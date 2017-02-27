@@ -9,6 +9,8 @@ All rights of the respective copyright holders shall be reserved.
 Brands and product names are trademarks of their respective owners.
 Referred and linked files/pages are out-of-scope of this repository and underly
 their respective licenses.
+Please notice the extra licenses in the /libraries/ directory included by
+the information in the respective files.
 ################################################################################
 
 In case of deviating information in this repository, license information
