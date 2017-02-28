@@ -21,15 +21,15 @@ This repository comprises several licenses dependent on the sources of the files
 
 Main directory
 
-*/arm/
+-/arm/
 
 Arduino Core
 
-*Directory: /cores/
-*License: GNU LESSER GENERAL PUBLIC LICENSE Version 2.1, February 1999
-*Original developed by Arduino (see information in files for more information)
-*Modified by Infineon Technologies AG to integrate XMC into Arduino IDE
-*See files and information in the respective directory for more information
+-Directory: /cores/
+-License: GNU LESSER GENERAL PUBLIC LICENSE Version 2.1, February 1999
+-Original developed by Arduino (see information in files for more information)
+-Modified by Infineon Technologies AG to integrate XMC into Arduino IDE
+-See files and information in the respective directory for more information
 
 XMC
 
