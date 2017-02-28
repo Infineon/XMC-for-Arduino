@@ -20,9 +20,11 @@ valid in the scope of the repository (not if statement here is not applicable).
 This repository comprises several licenses dependent on the sources of the files.
 
 Main directory
+
 */arm/
 
 Arduino Core
+
 *Directory: /cores/
 *License: GNU LESSER GENERAL PUBLIC LICENSE Version 2.1, February 1999
 *Original developed by Arduino (see information in files for more information)
@@ -30,36 +32,34 @@ Arduino Core
 *See files and information in the respective directory for more information
 
 XMC
+
 *Directory: /xmc_lib/CMSIS
 *License: ARM#1
 *See files and information in the respective directory for more information
-
 *Directory: /xmc_lib/LIBS
 *License: IFX#1
 *See files and information in the respective directory for more information
-
 *Directory: /xmc_lib/XMCLib
 *License: IFX#2
 *See files and information in the respective directory for more information
-
 *Directory (not each including subdirectory /config/): /variants/
 *License: IFX#2
 *See files and information in the respective directory for more information
 
-
 Variants
+
 *Directory: /variants/config/
 *License: GNU LESSER GENERAL PUBLIC LICENSE Version 2.1, February 1999
 *Original developed by David A. Mellis (see information in files for more information)
 *Modified by Infineon Technologies AG to integrate XMC into Arduino IDE
 *See files and information in the respective directory for more information
 
-------------------------------------------------------------------------------- 
+-------------------------------------------------------------------------------
 Extract of Licenses
-------------------------------------------------------------------------------- 
+-------------------------------------------------------------------------------
 
 GNU LESSER GENERAL PUBLIC LICENSE Version 2.1, February 1999
-------------------------------------------------------------------------------- 
+-------------------------------------------------------------------------------
 
                   GNU LESSER GENERAL PUBLIC LICENSE
                        Version 2.1, February 1999
@@ -563,11 +563,11 @@ necessary.  Here is a sample; alter the names:
   Ty Coon, President of Vice
 
 That's all there is to it!
-------------------------------------------------------------------------------- 
+-------------------------------------------------------------------------------
 
 
 License: IFX#1
-------------------------------------------------------------------------------- 
+-------------------------------------------------------------------------------
 Copyright (C) 2011 Infineon Technologies AG. All rights reserved.
 
 Infineon Technologies AG (Infineon) is supplying this software for use with
@@ -580,11 +580,11 @@ OR STATUTORY, INCLUDING, BUT NOT LIMITED TO, IMPLIED WARRANTIES OF
 MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE.
 INFINEON SHALL NOT, IN ANY CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL,
 OR CONSEQUENTIAL DAMAGES, FOR ANY REASON WHATSOEVER.
-------------------------------------------------------------------------------- 
+-------------------------------------------------------------------------------
 
 
 License: IFX#2
-------------------------------------------------------------------------------- 
+-------------------------------------------------------------------------------
 Copyright (c) 2012/2015-2016, Infineon Technologies AG
 All rights reserved.
 
@@ -610,11 +610,11 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 To improve the quality of the software, users are encouraged to share modifications, enhancements or bug fixes with
 Infineon Technologies AG dave@infineon.com).
-------------------------------------------------------------------------------- 
+-------------------------------------------------------------------------------
 
 
 License: ARM#1
-------------------------------------------------------------------------------- 
+-------------------------------------------------------------------------------
 Copyright (c) 2009 - 2015 ARM LIMITED
 
    All rights reserved.
@@ -640,4 +640,4 @@ Copyright (c) 2009 - 2015 ARM LIMITED
    CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
    ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
    POSSIBILITY OF SUCH DAMAGE.
-------------------------------------------------------------------------------- 
+-------------------------------------------------------------------------------
