@@ -5,7 +5,6 @@
  * @cond
  */
 
-
 //****************************************************************************
 // @Project Includes
 //****************************************************************************
@@ -109,8 +108,6 @@ XMC_I2C_t XMC_I2C_default =
     .slave_protocol_irq_num                   = (IRQn_Type) 92,
     .slave_protocol_irq_service_request       = 2
 };
-#else
-#error I2C not specified for selected board type
 #endif
 
 //****************************************************************************

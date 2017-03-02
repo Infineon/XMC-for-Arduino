@@ -28,6 +28,7 @@ extern "C" {
 #include <inttypes.h>
 
 }
+
 #include "Wire.h"
 
 //****************************************************************************
@@ -80,9 +81,6 @@ void TwoWire::begin(void)
 
     XMC_USIC_CH_SetInputSource(XMC_I2C_config->channel, XMC_USIC_CH_INPUT_DX0, XMC_I2C_config->input_source_dx0);
     XMC_USIC_CH_SetInputSource(XMC_I2C_config->channel, XMC_USIC_CH_INPUT_DX1, XMC_I2C_config->input_source_dx1);
-
-    //XMC_USIC_CH_TXFIFO_Configure(XMC_I2C_config->channel, 32u, XMC_USIC_CH_FIFO_SIZE_32WORDS, 1u);
-    //XMC_USIC_CH_RXFIFO_Configure(XMC_I2C_config->channel, 0u, XMC_USIC_CH_FIFO_SIZE_32WORDS, 31u);
 
     XMC_I2C_CH_Start(XMC_I2C_config->channel);
 
@@ -206,7 +204,7 @@ uint8_t TwoWire::requestFrom(uint8_t address, uint8_t quantity, uint32_t iaddres
         {
             /* wait for ACK */
         }
-        XMC_I2C_CH_ClearStatusFlag(XMC_I2C_config->channel, XMC_I2C_CH_STATUS_FLAG_ACK_RECEIVED | XMC_I2C_CH_STATUS_FLAG_ALTERNATIVE_RECEIVE_INDICATION);
+        XMC_I2C_CH_ClearStatusFlag(XMC_I2C_config->channel, XMC_I2C_CH_STATUS_FLAG_RECEIVE_INDICATION | XMC_I2C_CH_STATUS_FLAG_ALTERNATIVE_RECEIVE_INDICATION);
 
         rxBuffer[count] = XMC_I2C_CH_GetReceivedData(XMC_I2C_config->channel);
     }
@@ -215,7 +213,7 @@ uint8_t TwoWire::requestFrom(uint8_t address, uint8_t quantity, uint32_t iaddres
     {
         /* wait for ACK */
     }
-    XMC_I2C_CH_ClearStatusFlag(XMC_I2C_config->channel, XMC_I2C_CH_STATUS_FLAG_ACK_RECEIVED | XMC_I2C_CH_STATUS_FLAG_ALTERNATIVE_RECEIVE_INDICATION);
+    XMC_I2C_CH_ClearStatusFlag(XMC_I2C_config->channel, XMC_I2C_CH_STATUS_FLAG_RECEIVE_INDICATION | XMC_I2C_CH_STATUS_FLAG_ALTERNATIVE_RECEIVE_INDICATION);
 
     rxBuffer[quantity - 1] = XMC_I2C_CH_GetReceivedData(XMC_I2C_config->channel);
 

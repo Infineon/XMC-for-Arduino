@@ -48,6 +48,7 @@ extern XMC_I2C_t XMC_I2C_default;
 extern XMC_I2C_t XMC_I2C_default;
 
 #else
+#error XMC Board not supported
 #endif
 
 #endif /* XMC_I2C_CONF_H */
