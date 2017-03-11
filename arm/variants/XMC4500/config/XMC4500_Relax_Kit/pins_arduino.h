@@ -18,6 +18,8 @@
   Public License along with this library; if not, write to the
   Free Software Foundation, Inc., 59 Temple Place, Suite 330,
   Boston, MA  02111-1307  USA
+  
+  x marked should be ok, but should be checked :) // Nico Maas, 2017
 */
 #ifndef PINS_ARDUINO_H_
 #define PINS_ARDUINO_H_
@@ -42,32 +44,32 @@
 #define PWM4_TIMER_PERIOD (0x11EF)  // Generate 490Hz @fCCU=144MHz
 #define PWM8_TIMER_PERIOD (0x11EF)  // Generate 490Hz @fCCU=144MHz
 
-#define PIN_RX        (0)
-#define PIN_TX        (1)
-#define PIN_SPI_SS    (10)
-#define PIN_SPI_MOSI  (11)
-#define PIN_SPI_MISO  (12)
-#define PIN_SPI_SCK   (13)
+#define PIN_RX        (0) // x
+#define PIN_TX        (1) // x
+#define PIN_SPI_SS    (10)// x
+#define PIN_SPI_MOSI  (11)// x
+#define PIN_SPI_MISO  (12)// x
+#define PIN_SPI_SCK   (13)// x
 
-#define PIN_SPI_SS_SD    (28)
-#define PIN_SPI_MOSI_SD  (29)
-#define PIN_SPI_MISO_SD  (30)
-#define PIN_SPI_SCK_SD   (31)
+#define PIN_SPI_SS_SD    (28) // x
+#define PIN_SPI_MOSI_SD  (29) // x
+#define PIN_SPI_MISO_SD  (30) // x
+#define PIN_SPI_SCK_SD   (31) // x
 
 #define PIN_AREF            (14)
-#define PIN_WIRE_SDA        (15)
-#define PIN_WIRE_SCL        (16)
+#define PIN_WIRE_SDA        (15) // x
+#define PIN_WIRE_SCL        (16) // x
 
-static const uint8_t RX   = 0;
-static const uint8_t TX   = 1;
+static const uint8_t RX   = 0; // x
+static const uint8_t TX   = 1; // x
 
-static const uint8_t SS   = 10;
-static const uint8_t MOSI = 11;
-static const uint8_t MISO = 12;
-static const uint8_t SCK  = 13;
+static const uint8_t SS   = 10; // x
+static const uint8_t MOSI = 11; // x
+static const uint8_t MISO = 12; // x
+static const uint8_t SCK  = 13; // x
 
-static const uint8_t SDA = 14;
-static const uint8_t SCL = 15;
+static const uint8_t SDA = 15; // x
+static const uint8_t SCL = 16; // x
 
 #define A0   17
 #define A1   18
@@ -76,11 +78,11 @@ static const uint8_t SCL = 15;
 #define A4   21
 #define A5   22
 
-#define LED_BUILTIN 3 //Standard Arduino LED: Used LED1
-#define LED1    3  // Additional LED1
-#define LED2    2  // Additional LED2
-#define BUTTON1 26  // Additional BUTTON1
-#define BUTTON2 27  // Additional BUTTON2
+#define LED_BUILTIN 2 //Standard Arduino LED: Used LED1 x
+#define LED1    2  // Additional LED1 x
+#define LED2    3  // Additional LED2 x
+#define BUTTON1 26  // Additional BUTTON1 x
+#define BUTTON2 27  // Additional BUTTON2 x
 #define GND     50  // GND
 /*
 #define digitalPinToInterrupt(p)            ((p) == 2 ? 0 : ((p) == 3 ? 1 : NOT_AN_INTERRUPT))
@@ -96,23 +98,23 @@ static const uint8_t SCL = 15;
 
 const XMC_PORT_PIN_t mapping_port_pin[] =
 {
-    /* 0  */    {XMC_GPIO_PORT2, 15}, // PIN_RX                         P2.15
-    /* 1  */    {XMC_GPIO_PORT2 , 14}, // PIN_TX                         P2.14
-    /* 2  */    {XMC_GPIO_PORT1 , 0}, // Additional LED1                 P1.0
-    /* 3  */    {XMC_GPIO_PORT1 , 1}, // Additional LED2                 P1.1
-    /* 4  */    {XMC_GPIO_PORT1 , 8}, // GPIO                           P1.8
-    /* 5  */    {XMC_GPIO_PORT2 , 12}, // PWM output                     P2.12
-    /* 6  */    {XMC_GPIO_PORT2 , 11}, // PWM output                     P2.11
-    /* 7  */    {XMC_GPIO_PORT1 , 9}, // GPIO                           P1.9
-    /* 8  */    {XMC_GPIO_PORT1 , 10}, // GPIO                           P1.10
-    /* 9  */    {XMC_GPIO_PORT1 , 11}, // PWM output                     P1.11
-    /* 10  */   {XMC_GPIO_PORT3 , 10}, // SPI-SS / PWM output            P3.10
-    /* 11  */   {XMC_GPIO_PORT3 , 8}, // SPI-MOSI / PWM output          P3.8
-    /* 12  */   {XMC_GPIO_PORT3 , 7}, // SPI-MISO                       P3.7
-    /* 13  */   {XMC_GPIO_PORT3 , 9}, // SPI-SCK                        P3.9
-    /* 14  */   {XMC_GPIO_PORT2 , 3}, // AREF TODO:                     P2.3
-    /* 15  */   {XMC_GPIO_PORT3 , 15}, // I2C Data / Address SDA         P3.15
-    /* 16  */   {XMC_GPIO_PORT0 , 13}, // I2C Clock SCL                  P0.13
+    /* 0  */    {XMC_GPIO_PORT0  , 0}, // PIN_RX                         P0.0  x     
+    /* 1  */    {XMC_GPIO_PORT0  , 1}, // PIN_TX                         P0.1  x
+    /* 2  */    {XMC_GPIO_PORT1  , 1}, // Additional LED1                P1.1  x
+    /* 3  */    {XMC_GPIO_PORT1  , 0}, // Additional LED2                P1.0  x
+    /* 4  */    {XMC_GPIO_PORT1  , 8}, // GPIO                           P1.8  x WARN -> MMC_DAT1 -> but seems unused by SPI
+    /* 5  */    {XMC_GPIO_PORT2  , 12}, // PWM output                    P2.12
+    /* 6  */    {XMC_GPIO_PORT2  , 11}, // PWM output                    P2.11
+    /* 7  */    {XMC_GPIO_PORT1  , 9}, // GPIO                           P1.9
+    /* 8  */    {XMC_GPIO_PORT1  , 10}, // GPIO                          P1.10
+    /* 9  */    {XMC_GPIO_PORT1  , 11}, // PWM output                    P1.11
+    /* 10  */   {XMC_GPIO_PORT2  , 6}, // SPI-SS / PWM output            P2.6  x
+    /* 11  */   {XMC_GPIO_PORT5  , 0}, // SPI-MOSI / PWM output          P5.0  x
+    /* 12  */   {XMC_GPIO_PORT5  , 1}, // SPI-MISO                       P5.1  x
+    /* 13  */   {XMC_GPIO_PORT5  , 2}, // SPI-SCK                        P5.2  x
+    /* 14  */   {XMC_GPIO_PORT2  , 3}, // AREF TODO:                     P2.3  WARN -> ETH RXD! NOT TO BE USED AS GPIO!
+    /* 15  */   {XMC_GPIO_PORT1  , 5}, // I2C Data / Address SDA         P1.5  x
+    /* 16  */   {XMC_GPIO_PORT1  , 10}, // I2C Clock SCL                 P1.10 x
     /* 17  */   {XMC_GPIO_PORT14 , 0}, // A0 / ADC Input                 P14.0
     /* 18  */   {XMC_GPIO_PORT14 , 1}, // A1 / ADC Input                 P14.1
     /* 19  */   {XMC_GPIO_PORT14 , 2}, // A2 / ADC Input                 P14.2
@@ -120,18 +122,18 @@ const XMC_PORT_PIN_t mapping_port_pin[] =
     /* 21  */   {XMC_GPIO_PORT14 , 4}, // A4 / ADC Input                 P14.4
     /* 22  */   {XMC_GPIO_PORT14 , 5}, // A5 / ADC Input                 P14.5
     /* 23  */   {XMC_GPIO_PORT3 , 12}, // SPI_SS_2                       P3.12
-    /* 24  */   {XMC_GPIO_PORT5 , 9}, // Additional LED1                P5.9
-    /* 25  */   {XMC_GPIO_PORT5 , 8}, // Additional LED2                P5.8
-    /* 26  */   {XMC_GPIO_PORT15 , 13}, // Additional BUTTON1            P15.13
-    /* 27  */   {XMC_GPIO_PORT15 , 12}, // Additional BUTTON2            P15.12
-    /* 28  */   {XMC_GPIO_PORT4 , 1}, // SPI_SS_3 (SD CARD)             P4.1
-    /* 29  */   {XMC_GPIO_PORT3 , 5}, // SPI-MOSI (SD CARD)             P3.5
-    /* 30  */   {XMC_GPIO_PORT4 , 0}, // SPI-MISO (SD CARD)             P4.0
-    /* 31  */   {XMC_GPIO_PORT3 , 6}, // SPI-SCK  (SD CARD)             P3.6
-    /* 32  */   {XMC_GPIO_PORT1 , 6}, //                                P1.6
-    /* 33  */   {XMC_GPIO_PORT1 , 7}, //                                P1.7
-    /* 34  */   {XMC_GPIO_PORT1 , 4}, //                                P1.4
-    /* 35  */   {XMC_GPIO_PORT1 , 5}, //                                P1.5
+    /* 24  */   {XMC_GPIO_PORT1 , 9}, // Additional LED1                 P5.9  ?
+    /* 25  */   {XMC_GPIO_PORT1 , 8}, // Additional LED2                 P5.8  ?
+    /* 26  */   {XMC_GPIO_PORT1 , 14}, // Additional BUTTON1             P1.14 x
+    /* 27  */   {XMC_GPIO_PORT1 , 15}, // Additional BUTTON2             P1.15 x
+    /* 28  */   {XMC_GPIO_PORT4 , 1}, // SPI_SS_3 (SD CARD)              P4.1  x -> MMC_DAT3 / Slave Select
+    /* 29  */   {XMC_GPIO_PORT3 , 5}, // SPI-MOSI (SD CARD)              P3.5  x -> MMC_CMD
+    /* 30  */   {XMC_GPIO_PORT4 , 0}, // SPI-MISO (SD CARD)              P4.0  x -> MMC_DAT0
+    /* 31  */   {XMC_GPIO_PORT3 , 6}, // SPI-SCK  (SD CARD)              P3.6  x -> MMC_CLK
+    /* 32  */   {XMC_GPIO_PORT1 , 6}, //                                 P1.6
+    /* 33  */   {XMC_GPIO_PORT1 , 7}, //                                 P1.7  x WARN -> MMC_DAT2 -> but seems unused by SPI
+    /* 34  */   {XMC_GPIO_PORT1 , 4}, //                                 P1.4
+    /* 35  */   {XMC_GPIO_PORT1 , 5}, //                                 P1.5
 };
 
 
