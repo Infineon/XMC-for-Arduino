@@ -33,6 +33,10 @@ You can find the wiki under the following link:
 
 [XMC-for-Arduino Wiki](https://github.com/Infineon/XMC-for-Arduino/wiki)
 
+Page for [XMC 2Go](https://github.com/Infineon/XMC-for-Arduino/wiki/XMC-2Go)
+Page for [XMC1100 Boot Kit](https://github.com/Infineon/XMC-for-Arduino/wiki/XMC1100-Boot-Kit)
+Page for [XMC4700 Relax Kit](https://github.com/Infineon/XMC-for-Arduino/wiki/XMC4700-Relax-Kit)
+
 ## Installation Instructions
 
 ### Prework for SEGGER J-Link
