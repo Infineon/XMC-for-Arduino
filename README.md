@@ -23,6 +23,12 @@ Supported boards by this repository are listed under 'Microcontroller Boards' in
 * [XMC1100 Boot Kit](https://www.infineon.com/cms/en/product/evaluation-boards/KIT_XMC11_BOOT_001/productType.html?productType=db3a30443b360d0e013b8f5163c46f62#ispnTab1)
 * [XMC4700 Relax Kit](https://www.infineon.com/cms/en/product/evaluation-boards/KIT_XMC47_RELAX_LITE_V1/productType.html?productType=5546d46250cc1fdf0150f6a2788e6e89)
 
+## Additional Information
+Please visit also the Wiki for additional information, datasheets, pin out diagrams for the evaluation boards as well as links to datasheets, applications notes, and so on. 
+You can find the wiki under the following link:
+
+[XMC-for-Arduino Wiki](https://github.com/Infineon/XMC-for-Arduino/wiki)
+
 ## Installation Instructions
 
 ### Prework for SEGGER J-Link
