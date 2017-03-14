@@ -1,7 +1,7 @@
 # Infineon's XMC Microcontroller Boards for Arduino
 
 ```
-Important Infirmation: Arduino 1.8.0 IDE might have problems with the XMC-for-Arduino releases, please update to the newest one 
+Important Information: Arduino 1.8.0 IDE might have problems with the XMC-for-Arduino releases, please update to the newest one 
 
 Initial Note: There will be soon changes due to hardware/license/issue/other/your changes,
 please regard this kindly as an inital release to integrate our XMC boards into your favorite IDE.
