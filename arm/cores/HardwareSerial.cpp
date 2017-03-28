@@ -33,12 +33,21 @@ extern "C" {
     {
         if (serialEvent)
         {
-            serialEvent();
+			if (Serial.available())
+			{
+				serialEvent();
+			}
         }
+#if (NUM_SERIAL > 1)
         if (serialEvent1)
         {
-            serialEvent1();
+			if (Serial1.available())
+			{
+				serialEvent1();
+			}
         }
+#endif
+
     }
 
 #if (UC_FAMILY == XMC1)

@@ -28,7 +28,9 @@ extern "C" {
 }
 
 void serialEvent() __attribute__((weak));
+#if (NUM_SERIAL > 1)
 void serialEvent1() __attribute__((weak));
+#endif
 
 //****************************************************************************
 // @Project Includes
