@@ -19,19 +19,15 @@
 #ifndef _WIRING_MATH_
 #define _WIRING_MATH_
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 //****************************************************************************
 // @External Prototypes
 //****************************************************************************
     extern long random( long ) ;
-//extern long random( long, long ) ;
+	extern long random( long, long ) ;
     extern void randomSeed(uint32_t dwSeed) ;
 //extern long map( long, long, long, long, long ) ;
 
-//extern uint16_t makeWord( uint16_t w ) ;
+	extern uint16_t makeWord( uint16_t w ) ;
     extern uint16_t makeWord( uint8_t h, uint8_t l ) ;
 
 //****************************************************************************
@@ -39,8 +35,5 @@ extern "C" {
 //****************************************************************************
 #define word(...) makeWord(__VA_ARGS__)
 
-#ifdef __cplusplus
-}
-#endif
 
 #endif /* _WIRING_MATH_ */

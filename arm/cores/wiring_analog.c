@@ -55,12 +55,19 @@ void wiring_analog_init(void)
     /*Initialize Group*/
     XMC_VADC_GROUP_Init(VADC_G0, &vadc_group_config);
     XMC_VADC_GROUP_Init(VADC_G1, &vadc_group_config);
-    XMC_VADC_GROUP_Init(VADC_G2, &vadc_group_config);
-
+	
     /* Switch on the converter of the Group*/
     XMC_VADC_GROUP_SetPowerMode(VADC_G0, XMC_VADC_GROUP_POWERMODE_NORMAL);
     XMC_VADC_GROUP_SetPowerMode(VADC_G1, XMC_VADC_GROUP_POWERMODE_NORMAL);
+	
+#if(XMC_VADC_MAXIMUM_NUM_GROUPS > 2)
+    /*Initialize Group*/
+    XMC_VADC_GROUP_Init(VADC_G2, &vadc_group_config);
+
+    /* Switch on the converter of the Group*/
     XMC_VADC_GROUP_SetPowerMode(VADC_G2, XMC_VADC_GROUP_POWERMODE_NORMAL);
+#endif	
+
 #endif
 
     /* Calibrate the VADC. Make sure you do this after all used VADC groups
@@ -105,38 +112,38 @@ uint32_t analogRead(uint8_t pin)
     if (isanalogPin(pin))
     {
         uint8_t adc_num = analogPinToADCNum(pin);
-        XMC_ADC_t adc = mapping_adc[adc_num];
+        XMC_ADC_t *adc = &mapping_adc[adc_num];
 
 #if(XMC_VADC_GROUP_AVAILABLE == 1U)
 // ADC grouping
-        if (adc.enabled == DISABLED)
+        if (!(adc->enabled))
         {
             XMC_VADC_CHANNEL_CONFIG_t  vadc_gobal_channel_config = {0};
             vadc_gobal_channel_config.input_class       = XMC_VADC_CHANNEL_CONV_GROUP_CLASS1;
-            vadc_gobal_channel_config.result_reg_number = adc.result_reg_num;
+            vadc_gobal_channel_config.result_reg_number = adc->result_reg_num;
             vadc_gobal_channel_config.alias_channel     = XMC_VADC_CHANNEL_ALIAS_DISABLED;
 
             XMC_VADC_RESULT_CONFIG_t vadc_gobal_result_config = {0};
 
             /* Configure a channel belonging to the aforesaid conversion kernel */
-            XMC_VADC_GROUP_ChannelInit(adc.group, adc.channel_num, &vadc_gobal_channel_config);
+            XMC_VADC_GROUP_ChannelInit(adc->group, adc->channel_num, &vadc_gobal_channel_config);
 
             /* Configure a result resource belonging to the aforesaid conversion kernel */
-            XMC_VADC_GROUP_ResultInit(adc.group, adc.result_reg_num, &vadc_gobal_result_config);
+            XMC_VADC_GROUP_ResultInit(adc->group, adc->result_reg_num, &vadc_gobal_result_config);
 
             /* Add channel into the Background Request Source Channel Select Register */
-            XMC_VADC_GLOBAL_BackgroundAddChannelToSequence(VADC, (uint32_t)adc.group_num, (uint32_t)adc.channel_num);
+            XMC_VADC_GLOBAL_BackgroundAddChannelToSequence(VADC, (uint32_t)adc->group_num, (uint32_t)adc->channel_num);
         }
         /* Start conversion manually using load event trigger*/
         XMC_VADC_GLOBAL_BackgroundTriggerConversion(VADC);
 
-        value = XMC_VADC_GROUP_GetResult(adc.group, adc.result_reg_num);
+        value = XMC_VADC_GROUP_GetResult(adc->group, adc->result_reg_num);
 #else
 // XMC1100 no ADC grouping
-        if (adc.enabled == DISABLED)
+        if (!(adc->enabled))
         {
             /* Add a channel to the background source. */
-            VADC->BRSSEL[ADC_CONVERSION_GROUP] = (uint32_t)(1U << adc.channel_num);
+            VADC->BRSSEL[ADC_CONVERSION_GROUP] = (uint32_t)(1U << adc->channel_num);
         }
         // Generates conversion request
         XMC_VADC_GLOBAL_BackgroundTriggerConversion(VADC);
@@ -156,47 +163,46 @@ void analogWrite(uint8_t pin, uint16_t value)
     if (digitalPinHasPWM4(pin))
     {
         uint8_t pwm4_num = digitalPinToPWM4Num(pin);
-        XMC_PWM4_t pwm4 = mapping_pwm4[pwm4_num];
+        XMC_PWM4_t *pwm4 = &mapping_pwm4[pwm4_num];
 
-        if (!pwm4.enabled)
+        if (!(pwm4->enabled))
         {
             // Slice not yet initialized
             XMC_CCU4_SLICE_COMPARE_CONFIG_t pwm_config = {0};
             pwm_config.passive_level = XMC_CCU4_SLICE_OUTPUT_PASSIVE_LEVEL_HIGH;
-            pwm_config.prescaler_initval = pwm4.prescaler;
+            pwm_config.prescaler_initval = pwm4->prescaler;
 
-            XMC_CCU4_Init(pwm4.ccu, XMC_CCU4_SLICE_MCMS_ACTION_TRANSFER_PR_CR);
+            XMC_CCU4_Init(pwm4->ccu, XMC_CCU4_SLICE_MCMS_ACTION_TRANSFER_PR_CR);
 
-            XMC_CCU4_SLICE_CompareInit(pwm4.slice, &pwm_config);
+            XMC_CCU4_SLICE_CompareInit(pwm4->slice, &pwm_config);
 
-            XMC_CCU4_EnableClock(pwm4.ccu, pwm4.slice_num);
+            XMC_CCU4_EnableClock(pwm4->ccu, pwm4->slice_num);
 
-            XMC_CCU4_SLICE_SetTimerPeriodMatch(pwm4.slice, pwm4.period_timer_val);
+            XMC_CCU4_SLICE_SetTimerPeriodMatch(pwm4->slice, pwm4->period_timer_val);
 
-            pwm4.enabled = ENABLED;
+            pwm4->enabled = ENABLED;
         }
 
         if (value != 0)
         {
-            compare_reg  = (((value + 1) * pwm4.period_timer_val) >> _writeResolution);
+            compare_reg  = (((value + 1) * pwm4->period_timer_val) >> _writeResolution);
         }
 
-        XMC_CCU4_SLICE_SetTimerCompareMatch(pwm4.slice, compare_reg);
+        XMC_CCU4_SLICE_SetTimerCompareMatch(pwm4->slice, compare_reg);
 
-        XMC_CCU4_EnableShadowTransfer(pwm4.ccu, (CCU4_GCSS_S0SE_Msk << (4 * pwm4.slice_num)));
+        XMC_CCU4_EnableShadowTransfer(pwm4->ccu, (CCU4_GCSS_S0SE_Msk << (4 * pwm4->slice_num)));
 
-        XMC_GPIO_SetMode(pwm4.port_pin.port, pwm4.port_pin.pin, (XMC_GPIO_MODE_OUTPUT_PUSH_PULL | pwm4.port_mode));
+        XMC_GPIO_SetMode(pwm4->port_pin.port, pwm4->port_pin.pin, (XMC_GPIO_MODE_OUTPUT_PUSH_PULL | pwm4->port_mode));
 
-        XMC_CCU4_SLICE_StartTimer(pwm4.slice);
+        XMC_CCU4_SLICE_StartTimer(pwm4->slice);
     }
 #ifdef CCU8V2
     else if (digitalPinHasPWM8(pin))
     {
-
         uint8_t pwm8_num = digitalPinToPWM8Num(pin);
-        XMC_PWM8_t pwm8 = mapping_pwm8[pwm8_num];
+        XMC_PWM8_t *pwm8 = &mapping_pwm8[pwm8_num];
 
-        if (!pwm8.enabled)
+        if (!(pwm8->enabled))
         {
             // Slice not yet initialized
             XMC_CCU8_SLICE_COMPARE_CONFIG_t pwm_config = {0};
@@ -204,31 +210,31 @@ void analogWrite(uint8_t pin, uint16_t value)
             pwm_config.passive_level_out1 = XMC_CCU8_SLICE_OUTPUT_PASSIVE_LEVEL_HIGH;
             pwm_config.passive_level_out2 = XMC_CCU8_SLICE_OUTPUT_PASSIVE_LEVEL_HIGH;
             pwm_config.passive_level_out3 = XMC_CCU8_SLICE_OUTPUT_PASSIVE_LEVEL_HIGH;
-            pwm_config.prescaler_initval = pwm8.prescaler;
+            pwm_config.prescaler_initval = pwm8->prescaler;
 
-            XMC_CCU8_Init(pwm8.ccu, XMC_CCU8_SLICE_MCMS_ACTION_TRANSFER_PR_CR);
+            XMC_CCU8_Init(pwm8->ccu, XMC_CCU8_SLICE_MCMS_ACTION_TRANSFER_PR_CR);
 
-            XMC_CCU8_SLICE_CompareInit(pwm8.slice, &pwm_config);
+            XMC_CCU8_SLICE_CompareInit(pwm8->slice, &pwm_config);
 
-            XMC_CCU8_EnableClock(pwm8.ccu, pwm8.slice_num);
+            XMC_CCU8_EnableClock(pwm8->ccu, pwm8->slice_num);
 
-            XMC_CCU8_SLICE_SetTimerPeriodMatch(pwm8.slice, pwm8.period_timer_val);
+            XMC_CCU8_SLICE_SetTimerPeriodMatch(pwm8->slice, pwm8->period_timer_val);
 
-            pwm8.enabled = ENABLED;
+            pwm8->enabled = ENABLED;
         }
 
         if (value != 0)
         {
-            compare_reg  = (((value + 1) * pwm8.period_timer_val) >> _writeResolution);
+            compare_reg  = (((value + 1) * pwm8->period_timer_val) >> _writeResolution);
         }
 
-        XMC_CCU8_SLICE_SetTimerCompareMatch(pwm8.slice, pwm8.slice_channel, compare_reg);
+        XMC_CCU8_SLICE_SetTimerCompareMatch(pwm8->slice, pwm8->slice_channel, compare_reg);
 
-        XMC_CCU8_EnableShadowTransfer(pwm8.ccu, CCU4_GCSS_S0SE_Msk << (4 * pwm8.slice_num));
+        XMC_CCU8_EnableShadowTransfer(pwm8->ccu, CCU8_GCSS_S0SE_Msk << (4 * pwm8->slice_num));
 
-        XMC_GPIO_SetMode(pwm8.port_pin.port, pwm8.port_pin.pin, XMC_GPIO_MODE_OUTPUT_PUSH_PULL | pwm8.port_mode);
+        XMC_GPIO_SetMode(pwm8->port_pin.port, pwm8->port_pin.pin, XMC_GPIO_MODE_OUTPUT_PUSH_PULL | pwm8->port_mode);
 
-        XMC_CCU8_SLICE_StartTimer(pwm8.slice);
+        XMC_CCU8_SLICE_StartTimer(pwm8->slice);
     }
 #endif
     else // all the other pins

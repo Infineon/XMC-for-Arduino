@@ -44,6 +44,7 @@ private:
     XMC_I2C_t* XMC_I2C_config;
 
     static bool isMaster;
+    static bool inRepStart;
 
     static uint8_t rxBuffer[];
     static uint8_t rxBufferIndex;

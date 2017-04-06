@@ -158,6 +158,19 @@ extern "C" {
         uint32_t                irq_service_request ;
     } XMC_UART_t;
 
+//****************************************************************************
+// @Imported Global Variables
+//****************************************************************************
+    extern const XMC_PORT_PIN_t mapping_port_pin[];
+    extern const XMC_PIN_INTERRUPT_t mapping_interrupt[];
+    extern XMC_PWM4_t mapping_pwm4[];
+    extern XMC_ADC_t mapping_adc[];
+#ifdef CCU8V2
+    extern XMC_PWM8_t mapping_pwm8[];
+#endif
+
+
+
 
 //****************************************************************************
 // @Arduino Core Includes
@@ -172,23 +185,16 @@ extern "C" {
 #include "Tone.h"
 #include "itoa.h"
 #include "dtostrf.h"
-#include "WMath.h"
 #include "WCharacter.h"
 #include "WInterrupts.h"
+
+#ifdef __cplusplus
+} // extern "C"
+#include "WMath.h"
+#endif	// __cplusplus
+
 #include "Print.h"
 #include "HardwareSerial.h"
-
-
-//****************************************************************************
-// @Imported Global Variables
-//****************************************************************************
-    extern const XMC_PORT_PIN_t mapping_port_pin[];
-    extern const XMC_PIN_INTERRUPT_t mapping_interrupt[];
-    extern XMC_PWM4_t mapping_pwm4[];
-    extern XMC_ADC_t mapping_adc[];
-#ifdef CCU8V2
-    extern XMC_PWM8_t mapping_pwm8[];
-#endif
 
 
 //****************************************************************************
@@ -211,8 +217,5 @@ extern "C" {
 //****************************************************************************
 #include <pins_arduino.h>
 
-#ifdef __cplusplus
-} // extern "C"
-#endif
 
 #endif  /*_ARDUINO_H_ */

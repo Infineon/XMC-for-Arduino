@@ -29,7 +29,7 @@
 extern "C" {
 #endif
 
-    void serialEventRun(void)
+void serialEventRun(void)
     {
         if (serialEvent)
         {
