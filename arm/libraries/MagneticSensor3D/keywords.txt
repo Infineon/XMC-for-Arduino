@@ -1,0 +1,40 @@
+#######################################
+# Syntax Coloring Map For MagneticSensor3D
+#######################################
+
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+
+MagneticSensor3d	KEYWORD1
+
+
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+
+begin				KEYWORD2
+end				KEYWORD2
+updateData			KEYWORD2
+getX				KEYWORD2
+getY				KEYWORD2
+getZ				KEYWORD2
+getAmount			KEYWORD2
+getAzimuth			KEYWORD2
+getPolar			KEYWORD2
+getTemp				KEYWORD2
+
+
+
+#######################################
+# Instances (KEYWORD2)
+#######################################
+
+magnetic3dSensor		KEYWORD2
+
+
+#######################################
+# Constants (LITERAL1)
+#######################################
+

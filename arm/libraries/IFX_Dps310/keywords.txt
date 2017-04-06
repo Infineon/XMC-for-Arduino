@@ -1,0 +1,45 @@
+#######################################
+# Syntax Coloring Map For IFX Dps310
+#######################################
+
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+
+IFX_Dps310			KEYWORD1
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+
+begin				KEYWORD2
+end				KEYWORD2
+getProductId			KEYWORD2
+getRevisionId			KEYWORD2
+standby				KEYWORD2
+measureTempOnce			KEYWORD2
+startMeasureTempOnce		KEYWORD2
+measurePressureOnce		KEYWORD2
+startMeasurePressureOnce	KEYWORD2
+getSingleResult			KEYWORD2
+startMeasureTempCont		KEYWORD2
+startMeasurePressureCont	KEYWORD2
+startMeasureBothCont		KEYWORD2
+getContResults			KEYWORD2
+setInterruptPolarity		KEYWORD2
+setInterruptSources		KEYWORD2
+getIntFiofoFull			KEYWORD2
+getIntStatusTempReady		KEYWORD2
+getIntStatusPrsReady		KEYWORD2
+
+
+#######################################
+# Instances (KEYWORD2)
+#######################################
+
+ifxDps310			KEYWORD2
+
+#######################################
+# Constants (LITERAL1)
+#######################################
+

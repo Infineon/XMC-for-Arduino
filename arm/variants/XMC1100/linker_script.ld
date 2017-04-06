@@ -99,7 +99,6 @@ SECTIONS
 
       *(.rodata .rodata.*)
       *(.gnu.linkonce.r*)
-      . = ALIGN(4);   
     } > FLASH
 
     .eh_frame_hdr : ALIGN (4)
@@ -203,7 +202,7 @@ SECTIONS
     __ram_code_size = __ram_code_end - __ram_code_start;
     
     /* BSS section */
-    .bss ALIGN(4) (NOLOAD) :
+    .bss (NOLOAD) :
     {
         . = ALIGN(4); /* section size must be multiply of 4. See startup.S file */
         __bss_start = .;
@@ -217,11 +216,6 @@ SECTIONS
         Heap_Bank1_Start = .;
     } > SRAM
     __bss_size = __bss_end - __bss_start;
-
-    __malloc_heap_start = Heap_Bank1_Start;
-    __malloc_heap_end = __malloc_heap_start + 0x2000;
-    end = __malloc_heap_end;
-    __malloc_heap_size = __malloc_heap_end - __malloc_heap_start;
     
     /* .no_init section contains SystemCoreClock. See system.c file */
     .no_init ORIGIN(SRAM) + LENGTH(SRAM) - no_init_size (NOLOAD) : 

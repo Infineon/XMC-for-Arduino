@@ -172,7 +172,7 @@ SECTIONS
     __data_size = __data_end - __data_start;
         
     /* BSS section */
-    .bss ALIGN(4) (NOLOAD) : 
+    .bss (NOLOAD) : 
     {
         . = ALIGN(4); /* section size must be multiply of 4. See startup.S file */
         __bss_start = .;
@@ -205,20 +205,16 @@ SECTIONS
         *(ETH_RAM)
         . = ALIGN(4); /* section size must be multiply of 4. See startup.S file */
         ETH_RAM_end = .;
-        . = ALIGN(4);
+        . = ALIGN(8);
         Heap_Bank1_Start = .;
     } > SRAM_combined
     ETH_RAM_size = ETH_RAM_end - ETH_RAM_start;
-
-    __malloc_heap_start = Heap_Bank1_Start;
-    __malloc_heap_end = __malloc_heap_start + 0x2000;
-    end = __malloc_heap_end;
-    __malloc_heap_size = __malloc_heap_end - __malloc_heap_start;
 
     /* .no_init section contains chipid, SystemCoreClock and trimming data. See system.c file*/
     .no_init ORIGIN(SRAM_combined) + LENGTH(SRAM_combined) - no_init_size (NOLOAD) : 
     {
         Heap_Bank1_End = .;
+        end = Heap_Bank1_End;
         * (.no_init);
     } > SRAM_combined
 

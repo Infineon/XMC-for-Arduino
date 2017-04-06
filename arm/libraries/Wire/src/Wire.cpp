@@ -37,6 +37,7 @@ extern "C" {
 
 // Initialize Class Variables //////////////////////////////////////////////////
 bool TwoWire::isMaster = false;
+bool TwoWire::inRepStart = false;
 
 uint8_t TwoWire::rxBuffer[BUFFER_LENGTH];
 uint8_t TwoWire::rxBufferIndex = 0;
@@ -105,10 +106,10 @@ void TwoWire::begin(uint8_t address)
 
     XMC_USIC_CH_SetInterruptNodePointer(XMC_I2C_config->channel,
                                         XMC_USIC_CH_INTERRUPT_NODE_POINTER_RECEIVE,
-                                        XMC_I2C_config->slave_receive_irq_num);
+                                        XMC_I2C_config->slave_receive_irq_service_request);
     XMC_USIC_CH_SetInterruptNodePointer(XMC_I2C_config->channel,
                                         XMC_USIC_CH_INTERRUPT_NODE_POINTER_ALTERNATE_RECEIVE,
-                                        XMC_I2C_config->slave_receive_irq_num);
+                                        XMC_I2C_config->slave_receive_irq_service_request);
     XMC_USIC_CH_SetInterruptNodePointer(XMC_I2C_config->channel,
                                         XMC_USIC_CH_INTERRUPT_NODE_POINTER_PROTOCOL,
                                         XMC_I2C_config->slave_protocol_irq_service_request);
@@ -158,18 +159,20 @@ void TwoWire::setClock(uint32_t clock)
 // TODO: Further Tests (Check if protocol is correct)
 uint8_t TwoWire::requestFrom(uint8_t address, uint8_t quantity, uint32_t iaddress, uint8_t isize, uint8_t sendStop)
 {
+	uint32_t StatusFlag;
+    beginTransmission(address);
+	
     // clamp to buffer length
     if (quantity > BUFFER_LENGTH)
     {
         quantity = BUFFER_LENGTH;
     }
 
+    // send internal address; this mode allows sending a repeated start to access
+    // some devices' internal registers. This function is executed by the hardware
+    // TWI module on other processors (for example Due's TWI_IADR and TWI_MMR registers)
     if (isize > 0)
     {
-        // send internal address; this mode allows sending a repeated start to access
-        // some devices' internal registers. This function is executed by the hardware
-        // TWI module on other processors (for example Due's TWI_IADR and TWI_MMR registers)
-        beginTransmission(address);
 
         // the maximum size of internal address is 3 bytes
         if (isize > 3)
@@ -186,33 +189,56 @@ uint8_t TwoWire::requestFrom(uint8_t address, uint8_t quantity, uint32_t iaddres
 
         XMC_I2C_CH_MasterRepeatedStart(XMC_I2C_config->channel, (txAddress << 1), XMC_I2C_CH_CMD_READ);
     }
-    else
+    else if (inRepStart)
+	{
+        XMC_I2C_CH_MasterRepeatedStart(XMC_I2C_config->channel, (txAddress << 1), XMC_I2C_CH_CMD_READ);
+	}
+	else
     {
         XMC_I2C_CH_MasterStart(XMC_I2C_config->channel, (txAddress << 1), XMC_I2C_CH_CMD_READ);
     }
 
-    while ((XMC_I2C_CH_GetStatusFlag(XMC_I2C_config->channel) & XMC_I2C_CH_STATUS_FLAG_ACK_RECEIVED) == 0U)
-    {
-        /* wait for ACK */
-    }
-    XMC_I2C_CH_ClearStatusFlag(XMC_I2C_config->channel, XMC_I2C_CH_STATUS_FLAG_ACK_RECEIVED);
-
     for (uint8_t count = 0; count < (quantity - 1); count ++)
     {
         XMC_I2C_CH_MasterReceiveAck(XMC_I2C_config->channel);
-        while ((XMC_I2C_CH_GetStatusFlag(XMC_I2C_config->channel) & (XMC_I2C_CH_STATUS_FLAG_RECEIVE_INDICATION | XMC_I2C_CH_STATUS_FLAG_ALTERNATIVE_RECEIVE_INDICATION)) == 0U)
-        {
-            /* wait for ACK */
-        }
-        XMC_I2C_CH_ClearStatusFlag(XMC_I2C_config->channel, XMC_I2C_CH_STATUS_FLAG_RECEIVE_INDICATION | XMC_I2C_CH_STATUS_FLAG_ALTERNATIVE_RECEIVE_INDICATION);
+		
+		// Wait for ACK, leave when NACK is detected 
+		do
+		{
+			StatusFlag = XMC_I2C_CH_GetStatusFlag(XMC_I2C_config->channel);
+		
+			// Check for NACK, indicates that no slave with desired address is on the bus
+			if((StatusFlag & XMC_I2C_CH_STATUS_FLAG_NACK_RECEIVED) != 0U)
+			{	
+				XMC_I2C_CH_ClearStatusFlag(XMC_I2C_config->channel, XMC_I2C_CH_STATUS_FLAG_NACK_RECEIVED);
+				return 1;
+			}
+			
+			/* wait for Receive */
+			
+		}while ((XMC_I2C_CH_GetStatusFlag(XMC_I2C_config->channel) & (XMC_I2C_CH_STATUS_FLAG_RECEIVE_INDICATION | XMC_I2C_CH_STATUS_FLAG_ALTERNATIVE_RECEIVE_INDICATION)) == 0U);
+		XMC_I2C_CH_ClearStatusFlag(XMC_I2C_config->channel, XMC_I2C_CH_STATUS_FLAG_RECEIVE_INDICATION | XMC_I2C_CH_STATUS_FLAG_ALTERNATIVE_RECEIVE_INDICATION);
 
         rxBuffer[count] = XMC_I2C_CH_GetReceivedData(XMC_I2C_config->channel);
     }
+	
     XMC_I2C_CH_MasterReceiveNack(XMC_I2C_config->channel);
-    while ((XMC_I2C_CH_GetStatusFlag(XMC_I2C_config->channel) & (XMC_I2C_CH_STATUS_FLAG_RECEIVE_INDICATION | XMC_I2C_CH_STATUS_FLAG_ALTERNATIVE_RECEIVE_INDICATION)) == 0U)
-    {
-        /* wait for ACK */
-    }
+		
+	// Wait for ACK, leave when NACK is detected 
+    do
+	{
+		StatusFlag = XMC_I2C_CH_GetStatusFlag(XMC_I2C_config->channel);
+		
+		// Check for NACK, indicates that no slave with desired address is on the bus
+		if((StatusFlag & XMC_I2C_CH_STATUS_FLAG_NACK_RECEIVED) != 0U)
+		{	
+			XMC_I2C_CH_ClearStatusFlag(XMC_I2C_config->channel, XMC_I2C_CH_STATUS_FLAG_NACK_RECEIVED);
+			return 1;
+		}
+		
+		/* wait for Receive */
+		
+	}while ((XMC_I2C_CH_GetStatusFlag(XMC_I2C_config->channel) & (XMC_I2C_CH_STATUS_FLAG_RECEIVE_INDICATION | XMC_I2C_CH_STATUS_FLAG_ALTERNATIVE_RECEIVE_INDICATION)) == 0U);
     XMC_I2C_CH_ClearStatusFlag(XMC_I2C_config->channel, XMC_I2C_CH_STATUS_FLAG_RECEIVE_INDICATION | XMC_I2C_CH_STATUS_FLAG_ALTERNATIVE_RECEIVE_INDICATION);
 
     rxBuffer[quantity - 1] = XMC_I2C_CH_GetReceivedData(XMC_I2C_config->channel);
@@ -222,6 +248,8 @@ uint8_t TwoWire::requestFrom(uint8_t address, uint8_t quantity, uint32_t iaddres
     // set rx buffer iterator vars
     rxBufferIndex = 0;
     rxBufferLength = quantity;
+    // indicate that we are done transmitting
+    transmitting = 0;
 
     return quantity;
 }
@@ -277,27 +305,40 @@ void TwoWire::beginTransmission(int address)
 //
 uint8_t TwoWire::endTransmission(uint8_t sendStop)
 {
+	uint32_t StatusFlag;
+	
     XMC_I2C_CH_MasterStart(XMC_I2C_config->channel, (txAddress << 1), XMC_I2C_CH_CMD_WRITE);
-    while ((XMC_I2C_CH_GetStatusFlag(XMC_I2C_config->channel) & XMC_I2C_CH_STATUS_FLAG_ACK_RECEIVED) == 0U)
-    {
-        /* wait for ACK */
-    }
-    XMC_I2C_CH_ClearStatusFlag(XMC_I2C_config->channel, XMC_I2C_CH_STATUS_FLAG_ACK_RECEIVED);
 
     for (uint8_t count = 0; count < txBufferLength; count++)
     {
         XMC_I2C_CH_MasterTransmit(XMC_I2C_config->channel, txBuffer[count]);
-        while ((XMC_I2C_CH_GetStatusFlag(XMC_I2C_config->channel) & XMC_I2C_CH_STATUS_FLAG_ACK_RECEIVED) == 0U)
-        {
-            /* wait for ACK */
-        }
-        XMC_I2C_CH_ClearStatusFlag(XMC_I2C_config->channel, XMC_I2C_CH_STATUS_FLAG_ACK_RECEIVED);
+		
+		// Wait for ACK, leave when NACK is detected 
+        do
+		{
+			StatusFlag = XMC_I2C_CH_GetStatusFlag(XMC_I2C_config->channel);
+			
+			// Check for NACK, indicates that no slave with desired address is on the bus
+			if((StatusFlag & XMC_I2C_CH_STATUS_FLAG_NACK_RECEIVED) != 0U)
+			{	
+				XMC_I2C_CH_ClearStatusFlag(XMC_I2C_config->channel, XMC_I2C_CH_STATUS_FLAG_NACK_RECEIVED);
+				inRepStart = false;
+				return 1;
+			}
+		}
+		while ((StatusFlag & XMC_I2C_CH_STATUS_FLAG_ACK_RECEIVED) == 0U);	
+		XMC_I2C_CH_ClearStatusFlag(XMC_I2C_config->channel, XMC_I2C_CH_STATUS_FLAG_ACK_RECEIVED);
     }
 
     if (sendStop)
     {
         XMC_I2C_CH_MasterStop(XMC_I2C_config->channel);
+		inRepStart = false;
     }
+	else
+	{
+		inRepStart = true;
+	}
 
     // reset tx buffer iterator vars
     txBufferIndex = 0;
@@ -526,7 +567,7 @@ void TwoWire::onRequest( void (*function)(void) )
 /*
 *   Interrupt handler for xmc devices:
 *   XMC1-series: USIC0_4_IRQHandler (rx_irq) and USIC0_4_IRQHandler (protocol_irq)
-*   XMC4-series: USIC1_0_IRQHandler (rx_irq) and USIC1_1_IRQHandler (protocol_irq)
+*   XMC4-series: USIC1_1_IRQHandler (rx_irq) and USIC1_2_IRQHandler (protocol_irq)
 */
 extern "C" {
 #if (UC_FAMILY == XMC1)

@@ -29,17 +29,6 @@ extern "C" {
 //****************************************************************************
 // @Local Functions
 //****************************************************************************
-/*
-long map(long value, long fromLow, long fromHigh, long toLow, long toHigh)
-{
-    return (value - fromLow) * (toHigh - toLow) / (fromHigh - fromLow) + toLow;
-}
-*/
-
-uint16_t makeWord(uint8_t h, uint8_t l)
-{
-    return (h << 8) | l ;
-}
 
 void randomSeed(uint32_t dwSeed)
 {
@@ -59,8 +48,6 @@ long random(long howbig)
     return rand() % howbig;
 }
 
-#if 0
-
 long random(long howsmall, long howbig)
 {
     if (howsmall >= howbig)
@@ -72,7 +59,17 @@ long random(long howsmall, long howbig)
 
     return random(diff) + howsmall;
 }
-#endif
+
+extern uint16_t makeWord( uint16_t w )
+{
+  return w ;
+}
+
+uint16_t makeWord(uint8_t h, uint8_t l)
+{
+    return (h << 8) | l ;
+}
+
 
 //****************************************************************************
 //                                 END OF FILE

@@ -39,6 +39,11 @@ extern XMC_SPI_t XMC_SPI_default;
 #elif defined(XMC1100_Boot_Kit)
 #define NUM_SPI  1
 extern XMC_SPI_t XMC_SPI_default;
+
+#elif defined(XMC1300_Boot_Kit)
+#define NUM_SPI  1
+extern XMC_SPI_t XMC_SPI_default;
+
 #elif defined(XMC4700_Relax_Kit)
 #define NUM_SPI  2
 extern XMC_SPI_t XMC_SPI_default;

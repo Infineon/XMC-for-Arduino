@@ -43,6 +43,10 @@ extern XMC_I2C_t XMC_I2C_default;
 #define NUM_I2C  1
 extern XMC_I2C_t XMC_I2C_default;
 
+#elif defined(XMC1300_Boot_Kit)
+#define NUM_I2C  1
+extern XMC_I2C_t XMC_I2C_default;
+
 #elif defined(XMC4700_Relax_Kit)
 #define NUM_I2C  1
 extern XMC_I2C_t XMC_I2C_default;
