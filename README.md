@@ -4,7 +4,7 @@
 Important Information:
 ```
 From the road test of our products, we got the feedback that you might not get a notification that a new firmware is available for the built-in SEGGER J-Link debugger taking care of the flashing as well as additional handling of the microcontrollers on the evaluation boards. 
-Please be informed that this might lead to problems and this makes use of the boards impossible, e.g. in the Arduino IDE an upload might be indicated as successfull, but nothing happens or GDB errors occur in DAVE.
+Please be informed that this might lead to problems and this makes use of the boards impossible, e.g. in the Arduino IDE an upload might be indicated as successful, but nothing happens or GDB errors occur in DAVE.
 
 The notes and direct inputs from Enrico Miglino, Thomas Gambill as well as all the colleagues from the element14 community discussing this topic have shown this issue, please find the discussion here:
 
