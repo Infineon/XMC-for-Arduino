@@ -31,7 +31,7 @@
 //****************************************************************************
 // @Defines
 //****************************************************************************
-#define BUFFER_LENGTH 32
+#define BUFFER_LENGTH 255
 // WIRE_HAS_END means Wire has end()
 #define WIRE_HAS_END 1
 
@@ -65,6 +65,7 @@ private:
     void OnReceiveService(uint8_t*, uint8_t);
 public:
     TwoWire();
+	TwoWire(XMC_I2C_t *conf);
     void begin();
     void begin(uint8_t);
     void begin(int);
@@ -110,6 +111,18 @@ public:
 };
 
 extern TwoWire Wire;
+#if (NUM_I2C > 1)
+	extern TwoWire Wire1;
+#	if (NUM_I2C > 2)
+		extern TwoWire Wire2;
+#		if (NUM_I2C > 3)
+			extern TwoWire Wire3;
+#			if (NUM_I2C > 4)
+				extern TwoWire Wire4;
+#			endif
+#		endif
+#	endif
+#endif
 
 #endif /* TwoWire_h */
 

@@ -20,7 +20,7 @@ XMC1100_Boot_Kit.build.f_cpu=32000000L
 XMC1100_Boot_Kit.build.board=ARM_XMC
 XMC1100_Boot_Kit.build.board.version=1100
 XMC1100_Boot_Kit.build.board.type=T038x0064
-XMC1100_Boot_Kit.build.board.v=0032
+XMC1100_Boot_Kit.build.board.v=0064
 XMC1100_Boot_Kit.build.core=./
 XMC1100_Boot_Kit.build.variant=XMC1100
 XMC1100_Boot_Kit.build.board_variant=XMC1100_Boot_Kit
@@ -49,7 +49,7 @@ XMC1100_XMC2GO.build.f_cpu=32000000L
 XMC1100_XMC2GO.build.board=ARM_XMC
 XMC1100_XMC2GO.build.board.version=1100
 XMC1100_XMC2GO.build.board.type=T038x0064
-XMC1100_XMC2GO.build.board.v=0032
+XMC1100_XMC2GO.build.board.v=0064
 XMC1100_XMC2GO.build.core=./
 XMC1100_XMC2GO.build.variant=XMC1100
 XMC1100_XMC2GO.build.board_variant=XMC1100_XMC2GO
@@ -58,33 +58,35 @@ XMC1100_XMC2GO.build.flash_ld=linker_script.ld
 
 
 ####################################################
-#XMC1300_Boot_Kit.name=XMC1300 Boot Kit
-#XMC1300_Boot_Kit.upload.tool=xmcprog
-#XMC1300_Boot_Kit.upload.speed=115200
-#XMC1300_Boot_Kit.upload.resetmethod=ck
-#XMC1300_Boot_Kit.upload.maximum_size=65536
-#XMC1300_Boot_Kit.upload.wait_for_upload_port=true
+XMC1300_Boot_Kit.name=XMC1300 Boot Kit
+XMC1300_Boot_Kit.upload.tool=xmcprog
+XMC1300_Boot_Kit.upload.speed=115200
+XMC1300_Boot_Kit.upload.resetmethod=ck
+XMC1300_Boot_Kit.upload.maximum_size=65536
+XMC1300_Boot_Kit.upload.wait_for_upload_port=true
 
-#XMC1300_Boot_Kit.communication=usb
-#XMC1300_Boot_Kit.protocol=dragon_isp
-#XMC1300_Boot_Kit.program.protocol=dragon_isp
-#XMC1300_Boot_Kit.program.tool=xmcprog
-#XMC1300_Boot_Kit.program.extra_params=-Pusb
+XMC1300_Boot_Kit.communication=usb
+XMC1300_Boot_Kit.protocol=dragon_isp
+XMC1300_Boot_Kit.program.protocol=dragon_isp
+XMC1300_Boot_Kit.program.tool=xmcprog
+XMC1300_Boot_Kit.program.extra_params=-Pusb
 
-#XMC1300_Boot_Kit.serial.disableDTR=true
-#XMC1300_Boot_Kit.serial.disableRTS=true
+XMC1300_Boot_Kit.serial.disableDTR=true
+XMC1300_Boot_Kit.serial.disableRTS=true
 
-#XMC1300_Boot_Kit.build.mcu=cortex-m0
-#XMC1300_Boot_Kit.build.f_cpu=32000000L
-#XMC1300_Boot_Kit.build.board=ARM_XMC
-#XMC1300_Boot_Kit.build.board.version=1302
-#XMC1300_Boot_Kit.build.board.type=T038x0200
-#XMC1300_Boot_Kit.build.board.v=0200
-#XMC1300_Boot_Kit.build.core=./
-#XMC1300_Boot_Kit.build.variant=XMC1300
-#XMC1300_Boot_Kit.build.board_variant=XMC1300_Boot_Kit
-#XMC1300_Boot_Kit.build.flash_size=64K
-#XMC1300_Boot_Kit.build.flash_ld=linker_script.ld
+XMC1300_Boot_Kit.build.mcu=cortex-m0
+XMC1300_Boot_Kit.build.f_cpu=32000000L
+XMC1300_Boot_Kit.build.board=ARM_XMC
+XMC1300_Boot_Kit.build.board.version=1302
+XMC1300_Boot_Kit.build.board.type=T038x0200
+XMC1300_Boot_Kit.build.board.v=0200
+XMC1300_Boot_Kit.build.core=./
+XMC1300_Boot_Kit.build.variant=XMC1300
+XMC1300_Boot_Kit.build.board_variant=XMC1300_Boot_Kit
+XMC1300_Boot_Kit.build.flash_size=64K
+XMC1300_Boot_Kit.build.flash_ld=linker_script.ld
+
+
 ####################################################
 XMC4700_Relax_Kit.name=XMC4700 Relax Kit
 XMC4700_Relax_Kit.upload.tool=xmcprog

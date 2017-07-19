@@ -170,7 +170,11 @@ void delay(uint32_t dwMs)
         XMC_SYSTIMER_StartTimer(TimerId);
 
         // Wait until timer expires
-        while (!delay_timer_expired);
+		do
+		{
+			yield();
+		}
+        while(!delay_timer_expired);
 
         // Delete Timer since is One-Shot
         XMC_SYSTIMER_DeleteTimer(TimerId);

@@ -239,7 +239,10 @@ void HardwareSerial::IrqHandler( void )
         XMC_UART_CH_ClearStatusFlag(_XMC_UART_config->channel, (XMC_UART_CH_STATUS_FLAG_ALTERNATIVE_RECEIVE_INDICATION |
                                     XMC_UART_CH_STATUS_FLAG_RECEIVE_INDICATION));
 
-        _rx_buffer->store_char(XMC_UART_CH_GetReceivedData(_XMC_UART_config->channel));
+        while(_XMC_UART_config->channel->RBUFSR & (USIC_CH_RBUFSR_RDV0_Msk | USIC_CH_RBUFSR_RDV1_Msk)) 
+		{ 
+			_rx_buffer->store_char(XMC_UART_CH_GetReceivedData(_XMC_UART_config->channel)); 
+		} 
     }
 
     // Do we need to keep sending data?

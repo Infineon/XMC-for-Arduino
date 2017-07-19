@@ -31,23 +31,28 @@ typedef struct XMC_SPI
     XMC_GPIO_CONFIG_t     sclkout_config  ;
 } XMC_SPI_t;
 
+#define XMC_SPI_default 	XMC_SPI_0
 
 #if defined(XMC1100_XMC2GO)
-#define NUM_SPI  1
-extern XMC_SPI_t XMC_SPI_default;
+#define NUM_SPI  			1
+extern XMC_SPI_t XMC_SPI_0;
 
 #elif defined(XMC1100_Boot_Kit)
-#define NUM_SPI  1
-extern XMC_SPI_t XMC_SPI_default;
+#define NUM_SPI  			1
+extern XMC_SPI_t XMC_SPI_0;
 
 #elif defined(XMC1300_Boot_Kit)
-#define NUM_SPI  1
-extern XMC_SPI_t XMC_SPI_default;
+#define NUM_SPI  			1
+extern XMC_SPI_t XMC_SPI_0;
 
 #elif defined(XMC4700_Relax_Kit)
-#define NUM_SPI  2
-extern XMC_SPI_t XMC_SPI_default;
-extern XMC_SPI_t XMC_SPI_for_xmc4_SD;
+#define NUM_SPI  			5
+#define XMC_SPI_for_xmc_SD	XMC_SPI_1
+extern XMC_SPI_t XMC_SPI_0;
+extern XMC_SPI_t XMC_SPI_1;
+extern XMC_SPI_t XMC_SPI_2;
+extern XMC_SPI_t XMC_SPI_3;
+extern XMC_SPI_t XMC_SPI_4;
 #else
 #error XMC Board not supported
 #endif

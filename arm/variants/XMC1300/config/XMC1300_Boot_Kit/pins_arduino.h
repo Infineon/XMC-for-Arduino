@@ -56,10 +56,10 @@
 static const uint8_t RX   = 21;
 static const uint8_t TX   = 20;
 
-static const uint8_t SS   = 29;
-static const uint8_t MOSI = 22;
-static const uint8_t MISO = 23;
-static const uint8_t SCK  = 30;
+extern uint8_t SS  ;
+extern uint8_t MOSI;
+extern uint8_t MISO;
+extern uint8_t SCK ;
 
 static const uint8_t SDA = 11;
 static const uint8_t SCL = 10;
@@ -175,8 +175,8 @@ XMC_ADC_t mapping_adc[] =
  */
 RingBuffer rx_buffer_debug;
 RingBuffer tx_buffer_debug;
-RingBuffer rx_buffer_on_board;
-RingBuffer tx_buffer_on_board;
+//RingBuffer rx_buffer_on_board;
+//RingBuffer tx_buffer_on_board;
 
 XMC_UART_t XMC_UART_debug =
 {

@@ -11,7 +11,7 @@
 #include "xmc_spi_conf.h"
 
 #if defined(XMC1100_XMC2GO)
-XMC_SPI_t XMC_SPI_default =
+XMC_SPI_t XMC_SPI_0 =
 {
     .channel          = XMC_SPI0_CH1,
     .channel_config   = {
@@ -50,7 +50,7 @@ XMC_SPI_t XMC_SPI_default =
 };
 
 #elif defined(XMC1100_Boot_Kit)
-XMC_SPI_t XMC_SPI_default =
+XMC_SPI_t XMC_SPI_0 =
 {
     .channel          = XMC_SPI0_CH0,
     .channel_config   = {
@@ -89,7 +89,7 @@ XMC_SPI_t XMC_SPI_default =
 };
 
 #elif defined(XMC1300_Boot_Kit)
-XMC_SPI_t XMC_SPI_default =
+XMC_SPI_t XMC_SPI_0 =
 {
     .channel          = XMC_SPI0_CH0,
     .channel_config   = {
@@ -128,7 +128,7 @@ XMC_SPI_t XMC_SPI_default =
 };
 
 #elif defined(XMC4700_Relax_Kit)
-XMC_SPI_t XMC_SPI_default =
+XMC_SPI_t XMC_SPI_0 =
 {
     .channel          = XMC_SPI2_CH0,
     .channel_config   = {
@@ -165,7 +165,7 @@ XMC_SPI_t XMC_SPI_default =
     },
 };
 
-XMC_SPI_t XMC_SPI_for_xmc4_SD =
+XMC_SPI_t XMC_SPI_1 =
 {
     .channel          = XMC_SPI0_CH1,
     .channel_config   = {
@@ -197,6 +197,117 @@ XMC_SPI_t XMC_SPI_for_xmc4_SD =
     },
     .sclkout_config   = {
         .mode = XMC_GPIO_MODE_OUTPUT_PUSH_PULL_ALT4,
+        .output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH,
+        .output_strength = XMC_GPIO_OUTPUT_STRENGTH_MEDIUM
+    },
+};
+
+XMC_SPI_t XMC_SPI_2 =
+{
+    .channel          = XMC_SPI2_CH1,
+    .channel_config   = {
+        .baudrate = 20003906U,
+        .bus_mode = (XMC_SPI_CH_BUS_MODE_t)XMC_SPI_CH_BUS_MODE_MASTER,
+        .selo_inversion = XMC_SPI_CH_SLAVE_SEL_INV_TO_MSLS,
+        .parity_mode = XMC_USIC_CH_PARITY_MODE_NONE
+    },
+    .mosi             = {
+        .port = (XMC_GPIO_PORT_t*)PORT3_BASE,
+        .pin  = (uint8_t)11
+    },
+    .mosi_config      = {
+        .mode = XMC_GPIO_MODE_OUTPUT_PUSH_PULL_ALT1,
+        .output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH,
+        .output_strength = XMC_GPIO_OUTPUT_STRENGTH_MEDIUM
+    },
+    .miso             = {
+        .port = (XMC_GPIO_PORT_t*)PORT3_BASE,
+        .pin  = (uint8_t)12
+    },
+    .miso_config      = {
+        .mode = XMC_GPIO_MODE_INPUT_TRISTATE,
+    },
+    .input_source     = XMC_INPUT_D,
+    .sclkout = {
+        .port = (XMC_GPIO_PORT_t*)PORT3_BASE,
+        .pin  = (uint8_t)13
+    },
+    .sclkout_config   = {
+        .mode = XMC_GPIO_MODE_OUTPUT_PUSH_PULL_ALT1,
+        .output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH,
+        .output_strength = XMC_GPIO_OUTPUT_STRENGTH_MEDIUM
+    },
+};
+
+XMC_SPI_t XMC_SPI_3 =
+{
+    .channel          = XMC_SPI0_CH0,
+    .channel_config   = {
+        .baudrate = 20003906U,
+        .bus_mode = (XMC_SPI_CH_BUS_MODE_t)XMC_SPI_CH_BUS_MODE_MASTER,
+        .selo_inversion = XMC_SPI_CH_SLAVE_SEL_INV_TO_MSLS,
+        .parity_mode = XMC_USIC_CH_PARITY_MODE_NONE
+    },
+    .mosi             = {
+        .port = (XMC_GPIO_PORT_t*)PORT5_BASE,
+        .pin  = (uint8_t)1
+    },
+    .mosi_config      = {
+        .mode = XMC_GPIO_MODE_OUTPUT_PUSH_PULL_ALT1,
+        .output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH,
+        .output_strength = XMC_GPIO_OUTPUT_STRENGTH_MEDIUM
+    },
+    .miso             = {
+        .port = (XMC_GPIO_PORT_t*)PORT5_BASE,
+        .pin  = (uint8_t)0
+    },
+    .miso_config      = {
+        .mode = XMC_GPIO_MODE_INPUT_TRISTATE,
+    },
+    .input_source     = XMC_INPUT_D,
+    .sclkout = {
+        .port = (XMC_GPIO_PORT_t*)PORT0_BASE,
+        .pin  = (uint8_t)8
+    },
+    .sclkout_config   = {
+        .mode = XMC_GPIO_MODE_OUTPUT_PUSH_PULL_ALT2,
+        .output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH,
+        .output_strength = XMC_GPIO_OUTPUT_STRENGTH_MEDIUM
+    },
+};
+
+XMC_SPI_t XMC_SPI_4 =
+{
+    .channel          = XMC_SPI1_CH0,
+    .channel_config   = {
+        .baudrate = 20003906U,
+        .bus_mode = (XMC_SPI_CH_BUS_MODE_t)XMC_SPI_CH_BUS_MODE_MASTER,
+        .selo_inversion = XMC_SPI_CH_SLAVE_SEL_INV_TO_MSLS,
+        .parity_mode = XMC_USIC_CH_PARITY_MODE_NONE
+    },
+    .mosi             = {
+        .port = (XMC_GPIO_PORT_t*)PORT0_BASE,
+        .pin  = (uint8_t)5
+    },
+    .mosi_config      = {
+        .mode = XMC_GPIO_MODE_OUTPUT_PUSH_PULL_ALT2,
+        .output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH,
+        .output_strength = XMC_GPIO_OUTPUT_STRENGTH_MEDIUM
+    },
+    .miso             = {
+        .port = (XMC_GPIO_PORT_t*)PORT0_BASE,
+        .pin  = (uint8_t)4
+    },
+    .miso_config      = {
+        .mode = XMC_GPIO_MODE_INPUT_TRISTATE,
+    },
+    .input_source     = XMC_INPUT_A,
+    .sclkout = {
+        .port = (XMC_GPIO_PORT_t*)PORT0_BASE,
+        .pin  = (uint8_t)11
+    },
+    .sclkout_config   = {
+        .mode = XMC_GPIO_MODE_OUTPUT_PUSH_PULL_ALT2,
         .output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH,
         .output_strength = XMC_GPIO_OUTPUT_STRENGTH_MEDIUM
     },

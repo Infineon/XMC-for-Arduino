@@ -31,6 +31,7 @@ setInterruptSources		KEYWORD2
 getIntFiofoFull			KEYWORD2
 getIntStatusTempReady		KEYWORD2
 getIntStatusPrsReady		KEYWORD2
+correctTemp					KEYWORD2
 
 
 #######################################

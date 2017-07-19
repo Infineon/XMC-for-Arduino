@@ -77,6 +77,10 @@ void wiring_analog_init(void)
     /* Initialize the background source hardware. The gating mode is set to
     * ignore to pass external triggers unconditionally.*/
     XMC_VADC_GLOBAL_BackgroundInit(VADC, &vadc_background_config);
+	
+	
+	//Additional Initialization of DAC starting here
+	
 }
 
 void analogReadResolution(uint8_t res)
@@ -236,6 +240,18 @@ void analogWrite(uint8_t pin, uint16_t value)
 
         XMC_CCU8_SLICE_StartTimer(pwm8->slice);
     }
+#endif
+#ifdef DAC
+	else if(digitalPinHasDAC(pin))
+	{
+		uint8_t dac_num = digitalPinToDACNum(pin);
+        XMC_ARD_DAC_t *dac = &(mapping_dac[dac_num]);
+		XMC_DAC_Enable(dac->group);
+		XMC_DAC_CH_EnableOutput(dac->group, dac->channel);
+		XMC_DAC_CH_StartSingleValueMode(dac->group, dac->channel);
+		uint16_t dacValue = map(value, 0, (0b10<<_writeResolution)-1, 0, (0b10<<dac->resolution)-1);
+		XMC_DAC_CH_Write(dac->group, dac->channel, dacValue);
+	}
 #endif
     else // all the other pins
     {

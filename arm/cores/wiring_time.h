@@ -30,7 +30,7 @@ extern "C" {
 #define USEC_TO_N_NOP_CYCLES        36
 #elif ((UC_FAMILY == XMC1) && (F_CPU == 32000000U))
 // time per loop cycle: 0,375 us
-#define USEC_TO_N_NOP_CYCLES        2.66
+#define USEC_TO_N_NOP_CYCLES        3
 #else
 #error USEC_TO_N_NOP_CYCLES not calculated
 #endif

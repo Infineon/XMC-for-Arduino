@@ -28,6 +28,7 @@ extern "C" {
 // @Std Includes
 //****************************************************************************
 #include <stdlib.h>
+#include <stdio.h>
 #include <stdbool.h>
 #include <string.h>
 #include <types.h>
@@ -43,6 +44,8 @@ extern "C" {
 #include <xmc_ccu8.h>
 #include <xmc_vadc.h>
 #include <xmc_uart.h>
+//Additional xmc libs
+#include <xmc_dac.h>
 
 //****************************************************************************
 // @Defines
@@ -124,6 +127,19 @@ extern "C" {
     } XMC_PWM8_t;
 #endif
 
+#ifdef DAC
+	//TODO: find a better name; XMC_DAC_t is already used by XMCLib
+    /*
+    * XMC DAC type
+    */
+    typedef struct
+    {
+		XMC_DAC_t *group;
+		uint8_t channel;
+		uint8_t resolution; 	//number of resolution bits
+	} XMC_ARD_DAC_t;
+#endif
+
     /*
     * XMC VADC type (with or without adc grouping)
     */
@@ -168,10 +184,33 @@ extern "C" {
 #ifdef CCU8V2
     extern XMC_PWM8_t mapping_pwm8[];
 #endif
+#ifdef DAC
+	extern XMC_ARD_DAC_t mapping_dac[];
+#endif
 
+	extern XMC_UART_t XMC_UART_debug;
+	extern XMC_UART_t XMC_UART_on_board;
 
+//****************************************************************************
+// @Prototypes Of Global Functions
+//****************************************************************************
 
+	/*
+     * \brief Arduino yield function.
+     */	
+	void yield( void );
 
+    /*
+     * \brief Arduino Main setup function. Called only once at the beginning.
+     */
+    extern void setup(void);
+
+    /*
+     * \brief Arduino Main loop function. Called in an endless loop.
+     */
+    extern void loop(void);
+
+	
 //****************************************************************************
 // @Arduino Core Includes
 //****************************************************************************
@@ -195,21 +234,6 @@ extern "C" {
 
 #include "Print.h"
 #include "HardwareSerial.h"
-
-
-//****************************************************************************
-// @Prototypes Of Global Functions
-//****************************************************************************
-
-    /*
-     * \brief Arduino Main setup function. Called only once at the beginning.
-     */
-    extern void setup(void);
-
-    /*
-     * \brief Arduino Main loop function. Called in an endless loop.
-     */
-    extern void loop(void);
 
 
 //****************************************************************************

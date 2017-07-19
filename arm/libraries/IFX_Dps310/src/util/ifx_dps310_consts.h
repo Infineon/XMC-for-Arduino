@@ -30,8 +30,13 @@
 #define IFX_DPS310__PRS_STD_MR					2U
 #define IFX_DPS310__PRS_STD_OSR					3U
 #define IFX_DPS310__OSR_SE 						3U
-#define IFX_DPS310__MAX_BUSYTIME 				10000U
+//we use 0.1 mS units for time calculations, so 10 units are one millisecond
 #define IFX_DPS310__BUSYTIME_SCALING 			10U
+// DPS310 has 10 milliseconds of spare time for each synchronous measurement / per second for asynchronous measurements
+// this is for error prevention on friday-afternoon-products :D
+// you can set it to 0 if you dare, but there is no warranty that it will still work
+#define IFX_DPS310__BUSYTIME_FAILSAFE			10U
+#define IFX_DPS310__MAX_BUSYTIME 				((1000U-IFX_DPS310__BUSYTIME_FAILSAFE)*IFX_DPS310__BUSYTIME_SCALING)
 #define IFX_DPS310__NUM_OF_SCAL_FACTS			8
 
 #define IFX_DPS310__SUCCEEDED 					0

@@ -83,6 +83,18 @@ void TwoWire::begin(void)
     XMC_USIC_CH_SetInputSource(XMC_I2C_config->channel, XMC_USIC_CH_INPUT_DX0, XMC_I2C_config->input_source_dx0);
     XMC_USIC_CH_SetInputSource(XMC_I2C_config->channel, XMC_USIC_CH_INPUT_DX1, XMC_I2C_config->input_source_dx1);
 
+    /* configure i2c tx fifo */
+    XMC_USIC_CH_TXFIFO_Configure(XMC_I2C_config->channel,
+  							   16,
+  							   XMC_USIC_CH_FIFO_SIZE_16WORDS,
+  							   (uint32_t)15);
+
+    /* configure i2c rx fifo */
+    XMC_USIC_CH_RXFIFO_Configure(XMC_I2C_config->channel,
+  							   0,
+  							   XMC_USIC_CH_FIFO_SIZE_16WORDS,
+  								(uint32_t)(15));
+
     XMC_I2C_CH_Start(XMC_I2C_config->channel);
 
     XMC_GPIO_Init((XMC_GPIO_PORT_t*)XMC_I2C_config->sda.port, (uint8_t)XMC_I2C_config->sda.pin, &(XMC_I2C_config->sda_config));
@@ -112,11 +124,11 @@ void TwoWire::begin(uint8_t address)
                                         XMC_I2C_config->slave_receive_irq_service_request);
     XMC_USIC_CH_SetInterruptNodePointer(XMC_I2C_config->channel,
                                         XMC_USIC_CH_INTERRUPT_NODE_POINTER_PROTOCOL,
-                                        XMC_I2C_config->slave_protocol_irq_service_request);
+                                        XMC_I2C_config->protocol_irq_service_request);
     NVIC_SetPriority((IRQn_Type)XMC_I2C_config->slave_receive_irq_num, 3U);
     NVIC_EnableIRQ((IRQn_Type)XMC_I2C_config->slave_receive_irq_num);
-    NVIC_SetPriority((IRQn_Type)XMC_I2C_config->slave_protocol_irq_num, 3U);
-    NVIC_EnableIRQ((IRQn_Type)XMC_I2C_config->slave_protocol_irq_num);
+    NVIC_SetPriority((IRQn_Type)XMC_I2C_config->protocol_irq_num, 3U);
+    NVIC_EnableIRQ((IRQn_Type)XMC_I2C_config->protocol_irq_num);
 
     XMC_I2C_CH_SetSlaveAddress(XMC_I2C_config->channel, (address << 1));
 
@@ -192,6 +204,7 @@ uint8_t TwoWire::requestFrom(uint8_t address, uint8_t quantity, uint32_t iaddres
     else if (inRepStart)
 	{
         XMC_I2C_CH_MasterRepeatedStart(XMC_I2C_config->channel, (txAddress << 1), XMC_I2C_CH_CMD_READ);
+    	inRepStart = false;
 	}
 	else
     {
@@ -201,49 +214,60 @@ uint8_t TwoWire::requestFrom(uint8_t address, uint8_t quantity, uint32_t iaddres
     for (uint8_t count = 0; count < (quantity - 1); count ++)
     {
         XMC_I2C_CH_MasterReceiveAck(XMC_I2C_config->channel);
-		
-		// Wait for ACK, leave when NACK is detected 
+
+		// Wait for ACK, leave when NACK is detected
 		do
 		{
 			StatusFlag = XMC_I2C_CH_GetStatusFlag(XMC_I2C_config->channel);
-		
+
 			// Check for NACK, indicates that no slave with desired address is on the bus
 			if((StatusFlag & XMC_I2C_CH_STATUS_FLAG_NACK_RECEIVED) != 0U)
-			{	
-				XMC_I2C_CH_ClearStatusFlag(XMC_I2C_config->channel, XMC_I2C_CH_STATUS_FLAG_NACK_RECEIVED);
-				return 1;
+			{
+			    // Reset buffer and clear all Status Flags
+				XMC_USIC_CH_RXFIFO_Flush(XMC_I2C_config->channel);
+				XMC_USIC_CH_TXFIFO_Flush(XMC_I2C_config->channel);
+				XMC_USIC_CH_SetTransmitBufferStatus(XMC_I2C_config->channel, XMC_USIC_CH_TBUF_STATUS_SET_IDLE);
+			    XMC_I2C_CH_ClearStatusFlag(XMC_I2C_config->channel, 0xFFFF);
+				return 0;
 			}
-			
+
 			/* wait for Receive */
-			
-		}while ((XMC_I2C_CH_GetStatusFlag(XMC_I2C_config->channel) & (XMC_I2C_CH_STATUS_FLAG_RECEIVE_INDICATION | XMC_I2C_CH_STATUS_FLAG_ALTERNATIVE_RECEIVE_INDICATION)) == 0U);
+
+		}while ((StatusFlag & (XMC_I2C_CH_STATUS_FLAG_RECEIVE_INDICATION | XMC_I2C_CH_STATUS_FLAG_ALTERNATIVE_RECEIVE_INDICATION)) == 0U);
 		XMC_I2C_CH_ClearStatusFlag(XMC_I2C_config->channel, XMC_I2C_CH_STATUS_FLAG_RECEIVE_INDICATION | XMC_I2C_CH_STATUS_FLAG_ALTERNATIVE_RECEIVE_INDICATION);
 
         rxBuffer[count] = XMC_I2C_CH_GetReceivedData(XMC_I2C_config->channel);
     }
-	
+
     XMC_I2C_CH_MasterReceiveNack(XMC_I2C_config->channel);
 		
-	// Wait for ACK, leave when NACK is detected 
+	// Wait for ACK, leave when NACK is detected
     do
 	{
 		StatusFlag = XMC_I2C_CH_GetStatusFlag(XMC_I2C_config->channel);
-		
+
 		// Check for NACK, indicates that no slave with desired address is on the bus
 		if((StatusFlag & XMC_I2C_CH_STATUS_FLAG_NACK_RECEIVED) != 0U)
-		{	
-			XMC_I2C_CH_ClearStatusFlag(XMC_I2C_config->channel, XMC_I2C_CH_STATUS_FLAG_NACK_RECEIVED);
-			return 1;
+		{
+		    // Reset buffer and clear all Status Flags
+			XMC_USIC_CH_RXFIFO_Flush(XMC_I2C_config->channel);
+			XMC_USIC_CH_TXFIFO_Flush(XMC_I2C_config->channel);
+			XMC_USIC_CH_SetTransmitBufferStatus(XMC_I2C_config->channel, XMC_USIC_CH_TBUF_STATUS_SET_IDLE);
+		    XMC_I2C_CH_ClearStatusFlag(XMC_I2C_config->channel, 0xFFFF);
+			return 0;
 		}
-		
+
 		/* wait for Receive */
-		
-	}while ((XMC_I2C_CH_GetStatusFlag(XMC_I2C_config->channel) & (XMC_I2C_CH_STATUS_FLAG_RECEIVE_INDICATION | XMC_I2C_CH_STATUS_FLAG_ALTERNATIVE_RECEIVE_INDICATION)) == 0U);
+
+	}while ((StatusFlag & (XMC_I2C_CH_STATUS_FLAG_RECEIVE_INDICATION | XMC_I2C_CH_STATUS_FLAG_ALTERNATIVE_RECEIVE_INDICATION)) == 0U);
     XMC_I2C_CH_ClearStatusFlag(XMC_I2C_config->channel, XMC_I2C_CH_STATUS_FLAG_RECEIVE_INDICATION | XMC_I2C_CH_STATUS_FLAG_ALTERNATIVE_RECEIVE_INDICATION);
 
     rxBuffer[quantity - 1] = XMC_I2C_CH_GetReceivedData(XMC_I2C_config->channel);
 
-    XMC_I2C_CH_MasterStop(XMC_I2C_config->channel);
+    if(sendStop)
+    {
+    	XMC_I2C_CH_MasterStop(XMC_I2C_config->channel);
+    }
 
     // set rx buffer iterator vars
     rxBufferIndex = 0;
@@ -283,6 +307,9 @@ void TwoWire::beginTransmission(uint8_t address)
     // reset tx buffer iterator vars
     txBufferIndex = 0;
     txBufferLength = 0;
+	// Clear all Status Flags
+	//XMC_USIC_CH_SetTransmitBufferStatus(XMC_I2C_config->channel, XMC_USIC_CH_TBUF_STATUS_SET_IDLE);
+	XMC_I2C_CH_ClearStatusFlag(XMC_I2C_config->channel, 0xFFFF);
 }
 
 void TwoWire::beginTransmission(int address)
@@ -306,27 +333,31 @@ void TwoWire::beginTransmission(int address)
 uint8_t TwoWire::endTransmission(uint8_t sendStop)
 {
 	uint32_t StatusFlag;
-	
+
     XMC_I2C_CH_MasterStart(XMC_I2C_config->channel, (txAddress << 1), XMC_I2C_CH_CMD_WRITE);
 
     for (uint8_t count = 0; count < txBufferLength; count++)
     {
         XMC_I2C_CH_MasterTransmit(XMC_I2C_config->channel, txBuffer[count]);
-		
-		// Wait for ACK, leave when NACK is detected 
+
+		// Wait for ACK, leave when NACK is detected
         do
 		{
 			StatusFlag = XMC_I2C_CH_GetStatusFlag(XMC_I2C_config->channel);
-			
+
 			// Check for NACK, indicates that no slave with desired address is on the bus
 			if((StatusFlag & XMC_I2C_CH_STATUS_FLAG_NACK_RECEIVED) != 0U)
-			{	
-				XMC_I2C_CH_ClearStatusFlag(XMC_I2C_config->channel, XMC_I2C_CH_STATUS_FLAG_NACK_RECEIVED);
+			{
+			    // Reset buffer and clear all Status Flags
+				XMC_USIC_CH_RXFIFO_Flush(XMC_I2C_config->channel);
+				XMC_USIC_CH_TXFIFO_Flush(XMC_I2C_config->channel);
+				XMC_USIC_CH_SetTransmitBufferStatus(XMC_I2C_config->channel, XMC_USIC_CH_TBUF_STATUS_SET_IDLE);
+			    XMC_I2C_CH_ClearStatusFlag(XMC_I2C_config->channel, 0xFFFF);
 				inRepStart = false;
 				return 1;
 			}
 		}
-		while ((StatusFlag & XMC_I2C_CH_STATUS_FLAG_ACK_RECEIVED) == 0U);	
+		while ((StatusFlag & XMC_I2C_CH_STATUS_FLAG_ACK_RECEIVED) == 0U);
 		XMC_I2C_CH_ClearStatusFlag(XMC_I2C_config->channel, XMC_I2C_CH_STATUS_FLAG_ACK_RECEIVED);
     }
 
@@ -462,7 +493,7 @@ int TwoWire::peek(void)
 
 void TwoWire::flush(void)
 {
-    // XXX: to be implemented.
+    //XXX: TODO
 }
 
 // behind the scenes function that is called after each received byte
@@ -478,25 +509,31 @@ void TwoWire::ReceiveHandler(void)
 void TwoWire::ProtocolHandler(void)
 {
     uint32_t flag_status = XMC_I2C_CH_GetStatusFlag(XMC_I2C_config->channel);
-    if (flag_status & (uint32_t)XMC_I2C_CH_STATUS_FLAG_SLAVE_READ_REQUESTED)
+    if(isMaster)
     {
-        XMC_I2C_CH_ClearStatusFlag(XMC_I2C_config->channel, XMC_I2C_CH_STATUS_FLAG_SLAVE_READ_REQUESTED);
-        uint8_t numBytes = pre_rxBufferCount;
-
-        pre_rxBufferCount = 0;
-
-        OnReceiveService(pre_rxBuffer, numBytes);
-
-        OnRequestService();
     }
-    else if (flag_status & (uint32_t)XMC_I2C_CH_STATUS_FLAG_STOP_CONDITION_RECEIVED)
+    else
     {
-        XMC_I2C_CH_ClearStatusFlag(XMC_I2C_config->channel, XMC_I2C_CH_STATUS_FLAG_STOP_CONDITION_RECEIVED);
-        uint8_t numBytes = pre_rxBufferCount;
+    	if (flag_status & (uint32_t)XMC_I2C_CH_STATUS_FLAG_SLAVE_READ_REQUESTED)
+    	{
+			XMC_I2C_CH_ClearStatusFlag(XMC_I2C_config->channel, XMC_I2C_CH_STATUS_FLAG_SLAVE_READ_REQUESTED);
+			uint8_t numBytes = pre_rxBufferCount;
 
-        pre_rxBufferCount = 0;
+			pre_rxBufferCount = 0;
 
-        OnReceiveService(pre_rxBuffer, numBytes);
+			OnReceiveService(pre_rxBuffer, numBytes);
+
+			OnRequestService();
+		}
+		else if (flag_status & (uint32_t)XMC_I2C_CH_STATUS_FLAG_STOP_CONDITION_RECEIVED)
+		{
+			XMC_I2C_CH_ClearStatusFlag(XMC_I2C_config->channel, XMC_I2C_CH_STATUS_FLAG_STOP_CONDITION_RECEIVED);
+			uint8_t numBytes = pre_rxBufferCount;
+
+			pre_rxBufferCount = 0;
+
+			OnReceiveService(pre_rxBuffer, numBytes);
+		}
     }
 }
 

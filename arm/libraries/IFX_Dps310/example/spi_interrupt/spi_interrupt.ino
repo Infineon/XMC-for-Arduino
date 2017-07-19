@@ -33,6 +33,11 @@ void setup()
   //  For three wire interface, MISO has to be connected to SDI and there hase to be a resistor between MISO and MOSI
   //  I successfully tested this with a resistor of 1k, but I won't give you any warranty that this works for your equipment too
   ifxDps310.begin(SPI, pin_cs, 1);
+  
+    // the function below fixes a hardware problem on some devices
+    // you have this bug if you measure around 60°C when temperature is around 20°C
+    // call correctTemp() directly after begin() to fix this issue
+  //ifxDps310.correctTemp();
 
   //config Dps310 for Interrupts
   int ret = ifxDps310.setInterruptPolarity(1);

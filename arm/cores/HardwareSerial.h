@@ -74,8 +74,10 @@ typedef enum XMC_UART_MODE
 class HardwareSerial: public Stream
 {
 public:
+    XMC_UART_t* _XMC_UART_config;
+	
     HardwareSerial(XMC_UART_t* xmc_uart_config, RingBuffer* rx_buffer, RingBuffer* tx_buffer);
-
+	
     void begin(const uint32_t speed);
     void begin(const uint32_t speed, const XMC_UART_MODE_t config);
     void end(void);
@@ -121,19 +123,12 @@ public:
 private:
     RingBuffer* _rx_buffer;
     RingBuffer* _tx_buffer;
-
-    XMC_UART_t* _XMC_UART_config;
 };
 
 extern HardwareSerial Serial;
-#if (NUM_SERIAL > 1)
+
+#if defined(XMC4700_Relax_Kit)
 extern HardwareSerial Serial1;
-#elif (NUM_SERIAL > 2)
-extern HardwareSerial Serial2;
-#elif (NUM_SERIAL > 3)
-extern HardwareSerial Serial3;
-#elif (NUM_SERIAL > 4)
-extern HardwareSerial Serial4;
 #endif
 
 

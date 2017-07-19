@@ -11,7 +11,7 @@
 #include "xmc_i2c_conf.h"
 
 #if defined(XMC1100_XMC2GO)
-XMC_I2C_t XMC_I2C_default =
+XMC_I2C_t XMC_I2C_0 =
 {
     .channel          = XMC_I2C0_CH1,
     .channel_config   = {
@@ -40,12 +40,12 @@ XMC_I2C_t XMC_I2C_default =
     .input_source_dx1 = XMC_INPUT_E,
     .slave_receive_irq_num                    = (IRQn_Type) 13,
     .slave_receive_irq_service_request        = 4 ,
-    .slave_protocol_irq_num                   = (IRQn_Type) 14,
-    .slave_protocol_irq_service_request       = 5
+    .protocol_irq_num                   	  = (IRQn_Type) 14,
+    .protocol_irq_service_request       	  = 5
 };
 
 #elif defined(XMC1100_Boot_Kit)
-XMC_I2C_t XMC_I2C_default =
+XMC_I2C_t XMC_I2C_0 =
 {
     .channel          = XMC_I2C0_CH0,
     .channel_config   = {
@@ -74,12 +74,12 @@ XMC_I2C_t XMC_I2C_default =
     .input_source_dx1 = XMC_INPUT_E,
     .slave_receive_irq_num                    = (IRQn_Type) 13,
     .slave_receive_irq_service_request        = 4 ,
-    .slave_protocol_irq_num                   = (IRQn_Type) 14,
-    .slave_protocol_irq_service_request       = 5
+    .protocol_irq_num                   	  = (IRQn_Type) 14,
+    .protocol_irq_service_request       	  = 5
 };
 
 #elif defined(XMC1300_Boot_Kit)
-XMC_I2C_t XMC_I2C_default =
+XMC_I2C_t XMC_I2C_0 =
 {
     .channel          = XMC_I2C0_CH0,
     .channel_config   = {
@@ -108,11 +108,11 @@ XMC_I2C_t XMC_I2C_default =
     .input_source_dx1 = XMC_INPUT_E,
     .slave_receive_irq_num                    = (IRQn_Type) 13,
     .slave_receive_irq_service_request        = 4 ,
-    .slave_protocol_irq_num                   = (IRQn_Type) 14,
-    .slave_protocol_irq_service_request       = 5
+    .protocol_irq_num                  	      = (IRQn_Type) 14,
+    .protocol_irq_service_request      		  = 5
 };
 #elif defined(XMC4700_Relax_Kit)
-XMC_I2C_t XMC_I2C_default =
+XMC_I2C_t XMC_I2C_0 =
 {
     .channel          = XMC_I2C1_CH1,
     .channel_config   = {
@@ -139,8 +139,38 @@ XMC_I2C_t XMC_I2C_default =
     .input_source_dx1 = XMC_INPUT_B,
     .slave_receive_irq_num                    = (IRQn_Type) 91,
     .slave_receive_irq_service_request        = 1 ,
-    .slave_protocol_irq_num                   = (IRQn_Type) 92,
-    .slave_protocol_irq_service_request       = 2
+    .protocol_irq_num                		  = (IRQn_Type) 92,
+    .protocol_irq_service_request     		  = 2
+};
+XMC_I2C_t XMC_I2C_1 =
+{
+    .channel          = XMC_I2C1_CH0,
+    .channel_config   = {
+        .baudrate = (uint32_t)(100000U),
+        .address = 0U
+    },
+    .sda              = {
+        .port = (XMC_GPIO_PORT_t*)PORT0_BASE,
+        .pin  = (uint8_t)5
+    },
+    .sda_config       = {
+        .mode = XMC_GPIO_MODE_OUTPUT_OPEN_DRAIN_ALT2,
+        .output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH
+    },
+    .scl              = {
+        .port = (XMC_GPIO_PORT_t*)PORT0_BASE,
+        .pin  = (uint8_t)11
+    },
+    .scl_config       = {
+        .mode = XMC_GPIO_MODE_OUTPUT_OPEN_DRAIN_ALT2,
+        .output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH
+    },
+    .input_source_dx0 = XMC_INPUT_B,
+    .input_source_dx1 = XMC_INPUT_A,
+    .slave_receive_irq_num                    = (IRQn_Type) 93,
+    .slave_receive_irq_service_request        = 3 ,
+    .protocol_irq_num                  		  = (IRQn_Type) 94,
+    .protocol_irq_service_request     		  = 4
 };
 #endif
 

@@ -13,6 +13,11 @@ void setup()
     //Use the commented line below instead to use the default I2C address. 
   //ifxDps310.begin(Wire);
   
+    // the function below fixes a hardware problem on some devices
+    // you have this bug if you measure around 60°C when temperature is around 20°C
+    // call correctTemp() directly after begin() to fix this issue
+  //ifxDps310.correctTemp();
+  
     //temperature measure rate (value from 0 to 7)
     //2^temp_mr temperature measurement results per second
   int temp_mr = 2;

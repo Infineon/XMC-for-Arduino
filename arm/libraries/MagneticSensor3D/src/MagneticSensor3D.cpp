@@ -6,138 +6,313 @@
 
 
 #include "MagneticSensor3D.h"
-#include "util/MagneticSensor3Dutil.h"
+#include "./util/RegMask.h"
+#include "./util/BusInterface2.h"
+#include "./util/TLV493D_conf.h"
 #include <math.h>
 
 
-MagneticSensor3d magnetic3dSensor = MagneticSensor3d(Wire);
+Tlv493d magnetic3dSensor = Tlv493d(Wire);
 
 
-MagneticSensor3d::MagneticSensor3d(TwoWire &bus) : MagneticSensor3d(bus, MSENS3D_DEFAULTADDRESS)
+Tlv493d::Tlv493d(TwoWire &bus) : Tlv493d(bus, TLV493D_DEFAULTADR)
 {
 }
 
 
-MagneticSensor3d::MagneticSensor3d(TwoWire &bus, uint8_t slaveAddress)
+Tlv493d::Tlv493d(TwoWire &bus, uint8_t slaveAddress)
 {
-	mBus = &bus;
-	mSlaveAddress = slaveAddress;
+	tlv493d::initInterface(&mInterface, &bus, slaveAddress);
+	mXdata = 0;
+	mYdata = 0;
+	mZdata = 0;
+	mTempdata = 0;
 }
 
 
-MagneticSensor3d::~MagneticSensor3d(void)
+Tlv493d::~Tlv493d(void)
 {
 	end();
 }
 
 
-void MagneticSensor3d::begin(void)
+void Tlv493d::begin(void)
 {
-	delay(MSENS3D_STARTUPDELAY);
-	mBus->begin(); 
-	mBus->beginTransmission(mSlaveAddress); 
-	mBus->write(0x00);
-	mBus->write(MSENS3D_LOWPOWERMODECONFIG);
-	mBus->endTransmission(TRUE);
-	delay(MSENS3D_STARTUPDELAY);
+	delay(TLV493D_STARTUPDELAY);
+	resetSensor(mInterface.adress);
+	mInterface.bus->begin();
+	// get all register data from sensor
+	tlv493d::readOut(&mInterface);
+	// copy factory settings to write registers
+	setRegBits(tlv493d::W_RES1, getRegBits(tlv493d::R_RES1));
+	setRegBits(tlv493d::W_RES1, getRegBits(tlv493d::R_RES1));
+	setRegBits(tlv493d::W_RES1, getRegBits(tlv493d::R_RES1));
+	// enable parity detection
+	setRegBits(tlv493d::W_PARITY_EN, 1);
+	// config sensor to lowpower mode
+	// also contains parity calculation and writeout to sensor
+	setAccessMode(TLV493D_DEFAULTMODE);
+	delay(getMeasurementDelay());
 	updateData();
 }
 
 
-void MagneticSensor3d::end(void)
+void Tlv493d::end(void)
 {
-	mBus->beginTransmission(mSlaveAddress); 
-	mBus->write(0x00);
-	mBus->write(MSENS3D_POWERDOWNMODECONFIG);
-	mBus->endTransmission(TRUE);
+	disableInterrupt();
+	setAccessMode(POWERDOWNMODE);
 }
 
 
-void MagneticSensor3d::updateData()
+void Tlv493d::setAccessMode(AccessMode_e mode)
 {
-	int8_t registers[MSENS3D_UPDATEBLOCKSIZE];
-	do
+	const tlv493d::AccessMode_t *modeConfig = &(tlv493d::accModes[mode]);
+	setRegBits(tlv493d::W_FAST, modeConfig->fast);
+	setRegBits(tlv493d::W_LOWPOWER, modeConfig->lp);
+	setRegBits(tlv493d::W_LP_PERIOD, modeConfig->lpPeriod);
+	calcParity();
+	tlv493d::writeOut(&mInterface);
+	mMode = mode;
+}
+
+
+void Tlv493d::enableInterrupt(void)
+{
+	setRegBits(tlv493d::W_INT, 1);
+	calcParity();
+	tlv493d::writeOut(&mInterface);
+}
+
+
+void Tlv493d::disableInterrupt(void)
+{
+	setRegBits(tlv493d::W_INT, 0);
+	calcParity();
+	tlv493d::writeOut(&mInterface);
+}
+
+void Tlv493d::enableTemp(void)
+{
+	setRegBits(tlv493d::W_TEMP_NEN, 0);
+	calcParity();
+	tlv493d::writeOut(&mInterface);
+}
+
+
+void Tlv493d::disableTemp(void)
+{
+	setRegBits(tlv493d::W_TEMP_NEN, 1);
+	calcParity();
+	tlv493d::writeOut(&mInterface);
+}
+
+
+uint16_t Tlv493d::getMeasurementDelay(void)
+{
+	return tlv493d::accModes[mMode].measurementTime;
+}
+
+
+uint8_t Tlv493d::updateData(void)
+{
+	// in POWERDOWNMODE, sensor has to be switched on for one measurement
+	uint8_t powerdown = 0;
+	if(mMode == POWERDOWNMODE) 
 	{
-		uint8_t len = Wire.requestFrom(mSlaveAddress, MSENS3D_UPDATEBLOCKSIZE);    //Request data from the Sensor
-		for(uint8_t i=0; i<len; i++)
-		{
-			registers[i] = Wire.read();
-		}
-		Wire.endTransmission(TRUE);
-	} while( (registers[MSENS3D_CHANNEL_REGADR] & MSENS3D_CHANNEL_REGMASK != 0x00)
-		||   (registers[MSENS3D_POWERDOWN_REGADR] & MSENS3D_POWERDOWN_REGMASK != 0x00) );
-	
-	mXdata = (static_cast<int16_t>(registers[MSENS3D_XUPPER_REGADR] & MSENS3D_XUPPER_REGMASK)) << MSENS3D_XUPPER_REGSHIFT;
-	mXdata |= static_cast<uint16_t>((registers[MSENS3D_XLOWER_REGADR] >> MSENS3D_XLOWER_REGSHIFT) & MSENS3D_XLOWER_REGMASK);
-	if(mXdata > MSENS3D_12BITMSB)
-	{
-		mXdata -= MSENS3D_13BITMSB;
+		setAccessMode(MASTERCONTROLLEDMODE);
+		delay(getMeasurementDelay());
+		powerdown = 1;
 	}
-	
-	mYdata = (static_cast<int16_t>(registers[MSENS3D_YUPPER_REGADR] & MSENS3D_YUPPER_REGMASK)) << MSENS3D_YUPPER_REGSHIFT;
-	mYdata |= static_cast<uint16_t>((registers[MSENS3D_YLOWER_REGADR] >> MSENS3D_YLOWER_REGSHIFT) & MSENS3D_YLOWER_REGMASK);
-	if(mYdata > MSENS3D_12BITMSB)
+#ifdef TLV493D_ACCELERATE_READOUT
+	// just read the most important results in FASTMODE, if this behaviour is desired
+	if(mMode == FASTMODE) 
 	{
-		mYdata -= MSENS3D_13BITMSB;
+		readOut(&mInterface, TLV493D_FAST_READOUT);
 	}
-	
-	mZdata = (static_cast<int16_t>(registers[MSENS3D_ZUPPER_REGADR] & MSENS3D_ZUPPER_REGMASK)) << MSENS3D_ZUPPER_REGSHIFT;
-	mZdata |= static_cast<uint16_t>((registers[MSENS3D_ZLOWER_REGADR] >> MSENS3D_ZLOWER_REGSHIFT) & MSENS3D_ZLOWER_REGMASK);
-	if(mZdata > MSENS3D_12BITMSB)
+	else
 	{
-		mZdata -= MSENS3D_13BITMSB;
+		readOut(&mInterface, TLV493D_MEASUREMENT_READOUT);
 	}
-	
-	mTempdata = (static_cast<int16_t>(registers[MSENS3D_TUPPER_REGADR] & MSENS3D_TUPPER_REGMASK)) << MSENS3D_TUPPER_REGSHIFT;
-	mTempdata |= static_cast<uint16_t>((registers[MSENS3D_TLOWER_REGADR] >> MSENS3D_TLOWER_REGSHIFT) & MSENS3D_TLOWER_REGMASK);
-	if(mTempdata > MSENS3D_12BITMSB)
+#else
+	readOut(&mInterface, TLV493D_MEASUREMENT_READOUT);
+#endif
+	// construct results from registers
+	mXdata = concatResults(getRegBits(tlv493d::R_BX1), getRegBits(tlv493d::R_BX2), true);
+	mYdata = concatResults(getRegBits(tlv493d::R_BY1), getRegBits(tlv493d::R_BY2), true);
+	mZdata = concatResults(getRegBits(tlv493d::R_BZ1), getRegBits(tlv493d::R_BZ2), true);
+	mTempdata = concatResults(getRegBits(tlv493d::R_TEMP1), getRegBits(tlv493d::R_TEMP2), false);
+	// switch sensor back to POWERDOWNMODE, if it was in POWERDOWNMODE before
+	if(powerdown)
 	{
-		mTempdata -= MSENS3D_13BITMSB;
+		setAccessMode(POWERDOWNMODE);
+	}
+	// if the return value is 0, all results are from the same frame
+	// otherwise some results may be outdated
+	if(getRegBits(tlv493d::R_CHANNEL)==0)
+	{
+		return (!getRegBits(tlv493d::R_POWERDOWNFLAG));
+	}
+	else
+	{
+		return getRegBits(tlv493d::R_CHANNEL);
 	}
 }
 
 
-float MagneticSensor3d::getX(void)
+float Tlv493d::getX(void)
 {
-	return static_cast<float>(mXdata) * MSENS3D_B_MULT + MSENS3D_B_OFFSET;
+	return static_cast<float>(mXdata) * TLV493D_B_MULT;
 }
 
 
-float MagneticSensor3d::getY(void)
+float Tlv493d::getY(void)
 {
-	return static_cast<float>(mYdata) * MSENS3D_B_MULT + MSENS3D_B_OFFSET;
+	return static_cast<float>(mYdata) * TLV493D_B_MULT;
 }
 
 
-float MagneticSensor3d::getZ(void)
+float Tlv493d::getZ(void)
 {
-	return static_cast<float>(mZdata) * MSENS3D_B_MULT + MSENS3D_B_OFFSET;
+	return static_cast<float>(mZdata) * TLV493D_B_MULT;
 }
 
 
-float MagneticSensor3d::getTemp(void)
+float Tlv493d::getTemp(void)
 {
-	return static_cast<float>(mTempdata) * MSENS3D_TEMP_MULT + MSENS3D_TEMP_OFFSET;
+	return static_cast<float>(mTempdata-TLV493D_TEMP_OFFSET) * TLV493D_TEMP_MULT;
 }
 
 
-float MagneticSensor3d::getAmount(void)
+float Tlv493d::getAmount(void)
 {
 	// sqrt(x^2 + y^2 + z^2)
-	return MSENS3D_B_MULT * sqrt(pow(static_cast<float>(mXdata), 2) + pow(static_cast<float>(mYdata), 2) + pow(static_cast<float>(mZdata), 2));
+	return TLV493D_B_MULT * sqrt(pow(static_cast<float>(mXdata), 2) + pow(static_cast<float>(mYdata), 2) + pow(static_cast<float>(mZdata), 2));
 }
 
 
-float MagneticSensor3d::getAzimuth(void)
+float Tlv493d::getAzimuth(void)
 {
 	// arctan(y/x)
 	return atan2(static_cast<float>(mYdata), static_cast<float>(mXdata));
 }
 
 
-float MagneticSensor3d::getPolar(void)
+float Tlv493d::getPolar(void)
 {
 	// arctan(z/(sqrt(x^2+y^2)))
 	return atan2(static_cast<float>(mZdata), sqrt(pow(static_cast<float>(mXdata), 2) + pow(static_cast<float>(mYdata), 2)));
+}
+
+
+/* internal function called by begin()
+ * The sensor has a special reset sequence which allows to change its i2c address by setting SDA to high or low during a reset. 
+ * As some i2c peripherals may not cope with this, the simplest way is to use for this very few bytes bitbanging on the SCL/SDA lines.
+ * Furthermore, as the uC may be stopped during a i2c transmission, a special recovery sequence allows to bring the bus back to
+ * an operating state.
+ */
+void Tlv493d::resetSensor(uint8_t adr)     // Recovery & Reset - this can be handled by any uC as it uses bitbanging
+{
+	// SET BITBANGING I2C
+	digitalWrite(SCL,HIGH);
+	digitalWrite(SDA,HIGH);
+	pinMode(SDA,OUTPUT);
+	pinMode(SCL,OUTPUT);
+	
+	// I2C bus clear
+	digitalWrite(SDA,LOW); // START
+	digitalWrite(SCL,LOW);
+	digitalWrite(SDA,HIGH);
+	for(int i=0;i<9;i++) {
+		digitalWrite(SCL,HIGH);
+		digitalWrite(SCL,LOW);
+	}
+	digitalWrite(SDA,LOW);
+	digitalWrite(SCL,HIGH);
+	digitalWrite(SDA,HIGH); // STOP
+	
+	// RESET sequence for TLV493D
+	digitalWrite(SDA,LOW); // START
+	digitalWrite(SCL,LOW);
+	digitalWrite(SDA,LOW);
+	for(int i=0;i<9;i++) {
+		digitalWrite(SCL,HIGH);
+		digitalWrite(SCL,LOW);
+	}
+	if (adr==TLV493D_ADDRESS1) {
+		// if the sensor shall be initialized with i2c address 0x1F
+		digitalWrite(SDA,LOW);
+	} else {
+		// if the sensor shall be initialized with address 0x5E
+		digitalWrite(SDA,HIGH);
+	}
+	// keep SDA for >30µs until internal sensor reset is finished
+	delayMicroseconds(TLV493D_RESETDELAY);
+	// the sensor ignores the rest after a reset...  
+	digitalWrite(SDA,LOW);
+	digitalWrite(SCL,HIGH);
+	digitalWrite(SDA,HIGH); // STOP
+}
+
+void Tlv493d::setRegBits(uint8_t regMaskIndex, uint8_t data)
+{
+	if(regMaskIndex < TLV493D_NUM_OF_REGMASKS)
+	{
+		tlv493d::setToRegs(&(tlv493d::regMasks[regMaskIndex]), mInterface.regWriteData, data);
+	}
+}
+
+uint8_t Tlv493d::getRegBits(uint8_t regMaskIndex)
+{
+	if(regMaskIndex < TLV493D_NUM_OF_REGMASKS)
+	{
+		const tlv493d::RegMask_t *mask = &(tlv493d::regMasks[regMaskIndex]);
+		if(mask->rw == REGMASK_READ)
+		{
+			return tlv493d::getFromRegs(mask, mInterface.regReadData);
+		}
+		else
+		{
+			return tlv493d::getFromRegs(mask, mInterface.regWriteData);
+		}
+	}
+}
+
+void Tlv493d::calcParity(void) 
+{
+	uint8_t i;
+	uint8_t y = 0x00;
+	// set parity bit to 1
+	// algorithm will calculate an even parity and replace this bit, 
+	// so parity becomes odd
+	setRegBits(tlv493d::W_PARITY, 1);
+	// combine array to one byte first
+	for(i = 0; i < TLV493D_BUSIF_WRITESIZE; i++)
+	{
+		y ^= mInterface.regWriteData[i];
+	}
+	// combine all bits of this byte
+	y = y ^ (y >> 1);
+	y = y ^ (y >> 2);
+	y = y ^ (y >> 4);
+	// parity is in the LSB of y
+	setRegBits(tlv493d::W_PARITY, y&0x01);
+}
+
+
+int16_t Tlv493d::concatResults(uint8_t upperByte, uint8_t lowerByte, bool upperFull)  
+{
+	int16_t value=0x0000;	//16-bit signed integer for 12-bit values of sensor
+	if(upperFull)               
+	{
+		value=upperByte<<8;
+		value|=(lowerByte&0x0F)<<4;
+	}
+	else
+	{
+		value=(upperByte&0x0F)<<12;
+		value|=lowerByte<<4;
+	}
+	value>>=4;				//shift left so that value is a signed 12 bit integer
+	return value;
 }
 

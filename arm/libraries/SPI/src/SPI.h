@@ -180,7 +180,16 @@ private:
 
 extern SPIClass SPI;
 #if (NUM_SPI > 1)
-extern SPIClass SPI1;
+	extern SPIClass SPI1;
+#	if (NUM_SPI > 2)
+		extern SPIClass SPI2;
+#		if (NUM_SPI > 3)
+			extern SPIClass SPI3;
+#			if (NUM_SPI > 4)
+				extern SPIClass SPI4;
+#			endif
+#		endif
+#	endif
 #endif
 
 void SPIClass::transfer(uint8_t* buf, uint8_t count)

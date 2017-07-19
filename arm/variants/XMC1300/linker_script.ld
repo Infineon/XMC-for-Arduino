@@ -98,6 +98,7 @@ SECTIONS
 
       *(.rodata .rodata.*)
       *(.gnu.linkonce.r*)
+      . = ALIGN(4); 
     } > FLASH
 
     .eh_frame_hdr : ALIGN (4)

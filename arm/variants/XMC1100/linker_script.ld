@@ -66,7 +66,7 @@ MEMORY
     SRAM(!RX) : ORIGIN = 0x20000000, LENGTH = 0x4000
 }
 
-stack_size = DEFINED(stack_size) ? stack_size : 1024;
+stack_size = DEFINED(stack_size) ? stack_size : 2048;
 no_init_size = 4;
 
 SECTIONS
@@ -99,6 +99,7 @@ SECTIONS
 
       *(.rodata .rodata.*)
       *(.gnu.linkonce.r*)
+      . = ALIGN(4); 
     } > FLASH
 
     .eh_frame_hdr : ALIGN (4)

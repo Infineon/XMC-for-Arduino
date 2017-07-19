@@ -16,6 +16,11 @@ void setup()
     //Call begin to initialize ifxDps310
     //The parameter pin_nr is the number of the CS pin on your Microcontroller
   ifxDps310.begin(SPI, pin_cs);
+  
+    // the function below fixes a hardware problem on some devices
+    // you have this bug if you measure around 60°C when temperature is around 20°C
+    // call correctTemp() directly after begin() to fix this issue
+  //ifxDps310.correctTemp();
 
   
   Serial.println("Init complete!");

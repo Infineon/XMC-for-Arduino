@@ -14,6 +14,11 @@ void setup()
     //if you are using the Pressure 3 click Board, you need 0x76
   //ifxDps310.begin(&Wire);
   
+    // the function below fixes a hardware problem on some devices
+    // you have this bug if you measure around 60°C when temperature is around 20°C
+    // call correctTemp() directly after begin() to fix this issue
+  //ifxDps310.correctTemp();
+  
   Serial.println("Init complete!");
 }
 

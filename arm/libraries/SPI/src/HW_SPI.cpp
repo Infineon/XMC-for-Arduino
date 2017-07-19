@@ -23,13 +23,38 @@
 #include "SPI.h"
 #if !defined(USE_SW_SPI)
 
-
-#ifdef USE_XMC_RELAX_KIT_SD
-SPIClass SPI(&XMC_SPI_for_xmc4_SD);
+//swap SPI_default and SPI_for_xmc_SD if desired by user
+#if defined(USE_XMC_RELAX_KIT_SD) && defined(XMC_SPI_for_xmc_SD)
+SPIClass SPI(&XMC_SPI_for_xmc_SD);
+#if (NUM_SPI > 1)
 SPIClass SPI1(&XMC_SPI_default);
-#else // normal
-SPIClass SPI;
 #endif
+uint8_t SS   = PIN_SPI_SS_SD  ;
+uint8_t MOSI = PIN_SPI_MOSI_SD;
+uint8_t MISO = PIN_SPI_MISO_SD;
+uint8_t SCK  = PIN_SPI_SCK_SD ;
+#else // normal behaviour 
+SPIClass SPI(&XMC_SPI_default);
+#if (NUM_SPI > 1)
+SPIClass SPI1(&XMC_SPI_1);
+#endif
+uint8_t SS   = PIN_SPI_SS   ;
+uint8_t MOSI = PIN_SPI_MOSI ;
+uint8_t MISO = PIN_SPI_MISO ;
+uint8_t SCK  = PIN_SPI_SCK  ;
+#endif
+
+#if (NUM_SPI > 2)
+SPIClass SPI2(&XMC_SPI_2);
+#if (NUM_SPI > 3)
+SPIClass SPI3(&XMC_SPI_3);
+#if (NUM_SPI > 4)
+SPIClass SPI4(&XMC_SPI_4);
+#endif
+#endif
+#endif
+
+
 
 SPISettings DEFAULT_SPI_SETTINGS;
 

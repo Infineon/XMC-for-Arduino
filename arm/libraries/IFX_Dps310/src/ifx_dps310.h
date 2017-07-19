@@ -65,6 +65,8 @@ class IFX_Dps310
 		int16_t getIntStatusTempReady(void);
 		int16_t getIntStatusPrsReady(void);
 
+		//function to fix a hardware problem on some devices
+		int16_t correctTemp(void);
 
 	private:
 		//scaling factor table

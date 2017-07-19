@@ -54,10 +54,10 @@
 static const uint8_t RX   = 7;
 static const uint8_t TX   = 6;
 
-static const uint8_t SS   = 3;
-static const uint8_t MOSI = 0;
-static const uint8_t MISO = 1;
-static const uint8_t SCK  = 2;
+extern uint8_t SS  ;
+extern uint8_t MOSI;
+extern uint8_t MISO;
+extern uint8_t SCK ;
 
 static const uint8_t SDA = 11;
 static const uint8_t SCL = 10;
@@ -70,7 +70,7 @@ static const uint8_t SCL = 10;
 #define LED2    15  // Extended Leds
 #define GND     32  // GND
 
-#define digitalPinToInterrupt(p)    (((p) == 13) ? 0 : NOT_AN_INTERRUPT)
+#define digitalPinToInterrupt(p)    (((p) == 9) ? 0 : NOT_AN_INTERRUPT)
 #define isanalogPin(p)              (((p == A0) || (p == A1)) ? (1) :0)
 #define analogPinToADCNum(p)        ((p == A0) ? (0) : (p == A1) ? (1) : -1)
 #define digitalPinHasPWM4(p)        ((p) == 8 )
@@ -122,8 +122,8 @@ XMC_ADC_t mapping_adc[] =
  */
 RingBuffer rx_buffer_debug;
 RingBuffer tx_buffer_debug;
-RingBuffer rx_buffer_on_board;
-RingBuffer tx_buffer_on_board;
+//RingBuffer rx_buffer_on_board;
+//RingBuffer tx_buffer_on_board;
 
 XMC_UART_t XMC_UART_debug =
 {

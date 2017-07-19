@@ -223,8 +223,14 @@ int16_t IFX_Dps310::measureTempOnce(int32_t &result, uint8_t oversamplingRate)
 
 	//wait until measurement is finished
 	delay(calcBusyTime(0U, m_tempOsr)/IFX_DPS310__BUSYTIME_SCALING);
+	delay(IFX_DPS310__BUSYTIME_FAILSAFE);
 
-	return getSingleResult(result);
+	ret = getSingleResult(result);
+	if(ret!=IFX_DPS310__SUCCEEDED)
+	{
+		standby();
+	}
+	return ret;
 }
 
 /**
@@ -322,8 +328,14 @@ int16_t IFX_Dps310::measurePressureOnce(int32_t &result, uint8_t oversamplingRat
 
 	//wait until measurement is finished
 	delay(calcBusyTime(0U, m_prsOsr)/IFX_DPS310__BUSYTIME_SCALING);
+	delay(IFX_DPS310__BUSYTIME_FAILSAFE);
 
-	return getSingleResult(result);
+	ret = getSingleResult(result);
+	if(ret!=IFX_DPS310__SUCCEEDED)
+	{
+		standby();
+	}
+	return ret;
 }
 
 /**
@@ -587,7 +599,7 @@ int16_t IFX_Dps310::startMeasureBothCont(uint8_t tempMr,
 		return IFX_DPS310__FAIL_TOOBUSY;
 	}
 	//abort if speed and precision are too high
-	if(calcBusyTime(tempMr, tempOsr) + calcBusyTime(prsMr, prsOsr)>IFX_DPS310__MAX_BUSYTIME)
+	if(calcBusyTime(tempMr, tempOsr) + calcBusyTime(prsMr, prsOsr)>=IFX_DPS310__MAX_BUSYTIME)
 	{
 		return IFX_DPS310__FAIL_UNFINISHED;
 	}
@@ -802,6 +814,34 @@ int16_t IFX_Dps310::getIntStatusPrsReady(void)
 	return readByteBitfield(IFX_DPS310__REG_INFO_INT_FLAG_PRS);
 }
 
+/**
+ * function to fix a hardware problem on some devices
+ * you have this bug if you measure around 60°C when temperature is around 20°C
+ * call correctTemp() directly after begin() to fix this issue
+ */
+int16_t IFX_Dps310::correctTemp(void)
+{
+	if(m_initFail)
+	{
+		return IFX_DPS310__FAIL_INIT_FAILED;
+	}
+	// some magic to fix a hardware problem on some devices
+	// you have this bug if you measure around 60°C when temperature is around 20°C
+	// call correctTemp() directly after begin() to fix this issue
+	writeByte(0x0E, 0xA5);
+	writeByte(0x0F, 0x96);
+	writeByte(0x62, 0x02);
+	writeByte(0x0E, 0x00);
+	writeByte(0x0F, 0x00);
+	
+	//perform a first temperature measurement (again)
+	//the most recent temperature will be saved internally
+	//and used for compensation when calculating pressure
+	int32_t trash;
+	measureTempOnce(trash);
+	
+	return IFX_DPS310__SUCCEEDED;
+}
 
 
 
@@ -824,7 +864,7 @@ void IFX_Dps310::init(void)
 	}
 	m_productID = prodId;
 
-	int16_t revId = readByteBitfield(IFX_DPS310__REG_INFO_PROD_ID);
+	int16_t revId = readByteBitfield(IFX_DPS310__REG_INFO_REV_ID);
 	if(revId < 0)
 	{
 		m_initFail = 1U;
@@ -869,8 +909,9 @@ void IFX_Dps310::init(void)
 	measureTempOnce(trash);
 
 	//make sure the Dbs310 is in standby after initialization
-	standby();
+	standby();	
 }
+
 
 /**
  * reads the compensation coefficients from the Dbs310
@@ -1150,7 +1191,7 @@ uint16_t IFX_Dps310::calcBusyTime(uint16_t mr, uint16_t osr)
 	mr &= IFX_DPS310__REG_MASK_TEMP_MR >> IFX_DPS310__REG_SHIFT_TEMP_MR;
 	osr &= IFX_DPS310__REG_MASK_TEMP_OSR >> IFX_DPS310__REG_SHIFT_TEMP_OSR;
 	//formula from datasheet (optimized)
-	return (20U << mr) + (16 << (osr + mr));
+	return (20U << mr) + (16U << (osr + mr));
 }
 
 /**
@@ -1276,7 +1317,7 @@ int16_t IFX_Dps310::getFIFOvalue(int32_t* value)
 int32_t IFX_Dps310::calcTemp(int32_t raw)
 {
 	double temp = raw;
-
+	
 	//scale temperature according to scaling table and oversampling
 	temp /= scaling_facts[m_tempOsr];
 
