@@ -31,7 +31,7 @@
 //****************************************************************************
 // @Defines
 //****************************************************************************
-#define BUFFER_LENGTH 255
+#define BUFFER_LENGTH 32
 // WIRE_HAS_END means Wire has end()
 #define WIRE_HAS_END 1
 
@@ -50,6 +50,7 @@ private:
     static uint8_t rxBufferIndex;
     static uint8_t rxBufferLength;
 
+    static uint8_t slaveAddress;
     static uint8_t txAddress;
     static uint8_t txBuffer[];
     static uint8_t txBufferIndex;
@@ -64,6 +65,7 @@ private:
     void OnRequestService(void);
     void OnReceiveService(uint8_t*, uint8_t);
 public:
+	bool volatile hasError;
     TwoWire();
 	TwoWire(XMC_I2C_t *conf);
     void begin();

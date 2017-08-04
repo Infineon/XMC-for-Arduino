@@ -25,6 +25,11 @@
 
 SPIClass SPI;
 
+uint8_t SS   = PIN_SPI_SS   ;
+uint8_t MOSI = PIN_SPI_MOSI ;
+uint8_t MISO = PIN_SPI_MISO ;
+uint8_t SCK  = PIN_SPI_SCK  ;
+
 SPISettings DEFAULT_SPI_SETTINGS;
 
 void SPIClass::begin()
@@ -110,7 +115,8 @@ uint8_t SPIClass::transfer(uint8_t data_out)
   {
     delay = 1;
   }
-  
+
+  digitalWrite(SS, HIGH);
   switch(div)
   {
     case SPI_CLOCK_DIV2:                                 
@@ -145,6 +151,7 @@ uint8_t SPIClass::transfer(uint8_t data_out)
       data_in = SW_SPI_transfer_clock_div_2(mosi_pin, miso_pin, clk_pin, data_out, delay, spi_settings.dataMode);
       break;
   }
+  digitalWrite(SS, LOW);
   
   return data_in;
 }
