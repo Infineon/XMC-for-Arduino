@@ -131,6 +131,12 @@ void HardwareSerial::begin(const uint32_t speed, const XMC_UART_MODE_t config)
     // Make sure both ring buffers are initialized back to empty.
     _rx_buffer->_iHead = _rx_buffer->_iTail = 0;
     _tx_buffer->_iHead = _tx_buffer->_iTail = 0;
+	
+    /* configure uart tx fifo */
+    XMC_USIC_CH_TXFIFO_Configure(_XMC_UART_config->channel,
+  							   16,
+  							   XMC_USIC_CH_FIFO_SIZE_16WORDS,
+  							   (uint32_t)15);
 
     XMC_UART_CH_Start(_XMC_UART_config->channel);
 
@@ -260,7 +266,6 @@ void HardwareSerial::IrqHandler( void )
             // Mask off transmit interrupt so we don't get it anymore
             XMC_UART_CH_DisableEvent(_XMC_UART_config->channel, XMC_UART_CH_EVENT_TRANSMIT_BUFFER);
         }
-
     }
 }
 

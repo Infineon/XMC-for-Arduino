@@ -66,8 +66,8 @@ extern uint8_t MOSI;
 extern uint8_t MISO;
 extern uint8_t SCK ;
 
-static const uint8_t SDA = 14;
-static const uint8_t SCL = 15;
+static const uint8_t SDA = 15;
+static const uint8_t SCL = 16;
 
 #define A0   17
 #define A1   18

@@ -165,7 +165,7 @@ SECTIONS
         KEEP(*(.fini_array))
         PROVIDE_HIDDEN (__fini_array_end = .);
 
-        . = ALIGN(4); /* section size must be multiply of 4. See startup.S file */
+        . = ALIGN(8); /* section size must be multiply of 4. See startup.S file -> icreased to 8 due to linker warning*/
         __data_end = .;
     } > SRAM_combined AT > FLASH_1_uncached
     __data_load = LOADADDR (.data);

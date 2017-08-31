@@ -8,21 +8,13 @@
 #include "MagneticSensor3D.h"
 #include "./util/RegMask.h"
 #include "./util/BusInterface2.h"
-#include "./util/TLV493D_conf.h"
 #include <math.h>
 
 
-Tlv493d magnetic3dSensor = Tlv493d(Wire);
+Tlv493d magnetic3dSensor = Tlv493d();
 
-
-Tlv493d::Tlv493d(TwoWire &bus) : Tlv493d(bus, TLV493D_DEFAULTADR)
+Tlv493d::Tlv493d(void)
 {
-}
-
-
-Tlv493d::Tlv493d(TwoWire &bus, uint8_t slaveAddress)
-{
-	tlv493d::initInterface(&mInterface, &bus, slaveAddress);
 	mXdata = 0;
 	mYdata = 0;
 	mZdata = 0;
@@ -35,12 +27,28 @@ Tlv493d::~Tlv493d(void)
 	end();
 }
 
-
 void Tlv493d::begin(void)
 {
+	begin(Wire, TLV493D_ADDRESS1, TRUE);
+}
+
+void Tlv493d::begin(TwoWire &bus)
+{
+	begin(bus, TLV493D_ADDRESS1, TRUE);
+}
+
+void Tlv493d::begin(TwoWire &bus, Tlv493d_Address_t slaveAddress, bool reset)
+{
+	initInterface(&mInterface, &bus, slaveAddress);
 	delay(TLV493D_STARTUPDELAY);
-	resetSensor(mInterface.adress);
+
 	mInterface.bus->begin();
+
+	if(reset == TRUE)
+	{
+		resetSensor(mInterface.adress);
+	}
+
 	// get all register data from sensor
 	tlv493d::readOut(&mInterface);
 	// copy factory settings to write registers
@@ -212,45 +220,17 @@ float Tlv493d::getPolar(void)
  */
 void Tlv493d::resetSensor(uint8_t adr)     // Recovery & Reset - this can be handled by any uC as it uses bitbanging
 {
-	// SET BITBANGING I2C
-	digitalWrite(SCL,HIGH);
-	digitalWrite(SDA,HIGH);
-	pinMode(SDA,OUTPUT);
-	pinMode(SCL,OUTPUT);
+	mInterface.bus->beginTransmission(0x00);
 	
-	// I2C bus clear
-	digitalWrite(SDA,LOW); // START
-	digitalWrite(SCL,LOW);
-	digitalWrite(SDA,HIGH);
-	for(int i=0;i<9;i++) {
-		digitalWrite(SCL,HIGH);
-		digitalWrite(SCL,LOW);
-	}
-	digitalWrite(SDA,LOW);
-	digitalWrite(SCL,HIGH);
-	digitalWrite(SDA,HIGH); // STOP
-	
-	// RESET sequence for TLV493D
-	digitalWrite(SDA,LOW); // START
-	digitalWrite(SCL,LOW);
-	digitalWrite(SDA,LOW);
-	for(int i=0;i<9;i++) {
-		digitalWrite(SCL,HIGH);
-		digitalWrite(SCL,LOW);
-	}
-	if (adr==TLV493D_ADDRESS1) {
+	if (adr == TLV493D_ADDRESS1) {
 		// if the sensor shall be initialized with i2c address 0x1F
-		digitalWrite(SDA,LOW);
+		mInterface.bus->write(0x00);
 	} else {
 		// if the sensor shall be initialized with address 0x5E
-		digitalWrite(SDA,HIGH);
+		mInterface.bus->write(0xFF);
 	}
-	// keep SDA for >30µs until internal sensor reset is finished
-	delayMicroseconds(TLV493D_RESETDELAY);
-	// the sensor ignores the rest after a reset...  
-	digitalWrite(SDA,LOW);
-	digitalWrite(SCL,HIGH);
-	digitalWrite(SDA,HIGH); // STOP
+	
+	mInterface.bus->endTransmission(TRUE);
 }
 
 void Tlv493d::setRegBits(uint8_t regMaskIndex, uint8_t data)

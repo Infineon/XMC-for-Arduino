@@ -26,13 +26,30 @@ extern "C" {
 // @Defines
 //****************************************************************************
 #if ((UC_FAMILY == XMC4) && (F_CPU == 144000000U))
-// time per loop cycle: 0,0277777777777778 us
-#define USEC_TO_N_NOP_CYCLES        36
+
+#define NOPS_FOR_USEC()    asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); asm volatile("nop");asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); \
+							asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); \
+							asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); \
+							asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); \
+							asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); \
+							asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); \
+							asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); \
+							asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); \
+							asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); \
+							asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); \
+							asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); \
+							asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); \
+							asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); \
+							asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); \
+							asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); \
+							asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); asm volatile("nop")
+							
 #elif ((UC_FAMILY == XMC1) && (F_CPU == 32000000U))
-// time per loop cycle: 0,375 us
-#define USEC_TO_N_NOP_CYCLES        3
+
+#define NOPS_FOR_USEC()    asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); \
+							asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); asm volatile("nop")
 #else
-#error USEC_TO_N_NOP_CYCLES not calculated
+#error wiring_time: NOPS_FOR_USEC not defined 
 #endif
 
 //****************************************************************************
@@ -102,7 +119,6 @@ extern "C" {
      *
      * \param dwUs the number of microseconds to pause (uint32_t)
      */
-
     static inline void delayMicroseconds(uint32_t) __attribute__((always_inline));
     static inline void delayMicroseconds(uint32_t usec)
     {
@@ -113,13 +129,16 @@ extern "C" {
         }
         else
         {
-            uint32_t number_of_nop_cycles = (uint32_t)(usec * USEC_TO_N_NOP_CYCLES);
+            uint32_t number_of_cycles = usec;
+			
+			noInterrupts();
             // NOP loop to gnerate delay
-            while (number_of_nop_cycles)
+            while (number_of_cycles)
             {
-                asm volatile("nop");
-                number_of_nop_cycles--;
+				NOPS_FOR_USEC();
+                number_of_cycles--;
             }
+			interrupts();
         }
     }
     /*
