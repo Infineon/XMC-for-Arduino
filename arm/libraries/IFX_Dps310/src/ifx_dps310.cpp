@@ -70,6 +70,9 @@ void IFX_Dps310::begin(TwoWire &bus, uint8_t slaveAddress)
 	m_i2cbus = &bus;
 	m_slaveAddress = slaveAddress;
 
+	// Init bus
+	m_i2cbus->begin();
+
 	delay(50);		//startup time of Dps310
 
 	init();
@@ -100,6 +103,13 @@ void IFX_Dps310::begin(SPIClass &bus, int32_t chipSelect, uint8_t threeWire)
 	m_SpiI2c = 0U;
 	m_spibus = &bus;
 	m_chipSelect = chipSelect;
+
+	// Init bus
+	m_spibus->begin();
+	m_spibus->setDataMode(SPI_MODE3);
+
+	pinMode(m_chipSelect, OUTPUT);
+	digitalWrite(m_chipSelect, HIGH);
 
 	delay(50);		//startup time of Dps310
 
@@ -186,8 +196,8 @@ int16_t IFX_Dps310::standby(void)
  * &result:		reference to a 32-Bit signed Integer value where the result will be written
  * 				It will not be written if result==NULL
  * returns: 	0 on success
- * 				-4 if the Dbs310 is could not finish its measurement in time
- * 				-3 if the Dbs310 is already busy
+ * 				-4 if the DPS310 is could not finish its measurement in time
+ * 				-3 if the DPS310 is already busy
  * 				-2 if the object initialization failed
  * 				-1 on other fail
  */
@@ -204,11 +214,11 @@ int16_t IFX_Dps310::measureTempOnce(int32_t &result)
  * 						It will not be written if result==NULL
  * oversamplingRate: 	a value from 0 to 7 that decides about the precision
  * 						of the measurement
- * 						If this value equals n, the Dbs310 will perform
+ * 						If this value equals n, the DPS310 will perform
  * 						2^n measurements and combine the results
  * returns: 			0 on success
- * 						-4 if the Dbs310 is could not finish its measurement in time
- * 						-3 if the Dbs310 is already busy
+ * 						-4 if the DPS310 is could not finish its measurement in time
+ * 						-3 if the DPS310 is already busy
  * 						-2 if the object initialization failed
  * 						-1 on other fail
  */
@@ -237,7 +247,7 @@ int16_t IFX_Dps310::measureTempOnce(int32_t &result, uint8_t oversamplingRate)
  * starts a single temperature measurement
  *
  * returns: 	0 on success
- * 				-3 if the Dbs310 is already busy
+ * 				-3 if the DPS310 is already busy
  * 				-2 if the object initialization failed
  * 				-1 on other fail
  */
@@ -252,10 +262,10 @@ int16_t IFX_Dps310::startMeasureTempOnce(void)
  *
  * oversamplingRate: 	a value from 0 to 7 that decides about the precision
  * 						of the measurement
- * 						If this value equals n, the Dbs310 will perform
+ * 						If this value equals n, the DPS310 will perform
  * 						2^n measurements and combine the results
  * returns: 			0 on success
- * 						-3 if the Dbs310 is already busy
+ * 						-3 if the DPS310 is already busy
  * 						-2 if the object initialization failed
  * 						-1 on other fail
  */
@@ -291,8 +301,8 @@ int16_t IFX_Dps310::startMeasureTempOnce(uint8_t oversamplingRate)
  * &result:		reference to a 32-Bit signed Integer value where the result will be written
  * 				It will not be written if result==NULL
  * returns: 	0 on success
- * 				-4 if the Dbs310 is could not finish its measurement in time
- * 				-3 if the Dbs310 is already busy
+ * 				-4 if the DPS310 is could not finish its measurement in time
+ * 				-3 if the DPS310 is already busy
  * 				-2 if the object initialization failed
  * 				-1 on other fail
  */
@@ -309,11 +319,11 @@ int16_t IFX_Dps310::measurePressureOnce(int32_t &result)
  * 						It will not be written if result==NULL
  * oversamplingRate: 	a value from 0 to 7 that decides about the precision
  * 						of the measurement
- * 						If this value equals n, the Dbs310 will perform
+ * 						If this value equals n, the DPS310 will perform
  * 						2^n measurements and combine the results
  * returns: 			0 on success
- * 						-4 if the Dbs310 is could not finish its measurement in time
- * 						-3 if the Dbs310 is already busy
+ * 						-4 if the DPS310 is could not finish its measurement in time
+ * 						-3 if the DPS310 is already busy
  * 						-2 if the object initialization failed
  * 						-1 on other fail
  */
@@ -342,7 +352,7 @@ int16_t IFX_Dps310::measurePressureOnce(int32_t &result, uint8_t oversamplingRat
  * starts a single pressure measurement
  *
  * returns: 	0 on success
- * 				-3 if the Dbs310 is already busy
+ * 				-3 if the DPS310 is already busy
  * 				-2 if the object initialization failed
  * 				-1 on other fail
  */
@@ -357,10 +367,10 @@ int16_t IFX_Dps310::startMeasurePressureOnce(void)
  *
  * oversamplingRate: 	a value from 0 to 7 that decides about the precision
  * 						of the measurement
- * 						If this value equals n, the Dbs310 will perform
+ * 						If this value equals n, the DPS310 will perform
  * 						2^n measurements and combine the results
  * returns: 			0 on success
- * 						-3 if the Dbs310 is already busy
+ * 						-3 if the DPS310 is already busy
  * 						-2 if the object initialization failed
  * 						-1 on other fail
  */
@@ -393,8 +403,8 @@ int16_t IFX_Dps310::startMeasurePressureOnce(uint8_t oversamplingRate)
  *
  * &result:		reference to a 32-Bit signed Integer value where the result will be written
  * returns: 	0 on success
- * 				-4 if the Dbs310 is still busy
- * 				-3 if the Dbs310 is not in command mode
+ * 				-4 if the DPS310 is still busy
+ * 				-3 if the DPS310 is not in command mode
  * 				-2 if the object initialization failed
  * 				-1 on other fail
  */
@@ -416,7 +426,7 @@ int16_t IFX_Dps310::getSingleResult(int32_t &result)
 	case CMD_PRS: 	//pressure
 		rdy = readByteBitfield(IFX_DPS310__REG_INFO_PRS_RDY);
 		break;
-	default: 	//Dbs310 not in command mode
+	default: 	//DPS310 not in command mode
 		return IFX_DPS310__FAIL_TOOBUSY;
 	}
 
@@ -429,7 +439,7 @@ int16_t IFX_Dps310::getSingleResult(int32_t &result)
 		return IFX_DPS310__FAIL_UNFINISHED;
 	case 1: 						//measurement ready, expected case
 		IFX_Dps310::Mode oldMode = m_opMode;
-		m_opMode = IDLE;				//opcode was automatically reseted by Dbs310
+		m_opMode = IDLE;				//opcode was automatically reseted by DPS310
 		switch(oldMode)
 		{
 		case CMD_TEMP: 	//temperature
@@ -450,21 +460,21 @@ int16_t IFX_Dps310::getSingleResult(int32_t &result)
  *
  * measureRate: 		a value from 0 to 7 that decides about
  * 						the number of measurements per second
- * 						If this value equals n, the Dbs310 will perform
+ * 						If this value equals n, the DPS310 will perform
  * 						2^n measurements per second
  * oversamplingRate: 	a value from 0 to 7 that decides about
  * 						the precision of the measurements
- * 						If this value equals m, the Dbs310 will perform
+ * 						If this value equals m, the DPS310 will perform
  * 						2^m internal measurements and combine the results
  * 						to one more exact measurement
  * returns: 			0 on success
  * 						-4 if measureRate or oversamplingRate is too high
- * 						-3 if the Dbs310 is already busy
+ * 						-3 if the DPS310 is already busy
  * 						-2 if the object initialization failed
  * 						-1 on other fail
  * 	NOTE: 				If measure rate is n and oversampling rate is m,
- * 						the Dbs310 performs 2^(n+m) internal measurements per second.
- * 						The Dbs310 cannot operate with high precision and high speed
+ * 						the DPS310 performs 2^(n+m) internal measurements per second.
+ * 						The DPS310 cannot operate with high precision and high speed
  * 						at the same time.
  * 						Consult the datasheet for more information.
  */
@@ -511,21 +521,21 @@ int16_t IFX_Dps310::startMeasureTempCont(uint8_t measureRate, uint8_t oversampli
  *
  * measureRate: 		a value from 0 to 7 that decides about
  * 						the number of measurements per second
- * 						If this value equals n, the Dbs310 will perform
+ * 						If this value equals n, the DPS310 will perform
  * 						2^n measurements per second
  * oversamplingRate: 	a value from 0 to 7 that decides about the precision
  * 						of the measurements
- * 						If this value equals m, the Dbs310 will perform
+ * 						If this value equals m, the DPS310 will perform
  * 						2^m internal measurements
  * 						and combine the results to one more exact measurement
  * returns: 			0 on success
  * 						-4 if measureRate or oversamplingRate is too high
- * 						-3 if the Dbs310 is already busy
+ * 						-3 if the DPS310 is already busy
  * 						-2 if the object initialization failed
  * 						-1 on other fail
  * 	NOTE: 				If measure rate is n and oversampling rate is m,
- * 						the Dbs310 performs 2^(n+m) internal measurements per second.
- * 						The Dbs310 cannot operate with high precision and high speed
+ * 						the DPS310 performs 2^(n+m) internal measurements per second.
+ * 						The DPS310 cannot operate with high precision and high speed
  * 						at the same time.
  * 						Consult the datasheet for more information.
  */
@@ -573,7 +583,7 @@ int16_t IFX_Dps310::startMeasurePressureCont(uint8_t measureRate, uint8_t oversa
  * prsOsr				oversampling rate for pressure
  * returns: 			0 on success
  * 						-4 if precision or speed is too high
- * 						-3 if the Dbs310 is already busy
+ * 						-3 if the DPS310 is already busy
  * 						-2 if the object initialization failed
  * 						-1 on other fail
  * 	NOTE: 				High precision and speed for both temperature and pressure
@@ -642,7 +652,7 @@ int16_t IFX_Dps310::startMeasureBothCont(uint8_t tempMr,
  * 					When the function ends, it will contain
  * 					the number of bytes written to the buffer
  * returns:			0 on success
- * 					-3 if Dbs310 is not in background mode
+ * 					-3 if DPS310 is not in background mode
  * 					-2 if the object initialization failed
  * 					-1 on other fail
  */
@@ -908,19 +918,24 @@ void IFX_Dps310::init(void)
 	int32_t trash;
 	measureTempOnce(trash);
 
-	//make sure the Dbs310 is in standby after initialization
+	//make sure the DPS310 is in standby after initialization
 	standby();	
 }
 
 
 /**
- * reads the compensation coefficients from the Dbs310
+ * reads the compensation coefficients from the DPS310
  * this is called once from init(), which is called from begin()
  *
  * returns: 	0 on success, -1 on fail
  */
 int16_t IFX_Dps310::readcoeffs(void)
 {
+	uint32_t shiftBy15 = 32768;
+	uint32_t shiftBy16 = 65536;
+	uint32_t shiftBy19 = 524288;
+	uint32_t shiftBy20 = 1048576;
+
 	uint8_t buffer[IFX_DPS310__REG_LEN_COEF];
 	//read COEF registers to buffer
 	int16_t ret = readBlock(IFX_DPS310__REG_ADR_COEF,
@@ -937,69 +952,69 @@ int16_t IFX_Dps310::readcoeffs(void)
 				| (((uint32_t)buffer[1] >> 4) & 0x0F);
 	//this construction recognizes non-32-bit negative numbers
 	//and converts them to 32-bit negative numbers with 2's complement
-	if(m_c0Half & (1 << 11))
+	if(m_c0Half & ((uint32_t)1 << 11))
 	{
-		m_c0Half -= 1 << 12;
+		m_c0Half -= (uint32_t)1 << 12;
 	}
 	//c0 is only used as c0*0.5, so c0_half is calculated immediately
 	m_c0Half = m_c0Half / 2U;
 
 	//now do the same thing for all other coefficients
 	m_c1 = (((uint32_t)buffer[1] & 0x0F) << 8) | (uint32_t)buffer[2];
-	if(m_c1 & (1 << 11))
+	if(m_c1 & ((uint32_t)1 << 11))
 	{
-		m_c1 -= 1 << 12;
+		m_c1 -= (uint32_t)1 << 12;
 	}
 
 	m_c00 =   ((uint32_t)buffer[3] << 12)
 			| ((uint32_t)buffer[4] << 4)
 			| (((uint32_t)buffer[5] >> 4) & 0x0F);
-	if(m_c00 & (1 << 19))
+	if(m_c00 & ((uint32_t)1 << 19))
 	{
-		m_c00 -= 1 << 20;
+		m_c00 -= (uint32_t)1 << 20;
 	}
 
 	m_c10 =   (((uint32_t)buffer[5] & 0x0F) << 16)
 			| ((uint32_t)buffer[6] << 8)
 			| (uint32_t)buffer[7];
-	if(m_c10 & (1<<19))
+	if(m_c10 & ((uint32_t)1<<19))
 	{
-		m_c10 -= 1 << 20;
+		m_c10 -= (uint32_t)1 << 20;
 	}
 
 	m_c01 =   ((uint32_t)buffer[8] << 8)
 			| (uint32_t)buffer[9];
-	if(m_c01 & (1 << 15))
+	if(m_c01 & ((uint32_t)1 << 15))
 	{
-		m_c01 -= 1 << 16;
+		m_c01 -= (uint32_t)1 << 16;
 	}
 
 	m_c11 =   ((uint32_t)buffer[10] << 8)
 			| (uint32_t)buffer[11];
-	if(m_c11 & (1 << 15))
+	if(m_c11 & ((uint32_t)1 << 15))
 	{
-		m_c11 -= 1 << 16;
+		m_c11 -= (uint32_t)1 << 16;
 	}
 
 	m_c20 =   ((uint32_t)buffer[12] << 8)
 			| (uint32_t)buffer[13];
-	if(m_c20 & (1 << 15))
+	if(m_c20 & ((uint32_t)1 << 15))
 	{
-		m_c20 -= 1 << 16;
+		m_c20 -= (uint32_t)1 << 16;
 	}
 
 	m_c21 =   ((uint32_t)buffer[14] << 8)
 			| (uint32_t)buffer[15];
-	if(m_c21 & (1 << 15))
+	if(m_c21 & ((uint32_t)1 << 15))
 	{
-		m_c21 -= 1 << 16;
+		m_c21 -= (uint32_t)1 << 16;
 	}
 
 	m_c30 =   ((uint32_t)buffer[16] << 8)
 			| (uint32_t)buffer[17];
-	if(m_c30 & (1 << 15))
+	if(m_c30 & ((uint32_t)1 << 15))
 	{
-		m_c30 -= 1 << 16;
+		m_c30 -= (uint32_t)1 << 16;
 	}
 
 	return IFX_DPS310__SUCCEEDED;
@@ -1173,12 +1188,12 @@ int16_t IFX_Dps310::configPressure(uint8_t prsMr, uint8_t prsOsr)
 }
 
 /**
- * calculates the time that the Dbs310 needs for 2^mr measurements
+ * calculates the time that the DPS310 needs for 2^mr measurements
  * with an oversampling rate of 2^osr
  *
  * mr: 		Measure rate for temperature or pressure
  * osr: 	Oversampling rate for temperature or pressure
- * returns: time that the Dbs310 needs for this measurement
+ * returns: time that the DPS310 needs for this measurement
  * 			a value of 10000 equals 1 second
  * 	NOTE! 	The measurement time for temperature and pressure
  * 			in sum must not be more than 1 second!
@@ -1191,7 +1206,7 @@ uint16_t IFX_Dps310::calcBusyTime(uint16_t mr, uint16_t osr)
 	mr &= IFX_DPS310__REG_MASK_TEMP_MR >> IFX_DPS310__REG_SHIFT_TEMP_MR;
 	osr &= IFX_DPS310__REG_MASK_TEMP_OSR >> IFX_DPS310__REG_SHIFT_TEMP_OSR;
 	//formula from datasheet (optimized)
-	return (20U << mr) + (16U << (osr + mr));
+	return ((uint32_t)20U << mr) + ((uint32_t)16U << (osr + mr));
 }
 
 /**
@@ -1221,9 +1236,9 @@ int16_t IFX_Dps310::getTemp(int32_t *result)
 					| (uint32_t)buffer[2];
 	//recognize non-32-bit negative numbers
 	//and convert them to 32-bit negative numbers using 2's complement
-	if(temp & (1 << 23))
+	if(temp & ((uint32_t)1 << 23))
 	{
-		temp -= 1 << 24;
+		temp -= (uint32_t)1 << 24;
 	}
 
 	//return temperature
@@ -1240,6 +1255,9 @@ int16_t IFX_Dps310::getTemp(int32_t *result)
  */
 int16_t IFX_Dps310::getPressure(int32_t *result)
 {
+	uint32_t shiftBy23 = 8388608;
+	uint32_t shiftBy24 = 16777216;
+
 	uint8_t buffer[3] = {0};
 	//read raw pressure data to buffer
 	int16_t i = readBlock(IFX_DPS310__REG_ADR_PRS,
@@ -1258,9 +1276,9 @@ int16_t IFX_Dps310::getPressure(int32_t *result)
 					| (uint32_t)buffer[2];
 	//recognize non-32-bit negative numbers
 	//and convert them to 32-bit negative numbers using 2's complement
-	if(prs & (1 << 23))
+	if(prs & ((uint32_t)1 << 23))
 	{
-		prs -= 1 << 24;
+		prs -= (uint32_t)1 << 24;
 	}
 
 	*result = calcPressure(prs);
@@ -1300,9 +1318,9 @@ int16_t IFX_Dps310::getFIFOvalue(int32_t* value)
 			| (uint32_t)buffer[2];
 	//recognize non-32-bit negative numbers
 	//and convert them to 32-bit negative numbers using 2's complement
-	if(*value & (1 << 23))
+	if(*value & ((uint32_t)1 << 23))
 	{
-		*value -= 1 << 24;
+		*value -= (uint32_t)1 << 24;
 	}
 
 	//least significant bit shows measurement type

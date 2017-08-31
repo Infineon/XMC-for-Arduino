@@ -13,6 +13,13 @@
 #include <Wire.h>
 #include "./util/BusInterface.h"
 #include "./util/TLV493D.h"
+#include "./util/TLV493D_conf.h"
+
+typedef enum Tlv493d_Address
+{
+	TLV493D_ADDRESS1	=	0x1F,
+	TLV493D_ADDRESS2	=	0x5E
+}Tlv493d_Address_t;
 
 
 /*
@@ -31,10 +38,11 @@ class Tlv493d
 {
 public: 
 
-	Tlv493d(TwoWire &bus);
-	Tlv493d(TwoWire &bus, uint8_t address);
+	Tlv493d(void);
 	~Tlv493d(void);
 	void begin(void);
+	void begin(TwoWire &bus);
+	void begin(TwoWire &bus, Tlv493d_Address_t slaveAddress, bool reset);
 	void end(void);
 	
 	// sensor configuration
