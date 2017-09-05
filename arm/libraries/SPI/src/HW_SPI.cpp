@@ -244,6 +244,12 @@ void SPIClass::setClockDivider(uint8_t div)
 
 uint8_t SPIClass::transfer(uint8_t data_out)
 {
+    // Check if desire USIC channel is already in use
+	if((XMC_SPI_config->channel->CCR & USIC_CH_CCR_MODE_Msk) != XMC_USIC_CH_OPERATING_MODE_SPI)
+	{
+		SPI.begin();
+	}
+	
     uint8_t data_in = 0;
 
     /* Clear RBF0 */

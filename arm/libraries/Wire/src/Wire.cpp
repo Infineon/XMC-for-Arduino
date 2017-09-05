@@ -279,7 +279,7 @@ uint8_t TwoWire::requestFrom(uint8_t address, uint8_t quantity, uint32_t iaddres
     {
         XMC_I2C_CH_MasterReceiveAck(XMC_I2C_config->channel);
 
-		// Wait for ACK, leave when NACK is detected
+		// Wait for Receive, leave when NACK is detected
 		do
 		{
 			StatusFlag = XMC_I2C_CH_GetStatusFlag(XMC_I2C_config->channel);
@@ -290,9 +290,6 @@ uint8_t TwoWire::requestFrom(uint8_t address, uint8_t quantity, uint32_t iaddres
 				this->hasError = false;
 				return 0;
 			}
-
-			/* wait for Receive */
-
 		}while ((StatusFlag & (XMC_I2C_CH_STATUS_FLAG_RECEIVE_INDICATION | XMC_I2C_CH_STATUS_FLAG_ALTERNATIVE_RECEIVE_INDICATION)) == 0U);
 		XMC_I2C_CH_ClearStatusFlag(XMC_I2C_config->channel, XMC_I2C_CH_STATUS_FLAG_RECEIVE_INDICATION | XMC_I2C_CH_STATUS_FLAG_ALTERNATIVE_RECEIVE_INDICATION);
 
@@ -301,7 +298,7 @@ uint8_t TwoWire::requestFrom(uint8_t address, uint8_t quantity, uint32_t iaddres
 
     XMC_I2C_CH_MasterReceiveNack(XMC_I2C_config->channel);
 		
-	// Wait for ACK, leave when NACK is detected
+	// Wait for Receive, leave when NACK is detected
     do
 	{
 		StatusFlag = XMC_I2C_CH_GetStatusFlag(XMC_I2C_config->channel);
@@ -312,9 +309,6 @@ uint8_t TwoWire::requestFrom(uint8_t address, uint8_t quantity, uint32_t iaddres
 			this->hasError = false;
 			return 0;
 		}
-
-		/* wait for Receive */
-
 	}while ((StatusFlag & (XMC_I2C_CH_STATUS_FLAG_RECEIVE_INDICATION | XMC_I2C_CH_STATUS_FLAG_ALTERNATIVE_RECEIVE_INDICATION)) == 0U);
     XMC_I2C_CH_ClearStatusFlag(XMC_I2C_config->channel, XMC_I2C_CH_STATUS_FLAG_RECEIVE_INDICATION | XMC_I2C_CH_STATUS_FLAG_ALTERNATIVE_RECEIVE_INDICATION);
 
@@ -492,6 +486,17 @@ size_t TwoWire::write(uint8_t data)
     {
         // in slave send mode
         // reply to master
+		if( (XMC_I2C_config->channel->CCR & USIC_CH_CCR_MODE_Msk) != XMC_USIC_CH_OPERATING_MODE_I2C )
+		{
+			if(isMaster)
+			{
+				Wire.begin();
+			}
+			else
+			{
+				Wire.begin(slaveAddress);
+			}
+	    }
 
         XMC_USIC_CH_SetTransmitBufferStatus(XMC_I2C_config->channel, XMC_USIC_CH_TBUF_STATUS_SET_IDLE);
 
@@ -527,6 +532,17 @@ size_t TwoWire::write(const uint8_t* data, size_t quantity)
     {
         // in slave send mode
         // reply to master
+		if( (XMC_I2C_config->channel->CCR & USIC_CH_CCR_MODE_Msk) != XMC_USIC_CH_OPERATING_MODE_I2C )
+		{
+			if(isMaster)
+			{
+				Wire.begin();
+			}
+			else
+			{
+				Wire.begin(slaveAddress);
+			}
+	    }
 
         XMC_USIC_CH_SetTransmitBufferStatus(XMC_I2C_config->channel, XMC_USIC_CH_TBUF_STATUS_SET_IDLE);
 
