@@ -35,6 +35,8 @@
 // WIRE_HAS_END means Wire has end()
 #define WIRE_HAS_END 1
 
+#define WIRE_COMMUNICATION_TIMEOUT 5000u
+
 //****************************************************************************
 // @Class Definitions
 //****************************************************************************
@@ -60,6 +62,7 @@ private:
     static uint8_t pre_rxBufferCount;
 
     static uint8_t transmitting;
+    static uint16_t timeout;
     static void (*user_onRequest)(void);
     static void (*user_onReceive)(int);
     void OnRequestService(void);

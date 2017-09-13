@@ -34,10 +34,9 @@
 #define SYSTIMER_CFG_MAX_TMR  (8U)
 
 #if (UC_FAMILY == XMC4)
-#define SYSTIMER_PRIORITY  (63U)
-#define SYSTIMER_SUBPRIORITY  (0U)
+#define SYSTIMER_PRIORITY  (4U)
 #elif (UC_FAMILY == XMC1)
-#define SYSTIMER_PRIORITY  (3U)
+#define SYSTIMER_PRIORITY  (4U)
 #endif
 
 #define HW_TIMER_ADDITIONAL_CNT (1U)
@@ -79,6 +78,9 @@ XMC_SYSTIMER_OBJECT_t* g_timer_list = NULL;
 
 /* Timer ID tracker */
 uint32_t g_timer_tracker = 0U;
+
+/* Tracker if Timer Handler as already been entered -> avoid recursion */
+volatile uint16_t g_timer_entered_handler = 0u;
 
 /* SysTick counter */
 volatile uint32_t g_systick_count = 0U;
@@ -127,8 +129,7 @@ void wiring_time_init(void)
 
 #if (UC_FAMILY == XMC4)
     /* setting of First SW Timer period is always and subpriority value for XMC4000 devices */
-    NVIC_SetPriority(SysTick_IRQn, NVIC_EncodePriority(
-                         NVIC_GetPriorityGrouping(), SYSTIMER_PRIORITY, SYSTIMER_SUBPRIORITY));
+    NVIC_SetPriority(SysTick_IRQn, SYSTIMER_PRIORITY);
 #elif (UC_FAMILY == XMC1)
     /* setting of priority value for XMC1000 devices */
     NVIC_SetPriority(SysTick_IRQn, SYSTIMER_PRIORITY);
@@ -301,6 +302,8 @@ static void XMC_SYSTIMER_lRemoveTimerList(uint32_t tbl_index)
 static void XMC_SYSTIMER_lTimerHandler(void)
 {
     XMC_SYSTIMER_OBJECT_t* object_ptr;
+    /* Handler entered */
+    g_timer_entered_handler++;
     /* Get first item of timer list */
     object_ptr = g_timer_list;
     while ((NULL != object_ptr) && (0U == object_ptr->count))
@@ -369,7 +372,13 @@ void SysTick_Handler(void)
         else
         {
             object_ptr->count = 0U;
-            XMC_SYSTIMER_lTimerHandler();
+            // do not call handler, when still running
+            if(g_timer_entered_handler == 0u)
+            {
+            	//g_timer_entered_handler++;
+            	XMC_SYSTIMER_lTimerHandler();
+            	g_timer_entered_handler--;
+            }
         }
     }
 }

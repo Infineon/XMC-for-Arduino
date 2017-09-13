@@ -54,6 +54,7 @@ uint8_t TwoWire::pre_rxBuffer[BUFFER_LENGTH];
 uint8_t TwoWire::pre_rxBufferCount = 0;
 
 uint8_t TwoWire::transmitting = 0;
+uint16_t TwoWire::timeout = WIRE_COMMUNICATION_TIMEOUT;
 void (*TwoWire::user_onRequest)(void);
 void (*TwoWire::user_onReceive)(int);
 
@@ -205,7 +206,9 @@ void TwoWire::end(void)
 			NVIC_DisableIRQ((IRQn_Type)XMC_I2C_config->slave_receive_irq_num);
 			XMC_I2C_CH_DisableEvent(XMC_I2C_config->channel, (uint32_t)((uint32_t)XMC_I2C_CH_EVENT_STANDARD_RECEIVE | (uint32_t)XMC_I2C_CH_EVENT_ALTERNATIVE_RECEIVE));
 		}
-
+		
+		flush();
+		
 		/* Disable i2c tx fifo */
 		XMC_USIC_CH_TXFIFO_Configure(XMC_I2C_config->channel,
 								   16,
@@ -222,17 +225,9 @@ void TwoWire::end(void)
 
 void TwoWire::setClock(uint32_t clock)
 {
-    if (isMaster)
-    {
-        XMC_I2C_CH_SetBaudrate(XMC_I2C_config->channel, clock);
-    }
-    else
-    {
-        XMC_I2C_CH_SetBaudrate(XMC_I2C_config->channel, clock);
-    }
+    XMC_I2C_CH_SetBaudrate(XMC_I2C_config->channel, clock);
 }
 
-// TODO: Further Tests (Check if protocol is correct)
 uint8_t TwoWire::requestFrom(uint8_t address, uint8_t quantity, uint32_t iaddress, uint8_t isize, uint8_t sendStop)
 {
 	uint32_t StatusFlag;
@@ -279,21 +274,21 @@ uint8_t TwoWire::requestFrom(uint8_t address, uint8_t quantity, uint32_t iaddres
     {
         XMC_I2C_CH_MasterReceiveAck(XMC_I2C_config->channel);
 
-		// Wait for ACK, leave when NACK is detected
+		timeout = WIRE_COMMUNICATION_TIMEOUT;
+		// Wait for Receive, leave when NACK is detected
 		do
 		{
 			StatusFlag = XMC_I2C_CH_GetStatusFlag(XMC_I2C_config->channel);
-
+	
 			// Check for NACK, indicates that no slave with desired address is on the bus
-			if(this->hasError == true)
+			if(this->hasError == true || timeout == 0)
 			{
 				this->hasError = false;
+				flush();
 				return 0;
 			}
-
-			/* wait for Receive */
-
-		}while ((StatusFlag & (XMC_I2C_CH_STATUS_FLAG_RECEIVE_INDICATION | XMC_I2C_CH_STATUS_FLAG_ALTERNATIVE_RECEIVE_INDICATION)) == 0U);
+			timeout--;
+		}while ( (StatusFlag & (XMC_I2C_CH_STATUS_FLAG_RECEIVE_INDICATION | XMC_I2C_CH_STATUS_FLAG_ALTERNATIVE_RECEIVE_INDICATION)) == 0U );
 		XMC_I2C_CH_ClearStatusFlag(XMC_I2C_config->channel, XMC_I2C_CH_STATUS_FLAG_RECEIVE_INDICATION | XMC_I2C_CH_STATUS_FLAG_ALTERNATIVE_RECEIVE_INDICATION);
 
         rxBuffer[count] = XMC_I2C_CH_GetReceivedData(XMC_I2C_config->channel);
@@ -301,21 +296,21 @@ uint8_t TwoWire::requestFrom(uint8_t address, uint8_t quantity, uint32_t iaddres
 
     XMC_I2C_CH_MasterReceiveNack(XMC_I2C_config->channel);
 		
-	// Wait for ACK, leave when NACK is detected
+	timeout = WIRE_COMMUNICATION_TIMEOUT;
+	// Wait for Receive, leave when NACK is detected
     do
 	{
 		StatusFlag = XMC_I2C_CH_GetStatusFlag(XMC_I2C_config->channel);
 
 		// Check for NACK, indicates that no slave with desired address is on the bus
-		if(this->hasError == true)
+		if(this->hasError == true || timeout == 0)
 		{
 			this->hasError = false;
+			flush();
 			return 0;
 		}
-
-		/* wait for Receive */
-
-	}while ((StatusFlag & (XMC_I2C_CH_STATUS_FLAG_RECEIVE_INDICATION | XMC_I2C_CH_STATUS_FLAG_ALTERNATIVE_RECEIVE_INDICATION)) == 0U);
+		timeout--;
+	}while ( (StatusFlag & (XMC_I2C_CH_STATUS_FLAG_RECEIVE_INDICATION | XMC_I2C_CH_STATUS_FLAG_ALTERNATIVE_RECEIVE_INDICATION)) == 0U );
     XMC_I2C_CH_ClearStatusFlag(XMC_I2C_config->channel, XMC_I2C_CH_STATUS_FLAG_RECEIVE_INDICATION | XMC_I2C_CH_STATUS_FLAG_ALTERNATIVE_RECEIVE_INDICATION);
 
     rxBuffer[quantity - 1] = XMC_I2C_CH_GetReceivedData(XMC_I2C_config->channel);
@@ -323,14 +318,18 @@ uint8_t TwoWire::requestFrom(uint8_t address, uint8_t quantity, uint32_t iaddres
     if(sendStop)
     {
         XMC_I2C_CH_MasterStop(XMC_I2C_config->channel);
-        while (XMC_USIC_CH_GetTransmitBufferStatus(XMC_I2C_config->channel) == XMC_USIC_CH_TBUF_STATUS_BUSY)
+		
+		timeout = WIRE_COMMUNICATION_TIMEOUT;
+        while ( XMC_USIC_CH_GetTransmitBufferStatus(XMC_I2C_config->channel) == XMC_USIC_CH_TBUF_STATUS_BUSY )
 		{
-			if(this->hasError == true)
+			if(this->hasError == true || timeout == 0)
 			{
 				this->hasError = false;
 				inRepStart = false;
+				flush();
 				return 1;
 			}
+			timeout--;
 		}
     }
 
@@ -365,7 +364,7 @@ uint8_t TwoWire::requestFrom(int address, int quantity, int sendStop)
 
 void TwoWire::beginTransmission(uint8_t address)
 {
-	if((XMC_I2C_config->channel->CCR & USIC_CH_CCR_MODE_Msk) != XMC_USIC_CH_OPERATING_MODE_I2C)
+	if( (XMC_I2C_config->channel->CCR & USIC_CH_CCR_MODE_Msk) != XMC_USIC_CH_OPERATING_MODE_I2C )
 	{
 	    if (isMaster)
 	    {
@@ -385,7 +384,7 @@ void TwoWire::beginTransmission(uint8_t address)
     txBufferIndex = 0;
     txBufferLength = 0;
 	// Clear all Status Flags
-	XMC_I2C_CH_ClearStatusFlag(XMC_I2C_config->channel, 0xFFFF);
+	XMC_I2C_CH_ClearStatusFlag(XMC_I2C_config->channel, 0xFFFFFFFF);
 }
 
 void TwoWire::beginTransmission(int address)
@@ -416,34 +415,40 @@ uint8_t TwoWire::endTransmission(uint8_t sendStop)
     {
         XMC_I2C_CH_MasterTransmit(XMC_I2C_config->channel, txBuffer[count]);
 
+		timeout = WIRE_COMMUNICATION_TIMEOUT;
 		// Wait for ACK, leave when NACK is detected
         do
 		{
 			StatusFlag = XMC_I2C_CH_GetStatusFlag(XMC_I2C_config->channel);
 
 			// Check for NACK, indicates that no slave with desired address is on the bus
-			if(this->hasError == true)
+			if(this->hasError == true || timeout == 0 )
 			{
 				this->hasError = false;
 				inRepStart = false;
+				flush();
 				return 1;
 			}
+			timeout--;
 		}
-		while ((StatusFlag & XMC_I2C_CH_STATUS_FLAG_ACK_RECEIVED) == 0U);
+		while ( (StatusFlag & XMC_I2C_CH_STATUS_FLAG_ACK_RECEIVED) == 0U );
 		XMC_I2C_CH_ClearStatusFlag(XMC_I2C_config->channel, XMC_I2C_CH_STATUS_FLAG_ACK_RECEIVED);
     }
 
     if (sendStop)
     {
         XMC_I2C_CH_MasterStop(XMC_I2C_config->channel);
-        while (XMC_USIC_CH_GetTransmitBufferStatus(XMC_I2C_config->channel) == XMC_USIC_CH_TBUF_STATUS_BUSY)
+		timeout = WIRE_COMMUNICATION_TIMEOUT;
+        while ( XMC_USIC_CH_GetTransmitBufferStatus(XMC_I2C_config->channel) == XMC_USIC_CH_TBUF_STATUS_BUSY )
 		{
-			if(this->hasError == true)
+			if(this->hasError == true || timeout == 0 )
 			{
 				this->hasError = false;
 				inRepStart = false;
+				flush();
 				return 1;
 			}
+			timeout--;
 		}
 		inRepStart = false;
     }
@@ -492,19 +497,33 @@ size_t TwoWire::write(uint8_t data)
     {
         // in slave send mode
         // reply to master
+		if( (XMC_I2C_config->channel->CCR & USIC_CH_CCR_MODE_Msk) != XMC_USIC_CH_OPERATING_MODE_I2C )
+		{
+			if(isMaster)
+			{
+				Wire.begin();
+			}
+			else
+			{
+				Wire.begin(slaveAddress);
+			}
+	    }
 
         XMC_USIC_CH_SetTransmitBufferStatus(XMC_I2C_config->channel, XMC_USIC_CH_TBUF_STATUS_SET_IDLE);
 
         XMC_I2C_CH_SlaveTransmit(XMC_I2C_config->channel, data);
 
+		timeout = WIRE_COMMUNICATION_TIMEOUT;
         while (XMC_USIC_CH_GetTransmitBufferStatus(XMC_I2C_config->channel) == XMC_USIC_CH_TBUF_STATUS_BUSY)
 		{
-			if(this->hasError == true)
+			if(this->hasError == true || timeout == 0)
 			{
 				this->hasError = false;
 				inRepStart = false;
+				flush();
 				return 0;
 			}
+			timeout--;
 		}
     }
     return 1;
@@ -527,6 +546,17 @@ size_t TwoWire::write(const uint8_t* data, size_t quantity)
     {
         // in slave send mode
         // reply to master
+		if( (XMC_I2C_config->channel->CCR & USIC_CH_CCR_MODE_Msk) != XMC_USIC_CH_OPERATING_MODE_I2C )
+		{
+			if(isMaster)
+			{
+				Wire.begin();
+			}
+			else
+			{
+				Wire.begin(slaveAddress);
+			}
+	    }
 
         XMC_USIC_CH_SetTransmitBufferStatus(XMC_I2C_config->channel, XMC_USIC_CH_TBUF_STATUS_SET_IDLE);
 
@@ -534,8 +564,19 @@ size_t TwoWire::write(const uint8_t* data, size_t quantity)
         {
             XMC_I2C_CH_SlaveTransmit(XMC_I2C_config->channel, data[c]);
         }
-
-        while (XMC_USIC_CH_GetTransmitBufferStatus(XMC_I2C_config->channel) == XMC_USIC_CH_TBUF_STATUS_BUSY);
+   
+		timeout = WIRE_COMMUNICATION_TIMEOUT;
+        while (XMC_USIC_CH_GetTransmitBufferStatus(XMC_I2C_config->channel) == XMC_USIC_CH_TBUF_STATUS_BUSY)
+		{
+			if(this->hasError == true || timeout == 0)
+			{
+				this->hasError = false;
+				inRepStart = false;
+				flush();
+				return 0;
+			}
+			timeout--;
+		}
     }
     return quantity;
 }
@@ -582,7 +623,20 @@ int TwoWire::peek(void)
 
 void TwoWire::flush(void)
 {
-    //XXX: TODO
+	// Reset buffer and clear all Status Flags
+	if(isMaster == true)
+	{	
+		XMC_USIC_CH_RXFIFO_Flush(XMC_I2C_config->channel);
+		XMC_USIC_CH_TXFIFO_Flush(XMC_I2C_config->channel);
+	}
+	else
+	{		
+		/*Flush receive buffer*/
+		(void)XMC_I2C_CH_GetReceivedData(XMC_I2C_config->channel);
+		(void)XMC_I2C_CH_GetReceivedData(XMC_I2C_config->channel);
+	}
+	XMC_USIC_CH_SetTransmitBufferStatus(XMC_I2C_config->channel, XMC_USIC_CH_TBUF_STATUS_SET_IDLE);
+	XMC_I2C_CH_ClearStatusFlag(XMC_I2C_config->channel, 0xFFFFFFFF);
 }
 
 // behind the scenes function that is called after each received byte
@@ -603,11 +657,6 @@ void TwoWire::ProtocolHandler(void)
 		if (flag_status & (uint32_t)(XMC_I2C_CH_STATUS_FLAG_NACK_RECEIVED | XMC_I2C_CH_STATUS_FLAG_ARBITRATION_LOST | XMC_I2C_CH_STATUS_FLAG_ERROR | XMC_I2C_CH_STATUS_FLAG_DATA_LOST_INDICATION))
     	{
 			hasError = true;
-			// Reset buffer and clear all Status Flags
-			XMC_USIC_CH_RXFIFO_Flush(XMC_I2C_config->channel);
-			XMC_USIC_CH_TXFIFO_Flush(XMC_I2C_config->channel);
-			XMC_USIC_CH_SetTransmitBufferStatus(XMC_I2C_config->channel, XMC_USIC_CH_TBUF_STATUS_SET_IDLE);
-			XMC_I2C_CH_ClearStatusFlag(XMC_I2C_config->channel, (XMC_I2C_CH_STATUS_FLAG_NACK_RECEIVED | XMC_I2C_CH_STATUS_FLAG_ARBITRATION_LOST | XMC_I2C_CH_STATUS_FLAG_ERROR | XMC_I2C_CH_STATUS_FLAG_DATA_LOST_INDICATION));
 		}
     }
     else
