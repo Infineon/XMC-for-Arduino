@@ -20,34 +20,27 @@
 // @Project Includes
 //****************************************************************************
 #include "Arduino.h"
-
 //****************************************************************************
 // @Macros
 //****************************************************************************
-/**< SysTick interval in seconds */
-#define SYSTIMER_TICK_PERIOD  (0.001F)
-
-/**< SysTick interval in microseconds */
-#define SYSTIMER_TICK_PERIOD_US  (1000U)
-
-/**< Maximum No of timer */
-#define SYSTIMER_CFG_MAX_TMR  (8U)
-
-#if (UC_FAMILY == XMC4)
-#define SYSTIMER_PRIORITY  (4U)
-#elif (UC_FAMILY == XMC1)
-#define SYSTIMER_PRIORITY  (4U)
-#endif
-
-#define HW_TIMER_ADDITIONAL_CNT (1U)
 
 //****************************************************************************
 // @Defines
 //****************************************************************************
-#define TIMER_1mSec 1000              /*!< Millisecond to Microsecond ratio */
-#define TIMER_ISR_RATIO 1                              /*!< The ISR divider */
-#define TIMER_mSecTouSec_RATIO  \
-                (TIMER_1mSec/TIMER_ISR_RATIO)   /*!< mS to uS scaling factor*/
+/**< SysTick interval in seconds */
+#define SYSTIMER_TICK_PERIOD  (0.001F)
+
+/**< SysTick number of ticks per ms*/
+#define SYSTIMER_TICKS_FOR_ONE_MS (F_CPU / 1000u)
+/**< SysTick number of ticks per us*/
+#define SYSTIMER_TICKS_FOR_ONE_US (F_CPU / 1000000u)
+
+/**< Maximum No of timer */
+#define SYSTIMER_CFG_MAX_TMR  (8U)
+
+#define SYSTIMER_PRIORITY  (4U)
+
+#define HW_TIMER_ADDITIONAL_CNT (1U)
 
 //****************************************************************************
 // @Typedefs
@@ -125,27 +118,24 @@ void wiring_time_init(void)
     /* Initialize the header of the list */
     g_timer_list = NULL;
     /* Initialize SysTick timer */
-    SysTick_Config((uint32_t)(F_CPU * SYSTIMER_TICK_PERIOD));
-
-#if (UC_FAMILY == XMC4)
-    /* setting of First SW Timer period is always and subpriority value for XMC4000 devices */
+    SysTick_Config((uint32_t)SYSTIMER_TICKS_FOR_ONE_MS);
+    /* setting of priority value*/
     NVIC_SetPriority(SysTick_IRQn, SYSTIMER_PRIORITY);
-#elif (UC_FAMILY == XMC1)
-    /* setting of priority value for XMC1000 devices */
-    NVIC_SetPriority(SysTick_IRQn, SYSTIMER_PRIORITY);
-#endif
+	
     g_timer_tracker = 0U;
 }
 
 uint32_t millis(void)
 {
-    return (XMC_SYSTIMER_GetTime() / 1000);
+	// Get Tick value (incremented every ms)
+    return XMC_SYSTIMER_GetTickCount();
 }
 
-//TODO: not working properly as SYSTICK only runs on 1KHz
 uint32_t micros(void)
 {
-    return (XMC_SYSTIMER_GetTime());
+	// Combine g_systick_count and current systick value
+	uint32_t micros = (millis() * 1000u) + ((SysTick->LOAD - SysTick->VAL) / (SYSTIMER_TICKS_FOR_ONE_US));
+    return micros;
 }
 
 void delay(uint32_t dwMs)
@@ -164,7 +154,7 @@ void delay(uint32_t dwMs)
      *  @param[in]  TimerCallBack Call back function of the timer(No Macros are allowed)
      *  @param[in]  pCallBackArgPtr Call back function parameter
      */
-    TimerId = XMC_SYSTIMER_CreateTimer(dwMs * TIMER_mSecTouSec_RATIO, XMC_SYSTIMER_MODE_ONE_SHOT, delay_cb, NULL);
+    TimerId = XMC_SYSTIMER_CreateTimer(dwMs , XMC_SYSTIMER_MODE_ONE_SHOT, delay_cb, NULL);
     if (TimerId != 0)
     {
         //Timer is created successfully
@@ -402,7 +392,7 @@ uint32_t XMC_SYSTIMER_CreateTimer
     uint32_t count = 0U;
     uint32_t period_ratio = 0U;
 
-    if (period < SYSTIMER_TICK_PERIOD_US)
+    if (period == 0u)
     {
         id = 0U;
     }
@@ -419,7 +409,7 @@ uint32_t XMC_SYSTIMER_CreateTimer
                 g_timer_tbl[count].id     = count;
                 g_timer_tbl[count].mode   = mode;
                 g_timer_tbl[count].state  = XMC_SYSTIMER_STATE_STOPPED;
-                period_ratio = (uint32_t)(period / SYSTIMER_TICK_PERIOD_US);
+                period_ratio = (uint32_t)period;
                 g_timer_tbl[count].count  = (period_ratio + HW_TIMER_ADDITIONAL_CNT);
                 g_timer_tbl[count].reload  = period_ratio;
                 g_timer_tbl[count].callback = callback;
@@ -510,7 +500,7 @@ XMC_SYSTIMER_STATUS_t XMC_SYSTIMER_RestartTimer(uint32_t id, uint32_t microsec)
         }
         if (XMC_SYSTIMER_STATUS_SUCCESS == status)
         {
-            period_ratio = (uint32_t)(microsec / SYSTIMER_TICK_PERIOD_US);
+            period_ratio = (uint32_t)microsec;
             g_timer_tbl[id - 1U].reload = period_ratio;
             /* Start the timer */
             status = XMC_SYSTIMER_StartTimer(id);
@@ -550,14 +540,6 @@ XMC_SYSTIMER_STATUS_t XMC_SYSTIMER_DeleteTimer(uint32_t id)
     }
 
     return (status);
-}
-
-/*
- *  API to get the current SysTick time in microsecond.
- */
-uint32_t XMC_SYSTIMER_GetTime(void)
-{
-    return (g_systick_count * SYSTIMER_TICK_PERIOD_US);
 }
 
 /*
