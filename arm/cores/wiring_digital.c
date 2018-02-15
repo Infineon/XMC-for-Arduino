@@ -21,9 +21,9 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 //****************************************************************************
 #include "Arduino.h"
 
-void pinMode(uint8_t pin, uint8_t mode)
+void pinMode( uint8_t pin, uint8_t mode )
 {
-    XMC_GPIO_CONFIG_t gpio_conf = {};
+    XMC_GPIO_CONFIG_t gpio_conf;
     gpio_conf.mode = mode;
 
     XMC_GPIO_Init(mapping_port_pin[pin].port, mapping_port_pin[pin].pin, &gpio_conf);
