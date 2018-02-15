@@ -358,7 +358,6 @@ extern "C" {
  */
 void XMC_USBH_HandleIrq (uint32_t gintsts);
 /**
- * @param ms Delay in milliseconds.
  * @return uint8_t Value has no significance for the low level driver.
  *
  * \par<b>Description:</b><br>
@@ -366,7 +365,7 @@ void XMC_USBH_HandleIrq (uint32_t gintsts);
  * for delay which has to re-implemented with time delay logic. The low level driver expects blocking
  * implementation of the delay.
  */
- uint8_t XMC_USBH_osDelay(uint32_t ms);
+ uint8_t XMC_USBH_osDelay( );
  
 /**
  * @param port Address of the port which has the pin used to enable VBUS charge pump.

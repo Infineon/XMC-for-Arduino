@@ -560,7 +560,6 @@ extern "C" {
 #endif
 
 /**
- * @param sdmmc A constant pointer to XMC_SDMMC_t, pointing to the SDMMC base address
  * @return bool
  *
  * \par<b>Description: </b><br>
@@ -570,10 +569,9 @@ extern "C" {
  * The function checks the SD_BUS_POWER bit-field of the POWER_CTRL register and returns
  * a boolean value - "on" or "off".
  */
-bool XMC_SDMMC_GetPowerStatus(XMC_SDMMC_t *const sdmmc);
+bool XMC_SDMMC_GetPowerStatus( );
 
 /**
- * @param sdmmc A constant pointer to XMC_SDMMC_t, pointing to the SDMMC base address
  * @return None
  *
  * \par<b>Description: </b><br>
@@ -582,10 +580,9 @@ bool XMC_SDMMC_GetPowerStatus(XMC_SDMMC_t *const sdmmc);
  * \par
  * The function de-asserts the peripheral reset. The peripheral needs to be initialized.
  */
-void XMC_SDMMC_Enable(XMC_SDMMC_t *const sdmmc);
+void XMC_SDMMC_Enable( );
 
 /**
- * @param sdmmc A constant pointer to XMC_SDMMC_t, pointing to the SDMMC base address
  * @return None
  *
  * \par<b>Description: </b><br>
@@ -594,7 +591,7 @@ void XMC_SDMMC_Enable(XMC_SDMMC_t *const sdmmc);
  * \par
  * The function asserts the peripheral reset.
  */
-void XMC_SDMMC_Disable(XMC_SDMMC_t *const sdmmc);
+void XMC_SDMMC_Disable( );
 
 /**
  * @param sdmmc A constant pointer to XMC_SDMMC_t, pointing to the SDMMC base address
@@ -1326,7 +1323,6 @@ __STATIC_INLINE bool XMC_SDMMC_GetContinueRequest(XMC_SDMMC_t *const sdmmc)
 
 /**
  * @param sdmmc A constant pointer to XMC_SDMMC_t, pointing to the SDMMC base address
- * @param config A pointer to the SDMMC configuration structure (::XMC_SDMMC_CONFIG_t)
  * @return None
  *
  * \par<b>Description: </b><br>
@@ -1337,18 +1333,15 @@ __STATIC_INLINE bool XMC_SDMMC_GetContinueRequest(XMC_SDMMC_t *const sdmmc)
  * at block gap for a multi-block transfer. This bit is only valid in a 4-bit mode of
  * the SDIO card.
  */
-__STATIC_INLINE void XMC_SDMMC_EnableInterruptAtBlockGap(XMC_SDMMC_t *const sdmmc, const XMC_SDMMC_CONFIG_t *config)
+__STATIC_INLINE void XMC_SDMMC_EnableInterruptAtBlockGap(XMC_SDMMC_t *const sdmmc )
 {
   XMC_ASSERT("XMC_SDMMC_EnableInterruptAtBlockGap: Invalid module pointer", XMC_SDMMC_CHECK_MODULE_PTR(sdmmc));
-  XMC_ASSERT("XMC_SDMMC_EnableInterruptAtBlockGap: This operation is only valid in 4-bit mode",
-             (config->bus_width == XMC_SDMMC_DATA_LINES_1));
 
   sdmmc->BLOCK_GAP_CTRL |= (uint8_t)SDMMC_BLOCK_GAP_CTRL_INT_AT_BLOCK_GAP_Msk;
 }
 
 /**
  * @param sdmmc A constant pointer to XMC_SDMMC_t, pointing to the SDMMC base address
- * @param config A pointer to the SDMMC configuration structure (::XMC_SDMMC_CONFIG_t)
  * @return None
  *
  * \par<b>Description: </b><br>
@@ -1358,13 +1351,9 @@ __STATIC_INLINE void XMC_SDMMC_EnableInterruptAtBlockGap(XMC_SDMMC_t *const sdmm
  * The function resets the BLOCK_GAP_CTRL.INT_AT_BLOCK_GAP bit-field to disable interrupt
  * at block gap. This bit is only valid in a 4-bit mode of the SDIO card.
  */
-__STATIC_INLINE void XMC_SDMMC_DisableInterruptAtBlockGap(XMC_SDMMC_t *const sdmmc,
-                                                          const XMC_SDMMC_CONFIG_t *config)
-
+__STATIC_INLINE void XMC_SDMMC_DisableInterruptAtBlockGap(XMC_SDMMC_t *const sdmmc )
 {
   XMC_ASSERT("XMC_SDMMC_EnableInterruptAtBlockGap: Invalid module pointer", XMC_SDMMC_CHECK_MODULE_PTR(sdmmc));
-  XMC_ASSERT("XMC_SDMMC_EnableInterruptAtBlockGap: This operation is only valid in 4-bit mode",
-             (config->bus_width == XMC_SDMMC_DATA_LINES_1));
 
   sdmmc->BLOCK_GAP_CTRL &= (uint8_t)~SDMMC_BLOCK_GAP_CTRL_INT_AT_BLOCK_GAP_Msk;
 }
