@@ -131,7 +131,6 @@ extern HardwareSerial Serial;
 extern HardwareSerial Serial1;
 #endif
 
-
 #endif
 
 #endif /* HardwareSerial_h */

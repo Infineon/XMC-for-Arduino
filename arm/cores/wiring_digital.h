@@ -55,7 +55,7 @@ extern "C" {
      * \param pin the pin number
      * \param val HIGH or LOW
      */
-    extern inline void digitalWrite(uint8_t pin, uint8_t val);
+    extern void digitalWrite(uint8_t pin, uint8_t val);
 
     /*
      * \brief Reads the value from a specified digital pin, either HIGH or LOW.
@@ -64,14 +64,14 @@ extern "C" {
      *
      * \return HIGH or LOW
      */
-    extern inline uint8_t digitalRead(uint8_t pin);
+    extern uint8_t digitalRead(uint8_t pin);
 
     /*
      * \brief Toggles output signal of a digital pin.
      *
      * \param pin The number of the pin who you want to toggle
      */
-    extern inline void digitalToggle(uint8_t pin);
+    extern void digitalToggle(uint8_t pin);
 
 #ifdef __cplusplus
 }

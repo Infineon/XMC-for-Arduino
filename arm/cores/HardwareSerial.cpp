@@ -88,11 +88,13 @@ void HardwareSerial::begin(const uint32_t speed)
     begin(speed, SERIAL_8N1);
 }
 
-void HardwareSerial::begin(const uint32_t speed, const XMC_UART_MODE_t config)
+void HardwareSerial::begin( const uint32_t speed, const XMC_UART_MODE_t config )
 {
-    XMC_UART_CH_CONFIG_t uart_ch_config = {};
+    XMC_UART_CH_CONFIG_t uart_ch_config;
+    uart_ch_config.oversampling = 0;        // Must be 0 or valid oversample for baud rate calculations
     uart_ch_config.baudrate = speed;
     uart_ch_config.data_bits = (uint8_t)(config & 0x00fU);
+    uart_ch_config.frame_length = uart_ch_config.data_bits;        // Set same as data bits length
     uart_ch_config.parity_mode = (XMC_USIC_CH_PARITY_MODE_t)(config & ~0xffU);
     uart_ch_config.stop_bits = (uint8_t)((config & 0x0f0U) >> 4);
 

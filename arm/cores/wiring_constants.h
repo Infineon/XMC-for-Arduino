@@ -31,8 +31,6 @@ extern "C" {
 #define LOW             0
 #define ENABLED         1
 #define DISABLED        0
-#define true            1
-#define false           0
 #define INPUT           XMC_GPIO_MODE_INPUT_TRISTATE
 #define OUTPUT          XMC_GPIO_MODE_OUTPUT_PUSH_PULL
 #define INPUT_PULLUP    XMC_GPIO_MODE_INPUT_PULL_UP
