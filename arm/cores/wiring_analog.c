@@ -203,7 +203,7 @@ void analogWrite(uint8_t pin, uint16_t value)
 
         XMC_GPIO_SetMode(pwm4->port_pin.port, pwm4->port_pin.pin, (XMC_GPIO_MODE_OUTPUT_PUSH_PULL | pwm4->port_mode));
 
-        XMC_CCU4_SLICE_StartTimer(pwm4->slice);
+        XMC_CCU4_SLICE_StartTimer( pwm4->slice );
     }
 #ifdef CCU8V2
     else if (digitalPinHasPWM8(pin))

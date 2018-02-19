@@ -157,7 +157,9 @@ SECTIONS
     Stack (NOLOAD) : AT(0)
     {
         . = ALIGN(8);
+        __stack_start = .;
         . = . + stack_size;
+        __stack_end = .;
         __initial_sp = .;
     } > SRAM
 

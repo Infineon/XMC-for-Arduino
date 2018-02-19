@@ -41,16 +41,12 @@
  *           added support for ARM Compiler 6 (armclang)  
  *******************************************************************************************************/
 
-
-
 /** @addtogroup Infineon
   * @{
   */
-
 /** @addtogroup XMC1100
   * @{
   */
-
 #ifndef XMC1100_H
 #define XMC1100_H
 
@@ -58,9 +54,7 @@
 extern "C" {
 #endif
 
-
 /* -------------------------  Interrupt Number Definition  ------------------------ */
-
 typedef enum {
 /* -------------------  Cortex-M0 Processor Exceptions Numbers  ------------------- */
   Reset_IRQn                    = -15,              /*!<   1  Reset Vector, invoked on Power up and warm reset                 */
@@ -99,12 +93,9 @@ typedef enum {
 /** @addtogroup Configuration_of_CMSIS
   * @{
   */
-
-
 /* ================================================================================ */
 /* ================      Processor and Core Peripheral Section     ================ */
 /* ================================================================================ */
-
 /* ----------------Configuration of the Cortex-M0 Processor and Core Peripherals---------------- */
 #define __CM0_REV                 0x0000            /*!< Cortex-M0 Core Revision                                               */
 #define __MPU_PRESENT                  0            /*!< MPU present or not                                                    */
@@ -114,7 +105,6 @@ typedef enum {
 
 #include "core_cm0.h"                               /*!< Cortex-M0 processor and core peripherals                              */
 #include "system_XMC1100.h"                         /*!< XMC1100 System                                                        */
-
 
 /* ================================================================================ */
 /* ================       Device Specific Peripheral Section       ================ */
@@ -145,11 +135,10 @@ reg = (uint##size##_t) (VAL2 | VAL4);\
 
 /** Macro to clear a bit in register */
 #define CLR_BIT(reg, pos)     (reg = reg & (uint32_t)(~((uint32_t)1<<pos)) )
-/*
-* ==========================================================================
-* ---------- Interrupt Handler Definition ----------------------------------
-* ==========================================================================
-*/
+
+/* ========================================================================== */
+/* ---------- Interrupt Handler Definition ---------------------------------- */
+/* ========================================================================== */
 #define IRQ_Hdlr_0   SCU_0_IRQHandler
 #define IRQ_Hdlr_1   SCU_1_IRQHandler
 #define IRQ_Hdlr_2   SCU_2_IRQHandler
@@ -171,19 +160,15 @@ reg = (uint##size##_t) (VAL2 | VAL4);\
 #define IRQ_Hdlr_23  CCU40_2_IRQHandler
 #define IRQ_Hdlr_24  CCU40_3_IRQHandler
 
-/*
-* ==========================================================================
-* ---------- Interrupt Handler retrieval macro -----------------------------
-* ==========================================================================
-*/
-#define GET_IRQ_HANDLER(N) IRQ_Hdlr_##N
 
+/* ========================================================================== */
+/* ---------- Interrupt Handler retrieval macro ----------------------------- */
+/* ========================================================================== */
+#define GET_IRQ_HANDLER(N) IRQ_Hdlr_##N
 
 /** @addtogroup Device_Peripheral_Registers
   * @{
   */
-
-
 /* -------------------  Start of section using anonymous unions  ------------------ */
 #if defined(__CC_ARM)
   #pragma push
@@ -205,16 +190,13 @@ reg = (uint##size##_t) (VAL2 | VAL4);\
 #endif
 
 
-
 /* ================================================================================ */
 /* ================                       PPB                      ================ */
 /* ================================================================================ */
 
-
 /**
   * @brief Cortex-M0 Private Peripheral Block (PPB)
   */
-
 typedef struct {                                    /*!< (@ 0xE000E000) PPB Structure                                          */
   __I  uint32_t  RESERVED[4];
   __IO uint32_t  SYST_CSR;                          /*!< (@ 0xE000E010) SysTick Control and Status Register                    */
@@ -251,16 +233,13 @@ typedef struct {                                    /*!< (@ 0xE000E000) PPB Stru
   __IO uint32_t  SHCSR;                             /*!< (@ 0xE000ED24) System Handler Control and State Register              */
 } PPB_Type;
 
-
 /* ================================================================================ */
 /* ================                   ERU [ERU0]                   ================ */
 /* ================================================================================ */
 
-
 /**
   * @brief Event Request Unit 0 (ERU)
   */
-
 typedef struct {                                    /*!< (@ 0x40010600) ERU Structure                                          */
   __IO uint32_t  EXISEL;                            /*!< (@ 0x40010600) Event Input Select                                     */
   __I  uint32_t  RESERVED[3];
@@ -268,16 +247,13 @@ typedef struct {                                    /*!< (@ 0x40010600) ERU Stru
   __IO uint32_t  EXOCON[4];                         /*!< (@ 0x40010620) Event Output Trigger Control                           */
 } ERU_GLOBAL_TypeDef;
 
-
 /* ================================================================================ */
 /* ================                       PAU                      ================ */
 /* ================================================================================ */
 
-
 /**
   * @brief PAU Unit (PAU)
   */
-
 typedef struct {                                    /*!< (@ 0x40000000) PAU Structure                                          */
   __I  uint32_t  RESERVED[16];
   __I  uint32_t  AVAIL0;                            /*!< (@ 0x40000040) Peripheral Availability Register 0                     */
@@ -293,16 +269,13 @@ typedef struct {                                    /*!< (@ 0x40000000) PAU Stru
   __I  uint32_t  RAM0SIZE;                          /*!< (@ 0x40000410) RAM0 Size Register                                     */
 } PAU_Type;
 
-
 /* ================================================================================ */
 /* ================                       NVM                      ================ */
 /* ================================================================================ */
 
-
 /**
   * @brief NVM Unit (NVM)
   */
-
 typedef struct {                                    /*!< (@ 0x40050000) NVM Structure                                          */
   __I  uint16_t  NVMSTATUS;                         /*!< (@ 0x40050000) NVM Status Register                                    */
   __I  uint16_t  RESERVED;
@@ -313,16 +286,13 @@ typedef struct {                                    /*!< (@ 0x40050000) NVM Stru
   __IO uint16_t  CONFIG1;                           /*!< (@ 0x40050048) Configuration 1 Register                               */
 } NVM_Type;
 
-
 /* ================================================================================ */
 /* ================                       WDT                      ================ */
 /* ================================================================================ */
 
-
 /**
   * @brief Watch Dog Timer (WDT)
   */
-
 typedef struct {                                    /*!< (@ 0x40020000) WDT Structure                                          */
   __I  uint32_t  ID;                                /*!< (@ 0x40020000) WDT Module ID Register                                 */
   __IO uint32_t  CTR;                               /*!< (@ 0x40020004) WDT Control Register                                   */
@@ -334,16 +304,13 @@ typedef struct {                                    /*!< (@ 0x40020000) WDT Stru
   __O  uint32_t  WDTCLR;                            /*!< (@ 0x4002001C) WDT Clear Register                                     */
 } WDT_GLOBAL_TypeDef;
 
-
 /* ================================================================================ */
 /* ================                       RTC                      ================ */
 /* ================================================================================ */
 
-
 /**
   * @brief Real Time Clock (RTC)
   */
-
 typedef struct {                                    /*!< (@ 0x40010A00) RTC Structure                                          */
   __I  uint32_t  ID;                                /*!< (@ 0x40010A00) RTC Module ID Register                                 */
   __IO uint32_t  CTR;                               /*!< (@ 0x40010A04) RTC Control Register                                   */
@@ -357,16 +324,13 @@ typedef struct {                                    /*!< (@ 0x40010A00) RTC Stru
   __IO uint32_t  TIM1;                              /*!< (@ 0x40010A24) RTC Time Register 1                                    */
 } RTC_GLOBAL_TypeDef;
 
-
 /* ================================================================================ */
 /* ================                      PRNG                      ================ */
 /* ================================================================================ */
 
-
 /**
   * @brief PRNG Unit (PRNG)
   */
-
 typedef struct {                                    /*!< (@ 0x48020000) PRNG Structure                                         */
   __IO uint16_t  WORD;                              /*!< (@ 0x48020000) PRNG Word Register                                     */
   __I  uint16_t  RESERVED;
@@ -375,11 +339,9 @@ typedef struct {                                    /*!< (@ 0x48020000) PRNG Str
   __IO uint16_t  CTRL;                              /*!< (@ 0x4802000C) PRNG Control Register                                  */
 } PRNG_Type;
 
-
 /* ================================================================================ */
 /* ================                  USIC [USIC0]                  ================ */
 /* ================================================================================ */
-
 
 /**
   * @brief Universal Serial Interface Controller 0 (USIC)
@@ -394,11 +356,9 @@ typedef struct {                                    /*!< (@ 0x48000008) USIC Str
 /* ================               USIC_CH [USIC0_CH0]              ================ */
 /* ================================================================================ */
 
-
 /**
   * @brief Universal Serial Interface Controller 0 (USIC_CH)
   */
-
 typedef struct {                                    /*!< (@ 0x48000000) USIC_CH Structure                                      */
   __I  uint32_t  RESERVED;
   __I  uint32_t  CCFG;                              /*!< (@ 0x48000004) Channel Configuration Register                         */
@@ -456,16 +416,13 @@ typedef struct {                                    /*!< (@ 0x48000000) USIC_CH 
   __O  uint32_t  IN[32];                            /*!< (@ 0x48000180) Transmit FIFO Buffer                                   */
 } USIC_CH_TypeDef;
 
-
 /* ================================================================================ */
 /* ================                   SCU_GENERAL                  ================ */
 /* ================================================================================ */
 
-
 /**
   * @brief System Control Unit (SCU_GENERAL)
   */
-
 typedef struct {                                    /*!< (@ 0x40010000) SCU_GENERAL Structure                                  */
   __I  uint32_t  DBGROMID;                          /*!< (@ 0x40010000) Debug System ROM ID Register                           */
   __I  uint32_t  IDCHIP;                            /*!< (@ 0x40010004) Chip ID Register                                       */
@@ -487,11 +444,9 @@ typedef struct {                                    /*!< (@ 0x40010000) SCU_GENE
 /* ================                  SCU_INTERRUPT                 ================ */
 /* ================================================================================ */
 
-
 /**
   * @brief System Control Unit (SCU_INTERRUPT)
   */
-
 typedef struct {                                    /*!< (@ 0x40010038) SCU_INTERRUPT Structure                                */
   __I  uint32_t  SRRAW;                             /*!< (@ 0x40010038) SCU Raw Service Request Status                         */
   __IO uint32_t  SRMSK;                             /*!< (@ 0x4001003C) SCU Service Request Mask                               */
@@ -499,30 +454,24 @@ typedef struct {                                    /*!< (@ 0x40010038) SCU_INTE
   __O  uint32_t  SRSET;                             /*!< (@ 0x40010044) SCU Service Request Set                                */
 } SCU_INTERRUPT_TypeDef;
 
-
 /* ================================================================================ */
 /* ================                    SCU_POWER                   ================ */
 /* ================================================================================ */
 
-
 /**
   * @brief System Control Unit (SCU_POWER)
   */
-
 typedef struct {                                    /*!< (@ 0x40010200) SCU_POWER Structure                                    */
   __I  uint32_t  VDESR;                             /*!< (@ 0x40010200) Voltage Detector Status Register                       */
 } SCU_POWER_Type;
-
 
 /* ================================================================================ */
 /* ================                     SCU_CLK                    ================ */
 /* ================================================================================ */
 
-
 /**
   * @brief System Control Unit (SCU_CLK)
   */
-
 typedef struct {                                    /*!< (@ 0x40010300) SCU_CLK Structure                                      */
   __IO uint32_t  CLKCR;                             /*!< (@ 0x40010300) Clock Control Register                                 */
   __IO uint32_t  PWRSVCR;                           /*!< (@ 0x40010304) Power Save Control Register                            */
@@ -532,11 +481,9 @@ typedef struct {                                    /*!< (@ 0x40010300) SCU_CLK 
   __IO uint32_t  OSCCSR;                            /*!< (@ 0x40010314) Oscillator Control and Status Register                 */
 } SCU_CLK_TypeDef;
 
-
 /* ================================================================================ */
 /* ================                    SCU_RESET                   ================ */
 /* ================================================================================ */
-
 
 /**
   * @brief System Control Unit (SCU_RESET)
@@ -549,16 +496,13 @@ typedef struct {                                    /*!< (@ 0x40010400) SCU_RESE
   __IO uint32_t  RSTCON;                            /*!< (@ 0x4001040C) RCU Reset Control Register                             */
 } SCU_RESET_Type;
 
-
 /* ================================================================================ */
 /* ================                   SCU_ANALOG                   ================ */
 /* ================================================================================ */
 
-
 /**
   * @brief System Control Unit (SCU_ANALOG)
   */
-
 typedef struct {                                    /*!< (@ 0x40011000) SCU_ANALOG Structure                                   */
   __I  uint32_t  RESERVED[9];
   __IO uint16_t  ANATSECTRL;                        /*!< (@ 0x40011024) Temperature Sensor Control Register                    */
@@ -576,16 +520,13 @@ typedef struct {                                    /*!< (@ 0x40011000) SCU_ANAL
   __IO uint16_t  ANAOFFSET;                         /*!< (@ 0x4001106C) DCO1 Offset Register                                   */
 } SCU_ANALOG_Type;
 
-
 /* ================================================================================ */
 /* ================                  CCU4 [CCU40]                  ================ */
 /* ================================================================================ */
 
-
 /**
   * @brief Capture Compare Unit 4 - Unit 0 (CCU4)
   */
-
 typedef struct {                                    /*!< (@ 0x48040000) CCU4 Structure                                         */
   __IO uint32_t  GCTRL;                             /*!< (@ 0x48040000) Global Control Register                                */
   __I  uint32_t  GSTAT;                             /*!< (@ 0x48040004) Global Status Register                                 */
@@ -607,7 +548,6 @@ typedef struct {                                    /*!< (@ 0x48040000) CCU4 Str
 /**
   * @brief Capture Compare Unit 4 - Unit 0 (CCU4_CC4)
   */
-
 typedef struct {                                    /*!< (@ 0x48040100) CCU4_CC4 Structure                                     */
   __IO uint32_t  INS;                               /*!< (@ 0x48040100) Input Selector Configuration                           */
   __IO uint32_t  CMC;                               /*!< (@ 0x48040104) Connection Matrix Control                              */
@@ -644,11 +584,9 @@ typedef struct {                                    /*!< (@ 0x48040100) CCU4_CC4
 /* ================                   VADC [VADC]                  ================ */
 /* ================================================================================ */
 
-
 /**
   * @brief Analog to Digital Converter (VADC)
   */
-
 typedef struct {                                    /*!< (@ 0x48030000) VADC Structure                                         */
   __IO uint32_t  CLC;                               /*!< (@ 0x48030000) Clock Control Register                                 */
   __I  uint32_t  RESERVED;
@@ -678,16 +616,13 @@ typedef struct {                                    /*!< (@ 0x48030000) VADC Str
   __IO uint32_t  GLOBRESD;                          /*!< (@ 0x48030380) Global Result Register, Debug                          */
 } VADC_GLOBAL_TypeDef;
 
-
 /* ================================================================================ */
 /* ================                   SHS [SHS0]                   ================ */
 /* ================================================================================ */
 
-
 /**
   * @brief Sample and Hold ADC Sequencer (SHS)
   */
-
 typedef struct {                                    /*!< (@ 0x48034000) SHS Structure                                          */
   __I  uint32_t  RESERVED[2];
   __I  uint32_t  ID;                                /*!< (@ 0x48034008) Module Identification Register                         */
@@ -709,16 +644,13 @@ typedef struct {                                    /*!< (@ 0x48034000) SHS Stru
   __IO uint32_t  GNCTR10;                           /*!< (@ 0x48034190) Gain Control Register 10                               */
 } SHS_Type;
 
-
 /* ================================================================================ */
 /* ================                      PORT0                     ================ */
 /* ================================================================================ */
 
-
 /**
   * @brief Port 0 (PORT0)
   */
-
 typedef struct {                                    /*!< (@ 0x40040000) PORT0 Structure                                        */
   __IO uint32_t  OUT;                               /*!< (@ 0x40040000) Port 0 Output Register                                 */
   __O  uint32_t  OMR;                               /*!< (@ 0x40040004) Port 0 Output Modification Register                    */
@@ -739,16 +671,13 @@ typedef struct {                                    /*!< (@ 0x40040000) PORT0 St
   __IO uint32_t  HWSEL;                             /*!< (@ 0x40040074) Port 0 Pin Hardware Select Register                    */
 } PORT0_Type;
 
-
 /* ================================================================================ */
 /* ================                      PORT1                     ================ */
 /* ================================================================================ */
 
-
 /**
   * @brief Port 1 (PORT1)
   */
-
 typedef struct {                                    /*!< (@ 0x40040100) PORT1 Structure                                        */
   __IO uint32_t  OUT;                               /*!< (@ 0x40040100) Port 1 Output Register                                 */
   __O  uint32_t  OMR;                               /*!< (@ 0x40040104) Port 1 Output Modification Register                    */
@@ -766,16 +695,13 @@ typedef struct {                                    /*!< (@ 0x40040100) PORT1 St
   __IO uint32_t  HWSEL;                             /*!< (@ 0x40040174) Port 1 Pin Hardware Select Register                    */
 } PORT1_Type;
 
-
 /* ================================================================================ */
 /* ================                      PORT2                     ================ */
 /* ================================================================================ */
 
-
 /**
   * @brief Port 2 (PORT2)
   */
-
 typedef struct {                                    /*!< (@ 0x40040200) PORT2 Structure                                        */
   __IO uint32_t  OUT;                               /*!< (@ 0x40040200) Port 2 Output Register                                 */
   __O  uint32_t  OMR;                               /*!< (@ 0x40040204) Port 2 Output Modification Register                    */
@@ -814,11 +740,9 @@ typedef struct {                                    /*!< (@ 0x40040200) PORT2 St
 #endif
 
 
-
 /* ================================================================================ */
 /* ================          struct 'PPB' Position & Mask          ================ */
 /* ================================================================================ */
-
 
 /* --------------------------------  PPB_SYST_CSR  -------------------------------- */
 #define PPB_SYST_CSR_ENABLE_Pos               (0UL)                     /*!< PPB SYST_CSR: ENABLE (Bit 0)                                */
@@ -1006,11 +930,9 @@ typedef struct {                                    /*!< (@ 0x40040200) PORT2 St
 #define PPB_SHCSR_SVCALLPENDED_Pos            (15UL)                    /*!< PPB SHCSR: SVCALLPENDED (Bit 15)                            */
 #define PPB_SHCSR_SVCALLPENDED_Msk            (0x8000UL)                /*!< PPB SHCSR: SVCALLPENDED (Bitfield-Mask: 0x01)               */
 
-
 /* ================================================================================ */
 /* ================           Group 'ERU' Position & Mask          ================ */
 /* ================================================================================ */
-
 
 /* ---------------------------------  ERU_EXISEL  --------------------------------- */
 #define ERU_EXISEL_EXS0A_Pos                  (0UL)                     /*!< ERU EXISEL: EXS0A (Bit 0)                                   */
@@ -1068,11 +990,9 @@ typedef struct {                                    /*!< (@ 0x40040200) PORT2 St
 #define ERU_EXOCON_IPEN3_Pos                  (15UL)                    /*!< ERU EXOCON: IPEN3 (Bit 15)                                  */
 #define ERU_EXOCON_IPEN3_Msk                  (0x8000UL)                /*!< ERU EXOCON: IPEN3 (Bitfield-Mask: 0x01)                     */
 
-
 /* ================================================================================ */
 /* ================          struct 'PAU' Position & Mask          ================ */
 /* ================================================================================ */
-
 
 /* ---------------------------------  PAU_AVAIL0  --------------------------------- */
 #define PAU_AVAIL0_AVAIL5_Pos                 (5UL)                     /*!< PAU AVAIL0: AVAIL5 (Bit 5)                                  */
@@ -1156,11 +1076,9 @@ typedef struct {                                    /*!< (@ 0x40040200) PORT2 St
 #define PAU_RAM0SIZE_ADDR_Pos                 (8UL)                     /*!< PAU RAM0SIZE: ADDR (Bit 8)                                  */
 #define PAU_RAM0SIZE_ADDR_Msk                 (0x1f00UL)                /*!< PAU RAM0SIZE: ADDR (Bitfield-Mask: 0x1f)                    */
 
-
 /* ================================================================================ */
 /* ================          struct 'NVM' Position & Mask          ================ */
 /* ================================================================================ */
-
 
 /* --------------------------------  NVM_NVMSTATUS  ------------------------------- */
 #define NVM_NVMSTATUS_BUSY_Pos                (0UL)                     /*!< NVM NVMSTATUS: BUSY (Bit 0)                                 */
@@ -1200,11 +1118,9 @@ typedef struct {                                    /*!< (@ 0x40040200) PORT2 St
 #define NVM_CONFIG1_FIXWS_Pos                 (11UL)                    /*!< NVM CONFIG1: FIXWS (Bit 11)                                 */
 #define NVM_CONFIG1_FIXWS_Msk                 (0x800UL)                 /*!< NVM CONFIG1: FIXWS (Bitfield-Mask: 0x01)                    */
 
-
 /* ================================================================================ */
 /* ================          struct 'WDT' Position & Mask          ================ */
 /* ================================================================================ */
-
 
 /* -----------------------------------  WDT_ID  ----------------------------------- */
 #define WDT_ID_MOD_REV_Pos                    (0UL)                     /*!< WDT ID: MOD_REV (Bit 0)                                     */
@@ -1248,11 +1164,9 @@ typedef struct {                                    /*!< (@ 0x40040200) PORT2 St
 #define WDT_WDTCLR_ALMC_Pos                   (0UL)                     /*!< WDT WDTCLR: ALMC (Bit 0)                                    */
 #define WDT_WDTCLR_ALMC_Msk                   (0x1UL)                   /*!< WDT WDTCLR: ALMC (Bitfield-Mask: 0x01)                      */
 
-
 /* ================================================================================ */
 /* ================          struct 'RTC' Position & Mask          ================ */
 /* ================================================================================ */
-
 
 /* -----------------------------------  RTC_ID  ----------------------------------- */
 #define RTC_ID_MOD_REV_Pos                    (0UL)                     /*!< RTC ID: MOD_REV (Bit 0)                                     */
@@ -1373,7 +1287,6 @@ typedef struct {                                    /*!< (@ 0x40040200) PORT2 St
 /* ================          struct 'PRNG' Position & Mask         ================ */
 /* ================================================================================ */
 
-
 /* ----------------------------------  PRNG_WORD  --------------------------------- */
 #define PRNG_WORD_RDATA_Pos                   (0UL)                     /*!< PRNG WORD: RDATA (Bit 0)                                    */
 #define PRNG_WORD_RDATA_Msk                   (0xffffUL)                /*!< PRNG WORD: RDATA (Bitfield-Mask: 0xffff)                    */
@@ -1388,11 +1301,9 @@ typedef struct {                                    /*!< (@ 0x40040200) PORT2 St
 #define PRNG_CTRL_KLD_Pos                     (3UL)                     /*!< PRNG CTRL: KLD (Bit 3)                                      */
 #define PRNG_CTRL_KLD_Msk                     (0x8UL)                   /*!< PRNG CTRL: KLD (Bitfield-Mask: 0x01)                        */
 
-
 /* ================================================================================ */
 /* ================          Group 'USIC' Position & Mask          ================ */
 /* ================================================================================ */
-
 
 /* -----------------------------------  USIC_ID  ---------------------------------- */
 #define USIC_ID_MOD_REV_Pos                   (0UL)                     /*!< USIC ID: MOD_REV (Bit 0)                                    */
@@ -1402,11 +1313,9 @@ typedef struct {                                    /*!< (@ 0x40040200) PORT2 St
 #define USIC_ID_MOD_NUMBER_Pos                (16UL)                    /*!< USIC ID: MOD_NUMBER (Bit 16)                                */
 #define USIC_ID_MOD_NUMBER_Msk                (0xffff0000UL)            /*!< USIC ID: MOD_NUMBER (Bitfield-Mask: 0xffff)                 */
 
-
 /* ================================================================================ */
 /* ================         Group 'USIC_CH' Position & Mask        ================ */
 /* ================================================================================ */
-
 
 /* --------------------------------  USIC_CH_CCFG  -------------------------------- */
 #define USIC_CH_CCFG_SSC_Pos                  (0UL)                     /*!< USIC_CH CCFG: SSC (Bit 0)                                   */
@@ -2274,11 +2183,9 @@ typedef struct {                                    /*!< (@ 0x40040200) PORT2 St
 #define USIC_CH_IN_TDATA_Pos                  (0UL)                     /*!< USIC_CH IN: TDATA (Bit 0)                                   */
 #define USIC_CH_IN_TDATA_Msk                  (0xffffUL)                /*!< USIC_CH IN: TDATA (Bitfield-Mask: 0xffff)                   */
 
-
 /* ================================================================================ */
 /* ================      struct 'SCU_GENERAL' Position & Mask      ================ */
 /* ================================================================================ */
-
 
 /* ----------------------------  SCU_GENERAL_DBGROMID  ---------------------------- */
 #define SCU_GENERAL_DBGROMID_MANUFID_Pos      (1UL)                     /*!< SCU_GENERAL DBGROMID: MANUFID (Bit 1)                       */
@@ -2332,11 +2239,9 @@ typedef struct {                                    /*!< (@ 0x40040200) PORT2 St
 #define SCU_GENERAL_PMTSR_MTENS_Pos           (0UL)                     /*!< SCU_GENERAL PMTSR: MTENS (Bit 0)                            */
 #define SCU_GENERAL_PMTSR_MTENS_Msk           (0x1UL)                   /*!< SCU_GENERAL PMTSR: MTENS (Bitfield-Mask: 0x01)              */
 
-
 /* ================================================================================ */
 /* ================     struct 'SCU_INTERRUPT' Position & Mask     ================ */
 /* ================================================================================ */
-
 
 /* -----------------------------  SCU_INTERRUPT_SRRAW  ---------------------------- */
 #define SCU_INTERRUPT_SRRAW_PRWARN_Pos        (0UL)                     /*!< SCU_INTERRUPT SRRAW: PRWARN (Bit 0)                         */
@@ -2500,11 +2405,9 @@ typedef struct {                                    /*!< (@ 0x40040200) PORT2 St
 #define SCU_INTERRUPT_SRSET_TSE_LOW_Pos       (31UL)                    /*!< SCU_INTERRUPT SRSET: TSE_LOW (Bit 31)                       */
 #define SCU_INTERRUPT_SRSET_TSE_LOW_Msk       (0x80000000UL)            /*!< SCU_INTERRUPT SRSET: TSE_LOW (Bitfield-Mask: 0x01)          */
 
-
 /* ================================================================================ */
 /* ================       struct 'SCU_POWER' Position & Mask       ================ */
 /* ================================================================================ */
-
 
 /* -------------------------------  SCU_POWER_VDESR  ------------------------------ */
 #define SCU_POWER_VDESR_VCLIP_Pos             (0UL)                     /*!< SCU_POWER VDESR: VCLIP (Bit 0)                              */
@@ -2512,11 +2415,9 @@ typedef struct {                                    /*!< (@ 0x40040200) PORT2 St
 #define SCU_POWER_VDESR_VDDPPW_Pos            (1UL)                     /*!< SCU_POWER VDESR: VDDPPW (Bit 1)                             */
 #define SCU_POWER_VDESR_VDDPPW_Msk            (0x2UL)                   /*!< SCU_POWER VDESR: VDDPPW (Bitfield-Mask: 0x01)               */
 
-
 /* ================================================================================ */
 /* ================        struct 'SCU_CLK' Position & Mask        ================ */
 /* ================================================================================ */
-
 
 /* --------------------------------  SCU_CLK_CLKCR  ------------------------------- */
 #define SCU_CLK_CLKCR_FDIV_Pos                (0UL)                     /*!< SCU_CLK CLKCR: FDIV (Bit 0)                                 */
@@ -2584,11 +2485,9 @@ typedef struct {                                    /*!< (@ 0x40040200) PORT2 St
 #define SCU_CLK_OSCCSR_OWDEN_Pos              (17UL)                    /*!< SCU_CLK OSCCSR: OWDEN (Bit 17)                              */
 #define SCU_CLK_OSCCSR_OWDEN_Msk              (0x20000UL)               /*!< SCU_CLK OSCCSR: OWDEN (Bitfield-Mask: 0x01)                 */
 
-
 /* ================================================================================ */
 /* ================       struct 'SCU_RESET' Position & Mask       ================ */
 /* ================================================================================ */
-
 
 /* ------------------------------  SCU_RESET_RSTSTAT  ----------------------------- */
 #define SCU_RESET_RSTSTAT_RSTSTAT_Pos         (0UL)                     /*!< SCU_RESET RSTSTAT: RSTSTAT (Bit 0)                          */
@@ -2618,11 +2517,9 @@ typedef struct {                                    /*!< (@ 0x40040200) PORT2 St
 #define SCU_RESET_RSTCON_MRSTEN_Pos           (16UL)                    /*!< SCU_RESET RSTCON: MRSTEN (Bit 16)                           */
 #define SCU_RESET_RSTCON_MRSTEN_Msk           (0x10000UL)               /*!< SCU_RESET RSTCON: MRSTEN (Bitfield-Mask: 0x01)              */
 
-
 /* ================================================================================ */
 /* ================       struct 'SCU_ANALOG' Position & Mask      ================ */
 /* ================================================================================ */
-
 
 /* ----------------------------  SCU_ANALOG_ANATSECTRL  --------------------------- */
 #define SCU_ANALOG_ANATSECTRL_TSE_EN_Pos      (0UL)                     /*!< SCU_ANALOG ANATSECTRL: TSE_EN (Bit 0)                       */
@@ -2652,11 +2549,9 @@ typedef struct {                                    /*!< (@ 0x40040200) PORT2 St
 #define SCU_ANALOG_ANAOFFSET_ADJL_OFFSET_Pos  (0UL)                     /*!< SCU_ANALOG ANAOFFSET: ADJL_OFFSET (Bit 0)                   */
 #define SCU_ANALOG_ANAOFFSET_ADJL_OFFSET_Msk  (0xfUL)                   /*!< SCU_ANALOG ANAOFFSET: ADJL_OFFSET (Bitfield-Mask: 0x0f)     */
 
-
 /* ================================================================================ */
 /* ================          Group 'CCU4' Position & Mask          ================ */
 /* ================================================================================ */
-
 
 /* ---------------------------------  CCU4_GCTRL  --------------------------------- */
 #define CCU4_GCTRL_PRBC_Pos                   (0UL)                     /*!< CCU4 GCTRL: PRBC (Bit 0)                                    */
@@ -2824,11 +2719,9 @@ typedef struct {                                    /*!< (@ 0x40040200) PORT2 St
 #define CCU4_MIDR_MODN_Pos                    (16UL)                    /*!< CCU4 MIDR: MODN (Bit 16)                                    */
 #define CCU4_MIDR_MODN_Msk                    (0xffff0000UL)            /*!< CCU4 MIDR: MODN (Bitfield-Mask: 0xffff)                     */
 
-
 /* ================================================================================ */
 /* ================        Group 'CCU4_CC4' Position & Mask        ================ */
 /* ================================================================================ */
-
 
 /* --------------------------------  CCU4_CC4_INS  -------------------------------- */
 #define CCU4_CC4_INS_EV0IS_Pos                (0UL)                     /*!< CCU4_CC4 INS: EV0IS (Bit 0)                                 */
@@ -3106,11 +2999,9 @@ typedef struct {                                    /*!< (@ 0x40040200) PORT2 St
 #define CCU4_CC4_ECRD1_LCV_Pos                (25UL)                    /*!< CCU4_CC4 ECRD1: LCV (Bit 25)                                */
 #define CCU4_CC4_ECRD1_LCV_Msk                (0x2000000UL)             /*!< CCU4_CC4 ECRD1: LCV (Bitfield-Mask: 0x01)                   */
 
-
 /* ================================================================================ */
 /* ================          Group 'VADC' Position & Mask          ================ */
 /* ================================================================================ */
-
 
 /* ----------------------------------  VADC_CLC  ---------------------------------- */
 #define VADC_CLC_DISR_Pos                     (0UL)                     /*!< VADC CLC: DISR (Bit 0)                                      */
@@ -3294,11 +3185,9 @@ typedef struct {                                    /*!< (@ 0x40040200) PORT2 St
 #define VADC_GLOBRESD_VF_Pos                  (31UL)                    /*!< VADC GLOBRESD: VF (Bit 31)                                  */
 #define VADC_GLOBRESD_VF_Msk                  (0x80000000UL)            /*!< VADC GLOBRESD: VF (Bitfield-Mask: 0x01)                     */
 
-
 /* ================================================================================ */
 /* ================           Group 'SHS' Position & Mask          ================ */
 /* ================================================================================ */
-
 
 /* -----------------------------------  SHS_ID  ----------------------------------- */
 #define SHS_ID_MOD_REV_Pos                    (0UL)                     /*!< SHS ID: MOD_REV (Bit 0)                                     */
@@ -3464,11 +3353,9 @@ typedef struct {                                    /*!< (@ 0x40040200) PORT2 St
 #define SHS_GNCTR10_GAIN7_Pos                 (28UL)                    /*!< SHS GNCTR10: GAIN7 (Bit 28)                                 */
 #define SHS_GNCTR10_GAIN7_Msk                 (0xf0000000UL)            /*!< SHS GNCTR10: GAIN7 (Bitfield-Mask: 0x0f)                    */
 
-
 /* ================================================================================ */
 /* ================         struct 'PORT0' Position & Mask         ================ */
 /* ================================================================================ */
-
 
 /* ----------------------------------  PORT0_OUT  --------------------------------- */
 #define PORT0_OUT_P0_Pos                      (0UL)                     /*!< PORT0 OUT: P0 (Bit 0)                                       */
@@ -3782,11 +3669,9 @@ typedef struct {                                    /*!< (@ 0x40040200) PORT2 St
 #define PORT0_HWSEL_HW15_Pos                  (30UL)                    /*!< PORT0 HWSEL: HW15 (Bit 30)                                  */
 #define PORT0_HWSEL_HW15_Msk                  (0xc0000000UL)            /*!< PORT0 HWSEL: HW15 (Bitfield-Mask: 0x03)                     */
 
-
 /* ================================================================================ */
 /* ================         struct 'PORT1' Position & Mask         ================ */
 /* ================================================================================ */
-
 
 /* ----------------------------------  PORT1_OUT  --------------------------------- */
 #define PORT1_OUT_P0_Pos                      (0UL)                     /*!< PORT1 OUT: P0 (Bit 0)                                       */
@@ -3932,11 +3817,9 @@ typedef struct {                                    /*!< (@ 0x40040200) PORT2 St
 #define PORT1_HWSEL_HW6_Pos                   (12UL)                    /*!< PORT1 HWSEL: HW6 (Bit 12)                                   */
 #define PORT1_HWSEL_HW6_Msk                   (0x3000UL)                /*!< PORT1 HWSEL: HW6 (Bitfield-Mask: 0x03)                      */
 
-
 /* ================================================================================ */
 /* ================         struct 'PORT2' Position & Mask         ================ */
 /* ================================================================================ */
-
 
 /* ----------------------------------  PORT2_OUT  --------------------------------- */
 #define PORT2_OUT_P0_Pos                      (0UL)                     /*!< PORT2 OUT: P0 (Bit 0)                                       */
@@ -4176,8 +4059,6 @@ typedef struct {                                    /*!< (@ 0x40040200) PORT2 St
 #define PORT2_HWSEL_HW11_Pos                  (22UL)                    /*!< PORT2 HWSEL: HW11 (Bit 22)                                  */
 #define PORT2_HWSEL_HW11_Msk                  (0xc00000UL)              /*!< PORT2 HWSEL: HW11 (Bitfield-Mask: 0x03)                     */
 
-
-
 /* ================================================================================ */
 /* ================              Peripheral memory map             ================ */
 /* ================================================================================ */
@@ -4241,7 +4122,6 @@ typedef struct {                                    /*!< (@ 0x40040200) PORT2 St
 #define PORT1                           ((PORT1_Type              *) PORT1_BASE)
 #define PORT2                           ((PORT2_Type              *) PORT2_BASE)
 
-
 /** @} */ /* End of group Device_Peripheral_Registers */
 /** @} */ /* End of group XMC1100 */
 /** @} */ /* End of group Infineon */
@@ -4250,6 +4130,4 @@ typedef struct {                                    /*!< (@ 0x40040200) PORT2 St
 }
 #endif
 
-
 #endif  /* XMC1100_H */
-

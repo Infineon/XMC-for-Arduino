@@ -80,7 +80,7 @@ static const uint8_t SCL = 15;
 #define A4   20
 #define A5   21
 
-#define LED		13	// Standard Arduino LED 
+#define LED_BUILTIN		13	// Standard Arduino LED 
 #define LED1	24	// Additional LED1
 #define LED2	25 	// Additional LED2
 #define BUTTON1	26	// Additional BUTTON1
@@ -110,8 +110,8 @@ static const uint8_t SCL = 15;
 const XMC_PORT_PIN_t mapping_port_pin[] = {
 	/* 0  */ 	{XMC_GPIO_PORT2, 15}, // PIN_RX								
 	/* 1  */ 	{XMC_GPIO_PORT2 ,14}, // PIN_TX			  					
-	/* 2  */ 	{XMC_GPIO_PORT1 ,0},  // GPIO / INT0								
-	/* 3  */ 	{XMC_GPIO_PORT1 ,1},  // PWM output / INT1					
+	/* 2  */ 	{XMC_GPIO_PORT1 ,0},  // GPIO / External INT 0								
+	/* 3  */ 	{XMC_GPIO_PORT1 ,1},  // PWM output / External INT 1					
 	/* 4  */ 	{XMC_GPIO_PORT1 ,8},  // GPIO							
 	/* 5  */ 	{XMC_GPIO_PORT2 ,12}, // PWM output 							
 	/* 6  */ 	{XMC_GPIO_PORT2 ,11}, // PWM output							
