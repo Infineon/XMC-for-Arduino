@@ -186,6 +186,12 @@ extern "C" {
     XMC_SYSTIMER_STATUS_t XMC_SYSTIMER_DeleteTimer(uint32_t id);
 
     /*
+     * @brief Gives the current hardware SysTick time in microsecond since start of hardware SysTick timer.
+     * @return  uint32_t  returns current SysTick time in microsecond. Range: (SYSTIMER_TICK_PERIOD_US) to pow(2,32).
+     */
+    uint32_t XMC_SYSTIMER_GetTime(void);
+
+    /*
      * @brief Gives the SysTick count.
      * @return  uint32_t  returns SysTick count. Range: 0 to pow(2,32).
      */

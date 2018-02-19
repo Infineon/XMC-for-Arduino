@@ -93,7 +93,7 @@ const XMC_PORT_PIN_t mapping_port_pin[] =
     /* 6  */    {XMC_GPIO_PORT2 , 0},   // PIN_TX                           P2.0
     /* 7  */    {XMC_GPIO_PORT2 , 6},   // PIN_RX                           P2.6
     /* 8  */    {XMC_GPIO_PORT0 , 5},   // PWM output                       P0.5
-    /* 9  */    {XMC_GPIO_PORT0 , 0},   // External interrupt               P0.0
+    /* 9  */    {XMC_GPIO_PORT0 , 0},   // External interrupt 0             P0.0
     /* 10  */   {XMC_GPIO_PORT2 , 11},  // I2C Clock SCL                    P2.11
     /* 11  */   {XMC_GPIO_PORT2 , 10},  // I2C Data / Address SDA           P2.10
     /* 12  */   {XMC_GPIO_PORT2 , 9},   // A0 / ADC Input                   P2.9
