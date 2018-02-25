@@ -71,12 +71,12 @@ static const uint8_t SCK  = 13;
 static const uint8_t SDA = 14;
 static const uint8_t SCL = 15;
 
-#define A0   16
-#define A1   17
-#define A2   18
-#define A3   19
-#define A4   20
-#define A5   21
+#define A0   0
+#define A1   1
+#define A2   2
+#define A3   3
+#define A4   4
+#define A5   5
 
 #define LED_BUILTIN		13	// Standard Arduino LED 
 #define LED1	24	// Additional LED1
@@ -91,9 +91,6 @@ static const uint8_t SCL = 15;
 #define digitalPinToPCMSK(p)        (((p) <= 7) ? (&PCMSK2) : (((p) <= 13) ? (&PCMSK0) : (((p) <= 21) ? (&PCMSK1) : ((uint8_t *)0))))
 #define digitalPinToPCMSKbit(p)     (((p) <= 7) ? (p) : (((p) <= 13) ? ((p) - 8) : ((p) - 14)))
 #define digitalPinToInterrupt(p)    ((p) == 2 ? 0 : ((p) == 3 ? 1 : NOT_AN_INTERRUPT))
-#define analogInputToDigitalPin(p)  ((p < 6) ? (p) + 14 : -1)
-#define isanalogPin(p)        		(((p == A0) || (p == A1) || (p == A2) || (p == A3) || (p == A4) || (p == A5)) ? 1 : 0)
-#define analogPinToADCNum(p)		((p == A0) ? (0) :  (p == A1) ? (1) : (p == A2) ? (2) : (p == A3) ? (3) : (p == A4) ? (4) : (p == A5) ? (5) : -1)
 #define digitalPinHasPWM4(p)        ((p) == 3) ||  ((p) == 10) || ((p) == 11)
 #define digitalPinHasPWM8(p)		((p) == 5) || ((p) == 6) ||  ((p) == 9)
 #define digitalPinToPWM4Num(p)      (((p) == 3) ? (0) : ((p) == 10) ? (1) : ((p) == 11) ? (2) : -1 )
