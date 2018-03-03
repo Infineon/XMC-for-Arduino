@@ -121,8 +121,8 @@ const XMC_PORT_PIN_t mapping_port_pin[] =
 	/* 11  */ 	{XMC_GPIO_PORT2 ,1},  // I2C Data / Address SDA				P2.1		
 	/* 12  */ 	{XMC_GPIO_PORT0 ,14}, // GPIO								P0.14				
 	/* 13  */ 	{XMC_GPIO_PORT0 ,15}, // GPIO								P0.15				
-	/* 14  */ 	{XMC_GPIO_PORT0 ,12}, // External interrupt					P0.12 		
-	/* 15  */ 	{XMC_GPIO_PORT0 ,13}, // External interrupt					P0.13		
+	/* 14  */ 	{XMC_GPIO_PORT0 ,12}, // External interrupt	0				P0.12 		
+	/* 15  */ 	{XMC_GPIO_PORT0 ,13}, // External interrupt	1				P0.13		
 	/* 16  */ 	{XMC_GPIO_PORT0 ,10}, // GPIO								P0.10				
 	/* 17  */ 	{XMC_GPIO_PORT0 ,11}, // GPIO								P0.11	
 	

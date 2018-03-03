@@ -1,7 +1,8 @@
 # Arduino Core for Infineon XMC
 
 This repository containts the source code and configuration files of the Arduino Core
-for Infineon XMC Controller Boards (XMC1100 Boot Kit, XMC1100 XMC2GO and XMC4700 Relax Kit).
+for Infineon XMC Controller Boards (XMC1100 Boot Kit, XMC1100 XMC2GO, XMC1300 Boot Kit
+and XMC4700 Relax Kit).
 
 ## Installation on Arduino IDE
 
@@ -12,6 +13,11 @@ for Infineon XMC Controller Boards (XMC1100 Boot Kit, XMC1100 XMC2GO and XMC4700
   5. Select one of the boards under **XMC Family* in Tools->Board menu
   6. Compile/Upload as usual
 
+## Extra Feature
+
+  Beyond Arduino, additional GPIO modes supported, INPUT_PULLDOWN and OUTPUT_OPENDRAIN
+  Something most advanced users and engineers want often
+  
 ## Support
 
 ## Bugs or Issues
