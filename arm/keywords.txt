@@ -11,6 +11,7 @@
 #######################################
 
 digitalToggle	KEYWORD2
+setanalogWriteFrequency	KEYWORD2
 
 #######################################
 # Instances (KEYWORD2)

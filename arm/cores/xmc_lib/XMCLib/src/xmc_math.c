@@ -1,13 +1,13 @@
 
 /**
  * @file xmc_math.c
- * @date 2015-10-08
+ * @date 2017-04-20
  *
  * @cond
  **********************************************************************************
- * XMClib v2.1.8 - XMC Peripheral Driver Library 
+ * XMClib v2.1.16 - XMC Peripheral Driver Library 
  *
- * Copyright (c) 2015-2016, Infineon Technologies AG
+ * Copyright (c) 2015-2017, Infineon Technologies AG
  * All rights reserved.                        
  *                                             
  * Redistribution and use in source and binary forms, with or without           
@@ -54,6 +54,9 @@
  * 2015-10-08:
  *     - Return values for sin(), cos(), sinh(), cosh(), arctan() are corrected.
  *
+ * 2017-04-20:
+ *     - Foward declaration of __aeabi_* to fix link time optimization (-flto) compilation errors
+ * 
  * @endcond
  *
  */
@@ -153,6 +156,13 @@ bool XMC_MATH_GetEventStatus(const XMC_MATH_EVENT_t event)
 }
 
 #ifndef XMC_MATH_DISABLE_DIV_ABI
+
+/* Forward prototypes.  */
+uint32_t __aeabi_uidiv(uint32_t dividend, uint32_t divisor) __attribute__((externally_visible));
+int32_t __aeabi_idiv(int32_t dividend, int32_t divisor) __attribute__((externally_visible));
+uint64_t __aeabi_uidivmod(uint32_t dividend, uint32_t divisor) __attribute__((externally_visible));
+int64_t __aeabi_idivmod(int32_t dividend, int32_t divisor) __attribute__((externally_visible));
+
 /***********************************************************************************************************************
  * API IMPLEMENTATION - aeabi routines
  **********************************************************************************************************************/

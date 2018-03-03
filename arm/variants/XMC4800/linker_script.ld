@@ -1,15 +1,15 @@
 /**
  * @file XMC4800x2048.ld
- * @date 2016-03-08
+ * @date 2017-04-20
  *
  * @cond
  *********************************************************************************************************************
- * Linker file for the GNU C Compiler v1.2
+ * Linker file for the GNU C Compiler v1.3
  * Supported devices: XMC4800-E196x2048
  *                    XMC4800-F144x2048
  *                    XMC4800-F100x2048
  *
- * Copyright (c) 2015-2016, Infineon Technologies AG
+ * Copyright (c) 2015-2017, Infineon Technologies AG
  * All rights reserved.                        
  *                                             
  * Redistribution and use in source and binary forms, with or without modification,are permitted provided that the 
@@ -49,6 +49,12 @@
  *     - Fix size of BSS and DATA sections to be multiple of 4
  *     - Add assertion to check that region SRAM_combined does not overflowed no_init section  
  *             
+ * 2017-04-07:
+ *     - Added new symbols __text_size and eText
+ * 
+ * 2017-04-20:
+ *     - Change vtable location to flash area to save ram             
+ *
  * @endcond 
  *
  */
@@ -100,8 +106,10 @@ SECTIONS
 
     *(.rodata .rodata.*)
     *(.gnu.linkonce.r*)
-     
-    . = ALIGN(4);   
+        
+    *(vtable)        
+
+    . = ALIGN(4);        
   } > FLASH_1_cached AT > FLASH_1_uncached
 
   .eh_frame_hdr : ALIGN (4)
@@ -155,7 +163,6 @@ SECTIONS
   {
     . = ALIGN(4); /* section size must be multiply of 4 */        
     __data_start = .;
-    *(vtable)        
     * (.data);
     * (.data*);
     *(*.data);
@@ -186,6 +193,9 @@ SECTIONS
   } > SRAM_combined AT > FLASH_1_uncached
   __data_load = LOADADDR (.data);
   __data_size = __data_end - __data_start;
+        
+  __text_size = (__exidx_end - sText) + __data_size + __ram_code_size;
+  eText = sText + __text_size;
         
   /* BSS section */
   .bss (NOLOAD) : 
@@ -225,11 +235,6 @@ SECTIONS
     Heap_Bank1_Start = .;
   } > SRAM_combined
   ETH_RAM_size = ETH_RAM_end - ETH_RAM_start;
-
-  __malloc_heap_start = Heap_Bank1_Start;
-  __malloc_heap_end = __malloc_heap_start + 0x2000;
-  end = __malloc_heap_end;
-  __malloc_heap_size = __malloc_heap_end - __malloc_heap_start;
 
   /* .no_init section contains chipid, SystemCoreClock and trimming data. See system.c file*/
   .no_init ORIGIN(SRAM_combined) + LENGTH(SRAM_combined) - no_init_size (NOLOAD) : 

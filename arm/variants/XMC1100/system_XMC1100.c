@@ -1,12 +1,12 @@
 /*********************************************************************************************************************
  * @file     system_XMC1100.c
  * @brief    Device specific initialization for the XMC1100-Series according to CMSIS
- * @version  V1.10
- * @date     22 Aug 2016
+ * @version  V1.11
+ * @date     19 Jun 2017
  *
  * @cond
  *********************************************************************************************************************
- * Copyright (c) 2012-2016, Infineon Technologies AG
+ * Copyright (c) 2012-2017, Infineon Technologies AG
  * All rights reserved.                        
  *                                             
  * Redistribution and use in source and binary forms, with or without modification,are permitted provided that the 
@@ -46,7 +46,9 @@
  * V1.10,22 Aug 2016, JFT : Update coding for fixed flash wait states using new macros in device header file
  *                          Add macro guard USE_DYNAMIC_FLASH_WS. If defined in compiler options, adaptive wait states
  *                          are used for read accesses to the flash memory. Otherwise a fixed 1 WS is used.
- *
+ * V1.11,19 Jun 2017, Rely on cmsis_compiler.h instead of defining __WEAK
+ *                    Added support for ARM Compiler 6 (armclang) 
+ * 
  * @endcond 
  */
 
@@ -60,20 +62,6 @@
 /*******************************************************************************
  * MACROS
  *******************************************************************************/
-
-/* Define WEAK attribute */
-#if !defined(__WEAK)
-#if defined ( __CC_ARM )
-#define __WEAK __attribute__ ((weak))
-#elif defined ( __ICCARM__ )
-#define __WEAK __weak
-#elif defined ( __GNUC__ )
-#define __WEAK __attribute__ ((weak))
-#elif defined ( __TASKING__ )
-#define __WEAK __attribute__ ((weak))
-#endif
-#endif
-
 #define DCO1_FREQUENCY (64000000U)
 
 /*******************************************************************************
@@ -82,6 +70,8 @@
 
 #if defined ( __CC_ARM )
 uint32_t SystemCoreClock __attribute__((at(0x20003FFC)));
+#elif defined (__ARMCC_VERSION) && (__ARMCC_VERSION >= 6010050)
+uint32_t SystemCoreClock __attribute__((section(".ARM.__at_0x20003FFC")));
 #elif defined ( __ICCARM__ )
 __no_init uint32_t SystemCoreClock;
 #elif defined ( __GNUC__ )

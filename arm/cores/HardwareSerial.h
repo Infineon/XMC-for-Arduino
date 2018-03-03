@@ -29,6 +29,7 @@ extern "C" {
 
 void serialEvent() __attribute__((weak));
 void serialEvent1() __attribute__((weak));
+void serialEvent2() __attribute__((weak));
 
 //****************************************************************************
 // @Project Includes
@@ -129,6 +130,7 @@ extern HardwareSerial Serial;
 
 #if defined(XMC4700_Relax_Kit)
 extern HardwareSerial Serial1;
+extern HardwareSerial Serial2;
 #endif
 
 

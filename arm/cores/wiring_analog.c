@@ -259,6 +259,64 @@ void analogWrite(uint8_t pin, uint16_t value)
     }
 }
 
+extern int16_t setanalogWriteFrequency( uint8_t pin, uint32_t frequency )
+{
+	int16_t ret = -1;
+	XMC_CCU4_SLICE_PRESCALER_t prescaler = (XMC_CCU4_SLICE_PRESCALER_t) 0;
+	if(frequency < PCLK)
+	{
+		uint8_t exp = 0u;
+		do
+		{
+			if(frequency > PCLK/(1u<<exp))
+			{
+				break;
+			}
+			exp++;
+		}while(exp <= 12u);
+		
+		if (digitalPinHasPWM4(pin))
+		{
+			uint8_t pwm4_num = digitalPinToPWM4Num(pin);
+			XMC_PWM4_t *pwm4 = &mapping_pwm4[pwm4_num];
+					
+			pwm4->prescaler = exp;
+			pwm4->period_timer_val = PCLK/(frequency*(1u<<exp));
+			
+			if(pwm4->enabled == ENABLED)
+			{
+				// Disable pwm output
+				pwm4->enabled = DISABLED;
+				XMC_CCU4_SLICE_StartTimer(pwm4->slice);
+			}
+			
+			ret = 0;
+		}
+#ifdef CCU8V2
+		else if (digitalPinHasPWM8(pin))
+		{
+			uint8_t pwm8_num = digitalPinToPWM8Num(pin);
+			XMC_PWM8_t *pwm8 = &mapping_pwm8[pwm8_num];
+					
+			pwm8->prescaler = exp;
+			pwm8->period_timer_val = PCLK/(frequency*(1u<<exp));
+			
+			if(pwm8->enabled == ENABLED)
+			{
+				// Disable pwm output
+				pwm8->enabled = DISABLED;
+				XMC_CCU4_SLICE_StartTimer(pwm8->slice);
+			}
+			
+				
+			ret = 0;
+		}
+#endif
+	}
+	
+	return ret;
+}
+
 //****************************************************************************
 //                                 END OF FILE
 //****************************************************************************

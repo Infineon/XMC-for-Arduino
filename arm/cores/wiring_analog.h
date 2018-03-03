@@ -43,6 +43,16 @@ extern "C" {
      * \param value
      */
     extern void analogWrite( uint8_t pin, uint16_t value ) ;
+	
+	/*
+     * \brief Sets the frequency for analogWrite PWM.
+	 * 
+	 * \note Default value is 490 Hz
+     *
+     * \param pin
+     * \param frequency in Hz
+     */
+    extern int16_t setanalogWriteFrequency( uint8_t pin, uint32_t frequency ) ;
 
     /*
      * \brief Reads the value from the specified analog pin.

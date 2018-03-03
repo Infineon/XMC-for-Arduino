@@ -39,7 +39,9 @@
 #define NUM_INTERRUPT       2
 #define NUM_SERIAL          1
 
-#define PWM4_TIMER_PERIOD (2041U)  // Generate 490Hz @fCCU=1MHz
+#define PWM4_TIMER_PERIOD (2041U)  // Generate 490Hz @fCCU=64MHz
+
+#define PCLK 64000000u
 
 #define PIN_RX        (0)
 #define PIN_TX        (1)

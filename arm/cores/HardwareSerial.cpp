@@ -46,6 +46,15 @@ void serialEventRun(void)
 				serialEvent1();
 			}
         }
+#if (NUM_SERIAL > 2)
+        if (serialEvent2)
+        {
+			if (Serial2.available())
+			{
+				serialEvent2();
+			}
+        }
+#endif
 #endif
 
     }
@@ -64,6 +73,11 @@ void serialEventRun(void)
     void USIC1_0_IRQHandler(void)
     {
         Serial1.IrqHandler();
+    }
+	
+    void USIC0_1_IRQHandler(void)
+    {
+        Serial2.IrqHandler();
     }
 #endif
 
@@ -121,6 +135,7 @@ void HardwareSerial::begin(const uint32_t speed, const XMC_UART_MODE_t config)
     }
 
     XMC_UART_CH_EnableEvent(_XMC_UART_config->channel, XMC_UART_CH_EVENT_ALTERNATIVE_RECEIVE | XMC_UART_CH_EVENT_STANDARD_RECEIVE);
+    XMC_UART_CH_EnableEvent(_XMC_UART_config->channel, XMC_UART_CH_EVENT_TRANSMIT_BUFFER);
     XMC_USIC_CH_SetInterruptNodePointer(_XMC_UART_config->channel, XMC_USIC_CH_INTERRUPT_NODE_POINTER_RECEIVE, _XMC_UART_config->irq_service_request);
     XMC_USIC_CH_SetInterruptNodePointer(_XMC_UART_config->channel, XMC_USIC_CH_INTERRUPT_NODE_POINTER_ALTERNATE_RECEIVE, _XMC_UART_config->irq_service_request);
     XMC_USIC_CH_SetInterruptNodePointer(_XMC_UART_config->channel, XMC_USIC_CH_INTERRUPT_NODE_POINTER_TRANSMIT_BUFFER, _XMC_UART_config->irq_service_request);
@@ -196,7 +211,7 @@ int HardwareSerial::read( void )
     // if the head isn't ahead of the tail, we don't have any characters
     if ( _rx_buffer->_iHead == _rx_buffer->_iTail )
     {
-        return -1;
+    	return -1;
     }
 
     uint8_t uc = _rx_buffer->_aucBuffer[_rx_buffer->_iTail];
@@ -264,7 +279,8 @@ void HardwareSerial::IrqHandler( void )
         else
         {
             // Mask off transmit interrupt so we don't get it anymore
-            XMC_UART_CH_DisableEvent(_XMC_UART_config->channel, XMC_UART_CH_EVENT_TRANSMIT_BUFFER);
+			// TODO: not needed?
+            //XMC_UART_CH_DisableEvent(_XMC_UART_config->channel, XMC_UART_CH_EVENT_TRANSMIT_BUFFER);
         }
     }
 }

@@ -39,13 +39,15 @@
 #define NUM_INTERRUPT       1
 #define NUM_SERIAL          1
 
-#define PWM4_TIMER_PERIOD (2041U)  // Generate 490Hz @fCCU=1MHz
+#define PWM4_TIMER_PERIOD (2041U)  // Generate 490Hz @fCCU=64MHz
+
+#define PCLK 64000000u
 
 #define PIN_RX        (7)
 #define PIN_TX        (6)
 #define PIN_SPI_SS    (3)
-#define PIN_SPI_MOSI  (0)
-#define PIN_SPI_MISO  (1)
+#define PIN_SPI_MOSI  (1)
+#define PIN_SPI_MISO  (0)
 #define PIN_SPI_SCK   (2)
 
 #define PIN_WIRE_SDA        (11)
@@ -59,16 +61,16 @@ extern uint8_t MOSI;
 extern uint8_t MISO;
 extern uint8_t SCK ;
 
-static const uint8_t SDA = 11;
-static const uint8_t SCL = 10;
+static const uint8_t SDA = PIN_WIRE_SDA;
+static const uint8_t SCL = PIN_WIRE_SCL;
 
 #define A0   12
 #define A1   13
 
-#define LED_BUILTIN 14 //Standard Arduino LED: Used LED1
-#define LED1    14  // Extended Leds
-#define LED2    15  // Extended Leds
-#define GND     32  // GND
+#define LED_BUILTIN 14 	//Standard Arduino LED: Used LED1
+#define LED1    14  	// Extended Leds
+#define LED2    15  	// Extended Leds
+#define GND     32  	// GND
 
 #define digitalPinToInterrupt(p)    (((p) == 9) ? 0 : NOT_AN_INTERRUPT)
 #define isanalogPin(p)              (((p == A0) || (p == A1)) ? (1) :0)
@@ -81,8 +83,8 @@ static const uint8_t SCL = 10;
 
 const XMC_PORT_PIN_t mapping_port_pin[] =
 {
-    /* 0  */    {XMC_GPIO_PORT0, 6},    // SPI-MOSI                         P0.6
-    /* 1  */    {XMC_GPIO_PORT0 , 7},   // SPI-MISO                         P0.7
+    /* 0  */    {XMC_GPIO_PORT0, 6},    // SPI-MISO                         P0.6
+    /* 1  */    {XMC_GPIO_PORT0 , 7},   // SPI-MOSI                         P0.7
     /* 2  */    {XMC_GPIO_PORT0 , 8},   // SPI-SCK                          P0.8
     /* 3  */    {XMC_GPIO_PORT0 , 9},   // SPI-SS                           P0.9
     /* 4  */    {XMC_GPIO_PORT0 , 14},  // GPIO                             P0.14

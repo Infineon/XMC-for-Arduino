@@ -1,5 +1,5 @@
 /*********************************************************************************************************************
- * Copyright (c) 2012-2016, Infineon Technologies AG
+ * Copyright (c) 2012-2017, Infineon Technologies AG
  * All rights reserved.                        
  *                                             
  * Redistribution and use in source and binary forms, with or without modification,are permitted provided that the 
@@ -33,11 +33,12 @@
  * @brief    CMSIS Cortex-M0 Peripheral Access Layer Header File for
  *           XMC1300 from Infineon.
  *
- * @version  V1.3.0 (Reference Manual v1.3)
- * @date     22. August 2016
+ * @version  V1.3.1 (Reference Manual v1.3)
+ * @date     19. June 2017
  *
  * @note     Generated with SVDConv V2.87l 
  *           from CMSIS SVD File 'XMC1300_Processed_SVD.xml' Version 1.3.0 (Reference Manual v1.3),
+ *           added support for ARM Compiler 6 (armclang)  
  *******************************************************************************************************/
 
 
@@ -209,6 +210,10 @@ reg = (uint##size##_t) (VAL2 | VAL4);\
 #if defined(__CC_ARM)
   #pragma push
   #pragma anon_unions
+#elif defined(__ARMCC_VERSION) && (__ARMCC_VERSION >= 6010050)
+  #pragma clang diagnostic push
+  #pragma clang diagnostic ignored "-Wc11-extensions"
+  #pragma clang diagnostic ignored "-Wreserved-id-macro"
 #elif defined(__ICCARM__)
   #pragma language=extended
 #elif defined(__GNUC__)
@@ -1129,6 +1134,8 @@ typedef struct {                                    /*!< (@ 0x40040200) PORT2 St
 /* --------------------  End of section using anonymous unions  ------------------- */
 #if defined(__CC_ARM)
   #pragma pop
+#elif defined(__ARMCC_VERSION) && (__ARMCC_VERSION >= 6010050)
+  #pragma clang diagnostic pop
 #elif defined(__ICCARM__)
   /* leave anonymous unions enabled */
 #elif defined(__GNUC__)
@@ -6931,13 +6938,7 @@ typedef struct {                                    /*!< (@ 0x40040200) PORT2 St
 #define PORT1                           ((PORT1_Type              *) PORT1_BASE)
 #define PORT2                           ((PORT2_Type              *) PORT2_BASE)
 
-
-
-
-
 /** @} */ /* End of group Device_Peripheral_Registers */
-
-
 /** @} */ /* End of group XMC1300 */
 /** @} */ /* End of group Infineon */
 

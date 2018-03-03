@@ -26,7 +26,7 @@
 //****************************************************************************
 // @Macros
 //****************************************************************************
-#define FREQUENCY_TO_MILLIS(f)   (1000/(2*f)
+#define FREQUENCY_TO_MILLIS(f)   (1000/(2*f))
 #define TIMER_TO_IRQ_HANDLER(t)  t==0?TIMER_0_IRQHandler:t==1?TIMER_1_IRQHandler:t==2?TIMER_2_IRQHandler:t==3?TIMER_3_IRQHandler:NULL
 
 //****************************************************************************
@@ -105,7 +105,7 @@ void tone(uint8_t _pin, unsigned int frequency, unsigned long duration)
             toggle_count = -1;
         }
 
-        timer_ids[_timer] = XMC_SYSTIMER_CreateTimer((uint32_t)FREQUENCY_TO_MILLIS(frequency)), XMC_SYSTIMER_MODE_PERIODIC, (XMC_SYSTIMER_CALLBACK_t) (TIMER_TO_IRQ_HANDLER(_timer)), NULL);
+        timer_ids[_timer] = XMC_SYSTIMER_CreateTimer((uint32_t)FREQUENCY_TO_MILLIS(frequency), XMC_SYSTIMER_MODE_PERIODIC, (XMC_SYSTIMER_CALLBACK_t) (TIMER_TO_IRQ_HANDLER(_timer)), NULL);
         if (timer_ids[_timer] != 0)
         {
             //Timer is created successfully

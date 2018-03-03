@@ -1,12 +1,12 @@
 /*********************************************************************************************************************
  * @file     system_XMC4700.c
  * @brief    CMSIS Cortex-M4 Device Peripheral Access Layer Header File for the Infineon XMC4700 Device Series
- * @version  V1.0.2
- * @date     01. Jun 2016
+ * @version  V1.0.4
+ * @date     19. Jun 2017
  *
  * @cond
  *********************************************************************************************************************
- * Copyright (c) 2015-2016, Infineon Technologies AG
+ * Copyright (c) 2015-2017, Infineon Technologies AG
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,are permitted provided that the
@@ -36,7 +36,10 @@
  ********************** Version History ***************************************
  * V1.0.0, 03. Sep 2015, Initial version
  * V1.0.1, 26. Jan 2016, Disable trap generation from clock unit
- * V1.0.2, 01. Jun 2016, Fix masking of OSCHPCTRL value 
+ * V1.0.2, 01. Jun 2016, Fix masking of OSCHPCTRL value
+ * V1.0.3, 09. Feb 2017, Fix activation of USBPLL when SDMMC clock is enabled 
+ * V1.0.4, 19. Jun 2017, Rely on cmsis_compiler.h instead of defining __WEAK 
+ *                       Added support for ARM Compiler 6 (armclang) 
  ******************************************************************************
  * @endcond
  */
@@ -66,21 +69,7 @@
 /*******************************************************************************
  * MACROS
  *******************************************************************************/
-
 #define CHIPID_LOC ((uint8_t *)0x20000000UL)
-
-/* Define WEAK attribute */
-#if !defined(__WEAK)
-#if defined ( __CC_ARM )
-#define __WEAK __attribute__ ((weak))
-#elif defined ( __ICCARM__ )
-#define __WEAK __weak
-#elif defined ( __GNUC__ )
-#define __WEAK __attribute__ ((weak))
-#elif defined ( __TASKING__ )
-#define __WEAK __attribute__ ((weak))
-#endif
-#endif
 
 #define PMU_FLASH_WS          (0x4U)
 
@@ -313,7 +302,8 @@
      (((__CLKSET & SCU_CLK_CLKSET_WDTCEN_Msk) != 0) && ((__WDTCLKCR & SCU_CLK_WDTCLKCR_WDTSEL_Msk) == SCU_CLK_WDTCLKCR_WDTSEL_PLL)))
 
 #define ENABLE_USBPLL \
-     (((__CLKSET & SCU_CLK_CLKSET_USBCEN_Msk) != 0) && ((__USBCLKCR & SCU_CLK_USBCLKCR_USBSEL_Msk) == SCU_CLK_USBCLKCR_USBSEL_USBPLL))
+     ((((__CLKSET & SCU_CLK_CLKSET_USBCEN_Msk) != 0) && ((__USBCLKCR & SCU_CLK_USBCLKCR_USBSEL_Msk) == SCU_CLK_USBCLKCR_USBSEL_USBPLL)) || \
+      (((__CLKSET & SCU_CLK_CLKSET_MMCCEN_Msk) != 0) && ((__USBCLKCR & SCU_CLK_USBCLKCR_USBSEL_Msk) == SCU_CLK_USBCLKCR_USBSEL_USBPLL)))
                      
 #if ((__USBCLKCR & SCU_CLK_USBCLKCR_USBSEL_Msk) == SCU_CLK_USBCLKCR_USBSEL_USBPLL)
 #define USB_DIV (3U)
@@ -333,7 +323,17 @@ uint32_t SystemCoreClock __attribute__((at(0x2002CFC0)));
 uint8_t g_chipid[16] __attribute__((at(0x2002CFC4)));
 #else
 #error "system_XMC4700.c: device not supported" 
-#endif    
+#endif
+#elif defined (__ARMCC_VERSION) && (__ARMCC_VERSION >= 6010050)
+#if defined(XMC4700_E196x2048) || defined(XMC4700_F144x2048) || defined(XMC4700_F100x2048)
+uint32_t SystemCoreClock __attribute__((section(".ARM.__at_0x2003FFC0")));
+uint8_t g_chipid[16] __attribute__((section(".ARM.__at_0x2003FFC4")));
+#elif defined(XMC4700_E196x1536) || defined(XMC4700_F144x1536) || defined(XMC4700_F100x1536)
+uint32_t SystemCoreClock __attribute__((section(".ARM.__at_0x2002CFC0")));
+uint8_t g_chipid[16] __attribute__((section(".ARM.__at_0x2002CFC4")));
+#else
+#error "system_XMC4700.c: device not supported" 
+#endif   
 #elif defined ( __ICCARM__ )
 #if defined(XMC4700_E196x2048) || defined(XMC4700_F144x2048) || defined(XMC4700_F100x2048) || \
     defined(XMC4700_E196x1536) || defined(XMC4700_F144x1536) || defined(XMC4700_F100x1536)

@@ -1,13 +1,13 @@
 
 /**
  * @file xmc_dma.h
- * @date 2015-06-20
+ * @date 2016-10-28
  *
  * @cond
  *********************************************************************************************************************
- * XMClib v2.1.8 - XMC Peripheral Driver Library 
+ * XMClib v2.1.16 - XMC Peripheral Driver Library 
  *
- * Copyright (c) 2015-2016, Infineon Technologies AG
+ * Copyright (c) 2015-2017, Infineon Technologies AG
  * All rights reserved.                        
  *                                             
  * Redistribution and use in source and binary forms, with or without modification,are permitted provided that the 
@@ -47,6 +47,9 @@
  *       XMC_DMA_CH_ClearDestinationPeripheralRequest <br>
  *     - Documentation updates <br>
  *     - Removed version macros and declaration of GetDriverVersion API <br>
+ *
+ * 2016-10-28:
+ *     - Fix documentation on maximum block size
  *
  * @endcond
  */
@@ -417,7 +420,7 @@ typedef struct XMC_DMA_CH_CONFIG
     };
   };
   
-  uint16_t block_size;                          /**< Block size for DMA controlled transfers [1-2048]*/
+  uint16_t block_size;                          /**< Block size for DMA controlled transfers [max. 4095]*/
   XMC_DMA_CH_TRANSFER_TYPE_t transfer_type;     /**< DMA transfer type */
   XMC_DMA_CH_PRIORITY_t priority;               /**< DMA channel priority */
   XMC_DMA_CH_SRC_HANDSHAKING_t src_handshaking; /**< DMA source handshaking interface */
