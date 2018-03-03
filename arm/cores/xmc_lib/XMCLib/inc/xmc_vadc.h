@@ -1490,6 +1490,8 @@ __STATIC_INLINE void XMC_VADC_GLOBAL_ClockInit(XMC_VADC_GLOBAL_t *const global_p
 }
 #endif
 
+#if 0
+// Function not used in XMC-for-Arduino and probably not tested
 /**
  *
  * @param global_ptr Constant pointer to the VADC module.
@@ -1512,6 +1514,7 @@ __STATIC_INLINE void XMC_VADC_GLOBAL_ClockInit(XMC_VADC_GLOBAL_t *const global_p
 
 void XMC_VADC_GLOBAL_InputClassInit(XMC_VADC_GLOBAL_t *const global_ptr, const XMC_VADC_GLOBAL_CLASS_t config,
                                           const XMC_VADC_GROUP_CONV_t conv_type, const uint32_t set_num);
+#endif
 
 /**
  *
