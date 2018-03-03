@@ -228,6 +228,7 @@ void XMC_VADC_GLOBAL_Init(XMC_VADC_GLOBAL_t *const global_ptr, const XMC_VADC_GL
 
 }
 
+#if 0
 /* API to Set the Global IClass registers*/
 void XMC_VADC_GLOBAL_InputClassInit(XMC_VADC_GLOBAL_t *const global_ptr, const XMC_VADC_GLOBAL_CLASS_t config,
                                           const XMC_VADC_GROUP_CONV_t conv_type, const uint32_t set_num)
@@ -251,6 +252,7 @@ void XMC_VADC_GLOBAL_InputClassInit(XMC_VADC_GLOBAL_t *const global_ptr, const X
   }
 #endif
 }
+#endif
 
 /* API to enable startup calibration feature */
 void XMC_VADC_GLOBAL_StartupCalibration(XMC_VADC_GLOBAL_t *const global_ptr)
@@ -287,6 +289,7 @@ void XMC_VADC_GLOBAL_StartupCalibration(XMC_VADC_GLOBAL_t *const global_ptr)
   }
 #endif
 }
+
 
 /* API to set boudaries for result of conversion. Should the boundaries be violated, interrupts are generated */
 #if (XMC_VADC_BOUNDARY_AVAILABLE == 1U)
