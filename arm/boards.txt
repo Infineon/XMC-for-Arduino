@@ -52,7 +52,7 @@ XMC1100_XMC2GO.build.board.type=T038x0064
 XMC1100_XMC2GO.build.board.v=0064
 XMC1100_XMC2GO.build.core=./
 XMC1100_XMC2GO.build.variant=XMC1100
-XMC1100_XMC2GO.build.board_variant=XMC1100_XMC2GO
+XMC1100_XMC2GO.build.board_variant=XMC1100_XMC2Go
 XMC1100_XMC2GO.build.flash_size=64K
 XMC1100_XMC2GO.build.flash_ld=linker_script.ld
 
@@ -81,7 +81,7 @@ XMC1100_H_BRIDGE2GO.build.board.type=T038x0064
 XMC1100_H_BRIDGE2GO.build.board.v=0064
 XMC1100_H_BRIDGE2GO.build.core=./
 XMC1100_H_BRIDGE2GO.build.variant=XMC1100
-XMC1100_H_BRIDGE2GO.build.board_variant=XMC1100_H_BRIDGE2GO
+XMC1100_H_BRIDGE2GO.build.board_variant=XMC1100_H_Bridge2Go
 XMC1100_H_BRIDGE2GO.build.flash_size=64K
 XMC1100_H_BRIDGE2GO.build.flash_ld=linker_script.ld
 
@@ -141,7 +141,7 @@ XMC1300_Radar.build.board.type=T038x0064
 XMC1300_Radar.build.board.v=0032
 XMC1300_Radar.build.core=./
 XMC1300_Radar.build.variant=XMC1300
-XMC1300_Radar.build.board_variant=XMC1300_Radar
+XMC1300_Radar.build.board_variant=XMC1300_Sense2GoL
 XMC1300_Radar.build.flash_size=64K
 XMC1300_Radar.build.flash_ld=linker_script.ld
 
