@@ -66,12 +66,12 @@ extern uint8_t SCK ;
 static const uint8_t SDA = 15;
 static const uint8_t SCL = 16;
 
-#define A0   17
-#define A1   18
-#define A2   19
-#define A3   20
-#define A4   21
-#define A5   22
+#define A0   0
+#define A1   1
+#define A2   2
+#define A3   3
+#define A4   4
+#define A5   5
 
 #define PIN_SPI_SS_2    23
 
@@ -93,9 +93,6 @@ static const uint8_t SCL = 16;
 #define GND     32  // GND
 
 #define digitalPinToInterrupt(p)    ((p) == 2 ? 0 : ((p) == 3 ? 1 : NOT_AN_INTERRUPT))
-#define analogInputToDigitalPin(p)  ((p < 6) ? (p) + 14 : -1)
-#define isanalogPin(p)              (((p == A0) || (p == A1) || (p == A2) || (p == A3) || (p == A4) || (p == A5)) ? 1 : 0)
-#define analogPinToADCNum(p)        ((p == A0) ? (0) :  (p == A1) ? (1) : (p == A2) ? (2) : (p == A3) ? (3) : (p == A4) ? (4) : (p == A5) ? (5) : -1)
 #define digitalPinHasPWM4(p)        ((p) == 3 || (p) == 4 || (p) == 6 ||  (p) == 9)
 #define digitalPinToPWM4Num(p)      (((p) == 3) ? (0) : (((p) == 4) ? (1) : (((p) == 6) ? (2) : (3))))
 

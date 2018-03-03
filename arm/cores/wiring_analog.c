@@ -113,55 +113,61 @@ void analogReference(uint8_t ulMode)
     analog_reference = ulMode;
 }
 
-uint32_t analogRead(uint8_t pin)
+
+// analogRead takes parameter of ADC channel number
+// return 0 for invalid channel
+// Would prefer a return of 0xFFFFFFFF to be obvious in code/debug when wrong
+// instead of valid value as it has been done
+uint32_t analogRead( uint8_t channel )
 {
-    uint32_t value = 0;
-    if (isanalogPin(pin))
-    {
-        uint8_t adc_num = analogPinToADCNum(pin);
-        XMC_ADC_t *adc = &mapping_adc[adc_num];
+uint32_t value = 0;
+
+if( channel < NUM_ANALOG_INPUTS )
+  {
+  XMC_ADC_t *adc = &mapping_adc[ channel ];
 
 #if(XMC_VADC_GROUP_AVAILABLE == 1U)
-// ADC grouping
-        if (!(adc->enabled))
-        {
-            XMC_VADC_CHANNEL_CONFIG_t  vadc_gobal_channel_config;
-            memset( &vadc_gobal_channel_config, 0, sizeof( XMC_VADC_CHANNEL_CONFIG_t ) );
-            vadc_gobal_channel_config.input_class       = XMC_VADC_CHANNEL_CONV_GROUP_CLASS1;
-            vadc_gobal_channel_config.result_reg_number = adc->result_reg_num;
-            vadc_gobal_channel_config.alias_channel     = XMC_VADC_CHANNEL_ALIAS_DISABLED;
+  // ADC grouping
+  if (!(adc->enabled))
+    {
+    XMC_VADC_CHANNEL_CONFIG_t  vadc_gobal_channel_config;
+    memset( &vadc_gobal_channel_config, 0, sizeof( XMC_VADC_CHANNEL_CONFIG_t ) );
+    vadc_gobal_channel_config.input_class       = XMC_VADC_CHANNEL_CONV_GROUP_CLASS1;
+    vadc_gobal_channel_config.result_reg_number = adc->result_reg_num;
+    vadc_gobal_channel_config.alias_channel     = XMC_VADC_CHANNEL_ALIAS_DISABLED;
 
-            XMC_VADC_RESULT_CONFIG_t vadc_gobal_result_config = { .g_rcr = 0 };
+    XMC_VADC_RESULT_CONFIG_t vadc_gobal_result_config = { .g_rcr = 0 };
 
-            /* Configure a channel belonging to the aforesaid conversion kernel */
-            XMC_VADC_GROUP_ChannelInit(adc->group, adc->channel_num, &vadc_gobal_channel_config);
+    /* Configure a channel belonging to the aforesaid conversion kernel */
+    XMC_VADC_GROUP_ChannelInit(adc->group, adc->channel_num, &vadc_gobal_channel_config);
 
-            /* Configure a result resource belonging to the aforesaid conversion kernel */
-            XMC_VADC_GROUP_ResultInit(adc->group, adc->result_reg_num, &vadc_gobal_result_config);
+    /* Configure a result resource belonging to the aforesaid conversion kernel */
+    XMC_VADC_GROUP_ResultInit(adc->group, adc->result_reg_num, &vadc_gobal_result_config);
 
-            /* Add channel into the Background Request Source Channel Select Register */
-            XMC_VADC_GLOBAL_BackgroundAddChannelToSequence(VADC, (uint32_t)adc->group_num, (uint32_t)adc->channel_num);
-        }
-        /* Start conversion manually using load event trigger*/
-        XMC_VADC_GLOBAL_BackgroundTriggerConversion(VADC);
-
-        value = XMC_VADC_GROUP_GetResult(adc->group, adc->result_reg_num);
-#else
-// XMC1100 no ADC grouping
-        if (!(adc->enabled))
-        {
-            /* Add a channel to the background source. */
-            VADC->BRSSEL[ADC_CONVERSION_GROUP] = (uint32_t)(1U << adc->channel_num);
-        }
-        // Generates conversion request
-        XMC_VADC_GLOBAL_BackgroundTriggerConversion(VADC);
-
-        // Wait until conversion is ready
-        while (((value = XMC_VADC_GLOBAL_GetDetailedResult(VADC)) & VADC_GLOBRES_VF_Msk) == 0u);
-#endif
+    /* Add channel into the Background Request Source Channel Select Register */
+    XMC_VADC_GLOBAL_BackgroundAddChannelToSequence(VADC, (uint32_t)adc->group_num, (uint32_t)adc->channel_num);
     }
+  /* Start conversion manually using load event trigger*/
+  XMC_VADC_GLOBAL_BackgroundTriggerConversion(VADC);
 
-    return ((value & VADC_GLOBRES_RESULT_Msk) >> (ADC_MAX_READ_RESOLUTION - _readResolution));
+  value = XMC_VADC_GROUP_GetResult(adc->group, adc->result_reg_num);
+#else
+  // XMC1100 no ADC grouping
+  if( !(adc->enabled) )
+    {
+    /* Add a channel to the background source. */
+    VADC->BRSSEL[ADC_CONVERSION_GROUP] = (uint32_t)(1U << adc->channel_num);
+    }
+  // Generates conversion request
+  XMC_VADC_GLOBAL_BackgroundTriggerConversion(VADC);
+
+  // Wait until conversion is ready
+  while (((value = XMC_VADC_GLOBAL_GetDetailedResult(VADC)) & VADC_GLOBRES_VF_Msk) == 0u);
+#endif
+  return ((value & VADC_GLOBRES_RESULT_Msk) >> (ADC_MAX_READ_RESOLUTION - _readResolution));
+  }
+else
+  return 0;
 }
 
 void analogWrite(uint8_t pin, uint16_t value)
