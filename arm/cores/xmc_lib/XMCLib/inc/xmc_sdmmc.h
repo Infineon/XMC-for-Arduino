@@ -1,4 +1,3 @@
-
 /**
  * @file xmc_sdmmc.h
  * @date 2017-02-14
@@ -605,7 +604,7 @@ bool XMC_SDMMC_GetPowerStatus(XMC_SDMMC_t *const sdmmc);
  * \par
  * The function de-asserts the peripheral reset. The peripheral needs to be initialized.
  */
-void XMC_SDMMC_Enable(XMC_SDMMC_t *const sdmmc);
+void XMC_SDMMC_Enable( );
 
 /**
  * @param sdmmc A constant pointer to XMC_SDMMC_t, pointing to the SDMMC base address
@@ -617,7 +616,7 @@ void XMC_SDMMC_Enable(XMC_SDMMC_t *const sdmmc);
  * \par
  * The function asserts the peripheral reset.
  */
-void XMC_SDMMC_Disable(XMC_SDMMC_t *const sdmmc);
+void XMC_SDMMC_Disable( );
 
 /**
  * @param sdmmc A constant pointer to XMC_SDMMC_t, pointing to the SDMMC base address
@@ -1394,11 +1393,9 @@ __STATIC_INLINE bool XMC_SDMMC_GetContinueRequest(XMC_SDMMC_t *const sdmmc)
  * at block gap for a multi-block transfer. This bit is only valid in a 4-bit mode of
  * the SDIO card.
  */
-__STATIC_INLINE void XMC_SDMMC_EnableInterruptAtBlockGap(XMC_SDMMC_t *const sdmmc, const XMC_SDMMC_CONFIG_t *config)
+__STATIC_INLINE void XMC_SDMMC_EnableInterruptAtBlockGap( XMC_SDMMC_t *const sdmmc )
 {
   XMC_ASSERT("XMC_SDMMC_EnableInterruptAtBlockGap: Invalid module pointer", XMC_SDMMC_CHECK_MODULE_PTR(sdmmc));
-  XMC_ASSERT("XMC_SDMMC_EnableInterruptAtBlockGap: This operation is only valid in 4-bit mode",
-             (config->bus_width == XMC_SDMMC_DATA_LINES_1));
 
   sdmmc->BLOCK_GAP_CTRL |= (uint8_t)SDMMC_BLOCK_GAP_CTRL_INT_AT_BLOCK_GAP_Msk;
 }
@@ -1415,13 +1412,10 @@ __STATIC_INLINE void XMC_SDMMC_EnableInterruptAtBlockGap(XMC_SDMMC_t *const sdmm
  * The function resets the BLOCK_GAP_CTRL.INT_AT_BLOCK_GAP bit-field to disable interrupt
  * at block gap. This bit is only valid in a 4-bit mode of the SDIO card.
  */
-__STATIC_INLINE void XMC_SDMMC_DisableInterruptAtBlockGap(XMC_SDMMC_t *const sdmmc,
-                                                          const XMC_SDMMC_CONFIG_t *config)
+__STATIC_INLINE void XMC_SDMMC_DisableInterruptAtBlockGap(XMC_SDMMC_t *const sdmmc )
 
 {
   XMC_ASSERT("XMC_SDMMC_EnableInterruptAtBlockGap: Invalid module pointer", XMC_SDMMC_CHECK_MODULE_PTR(sdmmc));
-  XMC_ASSERT("XMC_SDMMC_EnableInterruptAtBlockGap: This operation is only valid in 4-bit mode",
-             (config->bus_width == XMC_SDMMC_DATA_LINES_1));
 
   sdmmc->BLOCK_GAP_CTRL &= (uint8_t)~SDMMC_BLOCK_GAP_CTRL_INT_AT_BLOCK_GAP_Msk;
 }

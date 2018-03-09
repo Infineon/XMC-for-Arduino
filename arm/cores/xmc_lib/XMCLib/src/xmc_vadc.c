@@ -232,6 +232,7 @@ void XMC_VADC_GLOBAL_Init(XMC_VADC_GLOBAL_t *const global_ptr, const XMC_VADC_GL
 
 }
 
+#if( UC_SERIES != XMC11 )
 /* API to Set the Global IClass registers*/
 void XMC_VADC_GLOBAL_InputClassInit(XMC_VADC_GLOBAL_t *const global_ptr, const XMC_VADC_GLOBAL_CLASS_t config,
                                           const XMC_VADC_GROUP_CONV_t conv_type, const uint32_t set_num)
@@ -255,6 +256,7 @@ void XMC_VADC_GLOBAL_InputClassInit(XMC_VADC_GLOBAL_t *const global_ptr, const X
   }
 #endif
 }
+#endif
 
 /* API to enable startup calibration feature */
 void XMC_VADC_GLOBAL_StartupCalibration(XMC_VADC_GLOBAL_t *const global_ptr)

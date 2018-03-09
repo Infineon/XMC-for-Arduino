@@ -1529,9 +1529,10 @@ __STATIC_INLINE void XMC_VADC_GLOBAL_ClockInit(XMC_VADC_GLOBAL_t *const global_p
  * None
  *
  */
-
+#if( UC_SERIES != XMC11 )
 void XMC_VADC_GLOBAL_InputClassInit(XMC_VADC_GLOBAL_t *const global_ptr, const XMC_VADC_GLOBAL_CLASS_t config,
                                           const XMC_VADC_GROUP_CONV_t conv_type, const uint32_t set_num);
+#endif
 
 /**
  *

@@ -1,12 +1,12 @@
 /**
  * @file xmc_device.h
- * @date 2016-07-21
+ * @date 2018-03-08
  *
  * @cond
- *********************************************************************************************************************
- * XMClib v2.1.16 - XMC Peripheral Driver Library
+  *********************************************************************************************************************
+ * XMClib v2.1.8 - XMC Peripheral Driver Library
  *
- * Copyright (c) 2015-2017, Infineon Technologies AG
+ * Copyright (c) 2015-2016, Infineon Technologies AG
  * All rights reserved.                        
  *                                             
  * Redistribution and use in source and binary forms, with or without modification,are permitted provided that the 
@@ -53,6 +53,11 @@
  *             XMC1302_T028x0016, XMC1402_T038x0032, XMC1402_T038x0064, XMC1402_T038x0128, 
  *             XMC1403_Q040x0064, XMC1403_Q040x0128, XMC1403_Q040x0200, XMC1402_T038x0200
  *             XMC1402_Q040x0200, XMC1402_Q048x0200, XMC1201_T028x0032
+ *
+ * 2018-03-08:
+ *      - Added defines for XMC1 and XMC47 and XMC48 series to give RAM totals in
+ *        UC_RAm and UC_ALL_RAM
+ *
  * @endcond 
  *
  */
@@ -124,6 +129,8 @@
 #define UC_DEVICE    XMC4800
 #define UC_PACKAGE   BGA196
 #define UC_FLASH     (2048UL)
+#define UC_RAM       (96UL)
+#define UC_ALL_RAM   (352UL)
 #define MULTICAN_PLUS
 #define CCU4V2
 #define CCU8V2
@@ -134,6 +141,8 @@
 #define UC_DEVICE    XMC4800
 #define UC_PACKAGE   LQFP144
 #define UC_FLASH     (2048UL)
+#define UC_RAM       (96UL)
+#define UC_ALL_RAM   (352UL)
 #define MULTICAN_PLUS
 #define CCU4V2
 #define CCU8V2
@@ -144,6 +153,8 @@
 #define UC_DEVICE    XMC4800
 #define UC_PACKAGE   LQFP100
 #define UC_FLASH     (2048UL)
+#define UC_RAM       (96UL)
+#define UC_ALL_RAM   (352UL)
 #define MULTICAN_PLUS
 #define CCU4V2
 #define CCU8V2
@@ -154,6 +165,8 @@
 #define UC_DEVICE    XMC4800
 #define UC_PACKAGE   BGA196
 #define UC_FLASH     (1536UL)
+#define UC_RAM       (96UL)
+#define UC_ALL_RAM   (276UL)
 #define MULTICAN_PLUS
 #define CCU4V2
 #define CCU8V2
@@ -164,6 +177,8 @@
 #define UC_DEVICE    XMC4800
 #define UC_PACKAGE   LQFP144
 #define UC_FLASH     (1536UL)
+#define UC_RAM       (96UL)
+#define UC_ALL_RAM   (276UL)
 #define MULTICAN_PLUS
 #define CCU4V2
 #define CCU8V2
@@ -174,6 +189,8 @@
 #define UC_DEVICE    XMC4800
 #define UC_PACKAGE   LQFP100
 #define UC_FLASH     (1536UL)
+#define UC_RAM       (96UL)
+#define UC_ALL_RAM   (276UL)
 #define MULTICAN_PLUS
 #define CCU4V2
 #define CCU8V2
@@ -184,6 +201,8 @@
 #define UC_DEVICE    XMC4800
 #define UC_PACKAGE   BGA196
 #define UC_FLASH     (1024UL)
+#define UC_RAM       (72UL)
+#define UC_ALL_RAM   (276UL)
 #define MULTICAN_PLUS
 #define CCU4V2
 #define CCU8V2
@@ -194,6 +213,8 @@
 #define UC_DEVICE    XMC4800
 #define UC_PACKAGE   LQFP144
 #define UC_FLASH     (1024UL)
+#define UC_RAM       (72UL)
+#define UC_ALL_RAM   (276UL)
 #define MULTICAN_PLUS
 #define CCU4V2
 #define CCU8V2
@@ -204,6 +225,8 @@
 #define UC_DEVICE    XMC4800
 #define UC_PACKAGE   LQFP100
 #define UC_FLASH     (1024UL)
+#define UC_RAM       (72UL)
+#define UC_ALL_RAM   (276UL)
 #define MULTICAN_PLUS
 #define CCU4V2
 #define CCU8V2
@@ -214,6 +237,8 @@
 #define UC_DEVICE    XMC4700
 #define UC_PACKAGE   BGA196
 #define UC_FLASH     (2048UL)
+#define UC_RAM       (96UL)
+#define UC_ALL_RAM   (352UL)
 #define MULTICAN_PLUS
 #define CCU4V2
 #define CCU8V2
@@ -224,6 +249,8 @@
 #define UC_DEVICE    XMC4700
 #define UC_PACKAGE   LQFP144
 #define UC_FLASH     (2048UL)
+#define UC_RAM       (96UL)
+#define UC_ALL_RAM   (352UL)
 #define MULTICAN_PLUS
 #define CCU4V2
 #define CCU8V2
@@ -234,6 +261,8 @@
 #define UC_DEVICE    XMC4700
 #define UC_PACKAGE   LQFP100
 #define UC_FLASH     (2048UL)
+#define UC_RAM       (96UL)
+#define UC_ALL_RAM   (352UL)
 #define MULTICAN_PLUS
 #define CCU4V2
 #define CCU8V2
@@ -244,6 +273,8 @@
 #define UC_DEVICE    XMC4700
 #define UC_PACKAGE   BGA196
 #define UC_FLASH     (1536UL)
+#define UC_RAM       (96UL)
+#define UC_ALL_RAM   (276UL)
 #define MULTICAN_PLUS
 #define CCU4V2
 #define CCU8V2
@@ -254,6 +285,8 @@
 #define UC_DEVICE    XMC4700
 #define UC_PACKAGE   LQFP144
 #define UC_FLASH     (1536UL)
+#define UC_RAM       (96UL)
+#define UC_ALL_RAM   (276UL)
 #define MULTICAN_PLUS
 #define CCU4V2
 #define CCU8V2
@@ -264,6 +297,8 @@
 #define UC_DEVICE    XMC4700
 #define UC_PACKAGE   LQFP100
 #define UC_FLASH     (1536UL)
+#define UC_RAM       (96UL)
+#define UC_ALL_RAM   (276UL)
 #define MULTICAN_PLUS
 #define CCU4V2
 #define CCU8V2
@@ -274,6 +309,8 @@
 #define UC_DEVICE    XMC4500
 #define UC_PACKAGE   BGA144
 #define UC_FLASH     (1024UL)
+#define UC_RAM       (64UL)
+#define UC_ALL_RAM   (80UL)
 #define CCU4V1
 #define CCU8V1
 
@@ -283,6 +320,8 @@
 #define UC_DEVICE    XMC4500
 #define UC_PACKAGE   LQFP144
 #define UC_FLASH     (1024UL)
+#define UC_RAM       (64UL)
+#define UC_ALL_RAM   (80UL)
 #define CCU4V1
 #define CCU8V1
 
@@ -292,6 +331,8 @@
 #define UC_DEVICE    XMC4500
 #define UC_PACKAGE   LQFP100
 #define UC_FLASH     (1024UL)
+#define UC_RAM       (64UL)
+#define UC_ALL_RAM   (80UL)
 #define CCU4V1
 #define CCU8V1
 
@@ -301,6 +342,8 @@
 #define UC_DEVICE    XMC4500
 #define UC_PACKAGE   LQFP144
 #define UC_FLASH     (768UL)
+#define UC_RAM       (64UL)
+#define UC_ALL_RAM   (80UL)
 #define CCU4V1
 #define CCU8V1
 
@@ -310,6 +353,8 @@
 #define UC_DEVICE    XMC4500
 #define UC_PACKAGE   LQFP100
 #define UC_FLASH     (768UL)
+#define UC_RAM       (64UL)
+#define UC_ALL_RAM   (80UL)
 #define CCU4V1
 #define CCU8V1
 
@@ -319,6 +364,8 @@
 #define UC_DEVICE    XMC4502
 #define UC_PACKAGE   LQFP100
 #define UC_FLASH     (768UL)
+#define UC_RAM       (64UL)
+#define UC_ALL_RAM   (80UL)
 #define CCU4V1
 #define CCU8V1
 
@@ -328,6 +375,8 @@
 #define UC_DEVICE    XMC4504
 #define UC_PACKAGE   LQFP100
 #define UC_FLASH     (512UL)
+#define UC_RAM       (64UL)
+#define UC_ALL_RAM   (64UL)
 #define CCU4V1
 #define CCU8V1
 
@@ -337,6 +386,8 @@
 #define UC_DEVICE    XMC4504
 #define UC_PACKAGE   LQFP144
 #define UC_FLASH     (512UL)
+#define UC_RAM       (64UL)
+#define UC_ALL_RAM   (64UL)
 #define CCU4V1
 #define CCU8V1
 
@@ -913,6 +964,8 @@
 #define UC_DEVICE    XMC1301
 #define UC_PACKAGE   TSSOP38
 #define UC_FLASH     (16UL)
+#define UC_RAM       (16UL)
+#define UC_ALL_RAM   (16UL)
 #define CCU4V2
 #define CCU8V2
 
@@ -1028,6 +1081,8 @@
 #define UC_DEVICE    XMC1302
 #define UC_PACKAGE   TSSOP38
 #define UC_FLASH     (64UL)
+#define UC_RAM       (16UL)
+#define UC_ALL_RAM   (16UL)
 #define CCU4V2
 #define CCU8V2
 
@@ -1454,6 +1509,35 @@
 #else
 #error "xmc_device.h: device not supported"
 #endif 	    
+#if UC_FAMILY == XMC1
+#define UC_RAM       (16UL)
+#define UC_ALL_RAM   (16UL)
+#endif
+
+#if UC_FAMILY == XMC41
+#define UC_RAM       (8UL)
+#define UC_ALL_RAM   (20UL)
+#endif
+
+#if UC_FAMILY == XMC42
+#define UC_RAM       (16UL)
+#define UC_ALL_RAM   (40UL)
+#endif
+
+#if UC_FAMILY == XMC43
+#define UC_RAM       (64UL)
+#define UC_ALL_RAM   (128UL)
+#endif
+
+#if UC_FAMILY == XMC44
+#define UC_RAM       (16UL)
+#define UC_ALL_RAM   (80UL)
+#endif
+
+#if UC_FAMILY == XMC45
+#define UC_RAM       (8UL)
+#define UC_ALL_RAM   (20UL)
+#endif
 
 #if UC_SERIES == XMC45
 #include "XMC4500.h"
