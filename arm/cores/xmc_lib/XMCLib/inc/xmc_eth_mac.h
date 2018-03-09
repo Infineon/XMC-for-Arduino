@@ -405,7 +405,6 @@ void XMC_ETH_MAC_InitRxDescriptors(XMC_ETH_MAC_t *const eth_mac);
 void XMC_ETH_MAC_InitTxDescriptors(XMC_ETH_MAC_t *const eth_mac);
  
 /**
- * @param eth_mac A constant pointer to XMC_ETH_MAC_t, pointing to the ETH MAC base address
  * @return None
  *
  * \par<b>Description: </b><br>
@@ -414,10 +413,9 @@ void XMC_ETH_MAC_InitTxDescriptors(XMC_ETH_MAC_t *const eth_mac);
  * \par
  * The function de-asserts the peripheral reset.
  */
-void XMC_ETH_MAC_Enable(XMC_ETH_MAC_t *const eth_mac);
+void XMC_ETH_MAC_Enable( );
 
 /**
- * @param eth_mac A constant pointer to XMC_ETH_MAC_t, pointing to the ETH MAC base address
  * @return None
  *
  * \par<b>Description: </b><br>
@@ -426,7 +424,7 @@ void XMC_ETH_MAC_Enable(XMC_ETH_MAC_t *const eth_mac);
  * \par
  * The function asserts the peripheral reset.
  */
-void XMC_ETH_MAC_Disable(XMC_ETH_MAC_t *const eth_mac);
+void XMC_ETH_MAC_Disable( );
 
 /**
  * @param eth_mac A constant pointer to XMC_ETH_MAC_t, pointing to the ETH MAC base address
@@ -492,7 +490,6 @@ XMC_ETH_MAC_STATUS_t XMC_ETH_MAC_ReadPhy(XMC_ETH_MAC_t *const eth_mac, uint8_t p
 XMC_ETH_MAC_STATUS_t XMC_ETH_MAC_WritePhy(XMC_ETH_MAC_t *const eth_mac, uint8_t phy_addr, uint8_t reg_addr, uint16_t data);
 
 /**
- * @param eth_mac A constant pointer to XMC_ETH_MAC_t, pointing to the ETH MAC base address
  * @param port_ctrl Port control configuration
  * @return None
  *
@@ -510,7 +507,7 @@ XMC_ETH_MAC_STATUS_t XMC_ETH_MAC_WritePhy(XMC_ETH_MAC_t *const eth_mac, uint8_t 
  * - XMC4800 LQFP144 and BGA196 packages
  *
  */
-__STATIC_INLINE void XMC_ETH_MAC_SetPortControl(XMC_ETH_MAC_t *const eth_mac, const XMC_ETH_MAC_PORT_CTRL_t port_ctrl)
+__STATIC_INLINE void XMC_ETH_MAC_SetPortControl( const XMC_ETH_MAC_PORT_CTRL_t port_ctrl )
 {
   ETH0_CON->CON = (uint32_t)port_ctrl.raw;
 }

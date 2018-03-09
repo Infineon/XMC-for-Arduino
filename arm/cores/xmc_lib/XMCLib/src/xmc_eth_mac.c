@@ -471,7 +471,7 @@ XMC_ETH_MAC_STATUS_t XMC_ETH_MAC_SetManagmentClockDivider(XMC_ETH_MAC_t *const e
 }
 
 /* ETH MAC enable */
-void XMC_ETH_MAC_Enable(XMC_ETH_MAC_t *const eth_mac)
+void XMC_ETH_MAC_Enable( )
 {
   XMC_SCU_CLOCK_EnableClock(XMC_SCU_CLOCK_ETH);
 #if UC_DEVICE != XMC4500
@@ -481,7 +481,7 @@ void XMC_ETH_MAC_Enable(XMC_ETH_MAC_t *const eth_mac)
 }
 
 /* ETH MAC disable */
-void XMC_ETH_MAC_Disable(XMC_ETH_MAC_t *const eth_mac)
+void XMC_ETH_MAC_Disable( )
 {
   XMC_SCU_RESET_AssertPeripheralReset(XMC_SCU_PERIPHERAL_RESET_ETH0);
 #if UC_DEVICE != XMC4500
