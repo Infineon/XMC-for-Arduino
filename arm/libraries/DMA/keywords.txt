@@ -1,0 +1,62 @@
+#######################################
+# Syntax Coloring Map For XMC_DeviceControl
+#######################################
+
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+
+DMA	KEYWORD1
+
+
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+
+beginDMA	KEYWORD2
+configDMA_M2M	KEYWORD2
+configDMA_M2P	KEYWORD2
+configDMA_P2M	KEYWORD2
+configDMA_P2P	KEYWORD2
+configDMA		KEYWORD2
+attachDMAInterrupt	KEYWORD2
+detachDMAInterrupt	KEYWORD2
+beginDMATransaction	KEYWORD2
+endDMA				KEYWORD2
+
+
+#######################################
+# Constants (LITERAL1)
+#######################################
+
+DMA0	LITERAL1
+DMA1	LITERAL1
+
+BURST_LENGTH_1	LITERAL1
+BURST_LENGTH_4	LITERAL1
+BURST_LENGTH_8	LITERAL1
+
+TRANSFER_WIDTH_8	LITERAL1
+TRANSFER_WIDTH_16	LITERAL1
+TRANSFER_WIDTH_32	LITERAL1
+
+TRANSFER_COMPLETE	LITERAL1
+SDMMC_ON			LITERAL1
+BLOCK_TRANSFER_COMPLETE		LITERAL1
+SRC_TRANSACTION_COMPLETE	LITERAL1
+DST_TRANSACTION_COMPLETE	LITERAL1
+ERROR						LITERAL1
+
+UART0_CH0	LITERAL1
+UART0_CH1	LITERAL1
+UART1_CH0	LITERAL1
+UART1_CH1	LITERAL1
+UART2_CH0	LITERAL1
+UART2_CH1	LITERAL1
+SPI0_CH0	LITERAL1
+SPI0_CH1	LITERAL1
+SPI1_CH0	LITERAL1
+SPI1_CH1	LITERAL1
+SPI2_CH0	LITERAL1
+SPI2_CH1	LITERAL1
