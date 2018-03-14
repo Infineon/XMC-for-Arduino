@@ -15,6 +15,9 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ * 
+ * Copyright (c) 2018 Infineon Technologies AG
+ * This library has been modified for the XMC microcontroller series.
  */
 
 #ifndef _SPI_H_INCLUDED
@@ -192,7 +195,7 @@ extern SPIClass SPI;
 #	endif
 #endif
 
-void SPIClass::transfer(uint8_t* buf, uint8_t count)
+void SPIClass::transfer(uint8_t *buf, uint8_t count)
 {
     uint8_t buf_in[count];
     for (uint8_t i = 0; i < count; i++)
