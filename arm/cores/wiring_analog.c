@@ -20,6 +20,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 // @Project Includes
 //****************************************************************************
 #include "Arduino.h"
+#include <string.h>
 
 //****************************************************************************
 // @Defines
@@ -37,7 +38,8 @@ static uint8_t _writeResolution = 8;
 void wiring_analog_init(void)
 {
     /* Initialization data of VADC Global resources */
-    XMC_VADC_GLOBAL_CONFIG_t vadc_global_config = {0};
+    XMC_VADC_GLOBAL_CONFIG_t vadc_global_config;
+    memset( &vadc_global_config, 0, sizeof( XMC_VADC_GLOBAL_CONFIG_t ) );
     vadc_global_config.class0.conversion_mode_standard = XMC_VADC_CONVMODE_12BIT;
     vadc_global_config.class1.conversion_mode_standard = XMC_VADC_CONVMODE_12BIT;
 
@@ -48,7 +50,8 @@ void wiring_analog_init(void)
 
 #if(XMC_VADC_GROUP_AVAILABLE == 1U)
 // ADC grouping
-    XMC_VADC_GROUP_CONFIG_t vadc_group_config = {0};
+    XMC_VADC_GROUP_CONFIG_t vadc_group_config;
+    memset( &vadc_group_config, 0, sizeof( XMC_VADC_GROUP_CONFIG_t ) );
     vadc_group_config.class0.conversion_mode_standard = XMC_VADC_CONVMODE_12BIT;
     vadc_group_config.class1.conversion_mode_standard = XMC_VADC_CONVMODE_12BIT;
 
@@ -122,12 +125,13 @@ uint32_t analogRead(uint8_t pin)
 // ADC grouping
         if (!(adc->enabled))
         {
-            XMC_VADC_CHANNEL_CONFIG_t  vadc_gobal_channel_config = {0};
+            XMC_VADC_CHANNEL_CONFIG_t  vadc_gobal_channel_config;
+            memset( &vadc_gobal_channel_config, 0, sizeof( XMC_VADC_CHANNEL_CONFIG_t ) );
             vadc_gobal_channel_config.input_class       = XMC_VADC_CHANNEL_CONV_GROUP_CLASS1;
             vadc_gobal_channel_config.result_reg_number = adc->result_reg_num;
             vadc_gobal_channel_config.alias_channel     = XMC_VADC_CHANNEL_ALIAS_DISABLED;
 
-            XMC_VADC_RESULT_CONFIG_t vadc_gobal_result_config = {0};
+            XMC_VADC_RESULT_CONFIG_t vadc_gobal_result_config = { .g_rcr = 0 };
 
             /* Configure a channel belonging to the aforesaid conversion kernel */
             XMC_VADC_GROUP_ChannelInit(adc->group, adc->channel_num, &vadc_gobal_channel_config);
@@ -169,14 +173,15 @@ void analogWrite(uint8_t pin, uint16_t value)
         uint8_t pwm4_num = digitalPinToPWM4Num(pin);
         XMC_PWM4_t *pwm4 = &mapping_pwm4[pwm4_num];
 
-        if (!(pwm4->enabled))
+        if( !(pwm4->enabled) )
         {
             // Slice not yet initialized
-            XMC_CCU4_SLICE_COMPARE_CONFIG_t pwm_config = {0};
+            XMC_CCU4_SLICE_COMPARE_CONFIG_t pwm_config;
+            memset( &pwm_config, 0, sizeof( XMC_CCU4_SLICE_COMPARE_CONFIG_t ) );
             pwm_config.passive_level = XMC_CCU4_SLICE_OUTPUT_PASSIVE_LEVEL_HIGH;
             pwm_config.prescaler_initval = pwm4->prescaler;
 
-            XMC_CCU4_Init(pwm4->ccu, XMC_CCU4_SLICE_MCMS_ACTION_TRANSFER_PR_CR);
+            XMC_CCU4_Init( pwm4->ccu, XMC_CCU4_SLICE_MCMS_ACTION_TRANSFER_PR_CR );
 
             XMC_CCU4_SLICE_CompareInit(pwm4->slice, &pwm_config);
 
@@ -209,7 +214,8 @@ void analogWrite(uint8_t pin, uint16_t value)
         if (!(pwm8->enabled))
         {
             // Slice not yet initialized
-            XMC_CCU8_SLICE_COMPARE_CONFIG_t pwm_config = {0};
+            XMC_CCU8_SLICE_COMPARE_CONFIG_t pwm_config;
+            memset( &pwm_config, 0, sizeof( XMC_CCU8_SLICE_COMPARE_CONFIG_t ) );
             pwm_config.passive_level_out0 = XMC_CCU8_SLICE_OUTPUT_PASSIVE_LEVEL_HIGH;
             pwm_config.passive_level_out1 = XMC_CCU8_SLICE_OUTPUT_PASSIVE_LEVEL_HIGH;
             pwm_config.passive_level_out2 = XMC_CCU8_SLICE_OUTPUT_PASSIVE_LEVEL_HIGH;
