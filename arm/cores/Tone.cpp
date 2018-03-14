@@ -50,7 +50,7 @@ void TIMER_1_IRQHandler(void);
 void TIMER_2_IRQHandler(void);
 void TIMER_3_IRQHandler(void);
 
-void timer_irq_action(uint8_t);
+void timer_irq_action( int8_t );
 
 //****************************************************************************
 // @Local Functions
@@ -115,7 +115,7 @@ void tone(uint8_t _pin, unsigned int frequency, unsigned long duration)
     }
 }
 
-void disableTimer(uint8_t _timer)
+void disableTimer( int8_t _timer )
 {
     if (_timer >= 0 && _timer < AVAILABLE_TONE_PINS)
     {
@@ -138,7 +138,7 @@ void noTone(uint8_t _pin)
         }
     }
 
-    disableTimer(_timer);
+    disableTimer( _timer );
 
     digitalWrite(_pin, 0);
 }
@@ -163,7 +163,7 @@ void TIMER_3_IRQHandler(void)
     timer_irq_action(3);
 }
 
-void timer_irq_action(uint8_t _timer)
+void timer_irq_action( int8_t _timer )
 {
     if (timer_toggle_count[_timer])
     {
@@ -172,7 +172,7 @@ void timer_irq_action(uint8_t _timer)
     }
     else
     {
-        disableTimer(_timer);
+        disableTimer( _timer );
         timer_ids[_timer] = 0;
         digitalWrite(tone_pins[_timer], LOW);
     }

@@ -20,7 +20,6 @@
 // @Project Includes
 //****************************************************************************
 #include "RingBuffer.h"
-#include <string.h>
 
 //****************************************************************************
 // @Local Functions
@@ -30,7 +29,6 @@
 
 RingBuffer::RingBuffer( void )
 {
-    memset( (void*)_aucBuffer, 0, SERIAL_BUFFER_SIZE ) ;
     _iHead = 0 ;
     _iTail = 0 ;
 }
