@@ -52,7 +52,7 @@ extern "C" {
      * \param pin
      * \param frequency in Hz
      */
-    extern int16_t setanalogWriteFrequency( uint8_t pin, uint32_t frequency ) ;
+    extern int16_t setAnalogWriteFrequency( uint8_t pin, uint32_t frequency ) ;
 
     /*
      * \brief Reads the value from the specified analog pin.

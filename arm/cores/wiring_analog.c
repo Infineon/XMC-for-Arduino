@@ -265,10 +265,10 @@ void analogWrite(uint8_t pin, uint16_t value)
     }
 }
 
-extern int16_t setanalogWriteFrequency( uint8_t pin, uint32_t frequency )
+extern int16_t setAnalogWriteFrequency( uint8_t pin, uint32_t frequency )
 {
 	int16_t ret = -1;
-	XMC_CCU4_SLICE_PRESCALER_t prescaler = (XMC_CCU4_SLICE_PRESCALER_t) 0;
+
 	if(frequency < PCLK)
 	{
 		uint8_t exp = 0u;
