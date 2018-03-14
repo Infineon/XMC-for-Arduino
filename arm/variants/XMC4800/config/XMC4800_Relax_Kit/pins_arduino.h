@@ -39,6 +39,8 @@ Boston, MA  02111-1307  USA
 #define NUM_INTERRUPT 2
 #define NUM_SERIAL 2
 
+// Board has two serial ports pre-assigned to debug and on-board
+
 #define PWM4_TIMER_PERIOD (0x11EF)  // Generate 490Hz @fCCU=144MHz
 #define PWM8_TIMER_PERIOD (0x11EF)  // Generate 490Hz @fCCU=144MHz
 
@@ -188,17 +190,17 @@ XMC_UART_t XMC_UART_debug =
 							},
   .tx 					= {	.port = (XMC_GPIO_PORT_t *)PORT1_BASE,
 							.pin  = (uint8_t)5
-							},
+						  },
   .tx_config			= { .mode = (XMC_GPIO_MODE_t) XMC_GPIO_MODE_OUTPUT_PUSH_PULL_ALT2,
 							.output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH,
 							.output_strength  = XMC_GPIO_OUTPUT_STRENGTH_STRONG_SOFT_EDGE
-							},
+						  },
   .input_source 		= (XMC_USIC_CH_INPUT_t)USIC0_C0_DX0_P1_4,
   .irq_num				= USIC0_0_IRQn,	
   .irq_service_request	= 0
 };	
 
-XMC_UART_t XMC_UART_on_board =
+XMC_UART_t XMC_UART_1 =
 {
   .channel 				= XMC_UART1_CH0,
   .rx 					= {	.port = (XMC_GPIO_PORT_t *)PORT2_BASE,
@@ -220,10 +222,11 @@ XMC_UART_t XMC_UART_on_board =
   .irq_service_request	= 0
 };	
 
-HardwareSerial Serial(&XMC_UART_debug, &rx_buffer_debug, &tx_buffer_debug);	
-HardwareSerial Serial1(&XMC_UART_on_board, &rx_buffer_on_board, &tx_buffer_on_board);	
+// Debug port
+HardwareSerial Serial( &XMC_UART_0, &rx_buffer_0, &tx_buffer_0 );
+// On-board port
+HardwareSerial Serial1( &XMC_UART_1, &rx_buffer_1, &tx_buffer_1 );
 
 #endif
-
 
 #endif
