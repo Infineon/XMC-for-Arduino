@@ -39,6 +39,17 @@
 #define NUM_INTERRUPT       1
 #define NUM_SERIAL          1
 
+// Defines will be either set by ArduinoIDE in the menu or manually
+#ifdef SERIAL_HOSTPC
+  // Comment out following line to use Serial on pins (board)
+  #define SERIAL_DEBUG    1
+#elif SERIAL_ONBOARD
+  // No SERIAL_DEBUG will be defined, kept here for clarity
+#else
+  // Define the SERIAL_DEBUG as default setting
+  #define SERIAL_DEBUG    1
+#endif
+
 #define PWM4_TIMER_PERIOD (2041U)  // Generate 490Hz @fCCU=64MHz
 
 #define PCLK 64000000u
@@ -134,73 +145,56 @@ XMC_ADC_t mapping_adc[] =
 /*
  * UART objects
  */
-RingBuffer rx_buffer_debug;
-RingBuffer tx_buffer_debug;
-//RingBuffer rx_buffer_on_board;
-//RingBuffer tx_buffer_on_board;
+RingBuffer rx_buffer_0;
+RingBuffer tx_buffer_0;
 
-XMC_UART_t XMC_UART_debug =
-{
-    .channel              = XMC_UART0_CH0,
-    .rx                   = {
-        .port = (XMC_GPIO_PORT_t*)PORT2_BASE,
-        .pin  = (uint8_t)2
-    },
-    .rx_config            = {
-        .mode = XMC_GPIO_MODE_INPUT_TRISTATE,
-        .input_hysteresis = XMC_GPIO_INPUT_HYSTERESIS_STANDARD,
-        .output_level     = XMC_GPIO_OUTPUT_LEVEL_HIGH
-    },
-    .tx                   = {
-        .port = (XMC_GPIO_PORT_t*)PORT2_BASE,
-        .pin  = (uint8_t)1
-    },
-    .tx_config            = {
-        .mode = (XMC_GPIO_MODE_t) XMC_GPIO_MODE_OUTPUT_PUSH_PULL_ALT6,
-        .input_hysteresis = XMC_GPIO_INPUT_HYSTERESIS_STANDARD,
-        .output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH
-    },
-    .input_source_dx0     = (XMC_USIC_INPUT_t)USIC0_C0_DX0_DX3INS,
-    .input_source_dx1     = XMC_INPUT_INVALID,
-    .input_source_dx2     = XMC_INPUT_INVALID,
-    .input_source_dx3     = (XMC_USIC_INPUT_t)USIC0_C0_DX3_P2_2,
-    .irq_num              = USIC0_0_IRQn,
-    .irq_service_request  = 0
-};
+XMC_UART_t XMC_UART_0 =
+  {
+  .channel              = XMC_UART0_CH0,
+  .rx                   = {
+#ifdef SERIAL_DEBUG
+                            .port = (XMC_GPIO_PORT_t*)PORT2_BASE,
+                            .pin  = (uint8_t)2
+#else
+                            .port = (XMC_GPIO_PORT_t*)PORT0_BASE,
+                            .pin  = (uint8_t)15
+#endif
+                          },
+  .rx_config            = { .mode = XMC_GPIO_MODE_INPUT_TRISTATE,
+                            .input_hysteresis = XMC_GPIO_INPUT_HYSTERESIS_STANDARD,
+                            .output_level     = XMC_GPIO_OUTPUT_LEVEL_HIGH
+                          },
+  .tx                   = {
+#ifdef SERIAL_DEBUG
+                            .port = (XMC_GPIO_PORT_t*)PORT2_BASE,
+                            .pin  = (uint8_t)1
+#else
+                            .port = (XMC_GPIO_PORT_t*)PORT0_BASE,
+                            .pin  = (uint8_t)14
+#endif
+                          },
+  .tx_config            = { .mode = (XMC_GPIO_MODE_t) XMC_GPIO_MODE_OUTPUT_PUSH_PULL_ALT6,
+                            .input_hysteresis = XMC_GPIO_INPUT_HYSTERESIS_STANDARD,
+                            .output_level     = XMC_GPIO_OUTPUT_LEVEL_HIGH
+                          },
+#ifdef SERIAL_DEBUG
+  .input_source_dx0     = (XMC_USIC_INPUT_t)USIC0_C0_DX0_DX3INS,
+#else
+  .input_source_dx0     = (XMC_USIC_INPUT_t)USIC0_C0_DX0_P0_15,
+#endif
+  .input_source_dx1     = XMC_INPUT_INVALID,
+  .input_source_dx2     = XMC_INPUT_INVALID,
+#ifdef SERIAL_DEBUG
+  .input_source_dx3     = (XMC_USIC_INPUT_t)USIC0_C0_DX3_P2_2,
+#else
+  .input_source_dx3     = XMC_INPUT_INVALID,
+#endif
+  .irq_num              = USIC0_0_IRQn,
+  .irq_service_request  = 0
+  };
 
-XMC_UART_t XMC_UART_on_board =
-{
-    .channel              = XMC_UART0_CH0,
-    .rx                   = {
-        .port = (XMC_GPIO_PORT_t*)PORT0_BASE,
-        .pin  = (uint8_t)15
-    },
-    .rx_config            = {
-        .mode = XMC_GPIO_MODE_INPUT_TRISTATE,
-        .input_hysteresis = XMC_GPIO_INPUT_HYSTERESIS_STANDARD
-    },
-    .tx                   = {
-        .port = (XMC_GPIO_PORT_t*)PORT0_BASE,
-        .pin  = (uint8_t)14
-    },
-    .tx_config            = {
-        .mode = (XMC_GPIO_MODE_t) XMC_GPIO_MODE_OUTPUT_PUSH_PULL_ALT6,
-        .input_hysteresis = XMC_GPIO_INPUT_HYSTERESIS_STANDARD,
-        .output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH
-    },
-    .input_source_dx0     = (XMC_USIC_INPUT_t)USIC0_C0_DX0_P0_15,
-    .input_source_dx1     = XMC_INPUT_INVALID,
-    .input_source_dx2     = XMC_INPUT_INVALID,
-    .input_source_dx3     = XMC_INPUT_INVALID,
-    .irq_num              = USIC0_0_IRQn,
-    .irq_service_request  = 0
-};
-
-HardwareSerial Serial(&XMC_UART_debug, &rx_buffer_debug, &tx_buffer_debug);
-//HardwareSerial Serial(&XMC_UART_on_board, &rx_buffer_on_board, &tx_buffer_on_board);
-
+HardwareSerial Serial( &XMC_UART_0, &rx_buffer_0, &tx_buffer_0 );
 
 #endif
-
 
 #endif

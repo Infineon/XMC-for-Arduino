@@ -1,4 +1,7 @@
 ####################################################
+menu.UART=Serial Output Selection
+
+####################################################
 XMC1100_Boot_Kit.name=XMC1100 Boot Kit
 XMC1100_Boot_Kit.upload.tool=xmcprog
 XMC1100_Boot_Kit.upload.speed=115200
@@ -27,63 +30,81 @@ XMC1100_Boot_Kit.build.board_variant=XMC1100_Boot_Kit
 XMC1100_Boot_Kit.build.flash_size=64K
 XMC1100_Boot_Kit.build.flash_ld=linker_script.ld
 
-####################################################
-XMC1100_XMC2GO.name=XMC1100 XMC2Go
-XMC1100_XMC2GO.upload.tool=xmcprog
-XMC1100_XMC2GO.upload.speed=115200
-XMC1100_XMC2GO.upload.resetmethod=ck
-XMC1100_XMC2GO.upload.maximum_size=65536
-XMC1100_XMC2GO.upload.wait_for_upload_port=true
-
-XMC1100_XMC2GO.communication=usb
-XMC1100_XMC2GO.protocol=dragon_isp
-XMC1100_XMC2GO.program.protocol=dragon_isp
-XMC1100_XMC2GO.program.tool=xmcprog
-XMC1100_XMC2GO.program.extra_params=-Pusb
-
-XMC1100_XMC2GO.serial.disableDTR=true
-XMC1100_XMC2GO.serial.disableRTS=true
-
-XMC1100_XMC2GO.build.mcu=cortex-m0
-XMC1100_XMC2GO.build.f_cpu=32000000L
-XMC1100_XMC2GO.build.board=ARM_XMC
-XMC1100_XMC2GO.build.board.version=1100
-XMC1100_XMC2GO.build.board.type=T038x0064
-XMC1100_XMC2GO.build.board.v=0064
-XMC1100_XMC2GO.build.core=./
-XMC1100_XMC2GO.build.variant=XMC1100
-XMC1100_XMC2GO.build.board_variant=XMC1100_XMC2Go
-XMC1100_XMC2GO.build.flash_size=64K
-XMC1100_XMC2GO.build.flash_ld=linker_script.ld
+XMC1100_Boot_Kit.menu.UART.debug=PC
+XMC1100_Boot_Kit.menu.UART.debug.flag.selected=SERIAL_HOSTPC
+XMC1100_Boot_Kit.menu.UART.onBoard=On Board
+XMC1100_Boot_Kit.menu.UART.onBoard.flag.selected=SERIAL_ONBOARD
 
 ####################################################
-XMC1100_H_BRIDGE2GO.name=XMC1100 H-Bridge2Go
-XMC1100_H_BRIDGE2GO.upload.tool=xmcprog
-XMC1100_H_BRIDGE2GO.upload.speed=115200
-XMC1100_H_BRIDGE2GO.upload.resetmethod=ck
-XMC1100_H_BRIDGE2GO.upload.maximum_size=65536
-XMC1100_H_BRIDGE2GO.upload.wait_for_upload_port=true
+XMC1100_XMC2Go.name=XMC1100 XMC2Go
+XMC1100_XMC2Go.upload.tool=xmcprog
+XMC1100_XMC2Go.upload.speed=115200
+XMC1100_XMC2Go.upload.resetmethod=ck
+XMC1100_XMC2Go.upload.maximum_size=65536
+XMC1100_XMC2Go.upload.wait_for_upload_port=true
 
-XMC1100_H_BRIDGE2GO.communication=usb
-XMC1100_H_BRIDGE2GO.protocol=dragon_isp
-XMC1100_H_BRIDGE2GO.program.protocol=dragon_isp
-XMC1100_H_BRIDGE2GO.program.tool=xmcprog
-XMC1100_H_BRIDGE2GO.program.extra_params=-Pusb
+XMC1100_XMC2Go.communication=usb
+XMC1100_XMC2Go.protocol=dragon_isp
+XMC1100_XMC2Go.program.protocol=dragon_isp
+XMC1100_XMC2Go.program.tool=xmcprog
+XMC1100_XMC2Go.program.extra_params=-Pusb
 
-XMC1100_H_BRIDGE2GO.serial.disableDTR=true
-XMC1100_H_BRIDGE2GO.serial.disableRTS=true
+XMC1100_XMC2Go.serial.disableDTR=true
+XMC1100_XMC2Go.serial.disableRTS=true
 
-XMC1100_H_BRIDGE2GO.build.mcu=cortex-m0
-XMC1100_H_BRIDGE2GO.build.f_cpu=32000000L
-XMC1100_H_BRIDGE2GO.build.board=ARM_XMC
-XMC1100_H_BRIDGE2GO.build.board.version=1100
-XMC1100_H_BRIDGE2GO.build.board.type=T038x0064
-XMC1100_H_BRIDGE2GO.build.board.v=0064
-XMC1100_H_BRIDGE2GO.build.core=./
-XMC1100_H_BRIDGE2GO.build.variant=XMC1100
-XMC1100_H_BRIDGE2GO.build.board_variant=XMC1100_H_Bridge2Go
-XMC1100_H_BRIDGE2GO.build.flash_size=64K
-XMC1100_H_BRIDGE2GO.build.flash_ld=linker_script.ld
+XMC1100_XMC2Go.build.mcu=cortex-m0
+XMC1100_XMC2Go.build.f_cpu=32000000L
+XMC1100_XMC2Go.build.board=ARM_XMC
+XMC1100_XMC2Go.build.board.version=1100
+XMC1100_XMC2Go.build.board.type=T038x0064
+XMC1100_XMC2Go.build.board.v=0064
+XMC1100_XMC2Go.build.core=./
+XMC1100_XMC2Go.build.variant=XMC1100
+XMC1100_XMC2Go.build.board_variant=XMC1100_XMC2Go
+XMC1100_XMC2Go.build.flash_size=64K
+XMC1100_XMC2Go.build.flash_ld=linker_script.ld
+
+XMC1100_XMC2Go.menu.UART.debug=Debugging
+XMC1100_XMC2Go.menu.UART.onBoard=OnBoard
+
+XMC1100_XMC2Go.menu.UART.debug=PC
+XMC1100_XMC2Go.menu.UART.debug.flag.selected=SERIAL_HOSTPC
+XMC1100_XMC2Go.menu.UART.onBoard=On Board
+XMC1100_XMC2Go.menu.UART.onBoard.flag.selected=SERIAL_ONBOARD
+
+####################################################
+XMC1100_H_Bridge_2Go.name=XMC1100 H-Bridge 2Go
+XMC1100_H_Bridge_2Go.upload.tool=xmcprog
+XMC1100_H_Bridge_2Go.upload.speed=115200
+XMC1100_H_Bridge_2Go.upload.resetmethod=ck
+XMC1100_H_Bridge_2Go.upload.maximum_size=65536
+XMC1100_H_Bridge_2Go.upload.wait_for_upload_port=true
+
+XMC1100_H_Bridge_2Go.communication=usb
+XMC1100_H_Bridge_2Go.protocol=dragon_isp
+XMC1100_H_Bridge_2Go.program.protocol=dragon_isp
+XMC1100_H_Bridge_2Go.program.tool=xmcprog
+XMC1100_H_Bridge_2Go.program.extra_params=-Pusb
+
+XMC1100_H_Bridge_2Go.serial.disableDTR=true
+XMC1100_H_Bridge_2Go.serial.disableRTS=true
+
+XMC1100_H_Bridge_2Go.build.mcu=cortex-m0
+XMC1100_H_Bridge_2Go.build.f_cpu=32000000L
+XMC1100_H_Bridge_2Go.build.board=ARM_XMC
+XMC1100_H_Bridge_2Go.build.board.version=1100
+XMC1100_H_Bridge_2Go.build.board.type=T038x0064
+XMC1100_H_Bridge_2Go.build.board.v=0064
+XMC1100_H_Bridge_2Go.build.core=./
+XMC1100_H_Bridge_2Go.build.variant=XMC1100
+XMC1100_H_Bridge_2Go.build.board_variant=XMC1100_H_Bridge_2Go
+XMC1100_H_Bridge_2Go.build.flash_size=64K
+XMC1100_H_Bridge_2Go.build.flash_ld=linker_script.ld
+
+XMC1100_H_Bridge_2Go.menu.UART.debug=PC
+XMC1100_H_Bridge_2Go.menu.UART.debug.flag.selected=SERIAL_ONBOARD
+XMC1100_H_Bridge_2Go.menu.UART.onBoard=On Board
+XMC1100_H_Bridge_2Go.menu.UART.onBoard.flag.selected=SERIAL_ONBOARD
 
 ####################################################
 XMC1300_Boot_Kit.name=XMC1300 Boot Kit
@@ -114,37 +135,40 @@ XMC1300_Boot_Kit.build.board_variant=XMC1300_Boot_Kit
 XMC1300_Boot_Kit.build.flash_size=64K
 XMC1300_Boot_Kit.build.flash_ld=linker_script.ld
 
+XMC1300_Boot_Kit.menu.UART.debug=PC
+XMC1300_Boot_Kit.menu.UART.debug.flag.selected=SERIAL_HOSTPC
+XMC1300_Boot_Kit.menu.UART.onBoard=On Board
+XMC1300_Boot_Kit.menu.UART.onBoard.flag.selected=SERIAL_ONBOARD
 
 ###################################################
-XMC1300_Radar.name=XMC1300 Sense2GoL
-XMC1300_Radar.upload.tool=xmcprog
-XMC1300_Radar.upload.speed=115200
-XMC1300_Radar.upload.resetmethod=ck
-XMC1300_Radar.upload.maximum_size=125160
-XMC1300_Radar.upload.maximum_data_size=4920
-XMC1300_Radar.upload.wait_for_upload_port=true
+XMC1300_Sense2GoL.name=XMC1300 Sense2GoL
+XMC1300_Sense2GoL.upload.tool=xmcprog
+XMC1300_Sense2GoL.upload.speed=115200
+XMC1300_Sense2GoL.upload.resetmethod=ck
+XMC1300_Sense2GoL.upload.maximum_size=125160
+XMC1300_Sense2GoL.upload.maximum_data_size=4920
+XMC1300_Sense2GoL.upload.wait_for_upload_port=true
 
-XMC1300_Radar.communication=usb
-XMC1300_Radar.protocol=dragon_isp
-XMC1300_Radar.program.protocol=dragon_isp
-XMC1300_Radar.program.tool=xmcprog
-XMC1300_Radar.program.extra_params=-Pusb
+XMC1300_Sense2GoL.communication=usb
+XMC1300_Sense2GoL.protocol=dragon_isp
+XMC1300_Sense2GoL.program.protocol=dragon_isp
+XMC1300_Sense2GoL.program.tool=xmcprog
+XMC1300_Sense2GoL.program.extra_params=-Pusb
 
-XMC1300_Radar.serial.disableDTR=true
-XMC1300_Radar.serial.disableRTS=true
+XMC1300_Sense2GoL.serial.disableDTR=true
+XMC1300_Sense2GoL.serial.disableRTS=true
 
-XMC1300_Radar.build.mcu=cortex-m0
-XMC1300_Radar.build.f_cpu=32000000L
-XMC1300_Radar.build.board=ARM_XMC
-XMC1300_Radar.build.board.version=1302
-XMC1300_Radar.build.board.type=T038x0064
-XMC1300_Radar.build.board.v=0032
-XMC1300_Radar.build.core=./
-XMC1300_Radar.build.variant=XMC1300
-XMC1300_Radar.build.board_variant=XMC1300_Sense2GoL
-XMC1300_Radar.build.flash_size=64K
-XMC1300_Radar.build.flash_ld=linker_script.ld
-
+XMC1300_Sense2GoL.build.mcu=cortex-m0
+XMC1300_Sense2GoL.build.f_cpu=32000000L
+XMC1300_Sense2GoL.build.board=ARM_XMC
+XMC1300_Sense2GoL.build.board.version=1302
+XMC1300_Sense2GoL.build.board.type=T038x0064
+XMC1300_Sense2GoL.build.board.v=0032
+XMC1300_Sense2GoL.build.core=./
+XMC1300_Sense2GoL.build.variant=XMC1300
+XMC1300_Sense2GoL.build.board_variant=XMC1300_Sense2GoL
+XMC1300_Sense2GoL.build.flash_size=64K
+XMC1300_Sense2GoL.build.flash_ld=linker_script.ld
 
 ####################################################
 XMC4700_Relax_Kit.name=XMC4700 Relax Kit
@@ -175,11 +199,8 @@ XMC4700_Relax_Kit.build.board_variant=XMC4700_Relax_Kit
 XMC4700_Relax_Kit.build.flash_size=2000K
 XMC4700_Relax_Kit.build.flash_ld=linker_script.ld
 
-
 ####################################################
-
 # Not up to date
-
 #XMC4800_Relax_Kit.name=XMC4800 Relax Kit
 #XMC4800_Relax_Kit.upload.tool=xmcprog
 #XMC4800_Relax_Kit.upload.speed=115200

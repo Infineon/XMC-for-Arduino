@@ -39,8 +39,16 @@
 #define NUM_INTERRUPT       2
 #define NUM_SERIAL          1
 
-// comment out following line to use Serial on pins (board)
-#define SERIAL_DEBUG    1
+// Defines will be either set by ArduinoIDE in the menu or manually
+#ifdef SERIAL_HOSTPC
+  // Comment out following line to use Serial on pins (board)
+  #define SERIAL_DEBUG    1
+#elif SERIAL_ONBOARD
+  // No SERIAL_DEBUG will be defined, kept here for clarity
+#else
+  // Define the SERIAL_DEBUG as default setting
+  #define SERIAL_DEBUG    1
+#endif
 
 #define PWM4_TIMER_PERIOD (2041U)  // Generate 490Hz @fCCU=1MHz
 #define PWM8_TIMER_PERIOD (2041U)  // Generate 490Hz @fCCU=1MHz
