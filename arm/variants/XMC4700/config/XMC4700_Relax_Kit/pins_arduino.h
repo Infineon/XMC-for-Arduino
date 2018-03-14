@@ -73,34 +73,33 @@ extern uint8_t SCK ;
 static const uint8_t SDA = 15;
 static const uint8_t SCL = 16;
 
-#define A0   17
-#define A1   18
-#define A2   19
-#define A3   20
-#define A4   21
-#define A5   22
+#define A0   0
+#define A1   1
+#define A2   2
+#define A3   3
+#define A4   4
+#define A5   5
 //Additional ADC ports starting here
-#define A6	 43		// ADC G2CH6 on P15.6
-#define A7	 44		// ADC G2CH5 on P15.5
-#define A8	 45		// ADC G2CH3 on P15.3
-#define A9	 46		// ADC G1CH7 on P14.15
-#define A10	 47		// ADC G1CH5 on P14.13
-#define A11	 48		// ADC G0CH7 on P14.7
-#define A12	 49		// ADC G3CH7 on P15.15
-#define A13	 50		// ADC G1CH1 on P14.9
-#define A14	 55		// ADC G1CH0 on P14.8
-#define A15	 56		// ADC G3CH6 on P15.14
-#define A16	 57		// ADC G0CH6 on P14.6
-#define A17	 58		// ADC G1CH4 on P14.12
-#define A18	 59		// ADC G1CH6 on P14.14
-#define A19	 60		// ADC G2CH2 on P15.2
-#define A20	 61		// ADC G2CH4 on P15.4
-#define A21	 62		// ADC G2CH7 on P15.7
+#define A6	 6		// ADC G2CH6 on P15.6
+#define A7	 7		// ADC G2CH5 on P15.5
+#define A8	 8		// ADC G2CH3 on P15.3
+#define A9	 9		// ADC G1CH7 on P14.15
+#define A10	 10		// ADC G1CH5 on P14.13
+#define A11	 11		// ADC G0CH7 on P14.7
+#define A12	 12		// ADC G3CH7 on P15.15
+#define A13	 13		// ADC G1CH1 on P14.9
+#define A14	 14		// ADC G1CH0 on P14.8
+#define A15	 15		// ADC G3CH6 on P15.14
+#define A16	 16		// ADC G0CH6 on P14.6
+#define A17	 17		// ADC G1CH4 on P14.12
+#define A18	 18		// ADC G1CH6 on P14.14
+#define A19	 19		// ADC G2CH2 on P15.2
+#define A20	 20		// ADC G2CH4 on P15.4
+#define A21	 21		// ADC G2CH7 on P15.7
 // ADC G3CH0 on P15.8	not available
 // ADC G3CH1 on P15.9	not available
 // ADC G3CH4 on P15.12	button
 // ADC G3CH5 on P15.13	button
-
 
 
 #define LED_BUILTIN 24 //Standard Arduino LED: Used LED1
@@ -111,14 +110,6 @@ static const uint8_t SCL = 16;
 #define GND     50  // GND
 
 #define digitalPinToInterrupt(p)            ((p) == 2 ? 0 : ((p) == 3 ? 1 : NOT_AN_INTERRUPT))
-#define analogInputToDigitalPin(p)          ((p < 6) ? (p) + 14 : -1)
-#define isanalogPin(p)                      (p == A0) || (p == A1) || (p == A2) || (p == A3) || (p == A4) || (p == A5) || (p == A6) || (p == A7) \
-											|| (p == A8) || (p == A9) || (p == A10) || (p == A11) || (p == A12) || (p == A13) || (p == A14) || (p == A15) \
-											|| (p == A16) || (p == A17) || (p == A18) || (p == A19) || (p == A20) || (p == A21)
-#define analogPinToADCNum(p)                ((p == A0) ? (0) :  (p == A1) ? (1) : (p == A2) ? (2) : (p == A3) ? (3) : (p == A4) ? (4) : (p == A5) ? (5) : \
-											(p == A6) ? (6) : (p == A7) ? (7) : (p == A8) ? (8) : (p == A9) ? (9) : (p == A10) ? (10) : (p == A11) ? (11) : \
-											(p == A12) ? (12) : (p == A13) ? (13) : (p == A14) ? (14) : (p == A15) ? (15) : (p == A16) ? (16) : (p == A17) ? (17) : \
-											(p == A18) ? (18) : (p == A19) ? (19) : (p == A20) ? (20) : (p == A21) ? (21) : -1)
 #define digitalPinHasDAC(p)					(p == 50) || (p == 55)
 #define digitalPinToDACNum(p)				(p == 50) ? (0) : ((p == 55) ? (1) : (-1))
 #define digitalPinHasPWM4(p)                ((p) == 3) ||  ((p) == 10) || ((p) == 11) || ((p) == 95) || ((p) == 72) || ((p) == 96) || ((p) == 63) || ((p) == 36) \

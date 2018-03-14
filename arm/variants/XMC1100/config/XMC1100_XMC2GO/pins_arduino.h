@@ -75,8 +75,8 @@ extern uint8_t SCK ;
 static const uint8_t SDA = PIN_WIRE_SDA;
 static const uint8_t SCL = PIN_WIRE_SCL;
 
-#define A0   12
-#define A1   13
+#define A0   0
+#define A1   1
 
 #define LED_BUILTIN 14 	//Standard Arduino LED: Used LED1
 #define LED1    14  	// Extended Leds
@@ -84,8 +84,6 @@ static const uint8_t SCL = PIN_WIRE_SCL;
 #define GND     32  	// GND
 
 #define digitalPinToInterrupt(p)    (((p) == 9) ? 0 : NOT_AN_INTERRUPT)
-#define isanalogPin(p)              (((p == A0) || (p == A1)) ? (1) :0)
-#define analogPinToADCNum(p)        ((p == A0) ? (0) : (p == A1) ? (1) : -1)
 #define digitalPinHasPWM4(p)        ((p) == 8 )
 #define digitalPinToPWM4Num(p)      (((p) == 8) ? (0) : (-1))
 

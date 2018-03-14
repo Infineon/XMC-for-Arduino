@@ -104,9 +104,6 @@ static const uint8_t SCL = 10;
 #define GND     34  		// GND
 
 #define digitalPinToInterrupt(p)    ((p) == 14 ? 0 : ((p) == 15 ? 1 : NOT_AN_INTERRUPT))
-#define analogInputToDigitalPin(p)  ((p < 6) ? (p) : -1)
-#define isanalogPin(p)              (((p == A0) || (p == A1) || (p == A2) || (p == A3) || (p == A4) || (p == A5)) ? 1 : 0)
-#define analogPinToADCNum(p)        ((p == A0) ? (0) :  (p == A1) ? (1) : (p == A2) ? (2) : (p == A3) ? (3) : (p == A4) ? (4) : (p == A5) ? (5) : -1)
 #define digitalPinHasPWM4(p)        ((p) == 31) ||  ((p) == 26)
 #define digitalPinHasPWM8(p)        ((p) == 32) ||  ((p) == 33)
 #define digitalPinToPWM4Num(p)      (((p) == 31) ? (0) : ((p) == 26) ? (1) : -1 )
