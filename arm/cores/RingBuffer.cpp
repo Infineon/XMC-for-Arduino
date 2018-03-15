@@ -37,7 +37,9 @@ RingBuffer::RingBuffer( void )
 
 void RingBuffer::store_char( uint8_t c )
 {
-    int i = (uint32_t)(_iHead + 1) % SERIAL_BUFFER_SIZE ;
+    int i = _iHead + 1;
+    if( i >= SERIAL_BUFFER_SIZE )
+      i = 0;
 
     // if we should be storing the received character into the location
     // just before the tail (meaning that the head would advance to the
