@@ -97,28 +97,18 @@ extern "C" {
 //****************************************************************************
 // @Typedefs
 //****************************************************************************
-typedef void ( *XMC_SYSTIMER_CALLBACK_t )( void* args );
-// For casting previous to empty parameter list function call
-typedef void ( *XMC_SYSTIMER_CALLBACK_tn )( );
+/* Structures  for task details next run, status etc.. */
+struct TaskList {
+                uint32_t    next;       // next execution time in ms
+                uint32_t    interval;   // interval between schedule starts in ms
+                int16_t     param;      // User defined parameter
+                int16_t     status;     // current task status 0 stopped,
+                                        // -ve stopped with error,
+                                        // > 0 user status (and active)
+                };
 
-typedef enum XMC_SYSTIMER_STATUS
-    {
-    XMC_SYSTIMER_STATUS_SUCCESS = 0U, /**< Status Success if initialization is successful */
-    XMC_SYSTIMER_STATUS_FAILURE         /**< Status Failure if initialization is failed */
-    } XMC_SYSTIMER_STATUS_t;
-
-typedef enum XMC_SYSTIMER_MODE
-    {
-    XMC_SYSTIMER_MODE_ONE_SHOT = 0U, /**< timer type is one shot */
-    XMC_SYSTIMER_MODE_PERIODIC      /**< timer type is periodic */
-    } XMC_SYSTIMER_MODE_t;
-
-typedef enum XMC_SYSTIMER_STATE
-    {
-    XMC_SYSTIMER_STATE_NOT_INITIALIZED = 0U, /**< The timer is in uninitialized state */
-    XMC_SYSTIMER_STATE_RUNNING,             /**< The timer is in running state */
-    XMC_SYSTIMER_STATE_STOPPED              /**< The timer is in stop state */
-    } XMC_SYSTIMER_STATE_t;
+/* SysTick counter */
+extern volatile uint32_t g_systick_count;
 
 /* SysTick counter */
 extern volatile uint32_t g_systick_count;
@@ -130,7 +120,6 @@ extern volatile uint32_t g_systick_count;
  * \brief Initialize the time module.
  */
 extern void wiring_time_init( void );
-
 
 /*
  * \brief Returns the number of milliseconds since the Arduino board began running the current program.
@@ -163,7 +152,7 @@ static inline uint32_t  micros( void ) __attribute__(( always_inline ));
 static inline uint32_t  micros( void )
 {
 return ( ( g_systick_count * SYSTIMER_TICK_PERIOD_US )
-            + ( ( ( SYSTICK_MS - SysTick->VAL ) / SYSTICK_US ) ) );
+            + ( ( SYSTICK_MS - SysTick->VAL ) / SYSTICK_US ) );
 }
 
 
@@ -177,6 +166,8 @@ extern void delay( uint32_t dwMs );
 
 /*
  * \brief Pauses the program for the amount of time (in microseconds) specified as parameter.
+ *
+ *  DISABLES all interrupts during this time
  *
  * \param dwUs the number of microseconds to pause (uint32_t)
  */
@@ -200,53 +191,14 @@ else
     }
 }
 
-
-/*
- * @brief Creates a new software timer.
- * @param period  timer period value in microseconds. Range: (SYSTIMER_TICK_PERIOD_US) to pow(2,32).
- * @param mode  Mode of timer(ONE_SHOT/PERIODIC). Refer @ref XMC_SYSTIMER_MODE_t for details.
- * @param callback  Call back function of the timer (No Macros are allowed).
- * @param args  Call back function parameter.
- *
- * Normally calls function callback( *args )
- *
- * Special cases for callback action processing
- *      args is NULL means a function with VOID parameter list called e.g callback()
- *      callback is NULL boolean delay_timer_expired is set to true
- *
- * This reduces warnings and also stops accidental callback of NULL causing leap to never never land
- */
-uint32_t XMC_SYSTIMER_CreateTimer( uint32_t period, XMC_SYSTIMER_MODE_t mode,
-                                        XMC_SYSTIMER_CALLBACK_t callback, void*  args );
-
-/*
- * @brief Starts the software timer.
- * @param id  timer ID obtained from SYSTIMER_CreateTimer. Range : 1 to 16
- * @return XMC_SYSTIMER_STATUS_t APP status. Refer @ref XMC_SYSTIMER_STATUS_t for details.
- */
-XMC_SYSTIMER_STATUS_t XMC_SYSTIMER_StartTimer( uint32_t id );
-
-/*
- * @brief Stops the software timer.
- * @param id  timer ID obtained from SYSTIMER_CreateTimer. Range : 1 to 16
- * @return XMC_SYSTIMER_STATUS_t APP status. Refer @ref XMC_SYSTIMER_STATUS_t for details.
- */
-XMC_SYSTIMER_STATUS_t XMC_SYSTIMER_StopTimer( uint32_t id );
-
-/*
- * @brief Function to modify the time interval and restart the timer for the new time interval.<br>
- * @param id ID of already created system timer. Range : 1 to 16
- * @param microsec new time interval. Range: (SYSTIMER_TICK_PERIOD_US) to pow(2,32).
- * @return XMC_SYSTIMER_STATUS_t APP status. Refer @ref XMC_SYSTIMER_STATUS_t for details.
- */
-XMC_SYSTIMER_STATUS_t XMC_SYSTIMER_RestartTimer( uint32_t id, uint32_t microsec );
-
-/*
- * @brief Deletes the software timer from the timer list.
- * @param id  timer ID obtained from SYSTIMER_CreateTimer. Range : 1 to 16
- * @return XMC_SYSTIMER_STATUS_t APP status. Refer @ref XMC_SYSTIMER_STATUS_t for details.
- */
-XMC_SYSTIMER_STATUS_t XMC_SYSTIMER_DeleteTimer( uint32_t id );
+extern int setInterval( int, uint32_t );
+extern uint32_t getInterval( int );
+extern int setParam( int, int16_t );
+extern int16_t getParam( int );
+extern uint32_t getTime( int );
+extern int16_t getStatus( int );
+extern int StartTask( int );
+extern int FindID( int(*  )( int, int16_t ) );
 
 #ifdef __cplusplus
 }
