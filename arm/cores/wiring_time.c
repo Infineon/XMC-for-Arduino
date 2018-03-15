@@ -15,86 +15,166 @@
   License along with this library; if not, write to the Free Software
   Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
+
+/* Includes Co-operative Scheduler for XMC-for-Arduino
+
+   Using COMPILE time scheduling table 
+
+Version V1.00
+Author: Paul Carpenter, PC Services, <sales@pcserviceselectronics.co.uk>
+Date    March 2018
+
+Co-operative scheduler library that has some support functions and main 
+schedule function meant to be run as the Systick scheduler event handler, the 
+support functions should be used to get status on, start, stop, or configure tasks.
+
+The schedule code is designed for MINIMAL overhead and SPEED.
+
+The time interval of calling the schedule loop is determined by Systick timer 
+interval currently 1 ms, and calls a selection of tasks determined by two
+parameters for each task
+
+    callback    function address
+    parameter   INTEGER to pass to function
+    
+From this we get TWO types of function calls when a task event happens
+
+1/ callback and parameter are set gives a function call of
+
+    int callback( int ID, int16_t param )
+            function to use as this task that accepts TWO integer parameters
+            and MUST return an integer
+
+   (even if parameter not set it is initialised to task_id AT compile TIME)
+    
+2/ Special case if ANY task has its callback set to NULL a special variable
+   in wiring_time is set to TRUE. This enables the delay() function to work
+   for ms delays. As a side effect it stops runaway tasks for callback set to 
+   NULL. 
+                            
+Callback functions in list
+--------------------------
+    For different processors speeds it is suggested to keep the number of 
+    total tasks (callback functions) to following limits -
+    
+    Speed               Max Tasks
+    < 50 MHz            8
+    > 50 MHz < 100 MHz  12
+    > 100 MHz           16
+
+Callback function structure
+---------------------------
+    Task is actually calling a function that should be defined as 
+    function that returns int and takes TWO integer parameter
+
+    e.g.    int func( int TaskId, int16_t Parameter )
+    First parameter is TaskId,
+    Second parameter is user defined parameter (int16_t)
+
+    If interval of a task has to change call setInterval during task execution
+    NOT to STOP task use return code
+
+Callback functions Contents
+---------------------------
+    Callback functions are effectively interrupt routines so care should be taken 
+    about which variables and flags set in these functions are volatiles.
+    
+    Functions MUST be VERY SMALL as many tasks have to run in less than 1 ms as 
+    well as the main code.
+    
+    Do NOT use blocking or slow callbacks that use AT LEAST the following Ardunio
+    functions
+        delay           (this would become recursive)
+        .print, .write, println on Serial or Liquid Crystal
+        analogread
+        PulseIn
+        Liquid Crystal  ANY function
+        I2C or SPI      ANY function
+        SD/MMC          ANY function
+
+    All of these and maybe others are SLOW, block waiting for I/O or time
+    delays often MUCH longer than 1 ms
+
+Callback Function Return value
+------------------------------
+    The returned value is the NEW status for that task which tells scheduler
+    what to do next time. Values are
+
+      < 0 User error status (stops task execution)
+        0  Task stopped (if needed to be run will have to be started by Start)
+      > 0 Next status this can be used by call back function for state machines
+          Task runs again at the interval set
+
+Scheduling Functions
+--------------------
+setInterval Set a task's NEW interval and schedule new time from now if not
+            already running
+getInterval Get a task's interval
+setParam    Set a task's callback function parameter (signed int16_t)
+getParam    Get a task's callback function parameter (signed int16_t)
+getTime     Get a task's next time to execute
+getStatus   Get a particular task status word
+StartTask   Start a task (if not already running)
+FindID      get ID of first task from task address
+*/
 //****************************************************************************
 // @Project Includes
 //****************************************************************************
 #include "Arduino.h"
-#include "wiring_time.h"
+extern int  tone_irq_action( int, int16_t );
 
 //****************************************************************************
 // @Macros
 //****************************************************************************
-/**< Maximum No of timer **/
-#define SYSTIMER_CFG_MAX_TMR  (8U)
+// number of tasks = number of tones plus delay task plus any others added later
+#define _MAX_TASKS   (NUM_TONE_PINS + 1)
 
 #define SYSTIMER_PRIORITY  (4U)
-
-#define HW_TIMER_ADDITIONAL_CNT (1U)
-
-//****************************************************************************
-// @Defines
-//****************************************************************************
-/*!< Millisecond to Microsecond ratio */
+/* Millisecond to Microsecond ratio */
 #define TIMER_1mSec 1000
-/*!< The ISR divider */
-#define TIMER_ISR_RATIO 1
-/*!< mS to uS scaling factor*/
-#define TIMER_mSecTouSec_RATIO  ( TIMER_1mSec / TIMER_ISR_RATIO )
-
-//****************************************************************************
-// @Typedefs
-//****************************************************************************
-/* SYSTIMER_OBJECT structure acts as the timer control block */
-typedef struct XMC_SYSTIMER_OBJECT
-    {
-    struct XMC_SYSTIMER_OBJECT* next;   /**< pointer to next timer control block */
-    struct XMC_SYSTIMER_OBJECT* prev;   /**< Pointer to previous timer control block */
-    XMC_SYSTIMER_CALLBACK_t callback;   /**< Callback function pointer */
-    XMC_SYSTIMER_MODE_t mode;           /**< timer Type (single shot or periodic) */
-    XMC_SYSTIMER_STATE_t state;         /**< timer state */
-    void* args;                         /**< Parameter to callback function */
-    uint32_t id;                        /**< timer ID */
-    uint32_t count;                     /**< timer count value */
-    uint32_t reload;                    /**< timer Reload count value */
-    bool delete_swtmr;                  /**< To delete the timer */
-    } XMC_SYSTIMER_OBJECT_t;
 
 //****************************************************************************
 // @Global Variables
 //****************************************************************************
-/** Table which save timer control block. */
-XMC_SYSTIMER_OBJECT_t g_timer_tbl[ SYSTIMER_CFG_MAX_TMR ];
+/* Array of tasks which are addresses to functions.
+    Each function returns int and takes TWO integer parameter
+        e.g.    int func( int TaskId, int16_t Parameter )
+     First parameter is TaskId,
+     second is current status is user defined parameter (int16_t)
 
-/* The header of the timer Control list. */
-XMC_SYSTIMER_OBJECT_t* g_timer_list = NULL;
+    Tasklist order is ALWAYS
+            Tone    callbacks ( 0 to NUM_TONE_PINS )
+            Any additional tasks
+            delay() callback
 
-/* Timer ID tracker */
-uint32_t g_timer_tracker = 0U;
+    This way last is always delay and first 'n' are always Tone pins i.e. 0 - n
+    last is _MAX_TASKS - 1
+*/
+int (* tasks[_MAX_TASKS])( int, int16_t ); 
 
-/* Tracker if Timer Handler as already been entered -> avoid recursion */
-volatile uint16_t g_timer_entered_handler = 0u;
+/* Structure for task details next run, status etc.. */
+struct TaskList taskTable[ _MAX_TASKS ];
+
+unsigned long old_ms;       // last execution time
+int running;                // Current task ID being checked or run
 
 /* SysTick counter */
 volatile uint32_t g_systick_count = 0U;
 
-// Should be volatile as updated in IRQ handler or callback from IRQ handler
-volatile __IO bool delay_timer_expired;
+/* Tracker if Timer Handler as already been entered -> avoid recursion */
+volatile __IO bool g_timer_entered_handler = FALSE;
+
+// Delay ms function flag for time expired in Systick Event Handler
+volatile __IO bool delay_timer_expired = FALSE;
 
 //****************************************************************************
 // @Prototypes Of Local Functions
 //****************************************************************************
-
-/* This function is called to insert a timer into the timer list. */
-static void XMC_SYSTIMER_lInsertTimerList( uint32_t tbl_index );
-
-/* This function is called to remove a timer from the timer list. */
-static void XMC_SYSTIMER_lRemoveTimerList( uint32_t tbl_index );
-
-/* Handler function  called from SysTick event handler. */
-static void XMC_SYSTIMER_lTimerHandler( void );
+/* Handler function  called from SysTick event handler for task scheduling */
+int XMC_SYSTIMER_lTimerHandler( void );
 
 /* SysTick handler which is the main interrupt service routine to service the
- * system timer's configured */
+ * tasks configured */
 void SysTick_Handler( void );
 
 
@@ -103,401 +183,317 @@ void SysTick_Handler( void );
 //****************************************************************************
 void wiring_time_init( void )
 {
-/* Initialize the header of the list */
-g_timer_list = NULL;
+// Initialise task control to all off
+memset( taskTable, 0, sizeof( taskTable ) );
+
+for( int i = 0; i < _MAX_TASKS; i++ )
+   {
+   taskTable[ i ].param = i;        // Preset user parameter to task number
+// Fill with call back function addresses
+   if( i < NUM_TONE_PINS )
+     tasks[ i ] = tone_irq_action;   // Tone callbacks
+   else
+     tasks[ i ] = NULL;     // Special case delay() ms callback
+   }
+old_ms = g_systick_count;        // Save last executed as now
+ 
 /* Initialize SysTick timer for 1ms (1kHz) interval */
 SysTick_Config( (uint32_t)SYSTICK_MS );
 
 /* setting of First SW Timer period is always and sub-priority value for XMC4000 devices */
 /* setting of priority value for XMC1000 devices */
 NVIC_SetPriority( SysTick_IRQn, SYSTIMER_PRIORITY );
-g_timer_tracker = 0U;
 }
 
 
-void delay( uint32_t dwMs )
-{
-uint32_t TimerId;
-
-delay_timer_expired = FALSE;
-/* This function uses SysTick Exception for controlling the timer list. Call back function
+/* delay - milliseconds
+ * This function uses SysTick Exception for controlling the timer list. Call back function
  * registered through this function will be called in SysTick exception when the timer is expired.
- * One shot timers are removed from the timer list, if it expires. To use
- * this SW timer again it has to be first deleted and then created again.
  *
  *  @param[in]  Period Timer period value in microseconds
- *  @param[in]  TimerType Type of Timer(ONE_SHOT/PERIODIC)
- *  @param[in]  TimerCallBack Call back function of the timer(No Macros are allowed)
- *  @param[in]  pCallBackArgPtr Call back function parameter
  *
  * Special cases for callback action processing
- *      args is NULL means a function with VOID parameter list called e.g function()
  *      callback is NULL boolean delay_timer_expired is set to true
- *
  */
-TimerId = XMC_SYSTIMER_CreateTimer( dwMs * TIMER_mSecTouSec_RATIO, XMC_SYSTIMER_MODE_ONE_SHOT,
-                                            NULL, NULL );
-if( TimerId != 0 )
-  {
-  //Timer is created successfully
-  XMC_SYSTIMER_StartTimer( TimerId );
-  // Wait until timer expires
-  do
-    yield( );
-  while( !delay_timer_expired );
-  // Delete Timer since is One-Shot
-  XMC_SYSTIMER_DeleteTimer( TimerId );
-  }
+void delay( uint32_t dwMs )
+{
+setInterval( _MAX_TASKS - 1, dwMs );
+//Timer is always in list as last
+StartTask( _MAX_TASKS - 1 );
+// Wait until timer expires
+do
+  yield( );
+while( !delay_timer_expired );
+delay_timer_expired = FALSE;
 }
 
 
-/* This function is called to insert a timer into the timer list. */
-static void XMC_SYSTIMER_lInsertTimerList( uint32_t tbl_index )
+/* Handler function called from SysTick event handler.
+        - Task scheduling loop
+
+   Does ONE pass through scheduling table, checking what tasks are due or 
+   overdue to run.
+
+   Order of task execution is list of tasks
+
+   When task has completed -
+        updates task status with status returned,
+        adjusts next run time using interval specified.
+            If interval is zero execution time set to zero.
+
+   Parameters - NONE
+
+   Returns  int  0  Processed no tasks to run
+                > 0 Number of tasks executed
+ */
+int XMC_SYSTIMER_TaskLoop( void )
 {
-XMC_SYSTIMER_OBJECT_t* object_ptr;
-int32_t delta_ticks;
-int32_t timer_count;
-bool found_flag = false;
-/* Get timer time */
-timer_count = (int32_t)g_timer_tbl[ tbl_index ].count;
-/* Check if Timer list is NULL */
-if( NULL == g_timer_list )
-  /* Set this as first Timer */
-  g_timer_list = &g_timer_tbl[ tbl_index ];
-/* If not, find the correct place, and insert the specified timer */
-else
-  {
-  object_ptr = g_timer_list;
-  /* Get timer tick */
-  delta_ticks = timer_count;
-  /* Find correct place for inserting the timer */
-  while( ( NULL != object_ptr ) && ( false == found_flag ) )
-    {
-    /* Get timer Count Difference */
-    delta_ticks -= (int32_t)object_ptr->count;
-    /* Check for delta ticks < 0 */
-    if( delta_ticks <= 0)
-      {
-      /* Check If head item */
-      if( NULL != object_ptr->prev )
-        {
-        /* If Insert to list */
-        object_ptr->prev->next = &g_timer_tbl[ tbl_index ];
-        g_timer_tbl[ tbl_index ].prev = object_ptr->prev;
-        g_timer_tbl[ tbl_index ].next = object_ptr;
-        object_ptr->prev = &g_timer_tbl[ tbl_index ];
-        }
-      else
-        {
-        /* Set Timer as first item */
-        g_timer_tbl[ tbl_index ].next = g_timer_list;
-        g_timer_list->prev = &g_timer_tbl[ tbl_index ];
-        g_timer_list = &g_timer_tbl[ tbl_index ];
-        }
-      g_timer_tbl[ tbl_index ].count = g_timer_tbl[ tbl_index ].next->count
-                                                    + (uint32_t)delta_ticks;
-      g_timer_tbl[ tbl_index ].next->count  -= g_timer_tbl[ tbl_index ].count;
-      found_flag = true;
-      }
-    /* Check for last item in list */
-    else
-      {
-      if( ( delta_ticks > 0 ) && ( NULL == object_ptr->next ) )
-        {
-        /* Yes, insert into */
-        g_timer_tbl[ tbl_index ].prev = object_ptr;
-        object_ptr->next = &g_timer_tbl[ tbl_index ];
-        g_timer_tbl[ tbl_index ].count = (uint32_t)delta_ticks;
-        found_flag = true;
-        }
-      }
-    /* Get the next item in timer list */
-    object_ptr = object_ptr->next;
-    }
-  }
-}
+int done;
+unsigned int overdue;
+unsigned long ms;
 
+// Task loop lock
+g_timer_entered_handler = TRUE;
 
-/* This function is called to remove a timer from the timer list. */
-static void XMC_SYSTIMER_lRemoveTimerList( uint32_t tbl_index )
-{
-XMC_SYSTIMER_OBJECT_t* object_ptr;
-object_ptr = &g_timer_tbl[ tbl_index ];
-/* Check whether only one timer available */
-if( ( NULL == object_ptr->prev ) && ( NULL == object_ptr->next ) )
-  /* set timer list as NULL */
-  g_timer_list = NULL;
-/* Check if the first item in timer list */
-else
-  if( NULL == object_ptr->prev )
-    {
-    /* Remove timer from list, and reset timer list */
-    g_timer_list  = object_ptr->next;
-    g_timer_list->prev = NULL;
-    g_timer_list->count += object_ptr->count;
-    object_ptr->next    = NULL;
-    }
-    /* Check if the last item in timer list */
-  else
-    {
-    if( NULL == object_ptr->next )
-      {
-      /* Remove timer from list */
-      object_ptr->prev->next = NULL;
-      object_ptr->prev = NULL;
-      }
-    else
-      {
-      /* Remove timer from list */
-      object_ptr->prev->next  =  object_ptr->next;
-      object_ptr->next->prev  =  object_ptr->prev;
-      object_ptr->next->count += object_ptr->count;
-      object_ptr->next = NULL;
-      object_ptr->prev = NULL;
-      }
-    }
-}
-
-
-/* Handler function called from SysTick event handler. */
-static void XMC_SYSTIMER_lTimerHandler( void )
-{
-XMC_SYSTIMER_OBJECT_t* object_ptr;
-int found;
-
-/* Handler entered */
-g_timer_entered_handler++;
-/* Get first item of timer list */
-object_ptr = g_timer_list;
-while( ( NULL != object_ptr ) && ( 0U == object_ptr->count ) )
-    {
-    found = 0;
-    if( true == object_ptr->delete_swtmr )
-      {
-      found = 1;
-      /* Set timer status as SYSTIMER_STATE_NOT_INITIALIZED */
-      object_ptr->state = XMC_SYSTIMER_STATE_NOT_INITIALIZED;
-      /* Release resource which are hold by this timer */
-      g_timer_tracker &= ~( 1U << object_ptr->id );
-      }
-    /* Check whether timer is a one shot timer */
-    else
-      if( XMC_SYSTIMER_MODE_ONE_SHOT == object_ptr->mode )
-        {
-        if( XMC_SYSTIMER_STATE_RUNNING == object_ptr->state )
-          {
-          found = 2;
-          /* Set timer status as SYSTIMER_STATE_STOPPED */
-          object_ptr->state = XMC_SYSTIMER_STATE_STOPPED;
-          }
-        }
-    /* Check whether timer is periodic timer */
-      else
-        if( XMC_SYSTIMER_MODE_PERIODIC == object_ptr->mode )
-          {
-          if( XMC_SYSTIMER_STATE_RUNNING == object_ptr->state )
-            {
-            found = 3;
-            /* Reset timer tick */
-            object_ptr->count = object_ptr->reload;
-            }
-          }
-        else
-          break;
-    // process common aspects having found a match
-    if( found )
-      {
-      /* Yes, remove this timer from timer list */
-      XMC_SYSTIMER_lRemoveTimerList( (uint32_t)object_ptr->id );
-      if( found > 1 )
-        {
-        /* Call timer callback function */
-        if( object_ptr->callback == NULL )
-          delay_timer_expired = TRUE;         // Special case of NULL callback function
-        else
-          if( object_ptr->args != NULL )
-            ( object_ptr->callback )( object_ptr->args );
-          else                    // Special case NULL arguments address
-            ( (XMC_SYSTIMER_CALLBACK_tn)object_ptr->callback )(  );
-        if( found == 3 )      // Reinsert into timer list
-          XMC_SYSTIMER_lInsertTimerList( (uint32_t)object_ptr->id );
-        }
-      }
-    /* Get first item of timer list */
-    object_ptr = g_timer_list;
-    }
+// get current time and overdue
+ms = g_systick_count;
+// Unsigned maths first ensures correct even at wraparound
+overdue = (unsigned int)( ms - old_ms );
+// save current execution time
+old_ms = ms;
+done = 0;
+for( running = 0; running < _MAX_TASKS; running++ )
+   {
+   if( taskTable[ running ].status > 0 )    // task enabled
+     { // check if time to run as in correct interval or overdue
+     if( ms - taskTable[ running ].next <= overdue )
+       {
+       if( tasks[ running ] == NULL )
+         {
+         delay_timer_expired = TRUE;        // Special case of NULL callback function
+         taskTable[ running ].status = 0;   // One shot event so stop task
+         }
+       else  
+         if( ( taskTable[ running ].status = 
+                ( ( *tasks[ running ])( running, taskTable[ running ].param ) ) ) > 0 )
+           taskTable[ running ].next = ms + taskTable[ running ].interval;
+       done++;
+       }
+     }
+   }
+return done;
 }
 
 
 /* SysTick Event Handler. */
 void SysTick_Handler( void )
 {
-XMC_SYSTIMER_OBJECT_t* object_ptr;
-object_ptr = g_timer_list;
-g_systick_count++;
+g_systick_count++;          // Another ms has occured
 
-if( NULL != object_ptr )
+// do not call handler, when still running
+if( g_timer_entered_handler == FALSE )
   {
-  if( object_ptr->count > 1UL )
-    object_ptr->count--;
-  else
-    {
-    object_ptr->count = 0U;
-    // do not call handler, when still running
-    if( g_timer_entered_handler == 0u )
-      {
-      //g_timer_entered_handler++;
-      XMC_SYSTIMER_lTimerHandler();
-      g_timer_entered_handler--;
-      }
-    }
+  //g_timer_entered_handler++;
+  XMC_SYSTIMER_TaskLoop();
+  g_timer_entered_handler = FALSE;
   }
 }
 
 
-/** @ingroup Simple_System_Timer_App PublicFunc
- * @{
- */
-/* API for creating a new software Timer instance. */
-uint32_t XMC_SYSTIMER_CreateTimer( uint32_t period, XMC_SYSTIMER_MODE_t mode,
-                                        XMC_SYSTIMER_CALLBACK_t callback, void* args )
-{
-uint32_t id = 0U;
-uint32_t count = 0U;
-uint32_t period_ratio = 0U;
+/* checkID - Common ID check for valid and not running
 
-if( period < SYSTIMER_TICK_PERIOD_US )
-  id = 0U;
-else
-  {
-  for( count = 0U; count < SYSTIMER_CFG_MAX_TMR; count++ )
-    {
-    /* Check for free timer ID */
-    if( 0U == ( g_timer_tracker & ( 1U << count ) ) )
-      {
-      /* If yes, assign ID to this timer */
-      g_timer_tracker |= ( 1U << count );
-      /* Initialize the timer as per input values */
-      g_timer_tbl[ count ].id       = count;
-      g_timer_tbl[ count ].mode     = mode;
-      g_timer_tbl[ count ].state    = XMC_SYSTIMER_STATE_STOPPED;
-      period_ratio = (uint32_t)( period / SYSTIMER_TICK_PERIOD_US );
-      g_timer_tbl[ count ].count    = ( period_ratio + HW_TIMER_ADDITIONAL_CNT );
-      g_timer_tbl[ count ].reload   = period_ratio;
-      g_timer_tbl[ count ].callback = callback;
-      g_timer_tbl[ count ].args     = args;
-      g_timer_tbl[ count ].prev     = NULL;
-      g_timer_tbl[ count ].next     = NULL;
-      id = count + 1U;
-      break;
-      }
-    }
-  }
-return ( id );
+    Parameters  int Task ID to check
+
+    Return int  -1  invalid ID
+                 0  current task running
+                 1  Valid
+*/
+int CheckID( int ID )
+{
+if( ID < 0 || ID >= _MAX_TASKS )
+  return -1;
+if( ID == running )
+  return 0;
+return 1;
 }
 
 
-/* API to start the software timer. */
-XMC_SYSTIMER_STATUS_t XMC_SYSTIMER_StartTimer( uint32_t id )
-{
-XMC_SYSTIMER_STATUS_t status;
-status = XMC_SYSTIMER_STATUS_FAILURE;
+/* setInterval - set the interval time in ms for a task
 
-/* Check if timer is running */
-id -= 1U;
-if( XMC_SYSTIMER_STATE_STOPPED == g_timer_tbl[ id ].state )
+   If task running just sets interval as next execution will be set at task end.
+
+   When task NOT running, also sets next execution time to now plus interval.
+
+    Parameters  int Task ID to check
+                unsigned int interval in ms
+
+    Return int  -2 invalid interval
+                -1 invalid ID
+                 0  task is running
+                > 0 task interval and execution time set
+*/
+int setInterval( int ID, uint32_t interval )
+{
+int i;
+
+if( ( i = CheckID( ID ) ) < 0 )
+  return i;
+taskTable[ ID ].interval = interval;
+if( i != 0 )
   {
-  g_timer_tbl[ id ].count = g_timer_tbl[ id ].reload + HW_TIMER_ADDITIONAL_CNT;
-  /* set timer status as XMC_SYSTIMER_STATE_RUNNING */
-  g_timer_tbl[ id ].state = XMC_SYSTIMER_STATE_RUNNING;
-  /* Insert this timer into timer list */
-  XMC_SYSTIMER_lInsertTimerList( id );
-  status = XMC_SYSTIMER_STATUS_SUCCESS;
+  taskTable[ ID ].next = millis( ) + interval + 1;
+  return 1;
   }
-return ( status );
+return 0;
 }
 
 
-/* API to stop the software timer.  */
-XMC_SYSTIMER_STATUS_t XMC_SYSTIMER_StopTimer( uint32_t id )
+/* getInterval - get the interval time in ms for a task
+
+    Parameters  int Task ID to check
+                NO ID validity check
+
+    Return int  >= 0 Valid interval time
+*/
+uint32_t getInterval( int ID )
 {
-XMC_SYSTIMER_STATUS_t status;
-status = XMC_SYSTIMER_STATUS_SUCCESS;
-
-id -= 1U;
-if( XMC_SYSTIMER_STATE_NOT_INITIALIZED == g_timer_tbl[ id ].state )
-  status = XMC_SYSTIMER_STATUS_FAILURE;
-else
-  {
-  /* Check whether Timer is in Stop state */
-  if( XMC_SYSTIMER_STATE_RUNNING == g_timer_tbl[ id ].state )
-    {
-    /* Set timer status as SYSTIMER_STATE_STOPPED */
-    g_timer_tbl[ id ].state = XMC_SYSTIMER_STATE_STOPPED;
-
-    /* remove Timer from node list */
-    XMC_SYSTIMER_lRemoveTimerList( id );
-    }
-  }
-return ( status );
+return taskTable[ ID ].interval;
 }
 
 
-/* API to reinitialize the time interval and to start the timer. */
-XMC_SYSTIMER_STATUS_t XMC_SYSTIMER_RestartTimer( uint32_t id, uint32_t microsec )
-{
-uint32_t period_ratio = 0U;
-XMC_SYSTIMER_STATUS_t status;
-status = XMC_SYSTIMER_STATUS_SUCCESS;
+/* setParam - set the param value for a task callback function
 
-if( XMC_SYSTIMER_STATE_NOT_INITIALIZED == g_timer_tbl[ id - 1U ].state )
-  status = XMC_SYSTIMER_STATUS_FAILURE;
-else
-  {
-  /* check whether timer is in run state */
-  if( XMC_SYSTIMER_STATE_STOPPED != g_timer_tbl[ id - 1U ].state )
-    {
-    /* Stop the timer */
-    status = XMC_SYSTIMER_StopTimer( id );
-    }
-  if( XMC_SYSTIMER_STATUS_SUCCESS == status )
-    {
-    period_ratio = (uint32_t)( microsec / SYSTIMER_TICK_PERIOD_US );
-    g_timer_tbl[ id - 1U ].reload = period_ratio;
-    /* Start the timer */
-    status = XMC_SYSTIMER_StartTimer( id );
-    }
-  }
-return ( status );
+   Parameters   int Task ID to check
+                int16_t param value
+
+   Return int   -1 invalid ID
+                 0  task is running
+                > 0 task interval and param value set
+*/
+int setParam( int ID, int16_t param )
+{
+int i;
+
+if( ( i = CheckID( ID ) ) < 0 )
+  return i;
+taskTable[ ID ].param = param;
+return i;
 }
 
 
-/* Function to delete the Timer instance. */
-XMC_SYSTIMER_STATUS_t XMC_SYSTIMER_DeleteTimer( uint32_t id )
-{
-XMC_SYSTIMER_STATUS_t status;
-status = XMC_SYSTIMER_STATUS_SUCCESS;
+/* getParam - get the param value for a task callback function
 
-/* Check whether Timer is in delete state first change id */
-id -= 1U;
-if( XMC_SYSTIMER_STATE_NOT_INITIALIZED == g_timer_tbl[ id ].state )
-  status = XMC_SYSTIMER_STATUS_FAILURE;
-else
-  {
-  if( XMC_SYSTIMER_STATE_STOPPED == g_timer_tbl[ id ].state )
-    {
-    /* Set timer status as SYSTIMER_STATE_NOT_INITIALIZED */
-    g_timer_tbl[ id ].state = XMC_SYSTIMER_STATE_NOT_INITIALIZED;
-    /* Release resource which are hold by this timer */
-    g_timer_tracker &= ~( 1U << id );
-    }
-  else
-    {
-    /* Yes, remove this timer from timer list during ISR execution */
-    g_timer_tbl[ id ].delete_swtmr = true;
-    }
-  }
-return ( status );
+    Parameters  int Task ID to get details of
+
+    Return int  -1 invalid ID or valid param
+                All other values assume the param value
+    */
+int16_t getParam( int ID )
+{
+int i;
+    
+if( ( i = CheckID( ID ) ) < 0 )
+  return i;
+return taskTable[ ID ].param;
+}
+
+
+/* getTime - get next execution time in ms of a task
+
+    As value is unsigned long impossible to guarantee error codes
+    So if values listed below for errors check current millis() value
+    to see if could be real or error.
+
+    Parameters  int Task ID to check
+
+    Return      unsigned long of time (or could be errors)
+                0 could be execution time or error of invalid ID
+                1 could be execution time or error of NO interval
+*/
+unsigned long getTime( int ID )
+{
+int i;
+
+if( ( i = CheckID( ID ) ) < 0 )
+  return 0;
+return taskTable[ ID ].next;
+}
+
+
+/* getStatus - get task status even if running task
+
+    Parameters  int Task ID to get status for
+
+    Return int  -1  invalid ID
+               any other value Status (including other user errors -ve
+*/
+int16_t getStatus( int ID )
+{
+int i;
+
+// Check valid ID, not running and interval
+if( ( i = CheckID( ID ) ) < 0 )
+  return i;
+return taskTable[ ID ].status;
+}
+
+
+/* StartTask - Start a task if not running and has interval set
+
+   Cannot start an already started task
+   
+   It is responsibility of the task to stop its task and any associated 
+   resources (GPIO/TWI/SPI etc).
+
+    Parameters  int Task ID to start
+
+    Return int  -3  Task already started
+                -2  No interval on task
+                -1  invalid ID
+                 0  current task running
+                > 0 Valid
+*/
+int StartTask( int ID )
+{
+int i;
+
+// Check valid ID, not running and interval
+if( ( i = CheckID( ID ) ) <= 0 )
+  return i;
+if( taskTable[ ID ].interval == 0 )
+  return -2;
+if( taskTable[ ID ].status  > 0 )
+  return -3;
+// Start task
+taskTable[ ID ].next = old_ms + taskTable[ ID ].interval;
+taskTable[ ID ].status = 1;
+return 1;
+}
+
+
+/* FindID - Find ID for FIRST task with matching function address in Task table
+
+   Scans task table to find a matching function address and return the ID
+   NOTE stops at FIRST match.
+   
+    Parameters  int Task ID to Stop
+
+    Return int  < 0 Invalid task address
+                > 0 Valid and stopped
+*/
+//int (* tasks[_MAX_TASKS])( int, int )
+int FindID( int(*  ptr)( int, int16_t ) )
+{
+int i;
+
+if( ptr == NULL )
+  return -1;
+for( i = 0; i < _MAX_TASKS; i++ )
+   if( tasks[ i ] == ptr )
+     break;
+if( i == _MAX_TASKS )
+  return -2;
+return i;
 }
 
 //****************************************************************************
