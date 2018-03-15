@@ -15,8 +15,6 @@
   License along with this library; if not, write to the Free Software
   Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
-
-
 #ifndef _ARDUINO_H_
 #define _ARDUINO_H_
 
@@ -187,7 +185,6 @@ extern "C" {
 #ifdef DAC
 	extern XMC_ARD_DAC_t mapping_dac[];
 #endif
-
 	extern XMC_UART_t XMC_UART_debug;
 	extern XMC_UART_t XMC_UART_on_board;
 
@@ -221,7 +218,6 @@ extern "C" {
 #include "wiring_shift.h"
 #include "wiring_time.h"
 #include "wiring_pulse.h"
-#include "Tone.h"
 #include "itoa.h"
 #include "dtostrf.h"
 #include "WCharacter.h"
@@ -229,17 +225,16 @@ extern "C" {
 
 #ifdef __cplusplus
 } // extern "C"
+#include "Tone.h"
 #include "WMath.h"
 #endif	// __cplusplus
 
 #include "Print.h"
 #include "HardwareSerial.h"
 
-
 //****************************************************************************
 // @Board Variant Includes
 //****************************************************************************
 #include <pins_arduino.h>
-
 
 #endif  /*_ARDUINO_H_ */

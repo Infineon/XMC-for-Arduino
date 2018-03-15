@@ -29,20 +29,21 @@
 
 int main(void)
 {
-    /*
-     *  Initialization
-     */
-    wiring_analog_init();
-    wiring_time_init();
+/*
+ *  Initialization Time first to get closer to startup time accuracy
+ */
+wiring_time_init();
+wiring_analog_init();
 
-    // Arduino's main() function just calls setup() and loop()....
-    setup();
-    while (1)
+// Arduino's main() function just calls setup() and loop()....
+setup();
+while (1)
     {
-        loop();
-        serialEventRun();
+    loop();
+    serialEventRun();
     }
 }
+
 //****************************************************************************
 //                                 END OF FILE
 //****************************************************************************
