@@ -177,12 +177,15 @@ extern "C" {
 //****************************************************************************
     extern const XMC_PORT_PIN_t mapping_port_pin[];
     extern const XMC_PIN_INTERRUPT_t mapping_interrupt[];
+    extern const uint8_t mapping_pin_PWM4[][ 2 ];
     extern XMC_PWM4_t mapping_pwm4[];
     extern XMC_ADC_t mapping_adc[];
 #ifdef CCU8V2
+    extern const uint8_t mapping_pin_PWM8[][ 2 ];
     extern XMC_PWM8_t mapping_pwm8[];
 #endif
 #ifdef DAC
+    extern const uint8_t mapping_pin_DAC[][ 2 ];
 	extern XMC_ARD_DAC_t mapping_dac[];
 #endif
 	extern XMC_UART_t XMC_UART_debug;

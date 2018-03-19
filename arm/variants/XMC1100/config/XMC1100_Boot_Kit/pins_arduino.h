@@ -19,7 +19,6 @@
   Free Software Foundation, Inc., 59 Temple Place, Suite 330,
   Boston, MA  02111-1307  USA
 */
-
 #ifndef PINS_ARDUINO_H_
 #define PINS_ARDUINO_H_
 
@@ -31,6 +30,7 @@
 //****************************************************************************
 // @Defines
 //****************************************************************************
+#define XMC_BOARD   Boot_Kit
 
 #define NUM_DIGITAL_PINS    18
 #define NUM_ANALOG_INPUTS   6
@@ -38,6 +38,7 @@
 #define NUM_LEDS            7
 #define NUM_INTERRUPT       2
 #define NUM_SERIAL          1
+#define NUM_TONE_PINS       4
 
 // comment out following line to use Serial on pins (board)
 #define SERIAL_DEBUG    1
@@ -66,12 +67,12 @@ extern uint8_t SCK ;
 static const uint8_t SDA = 15;
 static const uint8_t SCL = 16;
 
-#define A0   17
-#define A1   18
-#define A2   19
-#define A3   20
-#define A4   21
-#define A5   22
+#define A0   0
+#define A1   1
+#define A2   2
+#define A3   3
+#define A4   4
+#define A5   5
 
 #define PIN_SPI_SS_2    23
 
@@ -93,25 +94,30 @@ static const uint8_t SCL = 16;
 #define GND     32  // GND
 
 #define digitalPinToInterrupt(p)    ((p) == 2 ? 0 : ((p) == 3 ? 1 : NOT_AN_INTERRUPT))
-#define analogInputToDigitalPin(p)  ((p < 6) ? (p) + 14 : -1)
-#define isanalogPin(p)              (((p == A0) || (p == A1) || (p == A2) || (p == A3) || (p == A4) || (p == A5)) ? 1 : 0)
-#define analogPinToADCNum(p)        ((p == A0) ? (0) :  (p == A1) ? (1) : (p == A2) ? (2) : (p == A3) ? (3) : (p == A4) ? (4) : (p == A5) ? (5) : -1)
-#define digitalPinHasPWM4(p)        ((p) == 3 || (p) == 4 || (p) == 6 ||  (p) == 9)
-#define digitalPinToPWM4Num(p)      (((p) == 3) ? (0) : (((p) == 4) ? (1) : (((p) == 6) ? (2) : (3))))
 
 #ifdef ARDUINO_MAIN
+/* Mapping of Arduino Pins to PWM4 channels as pin and PWM4 channel
+   last entry 255 for both parts.
+   Putting both parts in array means if a PWM4 channel gets reassigned for 
+   another function later a gap in channel numbers will not mess things up */
+const uint8_t mapping_pin_PWM4[][ 2 ] = {
+                                        { 3, 0 }, 
+                                        { 4, 1 },
+                                        { 6, 2 }, 
+                                        { 9, 3 },
+                                        { 255, 255 } };
 
 const XMC_PORT_PIN_t mapping_port_pin[] =
 {
     /* 0  */    {XMC_GPIO_PORT1, 2},  // PIN_RX / LED output                P1.2
     /* 1  */    {XMC_GPIO_PORT1 , 3}, // PIN_TX / LED output                P1.3
-    /* 2  */    {XMC_GPIO_PORT1 , 4}, // External interrupt/ LED output     P1.4
-    /* 3  */    {XMC_GPIO_PORT0 , 0}, // External interrupt/ PWM output     P0.0
+    /* 2  */    {XMC_GPIO_PORT1 , 4}, // External interrupt 0 / LED output  P1.4
+    /* 3  */    {XMC_GPIO_PORT0 , 0}, // External interrupt 1 / PWM output  P0.0
     /* 4  */    {XMC_GPIO_PORT0 , 1}, // PWM output                         P0.1
     /* 5  */    {XMC_GPIO_PORT0 , 2}, // GPIO                               P0.2
     /* 6  */    {XMC_GPIO_PORT0 , 3}, // PWM output                         P0.3
     /* 7  */    {XMC_GPIO_PORT0 , 4}, // GPIO                               P0.4
-    /* 8  */    {XMC_GPIO_PORT0 , 12}, // GPIO                               P0.12
+    /* 8  */    {XMC_GPIO_PORT0 , 12}, // GPIO                              P0.12
     /* 9  */    {XMC_GPIO_PORT0 , 8}, // PWM output                         P0.8
     /* 10  */   {XMC_GPIO_PORT0 , 9}, // SPI-SS                             P0.9
     /* 11  */   {XMC_GPIO_PORT1 , 1}, // SPI-MOSI                           P1.1
@@ -123,17 +129,17 @@ const XMC_PORT_PIN_t mapping_port_pin[] =
     /* 17  */   {XMC_GPIO_PORT2 , 6}, // A0 / ADC Input                     P2.6
     /* 18  */   {XMC_GPIO_PORT2 , 8}, // A1 / ADC Input                     P2.8
     /* 19  */   {XMC_GPIO_PORT2 , 9}, // A2 / ADC Input                     P2.9
-    /* 20  */   {XMC_GPIO_PORT2 , 10}, // A3 / ADC Input                     P2.10
-    /* 21  */   {XMC_GPIO_PORT2 , 11}, // A4 / ADC Input                     P2.11
+    /* 20  */   {XMC_GPIO_PORT2 , 10}, // A3 / ADC Input                    P2.10
+    /* 21  */   {XMC_GPIO_PORT2 , 11}, // A4 / ADC Input                    P2.11
     /* 22  */   {XMC_GPIO_PORT2 , 2}, // A5 / ADC Input                     P2.2
     /* 23  */   {XMC_GPIO_PORT2 , 4}, // SPI_SS_2                           P2.4
     /* 24  */   {XMC_GPIO_PORT2 , 5}, // AD_AUX                             P2.5
     /* 25  */   {XMC_GPIO_PORT2 , 7}, // AD_AUX                             P2.7
     /* 26  */   {XMC_GPIO_PORT0 , 5}, // AUX / GPIO / LED output            P0.5
     /* 27  */   {XMC_GPIO_PORT0 , 6}, // AUX / GPIO / LED output            P0.6
-    /* 28  */   {XMC_GPIO_PORT0 , 10}, // AUX / GPIO                         P0.10
-    /* 29  */   {XMC_GPIO_PORT0 , 11}, // AUX / GPIO                         P0.11
-    /* 30  */   {XMC_GPIO_PORT0 , 13}, // AUX / GPIO                         P0.13
+    /* 28  */   {XMC_GPIO_PORT0 , 10}, // AUX / GPIO                        P0.10
+    /* 29  */   {XMC_GPIO_PORT0 , 11}, // AUX / GPIO                        P0.11
+    /* 30  */   {XMC_GPIO_PORT0 , 13}, // AUX / GPIO                        P0.13
     /* 31  */   {XMC_GPIO_PORT1 , 5}  // LED output                         P1.5
 };
 

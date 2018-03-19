@@ -19,7 +19,6 @@
   Free Software Foundation, Inc., 59 Temple Place, Suite 330,
   Boston, MA  02111-1307  USA
 */
-
 #ifndef PINS_ARDUINO_H_
 #define PINS_ARDUINO_H_
 
@@ -31,6 +30,7 @@
 //****************************************************************************
 // @Defines
 //****************************************************************************
+#define XMC_BOARD   Boot_Kit
 
 #define NUM_DIGITAL_PINS    18
 #define NUM_ANALOG_INPUTS   6
@@ -38,6 +38,7 @@
 #define NUM_LEDS            6
 #define NUM_INTERRUPT       2
 #define NUM_SERIAL          1
+#define NUM_TONE_PINS       4
 
 // comment out following line to use Serial on pins (board)
 #define SERIAL_DEBUG    1
@@ -94,15 +95,21 @@ static const uint8_t SCL = 10;
 #define GND     34  		// GND
 
 #define digitalPinToInterrupt(p)    ((p) == 14 ? 0 : ((p) == 15 ? 1 : NOT_AN_INTERRUPT))
-#define analogInputToDigitalPin(p)  ((p < 6) ? (p) : -1)
-#define isanalogPin(p)              (((p == A0) || (p == A1) || (p == A2) || (p == A3) || (p == A4) || (p == A5)) ? 1 : 0)
-#define analogPinToADCNum(p)        ((p == A0) ? (0) :  (p == A1) ? (1) : (p == A2) ? (2) : (p == A3) ? (3) : (p == A4) ? (4) : (p == A5) ? (5) : -1)
-#define digitalPinHasPWM4(p)        ((p) == 31) ||  ((p) == 26)
-#define digitalPinHasPWM8(p)        ((p) == 32) ||  ((p) == 33)
-#define digitalPinToPWM4Num(p)      (((p) == 31) ? (0) : ((p) == 26) ? (1) : -1 )
-#define digitalPinToPWM8Num(p)      (((p) == 32) ? (0) : ((p) == 33) ? (1) : -1 )
 
 #ifdef ARDUINO_MAIN
+/* Mapping of Arduino Pins to PWM4 channels as pin and PWM4 channel
+   last entry 255 for both parts.
+   Putting both parts in array means if a PWM4 channel gets reassigned for 
+   another function later a gap in channel numbers will not mess things up */
+const uint8_t mapping_pin_PWM4[][ 2 ] = {
+                                        { 31, 0 }, 
+                                        { 26, 1 },
+                                        { 255, 255 } };
+
+const uint8_t mapping_pin_PWM8[][ 2 ] = {
+                                        { 32, 0 }, 
+                                        { 33, 1 },
+                                        { 255, 255 } };
 
 const XMC_PORT_PIN_t mapping_port_pin[] =
 {
@@ -121,8 +128,8 @@ const XMC_PORT_PIN_t mapping_port_pin[] =
 	/* 11  */ 	{XMC_GPIO_PORT2 ,1},  // I2C Data / Address SDA				P2.1		
 	/* 12  */ 	{XMC_GPIO_PORT0 ,14}, // GPIO								P0.14				
 	/* 13  */ 	{XMC_GPIO_PORT0 ,15}, // GPIO								P0.15				
-	/* 14  */ 	{XMC_GPIO_PORT0 ,12}, // External interrupt					P0.12 		
-	/* 15  */ 	{XMC_GPIO_PORT0 ,13}, // External interrupt					P0.13		
+	/* 14  */ 	{XMC_GPIO_PORT0 ,12}, // External interrupt	0				P0.12 		
+	/* 15  */ 	{XMC_GPIO_PORT0 ,13}, // External interrupt	1				P0.13		
 	/* 16  */ 	{XMC_GPIO_PORT0 ,10}, // GPIO								P0.10				
 	/* 17  */ 	{XMC_GPIO_PORT0 ,11}, // GPIO								P0.11	
 	
@@ -132,17 +139,17 @@ const XMC_PORT_PIN_t mapping_port_pin[] =
 	/* 21  */ 	{XMC_GPIO_PORT1, 2},  // PIN_RX 	 						P1.2
 	/* 22  */ 	{XMC_GPIO_PORT1 ,1},  // SPI-MOSI							P1.1
 	/* 23  */ 	{XMC_GPIO_PORT1 ,0},  // SPI-MIS0							P1.0
-	/* 24  */ 	{XMC_GPIO_PORT0 ,0},  // LED output							P0.0
-	/* 25  */ 	{XMC_GPIO_PORT0 ,1},  // LED output							P0.1		
-	/* 26  */ 	{XMC_GPIO_PORT0 ,2},  // PWM								P0.2		
+	/* 24  */ 	{XMC_GPIO_PORT0 ,0},  // LED output	LED1					P0.0
+	/* 25  */ 	{XMC_GPIO_PORT0 ,1},  // LED output	LED2					P0.1		
+	/* 26  */ 	{XMC_GPIO_PORT0 ,2},  // PWM (PWM4 slice 1)					P0.2		
 	
-	/* 27  */ 	{XMC_GPIO_PORT0 ,8},  // LED output							P0.8		
-	/* 28  */ 	{XMC_GPIO_PORT0 ,9},  // LED output							P0.9
-	/* 29  */ 	{XMC_GPIO_PORT0 ,6},  // SPI-SS / LED output				P0.6
-	/* 30  */ 	{XMC_GPIO_PORT0 ,7},  // SPI-SCK / LED output				P0.7
-	/* 31  */ 	{XMC_GPIO_PORT0 ,4},  // PWM								P0.4
-	/* 32  */ 	{XMC_GPIO_PORT0 ,5},  // PWM								P0.5
-	/* 33  */ 	{XMC_GPIO_PORT0 ,3}   // PWM								P0.3 
+	/* 27  */ 	{XMC_GPIO_PORT0 ,8},  // LED output		LED5				P0.8		
+	/* 28  */ 	{XMC_GPIO_PORT0 ,9},  // LED output		LED6				P0.9
+	/* 29  */ 	{XMC_GPIO_PORT0 ,6},  // SPI-SS / LED output LED3			P0.6
+	/* 30  */ 	{XMC_GPIO_PORT0 ,7},  // SPI-SCK / LED output LED4			P0.7
+	/* 31  */ 	{XMC_GPIO_PORT0 ,4},  // PWM (PWM4 slice 0)					P0.4
+	/* 32  */ 	{XMC_GPIO_PORT0 ,5},  // PWM (PWM8 slice 0)					P0.5
+	/* 33  */ 	{XMC_GPIO_PORT0 ,3}   // PWM (PWM8 slice 1)				    P0.3 
 };
 
 const XMC_PIN_INTERRUPT_t mapping_interrupt[] =

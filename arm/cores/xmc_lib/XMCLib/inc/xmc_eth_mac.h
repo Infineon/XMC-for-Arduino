@@ -1,13 +1,13 @@
 
 /**
  * @file xmc_eth_mac.h
- * @date 2016-06-08
+ * @date 2017-08-07
  *
  * @cond
  *********************************************************************************************************************
- * XMClib v2.1.8 - XMC Peripheral Driver Library 
+ * XMClib v2.1.16 - XMC Peripheral Driver Library 
  *
- * Copyright (c) 2015-2016, Infineon Technologies AG
+ * Copyright (c) 2015-2017, Infineon Technologies AG
  * All rights reserved.                        
  *                                             
  * Redistribution and use in source and binary forms, with or without modification,are permitted provided that the 
@@ -50,6 +50,23 @@
  * 2016-06-08:
  *      - Added XMC_ETH_MAC_IsRxDescriptorOwnedByDma()
  * 
+ * 2017-02-25:
+ *      - XMC_ETH_MAC_SetPortControl() fixed compilation warning
+ *
+ * 2017-04-02:
+ *     - Added XMC_ETH_MAC_InitPTPEx()
+ *     - Added XMC_ETH_MAC_SetPTPTime()
+ *     - Added XMC_ETH_MAC_UpdateAddend()
+ *
+ * 2017-04-11:
+ *     - Added XMC_ETH_MAC_EnablePTPAlarm() and XMC_ETH_MAC_DisablePTPAlarm
+ *
+ * 2017-04-17:
+ *     - Fixed ordering of PTP nanoseconds and seconds in XMC_ETH_MAC_DMA_DESC_t
+ *
+ * 2017-08-07:
+ *     - Added XMC_ETH_MAC_TIMESTAMP_STATUS_t
+ *
  * @endcond
  */
 
@@ -259,6 +276,7 @@ typedef enum XMC_ETH_MAC_PMT_EVENT
 typedef enum XMC_ETH_MAC_TIMESTAMP_CONFIG
 {
   XMC_ETH_MAC_TIMESTAMP_CONFIG_FINE_UPDATE = ETH_TIMESTAMP_CONTROL_TSCFUPDT_Msk,             /**< Fine update */
+  XMC_ETH_MAC_TIMESTAMP_CONFIG_ENABLE_TS_INTERRUPT = ETH_TIMESTAMP_CONTROL_TSTRIG_Msk,       /**< Timestamp Interrupt Trigger Enable */
   XMC_ETH_MAC_TIMESTAMP_CONFIG_ENABLE_ALL_FRAMES = ETH_TIMESTAMP_CONTROL_TSENALL_Msk,        /**< Enable all frames */
   XMC_ETH_MAC_TIMESTAMP_CONFIG_ENABLE_PTPV2 = ETH_TIMESTAMP_CONTROL_TSVER2ENA_Msk,           /**< PTPV2 */
   XMC_ETH_MAC_TIMESTAMP_CONFIG_ENABLE_PTP_OVER_ETHERNET = ETH_TIMESTAMP_CONTROL_TSIPENA_Msk, /**< PTP over ETH */
@@ -266,6 +284,17 @@ typedef enum XMC_ETH_MAC_TIMESTAMP_CONFIG
   XMC_ETH_MAC_TIMESTAMP_CONFIG_ENABLE_PTP_OVER_IPV4 = ETH_TIMESTAMP_CONTROL_TSIPV4ENA_Msk,   /**< PTP over IPV4 */
   XMC_ETH_MAC_TIMESTAMP_CONFIG_ENABLE_MAC_ADDRESS_FILTER = ETH_TIMESTAMP_CONTROL_TSENMACADDR_Msk /**< MAC address filter */
 } XMC_ETH_MAC_TIMESTAMP_CONFIG_t;
+
+/**
+ * ETH MAC time-stamp status
+ */
+typedef enum XMC_ETH_MAC_TIMESTAMP_STATUS
+{
+  XMC_ETH_MAC_TIMESTAMP_STATUS_SECONDS_OVERFLOW = ETH_TIMESTAMP_STATUS_TSSOVF_Msk,           /**< Indicates that the seconds value of the timestamp has overflowed beyond 0xFFFFFFFF */
+  XMC_ETH_MAC_TIMESTAMP_STATUS_TARGET_TIME_REACHED = ETH_TIMESTAMP_STATUS_TSTARGT_Msk,       /**< Indicates that the value of system time is greater or equal to the value specified in the Target_Time_ Seconds Register and Target Time Nanoseconds Register */
+  XMC_ETH_MAC_TIMESTAMP_STATUS_TARGET_TIMER_ERROR = ETH_TIMESTAMP_STATUS_TSTRGTERR_Msk,      /**< Set when the target time, being programmed in Target Time Registers, is already elapsed */
+} XMC_ETH_MAC_TIMESTAMP_STATUS_t;
+
 
 /**********************************************************************************************************************
  * DATA STRUCTURES
@@ -318,8 +347,8 @@ typedef struct XMC_ETH_MAC_DMA_DESC
   uint32_t buffer2;                /**< Buffer 2 */
   uint32_t extended_status;        /**< Extended status */
   uint32_t reserved;               /**< Reserved */
-  uint32_t time_stamp_seconds;     /**< Time stamp low */
-  uint32_t time_stamp_nanoseconds; /**< Time stamp high */
+  uint32_t time_stamp_nanoseconds; /**< Time stamp low */
+  uint32_t time_stamp_seconds;     /**< Time stamp high */
 } XMC_ETH_MAC_DMA_DESC_t;
 
 /**
@@ -327,8 +356,8 @@ typedef struct XMC_ETH_MAC_DMA_DESC
  */
 typedef struct XMC_ETH_MAC_TIME
 {
-  int32_t nanoseconds;
-  uint32_t seconds;
+  uint32_t seconds;                 /**< Seconds */
+  int32_t nanoseconds;              /**< Nanoseconds */
 } XMC_ETH_MAC_TIME_t;
 
 /**
@@ -405,6 +434,7 @@ void XMC_ETH_MAC_InitRxDescriptors(XMC_ETH_MAC_t *const eth_mac);
 void XMC_ETH_MAC_InitTxDescriptors(XMC_ETH_MAC_t *const eth_mac);
  
 /**
+ * @param eth_mac A constant pointer to XMC_ETH_MAC_t, pointing to the ETH MAC base address
  * @return None
  *
  * \par<b>Description: </b><br>
@@ -413,9 +443,10 @@ void XMC_ETH_MAC_InitTxDescriptors(XMC_ETH_MAC_t *const eth_mac);
  * \par
  * The function de-asserts the peripheral reset.
  */
-void XMC_ETH_MAC_Enable( );
+void XMC_ETH_MAC_Enable(XMC_ETH_MAC_t *const eth_mac);
 
 /**
+ * @param eth_mac A constant pointer to XMC_ETH_MAC_t, pointing to the ETH MAC base address
  * @return None
  *
  * \par<b>Description: </b><br>
@@ -424,7 +455,7 @@ void XMC_ETH_MAC_Enable( );
  * \par
  * The function asserts the peripheral reset.
  */
-void XMC_ETH_MAC_Disable( );
+void XMC_ETH_MAC_Disable(XMC_ETH_MAC_t *const eth_mac);
 
 /**
  * @param eth_mac A constant pointer to XMC_ETH_MAC_t, pointing to the ETH MAC base address
@@ -490,6 +521,7 @@ XMC_ETH_MAC_STATUS_t XMC_ETH_MAC_ReadPhy(XMC_ETH_MAC_t *const eth_mac, uint8_t p
 XMC_ETH_MAC_STATUS_t XMC_ETH_MAC_WritePhy(XMC_ETH_MAC_t *const eth_mac, uint8_t phy_addr, uint8_t reg_addr, uint16_t data);
 
 /**
+ * @param eth_mac A constant pointer to XMC_ETH_MAC_t, pointing to the ETH MAC base address
  * @param port_ctrl Port control configuration
  * @return None
  *
@@ -507,8 +539,9 @@ XMC_ETH_MAC_STATUS_t XMC_ETH_MAC_WritePhy(XMC_ETH_MAC_t *const eth_mac, uint8_t 
  * - XMC4800 LQFP144 and BGA196 packages
  *
  */
-__STATIC_INLINE void XMC_ETH_MAC_SetPortControl( const XMC_ETH_MAC_PORT_CTRL_t port_ctrl )
+__STATIC_INLINE void XMC_ETH_MAC_SetPortControl(XMC_ETH_MAC_t *const eth_mac, const XMC_ETH_MAC_PORT_CTRL_t port_ctrl)
 {
+  XMC_UNUSED_ARG(eth_mac);
   ETH0_CON->CON = (uint32_t)port_ctrl.raw;
 }
 
@@ -1536,6 +1569,20 @@ void XMC_ETH_MAC_InitPTP(XMC_ETH_MAC_t *const eth_mac, uint32_t config);
 
 /**
  * @param eth_mac A constant pointer to XMC_ETH_MAC_t, pointing to the ETH MAC base address
+ * @param config Configuration of PTP module. See ::XMC_ETH_MAC_TIMESTAMP_CONFIG_t
+ * @param time Initialization time
+ * @return None
+ *
+ * \par<b>Description: </b><br>
+ * Initialize PTP <br>
+ *
+ * \par
+ * The function can be used to initialize PTP given a time parameter in addition
+ */
+void XMC_ETH_MAC_InitPTPEx(XMC_ETH_MAC_t *const eth_mac, uint32_t config, XMC_ETH_MAC_TIME_t *const time);
+
+/**
+ * @param eth_mac A constant pointer to XMC_ETH_MAC_t, pointing to the ETH MAC base address
  * @param time A constant pointer to XMC_ETH_MAC_TIME_t, pointing to the PTP time
  * @return None
  *
@@ -1547,6 +1594,19 @@ void XMC_ETH_MAC_InitPTP(XMC_ETH_MAC_t *const eth_mac, uint32_t config);
  * to the 'time' argument.
  */
 void XMC_ETH_MAC_GetPTPTime(XMC_ETH_MAC_t *const eth_mac, XMC_ETH_MAC_TIME_t *const time);
+
+/**
+ * @param eth_mac A constant pointer to XMC_ETH_MAC_t, pointing to the ETH MAC base address
+ * @param time A constant pointer to XMC_ETH_MAC_TIME_t, pointing to the PTP time
+ * @return None
+ *
+ * \par<b>Description: </b><br>
+ * Get PTP time <br>
+ *
+ * \par
+ * The function sets the PTP time give by the time parameter
+ */
+void XMC_ETH_MAC_SetPTPTime(XMC_ETH_MAC_t *const eth_mac, XMC_ETH_MAC_TIME_t *const time);
 
 /**
  * @param eth_mac A constant pointer to XMC_ETH_MAC_t, pointing to the ETH MAC base address
@@ -1575,6 +1635,52 @@ void XMC_ETH_MAC_UpdatePTPTime(XMC_ETH_MAC_t *const eth_mac, const XMC_ETH_MAC_T
  * be used to schedule an interrupt event triggered when the set alarm time limit is reached.
  */
 void XMC_ETH_MAC_SetPTPAlarm(XMC_ETH_MAC_t *const eth_mac, const XMC_ETH_MAC_TIME_t *const time);
+
+/**
+ * @param eth_mac A constant pointer to XMC_ETH_MAC_t, pointing to the ETH MAC base address
+ * @return None
+ *
+ * \par<b>Description: </b><br>
+ * Enables timestamp interrupt <br>
+ *
+ * \par
+ * The timestamp interrupt is generated when the System Time becomes greater than the value written
+ * in the Target Time register (Alarm). After the generation of the Timestamp Trigger Interrupt, the interrupt is disabled.
+ */
+__STATIC_INLINE void XMC_ETH_MAC_EnablePTPAlarm(XMC_ETH_MAC_t *const eth_mac)
+{
+  eth_mac->regs->TIMESTAMP_CONTROL |= (uint32_t)ETH_TIMESTAMP_CONTROL_TSTRIG_Msk;
+}
+
+/**
+ * @param eth_mac A constant pointer to XMC_ETH_MAC_t, pointing to the ETH MAC base address
+ * @return None
+ *
+ * \par<b>Description: </b><br>
+ * Disables timestamp interrupt <br>
+ *
+ * \par
+ * The timestamp interrupt is generated when the System Time becomes greater than the value written
+ * in the Target Time register (Alarm). After the generation of the Timestamp Trigger Interrupt, the interrupt is disabled.
+ */
+__STATIC_INLINE void XMC_ETH_MAC_DisablePTPAlarm(XMC_ETH_MAC_t *const eth_mac)
+{
+  eth_mac->regs->TIMESTAMP_CONTROL &= (uint32_t)~ETH_TIMESTAMP_CONTROL_TSTRIG_Msk;
+}
+
+
+/**
+ * @param eth_mac A constant pointer to XMC_ETH_MAC_t, pointing to the ETH MAC base address
+ * @param addend Addend value
+ * @return None
+ *
+ * \par<b>Description: </b><br>
+ * Adjust PTP clock <br>
+ *
+ * \par
+ * The function is used to adjust the PTP clock (time synchronization) to compensate a reference clock drift. 
+ */
+void XMC_ETH_MAC_UpdateAddend(XMC_ETH_MAC_t *const eth_mac, uint32_t addend);
 
 /**
  * @param eth_mac A constant pointer to XMC_ETH_MAC_t, pointing to the ETH MAC base address
@@ -1658,7 +1764,7 @@ void XMC_ETH_MAC_DisableEvent(XMC_ETH_MAC_t *const eth_mac, uint32_t event);
 
 /**
  * @param eth_mac A constant pointer to XMC_ETH_MAC_t, pointing to the ETH MAC base address
- * @param event The status of which event (or a combination of logically OR'd events) needs to be cleared?
+ * @param event The status of which event (or a combination of logically OR'd events) needs to be cleared
  * @return None
  *
  * \par<b>Description: </b><br>

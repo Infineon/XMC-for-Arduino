@@ -1,12 +1,12 @@
 /**
  * @file xmc1_scu.c
- * @date 2016-04-15
+ * @date 2017-06-24
  *
  * @cond
  *********************************************************************************************************************
- * XMClib v2.1.8 - XMC Peripheral Driver Library 
+ * XMClib v2.1.16 - XMC Peripheral Driver Library 
  *
- * Copyright (c) 2015-2016, Infineon Technologies AG
+ * Copyright (c) 2015-2017, Infineon Technologies AG
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,are permitted provided that the
@@ -62,6 +62,14 @@
  *     - Fixed XMC_SCU_CLOCK_Init for XMC1400
  *       It solves issues when trying to disable the OSCHP and use the XTAL pins as GPIO
  *
+ * 2017-02-09
+ *     - At XMC_SCU_CLOCK_Init() fixed issue while reading oscillator watchdog status
+ *
+ * 2017-04-11:
+ *     - Added XMC_SCU_SetBMI()
+ *
+ * 2017-06-24
+ *     - Changed XMC_SCU_SetBMI() for XMC11/XMC12/XMC13 to set to 1 the bit 11 of BMI
  *
  * @endcond
  *
@@ -522,16 +530,16 @@ void XMC_SCU_CLOCK_Init(const XMC_SCU_CLOCK_CONFIG_t *const config)
     }
 
     SCU_ANALOG->ANAOSCHPCTRL = (uint16_t)(SCU_ANALOG->ANAOSCHPCTRL & ~(SCU_ANALOG_ANAOSCHPCTRL_SHBY_Msk | SCU_ANALOG_ANAOSCHPCTRL_MODE_Msk)) |
-                                 config->oschp_mode;
-
-    /* Enable OSC_HP oscillator watchdog*/
-    SCU_CLK->OSCCSR |= SCU_CLK_OSCCSR_XOWDEN_Msk;
+                               config->oschp_mode;
 
     do
     {
       /* Restart OSC_HP oscillator watchdog */
       SCU_INTERRUPT->SRCLR1 = SCU_INTERRUPT_SRCLR1_LOECI_Msk;
-      SCU_CLK->OSCCSR |= SCU_CLK_OSCCSR_XOWDRES_Msk;
+
+      /* Enable OSC_HP oscillator watchdog*/
+      SCU_CLK->OSCCSR &= ~SCU_CLK_OSCCSR_XOWDEN_Msk;
+      SCU_CLK->OSCCSR |= SCU_CLK_OSCCSR_XOWDEN_Msk;
 
       /* Wait a few DCO2 cycles for the update of the clock detection result */
       delay(2500);
@@ -847,6 +855,16 @@ void XMC_SCU_IRQHandler(uint32_t sr_num)
     }
     index++;
   }
+}
+
+/* Install BMI */
+uint32_t XMC_SCU_SetBMI(uint32_t flags, uint8_t timeout)
+{
+#if (UC_SERIES == XMC14)
+  return ROM_BmiInstallationReq((flags & 0x0fffU) | ((timeout << 12) & 0xf000U));
+#else
+  return ROM_BmiInstallationReq((flags & 0x07ffU) | ((timeout << 12) & 0xf000U) | 0x0800U);
+#endif
 }
 
 #if (UC_SERIES == XMC14)

@@ -19,7 +19,6 @@
   Free Software Foundation, Inc., 59 Temple Place, Suite 330,
   Boston, MA  02111-1307  USA
 */
-
 #ifndef PINS_ARDUINO_H_
 #define PINS_ARDUINO_H_
 
@@ -31,6 +30,7 @@
 //****************************************************************************
 // @Defines
 //****************************************************************************
+#define XMC_BOARD   XMC2GO
 
 #define NUM_DIGITAL_PINS    12
 #define NUM_ANALOG_INPUTS   2
@@ -38,6 +38,7 @@
 #define NUM_LEDS            2
 #define NUM_INTERRUPT       1
 #define NUM_SERIAL          1
+#define NUM_TONE_PINS       4
 
 // comment out following line to use Serial on pins (board)
 #define SERIAL_DEBUG    1
@@ -65,8 +66,8 @@ extern uint8_t SCK ;
 static const uint8_t SDA = 11;
 static const uint8_t SCL = 10;
 
-#define A0   12
-#define A1   13
+#define A0   0
+#define A1   1
 
 #define LED_BUILTIN 14 //Standard Arduino LED: Used LED1
 #define LED1    14  // Extended Leds
@@ -74,13 +75,16 @@ static const uint8_t SCL = 10;
 #define GND     32  // GND
 
 #define digitalPinToInterrupt(p)    (((p) == 9) ? 0 : NOT_AN_INTERRUPT)
-#define isanalogPin(p)              (((p == A0) || (p == A1)) ? (1) :0)
-#define analogPinToADCNum(p)        ((p == A0) ? (0) : (p == A1) ? (1) : -1)
-#define digitalPinHasPWM4(p)        ((p) == 8 )
-#define digitalPinToPWM4Num(p)      (((p) == 8) ? (0) : (-1))
 
 
 #ifdef ARDUINO_MAIN
+/* Mapping of Arduino Pins to PWM4 channels as pin and PWM4 channel
+   last entry 255 for both parts.
+   Putting both parts in array means if a PWM4 channel gets reassigned for 
+   another function later a gap in channel numbers will not mess things up */
+const uint8_t mapping_pin_PWM4[][ 2 ] = {
+                                        { 8, 0 }, 
+                                        { 255, 255 } };
 
 const XMC_PORT_PIN_t mapping_port_pin[] =
 {
@@ -93,7 +97,7 @@ const XMC_PORT_PIN_t mapping_port_pin[] =
     /* 6  */    {XMC_GPIO_PORT2 , 0},   // PIN_TX                           P2.0
     /* 7  */    {XMC_GPIO_PORT2 , 6},   // PIN_RX                           P2.6
     /* 8  */    {XMC_GPIO_PORT0 , 5},   // PWM output                       P0.5
-    /* 9  */    {XMC_GPIO_PORT0 , 0},   // External interrupt               P0.0
+    /* 9  */    {XMC_GPIO_PORT0 , 0},   // External interrupt 0             P0.0
     /* 10  */   {XMC_GPIO_PORT2 , 11},  // I2C Clock SCL                    P2.11
     /* 11  */   {XMC_GPIO_PORT2 , 10},  // I2C Data / Address SDA           P2.10
     /* 12  */   {XMC_GPIO_PORT2 , 9},   // A0 / ADC Input                   P2.9

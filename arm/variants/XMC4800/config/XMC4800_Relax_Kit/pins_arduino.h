@@ -19,25 +19,26 @@ Public License along with this library; if not, write to the
 Free Software Foundation, Inc., 59 Temple Place, Suite 330,
 Boston, MA  02111-1307  USA
 */
-#include <XMC4800.h>
 #ifndef PINS_ARDUINO_H_
 #define PINS_ARDUINO_H_
 
 //****************************************************************************
 // @Project Includes
 //****************************************************************************
-
+#include <XMC4800.h>
 
 //****************************************************************************
 // @Defines
 //****************************************************************************
+#define XMC_BOARD   Relax_Kit
 
-#define NUM_DIGITAL_PINS 18
-#define NUM_ANALOG_INPUTS 6
-#define NUM_PWM 6
-#define NUM_LEDS 2
-#define NUM_INTERRUPT 2
-#define NUM_SERIAL 2
+#define NUM_DIGITAL_PINS    18
+#define NUM_ANALOG_INPUTS   6
+#define NUM_PWM             6
+#define NUM_LEDS            2
+#define NUM_INTERRUPT       2
+#define NUM_SERIAL          2
+#define NUM_TONE_PINS       16
 
 // Board has two serial ports pre-assigned to debug and on-board
 
@@ -71,14 +72,14 @@ static const uint8_t SCK  = 13;
 static const uint8_t SDA = 14;
 static const uint8_t SCL = 15;
 
-#define A0   16
-#define A1   17
-#define A2   18
-#define A3   19
-#define A4   20
-#define A5   21
+#define A0   0
+#define A1   1
+#define A2   2
+#define A3   3
+#define A4   4
+#define A5   5
 
-#define LED		13	// Standard Arduino LED 
+#define LED_BUILTIN		13	// Standard Arduino LED 
 #define LED1	24	// Additional LED1
 #define LED2	25 	// Additional LED2
 #define BUTTON1	26	// Additional BUTTON1
@@ -89,17 +90,24 @@ static const uint8_t SCL = 15;
 #define digitalPinToPCICR(p)        (((p) >= 0 && (p) <= 21) ? (&PCICR) : ((uint8_t *)0))
 #define digitalPinToPCICRbit(p)     (((p) <= 7) ? 2 : (((p) <= 13) ? 0 : 1))
 #define digitalPinToPCMSK(p)        (((p) <= 7) ? (&PCMSK2) : (((p) <= 13) ? (&PCMSK0) : (((p) <= 21) ? (&PCMSK1) : ((uint8_t *)0))))
-#define digitalPinToPCMSKbit(p)     (((p) <= 7) ? (p) : (((p) <= 13) ? ((p) - 8) : ((p) - 14)))
+#define digitalPinToPCMSKbit(p)     (((p) <= 7) ? (p) : ((p) <= 13) ? ((p) - 8) : ((p) - 14))
 #define digitalPinToInterrupt(p)    ((p) == 2 ? 0 : ((p) == 3 ? 1 : NOT_AN_INTERRUPT))
-#define analogInputToDigitalPin(p)  ((p < 6) ? (p) + 14 : -1)
-#define isanalogPin(p)        		(((p == A0) || (p == A1) || (p == A2) || (p == A3) || (p == A4) || (p == A5)) ? 1 : 0)
-#define analogPinToADCNum(p)		((p == A0) ? (0) :  (p == A1) ? (1) : (p == A2) ? (2) : (p == A3) ? (3) : (p == A4) ? (4) : (p == A5) ? (5) : -1)
-#define digitalPinHasPWM4(p)        ((p) == 3) ||  ((p) == 10) || ((p) == 11)
-#define digitalPinHasPWM8(p)		((p) == 5) || ((p) == 6) ||  ((p) == 9)
-#define digitalPinToPWM4Num(p)      (((p) == 3) ? (0) : ((p) == 10) ? (1) : ((p) == 11) ? (2) : -1 )
-#define digitalPinToPWM8Num(p)      (((p) == 5) ? (0) : ((p) == 6) ? (1) : ((p) == 9) ? (2) : -1 )
 
 #ifdef ARDUINO_MAIN
+/* Mapping of Arduino Pins to PWM4 channels as pin and PWM4 channel
+   last entry 255 for both parts.
+   Putting both parts in array means if a PWM4 channel gets reassigned for 
+   another function later a gap in channel numbers will not mess things up */
+const uint8_t mapping_pin_PWM4[][ 2 ] = {
+                                        { 3, 0 }, 
+                                        { 10, 1 },
+                                        { 11, 2 },
+                                        { 255, 255 } };
+const uint8_t mapping_pin_PWM8[][ 2 ] = {
+                                        { 5, 0 }, 
+                                        { 6, 1 },
+                                        { 9, 2 },
+                                        { 255, 255 } };
 
 // these arrays map port names (e.g. port B) to the
 // appropriate addresses for various functions (e.g. reading
@@ -108,8 +116,8 @@ static const uint8_t SCL = 15;
 const XMC_PORT_PIN_t mapping_port_pin[] = {
 	/* 0  */ 	{XMC_GPIO_PORT2, 15}, // PIN_RX								
 	/* 1  */ 	{XMC_GPIO_PORT2 ,14}, // PIN_TX			  					
-	/* 2  */ 	{XMC_GPIO_PORT1 ,0},  // GPIO / INT0								
-	/* 3  */ 	{XMC_GPIO_PORT1 ,1},  // PWM output / INT1					
+	/* 2  */ 	{XMC_GPIO_PORT1 ,0},  // GPIO / External INT 0								
+	/* 3  */ 	{XMC_GPIO_PORT1 ,1},  // PWM output / External INT 1					
 	/* 4  */ 	{XMC_GPIO_PORT1 ,8},  // GPIO							
 	/* 5  */ 	{XMC_GPIO_PORT2 ,12}, // PWM output 							
 	/* 6  */ 	{XMC_GPIO_PORT2 ,11}, // PWM output							
