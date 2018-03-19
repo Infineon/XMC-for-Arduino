@@ -30,7 +30,7 @@
 //****************************************************************************
 // @Defines
 //****************************************************************************
-#define XMC_BOARD   Relax_Kit
+#define XMC_BOARD           Relax_Kit
 
 #define NUM_DIGITAL_PINS    98
 #define NUM_ANALOG_INPUTS   22
@@ -45,21 +45,15 @@
 #define PWM4_TIMER_PERIOD (0x11EF)  // Generate 490Hz @fCCU=144MHz
 #define PWM8_TIMER_PERIOD (0x11EF)  // Generate 490Hz @fCCU=144MHz
 
-#define PIN_RX        (0)
-#define PIN_TX        (1)
-#define PIN_SPI_SS    (10)
-#define PIN_SPI_MOSI  (11)
-#define PIN_SPI_MISO  (12)
-#define PIN_SPI_SCK   (13)
+#define PIN_SPI_SS    10
+#define PIN_SPI_MOSI  11
+#define PIN_SPI_MISO  12
+#define PIN_SPI_SCK   13
 
-#define PIN_SPI_SS_SD    (28)
-#define PIN_SPI_MOSI_SD  (29)
-#define PIN_SPI_MISO_SD  (30)
-#define PIN_SPI_SCK_SD   (31)
-
-#define PIN_AREF            (14)
-#define PIN_WIRE_SDA        (15)
-#define PIN_WIRE_SCL        (16)
+#define PIN_SPI_SS_SD    28
+#define PIN_SPI_MOSI_SD  29
+#define PIN_SPI_MISO_SD  30
+#define PIN_SPI_SCK_SD   31
 
 static const uint8_t RX   = 0;
 static const uint8_t TX   = 1;
@@ -101,49 +95,49 @@ static const uint8_t SCL = 16;
 // ADC G3CH5 on P15.13	button
 
 
-#define LED_BUILTIN 24 //Standard Arduino LED: Used LED1
-#define LED1    24  // Additional LED1
-#define LED2    25  // Additional LED2
-#define BUTTON1 26  // Additional BUTTON1
-#define BUTTON2 27  // Additional BUTTON2
-#define GND     50  // GND
+#define LED_BUILTIN 24  //Standard Arduino LED: Used LED1
+#define LED1        24  // Additional LED1
+#define LED2        25  // Additional LED2
+#define BUTTON1     26  // Additional BUTTON1
+#define BUTTON2     27  // Additional BUTTON2
+#define GND         50  // GND
 
 #define digitalPinToInterrupt(p)    ((p) == 2 ? 0 : ((p) == 3 ? 1 : NOT_AN_INTERRUPT))
 
 #ifdef ARDUINO_MAIN
 /* Mapping of Arduino Pins to PWM4 channels as pin and PWM4 channel
    last entry 255 for both parts.
-   Putting both parts in array means if a PWM4 channel gets reassigned for 
+   Putting both parts in array means if a PWM4 channel gets reassigned for
    another function later a gap in channel numbers will not mess things up */
 const uint8_t mapping_pin_PWM4[][ 2 ] = {
-                                        { 3, 0 }, 
+                                        { 3, 0 },
                                         { 10, 1 },
-                                        { 11, 2 }, 
+                                        { 11, 2 },
                                         { 95, 3 },
-                                        { 72, 4 }, 
+                                        { 72, 4 },
                                         { 96, 5 },
-                                        { 63, 6 }, 
+                                        { 63, 6 },
                                         { 36, 7 },
-                                        { 78, 8 }, 
+                                        { 78, 8 },
                                         { 90, 9 },
-                                        { 91, 10 }, 
+                                        { 91, 10 },
                                         { 255, 255 } };
 const uint8_t mapping_pin_PWM8[][ 2 ] = {
-                                        { 5, 0 }, 
+                                        { 5, 0 },
                                         { 6, 1 },
-                                        { 9, 2 }, 
+                                        { 9, 2 },
                                         { 53, 3 },
-                                        { 39, 4 }, 
+                                        { 39, 4 },
                                         { 64, 5 },
-                                        { 38, 6 }, 
+                                        { 38, 6 },
                                         { 68, 7 },
-                                        { 79, 8 }, 
+                                        { 79, 8 },
                                         { 83, 9 },
-                                        { 82, 10 }, 
+                                        { 82, 10 },
                                         { 81, 11 },
                                         { 255, 255 } };
 const uint8_t mapping_pin_DAC[][ 2 ] = {
-                                        { 50, 0 }, 
+                                        { 50, 0 },
                                         { 55, 1 },
                                         { 255, 255 } };
 
@@ -152,15 +146,15 @@ const XMC_PORT_PIN_t mapping_port_pin[] =
     /* 0  */    {XMC_GPIO_PORT2, 15},  // PIN_RX                        P2.15
     /* 1  */    {XMC_GPIO_PORT2 , 14}, // PIN_TX                        P2.14
     /* 2  */    {XMC_GPIO_PORT1 , 0},  // GPIO / External INT 0         P1.0
-    /* 3  */    {XMC_GPIO_PORT1 , 1},  // PWM output / External INT 1   P1.1
+    /* 3  */    {XMC_GPIO_PORT1 , 1},  // PWM40-2 output / External INT 1 P1.1
     /* 4  */    {XMC_GPIO_PORT1 , 8},  // GPIO                          P1.8
-    /* 5  */    {XMC_GPIO_PORT2 , 12}, // PWM output                    P2.12
-    /* 6  */    {XMC_GPIO_PORT2 , 11}, // PWM output                    P2.11
+    /* 5  */    {XMC_GPIO_PORT2 , 12}, // PWM81-3 output                P2.12
+    /* 6  */    {XMC_GPIO_PORT2 , 11}, // PWM80-2 output                P2.11
     /* 7  */    {XMC_GPIO_PORT1 , 9},  // GPIO                          P1.9
     /* 8  */    {XMC_GPIO_PORT1 , 10}, // GPIO                          P1.10
-    /* 9  */    {XMC_GPIO_PORT1 , 11}, // PWM output                    P1.11
-    /* 10  */   {XMC_GPIO_PORT3 , 10}, // SPI-SS / PWM output           P3.10
-    /* 11  */   {XMC_GPIO_PORT3 , 8},  // SPI-MOSI / PWM output         P3.8
+    /* 9  */    {XMC_GPIO_PORT1 , 11}, // PWM81-1 output                P1.11
+    /* 10  */   {XMC_GPIO_PORT3 , 10}, // SPI-SS / PWM41-0 output       P3.10
+    /* 11  */   {XMC_GPIO_PORT3 , 8},  // SPI-MOSI / PWM41-2 output     P3.8
     /* 12  */   {XMC_GPIO_PORT3 , 7},  // SPI-MISO                      P3.7
     /* 13  */   {XMC_GPIO_PORT3 , 9},  // SPI-SCK                       P3.9
     /* 14  */   {XMC_GPIO_PORT2 , 3},  // AREF TODO:                    P2.3
@@ -185,12 +179,12 @@ const XMC_PORT_PIN_t mapping_port_pin[] =
     /* 33  */   {XMC_GPIO_PORT1 , 7},  //                               P1.7
     /* 34  */   {XMC_GPIO_PORT1 , 4},  //                               P1.4
     /* 35  */   {XMC_GPIO_PORT1 , 5},  //                               P1.5
-	
+
 	//Additional pins for port X1 starting here
-	/* 36  */   {XMC_GPIO_PORT3 , 4},  // PWM                           P3.4
+	/* 36  */   {XMC_GPIO_PORT3 , 4},  // PWM42-2                       P3.4
 	/* 37  */   {XMC_GPIO_PORT0 , 5},  // I2C_1 SDA  // SPI_4 MOSI      P0.5
-	/* 38  */   {XMC_GPIO_PORT0 , 3},  // PWM                           P0.3
-	/* 39  */   {XMC_GPIO_PORT0 , 1},  // PWM                           P0.1
+	/* 38  */   {XMC_GPIO_PORT0 , 3},  // PWM80-2                       P0.3
+	/* 39  */   {XMC_GPIO_PORT0 , 1},  // PWM80-1                       P0.1
 	/* 40  */   {XMC_GPIO_PORT0 , 10}, //                               P0.10
 	/* 41  */   {XMC_GPIO_PORT3 , 2},  //                               P3.2
 	/* 42  */   {XMC_GPIO_PORT3 , 1},  //                               P3.1
@@ -204,7 +198,7 @@ const XMC_PORT_PIN_t mapping_port_pin[] =
 	/* 50  */   {XMC_GPIO_PORT14 , 9}, // DAC0 // A13 / ADC Input       P14.9
 	/* 51  */   {XMC_GPIO_PORT2 , 13}, //                               P2.13
 	/* 52  */   {XMC_GPIO_PORT5 , 10}, //                               P5.10
-	/* 53  */   {XMC_GPIO_PORT5 , 11}, // PWM                           P5.11
+	/* 53  */   {XMC_GPIO_PORT5 , 11}, // PWM80-0                       P5.11
 	/* 54  */   {XMC_GPIO_PORT1 , 14}, //                               P1.14
 	/* 55  */   {XMC_GPIO_PORT14 , 8}, // DAC1 // A14 / ADC Input       P14.8
 	/* 56  */   {XMC_GPIO_PORT15 , 14}, // A15 / ADC Input              P15.14
@@ -214,42 +208,42 @@ const XMC_PORT_PIN_t mapping_port_pin[] =
 	/* 60  */   {XMC_GPIO_PORT15 , 2}, // A19 / ADC Input               P15.2
 	/* 61  */   {XMC_GPIO_PORT15 , 4}, // A20 / ADC Input               P15.4
 	/* 62  */   {XMC_GPIO_PORT15 , 7}, // A21 / ADC Input               P15.7
-	/* 63  */   {XMC_GPIO_PORT3 , 0}, // PWM                            P3.0
-	/* 64  */   {XMC_GPIO_PORT0 , 9}, // PWM                            P0.9
+	/* 63  */   {XMC_GPIO_PORT3 , 0}, // PWM42-0                        P3.0
+	/* 64  */   {XMC_GPIO_PORT0 , 9}, // PWM80-1                        P0.9
 	/* 65  */   {XMC_GPIO_PORT0 , 0}, //                                P0.0
 	/* 66  */   {XMC_GPIO_PORT0 , 2}, //                                P0.2
 	/* 67  */   {XMC_GPIO_PORT0 , 4}, // SPI_4 MISO                     P0.4
-	/* 68  */   {XMC_GPIO_PORT0 , 6}, // PWM                            P0.6
+	/* 68  */   {XMC_GPIO_PORT0 , 6}, // PWM80-3                        P0.6
 	/* 69  */   {XMC_GPIO_PORT0 , 11}, // I2C_1 SCL // SPI_4 SCLK       P0.11
-	
+
 	//Additional pins for port X2 starting here
 	/* 70  */   {XMC_GPIO_PORT3 , 13}, // SPI_2 SCLK                    P3.13
 	/* 71  */   {XMC_GPIO_PORT3 , 11}, // SPI_2 MOSI                    P3.11
-	/* 72  */   {XMC_GPIO_PORT0 , 14}, // PWM                           P0.14
+	/* 72  */   {XMC_GPIO_PORT0 , 14}, // PWM40-1                       P0.14
 	/* 73  */   {XMC_GPIO_PORT3 , 14}, //                               P3.14
 	/* 74  */   {XMC_GPIO_PORT0 , 7}, //                                P0.7
 	/* 75  */   {XMC_GPIO_PORT1 , 2}, //                                P1.2
 	/* 76  */   {XMC_GPIO_PORT6 , 1}, //                                P6.1
 	/* 77  */   {XMC_GPIO_PORT5 , 3}, //                                P5.3
-	/* 78  */   {XMC_GPIO_PORT6 , 5}, // PWM                            P6.5
-	/* 79  */   {XMC_GPIO_PORT1 , 15}, // PWM                           P1.15
+	/* 78  */   {XMC_GPIO_PORT6 , 5}, // PWM43-0                        P6.5
+	/* 79  */   {XMC_GPIO_PORT1 , 15}, // PWM81-0                       P1.15
 	/* 80  */   {XMC_GPIO_PORT5 , 1}, // SPI_3 MOSI                     P5.1
-	/* 81  */   {XMC_GPIO_PORT5 , 3}, // PWM                            P5.3
-	/* 82  */   {XMC_GPIO_PORT5 , 5}, // PWM                            P5.5
-	/* 83  */   {XMC_GPIO_PORT5 , 7}, // PWM                            P5.7
+	/* 81  */   {XMC_GPIO_PORT5 , 3}, // PWM81-2                        P5.3
+	/* 82  */   {XMC_GPIO_PORT5 , 5}, // PWM81-1                        P5.5
+	/* 83  */   {XMC_GPIO_PORT5 , 7}, // PWM81-0                        P5.7
 	/* 84  */   {XMC_GPIO_PORT2 , 6}, //                                P2.6
 	/* 85  */   {XMC_GPIO_PORT5 , 6}, //                                P5.6
 	/* 86  */   {XMC_GPIO_PORT5 , 4}, //                                P5.4
 	/* 87  */   {XMC_GPIO_PORT5 , 2}, //                                P5.2
 	/* 88  */   {XMC_GPIO_PORT5 , 0}, // SPI_3 MISO                     P5.0
 	/* 89  */   {XMC_GPIO_PORT6 , 6}, //                                P6.6
-	/* 90  */   {XMC_GPIO_PORT6 , 4}, // PWM                            P6.4
-	/* 91  */   {XMC_GPIO_PORT6 , 2}, // PWM                            P6.2
+	/* 90  */   {XMC_GPIO_PORT6 , 4}, // PWM43-1                        P6.4
+	/* 91  */   {XMC_GPIO_PORT6 , 2}, // PWM43-3                        P6.2
 	/* 92  */   {XMC_GPIO_PORT6 , 0}, //                                P6.0
 	/* 93  */   {XMC_GPIO_PORT0 , 8}, // SPI_3 SCLK                     P0.8
 	/* 94  */   {XMC_GPIO_PORT3 , 3}, //                                P3.3
-	/* 95  */   {XMC_GPIO_PORT0 , 15}, // PWM                           P0.15
-	/* 96  */   {XMC_GPIO_PORT0 , 12}, // PWM                           P0.12
+	/* 95  */   {XMC_GPIO_PORT0 , 15}, // PWM40-0                       P0.15
+	/* 96  */   {XMC_GPIO_PORT0 , 12}, // PWM40-3                       P0.12
 	/* 97  */   {XMC_GPIO_PORT3 , 12}, // SPI_2 MISO                    P3.12
 };
 
@@ -292,15 +286,15 @@ XMC_PWM8_t mapping_pwm8[] =
 	{CCU81, CCU81_CC82, 2,  XMC_CCU8_SLICE_COMPARE_CHANNEL_2, mapping_port_pin[81], P5_3_AF_CCU81_OUT22, XMC_CCU8_SLICE_PRESCALER_64, PWM8_TIMER_PERIOD , DISABLED},    // PWM disabled         81              P5.3
 };
 
-XMC_ARD_DAC_t mapping_dac[] = 
+XMC_ARD_DAC_t mapping_dac[] =
 {
-	{XMC_DAC0, 1, 12}, 
+	{XMC_DAC0, 1, 12},
 	{XMC_DAC0, 0, 12},
 };
 
 XMC_ADC_t mapping_adc[] =
 {
-	/* previous version: 
+	/* previous version:
     {VADC, 0, VADC_G0, 0, 4 , DISABLED},
     {VADC, 1, VADC_G0, 0, 15, DISABLED},
     {VADC, 2, VADC_G1, 1, 15, DISABLED},
