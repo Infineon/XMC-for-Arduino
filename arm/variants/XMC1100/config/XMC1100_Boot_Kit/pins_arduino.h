@@ -30,7 +30,7 @@
 //****************************************************************************
 // @Defines
 //****************************************************************************
-#define XMC_BOARD   Boot_Kit
+#define XMC_BOARD           Boot_Kit
 
 #define NUM_DIGITAL_PINS    18
 #define NUM_ANALOG_INPUTS   6
@@ -45,16 +45,10 @@
 
 #define PWM4_TIMER_PERIOD (2041U)  // Generate 490Hz @fCCU=1MHz
 
-#define PIN_RX        (0)
-#define PIN_TX        (1)
-#define PIN_SPI_SS    (10)
-#define PIN_SPI_MOSI  (11)
-#define PIN_SPI_MISO  (12)
-#define PIN_SPI_SCK   (13)
-
-#define PIN_AREF            (14)
-#define PIN_WIRE_SDA        (15)
-#define PIN_WIRE_SCL        (16)
+#define PIN_SPI_SS    10
+#define PIN_SPI_MOSI  11
+#define PIN_SPI_MISO  12
+#define PIN_SPI_SCK   13
 
 static const uint8_t RX   = 0;
 static const uint8_t TX   = 1;
@@ -74,55 +68,56 @@ static const uint8_t SCL = 16;
 #define A4   4
 #define A5   5
 
+// Input Only SLAVE MODE SS
 #define PIN_SPI_SS_2    23
 
 #define AD_AUX_1    24  // AD_AUX
 #define AD_AUX_2    25  // AD_AUX
-#define AUX_1   26  // AUX
-#define AUX_2   27  // AUX
-#define AUX_3   28  // AUX
-#define AUX_4   29  // AUX
-#define AUX_5   30  // AUX
+#define AUX_1       26  // AUX
+#define AUX_2       27  // AUX
+#define AUX_3       28  // AUX
+#define AUX_4       29  // AUX
+#define AUX_5       30  // AUX
 
-#define LED_BUILTIN 13 // Standard Arduino LED pin 13
-#define LED1    26  // Extended Leds P0.5
-#define LED2    27  // Extended Leds P0.6
-#define LED3    0   // Extended Leds P1.2
-#define LED4    1   // Extended Leds P1.3
-#define LED5    2   // Extended Leds P1.4
-#define LED6    31  // Extended Leds P1.5
-#define GND     32  // GND
+#define LED_BUILTIN 13  // Standard Arduino LED pin 13
+#define LED1        26  // Extended Leds P0.5
+#define LED2        27  // Extended Leds P0.6
+#define LED3        0   // Extended Leds P1.2
+#define LED4        1   // Extended Leds P1.3
+#define LED5        2   // Extended Leds P1.4
+#define LED6        31  // Extended Leds P1.5
+#define GND         32  // GND
 
 #define digitalPinToInterrupt(p)    ((p) == 2 ? 0 : ((p) == 3 ? 1 : NOT_AN_INTERRUPT))
 
 #ifdef ARDUINO_MAIN
 /* Mapping of Arduino Pins to PWM4 channels as pin and PWM4 channel
    last entry 255 for both parts.
-   Putting both parts in array means if a PWM4 channel gets reassigned for 
+   Putting both parts in array means if a PWM4 channel gets reassigned for
    another function later a gap in channel numbers will not mess things up */
 const uint8_t mapping_pin_PWM4[][ 2 ] = {
-                                        { 3, 0 }, 
+                                        { 3, 0 },
                                         { 4, 1 },
-                                        { 6, 2 }, 
+                                        { 6, 2 },
                                         { 9, 3 },
                                         { 255, 255 } };
 
 const XMC_PORT_PIN_t mapping_port_pin[] =
 {
-    /* 0  */    {XMC_GPIO_PORT1, 2},  // PIN_RX / LED output                P1.2
-    /* 1  */    {XMC_GPIO_PORT1 , 3}, // PIN_TX / LED output                P1.3
-    /* 2  */    {XMC_GPIO_PORT1 , 4}, // External interrupt 0 / LED output  P1.4
-    /* 3  */    {XMC_GPIO_PORT0 , 0}, // External interrupt 1 / PWM output  P0.0
-    /* 4  */    {XMC_GPIO_PORT0 , 1}, // PWM output                         P0.1
+    /* 0  */    {XMC_GPIO_PORT1, 2},  // PIN_RX / LED 3 output              P1.2
+    /* 1  */    {XMC_GPIO_PORT1 , 3}, // PIN_TX / LED 4 output              P1.3
+    /* 2  */    {XMC_GPIO_PORT1 , 4}, // External int 0 / LED 5 output      P1.4
+    /* 3  */    {XMC_GPIO_PORT0 , 0}, // External int 1 / PWM40-0 output    P0.0
+    /* 4  */    {XMC_GPIO_PORT0 , 1}, // PWM40-1 output                     P0.1
     /* 5  */    {XMC_GPIO_PORT0 , 2}, // GPIO                               P0.2
-    /* 6  */    {XMC_GPIO_PORT0 , 3}, // PWM output                         P0.3
+    /* 6  */    {XMC_GPIO_PORT0 , 3}, // PWM40-3 output                     P0.3
     /* 7  */    {XMC_GPIO_PORT0 , 4}, // GPIO                               P0.4
     /* 8  */    {XMC_GPIO_PORT0 , 12}, // GPIO                              P0.12
-    /* 9  */    {XMC_GPIO_PORT0 , 8}, // PWM output                         P0.8
+    /* 9  */    {XMC_GPIO_PORT0 , 8}, // PWM40-2 output                     P0.8
     /* 10  */   {XMC_GPIO_PORT0 , 9}, // SPI-SS                             P0.9
     /* 11  */   {XMC_GPIO_PORT1 , 1}, // SPI-MOSI                           P1.1
     /* 12  */   {XMC_GPIO_PORT1 , 0}, // SPI-MISO                           P1.0
-    /* 13  */   {XMC_GPIO_PORT0 , 7}, // SPI-SCK / LED output               P0.7
+    /* 13  */   {XMC_GPIO_PORT0 , 7}, // SPI-SCK / LED BUILTIN output       P0.7
     /* 14  */   {XMC_GPIO_PORT2 , 3}, // AREF                               P2.3
     /* 15  */   {XMC_GPIO_PORT2 , 1}, // I2C Data / Address SDA             P2.1
     /* 16  */   {XMC_GPIO_PORT2 , 0}, // I2C Clock SCL                      P2.0
@@ -135,12 +130,12 @@ const XMC_PORT_PIN_t mapping_port_pin[] =
     /* 23  */   {XMC_GPIO_PORT2 , 4}, // SPI_SS_2                           P2.4
     /* 24  */   {XMC_GPIO_PORT2 , 5}, // AD_AUX                             P2.5
     /* 25  */   {XMC_GPIO_PORT2 , 7}, // AD_AUX                             P2.7
-    /* 26  */   {XMC_GPIO_PORT0 , 5}, // AUX / GPIO / LED output            P0.5
-    /* 27  */   {XMC_GPIO_PORT0 , 6}, // AUX / GPIO / LED output            P0.6
+    /* 26  */   {XMC_GPIO_PORT0 , 5}, // AUX / GPIO / LED 1 output          P0.5
+    /* 27  */   {XMC_GPIO_PORT0 , 6}, // AUX / GPIO / LED 2 output          P0.6
     /* 28  */   {XMC_GPIO_PORT0 , 10}, // AUX / GPIO                        P0.10
     /* 29  */   {XMC_GPIO_PORT0 , 11}, // AUX / GPIO                        P0.11
     /* 30  */   {XMC_GPIO_PORT0 , 13}, // AUX / GPIO                        P0.13
-    /* 31  */   {XMC_GPIO_PORT1 , 5}  // LED output                         P1.5
+    /* 31  */   {XMC_GPIO_PORT1 , 5}  // LED 6 output                       P1.5
 };
 
 const XMC_PIN_INTERRUPT_t mapping_interrupt[] =

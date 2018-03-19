@@ -59,18 +59,18 @@ vadc_group_config.class1.conversion_mode_standard = XMC_VADC_CONVMODE_12BIT;
 /*Initialize Group*/
 XMC_VADC_GROUP_Init( VADC_G0, &vadc_group_config );
 XMC_VADC_GROUP_Init( VADC_G1, &vadc_group_config );
-	
+
 /* Switch on the converter of the Group*/
 XMC_VADC_GROUP_SetPowerMode( VADC_G0, XMC_VADC_GROUP_POWERMODE_NORMAL );
 XMC_VADC_GROUP_SetPowerMode( VADC_G1, XMC_VADC_GROUP_POWERMODE_NORMAL );
-	
+
 #if(XMC_VADC_MAXIMUM_NUM_GROUPS > 2)
 /*Initialize Group*/
 XMC_VADC_GROUP_Init( VADC_G2, &vadc_group_config );
 
 /* Switch on the converter of the Group*/
 XMC_VADC_GROUP_SetPowerMode( VADC_G2, XMC_VADC_GROUP_POWERMODE_NORMAL );
-#endif	
+#endif
 
 #endif
 /* Calibrate the VADC. Make sure you do this after all used VADC groups
@@ -80,7 +80,7 @@ XMC_VADC_GLOBAL_StartupCalibration( VADC );
 /* Initialize the background source hardware. The gating mode is set to
 * ignore to pass external triggers unconditionally.*/
 XMC_VADC_GLOBAL_BackgroundInit( VADC, &vadc_background_config );
-	
+
 //Additional Initialization of DAC starting here
 }
 
@@ -137,7 +137,7 @@ if( channel < NUM_ANALOG_INPUTS )
     /* Configure a result resource belonging to the aforesaid conversion kernel */
     XMC_VADC_GROUP_ResultInit( adc->group, adc->result_reg_num, &vadc_gobal_result_config );
     /* Add channel into the Background Request Source Channel Select Register */
-    XMC_VADC_GLOBAL_BackgroundAddChannelToSequence( VADC, (uint32_t)adc->group_num, 
+    XMC_VADC_GLOBAL_BackgroundAddChannelToSequence( VADC, (uint32_t)adc->group_num,
                                                             (uint32_t)adc->channel_num );
     }
   /* Start conversion manually using load event trigger*/
@@ -164,6 +164,7 @@ else
 /* Helper function for analogWrite to scan mapping tables to determine
    for a given pin which PWM4, PWM8 or DAC channel to use
    Returns valid channel or -1 for not listed
+   reading first column as 255 denotes end of table
    See pins_arduino.h for table layout
 */
 int16_t scan_map_table( const uint8_t table[][ 2 ], uint8_t pin )
@@ -213,7 +214,7 @@ if( ( resource = scan_map_table( mapping_pin_PWM4, pin ) ) >= 0 )
 
     XMC_CCU4_SLICE_SetTimerCompareMatch( pwm4->slice, compare_reg );
     XMC_CCU4_EnableShadowTransfer( pwm4->ccu, ( CCU4_GCSS_S0SE_Msk << ( 4 * pwm4->slice_num ) ) );
-    XMC_GPIO_SetMode( pwm4->port_pin.port, pwm4->port_pin.pin, 
+    XMC_GPIO_SetMode( pwm4->port_pin.port, pwm4->port_pin.pin,
                                     ( XMC_GPIO_MODE_OUTPUT_PUSH_PULL | pwm4->port_mode ) );
     XMC_CCU4_SLICE_StartTimer( pwm4->slice );
     }
@@ -246,7 +247,7 @@ else
 
     XMC_CCU8_SLICE_SetTimerCompareMatch( pwm8->slice, pwm8->slice_channel, compare_reg );
     XMC_CCU8_EnableShadowTransfer( pwm8->ccu, CCU8_GCSS_S0SE_Msk << ( 4 * pwm8->slice_num ) );
-    XMC_GPIO_SetMode( pwm8->port_pin.port, pwm8->port_pin.pin, 
+    XMC_GPIO_SetMode( pwm8->port_pin.port, pwm8->port_pin.pin,
                                 XMC_GPIO_MODE_OUTPUT_PUSH_PULL | pwm8->port_mode );
     XMC_CCU8_SLICE_StartTimer( pwm8->slice );
     }

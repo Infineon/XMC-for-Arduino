@@ -53,6 +53,8 @@ In the boards list **Tools** > **Board**, the XMC microcontroller boards XMC2Go,
 
 ### Important Notes
 
+* **New beyond Arduino, additional GPIO modes supported, INPUT_PULLDOWN and OUTPUT_OPENDRAIN
+     Something most advanced users and engineers want often, not available on AVR boards**
 * **This integration will only work for Arduino IDE >=1.5**
 * **The XMC1100 Boot Kit has limitations if compared to the official Arduino boards (consult the [XMC-for-Arduino Wiki](https://github.com/Infineon/XMC-for-Arduino/wiki) for more information)**
 * **Refer also to the LICENSE.md/txt file for further information**
