@@ -3,9 +3,9 @@
  * @date 2016-06-30
  *
  *********************************************************************************************************************
- * XMClib v2.1.8 - XMC Peripheral Driver Library
+ * XMClib v2.1.16 - XMC Peripheral Driver Library
  *
- * Copyright (c) 2015-2016, Infineon Technologies AG
+ * Copyright (c) 2015-2017, Infineon Technologies AG
  * All rights reserved.                        
  *                                             
  * Redistribution and use in source and binary forms, with or without modification,are permitted provided that the 
@@ -283,18 +283,12 @@ typedef struct XMC_USBH_DRIVER {
   int32_t               (*PortResume)            (uint8_t port);                             /**< Pointer to \ref ARM_USBH_PortResume : Resume Root HUB Port (start generating SOFs). */
   XMC_USBH_PORT_STATE_t   (*PortGetState)          (uint8_t port);                           /**< Pointer to \ref ARM_USBH_PortGetState : Get current Root HUB Port State. */
   XMC_USBH_PIPE_HANDLE  (*PipeCreate)            (uint8_t dev_addr,
-                                                  uint8_t dev_speed,
-                                                  uint8_t hub_addr,
-                                                  uint8_t hub_port,
                                                   uint8_t ep_addr,
                                                   uint8_t ep_type,
                                                   uint16_t ep_max_packet_size,
                                                   uint8_t ep_interval);                      /**< Pointer to \ref ARM_USBH_PipeCreate : Create Pipe in System. */
   int32_t               (*PipeModify)            (XMC_USBH_PIPE_HANDLE pipe_hndl,
                                                   uint8_t dev_addr,
-                                                  uint8_t dev_speed,
-                                                  uint8_t hub_addr,
-                                                  uint8_t hub_port,
                                                   uint16_t ep_max_packet_size);              /**< Pointer to \ref ARM_USBH_PipeModify : Modify Pipe in System. */
   int32_t               (*PipeDelete)            (XMC_USBH_PIPE_HANDLE pipe_hndl);           /**< Pointer to \ref ARM_USBH_PipeDelete : Delete Pipe from System. */
   int32_t               (*PipeReset)             (XMC_USBH_PIPE_HANDLE pipe_hndl);           /**< Pointer to \ref ARM_USBH_PipeReset : Reset Pipe. */
@@ -357,6 +351,7 @@ extern "C" {
  * calls the relevant callback functions to indicate it to the application.
  */
 void XMC_USBH_HandleIrq (uint32_t gintsts);
+
 /**
  * @return uint8_t Value has no significance for the low level driver.
  *

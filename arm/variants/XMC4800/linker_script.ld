@@ -141,10 +141,10 @@ SECTIONS
   /* functions with __attribute__((section(".ram_code"))) */
   .ram_code :
   {
-    . = ALIGN(4); /* section size must be multiply of 4 */        
+    . = ALIGN(4); /* section size must be multiple of 4 */        
     __ram_code_start = .;
     *(.ram_code)
-    . = ALIGN(4); /* section size must be multiply of 4 */
+    . = ALIGN(4); /* section size must be multiple of 4 */
     __ram_code_end = .;
   } > SRAM_combined AT > FLASH_1_uncached
   __ram_code_load = LOADADDR (.ram_code);
@@ -153,7 +153,7 @@ SECTIONS
   /* Standard DATA and user defined DATA/BSS/CONST sections */
   .data :
   {
-    . = ALIGN(4); /* section size must be multiply of 4 */        
+    . = ALIGN(4); /* section size must be multiple of 4 */        
     __data_start = .;
     *(vtable)        
     * (.data);
@@ -181,7 +181,7 @@ SECTIONS
     KEEP(*(.fini_array))
     PROVIDE_HIDDEN (__fini_array_end = .);
 
-    . = ALIGN(4); /* section size must be multiply of 4 */
+    . = ALIGN(4); /* section size must be multiple of 4 */
     __data_end = .;
   } > SRAM_combined AT > FLASH_1_uncached
   __data_load = LOADADDR (.data);
@@ -190,13 +190,13 @@ SECTIONS
   /* BSS section */
   .bss (NOLOAD) : 
   {
-    . = ALIGN(4); /* section size must be multiply of 4 */        
+    . = ALIGN(4); /* section size must be multiple of 4 */        
     __bss_start = .;
     * (.bss);
     * (.bss*);
     * (COMMON);
     *(.gnu.linkonce.b*)
-    . = ALIGN(4); /* section size must be multiply of 4 */
+    . = ALIGN(4); /* section size must be multiple of 4 */
     __bss_end = .;
   } > SRAM_combined
   __bss_size = __bss_end - __bss_start;
@@ -206,20 +206,20 @@ SECTIONS
 
   USB_RAM  (__bss_end + __shift_loc) (NOLOAD) :
   {
-    . = ALIGN(4); /* section size must be multiply of 4 */        
+    . = ALIGN(4); /* section size must be multiple of 4 */        
     USB_RAM_start = .;
     *(USB_RAM)
-    . = ALIGN(4); /* section size must be multiply of 4 */
+    . = ALIGN(4); /* section size must be multiple of 4 */
     USB_RAM_end = .;
   } > SRAM_combined
   USB_RAM_size = USB_RAM_end - USB_RAM_start;
 
   ETH_RAM (USB_RAM_end) (NOLOAD) :
   {
-    . = ALIGN(4); /* section size must be multiply of 4 */        
+    . = ALIGN(4); /* section size must be multiple of 4 */        
     ETH_RAM_start = .;
     *(ETH_RAM)
-    . = ALIGN(4); /* section size must be multiply of 4 */
+    . = ALIGN(4); /* section size must be multiple of 4 */
     ETH_RAM_end = .;
     . = ALIGN(8);
     Heap_Bank1_Start = .;

@@ -4,9 +4,9 @@
  *
  * @cond
  **********************************************************************************
- * XMClib v2.1.8 - XMC Peripheral Driver Library
+ * XMClib v2.1.16 - XMC Peripheral Driver Library
  *
- * Copyright (c) 2015-2016, Infineon Technologies AG
+ * Copyright (c) 2015-2017, Infineon Technologies AG
  * All rights reserved.                        
  *                                             
  * Redistribution and use in source and binary forms, with or without modification,are permitted provided that the 
@@ -704,9 +704,6 @@ static XMC_USBH_PORT_STATE_t XMC_USBH_PortGetState (uint8_t port)
 
 /**
  * @param dev_addr Device address
- * @param dev_speed  Device speed
- * @param hub_addr Hub address. This value should be 0 since hub is not supported.
- * @param hub_port  USB port number. Only one port(0) is supported.
  * @param ep_addr Device endpoint address \n
  *                - ep_addr.0..3: Address \n
  *                - ep_addr.7:    Direction\n
@@ -721,10 +718,7 @@ static XMC_USBH_PORT_STATE_t XMC_USBH_PortGetState (uint8_t port)
  * \par<b>Related APIs:</b><BR>
  * XMC_USBH_PipeModify(), XMC_USBH_PipeDelete(), XMC_USBH_PipeReset(), XMC_USBH_PipeTransfer() \n
 */
-static XMC_USBH_PIPE_HANDLE XMC_USBH_PipeCreate( uint8_t dev_addr, uint8_t dev_speed, 
-                                                  uint8_t hub_addr, uint8_t hub_port, 
-                                                  uint8_t ep_addr, uint8_t ep_type, 
-                                                  uint16_t ep_max_packet_size, uint8_t  ep_interval )
+static XMC_USBH_PIPE_HANDLE XMC_USBH_PipeCreate (uint8_t dev_addr,  uint8_t ep_addr, uint8_t ep_type, uint16_t ep_max_packet_size, uint8_t  ep_interval)
 {
   XMC_USBH0_pipe_t    *ptr_pipe;
   USB0_CH_TypeDef *ptr_ch;
@@ -798,9 +792,6 @@ static XMC_USBH_PIPE_HANDLE XMC_USBH_PipeCreate( uint8_t dev_addr, uint8_t dev_s
 /**
  * @param pipe_hndl Pointer returned by the pipe create function. It is the hardware based address of a USB channel.
  * @param dev_addr Device address to be configured for the pipe.
- * @param dev_speed  Device speed class.
- * @param hub_addr Hub address. It should be 0 since hub is not supported.
- * @param hub_port USB port number. Only one port(0) is supported.
  * @param ep_max_packet_size Endpoint maximum packet size
  * @return Execution_status
  *
@@ -810,10 +801,9 @@ static XMC_USBH_PIPE_HANDLE XMC_USBH_PipeCreate( uint8_t dev_addr, uint8_t dev_s
  * \par<b>Related APIs:</b><BR>
  * XMC_USBH_PipeCreate(), XMC_USBH_PipeDelete(), XMC_USBH_PipeReset(), XMC_USBH_PipeTransfer() \n
 */
-static int32_t XMC_USBH_PipeModify (XMC_USBH_PIPE_HANDLE pipe_hndl, uint8_t dev_addr, 
-                                          uint8_t dev_speed, uint8_t hub_addr, uint8_t hub_port, 
-                                          uint16_t ep_max_packet_size)
+static int32_t XMC_USBH_PipeModify (XMC_USBH_PIPE_HANDLE pipe_hndl, uint8_t dev_addr, uint16_t ep_max_packet_size)
 {
+
   XMC_USBH0_pipe_t    *ptr_pipe;
   USB0_CH_TypeDef *ptr_ch;
   uint32_t   hcchar;
