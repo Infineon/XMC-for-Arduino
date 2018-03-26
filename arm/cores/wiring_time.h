@@ -34,7 +34,7 @@ extern "C" {
 
 #if ((UC_FAMILY == XMC4) && (F_CPU == 144000000U))
 // 142 NOPS
-#define NOPS_FOR_USEC() asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); \
+#define NOPS_FOR_USEC() { asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); \
                         asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); \
                         asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); \
 						asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); \
@@ -81,15 +81,15 @@ extern "C" {
 						asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); \
 						asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); \
 						asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); \
-						asm volatile("nop")
+                        asm volatile("nop"); }
 #elif ((UC_FAMILY == XMC1) && (F_CPU == 32000000U))
 // 16 NOPS
-#define NOPS_FOR_USEC() asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); \
+#define NOPS_FOR_USEC() { asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); \
 						asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); \
 						asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); \
 						asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); \
 						asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); \
-						asm volatile("nop")
+                        asm volatile("nop"); }
 #else
 #error wiring_time: NOPS_FOR_USEC not defined
 #endif
@@ -167,8 +167,6 @@ extern void delay( uint32_t dwMs );
 /*
  * \brief Pauses the program for the amount of time (in microseconds) specified as parameter.
  *
- *  DISABLES all interrupts during this time
- *
  * \param dwUs the number of microseconds to pause (uint32_t)
  */
 static inline void delayMicroseconds( uint32_t ) __attribute__(( always_inline ));
@@ -177,18 +175,9 @@ static inline void delayMicroseconds( uint32_t usec )
 if( usec == 0 )
   return;
 else
-    {
-    uint32_t number_of_cycles = usec;
-
-    noInterrupts( );
-    // NOP loop to generate delay
-    while( number_of_cycles )
-        {
-        NOPS_FOR_USEC( );
-        number_of_cycles--;
-        }
-    interrupts( );
-    }
+  do  
+    NOPS_FOR_USEC( )  // NOP loop to generate delay
+  while( --usec );
 }
 
 extern int setInterval( int, uint32_t );

@@ -1,13 +1,12 @@
-
 /**
  * @file xmc_sdmmc.h
- * @date 2016-07-11
+ * @date 2017-02-14
  *
  * @cond
  *********************************************************************************************************************
- * XMClib v2.1.8 - XMC Peripheral Driver Library 
+ * XMClib v2.1.16 - XMC Peripheral Driver Library 
  *
- * Copyright (c) 2015-2016, Infineon Technologies AG
+ * Copyright (c) 2015-2017, Infineon Technologies AG
  * All rights reserved.                        
  *                                             
  * Redistribution and use in source and binary forms, with or without modification,are permitted provided that the 
@@ -61,6 +60,11 @@
  *       2) XMC_SDMMC_SetDataLineTimeout <br>
  *       3) XMC_SDMMC_SDClockFreqSelect <br>
  *
+ * 2017-02-14:
+ *     - Added: <br>
+ *       1) XMC_SDMMC_SetCardDetectionStatus() <br>
+ *       2) XMC_SDMMC_SetCardDetectionSource() <br>
+
  * @endcond
  */
 
@@ -397,6 +401,24 @@ typedef enum
   XMC_SDMMC_DATA_TRANSFER_CARD_TO_HOST       /** Card to host */
 } XMC_SDMMC_DATA_TRANSFER_DIR_t;
 
+/**
+ * SDMMC card detection signal source
+ */
+typedef enum XMC_SDMMC_CD_SOURCE
+{
+  XMC_SDMMC_CD_SOURCE_PIN = 0,
+  XMC_SDMMC_CD_SOURCE_SW = 1 << SDMMC_HOST_CTRL_CARD_DET_SIGNAL_DETECT_Pos
+} XMC_SDMMC_CD_SOURCE_t;
+
+/**
+ * SDMMC card detection status
+ */
+typedef enum XMC_SDMMC_CD_STATUS
+{
+  XMC_SDMMC_CD_STATUS_NO_CARD = 0,
+  XMC_SDMMC_CD_STATUS_INSERTED = 1 << SDMMC_HOST_CTRL_CARD_DETECT_TEST_LEVEL_Pos
+} XMC_SDMMC_CD_STATUS_t;
+
 /*******************************************************************************
  * DATA STRUCTURES
  *******************************************************************************/
@@ -560,6 +582,7 @@ extern "C" {
 #endif
 
 /**
+ * @param sdmmc A constant pointer to XMC_SDMMC_t, pointing to the SDMMC base address
  * @return bool
  *
  * \par<b>Description: </b><br>
@@ -569,9 +592,10 @@ extern "C" {
  * The function checks the SD_BUS_POWER bit-field of the POWER_CTRL register and returns
  * a boolean value - "on" or "off".
  */
-bool XMC_SDMMC_GetPowerStatus( );
+bool XMC_SDMMC_GetPowerStatus(XMC_SDMMC_t *const sdmmc);
 
 /**
+ * @param sdmmc A constant pointer to XMC_SDMMC_t, pointing to the SDMMC base address
  * @return None
  *
  * \par<b>Description: </b><br>
@@ -583,6 +607,7 @@ bool XMC_SDMMC_GetPowerStatus( );
 void XMC_SDMMC_Enable( );
 
 /**
+ * @param sdmmc A constant pointer to XMC_SDMMC_t, pointing to the SDMMC base address
  * @return None
  *
  * \par<b>Description: </b><br>
@@ -730,6 +755,40 @@ __STATIC_INLINE void XMC_SDMMC_TriggerEvent(XMC_SDMMC_t *const sdmmc, uint32_t e
   
   sdmmc->FORCE_EVENT_ERR_STATUS |= (uint16_t)(event >> 16U);
 }
+
+/**
+ * @param sdmmc A constant pointer to XMC_SDMMC_t, pointing to the SDMMC base address
+ * @param source A valid SDMMC card detection signal source (::XMC_SDMMC_CD_SOURCE_t)
+ * @return None
+ *
+ * \par<b>Description: </b><br>
+ * Selects source for card detection
+ */
+__STATIC_INLINE void XMC_SDMMC_SetCardDetectionSource(XMC_SDMMC_t *const sdmmc, XMC_SDMMC_CD_SOURCE_t source)
+{
+  XMC_ASSERT("XMC_SDMMC_TriggerEvent: Invalid module pointer", XMC_SDMMC_CHECK_MODULE_PTR(sdmmc));
+
+  sdmmc->HOST_CTRL |= (sdmmc->HOST_CTRL & (uint32_t)~SDMMC_HOST_CTRL_CARD_DET_SIGNAL_DETECT_Msk) | source;
+}
+
+/**
+ * @param sdmmc A constant pointer to XMC_SDMMC_t, pointing to the SDMMC base address
+ * @param status A valid SDMMC card detection status (::XMC_SDMMC_CD_STATUS_t)
+ * @return None
+ *
+ * \par<b>Description: </b><br>
+ * Sets the card detection status indicating whether card is inserted or not.
+ * Generates (card ins or card removal) interrupt when the normal interrupt is enabled.
+ * @note Only valid if SDMMC card detection signal source is set to XMC_SDMMC_CD_SOURCE_SW <br>
+ *
+ */
+__STATIC_INLINE void XMC_SDMMC_SetCardDetectionStatus(XMC_SDMMC_t *const sdmmc, XMC_SDMMC_CD_STATUS_t status)
+{
+  XMC_ASSERT("XMC_SDMMC_TriggerEvent: Invalid module pointer", XMC_SDMMC_CHECK_MODULE_PTR(sdmmc));
+
+  sdmmc->HOST_CTRL |= (sdmmc->HOST_CTRL & (uint32_t)~SDMMC_HOST_CTRL_CARD_DETECT_TEST_LEVEL_Msk) | status;
+}
+
 
 /**
  * @param sdmmc A constant pointer to XMC_SDMMC_t, pointing to the SDMMC base address
@@ -1323,6 +1382,7 @@ __STATIC_INLINE bool XMC_SDMMC_GetContinueRequest(XMC_SDMMC_t *const sdmmc)
 
 /**
  * @param sdmmc A constant pointer to XMC_SDMMC_t, pointing to the SDMMC base address
+ * @param config A pointer to the SDMMC configuration structure (::XMC_SDMMC_CONFIG_t)
  * @return None
  *
  * \par<b>Description: </b><br>
@@ -1333,7 +1393,7 @@ __STATIC_INLINE bool XMC_SDMMC_GetContinueRequest(XMC_SDMMC_t *const sdmmc)
  * at block gap for a multi-block transfer. This bit is only valid in a 4-bit mode of
  * the SDIO card.
  */
-__STATIC_INLINE void XMC_SDMMC_EnableInterruptAtBlockGap(XMC_SDMMC_t *const sdmmc )
+__STATIC_INLINE void XMC_SDMMC_EnableInterruptAtBlockGap( XMC_SDMMC_t *const sdmmc )
 {
   XMC_ASSERT("XMC_SDMMC_EnableInterruptAtBlockGap: Invalid module pointer", XMC_SDMMC_CHECK_MODULE_PTR(sdmmc));
 
@@ -1342,6 +1402,7 @@ __STATIC_INLINE void XMC_SDMMC_EnableInterruptAtBlockGap(XMC_SDMMC_t *const sdmm
 
 /**
  * @param sdmmc A constant pointer to XMC_SDMMC_t, pointing to the SDMMC base address
+ * @param config A pointer to the SDMMC configuration structure (::XMC_SDMMC_CONFIG_t)
  * @return None
  *
  * \par<b>Description: </b><br>
@@ -1352,6 +1413,7 @@ __STATIC_INLINE void XMC_SDMMC_EnableInterruptAtBlockGap(XMC_SDMMC_t *const sdmm
  * at block gap. This bit is only valid in a 4-bit mode of the SDIO card.
  */
 __STATIC_INLINE void XMC_SDMMC_DisableInterruptAtBlockGap(XMC_SDMMC_t *const sdmmc )
+
 {
   XMC_ASSERT("XMC_SDMMC_EnableInterruptAtBlockGap: Invalid module pointer", XMC_SDMMC_CHECK_MODULE_PTR(sdmmc));
 

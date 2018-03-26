@@ -5,9 +5,9 @@
  *
  * @cond
  *********************************************************************************************************************
- * XMClib v2.1.8 - XMC Peripheral Driver Library 
+ * XMClib v2.1.16 - XMC Peripheral Driver Library 
  *
- * Copyright (c) 2015-2016, Infineon Technologies AG
+ * Copyright (c) 2015-2017, Infineon Technologies AG
  * All rights reserved.                        
  *                                             
  * Redistribution and use in source and binary forms, with or without modification,are permitted provided that the 
@@ -184,6 +184,7 @@ void XMC_SDMMC_Enable( )
 /* Assert the peripheral reset */
 void XMC_SDMMC_Disable( )
 {
+
 #if defined(PERIPHERAL_RESET_SUPPORTED)
   XMC_SCU_RESET_AssertPeripheralReset(XMC_SCU_PERIPHERAL_RESET_SDMMC);
 #endif  

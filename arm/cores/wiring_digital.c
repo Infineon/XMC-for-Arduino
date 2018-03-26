@@ -21,30 +21,33 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 //****************************************************************************
 #include "Arduino.h"
 
+
 void pinMode( uint8_t pin, uint8_t mode )
 {
-    XMC_GPIO_CONFIG_t gpio_conf;
-    gpio_conf.mode = mode;
+XMC_GPIO_CONFIG_t gpio_conf;
+gpio_conf.mode = mode;
 
-    XMC_GPIO_Init(mapping_port_pin[pin].port, mapping_port_pin[pin].pin, &gpio_conf);
+XMC_GPIO_Init( mapping_port_pin[ pin ].port, mapping_port_pin[ pin ].pin, &gpio_conf );
 }
 
-uint8_t digitalRead(uint8_t pin)
+
+uint8_t digitalRead( uint8_t pin )
 {
-    uint32_t val = (pin == GND) ? LOW : XMC_GPIO_GetInput(mapping_port_pin[pin].port, mapping_port_pin[pin].pin);
-    return ((val ? HIGH : LOW));
+return ( ( pin == GND ) 
+            ? LOW : XMC_GPIO_GetInput( mapping_port_pin[ pin ].port, mapping_port_pin[ pin ].pin ) );
 }
 
-void digitalWrite(uint8_t pin, uint8_t value)
-{
-    XMC_GPIO_SetOutputLevel(mapping_port_pin[pin].port, mapping_port_pin[pin].pin, (value == LOW) ? XMC_GPIO_OUTPUT_LEVEL_LOW : XMC_GPIO_OUTPUT_LEVEL_HIGH);
 
+void digitalWrite( uint8_t pin, uint8_t value )
+{
+XMC_GPIO_SetOutputLevel( mapping_port_pin[ pin ].port, mapping_port_pin[ pin ].pin, 
+                        ( value == LOW ) ? XMC_GPIO_OUTPUT_LEVEL_LOW : XMC_GPIO_OUTPUT_LEVEL_HIGH );
 }
 
-void digitalToggle(uint8_t pin)
-{
-    XMC_GPIO_ToggleOutput(mapping_port_pin[pin].port, mapping_port_pin[pin].pin);
 
+void digitalToggle( uint8_t pin )
+{
+XMC_GPIO_ToggleOutput( mapping_port_pin[ pin ].port, mapping_port_pin[ pin ].pin );
 }
 
 //****************************************************************************

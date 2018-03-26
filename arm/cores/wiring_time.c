@@ -155,7 +155,7 @@ int (* tasks[_MAX_TASKS])( int, int16_t );
 /* Structure for task details next run, status etc.. */
 struct TaskList taskTable[ _MAX_TASKS ];
 
-unsigned long old_ms;       // last execution time
+unsigned long old_ms = 0;   // last execution time
 int running;                // Current task ID being checked or run
 
 /* SysTick counter */
@@ -183,22 +183,22 @@ void SysTick_Handler( void );
 //****************************************************************************
 void wiring_time_init( void )
 {
+/* Initialise micro/milli second counter as early as possible 
+   Initialize SysTick timer for 1 ms (1 kHz) interval */
+SysTick_Config( (uint32_t)SYSTICK_MS );
+
 // Initialise task control to all off
 memset( taskTable, 0, sizeof( taskTable ) );
 
 for( int i = 0; i < _MAX_TASKS; i++ )
    {
    taskTable[ i ].param = i;        // Preset user parameter to task number
-// Fill with call back function addresses
+   // Fill with call back function addresses
    if( i < NUM_TONE_PINS )
      tasks[ i ] = tone_irq_action;   // Tone callbacks
    else
      tasks[ i ] = NULL;     // Special case delay() ms callback
    }
-old_ms = g_systick_count;        // Save last executed as now
- 
-/* Initialize SysTick timer for 1ms (1kHz) interval */
-SysTick_Config( (uint32_t)SYSTICK_MS );
 
 /* setting of First SW Timer period is always and sub-priority value for XMC4000 devices */
 /* setting of priority value for XMC1000 devices */
@@ -288,12 +288,11 @@ return done;
 /* SysTick Event Handler. */
 void SysTick_Handler( void )
 {
-g_systick_count++;          // Another ms has occured
+g_systick_count++;          // Another ms has occurred
 
 // do not call handler, when still running
 if( g_timer_entered_handler == FALSE )
   {
-  //g_timer_entered_handler++;
   XMC_SYSTIMER_TaskLoop();
   g_timer_entered_handler = FALSE;
   }
@@ -327,8 +326,7 @@ return 1;
     Parameters  int Task ID to check
                 unsigned int interval in ms
 
-    Return int  -2 invalid interval
-                -1 invalid ID
+    Return int  -1 invalid ID
                  0  task is running
                 > 0 task interval and execution time set
 */
@@ -353,7 +351,7 @@ return 0;
     Parameters  int Task ID to check
                 NO ID validity check
 
-    Return int  >= 0 Valid interval time
+    Return int  Current interval time
 */
 uint32_t getInterval( int ID )
 {
@@ -367,17 +365,14 @@ return taskTable[ ID ].interval;
                 int16_t param value
 
    Return int   -1 invalid ID
-                 0  task is running
-                > 0 task interval and param value set
+                >=0 task param value set
 */
 int setParam( int ID, int16_t param )
 {
-int i;
-
-if( ( i = CheckID( ID ) ) < 0 )
-  return i;
+if( ( CheckID( ID ) ) < 0 )
+  return -1;
 taskTable[ ID ].param = param;
-return i;
+return 0;
 }
 
 
@@ -390,10 +385,8 @@ return i;
     */
 int16_t getParam( int ID )
 {
-int i;
-    
-if( ( i = CheckID( ID ) ) < 0 )
-  return i;
+if( ( CheckID( ID ) ) < 0 )
+  return -1;
 return taskTable[ ID ].param;
 }
 
@@ -412,9 +405,7 @@ return taskTable[ ID ].param;
 */
 unsigned long getTime( int ID )
 {
-int i;
-
-if( ( i = CheckID( ID ) ) < 0 )
+if( ( CheckID( ID ) ) < 0 )
   return 0;
 return taskTable[ ID ].next;
 }
@@ -425,15 +416,13 @@ return taskTable[ ID ].next;
     Parameters  int Task ID to get status for
 
     Return int  -1  invalid ID
-               any other value Status (including other user errors -ve
+               any other value Status (including other user errors -ve)
 */
 int16_t getStatus( int ID )
 {
-int i;
-
-// Check valid ID, not running and interval
-if( ( i = CheckID( ID ) ) < 0 )
-  return i;
+// Check valid ID
+if( ( CheckID( ID ) ) < 0 )
+  return -1;
 return taskTable[ ID ].status;
 }
 
@@ -451,15 +440,13 @@ return taskTable[ ID ].status;
                 -2  No interval on task
                 -1  invalid ID
                  0  current task running
-                > 0 Valid
+                > 0 Valid set to run after interval time
 */
 int StartTask( int ID )
 {
-int i;
-
 // Check valid ID, not running and interval
-if( ( i = CheckID( ID ) ) <= 0 )
-  return i;
+if( ( CheckID( ID ) ) <= 0 )
+  return -1;
 if( taskTable[ ID ].interval == 0 )
   return -2;
 if( taskTable[ ID ].status  > 0 )
@@ -478,10 +465,10 @@ return 1;
    
     Parameters  int Task ID to Stop
 
-    Return int  < 0 Invalid task address
-                > 0 Valid and stopped
+    Return int  -2 No task found
+                -1 Invalid task address
+                >= 0 Valid and stopped
 */
-//int (* tasks[_MAX_TASKS])( int, int )
 int FindID( int(*  ptr)( int, int16_t ) )
 {
 int i;
