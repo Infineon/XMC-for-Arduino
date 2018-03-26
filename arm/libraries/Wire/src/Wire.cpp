@@ -1,22 +1,25 @@
 /*
-  TwoWire.cpp - TWI/I2C library for Wiring & Arduino
-  Copyright (c) 2006 Nicholas Zambetti.  All right reserved.
-
-  This library is free software; you can redistribute it and/or
-  modify it under the terms of the GNU Lesser General Public
-  License as published by the Free Software Foundation; either
-  version 2.1 of the License, or (at your option) any later version.
-
-  This library is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-  Lesser General Public License for more details.
-
-  You should have received a copy of the GNU Lesser General Public
-  License along with this library; if not, write to the Free Software
-  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
-
-  Modified 2012 by Todd Krein (todd@krein.org) to implement repeated starts
+ * TwoWire.h - TWI/I2C library for Arduino & Wiring
+ * Copyright (c) 2006 Nicholas Zambetti.  All right reserved.
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2.1 of the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ *
+ * Modified 2012 by Todd Krein (todd@krein.org) to implement repeated starts
+ * 
+ * Copyright (c) 2018 Infineon Technologies AG
+ * This library has been modified for the XMC microcontroller series.
 */
 
 //****************************************************************************
@@ -37,41 +40,31 @@ extern "C" {
 //****************************************************************************
 
 // Initialize Class Variables //////////////////////////////////////////////////
-bool TwoWire::isMaster = false;
-bool TwoWire::inRepStart = false;
-
-uint8_t TwoWire::rxBuffer[BUFFER_LENGTH];
-uint8_t TwoWire::rxBufferIndex = 0;
-uint8_t TwoWire::rxBufferLength = 0;
-
-uint8_t TwoWire::slaveAddress = 0;
-uint8_t TwoWire::txAddress = 0;
-uint8_t TwoWire::txBuffer[BUFFER_LENGTH];
-uint8_t TwoWire::txBufferIndex = 0;
-uint8_t TwoWire::txBufferLength = 0;
-
-uint8_t TwoWire::pre_rxBuffer[BUFFER_LENGTH];
-uint8_t TwoWire::pre_rxBufferCount = 0;
-
-uint8_t TwoWire::transmitting = 0;
-uint16_t TwoWire::timeout = WIRE_COMMUNICATION_TIMEOUT;
-void (*TwoWire::user_onRequest)(void);
-void (*TwoWire::user_onReceive)(int);
 
 //****************************************************************************
 // @Local Functions
 //****************************************************************************
 
 // Constructors ////////////////////////////////////////////////////////////////
-
-TwoWire::TwoWire()
-{
-    XMC_I2C_config = &XMC_I2C_default;
-}
-
 TwoWire::TwoWire(XMC_I2C_t *conf)
 {
 	XMC_I2C_config = conf;
+	
+	hasError = false;
+	isMaster = false;
+    inRepStart = false;
+	
+    transmitting = 0;
+    timeout = WIRE_COMMUNICATION_TIMEOUT;
+
+	slaveAddress = 0;
+	txAddress = 0;
+	
+	rxBufferIndex = 0;
+	rxBufferLength = 0;
+	txBufferIndex = 0;
+	txBufferLength = 0;	
+	pre_rxBufferCount = 0;
 }
 
 // Public Methods //////////////////////////////////////////////////////////////
@@ -84,13 +77,8 @@ void TwoWire::begin(void)
 		SPI.end();
 	}
 
-    isMaster = true;
 	hasError = false;
-    rxBufferIndex = 0;
-    rxBufferLength = 0;
-
-    txBufferIndex = 0;
-    txBufferLength = 0;
+    isMaster = true;
 
     XMC_I2C_CH_Init(XMC_I2C_config->channel, &(XMC_I2C_config->channel_config));
 
@@ -166,12 +154,6 @@ void TwoWire::begin(uint8_t address)
     XMC_I2C_CH_EnableEvent(XMC_I2C_config->channel, (uint32_t)((uint32_t)XMC_I2C_CH_EVENT_SLAVE_READ_REQUEST | (uint32_t)XMC_I2C_CH_EVENT_STOP_CONDITION_RECEIVED));
 
     XMC_I2C_CH_Start(XMC_I2C_config->channel);
-
-    rxBufferIndex = 0;
-    rxBufferLength = 0;
-
-    txBufferIndex = 0;
-    txBufferLength = 0;
 }
 
 void TwoWire::begin(int address)
@@ -509,8 +491,6 @@ size_t TwoWire::write(uint8_t data)
 			}
 	    }
 
-        XMC_USIC_CH_SetTransmitBufferStatus(XMC_I2C_config->channel, XMC_USIC_CH_TBUF_STATUS_SET_IDLE);
-
         XMC_I2C_CH_SlaveTransmit(XMC_I2C_config->channel, data);
 
 		timeout = WIRE_COMMUNICATION_TIMEOUT;
@@ -557,8 +537,6 @@ size_t TwoWire::write(const uint8_t* data, size_t quantity)
 				Wire.begin(slaveAddress);
 			}
 	    }
-
-        XMC_USIC_CH_SetTransmitBufferStatus(XMC_I2C_config->channel, XMC_USIC_CH_TBUF_STATUS_SET_IDLE);
 
         for (uint8_t c = 0; c < quantity; c++)
         {
@@ -626,16 +604,16 @@ void TwoWire::flush(void)
 	// Reset buffer and clear all Status Flags
 	if(isMaster == true)
 	{	
-		XMC_USIC_CH_RXFIFO_Flush(XMC_I2C_config->channel);
 		XMC_USIC_CH_TXFIFO_Flush(XMC_I2C_config->channel);
+		XMC_USIC_CH_RXFIFO_Flush(XMC_I2C_config->channel);
+		XMC_USIC_CH_SetTransmitBufferStatus(XMC_I2C_config->channel, XMC_USIC_CH_TBUF_STATUS_SET_IDLE);
 	}
 	else
-	{		
+	{
 		/*Flush receive buffer*/
 		(void)XMC_I2C_CH_GetReceivedData(XMC_I2C_config->channel);
 		(void)XMC_I2C_CH_GetReceivedData(XMC_I2C_config->channel);
 	}
-	XMC_USIC_CH_SetTransmitBufferStatus(XMC_I2C_config->channel, XMC_USIC_CH_TBUF_STATUS_SET_IDLE);
 	XMC_I2C_CH_ClearStatusFlag(XMC_I2C_config->channel, 0xFFFFFFFF);
 }
 
@@ -656,17 +634,17 @@ void TwoWire::ProtocolHandler(void)
     {
 		if (flag_status & (uint32_t)(XMC_I2C_CH_STATUS_FLAG_NACK_RECEIVED | XMC_I2C_CH_STATUS_FLAG_ARBITRATION_LOST | XMC_I2C_CH_STATUS_FLAG_ERROR | XMC_I2C_CH_STATUS_FLAG_DATA_LOST_INDICATION))
     	{
+			XMC_I2C_CH_ClearStatusFlag(XMC_I2C_config->channel, (XMC_I2C_CH_STATUS_FLAG_NACK_RECEIVED | XMC_I2C_CH_STATUS_FLAG_ARBITRATION_LOST | XMC_I2C_CH_STATUS_FLAG_ERROR | XMC_I2C_CH_STATUS_FLAG_DATA_LOST_INDICATION));
 			hasError = true;
-		}
+    	}
     }
     else
     {
 		if (flag_status & (uint32_t)(XMC_I2C_CH_STATUS_FLAG_ARBITRATION_LOST | XMC_I2C_CH_STATUS_FLAG_ERROR | XMC_I2C_CH_STATUS_FLAG_DATA_LOST_INDICATION))
     	{
-			hasError = true;
-			XMC_USIC_CH_SetTransmitBufferStatus(XMC_I2C_config->channel, XMC_USIC_CH_TBUF_STATUS_SET_IDLE);
 			XMC_I2C_CH_ClearStatusFlag(XMC_I2C_config->channel, (XMC_I2C_CH_STATUS_FLAG_ARBITRATION_LOST | XMC_I2C_CH_STATUS_FLAG_ERROR | XMC_I2C_CH_STATUS_FLAG_DATA_LOST_INDICATION));
-		}
+			hasError = true;
+    	}
     	else if (flag_status & (uint32_t)XMC_I2C_CH_STATUS_FLAG_SLAVE_READ_REQUESTED)
     	{
 			XMC_I2C_CH_ClearStatusFlag(XMC_I2C_config->channel, XMC_I2C_CH_STATUS_FLAG_SLAVE_READ_REQUESTED);
@@ -722,8 +700,6 @@ void TwoWire::OnReceiveService(uint8_t* inBytes, uint8_t numBytes)
     (void)XMC_I2C_CH_GetReceivedData(XMC_I2C_config->channel);
     (void)XMC_I2C_CH_GetReceivedData(XMC_I2C_config->channel);
 
-    XMC_I2C_CH_EnableEvent(XMC_I2C_config->channel, (uint32_t)(XMC_I2C_CH_EVENT_STANDARD_RECEIVE | XMC_I2C_CH_EVENT_ALTERNATIVE_RECEIVE));
-    XMC_I2C_CH_EnableEvent(XMC_I2C_config->channel, (uint32_t)(XMC_I2C_CH_EVENT_SLAVE_READ_REQUEST | XMC_I2C_CH_EVENT_STOP_CONDITION_RECEIVED));
 }
 
 // behind the scenes function that is called when data is requested
@@ -770,6 +746,19 @@ extern "C" {
     {
         Wire.ProtocolHandler();
     }
+
+#if defined(XMC1100_XMC2GO)	|| defined(XMC1100_H_BRIDGE2GO)
+    void USIC0_2_IRQHandler()
+    {
+        Wire1.ReceiveHandler();
+    }
+
+    void USIC0_3_IRQHandler()
+    {
+        Wire1.ProtocolHandler();
+    }
+#endif
+
 #elif (UC_FAMILY == XMC4)
     void USIC1_1_IRQHandler()
     {
@@ -785,7 +774,19 @@ extern "C" {
 
 // Preinstantiate Objects //////////////////////////////////////////////////////
 
-TwoWire Wire = TwoWire();
+TwoWire Wire = TwoWire(&XMC_I2C_default);
+#if (NUM_I2C > 1)
+	TwoWire Wire1 = TwoWire(&XMC_I2C_1);
+#	if (NUM_I2C > 2)
+		TwoWire Wire2 = TwoWire(&XMC_I2C_2);
+#		if (NUM_I2C > 3)
+			TwoWire Wire3 = TwoWire(&XMC_I2C_3);
+#			if (NUM_I2C > 4)
+				TwoWire Wire4 = TwoWire(&XMC_I2C_4);
+#			endif
+#		endif
+#	endif
+#endif
 
 //****************************************************************************
 //                                 END OF FILE

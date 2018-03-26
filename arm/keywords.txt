@@ -12,6 +12,9 @@
 
 digitalToggle	KEYWORD2
 
+# TODO: Implement setAnalogWriteFrequency properly
+#setAnalogWriteFrequency	KEYWORD2
+
 #######################################
 # Instances (KEYWORD2)
 #######################################
