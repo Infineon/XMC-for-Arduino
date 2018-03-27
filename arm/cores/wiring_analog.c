@@ -286,7 +286,7 @@ extern int16_t setAnalogWriteFrequency( uint8_t pin, uint32_t frequency )
 		}while(exp <= 12u);
     
     int16_t resource;		
-    if ( resource = scan_map_table( mapping_pin_PWM4, pin ) ) >= 0 )
+    if ( ( resource = scan_map_table( mapping_pin_PWM4, pin ) ) >= 0 )
 		{
 			uint8_t pwm4_num = resource;
 			XMC_PWM4_t *pwm4 = &mapping_pwm4[pwm4_num];
@@ -303,7 +303,7 @@ extern int16_t setAnalogWriteFrequency( uint8_t pin, uint32_t frequency )
 			ret = 0;
 		}
 #ifdef CCU8V2
-		else if ( resource = scan_map_table( mapping_pin_PWM8, pin ) ) >= 0 )
+		else if ( (resource = scan_map_table( mapping_pin_PWM8, pin ) ) >= 0 )
 		{
 			uint8_t pwm8_num = resource;
 			XMC_PWM8_t *pwm8 = &mapping_pwm8[pwm8_num];
