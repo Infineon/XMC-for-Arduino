@@ -269,12 +269,10 @@ else
 #endif
 }
 
-/*
-// TODO: Implement setAnalogWriteFrequency properly
+
 extern int16_t setAnalogWriteFrequency( uint8_t pin, uint32_t frequency )
 {
 	int16_t ret = -1;
-
 	if(frequency < PCLK)
 	{
 		uint8_t exp = 0u;
@@ -286,10 +284,11 @@ extern int16_t setAnalogWriteFrequency( uint8_t pin, uint32_t frequency )
 			}
 			exp++;
 		}while(exp <= 12u);
-		
-		if (digitalPinHasPWM4(pin))
+    
+    int16_t resource;		
+    if ( resource = scan_map_table( mapping_pin_PWM4, pin ) ) >= 0 )
 		{
-			uint8_t pwm4_num = digitalPinToPWM4Num(pin);
+			uint8_t pwm4_num = resource;
 			XMC_PWM4_t *pwm4 = &mapping_pwm4[pwm4_num];
 					
 			pwm4->prescaler = exp;
@@ -300,14 +299,13 @@ extern int16_t setAnalogWriteFrequency( uint8_t pin, uint32_t frequency )
 				// Disable pwm output
 				pwm4->enabled = DISABLED;
 				XMC_CCU4_SLICE_StartTimer(pwm4->slice);
-			}
-			
+			}	
 			ret = 0;
 		}
 #ifdef CCU8V2
-		else if (digitalPinHasPWM8(pin))
+		else if ( resource = scan_map_table( mapping_pin_PWM8, pin ) ) >= 0 )
 		{
-			uint8_t pwm8_num = digitalPinToPWM8Num(pin);
+			uint8_t pwm8_num = resource;
 			XMC_PWM8_t *pwm8 = &mapping_pwm8[pwm8_num];
 					
 			pwm8->prescaler = exp;
@@ -319,17 +317,12 @@ extern int16_t setAnalogWriteFrequency( uint8_t pin, uint32_t frequency )
 				pwm8->enabled = DISABLED;
 				XMC_CCU4_SLICE_StartTimer(pwm8->slice);
 			}
-			
-				
 			ret = 0;
 		}
 #endif
 	}
-	
 	return ret;
 }
-*/
-
 //****************************************************************************
 //                                 END OF FILE
 //****************************************************************************
