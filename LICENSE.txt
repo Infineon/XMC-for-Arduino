@@ -11,9 +11,6 @@ their respective licenses.
 Please notice the extra licenses in the /libraries/ directory included by
 the information in the respective files.
 ```
-In case of deviating information in this repository, license information
-in files is decisive except the above 'Important Notice' section which shall be
-valid in the scope of the repository (not if statement here is not applicable).
 
 This repository comprises several licenses dependent on the sources of the files.
 

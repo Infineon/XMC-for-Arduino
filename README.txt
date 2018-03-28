@@ -1,11 +1,14 @@
 ﻿# Infineon's XMC Microcontroller Boards for Arduino
 
-This repository enables the integration of [Infineon's](https://www.infineon.com/) XMC microcontrollers into the [Arduino IDE](https://www.arduino.cc/en/main/software).
+This repository integrates [Infineon's](https://www.infineon.com/) XMC microcontrollers into the [Arduino IDE](https://www.arduino.cc/en/main/software).
 
 ## Supported Microcontroller Boards
 
-* [XMC 2Go](https://www.infineon.com/cms/en/product/evaluation-boards/KIT_XMC_2GO_XMC1100_V1/productType.html?productType=db3a304443537c4e01436ccecb5d154f)
+* [XMC1100 XMC 2Go](https://www.infineon.com/cms/en/product/evaluation-boards/KIT_XMC_2GO_XMC1100_V1/productType.html?productType=db3a304443537c4e01436ccecb5d154f)
+* [XMC1100 H-Bridge 2Go](https://www.infineon.com/cms/de/product/evaluation-boards/h-bridge-kit-2go/)
 * [XMC1100 Boot Kit](https://www.infineon.com/cms/en/product/evaluation-boards/KIT_XMC11_BOOT_001/productType.html?productType=db3a30443b360d0e013b8f5163c46f62#ispnTab1)
+* [XMC1300 Boot Kit](https://www.infineon.com/cms/de/product/evaluation-boards/kit_xmc13_boot_001/)
+* [XMC1300 Sense2GoL](https://www.infineon.com/cms/de/product/evaluation-boards/demo-sense2gol/)
 * [XMC4700 Relax Kit](https://www.infineon.com/cms/en/product/evaluation-boards/KIT_XMC47_RELAX_LITE_V1/productType.html?productType=5546d46250cc1fdf0150f6a2788e6e89)
 
 ## Additional Information
@@ -14,9 +17,14 @@ Please visit also the Wiki for additional information, e.g. datasheets, pin out 
 
 [XMC-for-Arduino Wiki](https://github.com/Infineon/XMC-for-Arduino/wiki)
 
-* Page for [XMC 2Go](https://github.com/Infineon/XMC-for-Arduino/wiki/XMC-2Go)
+* Page for [XMC1100 XMC 2Go](https://github.com/Infineon/XMC-for-Arduino/wiki/XMC-2Go)
+* Page for [XMC1100 H-Bridge 2Go](https://github.com/Infineon/XMC-for-Arduino/wiki/XMC1100-H-Bridge-2Go)
 * Page for [XMC1100 Boot Kit](https://github.com/Infineon/XMC-for-Arduino/wiki/XMC1100-Boot-Kit)
+* Page for [XMC1300 Boot Kit](https://github.com/Infineon/XMC-for-Arduino/wiki/XMC1300-Boot-Kit)
+* Page for [XMC1300 Sense2GoL](https://github.com/Infineon/XMC-for-Arduino/wiki/XMC1300-Sense2oL)
 * Page for [XMC4700 Relax Kit](https://github.com/Infineon/XMC-for-Arduino/wiki/XMC4700-Relax-Kit)
+
+Additionally, please consult the [releases](https://github.com/Infineon/XMC-for-Arduino/releases) for information about the changes and new versions.
 
 ## Installation Instructions
 
@@ -47,15 +55,16 @@ To install the boards, please navigate to **Tools** > **Board** > **Boards Manag
 
 ![Infineon Board Entry](https://raw.githubusercontent.com/infineon/assets/master/Pictures/Boards_Manager_Entry.png)
 
-In the boards list **Tools** > **Board**, the XMC microcontroller boards XMC2Go, XMC1100 Boot Kit, and XMC4700 Relax Kit are added and can be used from now on.
+In the boards list **Tools** > **Board**, the XMC microcontroller boards are added and can be used from now on.
 
 ![Board List](https://raw.githubusercontent.com/infineon/assets/master/Pictures/Board_List.png)
 
 ### Important Notes
 
-* **New beyond Arduino, additional GPIO modes supported, INPUT_PULLDOWN and OUTPUT_OPENDRAIN
-     Something most advanced users and engineers want often, not available on AVR boards**
-* **This integration will only work for Arduino IDE >=1.5**
-* **The XMC1100 Boot Kit has limitations if compared to the official Arduino boards (consult the [XMC-for-Arduino Wiki](https://github.com/Infineon/XMC-for-Arduino/wiki) for more information)**
-* **Refer also to the LICENSE.md/txt file for further information**
-* **Arduino 1.8.0 IDE might have problems with the XMC-for-Arduino releases**
+* This integration will only work for Arduino IDE >=1.5
+* The XMC1100 Boot Kit has limitations if compared to the official Arduino boards (consult the [XMC-for-Arduino Wiki](https://github.com/Infineon/XMC-for-Arduino/wiki) for more information)
+* Refer also to the LICENSE.md/txt file for further information
+* Arduino 1.8.0 IDE might have problems with the XMC-for-Arduino releases
+
+## Contributors
+* Paul Carpenter
