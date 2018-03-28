@@ -275,15 +275,15 @@ extern int16_t setAnalogWriteFrequency( uint8_t pin, uint32_t frequency )
 	int16_t ret = -1;
 	if(frequency < PCLK)
 	{
-		uint8_t exp = 0u;
+    uint16_t prescaler = 0U;
 		do
 		{
-			if(frequency > ((PCLK >> exp) / 65536))
+			if( frequency > (PCLK / ( ( 1U << prescaler ) * 65536U )) )
 			{
 				break;
 			}
-			exp++;
-		}while(exp <= 12u);
+      prescaler++;
+		}while(prescaler <= 16);
     
     int16_t resource;		
     if ( ( resource = scan_map_table( mapping_pin_PWM4, pin ) ) >= 0 )
@@ -291,8 +291,8 @@ extern int16_t setAnalogWriteFrequency( uint8_t pin, uint32_t frequency )
 			uint8_t pwm4_num = resource;
 			XMC_PWM4_t *pwm4 = &mapping_pwm4[pwm4_num];
 					
-			pwm4->prescaler = exp;
-			pwm4->period_timer_val =((PCLK >> exp)/frequency)-1;
+			pwm4->prescaler = prescaler;
+			pwm4->period_timer_val = PCLK / ( ( 1U << prescaler )  * frequency) - 1;
 			
 			if(pwm4->enabled == ENABLED)
 			{
@@ -308,8 +308,8 @@ extern int16_t setAnalogWriteFrequency( uint8_t pin, uint32_t frequency )
 			uint8_t pwm8_num = resource;
 			XMC_PWM8_t *pwm8 = &mapping_pwm8[pwm8_num];
 					
-			pwm8->prescaler = exp;
-			pwm8->period_timer_val = ((PCLK >> exp)/frequency)-1;
+			pwm8->prescaler = prescaler - 1;
+			pwm8->period_timer_val = PCLK / ( ( 1U << prescaler ) * frequency) - 1;
 			
 			if(pwm8->enabled == ENABLED)
 			{
