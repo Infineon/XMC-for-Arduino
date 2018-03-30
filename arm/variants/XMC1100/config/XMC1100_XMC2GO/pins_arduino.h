@@ -33,7 +33,7 @@
 //****************************************************************************
 // @Defines
 //****************************************************************************
-#define XMC_BOARD           XMC2GO
+#define XMC_BOARD           XMC1100_XMC2GO
 
 #define NUM_DIGITAL_PINS    12
 #define NUM_ANALOG_INPUTS   2
@@ -42,6 +42,7 @@
 #define NUM_INTERRUPT       1
 #define NUM_SERIAL          1
 #define NUM_TONE_PINS       4
+#define NUM_TASKS_VARIANT   8
 
 // Defines will be either set by ArduinoIDE in the menu or manually
 #ifdef SERIAL_HOSTPC
@@ -96,8 +97,8 @@ const uint8_t mapping_pin_PWM4[][ 2 ] = {
 
 const XMC_PORT_PIN_t mapping_port_pin[] =
 {
-    /* 0  */    {XMC_GPIO_PORT0, 6},    // SPI-MOSI                         P0.6
-    /* 1  */    {XMC_GPIO_PORT0 , 7},   // SPI-MISO                         P0.7
+    /* 0  */    {XMC_GPIO_PORT0, 7},    // SPI-MOSI                         P0.6
+    /* 1  */    {XMC_GPIO_PORT0 , 6},   // SPI-MISO                         P0.7
     /* 2  */    {XMC_GPIO_PORT0 , 8},   // SPI-SCK                          P0.8
     /* 3  */    {XMC_GPIO_PORT0 , 9},   // SPI-SS                           P0.9
     /* 4  */    {XMC_GPIO_PORT0 , 14},  // GPIO                             P0.14

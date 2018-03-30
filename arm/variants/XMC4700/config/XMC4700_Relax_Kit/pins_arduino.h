@@ -34,7 +34,7 @@
 //****************************************************************************
 // @Defines
 //****************************************************************************
-#define XMC_BOARD           Relax_Kit
+#define XMC_BOARD           XMC4700_Relax_Kit
 
 #define NUM_DIGITAL_PINS    98
 #define NUM_ANALOG_INPUTS   22
@@ -43,6 +43,7 @@
 #define NUM_INTERRUPT       2
 #define NUM_SERIAL          2
 #define NUM_TONE_PINS       16
+#define NUM_TASKS_VARIANT   32
 
 // Board has two serial ports pre-assigned to debug and on-board
 

@@ -33,6 +33,7 @@
 //****************************************************************************
 // @Defines
 //****************************************************************************
+#define XMC_BOARD           XMC1300_Sense2GoL
 
 #define NUM_DIGITAL_PINS 	18
 #define NUM_ANALOG_INPUTS 	2
@@ -40,6 +41,8 @@
 #define NUM_LEDS 			7
 #define NUM_INTERRUPT 		2
 #define NUM_SERIAL 			1
+#define NUM_TONE_PINS       0
+#define NUM_TASKS_VARIANT   8
 
 #define PWM4_TIMER_PERIOD (2041U)  // Generate 490Hz @fCCU=1MHz
 
@@ -67,8 +70,8 @@ static const uint8_t SCK  = 13;
 static const uint8_t SDA = 15;
 static const uint8_t SCL = 16;
 
-#define A0   19
-#define A1   21
+#define A0   0
+#define A1   1
 
 #define CH_I A0
 #define CH_Q A1
@@ -94,16 +97,22 @@ static const uint8_t SCL = 16;
 #define GND		32	// GND
 
 #define digitalPinToInterrupt(p)    ((p) == 2 ? 0 : ((p) == 3 ? 1 : NOT_AN_INTERRUPT))
-#define analogInputToDigitalPin(p)  ((p < 6) ? (p) + 14 : -1)
-#define isanalogPin(p)        		(((p == A0) || (p == A1) ) ? 1 : 0)
-#define analogPinToADCNum(p)		((p == A0) ? (0) :  (p == A1) ? (1) : -1)
-#define digitalPinHasPWM4(p)        ((p) == 3 || (p) == 4 || (p) == 6 ||  (p) == 9)
-#define digitalPinToPWM4Num(p)      (((p) == 3) ? (0) : (((p) == 4) ? (1) : (((p) == 6) ? (2) : (3))))
-
-#define digitalPinHasPWM8(p)      	p
-#define digitalPinToPWM8Num(p)      p
 
 #ifdef ARDUINO_MAIN
+/* Mapping of Arduino Pins to PWM4 channels as pin and PWM4 channel
+   last entry 255 for both parts.
+   Putting both parts in array means if a PWM4 channel gets reassigned for
+   another function later a gap in channel numbers will not mess things up */
+   const uint8_t mapping_pin_PWM4[][ 2 ] = {
+	{ 3, 0 },
+	{ 4, 1 },
+	{ 6, 2 },
+	{ 9, 3 },
+	{ 255, 255 } };
+
+	const uint8_t mapping_pin_PWM8[][ 2 ] = {
+		{ 255, 255 } };
+
 
 // these arrays map port names (e.g. port B) to the
 // appropriate addresses for various functions (e.g. reading
@@ -157,27 +166,35 @@ XMC_PWM4_t mapping_pwm4[] ={
 };
 
 XMC_PWM8_t mapping_pwm8[] =
-{};
+{
+
+};
 
 XMC_ADC_t mapping_adc[] ={
-	{VADC, 2, VADC_G0, 0, 10, DISABLED},				// CH_I
+	{VADC, 2, VADC_G0, 0, 10, DISABLED},			// CH_I
 	{VADC, 4, VADC_G0, 0, 11, DISABLED}				// CH_Q
 };
 
 /*
  * UART objects
  */
-RingBuffer rx_buffer_debug;
-RingBuffer tx_buffer_debug;
 
-XMC_UART_t XMC_UART_debug =
+ 
+/*
+ * UART objects
+ */
+RingBuffer rx_buffer_0;
+RingBuffer tx_buffer_0;
+
+XMC_UART_t XMC_UART_0 =
 {
   .channel 				= XMC_UART0_CH0,
   .rx 					= {	.port = (XMC_GPIO_PORT_t *)PORT0_BASE,
 							.pin  = (uint8_t)15
 							},
   .rx_config			= { .mode = XMC_GPIO_MODE_INPUT_TRISTATE,
-							.input_hysteresis = XMC_GPIO_INPUT_HYSTERESIS_STANDARD
+							.input_hysteresis = XMC_GPIO_INPUT_HYSTERESIS_STANDARD,
+							.output_level     = XMC_GPIO_OUTPUT_LEVEL_HIGH
 							},
   .tx 					= {	.port = (XMC_GPIO_PORT_t *)PORT2_BASE,
 							.pin  = (uint8_t)0
@@ -194,10 +211,7 @@ XMC_UART_t XMC_UART_debug =
   .irq_service_request	= 0
 };	
 
-HardwareSerial Serial(&XMC_UART_debug, &rx_buffer_debug, &tx_buffer_debug);	
-				
-
+HardwareSerial Serial( &XMC_UART_0, &rx_buffer_0, &tx_buffer_0 );
 #endif
-
 
 #endif

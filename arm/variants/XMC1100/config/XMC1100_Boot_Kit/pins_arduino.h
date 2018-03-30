@@ -30,7 +30,7 @@
 //****************************************************************************
 // @Defines
 //****************************************************************************
-#define XMC_BOARD           Boot_Kit
+#define XMC_BOARD           XMC1100_Boot_Kit
 
 #define NUM_DIGITAL_PINS    18
 #define NUM_ANALOG_INPUTS   6
@@ -39,6 +39,7 @@
 #define NUM_INTERRUPT       2
 #define NUM_SERIAL          1
 #define NUM_TONE_PINS       4
+#define NUM_TASKS_VARIANT   8
 
 // Defines will be either set by ArduinoIDE in the menu or manually
 #ifdef SERIAL_HOSTPC

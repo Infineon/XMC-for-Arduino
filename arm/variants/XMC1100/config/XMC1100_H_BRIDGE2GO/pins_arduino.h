@@ -34,7 +34,7 @@
 //****************************************************************************
 // @Defines
 //****************************************************************************
-#define XMC_BOARD           H_Bridge_2Go
+#define XMC_BOARD           XMC1100_H_BRIDGE2GO
 
 #define NUM_DIGITAL_PINS    12
 #define NUM_ANALOG_INPUTS   2
@@ -42,6 +42,8 @@
 #define NUM_LEDS            2
 #define NUM_INTERRUPT       1
 #define NUM_SERIAL          1
+#define NUM_TONE_PINS       2
+#define NUM_TASKS_VARIANT   8
 
 // Defines will be either set by ArduinoIDE in the menu or manually
 #ifdef SERIAL_HOSTPC
