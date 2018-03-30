@@ -9,7 +9,7 @@
  */
 
 #include <RTC.h>
-#include <XMC_DeviceControl.h>
+#include <DeviceControlXMC.h>
 #include "utility/timer.h"
 #include <xmc_gpio.h>
 

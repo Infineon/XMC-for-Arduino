@@ -18,14 +18,21 @@
   Copyright (c) 2018 Infineon Technologies AG
   This file has been modified for the XMC microcontroller series.
 */
-
 #ifndef _WIRING_TONE_
 #define _WIRING_TONE_
 
 //****************************************************************************
 // @External Prototypes
 //****************************************************************************
-void tone(uint8_t, unsigned int , unsigned long);
-void noTone(uint8_t);
+extern void tone( uint8_t, unsigned int, unsigned long = 0 );
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+extern void noTone( uint8_t );
+extern int  tone_irq_action( int, int16_t );
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* _WIRING_TONE_ */

@@ -104,7 +104,7 @@ typedef enum {
 /** @} */ /* End of group Configuration_of_CMSIS */
 
 #include "core_cm0.h"                               /*!< Cortex-M0 processor and core peripherals                              */
-#include "system_XMC1100.h"                         /*!< XMC1100 System                                                        */
+#include <system_XMC1100.h>                         /*!< XMC1100 System                                                        */
 
 /* ================================================================================ */
 /* ================       Device Specific Peripheral Section       ================ */

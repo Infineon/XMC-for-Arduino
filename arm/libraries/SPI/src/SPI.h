@@ -144,7 +144,8 @@ public:
     inline void transfer(uint8_t* buf, uint8_t count);
 
     // Transaction Functions
-    void usingInterrupt(int interruptNumber);
+    // Function not used here
+    //void usingInterrupt(int interruptNumber);
     void beginTransaction(SPISettings settings);
     void endTransaction(void);
 

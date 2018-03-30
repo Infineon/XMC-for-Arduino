@@ -166,9 +166,12 @@ void TwoWire::end(void)
     //  Only disable HW when USIC is used for I2C
 	if((XMC_I2C_config->channel->CCR & USIC_CH_CCR_MODE_Msk) == XMC_USIC_CH_OPERATING_MODE_I2C)
 	{
-		XMC_GPIO_CONFIG_t default_output_port_config = {};
-		default_output_port_config.mode = XMC_GPIO_MODE_OUTPUT_OPEN_DRAIN;
-		default_output_port_config.output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH;
+        
+        XMC_GPIO_CONFIG_t default_output_port_config = {
+            .mode = XMC_GPIO_MODE_OUTPUT_OPEN_DRAIN,
+            .input_hysteresis = XMC_GPIO_INPUT_HYSTERESIS_STANDARD,
+            .output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH
+        };
 
 		XMC_I2C_CH_Stop(XMC_I2C_config->channel);
 

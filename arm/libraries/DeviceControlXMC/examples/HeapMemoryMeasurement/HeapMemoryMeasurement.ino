@@ -3,7 +3,7 @@
   Demonstrates the ability to check on free heap memory.
   15 July 2017
  */
-#include <XMC_DeviceControl.h>
+#include <DeviceControlXMC.h>
 
 XMCClass xmc2go;
 

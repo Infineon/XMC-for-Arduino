@@ -18,8 +18,6 @@
   Copyright (c) 2018 Infineon Technologies AG
   This file has been modified for the XMC microcontroller series.
 */
-
-
 #ifndef _ARDUINO_H_
 #define _ARDUINO_H_
 
@@ -47,7 +45,6 @@ extern "C" {
 #include <xmc_ccu8.h>
 #include <xmc_vadc.h>
 #include <xmc_uart.h>
-//Additional xmc libs
 #include <xmc_dac.h>
 
 //****************************************************************************
@@ -182,15 +179,17 @@ extern "C" {
 //****************************************************************************
     extern const XMC_PORT_PIN_t mapping_port_pin[];
     extern const XMC_PIN_INTERRUPT_t mapping_interrupt[];
+    extern const uint8_t mapping_pin_PWM4[][ 2 ];
     extern XMC_PWM4_t mapping_pwm4[];
     extern XMC_ADC_t mapping_adc[];
 #ifdef CCU8V2
+    extern const uint8_t mapping_pin_PWM8[][ 2 ];
     extern XMC_PWM8_t mapping_pwm8[];
 #endif
 #ifdef DAC
+    extern const uint8_t mapping_pin_DAC[][ 2 ];
 	extern XMC_ARD_DAC_t mapping_dac[];
 #endif
-
 	extern XMC_UART_t XMC_UART_debug;
 	extern XMC_UART_t XMC_UART_on_board;
 
@@ -224,25 +223,28 @@ extern "C" {
 #include "wiring_shift.h"
 #include "wiring_time.h"
 #include "wiring_pulse.h"
-#include "Tone.h"
 #include "itoa.h"
 #include "dtostrf.h"
 #include "WCharacter.h"
 #include "WInterrupts.h"
 
+//****************************************************************************
+// @Infineon Core Includes
+//****************************************************************************
+#include "reset.h"
+
 #ifdef __cplusplus
 } // extern "C"
+#include "Tone.h"
 #include "WMath.h"
 #endif	// __cplusplus
 
 #include "Print.h"
 #include "HardwareSerial.h"
 
-
 //****************************************************************************
 // @Board Variant Includes
 //****************************************************************************
 #include <pins_arduino.h>
-
 
 #endif  /*_ARDUINO_H_ */

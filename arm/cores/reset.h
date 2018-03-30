@@ -1,11 +1,11 @@
 /**
- * xmc_rtc_conf.c - Utility file for the RTC (Real Time Clock) library.
+ * reset.h - Handling the reset for the XMC1100 Boot Kit.
+ *
+ * The General Purposes Direct Memory Access (GPDMA) is a module within the XMC4000 series to transfer data
+ * without any CPU interference. When a DMA transfer request is generated, the GPDMA transfers data stored
+ * at the source address to the destination address.
  * 
- * Real-time clock (RTC) is a clock that keeps track of the current time. RTCs are present
- * in almost any electronic device which needs to keep accurate time in a digital format for
- * clock displays and computer systems.
- * 
- * Have a look at the application note/datasheet for more information.
+ * Have a look at the application note/reference manual for more information.
  * 
  * Copyright (c) 2018 Infineon Technologies AG
  * 
@@ -30,22 +30,18 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.   
  */
 
-#include "xmc_rtc_conf.h"
+#ifndef Reset_h
+#define Reset_h
 
-#if (defined (XMC1100_XMC2GO) || (XMC1100_H_BRIDGE2GO) || (XMC1300_Sense2GoL) || (XMC1100_Boot_Kit) || (XMC1300_Boot_Kit) || (XMC4700_Relax_Kit) )
-XMC_RTC_CONFIG_t XMC_RTC_default_t = {
-	.prescaler = 0x7fffU,
-	.time = {
-		
-			.seconds = 0U,
-			.minutes = 0U,
-			.hours = 1U,
-			.days = 1U,
+#include "Arduino.h"
 
-			.year = 2017U,
-			.month = XMC_RTC_MONTH_JANUARY,
-			.daysofweek = XMC_RTC_WEEKDAY_SUNDAY,
-		},
-};
+//****************************************************************************
+// @External Prototypes
+//****************************************************************************
+
+/*
+* \brief Configures the reset pin for the selected board.
+*/
+extern void reset_init(void);
 
 #endif

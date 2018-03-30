@@ -6,7 +6,7 @@
  */
 
 #include <RTC.h>
-#include <XMC_DeviceControl.h>
+#include <DeviceControlXMC.h>
 
 /* Create an rtc object */
 RTCClass rtc;

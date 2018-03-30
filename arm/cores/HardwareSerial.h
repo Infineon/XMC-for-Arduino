@@ -14,9 +14,6 @@
   You should have received a copy of the GNU Lesser General Public
   License along with this library; if not, write to the Free Software
   Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
-
-  Copyright (c) 2018 Infineon Technologies AG
-  This file has been modified for the XMC microcontroller series.
 */
 
 #ifndef HardwareSerial_h
@@ -32,7 +29,6 @@ extern "C" {
 
 void serialEvent() __attribute__((weak));
 void serialEvent1() __attribute__((weak));
-void serialEvent2() __attribute__((weak));
 
 //****************************************************************************
 // @Project Includes
@@ -82,8 +78,8 @@ public:
 	
     HardwareSerial(XMC_UART_t* xmc_uart_config, RingBuffer* rx_buffer, RingBuffer* tx_buffer);
 	
-    void begin(const uint32_t speed);
-    void begin(const uint32_t speed, const XMC_UART_MODE_t config);
+    void begin( uint32_t speed);
+    void begin( uint32_t speed, XMC_UART_MODE_t config);
     void end(void);
     int available(void);
     int availableForWrite(void);
@@ -133,7 +129,6 @@ extern HardwareSerial Serial;
 
 #if defined(XMC4700_Relax_Kit)
 extern HardwareSerial Serial1;
-extern HardwareSerial Serial2;
 #endif
 
 #endif

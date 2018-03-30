@@ -171,10 +171,8 @@ bool XMC_SDMMC_GetPowerStatus(XMC_SDMMC_t *const sdmmc)
  * De-assert the peripheral reset. The SDMMC peripheral
  * needs to be initialized
  */
-void XMC_SDMMC_Enable(XMC_SDMMC_t *const sdmmc)
+void XMC_SDMMC_Enable( )
 {
-  XMC_ASSERT("XMC_SDMMC_Enable: Invalid module pointer", XMC_SDMMC_CHECK_MODULE_PTR(sdmmc));
-
 #if defined(CLOCK_GATING_SUPPORTED)
   XMC_SCU_CLOCK_UngatePeripheralClock(XMC_SCU_PERIPHERAL_CLOCK_SDMMC);
 #endif
@@ -184,9 +182,8 @@ void XMC_SDMMC_Enable(XMC_SDMMC_t *const sdmmc)
 }
 
 /* Assert the peripheral reset */
-void XMC_SDMMC_Disable(XMC_SDMMC_t *const sdmmc)
+void XMC_SDMMC_Disable( )
 {
-  XMC_ASSERT("XMC_SDMMC_Disable: Invalid module pointer", XMC_SDMMC_CHECK_MODULE_PTR(sdmmc));
 
 #if defined(PERIPHERAL_RESET_SUPPORTED)
   XMC_SCU_RESET_AssertPeripheralReset(XMC_SCU_PERIPHERAL_RESET_SDMMC);

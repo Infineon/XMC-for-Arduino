@@ -45,7 +45,7 @@ IFX9201::IFX9201(void)
 	m_SPIsettings = SPISettings(1000000u, MSBFIRST, SPI_MODE1);
 }
 
-void IFX9201::begin(SPIClass &bus, uint8_t pinSlaveSelect, uint8_t pinDirection, uint8_t pinPWM, uint8_t pinDisable);
+void IFX9201::begin(SPIClass &bus, uint8_t pinSlaveSelect, uint8_t pinDirection, uint8_t pinPWM, uint8_t pinDisable)
 {
 	m_Mode = IFX9201Mode_SPI;
 	m_bus = &bus;
@@ -65,29 +65,24 @@ void IFX9201::begin(SPIClass &bus, uint8_t pinSlaveSelect, uint8_t pinDirection,
 	setCTRLReg(IFX9201__CTRL_SIN_MSK);
 }
 
-void IFX9201::begin(uint8_t pinSlaveSelect, uint8_t pinDirection, uint8_t pinPWM, uint8_t pinDisable);
+void IFX9201::begin(uint8_t pinDirection, uint8_t pinPWM, uint8_t pinDisable)
 {
-	m_Mode = IFX9201Mode_SPI;
-	m_bus = &bus;
+	m_Mode = IFX9201Mode_PWM;
 	
-	m_bus->begin();
-	m_bus->setBitOrder(MSBFIRST); 
-	m_bus->setClockDivider(SPI_CLOCK_DIV16);
-	m_bus->setDataMode(SPI_MODE1);
-	
-	m_SlaveSelect = pinSlaveSelect;
 	m_Disable = pinDisable;
 	m_Direction = pinDirection;
 	m_PWM = pinPWM;
 
 	begin();
-	
-	setCTRLReg(IFX9201__CTRL_SIN_MSK);
 }
 
 void IFX9201::begin(void)
 {
-	pinMode(m_SlaveSelect, OUTPUT);
+	if(m_Mode == IFX9201Mode_SPI){
+		pinMode(m_SlaveSelect, OUTPUT);
+		digitalWrite(m_SlaveSelect, HIGH);
+	} 
+
 	pinMode(m_Disable, OUTPUT);
 	pinMode(m_Direction, OUTPUT);
 	pinMode(m_PWM, OUTPUT);
@@ -95,7 +90,6 @@ void IFX9201::begin(void)
 	digitalWrite(m_PWM, LOW);
 	digitalWrite(m_Direction, LOW);
 	digitalWrite(m_Disable, LOW);
-	digitalWrite(m_SlaveSelect, HIGH);
 	
 	setPWMFreqency(IFX9201__DEFAULT_PWM_FREQUENCY);
 }
@@ -105,7 +99,7 @@ void IFX9201::setPWMFreqency(uint16_t freq)
 	if(freq <= IFX9201__MAX_PWM_FREQ)
 	{
 		m_PWMFreq = freq;
-		setanalogWriteFrequency(m_PWM, m_PWMFreq);
+		setAnalogWriteFrequency(m_PWM, m_PWMFreq);
 	}
 }
 
