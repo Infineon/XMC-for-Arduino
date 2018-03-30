@@ -437,7 +437,7 @@ return taskTable[ ID ].status;
     Return int  -1 No free task available
                  >=0 Number of added task
 */
-extern int addTask( int(* ptr)( int, int16_t ) )
+int addTask( int(* ptr)( int, int16_t ) )
 {
   noInterrupts( );  
   for( int i = NUM_TONE_PINS; i < _MAX_TASKS - 1; i++ )
@@ -463,7 +463,7 @@ extern int addTask( int(* ptr)( int, int16_t ) )
                 -1 Invalid task address
                  >=0 Number of deleted task
 */
-extern int deleteTask( int(* ptr)( int, int16_t ) )
+int deleteTask( int(* ptr)( int, int16_t ) )
 {
   noInterrupts( );  
   int ID = findID( ptr );
@@ -473,8 +473,6 @@ extern int deleteTask( int(* ptr)( int, int16_t ) )
     taskTable[ ID ].status = 0;
     tasks[ ID ] = NULL;
     setInterval(ID, 0);
-    interrupts( );  
-    return ID;
   }
   interrupts( ); 
   return ID;
