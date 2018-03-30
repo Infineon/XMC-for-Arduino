@@ -30,23 +30,14 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.   
  */
 
-#include "BGT24LTR11.h"
+#include <BGT24LTR11.h>
+#include "Arduino.h"
 
-extern "C"{
-	void BGT24LTR11_CYCLE_TIMER_IRQHandler(void)
-	{
-		RadarBGT24LTR11.startAcq();
-		RadarBGT24LTR11.sampleInQ();
-		RadarBGT24LTR11.endAcq();  
-	}
-}
 
 BGT24LTR11::BGT24LTR11(void)
 {
 		_bgt24ltr11_initialized	= BGT24LTR11_DISABLED;
 		_bgt24ltr11_motion	= BGT24LTR11_NO_MOTION_DETECT;
-		_bgt24ltr11_timing	= {};
-		_bgt24ltr11_alg		= {};
 }
 
 BGT24LTR11::~BGT24LTR11(void)
@@ -66,7 +57,7 @@ void BGT24LTR11::begin(void)
 	_bgt24ltr11_alg.trigger_det_level		= 200;
 	_bgt24ltr11_alg.rootcalc_enable			= BGT24LTR11_DISABLED;
 	
-	_bgt24ltr11_contiguous_acq = false;
+	_acq_mode = BGT24LTR11_FALSE;        
 	
     memset( (void*)_bgt24ltr11_channel_I, 0, BGT24LTR11_MAX_SAMPLES ) ;
 	
@@ -82,8 +73,19 @@ void BGT24LTR11::begin(void)
 }
 
 void BGT24LTR11::end(void)
-{
-
+{	
+	switch(_acq_mode)
+		{
+			case BGT24LTR11_SINGLE_ACQ: 
+				return;
+			case BGT24LTR11_CONTINUOUS_ACQ:
+				deleteTask( &BGT24LTR11_CYCLE_TIMER_IRQHandler );
+				return;
+			default:
+				// Nothing to do
+				break;
+		}	
+	return;
 }
 		
 BGT24LTR11_ERROR_t BGT24LTR11::start(BGT24LTR11_ACQ_MODE_t acq_mode)
@@ -96,26 +98,40 @@ BGT24LTR11_ERROR_t BGT24LTR11::start(BGT24LTR11_ACQ_MODE_t acq_mode)
 	}
 	else
 	{
-		switch(acq_mode)
+		_acq_mode = acq_mode;
+
+		switch(_acq_mode)
 		{
 			case BGT24LTR11_SINGLE_ACQ:
+			{
 				startAcq();
 				sampleInQ();
 				endAcq();  
 				break;
-			case BGT24LTR11_CONTIGUOUS_ACQ:
+			}
+			case BGT24LTR11_CONTINUOUS_ACQ:
+			{
 				digitalToggle(LED3);
-				_bgt24ltr11_contiguous_acq = true;        
-				_bgt24ltr11_cyle_timer_id = XMC_SYSTIMER_CreateTimer(_bgt24ltr11_timing.t_cycle_ms, XMC_SYSTIMER_MODE_PERIODIC, (XMC_SYSTIMER_CALLBACK_t) BGT24LTR11_CYCLE_TIMER_IRQHandler, NULL);
-				if (_bgt24ltr11_cyle_timer_id != 0)
+				_acq_mode = BGT24LTR11_CONTINUOUS_ACQ;        
+				_bgt24ltr11_cyle_timer_id = _bgt24ltr11_timing.t_cycle_ms;
+				
+				int _timer = addTask( BGT24LTR11_CYCLE_TIMER_IRQHandler );
+				if(_timer >= 0 && _timer <= NUM_TASKS_VARIANT )
 				{
-					XMC_SYSTIMER_StartTimer(_bgt24ltr11_cyle_timer_id);
+					setParam( _timer, _timer );
+					setInterval( _timer, _bgt24ltr11_timing.t_cycle_ms );
+					startTask( _timer );
+				} else 
+				{
+					error = BGT24LTR11_ERROR;
 				}
-				// Start timer -> interrupt contains acq 
 				break;
+			}
 			default:
+			{
 				error = BGT24LTR11_INVALID_ACQ_MODE;
 				break;
+			}
 		}
 	
 	}
@@ -130,13 +146,13 @@ BGT24LTR11_ERROR_t BGT24LTR11::stop(void)
 	{
 		error = BGT24LTR11_NOT_INITIALIZED;
 	}
-	else if(_bgt24ltr11_contiguous_acq)
+	else if( _acq_mode == BGT24LTR11_CONTINUOUS_ACQ )
 	{
-		error = BGT24LTR11_NOT_IN_CONTIGUOUS_MODE;
+		error = BGT24LTR11_NOT_IN_CONTINUOUS_MODE;
 	}
 	else
 	{
-		// Delete timer
+		deleteTask( &BGT24LTR11_CYCLE_TIMER_IRQHandler );
 	}
 	
 	return error;
@@ -144,7 +160,6 @@ BGT24LTR11_ERROR_t BGT24LTR11::stop(void)
 
 void BGT24LTR11::startAcq(void)
 {
-  static uint32_t BGT24_settle;
   digitalWrite(BGT24LTR11_BGT_ON_PIN, LOW);
   delayMicroseconds(250000u);
 }

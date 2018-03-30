@@ -2,6 +2,14 @@
 
 BGT24LTR11 RadarBGT24LTR11 = BGT24LTR11();
 
+int BGT24LTR11_CYCLE_TIMER_IRQHandler(int ID, int16_t tone)
+{
+  RadarBGT24LTR11.startAcq();
+  RadarBGT24LTR11.sampleInQ();
+  RadarBGT24LTR11.endAcq();
+  return 1;  
+}
+
 void setup() {
   // put your setup code here, to run once:
   Serial.begin(115200);
@@ -9,7 +17,7 @@ void setup() {
 
   Serial.println("Init done!");
 
-  RadarBGT24LTR11.start(BGT24LTR11_CONTIGUOUS_ACQ);
+  RadarBGT24LTR11.start(BGT24LTR11_CONTINGUOUS_ACQ);
 }
 
 void loop() {

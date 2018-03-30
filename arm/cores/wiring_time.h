@@ -114,9 +114,6 @@ struct TaskList {
 /* SysTick counter */
 extern volatile uint32_t g_systick_count;
 
-/* SysTick counter */
-extern volatile uint32_t g_systick_count;
-
 //****************************************************************************
 // @External Prototypes
 //****************************************************************************
@@ -190,8 +187,10 @@ extern int setParam( int, int16_t );
 extern int16_t getParam( int );
 extern uint32_t getTime( int );
 extern int16_t getStatus( int );
-extern int StartTask( int );
-extern int FindID( int(*  )( int, int16_t ) );
+extern int addTask( int(*  )( int, int16_t ) );
+extern int deleteTask( int(*  )( int, int16_t ) );
+extern int startTask( int );
+extern int findID( int(*  )( int, int16_t ) );
 
 #ifdef __cplusplus
 }

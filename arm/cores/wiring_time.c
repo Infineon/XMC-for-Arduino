@@ -117,8 +117,10 @@ setParam    Set a task's callback function parameter (signed int16_t)
 getParam    Get a task's callback function parameter (signed int16_t)
 getTime     Get a task's next time to execute
 getStatus   Get a particular task status word
-StartTask   Start a task (if not already running)
-FindID      get ID of first task from task address
+addTask     Add a task to the task list
+deleteTask  Delete a task from the task list 
+startTask   Start a task (if not already running)
+findID      Get ID of first task from task address
 */
 //****************************************************************************
 // @Project Includes
@@ -130,7 +132,7 @@ extern int  tone_irq_action( int, int16_t );
 // @Macros
 //****************************************************************************
 // number of tasks = number of tones plus delay task plus any others added later
-#define _MAX_TASKS   (NUM_TONE_PINS + 1)
+#define _MAX_TASKS   NUM_TASKS_VARIANT
 
 #define SYSTIMER_PRIORITY  (4U)
 /* Millisecond to Microsecond ratio */
@@ -222,7 +224,7 @@ void delay( uint32_t dwMs )
 {
 setInterval( _MAX_TASKS - 1, dwMs );
 //Timer is always in list as last
-StartTask( _MAX_TASKS - 1 );
+startTask( _MAX_TASKS - 1 );
 // Wait until timer expires
 do
   yield( );
@@ -348,7 +350,6 @@ if( i != 0 )
 return 0;
 }
 
-
 /* getInterval - get the interval time in ms for a task
 
     Parameters  int Task ID to check
@@ -429,8 +430,57 @@ if( ( CheckID( ID ) ) < 0 )
 return taskTable[ ID ].status;
 }
 
+/* addTask - Add a task to the task list
 
-/* StartTask - Start a task if not running and has interval set
+    Parameters  ptr Pointer to callback function
+
+    Return int  -1 No free task available
+                 >=0 Number of added task
+*/
+extern int addTask( int(* ptr)( int, int16_t ) )
+{
+  noInterrupts( );  
+  for( int i = NUM_TONE_PINS; i < _MAX_TASKS - 1; i++ )
+    {
+    // Fill with call back function address
+    if( tasks[ i ] == NULL )
+      {
+        taskTable[ i ].status = 0;
+        tasks[ i ] = ptr;   // Register callback
+        interrupts( ); 
+        return i;
+      }
+    }
+    interrupts( ); 
+    return -1;
+}
+
+/* deleteTask - Remove a task from the list and delete the callback function
+
+    Parameters  ptr Pointer to callback function
+
+    Return int  -2 No task found
+                -1 Invalid task address
+                 >=0 Number of deleted task
+*/
+extern int deleteTask( int(* ptr)( int, int16_t ) )
+{
+  noInterrupts( );  
+  int ID = findID( ptr );
+
+  if( ID >= 0 )
+  {
+    taskTable[ ID ].status = 0;
+    tasks[ ID ] = NULL;
+    setInterval(ID, 0);
+    interrupts( );  
+    return ID;
+  }
+  interrupts( ); 
+  return ID;
+}
+
+/* startTask - Start a task if not running and has interval set
 
    Cannot start an already started task
    
@@ -445,7 +495,7 @@ return taskTable[ ID ].status;
                  0  current task running
                 > 0 Valid set to run after interval time
 */
-int StartTask( int ID )
+int startTask( int ID )
 {
 // Check valid ID, not running and interval
 if( ( CheckID( ID ) ) <= 0 )
@@ -461,7 +511,7 @@ return 1;
 }
 
 
-/* FindID - Find ID for FIRST task with matching function address in Task table
+/* findID - Find ID for FIRST task with matching function address in Task table
 
    Scans task table to find a matching function address and return the ID
    NOTE stops at FIRST match.
@@ -472,7 +522,7 @@ return 1;
                 -1 Invalid task address
                 >= 0 Valid and stopped
 */
-int FindID( int(*  ptr)( int, int16_t ) )
+int findID( int(*  ptr)( int, int16_t ) )
 {
 int i;
 

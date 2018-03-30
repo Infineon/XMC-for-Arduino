@@ -51,7 +51,7 @@ typedef enum {
 	BGT24LTR11_ERROR = 1,
 	BGT24LTR11_NOT_INITIALIZED = 2,
 	BGT24LTR11_INVALID_ACQ_MODE  = 3,
-	BGT24LTR11_NOT_IN_CONTIGUOUS_MODE  = 4,
+	BGT24LTR11_NOT_IN_CONTINUOUS_MODE  = 4,
 	BGT24LTR11_NO_dataAvailable  = 5
 } BGT24LTR11_ERROR_t;
 
@@ -63,7 +63,8 @@ typedef enum {
 
 typedef enum {
 	BGT24LTR11_SINGLE_ACQ = 0,			// One time
-	BGT24LTR11_CONTIGUOUS_ACQ = 1		// Every t_cylce
+	BGT24LTR11_CONTINUOUS_ACQ = 1,		// Every t_cylce
+	BGT24LTR11_FALSE = 2
 } BGT24LTR11_ACQ_MODE_t;
 
 typedef struct {
@@ -78,18 +79,14 @@ typedef struct {
 	BGT24LTR11_ENABLE_t rootcalc_enable;
 } BGT24LTR11_ALG_t;
 
-
+extern int BGT24LTR11_CYCLE_TIMER_IRQHandler(int, int16_t);
 
 class BGT24LTR11
 {
 	public:
-		//constructor
 		BGT24LTR11(void);
-		//destructor
 		~BGT24LTR11(void);
-		//begin
 		void begin(void);
-		//end
 		void end(void);
 		
 		BGT24LTR11_ERROR_t start(BGT24LTR11_ACQ_MODE_t acq_mode);
@@ -119,7 +116,7 @@ class BGT24LTR11
 		
 		BGT24LTR11_ALG_t _bgt24ltr11_alg;
 		
-		bool _bgt24ltr11_contiguous_acq;
+		bool _bgt24ltr11_continuous_acq;
 		
 		uint32_t _bgt24ltr11_cyle_timer_id;
 		
@@ -130,6 +127,8 @@ class BGT24LTR11
 		bool _bgt24ltr11_dataAvailable;
 
 		BGT24LTR11_ERROR_t motionDetection(void);
+
+		BGT24LTR11_ACQ_MODE_t _acq_mode;
 };
 
 #endif

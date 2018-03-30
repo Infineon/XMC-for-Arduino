@@ -315,7 +315,7 @@ extern int16_t setAnalogWriteFrequency( uint8_t pin, uint32_t frequency )
 			{
 				// Disable pwm output
 				pwm8->enabled = DISABLED;
-				XMC_CCU4_SLICE_StartTimer(pwm8->slice);
+				XMC_CCU8_SLICE_StartTimer(pwm8->slice);
 			}
 			ret = 0;
 		}
