@@ -1,12 +1,12 @@
 /**
   * @file xmc1_eru_map.h
- * @date 2015-08-25
+  * @date 2015-08-25
   *
   * @cond
   *********************************************************************************************************************
- * XMClib v2.1.8 - XMC Peripheral Driver Library 
+  * XMClib v2.1.16 - XMC Peripheral Driver Library 
   *
-  * Copyright (c) 2015-2016, Infineon Technologies AG
+  * Copyright (c) 2015-2017, Infineon Technologies AG
   * All rights reserved.                        
   *                                             
   * Redistribution and use in source and binary forms, with or without modification,are permitted provided that the 
@@ -43,7 +43,7 @@
   *     - Added support for XMC1400 devices
   *
   * @endcond
-*/
+  */
 #ifndef XMC1_ERU_MAP_H
 #define XMC1_ERU_MAP_H
 

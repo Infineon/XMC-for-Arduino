@@ -4,9 +4,9 @@
  *
  * @cond
  *********************************************************************************************************************
- * XMClib v2.1.8 - XMC Peripheral Driver Library 
+ * XMClib v2.1.16 - XMC Peripheral Driver Library 
  *
- * Copyright (c) 2015-2016, Infineon Technologies AG
+ * Copyright (c) 2015-2017, Infineon Technologies AG
  * All rights reserved.                        
  *                                             
  * Redistribution and use in source and binary forms, with or without modification,are permitted provided that the 
@@ -131,6 +131,7 @@ void XMC_UART_CH_Init(XMC_USIC_CH_t *channel, const XMC_UART_CH_CONFIG_t *const 
   channel->CCR = (uint32_t)config->parity_mode;
 }
 
+
 XMC_UART_CH_STATUS_t XMC_UART_CH_SetBaudrate(XMC_USIC_CH_t *const channel, uint32_t rate, uint32_t oversampling)
 {
   XMC_UART_CH_STATUS_t status;
@@ -146,6 +147,7 @@ XMC_UART_CH_STATUS_t XMC_UART_CH_SetBaudrate(XMC_USIC_CH_t *const channel, uint3
   } 
   return status;
 }
+
 
 void XMC_UART_CH_Transmit(XMC_USIC_CH_t *const channel, const uint16_t data)
 {
@@ -186,6 +188,7 @@ uint16_t XMC_UART_CH_GetReceivedData(XMC_USIC_CH_t *const channel)
   return retval;
 }
 
+
 XMC_UART_CH_STATUS_t XMC_UART_CH_Stop(XMC_USIC_CH_t *const channel)
 {
   XMC_UART_CH_STATUS_t status = XMC_UART_CH_STATUS_OK;
@@ -203,11 +206,13 @@ XMC_UART_CH_STATUS_t XMC_UART_CH_Stop(XMC_USIC_CH_t *const channel)
   return status;
 }
 
+
 void XMC_UART_CH_EnableEvent(XMC_USIC_CH_t *const channel, const uint32_t event)
 {
   channel->CCR |= (event&0x1fc00U);
   channel->PCR_ASCMode |= (event&0xf8U);
 }
+
 
 void XMC_UART_CH_DisableEvent(XMC_USIC_CH_t *const channel, const uint32_t event)
 {

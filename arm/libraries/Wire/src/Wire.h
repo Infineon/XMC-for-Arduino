@@ -1,22 +1,25 @@
 /*
-  TwoWire.h - TWI/I2C library for Arduino & Wiring
-  Copyright (c) 2006 Nicholas Zambetti.  All right reserved.
-
-  This library is free software; you can redistribute it and/or
-  modify it under the terms of the GNU Lesser General Public
-  License as published by the Free Software Foundation; either
-  version 2.1 of the License, or (at your option) any later version.
-
-  This library is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-  Lesser General Public License for more details.
-
-  You should have received a copy of the GNU Lesser General Public
-  License along with this library; if not, write to the Free Software
-  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
-
-  Modified 2012 by Todd Krein (todd@krein.org) to implement repeated starts
+ * TwoWire.h - TWI/I2C library for Arduino & Wiring
+ * Copyright (c) 2006 Nicholas Zambetti.  All right reserved.
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2.1 of the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ *
+ * Modified 2012 by Todd Krein (todd@krein.org) to implement repeated starts
+ * 
+ * Copyright (c) 2018 Infineon Technologies AG
+ * This library has been modified for the XMC microcontroller series.
 */
 
 #ifndef TwoWire_h
@@ -45,31 +48,30 @@ class TwoWire : public Stream
 private:
     XMC_I2C_t* XMC_I2C_config;
 
-    static bool isMaster;
-    static bool inRepStart;
+    bool isMaster;
+    bool inRepStart;
+    uint8_t transmitting;
+    uint16_t timeout;
 
-    static uint8_t rxBuffer[];
-    static uint8_t rxBufferIndex;
-    static uint8_t rxBufferLength;
+    uint8_t rxBuffer[BUFFER_LENGTH];
+    uint8_t rxBufferIndex;
+    uint8_t rxBufferLength;
 
-    static uint8_t slaveAddress;
-    static uint8_t txAddress;
-    static uint8_t txBuffer[];
-    static uint8_t txBufferIndex;
-    static uint8_t txBufferLength;
+    uint8_t slaveAddress;
+    uint8_t txAddress;
+    uint8_t txBuffer[BUFFER_LENGTH];
+    uint8_t txBufferIndex;
+    uint8_t txBufferLength;
 
-    static uint8_t pre_rxBuffer[];
-    static uint8_t pre_rxBufferCount;
-
-    static uint8_t transmitting;
-    static uint16_t timeout;
-    static void (*user_onRequest)(void);
-    static void (*user_onReceive)(int);
+    uint8_t pre_rxBuffer[BUFFER_LENGTH];
+    uint8_t pre_rxBufferCount;
+	
+    void (*user_onRequest)(void);
+    void (*user_onReceive)(int);
     void OnRequestService(void);
     void OnReceiveService(uint8_t*, uint8_t);
 public:
 	bool volatile hasError;
-    TwoWire();
 	TwoWire(XMC_I2C_t *conf);
     void begin();
     void begin(uint8_t);

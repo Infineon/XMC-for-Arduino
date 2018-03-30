@@ -78,8 +78,8 @@ public:
 	
     HardwareSerial(XMC_UART_t* xmc_uart_config, RingBuffer* rx_buffer, RingBuffer* tx_buffer);
 	
-    void begin(const uint32_t speed);
-    void begin(const uint32_t speed, const XMC_UART_MODE_t config);
+    void begin( uint32_t speed);
+    void begin( uint32_t speed, XMC_UART_MODE_t config);
     void end(void);
     int available(void);
     int availableForWrite(void);
@@ -130,7 +130,6 @@ extern HardwareSerial Serial;
 #if defined(XMC4700_Relax_Kit)
 extern HardwareSerial Serial1;
 #endif
-
 
 #endif
 

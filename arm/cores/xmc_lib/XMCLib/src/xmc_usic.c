@@ -3,10 +3,10 @@
  * @date 2015-09-01
  *
  * @cond
-  *********************************************************************************************************************
- * XMClib v2.1.8 - XMC Peripheral Driver Library 
+ *********************************************************************************************************************
+ * XMClib v2.1.16 - XMC Peripheral Driver Library 
  *
- * Copyright (c) 2015-2016, Infineon Technologies AG
+ * Copyright (c) 2015-2017, Infineon Technologies AG
  * All rights reserved.                        
  *                                             
  * Redistribution and use in source and binary forms, with or without modification,are permitted provided that the 
@@ -112,10 +112,12 @@ void XMC_USIC_CH_Enable(XMC_USIC_CH_t *const channel)
   channel->CCR &= (uint32_t)~USIC_CH_CCR_MODE_Msk;
 }
 
+
 void XMC_USIC_CH_Disable(XMC_USIC_CH_t *const channel)
 {
   channel->KSCFG = (uint32_t)((channel->KSCFG & (~USIC_CH_KSCFG_MODEN_Msk)) | USIC_CH_KSCFG_BPMODEN_Msk);
 }
+
 
 XMC_USIC_CH_STATUS_t XMC_USIC_CH_SetBaudrate(XMC_USIC_CH_t *const channel, uint32_t rate, uint32_t oversampling)
 {
@@ -138,7 +140,6 @@ XMC_USIC_CH_STATUS_t XMC_USIC_CH_SetBaudrate(XMC_USIC_CH_t *const channel, uint3
   {
     peripheral_clock = XMC_SCU_CLOCK_GetPeripheralClockFrequency() / 100U;
     rate = rate / 100U;
-
     clock_divider_min = 1U;
     pdiv_int_min = 1U;
     pdiv_frac_min = 0x3ffU;
@@ -177,6 +178,7 @@ XMC_USIC_CH_STATUS_t XMC_USIC_CH_SetBaudrate(XMC_USIC_CH_t *const channel, uint3
   return status;
 }
 
+
 void XMC_USIC_CH_ConfigExternalInputSignalToBRG(XMC_USIC_CH_t *const channel,
 		                                        const uint16_t pdiv,
 												const uint32_t oversampling,
@@ -200,6 +202,7 @@ void XMC_USIC_CH_ConfigExternalInputSignalToBRG(XMC_USIC_CH_t *const channel,
                   (((pdiv) - 1U) << USIC_CH_BRG_PDIV_Pos);
 }
 
+
 void XMC_USIC_CH_TXFIFO_Configure(XMC_USIC_CH_t *const channel,
                                   const uint32_t data_pointer,
                                   const XMC_USIC_CH_FIFO_SIZE_t size,
@@ -208,10 +211,11 @@ void XMC_USIC_CH_TXFIFO_Configure(XMC_USIC_CH_t *const channel,
   /* Disable FIFO */
   channel->TBCTR &= (uint32_t)~USIC_CH_TBCTR_SIZE_Msk;
 
-  /* LOF = 0, A standard transmit buffer event occurs when the filling level equals the limit value and gets
-   * lower due to transmission of a data word
-   * STBTEN = 0, the trigger of the standard transmit buffer event is based on the transition of the fill level
-   *  from equal to below the limit, not the fact being below
+  /* LOF = 0, A standard transmit buffer event occurs when the filling level 
+   * equals the limit value and gets lower due to transmission of a data word
+   * STBTEN = 0, the trigger of the standard transmit buffer event is based on
+   * the transition of the fill level from equal to below the limit, not the 
+   * fact being below
    */
   channel->TBCTR = (uint32_t)(channel->TBCTR & (uint32_t)~(USIC_CH_TBCTR_LIMIT_Msk |
                                                            USIC_CH_TBCTR_DPTR_Msk |
@@ -230,8 +234,8 @@ void XMC_USIC_CH_RXFIFO_Configure(XMC_USIC_CH_t *const channel,
   /* Disable FIFO */
   channel->RBCTR &= (uint32_t)~USIC_CH_RBCTR_SIZE_Msk;
 
-  /* LOF = 1, A standard receive buffer event occurs when the filling level equals the limit value and gets bigger
-   *  due to the reception of a new data word
+  /* LOF = 1, A standard receive buffer event occurs when the filling level 
+   * equals the limit value and gets bigger due to the reception of a new data word
    */
   channel->RBCTR = (uint32_t)((channel->RBCTR & (uint32_t)~(USIC_CH_RBCTR_LIMIT_Msk |
                                                             USIC_CH_RBCTR_DPTR_Msk |
@@ -242,6 +246,7 @@ void XMC_USIC_CH_RXFIFO_Configure(XMC_USIC_CH_t *const channel,
                    (uint32_t)USIC_CH_RBCTR_LOF_Msk));
 }
 
+
 void XMC_USIC_CH_TXFIFO_SetSizeTriggerLimit(XMC_USIC_CH_t *const channel,
                                             const XMC_USIC_CH_FIFO_SIZE_t size,
                                             const uint32_t limit)
@@ -249,13 +254,15 @@ void XMC_USIC_CH_TXFIFO_SetSizeTriggerLimit(XMC_USIC_CH_t *const channel,
   /* Disable FIFO */
   channel->TBCTR &= (uint32_t)~USIC_CH_TBCTR_SIZE_Msk;
 
-  /* STBTEN = 0, the trigger of the standard transmit buffer event is based on the transition of the fill level
+  /* STBTEN = 0, the trigger of the standard transmit buffer event is based on 
+   * the transition of the fill level
    *  from equal to below the limit, not the fact being below
    */
   channel->TBCTR = (uint32_t)((uint32_t)(channel->TBCTR & (uint32_t)~USIC_CH_TBCTR_LIMIT_Msk) |
                    (limit << USIC_CH_TBCTR_LIMIT_Pos) |
                    ((uint32_t)size << USIC_CH_TBCTR_SIZE_Pos));
 }
+
 
 void XMC_USIC_CH_RXFIFO_SetSizeTriggerLimit(XMC_USIC_CH_t *const channel,
                                             const XMC_USIC_CH_FIFO_SIZE_t size,
@@ -269,6 +276,7 @@ void XMC_USIC_CH_RXFIFO_SetSizeTriggerLimit(XMC_USIC_CH_t *const channel,
                    ((uint32_t)size << USIC_CH_RBCTR_SIZE_Pos));
 }
 
+
 void XMC_USIC_CH_SetInterruptNodePointer(XMC_USIC_CH_t *const channel,
                                          const XMC_USIC_CH_INTERRUPT_NODE_POINTER_t interrupt_node,
                                          const uint32_t service_request)
@@ -276,6 +284,7 @@ void XMC_USIC_CH_SetInterruptNodePointer(XMC_USIC_CH_t *const channel,
   channel->INPR = (uint32_t)((channel->INPR & (~(uint32_t)(USIC_CH_INPR_Msk << (uint32_t)interrupt_node))) |
                   (service_request << (uint32_t)interrupt_node));
 }
+
 
 void XMC_USIC_CH_TXFIFO_SetInterruptNodePointer(XMC_USIC_CH_t *const channel,
                                                 const XMC_USIC_CH_TXFIFO_INTERRUPT_NODE_POINTER_t interrupt_node,
@@ -292,6 +301,7 @@ void XMC_USIC_CH_RXFIFO_SetInterruptNodePointer(XMC_USIC_CH_t *const channel,
   channel->RBCTR = (uint32_t)((channel->RBCTR & (~(uint32_t)(USIC_CH_INPR_Msk << (uint32_t)interrupt_node))) |
                    (service_request << (uint32_t)interrupt_node));
 }
+
 
 void XMC_USIC_Enable(XMC_USIC_t *const usic)
 {
@@ -332,6 +342,7 @@ void XMC_USIC_Enable(XMC_USIC_t *const usic)
   }
 }
 
+
 void XMC_USIC_Disable(XMC_USIC_t *const usic)
 {
   if (usic == (XMC_USIC_t *)USIC0)
@@ -369,5 +380,4 @@ void XMC_USIC_Disable(XMC_USIC_t *const usic)
   {
 	  XMC_ASSERT("USIC module not available", 0/*Always*/);
   }
-  
 }

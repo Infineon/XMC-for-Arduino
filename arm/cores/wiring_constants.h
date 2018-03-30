@@ -14,6 +14,9 @@
   You should have received a copy of the GNU Lesser General Public
   License along with this library; if not, write to the Free Software
   Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+
+  Copyright (c) 2018 Infineon Technologies AG
+  This file has been modified for the XMC microcontroller series.
 */
 
 #ifndef _WIRING_CONSTANTS_
@@ -31,11 +34,11 @@ extern "C" {
 #define LOW             0
 #define ENABLED         1
 #define DISABLED        0
-#define true            1
-#define false           0
 #define INPUT           XMC_GPIO_MODE_INPUT_TRISTATE
 #define OUTPUT          XMC_GPIO_MODE_OUTPUT_PUSH_PULL
 #define INPUT_PULLUP    XMC_GPIO_MODE_INPUT_PULL_UP
+#define INPUT_PULLDOWN  XMC_GPIO_MODE_INPUT_PULL_DOWN
+#define OUTPUT_OPENDRAIN        XMC_GPIO_MODE_OUTPUT_OPEN_DRAIN
 
 #define PI 3.1415926535897932384626433832795
 #define HALF_PI 1.5707963267948966192313216916398

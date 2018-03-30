@@ -11,6 +11,7 @@
 #######################################
 
 digitalToggle	KEYWORD2
+setAnalogWriteFrequency	KEYWORD2
 
 #######################################
 # Instances (KEYWORD2)
@@ -20,6 +21,8 @@ digitalToggle	KEYWORD2
 # Constants (LITERAL1)
 #######################################
 
+INPUT_PULLDOWN	LITERAL1	Constants	RESERVED_WORD_2
+OUTPUT_OPENDRAIN	LITERAL1	Constants	RESERVED_WORD_2
 NUM_DIGITAL_PINS	LITERAL1
 NUM_ANALOG_INPUTS	LITERAL1
 NUM_PWM	LITERAL1
