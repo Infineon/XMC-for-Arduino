@@ -45,7 +45,6 @@ extern "C" {
 #include <xmc_ccu8.h>
 #include <xmc_vadc.h>
 #include <xmc_uart.h>
-//Additional xmc libs
 #include <xmc_dac.h>
 
 //****************************************************************************
@@ -228,6 +227,11 @@ extern "C" {
 #include "dtostrf.h"
 #include "WCharacter.h"
 #include "WInterrupts.h"
+
+//****************************************************************************
+// @Infineon Core Includes
+//****************************************************************************
+#include "reset.h"
 
 #ifdef __cplusplus
 } // extern "C"
