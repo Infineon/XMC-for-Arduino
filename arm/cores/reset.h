@@ -30,6 +30,9 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.   
  */
 
+#ifndef Reset_h
+#define Reset_h
+
 #include "Arduino.h"
 
 //****************************************************************************
@@ -40,3 +43,5 @@
 * \brief Configures the reset pin for the selected board.
 */
 extern void reset_init(void);
+
+#endif
