@@ -17,7 +17,7 @@ void setup() {
 
   Serial.println("Init done!");
 
-  RadarBGT24LTR11.start(BGT24LTR11_CONTINGUOUS_ACQ);
+  RadarBGT24LTR11.start(BGT24LTR11_CONTINUOUS_ACQ);
 }
 
 void loop() {
