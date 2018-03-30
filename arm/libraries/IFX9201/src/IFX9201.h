@@ -60,7 +60,7 @@ class IFX9201
 		void begin(SPIClass &bus, uint8_t pinSlaveSelect, uint8_t pinDirection, uint8_t pinPWM, uint8_t pinDisable);
 
 		//! \brief Enables and initializes the IFX9201 with control pins
-		void begin(uint8_t pinSlaveSelect, uint8_t pinDirection, uint8_t pinPWM, uint8_t pinDisable);
+		void begin(uint8_t pinDirection, uint8_t pinPWM, uint8_t pinDisable);
 		
 		//! \brief Function to set PWM frequency for the IFX9201
 		void setPWMFreqency(uint16_t);
