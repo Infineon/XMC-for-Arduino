@@ -5,7 +5,7 @@
   05 July 2017
  */
 
-#include <XMC_DeviceControl.h>
+#include <DeviceControlXMC.h>
 XMCClass xmc;
 
  uint32_t temperature = 0;
