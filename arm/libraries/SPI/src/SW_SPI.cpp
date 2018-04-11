@@ -1,5 +1,5 @@
 /*
- * SPI Master library for.
+ * SPI Master library.
  * Copyright (c) 2015 Arduino LLC
  *
  * This library is free software; you can redistribute it and/or
@@ -15,6 +15,9 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ * 
+ * Copyright (c) 2018 Infineon Technologies AG
+ * This library has been modified for the XMC microcontroller series.
  */
 
 #include "SPI.h"
@@ -24,6 +27,11 @@
 #define SPI_MODE_DELAY_ENABLED  ((spi_settings.dataMode == SPI_MODE0) || (spi_settings.dataMode == SPI_MODE2))
 
 SPIClass SPI;
+
+uint8_t SS   = PIN_SPI_SS   ;
+uint8_t MOSI = PIN_SPI_MOSI ;
+uint8_t MISO = PIN_SPI_MISO ;
+uint8_t SCK  = PIN_SPI_SCK  ;
 
 SPISettings DEFAULT_SPI_SETTINGS;
 
@@ -110,7 +118,8 @@ uint8_t SPIClass::transfer(uint8_t data_out)
   {
     delay = 1;
   }
-  
+
+  digitalWrite(SS, HIGH);
   switch(div)
   {
     case SPI_CLOCK_DIV2:                                 
@@ -145,6 +154,7 @@ uint8_t SPIClass::transfer(uint8_t data_out)
       data_in = SW_SPI_transfer_clock_div_2(mosi_pin, miso_pin, clk_pin, data_out, delay, spi_settings.dataMode);
       break;
   }
+  digitalWrite(SS, LOW);
   
   return data_in;
 }

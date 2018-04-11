@@ -14,9 +14,10 @@
   You should have received a copy of the GNU Lesser General Public
   License along with this library; if not, write to the Free Software
   Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+
+  Copyright (c) 2018 Infineon Technologies AG
+  This file has been modified for the XMC microcontroller series.
 */
-
-
 #ifndef _ARDUINO_H_
 #define _ARDUINO_H_
 
@@ -28,6 +29,7 @@ extern "C" {
 // @Std Includes
 //****************************************************************************
 #include <stdlib.h>
+#include <stdio.h>
 #include <stdbool.h>
 #include <string.h>
 #include <types.h>
@@ -43,6 +45,7 @@ extern "C" {
 #include <xmc_ccu8.h>
 #include <xmc_vadc.h>
 #include <xmc_uart.h>
+#include <xmc_dac.h>
 
 //****************************************************************************
 // @Defines
@@ -124,6 +127,19 @@ extern "C" {
     } XMC_PWM8_t;
 #endif
 
+#ifdef DAC
+	//TODO: find a better name; XMC_DAC_t is already used by XMCLib
+    /*
+    * XMC DAC type
+    */
+    typedef struct
+    {
+		XMC_DAC_t *group;
+		uint8_t channel;
+		uint8_t resolution; 	//number of resolution bits
+	} XMC_ARD_DAC_t;
+#endif
+
     /*
     * XMC VADC type (with or without adc grouping)
     */
@@ -163,43 +179,28 @@ extern "C" {
 //****************************************************************************
     extern const XMC_PORT_PIN_t mapping_port_pin[];
     extern const XMC_PIN_INTERRUPT_t mapping_interrupt[];
+    extern const uint8_t mapping_pin_PWM4[][ 2 ];
     extern XMC_PWM4_t mapping_pwm4[];
     extern XMC_ADC_t mapping_adc[];
 #ifdef CCU8V2
+    extern const uint8_t mapping_pin_PWM8[][ 2 ];
     extern XMC_PWM8_t mapping_pwm8[];
 #endif
-
-
-
-
-//****************************************************************************
-// @Arduino Core Includes
-//****************************************************************************
-#include "wiring_constants.h"
-#include "binary.h"
-#include "wiring_digital.h"
-#include "wiring_analog.h"
-#include "wiring_shift.h"
-#include "wiring_time.h"
-#include "wiring_pulse.h"
-#include "Tone.h"
-#include "itoa.h"
-#include "dtostrf.h"
-#include "WCharacter.h"
-#include "WInterrupts.h"
-
-#ifdef __cplusplus
-} // extern "C"
-#include "WMath.h"
-#endif	// __cplusplus
-
-#include "Print.h"
-#include "HardwareSerial.h"
-
+#ifdef DAC
+    extern const uint8_t mapping_pin_DAC[][ 2 ];
+	extern XMC_ARD_DAC_t mapping_dac[];
+#endif
+	extern XMC_UART_t XMC_UART_debug;
+	extern XMC_UART_t XMC_UART_on_board;
 
 //****************************************************************************
 // @Prototypes Of Global Functions
 //****************************************************************************
+
+	/*
+     * \brief Arduino yield function.
+     */	
+	void yield( void );
 
     /*
      * \brief Arduino Main setup function. Called only once at the beginning.
@@ -211,11 +212,39 @@ extern "C" {
      */
     extern void loop(void);
 
+	
+//****************************************************************************
+// @Arduino Core Includes
+//****************************************************************************
+#include "wiring_constants.h"
+#include "binary.h"
+#include "wiring_digital.h"
+#include "wiring_analog.h"
+#include "wiring_shift.h"
+#include "wiring_time.h"
+#include "wiring_pulse.h"
+#include "itoa.h"
+#include "dtostrf.h"
+#include "WCharacter.h"
+#include "WInterrupts.h"
+
+//****************************************************************************
+// @Infineon Core Includes
+//****************************************************************************
+#include "reset.h"
+
+#ifdef __cplusplus
+} // extern "C"
+#include "Tone.h"
+#include "WMath.h"
+#endif	// __cplusplus
+
+#include "Print.h"
+#include "HardwareSerial.h"
 
 //****************************************************************************
 // @Board Variant Includes
 //****************************************************************************
 #include <pins_arduino.h>
-
 
 #endif  /*_ARDUINO_H_ */

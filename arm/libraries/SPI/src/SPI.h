@@ -15,6 +15,9 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ * 
+ * Copyright (c) 2018 Infineon Technologies AG
+ * This library has been modified for the XMC microcontroller series.
  */
 
 #ifndef _SPI_H_INCLUDED
@@ -141,7 +144,8 @@ public:
     inline void transfer(uint8_t* buf, uint8_t count);
 
     // Transaction Functions
-    void usingInterrupt(int interruptNumber);
+    // Function not used here
+    //void usingInterrupt(int interruptNumber);
     void beginTransaction(SPISettings settings);
     void endTransaction(void);
 
@@ -180,10 +184,19 @@ private:
 
 extern SPIClass SPI;
 #if (NUM_SPI > 1)
-extern SPIClass SPI1;
+	extern SPIClass SPI1;
+#	if (NUM_SPI > 2)
+		extern SPIClass SPI2;
+#		if (NUM_SPI > 3)
+			extern SPIClass SPI3;
+#			if (NUM_SPI > 4)
+				extern SPIClass SPI4;
+#			endif
+#		endif
+#	endif
 #endif
 
-void SPIClass::transfer(uint8_t* buf, uint8_t count)
+void SPIClass::transfer(uint8_t *buf, uint8_t count)
 {
     uint8_t buf_in[count];
     for (uint8_t i = 0; i < count; i++)

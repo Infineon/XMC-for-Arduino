@@ -15,6 +15,9 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ * 
+ * Copyright (c) 2018 Infineon Technologies AG
+ * This library has been modified for the XMC microcontroller series.
  */
 
 //****************************************************************************
@@ -22,14 +25,40 @@
 //****************************************************************************
 #include "SPI.h"
 #if !defined(USE_SW_SPI)
+#include "Wire.h"
 
-
-#ifdef USE_XMC_RELAX_KIT_SD
-SPIClass SPI(&XMC_SPI_for_xmc4_SD);
+//swap SPI_default and SPI_for_xmc_SD if desired by user
+#if defined(USE_XMC_RELAX_KIT_SD) && defined(XMC_SPI_for_xmc_SD)
+SPIClass SPI(&XMC_SPI_for_xmc_SD);
+#if (NUM_SPI > 1)
 SPIClass SPI1(&XMC_SPI_default);
-#else // normal
-SPIClass SPI;
 #endif
+uint8_t SS   = PIN_SPI_SS_SD  ;
+uint8_t MOSI = PIN_SPI_MOSI_SD;
+uint8_t MISO = PIN_SPI_MISO_SD;
+uint8_t SCK  = PIN_SPI_SCK_SD ;
+#else // normal behaviour 
+SPIClass SPI(&XMC_SPI_default);
+#if (NUM_SPI > 1)
+SPIClass SPI1(&XMC_SPI_1);
+#endif
+uint8_t SS   = PIN_SPI_SS   ;
+uint8_t MOSI = PIN_SPI_MOSI ;
+uint8_t MISO = PIN_SPI_MISO ;
+uint8_t SCK  = PIN_SPI_SCK  ;
+#endif
+
+#if (NUM_SPI > 2)
+SPIClass SPI2(&XMC_SPI_2);
+#if (NUM_SPI > 3)
+SPIClass SPI3(&XMC_SPI_3);
+#if (NUM_SPI > 4)
+SPIClass SPI4(&XMC_SPI_4);
+#endif
+#endif
+#endif
+
+
 
 SPISettings DEFAULT_SPI_SETTINGS;
 
@@ -42,6 +71,12 @@ SPISettings DEFAULT_SPI_SETTINGS;
 
 void SPIClass::begin()
 {
+    // Check if desire USIC channel is already in use
+	if((XMC_SPI_config->channel->CCR & USIC_CH_CCR_MODE_Msk) == XMC_USIC_CH_OPERATING_MODE_I2C)
+	{
+		Wire.end();
+	}
+
     init();
 
     setBitOrder(DEFAULT_SPI_SETTINGS.bitOrder);
@@ -61,20 +96,20 @@ void SPIClass::init()
     /* LLD initialization */
     XMC_SPI_CH_Init(XMC_SPI_config->channel, &(XMC_SPI_config->channel_config));
 
-    /* Configure the input pin properties */
-    XMC_GPIO_Init((XMC_GPIO_PORT_t*)XMC_SPI_config->miso.port, (uint8_t)XMC_SPI_config->miso.pin, &(XMC_SPI_config->miso_config));
-
     /* Configure the data input line selected */
     XMC_SPI_CH_SetInputSource(XMC_SPI_config->channel, XMC_SPI_CH_INPUT_DIN0, (uint8_t)XMC_SPI_config->input_source);
 
-    /* Start the SPI_Channel */
-    XMC_SPI_CH_Start(XMC_SPI_config->channel);
+    /* Configure the input pin properties */
+    XMC_GPIO_Init((XMC_GPIO_PORT_t*)XMC_SPI_config->miso.port, (uint8_t)XMC_SPI_config->miso.pin, &(XMC_SPI_config->miso_config));
 
     /* Configure the output pin properties */
     XMC_GPIO_Init((XMC_GPIO_PORT_t*)XMC_SPI_config->mosi.port, (uint8_t)XMC_SPI_config->mosi.pin, &(XMC_SPI_config->mosi_config));
 
     /* Initialize SPI SCLK out pin */
     XMC_GPIO_Init((XMC_GPIO_PORT_t*)XMC_SPI_config->sclkout.port, (uint8_t)XMC_SPI_config->sclkout.pin, &(XMC_SPI_config->sclkout_config));
+
+    /* Start the SPI_Channel */
+    XMC_SPI_CH_Start(XMC_SPI_config->channel);
 
     interruptMode = SPI_IMODE_NONE;
     interruptSave = 0;
@@ -84,17 +119,49 @@ void SPIClass::init()
 
 void SPIClass::end()
 {
+    // Only disable HW when USIC is used for SPI
+	if((XMC_SPI_config->channel->CCR & USIC_CH_CCR_MODE_Msk) == XMC_USIC_CH_OPERATING_MODE_SPI)
+	{
+		XMC_GPIO_CONFIG_t default_input_port_config = {
+            .mode = XMC_GPIO_MODE_INPUT_TRISTATE,
+            .input_hysteresis = XMC_GPIO_INPUT_HYSTERESIS_STANDARD,
+            .output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH
+        };
+		
+		XMC_GPIO_CONFIG_t default_output_port_config = {
+            .mode = XMC_GPIO_MODE_OUTPUT_PUSH_PULL,
+            .input_hysteresis = XMC_GPIO_INPUT_HYSTERESIS_STANDARD,
+            .output_level = XMC_GPIO_OUTPUT_LEVEL_LOW
+        };
+
+		XMC_SPI_CH_Stop(XMC_SPI_config->channel);
+
+		XMC_GPIO_Init((XMC_GPIO_PORT_t*)XMC_SPI_config->miso.port, (uint8_t)XMC_SPI_config->miso.pin, &default_input_port_config);
+		XMC_GPIO_Init((XMC_GPIO_PORT_t*)XMC_SPI_config->mosi.port, (uint8_t)XMC_SPI_config->mosi.pin, &default_output_port_config);
+		XMC_GPIO_Init((XMC_GPIO_PORT_t*)XMC_SPI_config->sclkout.port, (uint8_t)XMC_SPI_config->sclkout.pin, &default_output_port_config);
+
+		XMC_SPI_config->channel->DXCR[XMC_USIC_CH_INPUT_DX0] = (uint32_t)(XMC_SPI_config->channel->DXCR[XMC_USIC_CH_INPUT_DX0] | (USIC_CH_DX0CR_DSEN_Msk)) & (~USIC_CH_DX0CR_INSW_Msk);
+		XMC_USIC_CH_SetInputSource(XMC_SPI_config->channel, XMC_USIC_CH_INPUT_DX0, XMC_INPUT_A);
+	}
+
     initialized = false;
-    XMC_SPI_CH_Stop(XMC_SPI_config->channel);
 }
 
+/*
+// Function not used here
 void SPIClass::usingInterrupt(int interruptNumber)
 {
-    // not used
+
 }
+*/
 
 void SPIClass::beginTransaction(SPISettings settings)
 {
+    // Check if desire USIC channel is already in use
+	if((XMC_SPI_config->channel->CCR & USIC_CH_CCR_MODE_Msk) != XMC_USIC_CH_OPERATING_MODE_SPI)
+	{
+		SPI.begin();
+	}
     setBitOrder(settings.bitOrder);
     setDataMode(settings.dataMode);
     XMC_SPI_CH_SetBaudrate(XMC_SPI_config->channel, settings.clockFreq);

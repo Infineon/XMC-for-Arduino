@@ -126,10 +126,10 @@ SECTIONS
     /* functions with __attribute__((section(".ram_code"))) */
     .ram_code :
     {
-        . = ALIGN(4); /* section size must be multiply of 4. See startup.S file */
+        . = ALIGN(4); /* section size must be multiple of 4. See startup_XMC-xxxx.S file */
         __ram_code_start = .;
         *(.ram_code)
-        . = ALIGN(4); /* section size must be multiply of 4. See startup.S file */
+        . = ALIGN(4); /* section size must be multiple of 4. See startup_XMC-xxxx.S file */
         __ram_code_end = .;
     } > SRAM_combined AT > FLASH_1_uncached
     __ram_code_load = LOADADDR (.ram_code);
@@ -138,7 +138,7 @@ SECTIONS
     /* Standard DATA and user defined DATA/BSS/CONST sections */
     .data :
     {
-        . = ALIGN(4); /* section size must be multiply of 4. See startup.S file */
+        . = ALIGN(4); /* section size must be multiple of 4. See startup_XMC-xxxx.S file */
         __data_start = .;
         * (.data);
         * (.data*);
@@ -165,7 +165,7 @@ SECTIONS
         KEEP(*(.fini_array))
         PROVIDE_HIDDEN (__fini_array_end = .);
 
-        . = ALIGN(4); /* section size must be multiply of 4. See startup.S file */
+        . = ALIGN(8); /* section size must be multiple of 4. See startup_XMC-xxxx.S file -> icreased to 8 due to linker warning*/
         __data_end = .;
     } > SRAM_combined AT > FLASH_1_uncached
     __data_load = LOADADDR (.data);
@@ -174,13 +174,13 @@ SECTIONS
     /* BSS section */
     .bss (NOLOAD) : 
     {
-        . = ALIGN(4); /* section size must be multiply of 4. See startup.S file */
+        . = ALIGN(4); /* section size must be multiple of 4. See startup_XMC-xxxx.S file */
         __bss_start = .;
         * (.bss);
         * (.bss*);
         * (COMMON);
         *(.gnu.linkonce.b*)
-        . = ALIGN(4); /* section size must be multiply of 4. See startup.S file */
+        . = ALIGN(4); /* section size must be multiple of 4. See startup_XMC-xxxx.S file */
         __bss_end = .;
     } > SRAM_combined
     __bss_size = __bss_end - __bss_start;
@@ -190,27 +190,27 @@ SECTIONS
 
     USB_RAM  (__bss_end + __shift_loc) (NOLOAD) :
     {
-        . = ALIGN(4); /* section size must be multiply of 4. See startup.S file */
+        . = ALIGN(4); /* section size must be multiple of 4. See startup_XMC-xxxx.S file */
         USB_RAM_start = .;
         *(USB_RAM)
-        . = ALIGN(4); /* section size must be multiply of 4. See startup.S file */
+        . = ALIGN(4); /* section size must be multiple of 4. See startup_XMC-xxxx.S file */
         USB_RAM_end = .;
     } > SRAM_combined
     USB_RAM_size = USB_RAM_end - USB_RAM_start;
 
     ETH_RAM (USB_RAM_end) (NOLOAD) :
     {
-        . = ALIGN(4); /* section size must be multiply of 4. See startup.S file */
+        . = ALIGN(4); /* section size must be multiple of 4. See startup_XMC-xxxx.S file */
         ETH_RAM_start = .;
         *(ETH_RAM)
-        . = ALIGN(4); /* section size must be multiply of 4. See startup.S file */
+        . = ALIGN(4); /* section size must be multiple of 4. See startup_XMC-xxxx.S file */
         ETH_RAM_end = .;
         . = ALIGN(8);
         Heap_Bank1_Start = .;
     } > SRAM_combined
     ETH_RAM_size = ETH_RAM_end - ETH_RAM_start;
 
-    /* .no_init section contains chipid, SystemCoreClock and trimming data. See system.c file*/
+    /* .no_init section contains chipid, SystemCoreClock and trimming data. See startup_XMC-xxxx.c file*/
     .no_init ORIGIN(SRAM_combined) + LENGTH(SRAM_combined) - no_init_size (NOLOAD) : 
     {
         Heap_Bank1_End = .;

@@ -1,6 +1,6 @@
 /**
  * @file XMC1300x0200.ld
- * @date 2016-06-07
+ * @date 2018-03-08
  *
  * @cond
  *********************************************************************************************************************
@@ -51,6 +51,11 @@
  * 2016-06-07:
  *     - Add XMC1302-Q040X0200                                                                                           
  *
+ * 2018-03-08:
+ *     - Change default XMC1xxx stack size
+ *     - Move Stack to top of RAM below no_init for more standard and safer location
+ *     - Could mean startup_XMC1xxx.S could be shortened
+ *
  * @endcond 
  *
  */
@@ -98,6 +103,7 @@ SECTIONS
 
       *(.rodata .rodata.*)
       *(.gnu.linkonce.r*)
+      . = ALIGN(4); 
     } > FLASH
 
     .eh_frame_hdr : ALIGN (4)
@@ -129,32 +135,24 @@ SECTIONS
     eROData = . ;
 
     /* DSRAM layout (Lowest to highest)*/
-    /* Veneer <-> Stack <-> DATA <-> BSS <-> HEAP */
+    /* Veneer <-> DATA <-> ram_code <-> BSS <-> HEAP <-> memory gap <-> Stack <-> no_init */
 
     .VENEER_Code ABSOLUTE(0x2000000C): AT(eROData)
     {
-        . = ALIGN(4); /* section size must be multiply of 4. See startup.S file */
+        . = ALIGN(4); /* section size must be multiple of 4. See startup_XMC_xxxx.S file */
         VeneerStart = .;
         KEEP(*(.XmcVeneerCode));
-        . = ALIGN(4); /* section size must be multiply of 4. See startup.S file */
+        . = ALIGN(4); /* section size must be multiple of 4. See startup_XMC_xxxx.S file */
         VeneerEnd = .;
     } > SRAM
 
     VeneerSize = ABSOLUTE(VeneerEnd) - ABSOLUTE(VeneerStart);
 
-    /* Dummy section for stack */
-    Stack (NOLOAD) : AT(0)
-    {
-        . = ALIGN(8);
-        . = . + stack_size;
-        __initial_sp = .;
-    } > SRAM
-
      /* Standard DATA and user defined DATA/BSS/CONST sections */
     DataLoadAddr = eROData + VeneerSize;
     .data : AT(DataLoadAddr)
     {
-      . = ALIGN(4); /* section size must be multiply of 4. See startup.S file */
+      . = ALIGN(4); /* section size must be multiple of 4. See startup_XMC_xxxx.S file */
       __data_start = .;
       *(vtable)        
       * (.data);
@@ -183,18 +181,18 @@ SECTIONS
       KEEP(*(.fini_array))
       PROVIDE_HIDDEN (__fini_array_end = .);
 
-      . = ALIGN(4); /* section size must be multiply of 4. See startup.S file */
+      . = ALIGN(4); /* section size must be multiple of 4. See startup_XMC_xxxx.S file */
       __data_end = .;
     } > SRAM
     __data_size = __data_end - __data_start;
 
     .ram_code : AT(DataLoadAddr + __data_size)
     {
-        . = ALIGN(4); /* section size must be multiply of 4. See startup.S file */
+        . = ALIGN(4); /* section size must be multiple of 4. See startup_XMC_xxxx.S file */
         __ram_code_start = .;
         /* functions with __attribute__ ((section (".ram_code")))*/
         *(.ram_code)   
-        . = ALIGN(4); /* section size must be multiply of 4. See startup.S file */
+        . = ALIGN(4); /* section size must be multiple of 4. See startup_XMC_xxxx.S file */
         __ram_code_end = .;
     } > SRAM
     __ram_code_load = LOADADDR (.ram_code);
@@ -203,31 +201,44 @@ SECTIONS
     /* BSS section */
     .bss (NOLOAD) :
     {
-        . = ALIGN(4); /* section size must be multiply of 4. See startup.S file */
+        . = ALIGN(4); /* section size must be multiple of 4. See startup_XMC_xxxx.S file */
         __bss_start = .;
         * (.bss);
         * (.bss*);
         * (COMMON);
         *(.gnu.linkonce.b*)
-        . = ALIGN(4); /* section size must be multiply of 4. See startup.S file */
+        . = ALIGN(4); /* section size must be multiple of 4. See startup_XMC_xxxx.S file */
         __bss_end = .;
-        . = ALIGN(8);
         Heap_Bank1_Start = .;
     } > SRAM
     __bss_size = __bss_end - __bss_start;
     
-    /* .no_init section contains SystemCoreClock. See system.c file */
-    .no_init ORIGIN(SRAM) + LENGTH(SRAM) - no_init_size (NOLOAD) : 
+    _stack_begin = ORIGIN(SRAM) + LENGTH(SRAM) - stack_size - (2 * no_init_size);
+
+    /* Dummy section for stack  */
+    Stack _stack_begin (NOLOAD) :
     {
+        . = ORIGIN(SRAM) + LENGTH(SRAM) - stack_size - (2 * no_init_size);
         Heap_Bank1_End = .;
-        * (.no_init);
+        __stack_start = .;
+         . = . + stack_size;
+        __stack_end = .;
+        __initial_sp = .;
     } > SRAM
-    
+
     /* Heap - Bank1*/
+
     Heap_Bank1_Size  = Heap_Bank1_End - Heap_Bank1_Start;
 
-    ASSERT(Heap_Bank1_Start <= Heap_Bank1_End, "region SRAM overflowed no_init section")
+    ASSERT(Heap_Bank1_Start <= Heap_Bank1_End, "bss section SRAM overflowed stack section")
+    
+    /* .no_init section contains SystemCoreClock. See system_XMC_xxxx.c file */
+    .no_init ORIGIN(SRAM) + LENGTH(SRAM) - no_init_size (NOLOAD) : 
+    {
+        * (.no_init);
+    } > SRAM
 
+    
     /DISCARD/ :
     {
         *(.comment)
