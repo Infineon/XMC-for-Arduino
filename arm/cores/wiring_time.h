@@ -14,7 +14,11 @@
   You should have received a copy of the GNU Lesser General Public
   License along with this library; if not, write to the Free Software
   Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+
+  Copyright (c) 2018 Infineon Technologies AG
+  This file has been modified for the XMC microcontroller series.
 */
+
 #ifndef WIRING_TIME_H_
 #define WIRING_TIME_H_
 
@@ -183,8 +187,10 @@ extern int setParam( int, int16_t );
 extern int16_t getParam( int );
 extern uint32_t getTime( int );
 extern int16_t getStatus( int );
-extern int StartTask( int );
-extern int FindID( int(*  )( int, int16_t ) );
+extern int addTask( int(*  )( int, int16_t ) );
+extern int deleteTask( int(*  )( int, int16_t ) );
+extern int startTask( int );
+extern int findID( int(*  )( int, int16_t ) );
 
 #ifdef __cplusplus
 }

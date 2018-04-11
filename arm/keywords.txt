@@ -11,6 +11,7 @@
 #######################################
 
 digitalToggle	KEYWORD2
+setAnalogWriteFrequency	KEYWORD2
 
 #######################################
 # Instances (KEYWORD2)

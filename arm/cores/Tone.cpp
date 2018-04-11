@@ -104,7 +104,7 @@ if( frequency > 0 && frequency <= 500 )
     // Set int task parameters
     setParam( _timer, _timer );
     setInterval( _timer, (unsigned int)FREQUENCY_TO_MILLIS( frequency ) );
-    StartTask( _timer );
+    startTask( _timer );
     }
   }
 }

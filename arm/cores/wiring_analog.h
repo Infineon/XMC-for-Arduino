@@ -14,6 +14,9 @@
   You should have received a copy of the GNU Lesser General Public
   License along with this library; if not, write to the Free Software
   Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+
+  Copyright (c) 2018 Infineon Technologies AG
+  This file has been modified for the XMC microcontroller series.
 */
 
 #ifndef _WIRING_ANALOG_
@@ -43,6 +46,16 @@ extern "C" {
      * \param value
      */
     extern void analogWrite( uint8_t pin, uint16_t value ) ;
+	
+	/*
+     * \brief Sets the frequency for analogWrite PWM.
+	 * 
+	 * \note Default value is 490 Hz
+     *
+     * \param pin
+     * \param frequency in Hz
+     */
+    extern int16_t setAnalogWriteFrequency( uint8_t pin, uint32_t frequency ) ;
 
     /*
      * \brief Reads the value from the specified analog pin.

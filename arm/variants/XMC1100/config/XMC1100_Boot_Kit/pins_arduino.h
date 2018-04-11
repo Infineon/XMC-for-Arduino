@@ -30,7 +30,7 @@
 //****************************************************************************
 // @Defines
 //****************************************************************************
-#define XMC_BOARD           Boot_Kit
+#define XMC_BOARD           XMC1100_Boot_Kit
 
 #define NUM_DIGITAL_PINS    18
 #define NUM_ANALOG_INPUTS   6
@@ -39,11 +39,22 @@
 #define NUM_INTERRUPT       2
 #define NUM_SERIAL          1
 #define NUM_TONE_PINS       4
+#define NUM_TASKS_VARIANT   8
 
-// comment out following line to use Serial on pins (board)
+// Defines will be either set by ArduinoIDE in the menu or manually
+#ifdef SERIAL_HOSTPC
+// Comment out following line to use Serial on pins (board)
 #define SERIAL_DEBUG    1
+#elif SERIAL_ONBOARD
+// No SERIAL_DEBUG will be defined, kept here for clarity
+#else
+// Define the SERIAL_DEBUG as default setting
+#define SERIAL_DEBUG    1
+#endif
 
 #define PWM4_TIMER_PERIOD (2041U)  // Generate 490Hz @fCCU=1MHz
+
+#define PCLK 64000000u
 
 #define PIN_SPI_SS    10
 #define PIN_SPI_MOSI  11

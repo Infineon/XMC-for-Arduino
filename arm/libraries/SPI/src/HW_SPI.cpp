@@ -15,6 +15,9 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ * 
+ * Copyright (c) 2018 Infineon Technologies AG
+ * This library has been modified for the XMC microcontroller series.
  */
 
 //****************************************************************************
@@ -119,13 +122,17 @@ void SPIClass::end()
     // Only disable HW when USIC is used for SPI
 	if((XMC_SPI_config->channel->CCR & USIC_CH_CCR_MODE_Msk) == XMC_USIC_CH_OPERATING_MODE_SPI)
 	{
-		XMC_GPIO_CONFIG_t default_input_port_config = {};
-		default_input_port_config.mode = XMC_GPIO_MODE_INPUT_TRISTATE,
-		default_input_port_config.output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH;
+		XMC_GPIO_CONFIG_t default_input_port_config = {
+            .mode = XMC_GPIO_MODE_INPUT_TRISTATE,
+            .input_hysteresis = XMC_GPIO_INPUT_HYSTERESIS_STANDARD,
+            .output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH
+        };
 		
-		XMC_GPIO_CONFIG_t default_output_port_config = {};
-		default_output_port_config.mode = XMC_GPIO_MODE_OUTPUT_PUSH_PULL;
-		default_output_port_config.output_level = XMC_GPIO_OUTPUT_LEVEL_LOW;
+		XMC_GPIO_CONFIG_t default_output_port_config = {
+            .mode = XMC_GPIO_MODE_OUTPUT_PUSH_PULL,
+            .input_hysteresis = XMC_GPIO_INPUT_HYSTERESIS_STANDARD,
+            .output_level = XMC_GPIO_OUTPUT_LEVEL_LOW
+        };
 
 		XMC_SPI_CH_Stop(XMC_SPI_config->channel);
 
@@ -140,10 +147,13 @@ void SPIClass::end()
     initialized = false;
 }
 
+/*
+// Function not used here
 void SPIClass::usingInterrupt(int interruptNumber)
 {
-    // not used
+
 }
+*/
 
 void SPIClass::beginTransaction(SPISettings settings)
 {

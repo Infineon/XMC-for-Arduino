@@ -1,5 +1,5 @@
 /*
- * SPI Master library for.
+ * SPI Master library.
  * Copyright (c) 2015 Arduino LLC
  *
  * This library is free software; you can redistribute it and/or
@@ -15,6 +15,9 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ * 
+ * Copyright (c) 2018 Infineon Technologies AG
+ * This library has been modified for the XMC microcontroller series.
  */
 
 #include "SPI.h"

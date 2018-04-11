@@ -26,7 +26,6 @@
 //****************************************************************************
 #include "Arduino.h"
 
-
 int main(void)
 {
 /*
@@ -34,6 +33,10 @@ int main(void)
  */
 wiring_time_init();
 wiring_analog_init();
+// Initialize the reset pin for the XMC1100 Boot Kit series
+#ifdef XMC1100_Boot_Kit
+  reset_init();
+#endif
 
 // Arduino's main() function just calls setup() and loop()....
 setup();

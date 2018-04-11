@@ -5,7 +5,7 @@
   Copyright (c) 2007 David A. Mellis
 
   This library is free software; you can redistribute it and/or
-  modify it under the terms of the GNU Lesser General Public
+  modify it under the terms of the GNU Lesser General Public<
   License as published by the Free Software Foundation; either
   version 2.1 of the License, or (at your option) any later version.
 
@@ -18,6 +18,9 @@
   Public License along with this library; if not, write to the
   Free Software Foundation, Inc., 59 Temple Place, Suite 330,
   Boston, MA  02111-1307  USA
+  
+  Copyright (c) 2018 Infineon Technologies AG
+  This file has been modified for the XMC microcontroller series.
 */
 #ifndef PINS_ARDUINO_H_
 #define PINS_ARDUINO_H_
@@ -30,7 +33,7 @@
 //****************************************************************************
 // @Defines
 //****************************************************************************
-#define XMC_BOARD           Boot_Kit
+#define XMC_BOARD           XMC1300_Boot_Kit
 
 #define NUM_DIGITAL_PINS    18
 #define NUM_ANALOG_INPUTS   6
@@ -39,12 +42,23 @@
 #define NUM_INTERRUPT       2
 #define NUM_SERIAL          1
 #define NUM_TONE_PINS       4
+#define NUM_TASKS_VARIANT   8
 
-// comment out following line to use Serial on pins (board)
+// Defines will be either set by ArduinoIDE in the menu or manually
+#ifdef SERIAL_HOSTPC
+// Comment out following line to use Serial on pins (board)
 #define SERIAL_DEBUG    1
+#elif SERIAL_ONBOARD
+// No SERIAL_DEBUG will be defined, kept here for clarity
+#else
+// Define the SERIAL_DEBUG as default setting
+#define SERIAL_DEBUG    1
+#endif
 
 #define PWM4_TIMER_PERIOD (2041U)  // Generate 490Hz @fCCU=1MHz
 #define PWM8_TIMER_PERIOD (2041U)  // Generate 490Hz @fCCU=1MHz
+
+#define PCLK 64000000u
 
 #define PIN_SPI_SS    29
 #define PIN_SPI_MOSI  22
@@ -115,7 +129,6 @@ const XMC_PORT_PIN_t mapping_port_pin[] =
 	/* 5  */ 	{XMC_GPIO_PORT2 ,9},  // A5 / ADC Input						P2.9
 	/* 6  */ 	{XMC_GPIO_PORT2 ,10}, // GPIO								P2.10
 	/* 7  */ 	{XMC_GPIO_PORT2 ,11}, // GPIO								P2.11
-
 	/* 8  */ 	{XMC_GPIO_PORT2 ,2},  // GPIO								P2.2
 	/* 9  */ 	{XMC_GPIO_PORT2 ,3},  // GPIO								P2.3
 	/* 10  */ 	{XMC_GPIO_PORT2 ,0},  // I2C Clock SCL						P2.0
@@ -126,7 +139,6 @@ const XMC_PORT_PIN_t mapping_port_pin[] =
 	/* 15  */ 	{XMC_GPIO_PORT0 ,13}, // External interrupt	1				P0.13
 	/* 16  */ 	{XMC_GPIO_PORT0 ,10}, // GPIO								P0.10
 	/* 17  */ 	{XMC_GPIO_PORT0 ,11}, // GPIO								P0.11
-
 	/* 18  */ 	{XMC_GPIO_PORT1 ,5},  // GPIO								P1.5
 	/* 19  */ 	{XMC_GPIO_PORT1 ,4},  // GPIO								P1.4
 	/* 20  */ 	{XMC_GPIO_PORT1 ,3},  // PIN_TX 				  			P1.3
@@ -136,7 +148,6 @@ const XMC_PORT_PIN_t mapping_port_pin[] =
 	/* 24  */ 	{XMC_GPIO_PORT0 ,0},  // LED output	LED1	(BUILTIN)		P0.0
 	/* 25  */ 	{XMC_GPIO_PORT0 ,1},  // LED output	LED2					P0.1
 	/* 26  */ 	{XMC_GPIO_PORT0 ,2},  // PWM (PWM4 slice 1)					P0.2
-
 	/* 27  */ 	{XMC_GPIO_PORT0 ,8},  // LED output		LED5				P0.8
 	/* 28  */ 	{XMC_GPIO_PORT0 ,9},  // LED output		LED6				P0.9
 	/* 29  */ 	{XMC_GPIO_PORT0 ,6},  // SPI-SS / LED output LED3			P0.6

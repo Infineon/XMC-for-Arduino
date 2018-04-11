@@ -294,6 +294,7 @@ void XMC_VADC_GLOBAL_StartupCalibration(XMC_VADC_GLOBAL_t *const global_ptr)
 #endif
 }
 
+
 /* API to set boudaries for result of conversion. Should the boundaries be violated, interrupts are generated */
 #if (XMC_VADC_BOUNDARY_AVAILABLE == 1U)
 void XMC_VADC_GLOBAL_SetBoundaries(XMC_VADC_GLOBAL_t *const global_ptr,

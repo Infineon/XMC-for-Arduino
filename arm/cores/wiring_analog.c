@@ -1,19 +1,22 @@
 /*
-Copyright (c) 2011 Arduino.  All right reserved.
+  Copyright (c) 2011 Arduino.  All right reserved.
 
-This library is free software; you can redistribute it and/or
-modify it under the terms of the GNU Lesser General Public
-License as published by the Free Software Foundation; either
-version 2.1 of the License, or (at your option) any later version.
+  This library is free software; you can redistribute it and/or
+  modify it under the terms of the GNU Lesser General Public
+  License as published by the Free Software Foundation; either
+  version 2.1 of the License, or (at your option) any later version.
 
-This library is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-See the GNU Lesser General Public License for more details.
+  This library is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+  See the GNU Lesser General Public License for more details.
 
-You should have received a copy of the GNU Lesser General Public
-License along with this library; if not, write to the Free Software
-Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+  You should have received a copy of the GNU Lesser General Public
+  License along with this library; if not, write to the Free Software
+  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+
+  Copyright (c) 2018 Infineon Technologies AG
+  This file has been modified for the XMC microcontroller series.
 */
 
 //****************************************************************************
@@ -107,7 +110,6 @@ void analogReference( uint8_t ulMode )
 {
 analog_reference = ulMode;
 }
-
 
 // analogRead takes parameter of ADC channel number
 // return 0 for invalid channel
@@ -267,6 +269,60 @@ else
 #endif
 }
 
+
+extern int16_t setAnalogWriteFrequency( uint8_t pin, uint32_t frequency )
+{
+	int16_t ret = -1;
+	if(frequency < PCLK)
+	{
+    uint16_t prescaler = 0U;
+		do
+		{
+			if( frequency > (PCLK / ( ( 1U << prescaler ) * 65536U )) )
+			{
+				break;
+			}
+      prescaler++;
+		}while(prescaler <= 16);
+    
+    int16_t resource;		
+    if ( ( resource = scan_map_table( mapping_pin_PWM4, pin ) ) >= 0 )
+		{
+			uint8_t pwm4_num = resource;
+			XMC_PWM4_t *pwm4 = &mapping_pwm4[pwm4_num];
+					
+			pwm4->prescaler = prescaler;
+			pwm4->period_timer_val = PCLK / ( ( 1U << prescaler )  * frequency) - 1;
+			
+			if(pwm4->enabled == ENABLED)
+			{
+				// Disable pwm output
+				pwm4->enabled = DISABLED;
+				XMC_CCU4_SLICE_StartTimer(pwm4->slice);
+			}	
+			ret = 0;
+		}
+#ifdef CCU8V2
+		else if ( (resource = scan_map_table( mapping_pin_PWM8, pin ) ) >= 0 )
+		{
+			uint8_t pwm8_num = resource;
+			XMC_PWM8_t *pwm8 = &mapping_pwm8[pwm8_num];
+					
+			pwm8->prescaler = prescaler - 1;
+			pwm8->period_timer_val = PCLK / ( ( 1U << prescaler ) * frequency) - 1;
+			
+			if(pwm8->enabled == ENABLED)
+			{
+				// Disable pwm output
+				pwm8->enabled = DISABLED;
+				XMC_CCU8_SLICE_StartTimer(pwm8->slice);
+			}
+			ret = 0;
+		}
+#endif
+	}
+	return ret;
+}
 //****************************************************************************
 //                                 END OF FILE
 //****************************************************************************

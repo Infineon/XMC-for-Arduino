@@ -14,6 +14,9 @@
   You should have received a copy of the GNU Lesser General Public
   License along with this library; if not, write to the Free Software
   Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+
+  Copyright (c) 2018 Infineon Technologies AG
+  This file has been modified for the XMC microcontroller series.
 */
 #ifndef _ARDUINO_H_
 #define _ARDUINO_H_
@@ -42,7 +45,6 @@ extern "C" {
 #include <xmc_ccu8.h>
 #include <xmc_vadc.h>
 #include <xmc_uart.h>
-//Additional xmc libs
 #include <xmc_dac.h>
 
 //****************************************************************************
@@ -225,6 +227,11 @@ extern "C" {
 #include "dtostrf.h"
 #include "WCharacter.h"
 #include "WInterrupts.h"
+
+//****************************************************************************
+// @Infineon Core Includes
+//****************************************************************************
+#include "reset.h"
 
 #ifdef __cplusplus
 } // extern "C"
