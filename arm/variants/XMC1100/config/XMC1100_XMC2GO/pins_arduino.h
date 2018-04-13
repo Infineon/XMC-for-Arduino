@@ -165,7 +165,7 @@ XMC_UART_t XMC_UART_0 =
                             .input_hysteresis = XMC_GPIO_INPUT_HYSTERESIS_STANDARD,
                             .output_level     = XMC_GPIO_OUTPUT_LEVEL_HIGH
                           },
-  .input_source_dx0     = (XMC_USIC_INPUT_t)USIC0_C1_DX0_P1_3,
+  .input_source_dx0     = (XMC_USIC_INPUT_t)USIC0_C0_DX0_DX3INS,
   .input_source_dx1     = XMC_INPUT_INVALID,
   .input_source_dx2     = XMC_INPUT_INVALID,
 #ifdef SERIAL_DEBUG
