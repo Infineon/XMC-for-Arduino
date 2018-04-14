@@ -43,7 +43,6 @@
  *     - Removed version macros and declaration of GetDriverVersion API
  *
  * @endcond
- *
  */
 
 #ifndef XMC1_GPIO_H
@@ -121,6 +120,7 @@
 #define XMC_GPIO_CHECK_INPUT_HYSTERESIS(hysteresis) ((hysteresis == XMC_GPIO_INPUT_HYSTERESIS_STANDARD) || \
                                                      (hysteresis == XMC_GPIO_INPUT_HYSTERESIS_LARGE))
 
+
 /**********************************************************************************************************************
  * ENUMS
  *********************************************************************************************************************/
@@ -176,14 +176,14 @@ typedef enum XMC_GPIO_MODE
 } XMC_GPIO_MODE_t;
 
 /**
- * Configures input hysteresis mode of pin. Use type \a XMC_GPIO_INPUT_HYSTERESIS_t for this enum.
- * Selecting the appropriate pad hysteresis allows optimized pad oscillation behavior
+ * Configures input hysteresis mode of pin. Use type \a XMC_GPIO_INPUT_HYSTERESIS_t for this
+ * enum.  Selecting the appropriate pad hysteresis allows optimized pad oscillation behaviour
  * for touch-sensing applications.
  */
 typedef enum XMC_GPIO_INPUT_HYSTERESIS
 {
-  XMC_GPIO_INPUT_HYSTERESIS_STANDARD = 0x0U, /**< Standard hysteresis */
-  XMC_GPIO_INPUT_HYSTERESIS_LARGE    = 0x4U  /**< Large hysteresis */
+  XMC_GPIO_INPUT_HYSTERESIS_STANDARD = 0x0, /**< Standard hysteresis */
+  XMC_GPIO_INPUT_HYSTERESIS_LARGE    = 0x4  /**< Large hysteresis */
 } XMC_GPIO_INPUT_HYSTERESIS_t;
 
 
@@ -221,9 +221,10 @@ typedef struct XMC_GPIO_PORT {
 typedef struct XMC_GPIO_CONFIG
 {
   XMC_GPIO_MODE_t mode;								/**< Defines the direction and characteristics of a pin */
-  XMC_GPIO_INPUT_HYSTERESIS_t input_hysteresis;		/**< Defines input pad hysteresis of a pin */
   XMC_GPIO_OUTPUT_LEVEL_t output_level;				/**< Defines output level of a pin */
+  XMC_GPIO_INPUT_HYSTERESIS_t input_hysteresis;		/**< Defines input pad hysteresis of a pin */
 } XMC_GPIO_CONFIG_t;
+
 
 /**********************************************************************************************************************
  * API PROTOTYPES
@@ -284,9 +285,7 @@ __STATIC_INLINE bool XMC_GPIO_IsModeValid(XMC_GPIO_MODE_t mode)
  *
  * \par<b>Note:</b><br>
  * Prior to this api, user has to configure port pin to input mode using XMC_GPIO_SetMode().
- *
  */
-
 void XMC_GPIO_SetInputHysteresis(XMC_GPIO_PORT_t *const port, 
                                  const uint8_t pin, 
                                  const XMC_GPIO_INPUT_HYSTERESIS_t hysteresis);
@@ -302,4 +301,3 @@ void XMC_GPIO_SetInputHysteresis(XMC_GPIO_PORT_t *const port,
 #endif /* UC_FAMILY == XMC1 */
 
 #endif /* XMC1_GPIO_H */
- 

@@ -43,7 +43,6 @@
  *     - Removed version macros and declaration of GetDriverVersion API
  *
  * @endcond
- *
  */
 
 #include "xmc_gpio.h"
@@ -58,6 +57,7 @@
 #define PORT_PDR_Size             (4U)
 #define PORT_HWSEL_Msk            PORT0_HWSEL_HW0_Msk
 
+
 /*******************************************************************************
  * API IMPLEMENTATION
  *******************************************************************************/
@@ -68,13 +68,13 @@ void XMC_GPIO_Init(XMC_GPIO_PORT_t *const port, const uint8_t pin, const XMC_GPI
   XMC_ASSERT("XMC_GPIO_Init: Invalid mode", XMC_GPIO_IsModeValid(config->mode));
  
   /* Switch to input */
-  port->IOCR[pin >> 2U] &= (uint32_t)~(PORT_IOCR_PC_Msk << (PORT_IOCR_PC_Size * (pin & 0x3U)));
+  port->IOCR[pin >> 2 ] &= (uint32_t)~(PORT_IOCR_PC_Msk << (PORT_IOCR_PC_Size * (pin & 0x3U)));
 
   /* HW port control is disabled */
-  port->HWSEL &= ~(uint32_t)((uint32_t)PORT_HWSEL_Msk << ((uint32_t)pin << 1U));
+  port->HWSEL &= ~(uint32_t)((uint32_t)PORT_HWSEL_Msk << ((uint32_t)pin << 1 ));
 
 
-  /* Enable digital input */
+  /* Enable digital input (input ONLY) */
   if (XMC_GPIO_CHECK_ANALOG_PORT(port))
   {
     port->PDISC &= ~(uint32_t)((uint32_t)0x1U << pin);
@@ -85,21 +85,21 @@ void XMC_GPIO_Init(XMC_GPIO_PORT_t *const port, const uint8_t pin, const XMC_GPI
     port->OMR = (uint32_t)config->output_level << pin;
 
     /* Set output driver strength */
-    port->PDR[pin >> 3U] &= (uint32_t)~(PORT_PDR_Msk << ((uint32_t)PORT_PDR_Size * ((uint32_t)pin & 0x7U)));
-    port->PDR[pin >> 3U] |= (uint32_t)config->output_strength << ((uint32_t)PORT_PDR_Size * ((uint32_t)pin & 0x7U));
+    port->PDR[pin >> 3 ] &= (uint32_t)~(PORT_PDR_Msk << ((uint32_t)PORT_PDR_Size * ((uint32_t)pin & 0x7U)));
+    port->PDR[pin >> 3 ] |= (uint32_t)config->output_strength << ((uint32_t)PORT_PDR_Size * ((uint32_t)pin & 0x7U));
   }
-
   /* Set mode */
-  port->IOCR[pin >> 2U] |= (uint32_t)config->mode << ((uint32_t)PORT_IOCR_PC_Size * ((uint32_t)pin & 0x3U));
+  port->IOCR[pin >> 2 ] |= (uint32_t)config->mode << ((uint32_t)PORT_IOCR_PC_Size * ((uint32_t)pin & 0x3U));
 }
+
 
 void XMC_GPIO_SetOutputStrength(XMC_GPIO_PORT_t *const port, const uint8_t pin, XMC_GPIO_OUTPUT_STRENGTH_t strength)
 {
   XMC_ASSERT("XMC_GPIO_Init: Invalid port", XMC_GPIO_CHECK_OUTPUT_PORT(port));
   XMC_ASSERT("XMC_GPIO_Init: Invalid output strength", XMC_GPIO_CHECK_OUTPUT_STRENGTH(strength));
 
-  port->PDR[pin >> 3U] &= (uint32_t)~((uint32_t)PORT_PDR_Msk << ((uint32_t)PORT_PDR_Size * ((uint32_t)pin & 0x7U)));
-  port->PDR[pin >> 3U] |= (uint32_t)strength << ((uint32_t)PORT_PDR_Size * ((uint32_t)pin & 0x7U));
+  port->PDR[pin >> 3 ] &= (uint32_t)~((uint32_t)PORT_PDR_Msk << ((uint32_t)PORT_PDR_Size * ((uint32_t)pin & 0x7U)));
+  port->PDR[pin >> 3 ] |= (uint32_t)strength << ((uint32_t)PORT_PDR_Size * ((uint32_t)pin & 0x7U));
 }
 
 #endif /* UC_FAMILY == XMC4 */
