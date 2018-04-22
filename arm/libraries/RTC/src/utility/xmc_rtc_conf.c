@@ -47,5 +47,4 @@ XMC_RTC_CONFIG_t XMC_RTC_default_t = {
 			.daysofweek = XMC_RTC_WEEKDAY_SUNDAY,
 		},
 };
-
 #endif

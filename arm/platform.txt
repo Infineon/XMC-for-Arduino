@@ -1,13 +1,11 @@
 
 # XMC platform
 # ------------------------------
-
 # For more info:
 # https://github.com/arduino/Arduino/wiki/Arduino-IDE-1.5---3rd-party-Hardware-specification
 
 name=XMC Family
-version=1.0.0
-
+version=1.1.0
 
 compiler.warning_flags=-w
 compiler.warning_flags.none=-w
@@ -18,8 +16,6 @@ compiler.warning_flags.all=-Wall -Wextra
 compiler.path={runtime.tools.arm-none-eabi-gcc.path}/bin/
 compiler.cmsys_rc2_include.path={runtime.platform.path}/cores/xmc_lib
 compiler.cmsys_include.path={compiler.cmsys_rc2_include.path}/CMSIS/Include
-
-
 
 build.core.path ={runtime.platform.path}/core
 build.variant.path ={runtime.platform.path}/variants/{build.variant}
@@ -54,7 +50,8 @@ compiler.arm.cmsis.path=  "-I{compiler.cmsys_rc2_include.path}/XMCLib/inc"   "-I
 compiler.avr_support.path=  "-I{build.core.path}/avr" 
 
 # this can be overriden in boards.txt
-build.extra_flags=
+flag.selected=UNDEFINED_DEBUG
+build.extra_flags=-D{flag.selected}
 
 # USB Flags
 # ---------

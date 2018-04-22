@@ -85,7 +85,6 @@ static const uint8_t SCL = 10;
 
 #define digitalPinToInterrupt(p)    (((p) == 9) ? 0 : NOT_AN_INTERRUPT)
 
-
 #ifdef ARDUINO_MAIN
 /* Mapping of Arduino Pins to PWM4 channels as pin and PWM4 channel
    last entry 255 for both parts.
