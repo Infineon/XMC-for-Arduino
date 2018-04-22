@@ -24,7 +24,6 @@ enterSleepMode	KEYWORD2
 getTemperature	KEYWORD2
 calibrateTemperatureSensor	KEYWORD2
 freeRAM_Heap	KEYWORD2
-freeRAM_Stack	KEYWORD2
 
 
 #######################################
