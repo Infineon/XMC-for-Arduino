@@ -1,5 +1,5 @@
 #######################################
-# Syntax Coloring Map For BGT24LTR11 Library
+# Syntax Coloring Map For IFX BGT24LTR11
 #######################################
 
 #######################################

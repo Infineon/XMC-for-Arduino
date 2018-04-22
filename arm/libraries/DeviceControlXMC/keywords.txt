@@ -1,5 +1,5 @@
 #######################################
-# Syntax Coloring Map For DeviceControlXMC Library
+# Syntax Coloring Map For XMC_DeviceControl
 #######################################
 
 #######################################
@@ -23,8 +23,8 @@ configureSleepMode	KEYWORD2
 enterSleepMode	KEYWORD2
 getTemperature	KEYWORD2
 calibrateTemperatureSensor	KEYWORD2
-freeHeapRAM	KEYWORD2
-freeStackRAM	KEYWORD2
+freeRAM_Heap	KEYWORD2
+freeRAM_Stack	KEYWORD2
 
 
 #######################################

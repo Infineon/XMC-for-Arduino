@@ -1,10 +1,6 @@
 /**
  * reset.h - Handling the reset for the XMC1100 Boot Kit.
  *
- * The General Purposes Direct Memory Access (GPDMA) is a module within the XMC4000 series to transfer data
- * without any CPU interference. When a DMA transfer request is generated, the GPDMA transfers data stored
- * at the source address to the destination address.
- * 
  * Have a look at the application note/reference manual for more information.
  * 
  * Copyright (c) 2018 Infineon Technologies AG
@@ -33,7 +29,7 @@
 #ifndef Reset_h
 #define Reset_h
 
-#include "Arduino.h"
+#include <Arduino.h>
 
 //****************************************************************************
 // @External Prototypes

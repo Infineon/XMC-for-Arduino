@@ -93,7 +93,7 @@ uint32_t XMCClass::getTemperature()
  *  Get free heap memory.
  * @return heap_free_s: Value of free bytes in heap.
  */
-size_t XMCClass::freeHeapRAM()	{
+size_t XMCClass::freeRAM_Heap()	{
 	/*Only possible to check for chunks. Good Method is to do a for loop trying to allocate maximum size of heap,
 	 * decreasing the size, until we succeed, this is equal to the free amount, deallocate it and return free size of heap*/
 	extern caddr_t Heap_Bank1_Start;
@@ -116,7 +116,7 @@ size_t XMCClass::freeHeapRAM()	{
  *  Get free stack memory.
  * @return expression: Value of free bytes in stack.
  */
-uint32_t XMCClass::freeStackRAM()	{
+uint32_t XMCClass::freeRAM_Stack()	{
 	extern uint32_t stack_size;
 	uint32_t stack_end;
 #if (UC_FAMILY == XMC4)

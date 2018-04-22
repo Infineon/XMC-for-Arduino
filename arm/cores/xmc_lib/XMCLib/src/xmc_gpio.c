@@ -43,7 +43,6 @@
  *     - Removed version macros and declaration of GetDriverVersion API
  *
  * @endcond
- *
  */
 
 /*******************************************************************************
@@ -58,6 +57,7 @@
 
 #define PORT_HWSEL_Msk PORT0_HWSEL_HW0_Msk
 
+
 /*******************************************************************************
  * API IMPLEMENTATION
  *******************************************************************************/
@@ -67,8 +67,8 @@ void XMC_GPIO_SetMode(XMC_GPIO_PORT_t *const port, const uint8_t pin, const XMC_
   XMC_ASSERT("XMC_GPIO_SetMode: Invalid port", XMC_GPIO_CHECK_PORT(port));
   XMC_ASSERT("XMC_GPIO_SetMode: Invalid mode", XMC_GPIO_IsModeValid(mode));
 
-  port->IOCR[(uint32_t)pin >> 2U] &= ~(uint32_t)((uint32_t)PORT_IOCR_PC_Msk << ((uint32_t)PORT_IOCR_PC_Size * ((uint32_t)pin & 0x3U)));
-  port->IOCR[(uint32_t)pin >> 2U] |= (uint32_t)mode << ((uint32_t)PORT_IOCR_PC_Size * ((uint32_t)pin & 0x3U));
+  port->IOCR[(uint32_t)pin >> 2 ] &= ~(uint32_t)((uint32_t)PORT_IOCR_PC_Msk << ((uint32_t)PORT_IOCR_PC_Size * ((uint32_t)pin & 0x3U)));
+  port->IOCR[(uint32_t)pin >> 2 ] |= (uint32_t)mode << ((uint32_t)PORT_IOCR_PC_Size * ((uint32_t)pin & 0x3U));
 }
 
 void XMC_GPIO_SetHardwareControl(XMC_GPIO_PORT_t *const port, const uint8_t pin, const XMC_GPIO_HWCTRL_t hwctrl)
@@ -76,6 +76,6 @@ void XMC_GPIO_SetHardwareControl(XMC_GPIO_PORT_t *const port, const uint8_t pin,
   XMC_ASSERT("XMC_GPIO_SetHardwareControl: Invalid port", XMC_GPIO_CHECK_PORT(port));
   XMC_ASSERT("XMC_GPIO_SetHardwareControl: Invalid hwctrl", XMC_GPIO_CHECK_HWCTRL(hwctrl));
 
-  port->HWSEL &= ~(uint32_t)((uint32_t)PORT_HWSEL_Msk << ((uint32_t)pin << 1U));
-  port->HWSEL |= (uint32_t)hwctrl << ((uint32_t)pin << 1U);
+  port->HWSEL &= ~(uint32_t)((uint32_t)PORT_HWSEL_Msk << ((uint32_t)pin << 1 ));
+  port->HWSEL |= (uint32_t)hwctrl << ((uint32_t)pin << 1 );
 }

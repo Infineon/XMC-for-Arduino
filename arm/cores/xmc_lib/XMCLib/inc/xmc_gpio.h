@@ -89,6 +89,7 @@
  *
  *@{
  */
+
  
 /**********************************************************************************************************************
  * MACROS
@@ -111,7 +112,6 @@
  * ENUMS
  *********************************************************************************************************************/
 
-
 /**
  * Defines output level of a pin. Use type \a XMC_GPIO_OUTPUT_LEVEL_t for this enum.
  */
@@ -126,10 +126,11 @@ typedef enum XMC_GPIO_OUTPUT_LEVEL
  */
 typedef enum XMC_GPIO_HWCTRL
 {
-  XMC_GPIO_HWCTRL_DISABLED     = 0x0U, /**<  Software control only */
-  XMC_GPIO_HWCTRL_PERIPHERAL1  = 0x1U, /**<  HWI0/HWO0 control path can override the software configuration */
-  XMC_GPIO_HWCTRL_PERIPHERAL2  = 0x2U  /**<  HWI1/HWO1 control path can override the software configuration */
+  XMC_GPIO_HWCTRL_DISABLED     = 0x0, /**<  Software control only */
+  XMC_GPIO_HWCTRL_PERIPHERAL1  = 0x1, /**<  HWI0/HWO0 control path can override the software configuration */
+  XMC_GPIO_HWCTRL_PERIPHERAL2  = 0x2  /**<  HWI1/HWO1 control path can override the software configuration */
 } XMC_GPIO_HWCTRL_t;
+
 
 /**********************************************************************************************************************
  * DEVICE FAMILY EXTENSIONS
@@ -142,6 +143,7 @@ typedef enum XMC_GPIO_HWCTRL
 #else
 #error "xmc_gpio.h: family device not supported"
 #endif
+
 
 /**********************************************************************************************************************
  * API PROTOTYPES
@@ -177,12 +179,9 @@ extern "C" {
  * \par<b>Note:</b><br>
  * This API is called in definition of DAVE_init by code generation and therefore should not be explicitly called
  * for the normal operation. Use other APIs only after DAVE_init is called successfully (returns DAVE_STATUS_SUCCESS).
- *
- *
  */
-
- 
 void XMC_GPIO_Init(XMC_GPIO_PORT_t *const port, const uint8_t pin, const XMC_GPIO_CONFIG_t *const config);
+
  
 /**
  *
@@ -199,9 +198,7 @@ void XMC_GPIO_Init(XMC_GPIO_PORT_t *const port, const uint8_t pin, const XMC_GPI
  *
  * \par<b>Related APIs:</b><BR>
  *  None
- *
  */
-
 void XMC_GPIO_SetMode(XMC_GPIO_PORT_t *const port, const uint8_t pin, const XMC_GPIO_MODE_t mode);
 
 
@@ -222,10 +219,7 @@ void XMC_GPIO_SetMode(XMC_GPIO_PORT_t *const port, const uint8_t pin, const XMC_
  *
  * \par<b>Note:</b><br>
  * Prior to this api, user has to configure port pin to output mode using XMC_GPIO_SetMode().
- *
  */
-
-
 __STATIC_INLINE void XMC_GPIO_SetOutputLevel(XMC_GPIO_PORT_t *const port, const uint8_t pin, const XMC_GPIO_OUTPUT_LEVEL_t level)
 {
   XMC_ASSERT("XMC_GPIO_SetOutputLevel: Invalid port", XMC_GPIO_CHECK_OUTPUT_PORT(port));
@@ -250,15 +244,14 @@ __STATIC_INLINE void XMC_GPIO_SetOutputLevel(XMC_GPIO_PORT_t *const port, const 
  * \par<b>Note:</b><br>
  * Prior to this api, user has to configure port pin to output mode using XMC_GPIO_SetMode().\n
  * Register Pn_OMR is virtual and does not contain any flip-flop. A read action delivers the value of 0.
- *
  */
-
 __STATIC_INLINE void XMC_GPIO_SetOutputHigh(XMC_GPIO_PORT_t *const port, const uint8_t pin)
 {
   XMC_ASSERT("XMC_GPIO_SetOutputHigh: Invalid port", XMC_GPIO_CHECK_OUTPUT_PORT(port));
 
   port->OMR = (uint32_t)0x1U << pin;
 }
+
 
 /**
  *
@@ -276,15 +269,14 @@ __STATIC_INLINE void XMC_GPIO_SetOutputHigh(XMC_GPIO_PORT_t *const port, const u
  *\par<b>Note:</b><br>
  * Prior to this api, user has to configure port pin to output mode using XMC_GPIO_SetMode().
  * Register Pn_OMR is virtual and does not contain any flip-flop. A read action delivers the value of 0.\n
- *
  */
-
 __STATIC_INLINE void XMC_GPIO_SetOutputLow(XMC_GPIO_PORT_t *const port, const uint8_t pin)
 {
   XMC_ASSERT("XMC_GPIO_SetOutputLow: Invalid port", XMC_GPIO_CHECK_OUTPUT_PORT(port));
 
   port->OMR = 0x10000U << pin;
 }
+
 
 /**
  *
@@ -302,15 +294,14 @@ __STATIC_INLINE void XMC_GPIO_SetOutputLow(XMC_GPIO_PORT_t *const port, const ui
  * \par<b>Note:</b><br>
  * Prior to this api, user has to configure port pin to output mode using XMC_GPIO_SetMode(). Register Pn_OMR is virtual
  * and does not contain any flip-flop. A read action delivers the value of 0.
- *
  */
-
 __STATIC_INLINE void XMC_GPIO_ToggleOutput(XMC_GPIO_PORT_t *const port, const uint8_t pin)
 {
   XMC_ASSERT("XMC_GPIO_ToggleOutput: Invalid port", XMC_GPIO_CHECK_OUTPUT_PORT(port));
 
   port->OMR = 0x10001U << pin;
 }
+
 
 /**
  *
@@ -329,13 +320,13 @@ __STATIC_INLINE void XMC_GPIO_ToggleOutput(XMC_GPIO_PORT_t *const port, const ui
  * Prior to this api, user has to configure port pin to input mode using XMC_GPIO_SetMode().
  *
  */
-
 __STATIC_INLINE uint32_t XMC_GPIO_GetInput(XMC_GPIO_PORT_t *const port, const uint8_t pin)
 {
   XMC_ASSERT("XMC_GPIO_GetInput: Invalid port", XMC_GPIO_CHECK_PORT(port));
 
   return (((port->IN) >> pin) & 0x1U);
 }
+
 
 /**
  * @param port constant pointer pointing to GPIO port, to access hardware register Pn_PPS.
@@ -354,10 +345,7 @@ __STATIC_INLINE uint32_t XMC_GPIO_GetInput(XMC_GPIO_PORT_t *const port, const ui
  * <b>Note:</b><br>
  * Do not enable the Pin Power Save function for pins configured for Hardware Control (Pn_HWSEL.HWx != 00B). Doing so
  * may result in an undefined behavior of the pin when the device enters the Deep Sleep state.
- *
  */
-
-
 __STATIC_INLINE void XMC_GPIO_EnablePowerSaveMode(XMC_GPIO_PORT_t *const port, const uint8_t pin)
 {
   XMC_ASSERT("XMC_GPIO_EnablePowerSaveMode: Invalid port", XMC_GPIO_CHECK_PORT(port));
@@ -384,9 +372,7 @@ __STATIC_INLINE void XMC_GPIO_EnablePowerSaveMode(XMC_GPIO_PORT_t *const port, c
  *\par<b>Note:</b><br>
  * Do not enable the Pin Power Save function for pins configured for Hardware Control (Pn_HWSEL.HWx != 00B). Doing so
  * may result in an undefined behavior of the pin when the device enters the Deep Sleep state.
- *
  */
-
 __STATIC_INLINE void XMC_GPIO_DisablePowerSaveMode(XMC_GPIO_PORT_t *const port, const uint8_t pin)
 {
   XMC_ASSERT("XMC_GPIO_DisablePowerSaveMode: Invalid port", XMC_GPIO_CHECK_PORT(port));
@@ -412,9 +398,7 @@ __STATIC_INLINE void XMC_GPIO_DisablePowerSaveMode(XMC_GPIO_PORT_t *const port, 
  *\par<b>Note:</b><br>
  * Do not enable the Pin Power Save function for pins configured for Hardware Control (Pn_HWSEL.HWx != 00B).
  * Doing so may result in an undefined behavior of the pin when the device enters the Deep Sleep state.
- *
  */
-
 void XMC_GPIO_SetHardwareControl(XMC_GPIO_PORT_t *const port, const uint8_t pin, const XMC_GPIO_HWCTRL_t hwctrl);
 
 
@@ -430,7 +414,6 @@ void XMC_GPIO_SetHardwareControl(XMC_GPIO_PORT_t *const port, const uint8_t pin,
  * \par<b>Description:</b><br>
  * Enable digital input path for analog pins and configures Pn_PDISC register.This configuration is applicable only for
  * analog port pins.
- *
  */
 __STATIC_INLINE void XMC_GPIO_EnableDigitalInput(XMC_GPIO_PORT_t *const port, const uint8_t pin)
 {
@@ -454,7 +437,6 @@ __STATIC_INLINE void XMC_GPIO_EnableDigitalInput(XMC_GPIO_PORT_t *const port, co
  * for analog port pins.
  *
  */
-
 __STATIC_INLINE void XMC_GPIO_DisableDigitalInput(XMC_GPIO_PORT_t *const port, const uint8_t pin)
 {
   XMC_ASSERT("XMC_GPIO_EnableDigitalInput: Invalid analog port", XMC_GPIO_CHECK_ANALOG_PORT(port));

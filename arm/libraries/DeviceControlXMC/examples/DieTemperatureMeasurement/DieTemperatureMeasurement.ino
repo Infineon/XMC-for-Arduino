@@ -1,11 +1,12 @@
+
 /*
   Simple die temperature measurement for XMC devices
   Demonstrates the measure temperature of die using sensor.
-*/
+  05 July 2017
+ */
 
 #include <DeviceControlXMC.h>
-
-XMCClass XMC;
+XMCClass xmc;
 
  uint32_t temperature = 0;
  
@@ -22,7 +23,7 @@ void loop()
   delay(1000);
 
   /*If UC_FAMILY = XMC4 you can also calibrate temperature for finer measurements*/
-  temperature = XMC.getTemperature();
+  temperature = xmc.getTemperature();
 
   Serial.println();
   Serial.print("Temperature of die is:");

@@ -1,10 +1,6 @@
 /**
  * reset.c - Handling the reset for the XMC1100 Boot Kit.
  *
- * The General Purposes Direct Memory Access (GPDMA) is a module within the XMC4000 series to transfer data
- * without any CPU interference. When a DMA transfer request is generated, the GPDMA transfers data stored
- * at the source address to the destination address.
- * 
  * Have a look at the application note/reference manual for more information.
  * 
  * Copyright (c) 2018 Infineon Technologies AG
@@ -62,7 +58,8 @@ void reset_init(void) {
 
     XMC_GPIO_CONFIG_t config_reset;
     config_reset.mode = XMC_GPIO_MODE_INPUT_PULL_UP;
-    config_reset.input_hysteresis = XMC_GPIO_INPUT_HYSTERESIS_STANDARD;
+    // Set large threshold for improved noise immunity on reset pin
+    config_reset.input_hysteresis = XMC_GPIO_INPUT_HYSTERESIS_LARGE;
     XMC_GPIO_Init(P2_4, &config_reset);
 
     NVIC_SetPriority(ERU0_0_IRQn, 3U);

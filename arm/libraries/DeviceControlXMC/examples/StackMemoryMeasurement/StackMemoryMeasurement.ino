@@ -18,7 +18,7 @@ void loop()
   // Check the stack value when in this function (loop)
   delay(1000);
   Serial.print("Free stack in function loop is:");
-  free_stack = xmc4700.freeStackRAM();
+  free_stack = xmc4700.freeRAM_Stack();
   Serial.print(free_stack);
   Serial.println();
   delay(1000);
@@ -28,7 +28,7 @@ void loop()
 
   // Check the stack after going back to loop
   Serial.print("Free stack after going back to loop is:");
-  free_stack = xmc4700.freeStackRAM();
+  free_stack = xmc4700.freeRAM_Stack();
   Serial.print(free_stack);
   Serial.println();
   delay(1000);
@@ -46,7 +46,7 @@ void doNothing(int value) {
      j = i;
   }
   Serial.print("Free stack after entering doNothing function is:");
-  stack_now = xmc4700.freeStackRAM();
+  stack_now = xmc4700.freeRAM_Stack();
   Serial.print(stack_now);
   Serial.println();
   delay(1000);
