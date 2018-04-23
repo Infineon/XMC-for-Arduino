@@ -1,6 +1,6 @@
 /*
-  Simple RTC for XMC4700 Relax Kit V1
-  Demonstrates the use of the RTC library for the XMC4700
+   Simple RTC for XMC4700 Relax Kit V1
+   Demonstrates the use of the RTC library for the XMC4700
  */
 
 #include <RTC.h>

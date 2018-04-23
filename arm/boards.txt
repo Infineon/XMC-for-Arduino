@@ -69,6 +69,11 @@ XMC1100_XMC2GO.menu.UART.debug.flag.selected=SERIAL_HOSTPC
 XMC1100_XMC2GO.menu.UART.onBoard=On Board
 XMC1100_XMC2GO.menu.UART.onBoard.flag.selected=SERIAL_ONBOARD
 
+XMC1100_XMC2GO.menu.UART.debug=PC
+XMC1100_XMC2GO.menu.UART.debug.flag.selected=SERIAL_HOSTPC
+XMC1100_XMC2GO.menu.UART.onBoard=On Board
+XMC1100_XMC2GO.menu.UART.onBoard.flag.selected=SERIAL_ONBOARD
+
 ####################################################
 XMC1100_H_BRIDGE2GO.name=XMC1100 H-Bridge 2Go
 XMC1100_H_BRIDGE2GO.upload.tool=xmcprog

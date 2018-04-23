@@ -39,7 +39,7 @@
 // @Board Check
 //****************************************************************************
 #if !defined(XMC1) || !defined(XMC4)
-#error Only XMC microcontrollers are supprted by this library
+#error Only XMC microcontrollers are supported by this library
 #endif
 
 //****************************************************************************

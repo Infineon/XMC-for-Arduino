@@ -36,7 +36,7 @@
 //****************************************************************************
 #define XMC_BOARD           XMC1100_H_BRIDGE2GO
 
-#define NUM_DIGITAL_PINS    12
+//#define NUM_DIGITAL_PINS    12
 #define NUM_ANALOG_INPUTS   2
 #define NUM_PWM             2
 #define NUM_LEDS            2
@@ -58,31 +58,17 @@
 
 #define PWM4_TIMER_PERIOD (2041U)  // Generate 490Hz @fCCU=64MHz
 
-#define PCLK 64000000u
+#define PIN_SPI_SS    3
+#define PIN_SPI_MOSI  1
+#define PIN_SPI_MISO  0
+#define PIN_SPI_SCK   2
 
-// TODO
-#define PIN_SPI_SS    (3)
-#define PIN_SPI_MOSI  (1)
-#define PIN_SPI_MISO  (0)
-#define PIN_SPI_SCK   (2)
-
-static const uint8_t RX   = 5;
-static const uint8_t TX   = 4;
-
-extern uint8_t SS  ;
-extern uint8_t MOSI;
-extern uint8_t MISO;
-extern uint8_t SCK ;
-
-static const uint8_t SDA = 1;
-static const uint8_t SCL = 2;
-
-#define A0   12
-#define A1   13
+#define A0   0
+#define A1   1
 
 #define LED_BUILTIN 14	//Standard Arduino LED: Used LED1
-#define LED1    14  	// Extended Leds
-#define LED2    15  	// Extended Leds
+#define LED1    14  	// Extended LEDs
+#define LED2    15  	// Extended LEDs
 #define GND     32  	// GND
 
 // H-BRIDGE2Go specific Pins
@@ -107,24 +93,24 @@ static const uint8_t SCL = 2;
 
 const XMC_PORT_PIN_t mapping_port_pin[] =
 {
-    /* 0  */    {XMC_GPIO_PORT0, 6},    // SPI-MISO							            P0.6
+    /* 0  */    {XMC_GPIO_PORT0, 6},    // SPI-MISO	                        P0.6
     /* 1  */    {XMC_GPIO_PORT0 , 7},   // SPI-MOSI / I2C Data              P0.7
     /* 2  */    {XMC_GPIO_PORT0 , 8},   // SPI-SCK / I2C Clock             	P0.8
     /* 3  */    {XMC_GPIO_PORT0 , 9},   // SPI-SS                           P0.9
-    /* 4  */    {XMC_GPIO_PORT0 , 14},  // PIN_TX			                      P0.14
-    /* 5  */    {XMC_GPIO_PORT0 , 15},  // PIN_RX               			      P0.15
-    /* 6  */    {XMC_GPIO_PORT2 , 0},   // DIR								              P2.0
-    /* 7  */    {XMC_GPIO_PORT2 , 6},   // GPIO		                          P2.6
+    /* 4  */    {XMC_GPIO_PORT0 , 14},  // TX                               P0.14
+    /* 5  */    {XMC_GPIO_PORT0 , 15},  // RX                  	            P0.15
+    /* 6  */    {XMC_GPIO_PORT2 , 0},   // DIR	(Fixed on PCB)              P2.0
+    /* 7  */    {XMC_GPIO_PORT2 , 6},   // GPIO		                        P2.6 (INPUT ONLY)
     /* 8  */    {XMC_GPIO_PORT0 , 5},   // PWM0 output                      P0.5
     /* 9  */    {XMC_GPIO_PORT0 , 0},   // External interrupt               P0.0
-    /* 10  */   {XMC_GPIO_PORT2 , 11},  // PWM / PWM1 output              	P2.11
-    /* 11  */   {XMC_GPIO_PORT2 , 10},  // DIS  		  					            P2.10
-    /* 12  */   {XMC_GPIO_PORT2 , 9},   // A0 / ADC Input                   P2.9
-    /* 13  */   {XMC_GPIO_PORT2 , 7},   // A1                               P2.7
-    /* 14  */   {XMC_GPIO_PORT1 , 1},   // LED output                       P1.1
-    /* 15  */   {XMC_GPIO_PORT1 , 0},   // LED output                       P1.0
+    /* 10  */   {XMC_GPIO_PORT2 , 11},  // PWM / PWM1 output (Fixed on PCB) P2.11
+    /* 11  */   {XMC_GPIO_PORT2 , 10},  // DIS  (Fixed on PCB)              P2.10
+    /* 12  */   {XMC_GPIO_PORT2 , 9},   // A0 / ADC Input                   P2.9 (INPUT ONLY)
+    /* 13  */   {XMC_GPIO_PORT2 , 7},   // A1 / ADC Input                   P2.7 (INPUT ONLY)
+    /* 14  */   {XMC_GPIO_PORT1 , 1},   // LED1 output                      P1.1
+    /* 15  */   {XMC_GPIO_PORT1 , 0},   // LED2 output                      P1.0
     /* 16  */   {XMC_GPIO_PORT2 , 1},   // DEBUG_TX                         P2.1
-    /* 17  */   {XMC_GPIO_PORT2 , 2}    // DEBUG_RX                         P2.2
+    /* 17  */   {XMC_GPIO_PORT2 , 2}    // DEBUG_RX                         P2.2 (INPUT ONLY)
 };
 
 const XMC_PIN_INTERRUPT_t mapping_interrupt[] =
@@ -134,8 +120,8 @@ const XMC_PIN_INTERRUPT_t mapping_interrupt[] =
 
 XMC_PWM4_t mapping_pwm4[] =
 {
-    {CCU40, CCU40_CC40, 0, mapping_port_pin[8], P0_0_AF_CCU40_OUT0, XMC_CCU4_SLICE_PRESCALER_64, PWM4_TIMER_PERIOD, DISABLED}, 		// PWM disabled      8                   P0.5
-    {CCU40, CCU40_CC43, 3, mapping_port_pin[10], P2_11_AF_CCU40_OUT3, XMC_CCU4_SLICE_PRESCALER_64, PWM4_TIMER_PERIOD, DISABLED}  	// PWM disabled      10                  P2.11
+    {CCU40, CCU40_CC40, 0, mapping_port_pin[8],  P0_0_AF_CCU40_OUT0,  XMC_CCU4_SLICE_PRESCALER_64, PWM4_TIMER_PERIOD, DISABLED}, // PWM disabled  8    P0.5
+    {CCU40, CCU40_CC43, 3, mapping_port_pin[10], P2_11_AF_CCU40_OUT3, XMC_CCU4_SLICE_PRESCALER_64, PWM4_TIMER_PERIOD, DISABLED}  // PWM disabled  10   P2.11
 };
 
 XMC_ADC_t mapping_adc[] =
@@ -163,8 +149,8 @@ XMC_UART_t XMC_UART_0 =
 #endif
                           },
   .rx_config            = { .mode = XMC_GPIO_MODE_INPUT_TRISTATE,
-                            .input_hysteresis = XMC_GPIO_INPUT_HYSTERESIS_STANDARD,
-                            .output_level     = XMC_GPIO_OUTPUT_LEVEL_HIGH
+                            .output_level     = XMC_GPIO_OUTPUT_LEVEL_HIGH,
+                            .input_hysteresis = XMC_GPIO_INPUT_HYSTERESIS_STANDARD
                           },
   .tx                   = {
 #ifdef SERIAL_DEBUG
@@ -176,8 +162,8 @@ XMC_UART_t XMC_UART_0 =
 #endif
                           },
   .tx_config            = { .mode = (XMC_GPIO_MODE_t) XMC_GPIO_MODE_OUTPUT_PUSH_PULL_ALT6,
-                            .input_hysteresis = XMC_GPIO_INPUT_HYSTERESIS_STANDARD,
-                            .output_level     = XMC_GPIO_OUTPUT_LEVEL_HIGH
+                            .output_level     = XMC_GPIO_OUTPUT_LEVEL_HIGH,
+                            .input_hysteresis = XMC_GPIO_INPUT_HYSTERESIS_STANDARD
                           },
 #ifdef SERIAL_DEBUG
   .input_source_dx0     = (XMC_USIC_INPUT_t)USIC0_C0_DX0_DX3INS,

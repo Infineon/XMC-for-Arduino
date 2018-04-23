@@ -1,33 +1,33 @@
 /**
- * DeviceControlXMC.h - Library for Arduino to control the IFX9201 H-Bridge.
- * 
+ * DeviceControlXMC.h - Library for Arduino to control extra device functions.
+ *
  * The XMC series devices combine the extended functionality and performance of
  * the ARM Cortex-M0/4 core with powerful on-chip peripheral subsystems and on-chip
  * memory units. This library helps to control basic device functionalities.
- * 
+ *
  * Have a look at the application note/datasheet for more information.
- * 
+ *
  * Copyright (c) 2018 Infineon Technologies AG
- * 
- * Redistribution and use in source and binary forms, with or without modification,are permitted provided that the 
- * following conditions are met:   
- *                                                                              
- * Redistributions of source code must retain the above copyright notice, this list of conditions and the following 
- * disclaimer.                        
- * 
- * Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following 
- * disclaimer in the documentation and/or other materials provided with the distribution.                       
- * 
- * Neither the name of the copyright holders nor the names of its contributors may be used to endorse or promote 
- * products derived from this software without specific prior written permission.                                           
- *                                                                              
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, 
- * INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE  
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE  FOR ANY DIRECT, INDIRECT, INCIDENTAL, 
- * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR  
- * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, 
- * WHETHER IN CONTRACT, STRICT LIABILITY,OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE 
- * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.   
+ *
+ * Redistribution and use in source and binary forms, with or without modification,are permitted provided that the
+ * following conditions are met:
+ *
+ * Redistributions of source code must retain the above copyright notice, this list of conditions and the following
+ * disclaimer.
+ *
+ * Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following
+ * disclaimer in the documentation and/or other materials provided with the distribution.
+ *
+ * Neither the name of the copyright holders nor the names of its contributors may be used to endorse or promote
+ * products derived from this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES,
+ * INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE  FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+ * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+ * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+ * WHETHER IN CONTRACT, STRICT LIABILITY,OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
 #ifndef _DEVICECONTROLXMC_H_INCLUDED
@@ -38,7 +38,9 @@
 #include <Arduino.h>
 #include <xmc_scu.h>
 
-#if (UC_FAMILY == XMC4)	
+extern const size_t total_heap_s;
+
+#if (UC_FAMILY == XMC4)
 #include <DMA.h>
 #endif
 //****************************************************************************
@@ -50,7 +52,7 @@ enum sleepMode_t {
 	DEEP_SLEEP_MODE = SCB_SCR_SLEEPDEEP_Msk,
 };
 
-#if (UC_FAMILY == XMC4)	
+#if (UC_FAMILY == XMC4)
 	enum  WakeupSource
 	{
 		WAKEUP_ON_RTC = XMC_SCU_HIB_EVENT_WAKEUP_ON_RTC,
@@ -167,8 +169,7 @@ class XMCClass
 		/* State Control*/
 		uint32_t getTemperature();	// Device Temperature control
 
-		size_t freeHeapRAM();
-		uint32_t freeStackRAM();
+   		size_t freeHeapRAM();
 
 #if (UC_FAMILY == XMC4)
 		/*Power Control*/
@@ -197,7 +198,6 @@ class XMCClass
 		XMC_SCU_HIB_HIBERNATE_MODE_t hibernate_mode;	// Stores type of hibernate mode, EXTERNAL or INTERNAL
 		bool hibernate;									// Set if hibernate mode is active
 #endif
-
 };
 
 #endif /* _DEVICECONTROL_XMC_H_INCLUDED */

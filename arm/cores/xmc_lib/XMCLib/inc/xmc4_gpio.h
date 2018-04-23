@@ -45,7 +45,6 @@
  * 2015-10-09:
  *     - Added PORT MACRO checks and definitions for XMC4800/4700 devices
  * @endcond
- *
  */
 
 #ifndef XMC4_GPIO_H
@@ -71,6 +70,7 @@
  * @{
  */
 
+ 
 /**********************************************************************************************************************
  * MACROS
  *********************************************************************************************************************/
@@ -193,6 +193,7 @@
                                                  (strength == XMC_GPIO_OUTPUT_STRENGTH_MEDIUM) ||\
                                                  (strength == XMC_GPIO_OUTPUT_STRENGTH_WEAK))
 
+
 /**********************************************************************************************************************
  * ENUMS
  *********************************************************************************************************************/
@@ -234,12 +235,12 @@ typedef enum XMC_GPIO_MODE
  */
 typedef enum XMC_GPIO_OUTPUT_STRENGTH
 {
-  XMC_GPIO_OUTPUT_STRENGTH_STRONG_SHARP_EDGE  = 0x0U,  /**<  Defines pad driver mode, for high speed 3.3V LVTTL outputs */
-  XMC_GPIO_OUTPUT_STRENGTH_STRONG_MEDIUM_EDGE = 0x1U,  /**<  Defines pad driver mode, for high speed 3.3V LVTTL outputs  */
-  XMC_GPIO_OUTPUT_STRENGTH_STRONG_SOFT_EDGE   = 0x2U,  /**<  Defines pad driver mode, medium speed 3.3V LVTTL outputs  */
-  XMC_GPIO_OUTPUT_STRENGTH_STRONG_SLOW_EDGE   = 0x3U,  /**<  Defines pad driver mode, medium speed 3.3V LVTTL outputs  */
-  XMC_GPIO_OUTPUT_STRENGTH_MEDIUM             = 0x4U,  /**<  Defines pad driver mode, for low speed 3.3V LVTTL outputs  */
-  XMC_GPIO_OUTPUT_STRENGTH_WEAK               = 0x7U   /**<  Defines pad driver mode, low speed 3.3V LVTTL outputs  */
+  XMC_GPIO_OUTPUT_STRENGTH_STRONG_SHARP_EDGE  = 0x0,  /**<  Defines pad driver mode, for high speed 3.3V LVTTL outputs */
+  XMC_GPIO_OUTPUT_STRENGTH_STRONG_MEDIUM_EDGE = 0x1,  /**<  Defines pad driver mode, for high speed 3.3V LVTTL outputs  */
+  XMC_GPIO_OUTPUT_STRENGTH_STRONG_SOFT_EDGE   = 0x2,  /**<  Defines pad driver mode, medium speed 3.3V LVTTL outputs  */
+  XMC_GPIO_OUTPUT_STRENGTH_STRONG_SLOW_EDGE   = 0x3,  /**<  Defines pad driver mode, medium speed 3.3V LVTTL outputs  */
+  XMC_GPIO_OUTPUT_STRENGTH_MEDIUM             = 0x4,  /**<  Defines pad driver mode, for low speed 3.3V LVTTL outputs  */
+  XMC_GPIO_OUTPUT_STRENGTH_WEAK               = 0x7   /**<  Defines pad driver mode, low speed 3.3V LVTTL outputs  */
 } XMC_GPIO_OUTPUT_STRENGTH_t;
 
 
@@ -282,6 +283,7 @@ typedef struct XMC_GPIO_CONFIG
   XMC_GPIO_OUTPUT_STRENGTH_t output_strength;	/**< Defines pad driver mode of a pin */
 } XMC_GPIO_CONFIG_t;
 
+
 /**********************************************************************************************************************
  * API PROTOTYPES
  *********************************************************************************************************************/
@@ -308,6 +310,7 @@ __STATIC_INLINE bool XMC_GPIO_IsModeValid(XMC_GPIO_MODE_t mode)
           (mode == XMC_GPIO_MODE_OUTPUT_OPEN_DRAIN_ALT4));
 }
 
+
 /**
  *
  * @param  port		constant pointer pointing to GPIO port, to access hardware register Pn_PDR.
@@ -326,9 +329,7 @@ __STATIC_INLINE bool XMC_GPIO_IsModeValid(XMC_GPIO_MODE_t mode)
  *
  * \par<b>Note:</b><br>
  * Prior to this api, user has to configure port pin to output mode using XMC_GPIO_SetMode().
- *
  */
-
 void XMC_GPIO_SetOutputStrength(XMC_GPIO_PORT_t *const port, const uint8_t pin, XMC_GPIO_OUTPUT_STRENGTH_t strength);
 
 /**
@@ -342,4 +343,3 @@ void XMC_GPIO_SetOutputStrength(XMC_GPIO_PORT_t *const port, const uint8_t pin, 
 #endif /* UC_FAMILY == XMC4 */
 
 #endif /* XMC4_GPIO_H */
- 

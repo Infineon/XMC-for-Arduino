@@ -1,21 +1,21 @@
 /*
-  Simple RTC Alarm for XMC boards
-  Demonstrates how to set an RTC alarm for the XMC4700 Relax Kit V1
-*/
+   Simple RTC Alarm for XMC Boards
+   Demonstrates how to set an RTC alarm for the XMC4700 Relax Kit V1
+ */
 
-/* 
-  Board Check
-  This library can currently only be used with the XMC4700 Relax Kit
-  If you modify the library to work with other XMC versions, remove the following lines
-*/
-#ifndef XMC1
-#error This XMC board is not supported, only XMC4700 Relax Kit is supported
-#endif
-// End of Board Check
+ /*  
+  Board Check 
+  This library can currently only be used with the XMC4700 Relax Kit 
+  If you modify the library to work with other XMC versions, remove the following lines 
+*/ 
+#ifndef XMC1 
+#error This XMC board is not supported, only XMC4700 Relax Kit is supported 
+#endif 
+// End of Board Check 
 
 #include <RTC.h>
 
-/* Create an RTC object */
+/* Create an rtc object */
  RTCClass RTC;
 
 /* Change these values to set the current initial time */
@@ -32,7 +32,7 @@ void setup()
 {
    Serial.begin(9600);
 
-   RTC.begin(); // Initialize RTC 24H format
+   RTC.begin(); // initialize RTC 24H format
 
    RTC.setTime(hours, minutes, seconds);
    RTC.setDate(day, month, year);
@@ -65,7 +65,7 @@ void alarmMatch()
 
 void print2digits(int number) {
    if (number < 10) {
-     Serial.print("0"); // Print a 0 before if the number is < than 10
+     Serial.print("0"); // print a 0 before if the number is < than 10
    }
    Serial.print(number);
 }
