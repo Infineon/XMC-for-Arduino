@@ -169,8 +169,8 @@ RingBuffer tx_buffer_0;
 XMC_UART_t XMC_UART_0 =
 {
   .channel 				= XMC_UART0_CH0,
-  .rx 					= {	.port = (XMC_GPIO_PORT_t *)PORT0_BASE,
-							.pin  = (uint8_t)15
+  .rx 					= {	.port = (XMC_GPIO_PORT_t *)PORT2_BASE,
+							.pin  = (uint8_t)6
 							},
   .rx_config			= { .mode = XMC_GPIO_MODE_INPUT_TRISTATE,
 							.output_level     = XMC_GPIO_OUTPUT_LEVEL_HIGH,
@@ -183,10 +183,10 @@ XMC_UART_t XMC_UART_0 =
 							.output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH,
 							.input_hysteresis = XMC_GPIO_INPUT_HYSTERESIS_STANDARD
 							},
-  .input_source_dx0		= (XMC_USIC_INPUT_t)USIC0_C0_DX0_P0_15,
+  .input_source_dx0		= (XMC_USIC_INPUT_t)USIC0_C0_DX0_DX3INS,
   .input_source_dx1		= XMC_INPUT_INVALID,
   .input_source_dx2		= XMC_INPUT_INVALID,
-  .input_source_dx3		= XMC_INPUT_INVALID,
+  .input_source_dx3		= (XMC_USIC_INPUT_t)USIC0_C0_DX3_P2_6,
   .irq_num				= USIC0_0_IRQn,	
   .irq_service_request	= 0
 };	
