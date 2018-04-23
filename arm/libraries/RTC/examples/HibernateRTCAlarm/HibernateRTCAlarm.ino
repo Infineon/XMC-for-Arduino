@@ -4,6 +4,7 @@
  */
 
  /* 
+  Board Check 
   This example currently works only with the XMC4700 Relax Kit as the XMC1000 Series has no hibernate function.
   If you modify the example to work with other (XMC) board variants, remove the following lines.
 */

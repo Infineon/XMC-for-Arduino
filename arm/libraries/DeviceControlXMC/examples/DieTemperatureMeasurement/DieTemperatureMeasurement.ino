@@ -2,10 +2,10 @@
   Simple die temperature measurement for XMC devices
   Demonstrates the measure temperature of die using sensor.
   05 July 2017
-  
+
   Amended April 2018 Paul Carpenter, PC Services
   Needs first serial port to display results at 115,200 baud
-  
+
   Add signon message
   Take initial reading and to avoid high reading as first reading
   Make board agnostic
@@ -22,7 +22,7 @@ XMCClass devCtrl;
 
 uint32_t temperature = 0;
 
- 
+
 void setup( )
 {
 Serial.begin( 115200 );

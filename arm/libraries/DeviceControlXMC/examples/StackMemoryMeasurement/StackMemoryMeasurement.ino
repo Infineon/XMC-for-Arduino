@@ -1,7 +1,7 @@
 /* MODIFIED Free Stack example for ANY board
 
     Sends details to first serial port at 115,200 baud.
-    
+
     Note free stack displayed is a SIGNED value so if a negative value
     appears it is a stack over run. That is too many items on the stack
     and has gone beyond its allocated area.
@@ -15,13 +15,15 @@
     Return show stack free now
     Call a second function that calls the first function to show stack
     Return show stack free now
-    
+
     Loop doing nothing
-    
+
   New example  Paul Carpenter, PC Services, April 2018
  */
+// The actual calculation to get amount of free Stack
+#define freeStackRAM    (int32_t)( __get_MSP( ) - (int32_t)&__stack_start )
 
-/* Variables */
+// Variables
 extern char __stack_start, __stack_end;
 
 int dummy;
@@ -35,7 +37,7 @@ delay( 1000 );
 }
 
 
-// Function that does nothing. just some parameters & local variables, 
+// Function that does nothing. just some parameters & local variables,
 // so that the difference in stack will be more obvious
 void doNothing( int value )
 {
@@ -47,7 +49,7 @@ for( int i = 0; i < value; i++ )
      j += i + 1;
 
 Serial.print("Free stack in doNothing function is: \t");
-dispfree( __get_MSP( ) - (int32_t)&__stack_start );
+dispfree( freeStackRAM );
 }
 
 
@@ -65,30 +67,29 @@ doNothing( value / 4);
 }
 
 
-/* Actual Code here */
+// Actual Main Code here
 void setup()
 {
 Serial.begin( 115200 );
 
 delay(100);
 Serial.println( "XMC - Free Stack example  (V2.0)\n" );
-/* Show inital stack settings */
+// Show inital stack settings
 Serial.print( "Stack starts at\t" );
 Serial.println( (uint32_t)&__stack_start, HEX );
 Serial.print( "Stack size is\t" );
 Serial.println( (uint32_t)(&__stack_end - &__stack_start ) );
 
-/* Start showing stack changes */
-
+// Start showing stack changes
 Serial.print("Free stack in function loop is:\t");
-dispfree( __get_MSP( ) - (int32_t)&__stack_start );
-  
+dispfree( freeStackRAM );
+
 // Check the stack value after calling another function
 doNothing( 200 );
 
 // Check the stack after going back to loop
 Serial.print("Free stack after going back to loop is:\t");
-dispfree(  __get_MSP( ) - (int32_t)&__stack_start  );
+dispfree(  freeStackRAM  );
 
 dummy = 1000;
 // Check the stack value after calling two levels of functions
@@ -96,8 +97,7 @@ SecondNothing( dummy );
 
 // Check the stack after going back to loop
 Serial.print("Free stack after going back to loop is:\t");
-dispfree(  __get_MSP( ) - (int32_t)&__stack_start );
-
+dispfree(  freeStackRAM );
 }
 
 

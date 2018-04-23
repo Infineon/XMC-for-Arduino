@@ -49,7 +49,6 @@
 
 #ifdef __cplusplus
 extern "C" {
-#endif
 
 __WEAK void timer_cb( );
 /**
@@ -84,7 +83,6 @@ void TIMER_Clear( void );
  * Timer get timer
  */
 uint32_t TIMER_GetTime( void );
-#ifdef __cplusplus
 }
 #endif
 

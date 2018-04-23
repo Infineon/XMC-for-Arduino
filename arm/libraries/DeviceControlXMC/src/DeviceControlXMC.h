@@ -169,7 +169,7 @@ class XMCClass
 		/* State Control*/
 		uint32_t getTemperature();	// Device Temperature control
 
-   		size_t freeRAM_Heap();
+   		size_t freeHeapRAM();
 
 #if (UC_FAMILY == XMC4)
 		/*Power Control*/
