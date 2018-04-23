@@ -127,7 +127,7 @@ private:
 
 extern HardwareSerial Serial;
 
-#if defined(XMC4700_Relax_Kit)
+#if (NUM_SERIAL > 1)
 extern HardwareSerial Serial1;
 #endif
 
