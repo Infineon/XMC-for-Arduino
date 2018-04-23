@@ -1,5 +1,5 @@
 #######################################
-# Syntax Coloring Map For XMC_DeviceControl
+# Syntax Coloring Map For DMA Library
 #######################################
 
 #######################################

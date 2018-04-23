@@ -116,7 +116,7 @@ uint32_t XMCClass::getTemperature( )
  * At best the largest chunk available is reported not the total depending
  * on what malloc/free pairings or not paired have already been done.
  */
-size_t XMCClass::freeRAM_Heap( )
+size_t XMCClass::freeHeapRAM( )
 {
 	size_t heap_free_s;
 	char *pnt;
@@ -124,7 +124,7 @@ size_t XMCClass::freeRAM_Heap( )
     // Set to initial total size
     heap_free_s = total_heap_s;
     heap_free_s &= ~0x03;   // align as last bytes probably not available
-    
+
     // loop in 4 byte (at least) multiples to satisfy alignment requirements
 	for( ; heap_free_s > 0; heap_free_s -= 4 )
        {
@@ -158,7 +158,7 @@ void XMCClass::configureHibernate( WakeupSource wkpsrc )
 
 	switch( wkpsrc )
 	{
-	case ( WAKEUP_ON_RTC ):	
+	case ( WAKEUP_ON_RTC ):
 		/* Enable the RTC with Ultra Low Power Clock */
 		XMC_SCU_HIB_SetRtcClockSource( XMC_SCU_HIB_RTCCLKSRC_ULP );
 		delay( 3 );
@@ -218,9 +218,9 @@ void XMCClass::enterHibernate( int mode )
  * 			clkpll (PLL_ON or PLL_OFF)		-- possible to turn off only on deep sleep mode
  * 			vco    (VCO_ON or VCO_OFF)		-- possible to turn off only on deep sleep mode
  */
-void XMCClass::configureSleepMode( sleepMode_t type, sysclock_t clk, usb_t usb, 
-                                    sdmmc_t sdmmc, eth0_t ethernet, ebu_t  ebu, 
-                                    ccu_t ccu , wdt_t wdt, flash_t flash, clkpll_t pll, 
+void XMCClass::configureSleepMode( sleepMode_t type, sysclock_t clk, usb_t usb,
+                                    sdmmc_t sdmmc, eth0_t ethernet, ebu_t  ebu,
+                                    ccu_t ccu , wdt_t wdt, flash_t flash, clkpll_t pll,
                                     vco_t vco )
 {
 	sleep_config |= clk;
@@ -269,10 +269,10 @@ void XMCClass::enterSleepMode( )
 
 /**
  * Calibrate temperature sensor for more accurate measurement.
- * @param 	offset	- The range of the offset adjustment is 7 bits with a resolution 
+ * @param 	offset	- The range of the offset adjustment is 7 bits with a resolution
  *                      that corresponds to +/- 12.5�C.
  * 					  The offset value gets added to the measure result.
- * 			gain	- 0, result is generated with maximum gain;  63, result is 
+ * 			gain	- 0, result is generated with maximum gain;  63, result is
  *                      generated with least gain.
  */
 void XMCClass::calibrateTemperatureSensor( uint32_t offset, uint32_t gain )
@@ -294,10 +294,10 @@ void XMCClass::calibrateTemperatureSensor( uint32_t offset, uint32_t gain )
  * 			usic   (USIC_ON or USIC_OFF)
  * 			ledt   (LEDT_ON	or LEDT_OFF)
  * 			wdt    (WDT_ON or WDT_OFF)
- * 			flash  (FLASH_ON or FLASH_OFF) -- possible to turn off only 
+ * 			flash  (FLASH_ON or FLASH_OFF) -- possible to turn off only
  *                                               on deep sleep mode
  */
-void XMCClass::configureSleepMode( sleepMode_t type, usic_t usic, 
+void XMCClass::configureSleepMode( sleepMode_t type, usic_t usic,
                                    ledt_t ledt, ccu_t ccu, wdt_t wdt, flash_t flash )
 {
 	sleep_config |= usic;
