@@ -1,6 +1,6 @@
 /* tonetest sketch tests wiring_time implementation
 
-   Tests that the timing scheduler can handle multiple events at diffeent
+   Tests that the timing scheduler can handle multiple events at different
    timing intervals.
 
    The main ones it tests are as many pins to have tones on as possible
@@ -9,7 +9,7 @@
    as possible within th constraints of that board (unless used for RX and TX signals)
 
    Assumes board has at LEAST TWO LEDs compiler error for NO LEDs or TONE PINS
-   avaliable
+   available
 
    Main uses for timed task scheduling at 1 ms resolution are
         delay()     function to wait for ms time interval
@@ -23,7 +23,7 @@
 #include <Arduino.h>
 
 #if NUM_TONE_PINS < 2
-#error Not enough Tone Pins avaliable on this board
+#error Not enough Tone Pins available on this board
 #endif
 #if NUM_LEDS < 2
 #error Not enough LEDs available on this board to run this test

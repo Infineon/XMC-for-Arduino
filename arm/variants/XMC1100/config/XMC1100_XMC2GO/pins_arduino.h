@@ -57,8 +57,6 @@
 
 #define PWM4_TIMER_PERIOD (2041U)  // Generate 490Hz @fCCU=1MHz
 
-#define PCLK 64000000u
-
 #define PIN_SPI_SS    3
 #define PIN_SPI_MOSI  0
 #define PIN_SPI_MISO  1
@@ -85,8 +83,8 @@ const uint8_t mapping_pin_PWM4[][ 2 ] = {
 
 const XMC_PORT_PIN_t mapping_port_pin[] =
 {
-    /* 0  */    {XMC_GPIO_PORT0, 7},    // SPI-MOSI                         P0.6
-    /* 1  */    {XMC_GPIO_PORT0 , 6},   // SPI-MISO                         P0.7
+    /* 0  */    {XMC_GPIO_PORT0, 7},    // SPI-MOSI                         P0.7
+    /* 1  */    {XMC_GPIO_PORT0 , 6},   // SPI-MISO                         P0.6
     /* 2  */    {XMC_GPIO_PORT0 , 8},   // SPI-SCK                          P0.8
     /* 3  */    {XMC_GPIO_PORT0 , 9},   // SPI-SS                           P0.9
     /* 4  */    {XMC_GPIO_PORT0 , 14},  // GPIO                             P0.14
