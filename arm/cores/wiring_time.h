@@ -129,8 +129,8 @@ extern void wiring_time_init( void );
  *
  * \return Number of milliseconds since the program started (uint32_t)
  */
-static inline uint32_t  millis( void ) __attribute__(( always_inline ));
-static inline uint32_t  millis( void )
+static inline uint32_t  millis( ) __attribute__(( always_inline ));
+static inline uint32_t  millis( )
 {
 return ( g_systick_count );
 }
@@ -139,21 +139,21 @@ return ( g_systick_count );
 /*
  * \brief Returns the number of microseconds since the Arduino board began running the current program.
  *
- * This number will overflow (go back to zero), after approximately 70 minutes. On 16 MHz Arduino
- * boards (e.g. Duemilanove and Nano), this function has a resolution of four microseconds (i.e.
- * the value returned is always a multiple of four). On 8 MHz Arduino boards (e.g. the LilyPad), this
- * function has a resolution of eight microseconds.
+ * This number will overflow (go back to zero), after approximately 70 minutes. 
+ * On XMC boards the returned value has resolution of 1 microsecond as it is
+ * calculated from a hardware timer running counting clock cycles to produce 
+ * 1 millisecond interval interrupts.
  *
  * \note There are 1,000 microseconds in a millisecond and 1,000,000 microseconds in a second.
 
    get micro seconds since power up 
    Read milli seconds (in microseconds) and convert Systick counter to microseconds to add to it 
    remember SysTick->VAL counts DOWN to zero */
-static inline uint32_t  micros( void ) __attribute__(( always_inline ));
-static inline uint32_t  micros( void )
+static inline uint32_t  micros( ) __attribute__(( always_inline ));
+static inline uint32_t  micros( )
 {
-return ( ( g_systick_count * SYSTIMER_TICK_PERIOD_US )
-            + ( ( SYSTICK_MS - SysTick->VAL ) / SYSTICK_US ) );
+return ( ( ( SYSTICK_MS - SysTick->VAL ) / SYSTICK_US )
+            + ( g_systick_count * SYSTIMER_TICK_PERIOD_US ) );
 }
 
 
@@ -180,6 +180,7 @@ else
     NOPS_FOR_USEC( )  // NOP loop to generate delay
   while( --usec );
 }
+
 
 extern int setInterval( int, uint32_t );
 extern uint32_t getInterval( int );

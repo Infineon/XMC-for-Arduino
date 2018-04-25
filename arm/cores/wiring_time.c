@@ -21,25 +21,25 @@
 
 /* Includes Co-operative Scheduler for XMC-for-Arduino
 
-   Using COMPILE time scheduling table 
+   Using COMPILE time scheduling table
 
 Version V1.00
 Author: Paul Carpenter, PC Services, <sales@pcserviceselectronics.co.uk>
 Date    March 2018
 
-Co-operative scheduler library that has some support functions and main 
-schedule function meant to be run as the Systick scheduler event handler, the 
+Co-operative scheduler library that has some support functions and main
+schedule function meant to be run as the Systick scheduler event handler, the
 support functions should be used to get status on, start, stop, or configure tasks.
 
 The schedule code is designed for MINIMAL overhead and SPEED.
 
-The time interval of calling the schedule loop is determined by Systick timer 
+The time interval of calling the schedule loop is determined by Systick timer
 interval currently 1 ms, and calls a selection of tasks determined by two
 parameters for each task
 
     callback    function address
     parameter   INTEGER to pass to function
-    
+
 From this we get TWO types of function calls when a task event happens
 
 1/ callback and parameter are set gives a function call of
@@ -49,17 +49,17 @@ From this we get TWO types of function calls when a task event happens
             and MUST return an integer
 
    (even if parameter not set it is initialised to task_id AT compile TIME)
-    
+
 2/ Special case if ANY task has its callback set to NULL a special variable
    in wiring_time is set to TRUE. This enables the delay() function to work
-   for ms delays. As a side effect it stops runaway tasks for callback set to 
-   NULL. 
-                            
+   for ms delays. As a side effect it stops runaway tasks for callback set to
+   NULL.
+
 Callback functions in list
 --------------------------
-    For different processors speeds it is suggested to keep the number of 
+    For different processors speeds it is suggested to keep the number of
     total tasks (callback functions) to following limits -
-    
+
     Speed               Max Tasks
     < 50 MHz            8
     > 50 MHz < 100 MHz  12
@@ -67,7 +67,7 @@ Callback functions in list
 
 Callback function structure
 ---------------------------
-    Task is actually calling a function that should be defined as 
+    Task is actually calling a function that should be defined as
     function that returns int and takes TWO integer parameter
 
     e.g.    int func( int TaskId, int16_t Parameter )
@@ -79,12 +79,12 @@ Callback function structure
 
 Callback functions Contents
 ---------------------------
-    Callback functions are effectively interrupt routines so care should be taken 
+    Callback functions are effectively interrupt routines so care should be taken
     about which variables and flags set in these functions are volatiles.
-    
-    Functions MUST be VERY SMALL as many tasks have to run in less than 1 ms as 
+
+    Functions MUST be VERY SMALL as many tasks have to run in less than 1 ms as
     well as the main code.
-    
+
     Do NOT use blocking or slow callbacks that use AT LEAST the following Ardunio
     functions
         delay           (this would become recursive)
@@ -118,7 +118,7 @@ getParam    Get a task's callback function parameter (signed int16_t)
 getTime     Get a task's next time to execute
 getStatus   Get a particular task status word
 addTask     Add a task to the task list
-deleteTask  Delete a task from the task list 
+deleteTask  Delete a task from the task list
 startTask   Start a task (if not already running)
 findID      Get ID of first task from task address
 */
@@ -155,7 +155,7 @@ extern int  tone_irq_action( int, int16_t );
     This way last is always delay and first 'n' are always Tone pins i.e. 0 - n
     last is _MAX_TASKS - 1
 */
-int (* tasks[_MAX_TASKS])( int, int16_t ); 
+int (* tasks[_MAX_TASKS])( int, int16_t );
 
 /* Structure for task details next run, status etc.. */
 struct TaskList taskTable[ _MAX_TASKS ];
@@ -171,6 +171,7 @@ volatile __IO bool g_timer_entered_handler = FALSE;
 
 // Delay ms function flag for time expired in Systick Event Handler
 volatile __IO bool delay_timer_expired = FALSE;
+
 
 //****************************************************************************
 // @Prototypes Of Local Functions
@@ -188,7 +189,7 @@ void SysTick_Handler( void );
 //****************************************************************************
 void wiring_time_init( void )
 {
-/* Initialise micro/milli second counter as early as possible 
+/* Initialise micro/milli second counter as early as possible
    Initialize SysTick timer for 1 ms (1 kHz) interval */
 SysTick_Config( (uint32_t)SYSTICK_MS );
 
@@ -236,7 +237,7 @@ delay_timer_expired = FALSE;
 /* Handler function called from SysTick event handler.
         - Task scheduling loop
 
-   Does ONE pass through scheduling table, checking what tasks are due or 
+   Does ONE pass through scheduling table, checking what tasks are due or
    overdue to run.
 
    Order of task execution is list of tasks
@@ -278,8 +279,8 @@ for( running = 0; running < _MAX_TASKS; running++ )
          delay_timer_expired = TRUE;        // Special case of NULL callback function
          taskTable[ running ].status = 0;   // One shot event so stop task
          }
-       else  
-         if( ( taskTable[ running ].status = 
+       else
+         if( ( taskTable[ running ].status =
                 ( ( *tasks[ running ])( running, taskTable[ running ].param ) ) ) > 0 )
            taskTable[ running ].next = ms + taskTable[ running ].interval;
        done++;
@@ -439,7 +440,7 @@ return taskTable[ ID ].status;
 */
 int addTask( int(* ptr)( int, int16_t ) )
 {
-  noInterrupts( );  
+  noInterrupts( );
   for( int i = NUM_TONE_PINS; i < _MAX_TASKS - 1; i++ )
     {
     // Fill with call back function address
@@ -447,11 +448,11 @@ int addTask( int(* ptr)( int, int16_t ) )
       {
         taskTable[ i ].status = 0;
         tasks[ i ] = ptr;   // Register callback
-        interrupts( ); 
+        interrupts( );
         return i;
       }
     }
-    interrupts( ); 
+    interrupts( );
     return -1;
 }
 
@@ -465,7 +466,7 @@ int addTask( int(* ptr)( int, int16_t ) )
 */
 int deleteTask( int(* ptr)( int, int16_t ) )
 {
-  noInterrupts( );  
+  noInterrupts( );
   int ID = findID( ptr );
 
   if( ID >= 0 )
@@ -474,15 +475,15 @@ int deleteTask( int(* ptr)( int, int16_t ) )
     tasks[ ID ] = NULL;
     setInterval(ID, 0);
   }
-  interrupts( ); 
+  interrupts( );
   return ID;
 }
 
 /* startTask - Start a task if not running and has interval set
 
    Cannot start an already started task
-   
-   It is responsibility of the task to stop its task and any associated 
+
+   It is responsibility of the task to stop its task and any associated
    resources (GPIO/TWI/SPI etc).
 
     Parameters  int Task ID to start
@@ -513,7 +514,7 @@ return 1;
 
    Scans task table to find a matching function address and return the ID
    NOTE stops at FIRST match.
-   
+
     Parameters  int Task ID to Stop
 
     Return int  -2 No task found

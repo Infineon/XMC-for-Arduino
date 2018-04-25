@@ -21,7 +21,7 @@ void setup() {
 #if XMC_BOARD == XMC1100_XMC2GO
 analogWrite( 8, 32 );      // PWM4
 #endif
-#if XMC_BOARD == XMC1100_Boot_Kit
+#if XMC_BOARD == XMC1300_Boot_Kit
 // XMC1100 Boot Kit
 analogWrite( 3, 32 );       // all PWM4
 analogWrite( 4, 64 );
