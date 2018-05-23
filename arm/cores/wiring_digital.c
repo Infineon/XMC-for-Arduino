@@ -29,6 +29,7 @@ void pinMode( uint8_t pin, uint8_t mode )
 {
 XMC_GPIO_CONFIG_t gpio_conf;
 gpio_conf.mode = mode;
+gpio_conf.input_hysteresis = XMC_GPIO_INPUT_HYSTERESIS_LARGE;
 
 XMC_GPIO_Init( mapping_port_pin[ pin ].port, mapping_port_pin[ pin ].pin, &gpio_conf );
 }
