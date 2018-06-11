@@ -124,13 +124,17 @@ void SPIClass::end()
 	{
 		XMC_GPIO_CONFIG_t default_input_port_config = {
             .mode = XMC_GPIO_MODE_INPUT_TRISTATE,
+#if UC_FAMILY == XMC1
             .input_hysteresis = XMC_GPIO_INPUT_HYSTERESIS_STANDARD,
+#endif
             .output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH
         };
 		
 		XMC_GPIO_CONFIG_t default_output_port_config = {
             .mode = XMC_GPIO_MODE_OUTPUT_PUSH_PULL,
+#if UC_FAMILY == XMC1
             .input_hysteresis = XMC_GPIO_INPUT_HYSTERESIS_STANDARD,
+#endif
             .output_level = XMC_GPIO_OUTPUT_LEVEL_LOW
         };
 

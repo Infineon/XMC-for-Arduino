@@ -169,7 +169,9 @@ void TwoWire::end(void)
         
         XMC_GPIO_CONFIG_t default_output_port_config = {
             .mode = XMC_GPIO_MODE_OUTPUT_OPEN_DRAIN,
+#if UC_FAMILY == XMC1
             .input_hysteresis = XMC_GPIO_INPUT_HYSTERESIS_STANDARD,
+#endif
             .output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH
         };
 

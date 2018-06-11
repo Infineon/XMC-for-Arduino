@@ -95,9 +95,9 @@ caddr_t _sbrk(int nbytes)
 
 /* Init */
 // This forward declaration is not compatible with Arduino and commented out
-/*
+#ifdef DAVECE
 void _init(void)
 {}
-*/
+#endif
 
 #endif /* __GNUC__ */
