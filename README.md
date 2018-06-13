@@ -67,4 +67,5 @@ In the boards list **Tools** > **Board**, the XMC microcontroller boards are add
 * Arduino 1.8.0 IDE might have problems with the XMC-for-Arduino releases
 
 ## Additional Contributors
+
 * [Paul Carpenter](https://github.com/techpaul)
