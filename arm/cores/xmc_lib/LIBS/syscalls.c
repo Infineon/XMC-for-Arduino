@@ -95,7 +95,7 @@ caddr_t _sbrk(int nbytes)
 
 /* Init */
 // This forward declaration is not compatible with Arduino and commented out
-#ifdef DAVECE
+#ifdef (DAVECE || _INIT_DECLARATION_REQUIRED)
 void _init(void)
 {}
 #endif
