@@ -4,7 +4,7 @@
 # install travis: "gem install travis -v 1.8.8 --no-rdoc --no-ri"
 # login with your Github credentials: "travis login"
 # print your API token (this is to be kept secret!): "travis token"
-# encrypt token and add it to .travis.yml: "travis encrypt TRAVIS_API_TOKEN=ygCWqiZ8fnZrTfH6veb9Xw --add" 
+# encrypt token and add it to .travis.yml: "travis encrypt TRAVIS_API_TOKEN=xxxx --add" 
 # now you are able to use TRAVIS_API_TOKEN in the build environment!
 
 body='{
