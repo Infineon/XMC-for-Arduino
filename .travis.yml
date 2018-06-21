@@ -1,5 +1,5 @@
 script:
-- chmod +x trigger.sh
+- chmod +x ./scripts/trigger.sh
 - "./scripts/trigger.sh"
 env:
   global:
