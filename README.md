@@ -1,4 +1,5 @@
-﻿# Infineon's XMC Microcontroller Boards for Arduino
+[![Build Status](https://travis-ci.org/Infineon/platformio-infineonxmc.svg?branch=master)](https://travis-ci.org/Infineon/platformio-infineonxmc)
+# Infineon's XMC Microcontroller Boards for Arduino
 
 This repository integrates [Infineon's](https://www.infineon.com/) XMC microcontrollers into the [Arduino IDE](https://www.arduino.cc/en/main/software).
 
@@ -67,4 +68,5 @@ In the boards list **Tools** > **Board**, the XMC microcontroller boards are add
 * Arduino 1.8.0 IDE might have problems with the XMC-for-Arduino releases
 
 ## Additional Contributors
+
 * [Paul Carpenter](https://github.com/techpaul)
