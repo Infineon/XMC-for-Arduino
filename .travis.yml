@@ -1,10 +1,3 @@
-# script:
-# - chmod +x ./scripts/trigger.sh
-# - "./scripts/trigger.sh"
-# env:
-  # global:
-    # secure: ZutXzmlZ/V0wDPArSNAsZ6ltJ15Sf5IAgcMU7YhGjcxA5XCi31aZmqg2A+zAXdC324qKwTQIsysHFuKnh6bsY19BrznBtuGRrE6PyIcYEjmZq+o+0LKWexjHIskBb284Iuoo8EbPEYtSKHhKokeujSMK2bAzbijt6WKCNjFQN4+aI5r05atQM62iYvykgvuxUVd380GrV2g8Rb9us04lZGnLwUCW0k3BVDELevW3aRdDEey/UUlFKsPTCtU/lU5/RX/zQsmS6p6y1uPZWiSlToH9t/g8UQYu74J1xmLsZLhqwh1uOtpOTBYrb8qQt3YH4uE3aZf25Zw4Go35qoS/FzCOOkH1qej8oovTvkBVjA5YPJNEoRsMDSdyNeYus4SioQREdTCFaQU3cjYK3a7k03uhPHbNAa347bwRk2nPzP64PG6BEHW8jSBTMGofjtETKTCvKdTYq/4DmT51sOUYbJlL2yBOVmv0S/lGvqJDyrLYdxDq5jKedm/5U0QxBsfM5/iuSGpdB/sdnvKOoGu3E0RJE9KhvmaWXrBZO2wTcAUdh3KX54oQw8ifph/Yy7bksLZRAQdz05YJsDX1L6KJU9SdDIbpN7fjZ5aC085GYVIzJML/1IFcXppBzixkUS2ifGNVq8NnTENicKO0/A88092N5d61GH8/SfS4LHK8tE0=
-
 language: python
 python:
   - "2.7"
@@ -23,9 +16,9 @@ before_script:
   - export PATH=$PATH:$PWD/gcc-arm-none-eabi-5_4-2016q3/bin/
 
 env:
-  # automate reading of test project dirs
+  # defining this variable creates multiple jobs in Travis
   - PLATFORMIO_PROJECT_DIR=examples/arduino-blink
-  #- PLATFORMIO_PROJECT_DIR=examples/arduino-wire/master_reader
+  - PLATFORMIO_PROJECT_DIR=examples/arduino-wire/master_reader
   #- PLATFORMIO_PROJECT_DIR=examples/arduino-wire/master_writer
   #- PLATFORMIO_PROJECT_DIR=examples/arduino-wire/slave_receiver
   #- PLATFORMIO_PROJECT_DIR=examples/arduino-wire/slave_sender
@@ -42,4 +35,4 @@ install:
   - platformio platform install -f file://. --without-package=uploader
 
 script:
-- platformio run -d $PLATFORMIO_PROJECT_DIR    
+  - platformio run -d $PLATFORMIO_PROJECT_DIR
