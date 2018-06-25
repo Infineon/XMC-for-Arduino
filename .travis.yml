@@ -1,6 +1,45 @@
-script:
-- chmod +x ./scripts/trigger.sh
-- "./scripts/trigger.sh"
+# script:
+# - chmod +x ./scripts/trigger.sh
+# - "./scripts/trigger.sh"
+# env:
+  # global:
+    # secure: ZutXzmlZ/V0wDPArSNAsZ6ltJ15Sf5IAgcMU7YhGjcxA5XCi31aZmqg2A+zAXdC324qKwTQIsysHFuKnh6bsY19BrznBtuGRrE6PyIcYEjmZq+o+0LKWexjHIskBb284Iuoo8EbPEYtSKHhKokeujSMK2bAzbijt6WKCNjFQN4+aI5r05atQM62iYvykgvuxUVd380GrV2g8Rb9us04lZGnLwUCW0k3BVDELevW3aRdDEey/UUlFKsPTCtU/lU5/RX/zQsmS6p6y1uPZWiSlToH9t/g8UQYu74J1xmLsZLhqwh1uOtpOTBYrb8qQt3YH4uE3aZf25Zw4Go35qoS/FzCOOkH1qej8oovTvkBVjA5YPJNEoRsMDSdyNeYus4SioQREdTCFaQU3cjYK3a7k03uhPHbNAa347bwRk2nPzP64PG6BEHW8jSBTMGofjtETKTCvKdTYq/4DmT51sOUYbJlL2yBOVmv0S/lGvqJDyrLYdxDq5jKedm/5U0QxBsfM5/iuSGpdB/sdnvKOoGu3E0RJE9KhvmaWXrBZO2wTcAUdh3KX54oQw8ifph/Yy7bksLZRAQdz05YJsDX1L6KJU9SdDIbpN7fjZ5aC085GYVIzJML/1IFcXppBzixkUS2ifGNVq8NnTENicKO0/A88092N5d61GH8/SfS4LHK8tE0=
+
+language: python
+python:
+  - "2.7"
+cache:
+    directories:
+        - "~/.platformio"
+addons:
+  apt_packages:
+    - lib32bz2-1.0
+    - lib32ncurses5
+    - lib32z1
+    
+before_script:
+  - wget https://github.com/Infineon/Assets/releases/download/current/gcc-arm-none-eabi-5_4-2016q3-20160926-linux.-d-.tar.bz2 -O /tmp/gcc-arm-none-eabi.tar.bz2
+  - tar -xjf /tmp/gcc-arm-none-eabi.tar.bz2
+  - export PATH=$PATH:$PWD/gcc-arm-none-eabi-5_4-2016q3/bin/
+
 env:
-  global:
-    secure: bsG2yh2beyN2QZF/kwAEJ8vZC7ns0DK19lYX+1g1XVx3eGS7HbKtXqAR6iIWiWA3rDq/F3Lz/RxLptKZ0mpa2TJ8X/OsPw1/WQxLWzaCHe0lSmlK3W+1UkqjNffnCBRL+0QBHSPTEfkrKVp+KtXxTE7Q8ZyAfhZe9ieujlzN3kMQEnN10jVqgajTJPtmUXQBFHqTcETk8OS38YiWCrH58C6so4fI8Sw5dPtOcL49otIB39HXXyDyuSMXgp0Efi6b41a96IM4v4W4e/A8tEDnRdJF4w7L6KU3SCYJkEKwq60wDEY0j6zB3+iEJaoWPIvY/eCSvmjBNGAHzi5pYT5xG1W1UTJSkbTpyZVj3bJOj/QkJvx0Y616wyoM776NllVNRghftnu2kMTV8Ip1rfgqsp/zWJoZ6YJWZNnZTPS0Gj2G3eR2eViwieZ+BxCLs4ZDTq/kHDLrq1mLFWUUhYFxhpsHUwpncMh7xMnCpmNRbQNnzQAFhknRzY+BbX/REfcjfphOtOTrNJeEPVv9WVcTwiCdQIfeTClNc7KbONZSr3luGZP1s6EJ63XesxTw18VoLj0wc7+/OcInJlUZPiweBS+p34n8ei7OabfrZLVqh+oUogns3ImT8iTCwtoeoLSnBxI/im0weE7DW+RiGCqk4AWlM9LTWFq4yPZaWyoDF5g=
+  # automate reading of test project dirs
+  - PLATFORMIO_PROJECT_DIR=examples/arduino-blink
+  #- PLATFORMIO_PROJECT_DIR=examples/arduino-wire/master_reader
+  #- PLATFORMIO_PROJECT_DIR=examples/arduino-wire/master_writer
+  #- PLATFORMIO_PROJECT_DIR=examples/arduino-wire/slave_receiver
+  #- PLATFORMIO_PROJECT_DIR=examples/arduino-wire/slave_sender
+
+install:
+  - zip -r /tmp/framework-arduinoxmc.zip ./arm  
+  - git clone https://github.com/Infineon/platformio-infineonxmc.git /tmp/builder
+  - cd /tmp/builder
+  - platform_json=$(<platform.json)
+  - rm platform.json
+  - jq '.packages."framework-arduinoxmc".version = "file:///tmp/framework-arduinoxmc.zip"' <<<"$platform_json" > platform.json
+
+  - pip install -U https://github.com/platformio/platformio/archive/develop.zip
+  - platformio platform install -f file://. --without-package=uploader
+
+script:
+- platformio run -d $PLATFORMIO_PROJECT_DIR    
