@@ -1,6 +1,38 @@
-script:
-- chmod +x ./scripts/trigger.sh
-- "./scripts/trigger.sh"
+language: python
+python:
+  - "2.7"
+cache:
+    directories:
+        - "~/.platformio"
+addons:
+  apt_packages:
+    - lib32bz2-1.0
+    - lib32ncurses5
+    - lib32z1
+    
+before_script:
+  - wget https://github.com/Infineon/Assets/releases/download/current/gcc-arm-none-eabi-5_4-2016q3-20160926-linux.-d-.tar.bz2 -O /tmp/gcc-arm-none-eabi.tar.bz2
+  - tar -xjf /tmp/gcc-arm-none-eabi.tar.bz2
+  - export PATH=$PATH:$PWD/gcc-arm-none-eabi-5_4-2016q3/bin/
+
 env:
-  global:
-    secure: bsG2yh2beyN2QZF/kwAEJ8vZC7ns0DK19lYX+1g1XVx3eGS7HbKtXqAR6iIWiWA3rDq/F3Lz/RxLptKZ0mpa2TJ8X/OsPw1/WQxLWzaCHe0lSmlK3W+1UkqjNffnCBRL+0QBHSPTEfkrKVp+KtXxTE7Q8ZyAfhZe9ieujlzN3kMQEnN10jVqgajTJPtmUXQBFHqTcETk8OS38YiWCrH58C6so4fI8Sw5dPtOcL49otIB39HXXyDyuSMXgp0Efi6b41a96IM4v4W4e/A8tEDnRdJF4w7L6KU3SCYJkEKwq60wDEY0j6zB3+iEJaoWPIvY/eCSvmjBNGAHzi5pYT5xG1W1UTJSkbTpyZVj3bJOj/QkJvx0Y616wyoM776NllVNRghftnu2kMTV8Ip1rfgqsp/zWJoZ6YJWZNnZTPS0Gj2G3eR2eViwieZ+BxCLs4ZDTq/kHDLrq1mLFWUUhYFxhpsHUwpncMh7xMnCpmNRbQNnzQAFhknRzY+BbX/REfcjfphOtOTrNJeEPVv9WVcTwiCdQIfeTClNc7KbONZSr3luGZP1s6EJ63XesxTw18VoLj0wc7+/OcInJlUZPiweBS+p34n8ei7OabfrZLVqh+oUogns3ImT8iTCwtoeoLSnBxI/im0weE7DW+RiGCqk4AWlM9LTWFq4yPZaWyoDF5g=
+  # defining this variable creates multiple jobs in Travis
+  - PLATFORMIO_PROJECT_DIR=examples/arduino-blink
+  - PLATFORMIO_PROJECT_DIR=examples/arduino-wire/master_reader
+  #- PLATFORMIO_PROJECT_DIR=examples/arduino-wire/master_writer
+  #- PLATFORMIO_PROJECT_DIR=examples/arduino-wire/slave_receiver
+  #- PLATFORMIO_PROJECT_DIR=examples/arduino-wire/slave_sender
+
+install:
+  - zip -r /tmp/framework-arduinoxmc.zip ./arm  
+  - git clone https://github.com/Infineon/platformio-infineonxmc.git /tmp/builder
+  - cd /tmp/builder
+  - platform_json=$(<platform.json)
+  - rm platform.json
+  - jq '.packages."framework-arduinoxmc".version = "file:///tmp/framework-arduinoxmc.zip"' <<<"$platform_json" > platform.json
+
+  - pip install -U https://github.com/platformio/platformio/archive/develop.zip
+  - platformio platform install -f file://. --without-package=uploader
+
+script:
+  - platformio run -d $PLATFORMIO_PROJECT_DIR
