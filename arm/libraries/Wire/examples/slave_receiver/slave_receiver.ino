@@ -11,14 +11,11 @@
 
 
 #include <Wire.h>
-uint8_t vgl = 1;
 
 void setup() {
   Serial.begin(115200);
   pinMode(LED2, OUTPUT);
-  pinMode(LED3, OUTPUT);
   digitalWrite(LED2, LOW); 
-  digitalWrite(LED3, LOW); 
   delay(500);
   Wire.begin(8);                // join i2c bus with address #8
   Wire.onReceive(receiveEvent); // register event
@@ -26,7 +23,6 @@ void setup() {
 
 void loop() {
   delay(100);
-  Serial.println(vgl);
 }
 
 // function that executes whenever data is received from master
@@ -41,19 +37,4 @@ void receiveEvent(int howMany) {
   {
     digitalWrite(LED2, HIGH); 
   }
-  
-  //while (1 < Wire.available()) { // loop through all but the last
-  //  char c = Wire.read(); // receive byte as a character
-  //  Serial.print(c);         // print the character
-  //}
-
-  if (x == vgl)
-  {
-    digitalWrite(LED3, HIGH);
-  }
-  else
-  {
-    digitalWrite(LED3, LOW);
-  }
-  vgl++;
 }

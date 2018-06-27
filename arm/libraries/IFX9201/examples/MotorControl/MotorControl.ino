@@ -15,12 +15,12 @@ void setup() {
   Serial.begin(9600);
   
   // Use SPI Mode with H-Bridge 2GO Evaluation Board
-  // Change the SS, DIR, PWM, and DIS pins to custom ones for other boards
-  IFX9201_HBridge.begin(SPI, SS, DIR, PWM, DIS);
+  // Change the CSN, DIR, PWM, and DIS pins to custom ones for other boards
+  IFX9201_HBridge.begin(SPI, CSN, DIR, PWM, DIS);
 
   // Use PWM Mode
-  // Change the SS, DIR, PWM, and DIS pins to custom ones for other boards
-  // IFX9201_HBridge.begin(SS, DIR, PWM, DIS);
+  // Change the CSN, DIR, PWM, and DIS pins to custom ones for other boards
+  // IFX9201_HBridge.begin(CSN, DIR, PWM, DIS);
   
   delay(1000);        
 }
