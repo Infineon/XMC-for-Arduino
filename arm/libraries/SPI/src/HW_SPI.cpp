@@ -124,14 +124,18 @@ void SPIClass::end()
 	{
 		XMC_GPIO_CONFIG_t default_input_port_config = {
             .mode = XMC_GPIO_MODE_INPUT_TRISTATE,
-            .input_hysteresis = XMC_GPIO_INPUT_HYSTERESIS_STANDARD,
-            .output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH
+            .output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH,
+#if UC_FAMILY == XMC1
+            .input_hysteresis = XMC_GPIO_INPUT_HYSTERESIS_STANDARD
+#endif
         };
 		
 		XMC_GPIO_CONFIG_t default_output_port_config = {
             .mode = XMC_GPIO_MODE_OUTPUT_PUSH_PULL,
-            .input_hysteresis = XMC_GPIO_INPUT_HYSTERESIS_STANDARD,
-            .output_level = XMC_GPIO_OUTPUT_LEVEL_LOW
+            .output_level = XMC_GPIO_OUTPUT_LEVEL_LOW,
+#if UC_FAMILY == XMC1
+            .input_hysteresis = XMC_GPIO_INPUT_HYSTERESIS_STANDARD
+#endif
         };
 
 		XMC_SPI_CH_Stop(XMC_SPI_config->channel);
