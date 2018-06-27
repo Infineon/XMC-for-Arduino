@@ -139,11 +139,7 @@ enum sleepMode_t {
 //****************************************************************************
 // @Class Definitions
 //****************************************************************************
-#if (UC_FAMILY == XMC4)
-class XMCClass : public DMA
-#else
 class XMCClass
-#endif
 {
 		// TODO: DMA is only available for M-M, or UART-M, M-UART
 	public:
