@@ -10,8 +10,8 @@
 #include "utility/timer.h"
 #include <xmc_gpio.h>
 
-// Create an RTC object
- RTCClass RTC;
+// Create an rtc object
+ RTCClass rtc;
 
 // Create an DeviceControlXMC object
  XMCClass devCtrl;
@@ -33,20 +33,20 @@
 void setup( )
 {
   Serial.begin( 9600 );
-  RTC.begin();
+  rtc.begin();
   devCtrl.configureSleepMode( SLEEP_MODE, SYSCLK_FOFI, USB_OFF, SDMMC_OFF, ETH_OFF,
                                 EBU_OFF, CCU_ON, WDT_ON, FLASH_ON, PLL_ON, VCO_ON );
   pinMode( LED2, OUTPUT );
 
   TIMER_Init( 0 );  // Timer init, used to toggle LED2
 
-  RTC.setTime( hours, minutes, seconds );
-  RTC.setDate( day, month, year );
+  rtc.setTime( hours, minutes, seconds );
+  rtc.setDate( day, month, year );
 
   //Set alarm to go to sleep
-  RTC.setAlarmTime( 16, 0, 5 );
-  RTC.enableAlarm( RTC.ALARM );
-  RTC.attachInterrupt( alarmMatch );
+  rtc.setAlarmTime( 16, 0, 5 );
+  rtc.enableAlarm( rtc.ALARM );
+  rtc.attachInterrupt( alarmMatch );
 }
 
 void loop( )
@@ -54,7 +54,7 @@ void loop( )
   TIMER_Start( 8000000U );  // Start a timer
 
   if( state == 1 ){
-    RTC.setAlarmTime( 16, 0, 20 );  // Time to wake up
+    rtc.setAlarmTime( 16, 0, 20 );  // Time to wake up
     state = 2;            // Flag to wake up from sleep mode
     Serial.println( "Entering sleep mode" );
     delay( 100 );
