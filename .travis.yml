@@ -17,11 +17,25 @@ before_script:
 
 env:
   # defining this variable creates multiple jobs in Travis
+  # TODO keep these examples up-to-date with the ones in the core
   - PLATFORMIO_PROJECT_DIR=examples/arduino-blink
   - PLATFORMIO_PROJECT_DIR=examples/arduino-wire/master_reader
-  #- PLATFORMIO_PROJECT_DIR=examples/arduino-wire/master_writer
-  #- PLATFORMIO_PROJECT_DIR=examples/arduino-wire/slave_receiver
-  #- PLATFORMIO_PROJECT_DIR=examples/arduino-wire/slave_sender
+  - PLATFORMIO_PROJECT_DIR=examples/arduino-wire/master_writer
+  - PLATFORMIO_PROJECT_DIR=examples/arduino-wire/slave_receiver
+  - PLATFORMIO_PROJECT_DIR=examples/arduino-wire/slave_sender
+  - PLATFORMIO_PROJECT_DIR=examples/device-control/DieTemperatureMeasurement
+  - PLATFORMIO_PROJECT_DIR=examples/device-control/HeapMemoryMeasurement
+  - PLATFORMIO_PROJECT_DIR=examples/device-control/SleepModeXMC1100
+  - PLATFORMIO_PROJECT_DIR=examples/device-control/SleepModeXMC4700
+  - PLATFORMIO_PROJECT_DIR=examples/device-control/StackMemoryMeasurement
+  - PLATFORMIO_PROJECT_DIR=examples/ifx9201/MotorControl
+  - PLATFORMIO_PROJECT_DIR=examples/rtc/AlarmRTC
+  - PLATFORMIO_PROJECT_DIR=examples/rtc/HibernateRTCAlarm
+  - PLATFORMIO_PROJECT_DIR=examples/rtc/SimpleRTC
+  - PLATFORMIO_PROJECT_DIR=examples/spi/BarometricPressureSensor
+  - PLATFORMIO_PROJECT_DIR=examples/spi/DigitalPotControl
+  - PLATFORMIO_PROJECT_DIR=examples/ultrasonic/betterecho
+  - PLATFORMIO_PROJECT_DIR=examples/ultrasonic/simple-echo
 
 install:
   - zip -r /tmp/framework-arduinoxmc.zip ./arm  

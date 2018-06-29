@@ -171,19 +171,19 @@ public:
         concat(str);
         return (*this);
     }
-    /*
-        friend StringSumHelper & operator + (const StringSumHelper &lhs, const String &rhs);
-        friend StringSumHelper & operator + (const StringSumHelper &lhs, const char *cstr);
-        friend StringSumHelper & operator + (const StringSumHelper &lhs, char c);
-        friend StringSumHelper & operator + (const StringSumHelper &lhs, unsigned char num);
-        friend StringSumHelper & operator + (const StringSumHelper &lhs, int num);
-        friend StringSumHelper & operator + (const StringSumHelper &lhs, unsigned int num);
-        friend StringSumHelper & operator + (const StringSumHelper &lhs, long num);
-        friend StringSumHelper & operator + (const StringSumHelper &lhs, unsigned long num);
-        friend StringSumHelper & operator + (const StringSumHelper &lhs, float num);
-        friend StringSumHelper & operator + (const StringSumHelper &lhs, double num);
-        friend StringSumHelper & operator + (const StringSumHelper &lhs, const __FlashStringHelper *rhs);
-    */
+    
+    friend StringSumHelper & operator + (const StringSumHelper &lhs, const String &rhs);
+    friend StringSumHelper & operator + (const StringSumHelper &lhs, const char *cstr);
+    friend StringSumHelper & operator + (const StringSumHelper &lhs, char c);
+    friend StringSumHelper & operator + (const StringSumHelper &lhs, unsigned char num);
+    friend StringSumHelper & operator + (const StringSumHelper &lhs, int num);
+    friend StringSumHelper & operator + (const StringSumHelper &lhs, unsigned int num);
+    friend StringSumHelper & operator + (const StringSumHelper &lhs, long num);
+    friend StringSumHelper & operator + (const StringSumHelper &lhs, unsigned long num);
+    friend StringSumHelper & operator + (const StringSumHelper &lhs, float num);
+    friend StringSumHelper & operator + (const StringSumHelper &lhs, double num);
+    friend StringSumHelper & operator + (const StringSumHelper &lhs, const __FlashStringHelper *rhs);
+    
     // comparison (only works w/ Strings and "strings")
     operator StringIfHelperType() const
     {
