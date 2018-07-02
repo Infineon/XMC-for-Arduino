@@ -8,7 +8,7 @@
   This library can currently only be used with the XMC4700 Relax Kit 
   If you modify the library to work with other XMC versions, remove the following lines 
 */ 
-#ifndef XMC1 
+#if (UC_FAMILY != XMC4)
 #error This XMC board is not supported, only XMC4700 Relax Kit is supported 
 #endif 
 // End of Board Check 
@@ -16,7 +16,7 @@
 #include <RTC.h>
 
 /* Create an rtc object */
- RTCClass RTC;
+ RTCClass rtc;
 
 /* Change these values to set the current initial time */
  const byte seconds = 0;
@@ -32,26 +32,26 @@ void setup()
 {
    Serial.begin(9600);
 
-   RTC.begin(); // initialize RTC 24H format
+   rtc.begin(); // initialize RTC 24H format
 
-   RTC.setTime(hours, minutes, seconds);
-   RTC.setDate(day, month, year);
+   rtc.setTime(hours, minutes, seconds);
+   rtc.setDate(day, month, year);
 
-   RTC.setAlarmTime(16, 0, 10);
-   RTC.enableAlarm(RTC.ALARM);
+   rtc.setAlarmTime(16, 0, 10);
+   rtc.enableAlarm(rtc.ALARM);
    
-   RTC.attachInterrupt(alarmMatch);
+   rtc.attachInterrupt(alarmMatch);
 }
 
 void loop()
 {
 
    // Print time
-   print2digits(RTC.getHours());
+   print2digits(rtc.getHours());
    Serial.print(":");
-   print2digits(RTC.getMinutes());
+   print2digits(rtc.getMinutes());
    Serial.print(":");
-   print2digits(RTC.getSeconds());
+   print2digits(rtc.getSeconds());
 
    Serial.println();
 
