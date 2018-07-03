@@ -123,18 +123,18 @@ void SPIClass::end()
 	if((XMC_SPI_config->channel->CCR & USIC_CH_CCR_MODE_Msk) == XMC_USIC_CH_OPERATING_MODE_SPI)
 	{
 		XMC_GPIO_CONFIG_t default_input_port_config = {
-            mode : XMC_GPIO_MODE_INPUT_TRISTATE,
-            output_level : XMC_GPIO_OUTPUT_LEVEL_HIGH,
+            .mode = XMC_GPIO_MODE_INPUT_TRISTATE,
+            .output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH,
 #if UC_FAMILY == XMC1
-            input_hysteresis : XMC_GPIO_INPUT_HYSTERESIS_STANDARD
+            .input_hysteresis = XMC_GPIO_INPUT_HYSTERESIS_STANDARD
 #endif
         };
 		
 		XMC_GPIO_CONFIG_t default_output_port_config = {
-            mode : XMC_GPIO_MODE_OUTPUT_PUSH_PULL,
-            output_level : XMC_GPIO_OUTPUT_LEVEL_LOW,
+            .mode = XMC_GPIO_MODE_OUTPUT_PUSH_PULL,
+            .output_level = XMC_GPIO_OUTPUT_LEVEL_LOW,
 #if UC_FAMILY == XMC1
-            input_hysteresis : XMC_GPIO_INPUT_HYSTERESIS_STANDARD
+            .input_hysteresis = XMC_GPIO_INPUT_HYSTERESIS_STANDARD
 #endif
         };
 
