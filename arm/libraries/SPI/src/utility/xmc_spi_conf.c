@@ -49,8 +49,8 @@
 		},
 		.mosi_config      = {
 			.mode =XMC_GPIO_MODE_OUTPUT_PUSH_PULL_ALT7 ,
-			.input_hysteresis = XMC_GPIO_INPUT_HYSTERESIS_STANDARD,
-			.output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH
+			.output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH,
+			.input_hysteresis = XMC_GPIO_INPUT_HYSTERESIS_STANDARD
 		},
 		.miso             = {
 			.port = (XMC_GPIO_PORT_t*)PORT0_BASE,
@@ -67,8 +67,8 @@
 		},
 		.sclkout_config   = {
 			.mode = XMC_GPIO_MODE_OUTPUT_PUSH_PULL_ALT7,
-			.input_hysteresis = XMC_GPIO_INPUT_HYSTERESIS_STANDARD,
-			.output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH
+			.output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH,
+			.input_hysteresis = XMC_GPIO_INPUT_HYSTERESIS_STANDARD
 		}
 	};
 #else
@@ -87,8 +87,8 @@
 		},
 		.mosi_config      = {
 			.mode = XMC_GPIO_MODE_OUTPUT_PUSH_PULL_ALT7,
-			.input_hysteresis = XMC_GPIO_INPUT_HYSTERESIS_STANDARD,
-			.output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH
+			.output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH,
+			.input_hysteresis = XMC_GPIO_INPUT_HYSTERESIS_STANDARD
 		},
 		.miso             = {
 			.port = (XMC_GPIO_PORT_t*)PORT0_BASE,
@@ -105,8 +105,8 @@
 		},
 		.sclkout_config   = {
 			.mode = XMC_GPIO_MODE_OUTPUT_PUSH_PULL_ALT7,
-			.input_hysteresis = XMC_GPIO_INPUT_HYSTERESIS_STANDARD,
-			.output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH
+			.output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH,
+			.input_hysteresis = XMC_GPIO_INPUT_HYSTERESIS_STANDARD
 		}
 	};
 #endif // defined(2GO_SWAP_MOSI_MISO)
@@ -127,8 +127,8 @@ XMC_SPI_t XMC_SPI_0 =
     },
     .mosi_config      = {
         .mode = XMC_GPIO_MODE_OUTPUT_PUSH_PULL_ALT6,
-        .input_hysteresis = XMC_GPIO_INPUT_HYSTERESIS_STANDARD,
-        .output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH
+        .output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH,
+        .input_hysteresis = XMC_GPIO_INPUT_HYSTERESIS_STANDARD
     },
     .miso             = {
         .port = (XMC_GPIO_PORT_t*)PORT1_BASE,
@@ -145,8 +145,8 @@ XMC_SPI_t XMC_SPI_0 =
     },
     .sclkout_config   = {
         .mode = XMC_GPIO_MODE_OUTPUT_PUSH_PULL_ALT6,
-        .input_hysteresis = XMC_GPIO_INPUT_HYSTERESIS_STANDARD,
-        .output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH
+        .output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH,
+        .input_hysteresis = XMC_GPIO_INPUT_HYSTERESIS_STANDARD
     }
 };
 
@@ -166,8 +166,8 @@ XMC_SPI_t XMC_SPI_0 =
     },
     .mosi_config      = {
         .mode = XMC_GPIO_MODE_OUTPUT_PUSH_PULL_ALT6,
-        .input_hysteresis = XMC_GPIO_INPUT_HYSTERESIS_STANDARD,
-        .output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH
+        .output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH,
+        .input_hysteresis = XMC_GPIO_INPUT_HYSTERESIS_STANDARD
     },
     .miso             = {
         .port = (XMC_GPIO_PORT_t*)PORT1_BASE,
@@ -184,8 +184,8 @@ XMC_SPI_t XMC_SPI_0 =
     },
     .sclkout_config   = {
         .mode = XMC_GPIO_MODE_OUTPUT_PUSH_PULL_ALT6,
-        .input_hysteresis = XMC_GPIO_INPUT_HYSTERESIS_STANDARD,
-        .output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH
+        .output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH,
+        .input_hysteresis = XMC_GPIO_INPUT_HYSTERESIS_STANDARD
     }
 };
 
