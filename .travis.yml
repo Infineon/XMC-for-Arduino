@@ -10,11 +10,6 @@ addons:
     - lib32ncurses5
     - lib32z1
     
-before_script:
-  - wget https://github.com/Infineon/Assets/releases/download/current/gcc-arm-none-eabi-5_4-2016q3-20160926-linux.-d-.tar.bz2 -O /tmp/gcc-arm-none-eabi.tar.bz2
-  - tar -xjf /tmp/gcc-arm-none-eabi.tar.bz2
-  - export PATH=$PATH:$PWD/gcc-arm-none-eabi-5_4-2016q3/bin/
-
 env:
   # defining this variable creates multiple jobs in Travis
   # TODO keep these examples up-to-date with the ones in the core
@@ -45,7 +40,8 @@ install:
   - rm platform.json
   - jq '.packages."framework-arduinoxmc".version = "file:///tmp/framework-arduinoxmc.zip"' <<<"$platform_json" > platform.json
 
-  - pip install -U https://github.com/platformio/platformio/archive/develop.zip
+  - pip install -U platformio
+  - platformio update
   - platformio platform install -f file://. 
 
 script:
