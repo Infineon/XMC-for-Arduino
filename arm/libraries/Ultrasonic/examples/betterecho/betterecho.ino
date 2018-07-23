@@ -2,6 +2,10 @@
    Based on public domain code from
    http://www.pcserviceselectronics.co.uk/arduino/Ultrasonic/betterecho.php
 
+   Modified to use on board LED library to work better over all boards
+   Paul Carpenter, PC Services
+   22-July-2018
+
    Paul Carpenter, PC Services
    25-April-2018
 
@@ -37,6 +41,11 @@
    In order to reduce code size and execution time values are kept as integers
    and factor of 58 to calculate distances
 */
+/* For on board LEDs */
+#include <LED.h>
+
+/* Create an LED object */
+LED Led;
 
 /* Pin definitions */
 #define echopin    4
@@ -140,10 +149,10 @@ digitalWrite( trigpin, LOW );
 pinMode( echopin, INPUT );
 
 /* Configure LED drive and both LEDs On at start up */
-pinMode( noReading, OUTPUT );
-pinMode( closeled, OUTPUT );
-digitalWrite( noReading, HIGH );
-digitalWrite( closeled, HIGH );
+Led.Add( noReading );
+Led.Add( closeled );
+Led.On( noReading );
+Led.On( closeled );
 
 /* Send signon message */
 Serial.println( "PC Services - Better Range test" );
@@ -164,8 +173,8 @@ new_time = millis( );           // check if to run this time
 if( new_time >= next_time )
   {
   /* Turn LEDs Off */
-  digitalWrite( noReading, HIGH );
-  digitalWrite( closeled, HIGH );
+  Led.Off( noReading );
+  Led.Off( closeled );
   
   /* Calculate distance */
   echotime = GetEchoTime( );
@@ -191,12 +200,12 @@ if( new_time >= next_time )
   /* catch errors on LEDs */
   if( distance > MAX_RANGE || echotime <= MAX_ERROR )
     {
-    digitalWrite( noReading, LOW );            // Range error too large
+    Led.On( noReading );            // Range error too large
     if( echotime <= MAX_ERROR )
-      digitalWrite( closeled, LOW );           // Light 2nd LED for timeout etc error
+      Led.On( closeled );           // Light 2nd LED for timeout etc error
     }
   if( distance < MIN_RANGE )
-    digitalWrite( closeled, LOW );             // Range too close
+    Led.On( closeled );             // Range too close
 
   next_time = new_time + INTERVAL;       // save next time to run
   }

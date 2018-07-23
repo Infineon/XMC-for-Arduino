@@ -33,10 +33,13 @@
 //****************************************************************************
 // @Defines
 //****************************************************************************
-#define XMC_BOARD           XMC1300_Sense2GoL
+// XMC_BOARD for stringifying into serial or other text outputs/logs
+// Note the actual name XMC and number MUST have a character between 
+// to avoid issues with other defined macros e.g. XMC1100
+#define XMC_BOARD           XMC 1300 Sense2GoL
+/* On board LED is ON when digital output is 0, LOW, False, OFF */
+#define  XMC_LED_ON         0
 
-//#define NUM_DIGITAL_PINS 	18
-// does not match comments in mapping_port_pin
 #define NUM_ANALOG_INPUTS 	2
 #define NUM_PWM 			4
 #define NUM_LEDS 			3
@@ -45,6 +48,9 @@
 // Following could be 4 unless add/delete task has issues
 #define NUM_TONE_PINS       0
 #define NUM_TASKS_VARIANT   8
+
+// Indicate unit has RTC/Alarm
+#define HAS_RTC             1
 
 #define PWM4_TIMER_PERIOD (2041U)  // Generate 490Hz @fCCU=1MHz
 

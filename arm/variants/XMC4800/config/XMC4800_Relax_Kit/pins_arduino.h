@@ -30,9 +30,13 @@ Boston, MA  02111-1307  USA
 //****************************************************************************
 // @Defines
 //****************************************************************************
-#define XMC_BOARD           XMC4800_Relax_Kit
+// XMC_BOARD for stringifying into serial or other text outputs/logs
+// Note the actual name XMC and number MUST have a character between 
+// to avoid issues with other defined macros e.g. XMC1100
+#define XMC_BOARD           XMC 4800 Relax Kit
+/* On board LED is ON when digital output is 0, LOW, False, OFF */
+#define  XMC_LED_ON         0
 
-//#define NUM_DIGITAL_PINS    18
 #define NUM_ANALOG_INPUTS   6
 #define NUM_PWM             6
 #define NUM_LEDS            2
@@ -40,6 +44,9 @@ Boston, MA  02111-1307  USA
 #define NUM_SERIAL          2
 #define NUM_TONE_PINS       16
 #define NUM_TASKS_VARIANT   32
+
+// Indicate unit has RTC/Alarm
+#define HAS_RTC             1
 
 // Board has two serial ports pre-assigned to debug and on-board
 
