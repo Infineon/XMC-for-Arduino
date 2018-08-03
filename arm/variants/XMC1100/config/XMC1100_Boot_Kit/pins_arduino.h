@@ -30,7 +30,12 @@
 //****************************************************************************
 // @Defines
 //****************************************************************************
-#define XMC_BOARD           XMC1100_Boot_Kit
+// XMC_BOARD for stringifying into serial or other text outputs/logs
+// Note the actual name XMC and number MUST have a character between 
+// to avoid issues with other defined macros e.g. XMC1100
+#define XMC_BOARD           XMC 1100 Boot Kit
+/* On board LED is ON when digital output is 0, LOW, False, OFF */
+#define  XMC_LED_ON         0
 
 //#define NUM_DIGITAL_PINS    18
 #define NUM_ANALOG_INPUTS   6
@@ -40,6 +45,9 @@
 #define NUM_SERIAL          1
 #define NUM_TONE_PINS       4
 #define NUM_TASKS_VARIANT   8
+
+// Indicate unit has RTC/Alarm for simpler RTC control
+#define HAS_RTC
 
 // Defines will be either set by ArduinoIDE in the menu or manually
 #ifdef SERIAL_HOSTPC

@@ -34,7 +34,12 @@
 //****************************************************************************
 // @Defines
 //****************************************************************************
-#define XMC_BOARD           XMC1100_H_BRIDGE2GO
+// XMC_BOARD for stringifying into serial or other text outputs/logs
+// Note the actual name XMC and number MUST have a character between 
+// to avoid issues with other defined macros e.g. XMC1100
+#define XMC_BOARD           XMC 1100 H-BRIDGE2GO
+/* On board LED is ON when digital output is 1, HIGH, TRUE, ON */
+#define  XMC_LED_ON         1
 
 //#define NUM_DIGITAL_PINS    12
 #define NUM_ANALOG_INPUTS   2
@@ -44,6 +49,9 @@
 #define NUM_SERIAL          1
 #define NUM_TONE_PINS       2
 #define NUM_TASKS_VARIANT   8
+
+// Indicate unit has RTC/Alarm
+#define HAS_RTC             1
 
 // Defines will be either set by ArduinoIDE in the menu or manually
 #ifdef SERIAL_HOSTPC
