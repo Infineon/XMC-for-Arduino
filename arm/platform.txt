@@ -16,6 +16,8 @@ compiler.warning_flags.all=-Wall -Wextra
 compiler.path={runtime.tools.arm-none-eabi-gcc.path}/bin/
 compiler.cmsys_rc2_include.path={runtime.platform.path}/cores/xmc_lib
 compiler.cmsys_include.path={compiler.cmsys_rc2_include.path}/CMSIS/Include
+compiler.dsp_include.path={compiler.cmsys_rc2_include.path}/CMSIS/DSP/Include
+
 
 build.core.path ={runtime.platform.path}/core
 build.variant.path ={runtime.platform.path}/variants/{build.variant}
@@ -24,7 +26,7 @@ build.flash_ld_path ={build.variant.path}/{build.flash_ld}
 build.assembly_file ={build.variant.path}/Startup_{build.variant}.S
 
 compiler.c.cmd=arm-none-eabi-gcc
-compiler.c.flags=-mcpu={build.mcu} -mthumb -c -g -Os {compiler.warning_flags} -std=gnu11 -ffunction-sections -fdata-sections -nostdlib --param max-inline-insns-single=500 -MMD
+compiler.c.flags=-mcpu={build.mcu} -mthumb -fpermissive -c -g -Os {compiler.warning_flags} -std=gnu11 -ffunction-sections -fdata-sections -nostdlib --param max-inline-insns-single=500 -MMD
 compiler.c.extra_flags= 
 compiler.c.elf.cmd=arm-none-eabi-gcc
 compiler.c.elf.flags=-Os -Wl,--gc-sections -save-temps
@@ -33,7 +35,7 @@ compiler.S.cmd=arm-none-eabi-gcc
 compiler.S.flags=-c -g -x assembler-with-cpp
 compiler.S.extra_flags=-w
 compiler.cpp.cmd=arm-none-eabi-g++
-compiler.cpp.flags=-mcpu={build.mcu} -mthumb -c -g -Os {compiler.warning_flags} -std=gnu++11 -ffunction-sections -fdata-sections -fno-threadsafe-statics -nostdlib --param max-inline-insns-single=500 -fno-rtti -fno-exceptions -MMD
+compiler.cpp.flags=-mcpu={build.mcu} -mthumb -fpermissive -c -g -Os {compiler.warning_flags} -std=gnu++11 -ffunction-sections -fdata-sections -fno-threadsafe-statics -nostdlib --param max-inline-insns-single=500 -fno-rtti -fno-exceptions -MMD
 compiler.cpp.extra_flags=
 compiler.ar.cmd=arm-none-eabi-ar
 compiler.ar.flags=rcs
@@ -43,10 +45,10 @@ compiler.objcopy.eep.flags=-O ihex -j .eeprom --set-section-flags=.eeprom=alloc,
 compiler.elf2hex.flags=-O ihex
 compiler.elf2hex.extra_flags=
 compiler.elf2hex.cmd=arm-none-eabi-objcopy
-compiler.ldflags=-mcpu={build.mcu} -mthumb -Wl,--cref -Wl,--check-sections -Wl,--gc-sections -Wl,--unresolved-symbols=report-all -Wl,--warn-common -Wl,--warn-section-align
+#compiler.ldflags=-mcpu={build.mcu} -mthumb -Wl,--cref -Wl,--check-sections -Wl,--gc-sections -Wl,--unresolved-symbols=report-all -Wl,--warn-common -Wl,--warn-section-align --specs=nano.specs --specs=nosys.specs
 compiler.size.cmd=arm-none-eabi-size
 compiler.define=-DARDUINO=
-compiler.arm.cmsis.path=  "-I{compiler.cmsys_rc2_include.path}/XMCLib/inc"   "-I{compiler.cmsys_include.path}"  "-I{compiler.cmsys_rc2_include.path}/LIBS"  "-I{build.variant.path}"  "-I{build.variant.config_path}"
+compiler.arm.cmsis.path=  "-I{compiler.cmsys_rc2_include.path}/XMCLib/inc"  "-I{compiler.dsp_include.path}"  "-I{compiler.cmsys_include.path}"  "-I{compiler.cmsys_rc2_include.path}/LIBS"  "-I{build.variant.path}"  "-I{build.variant.config_path}"
 compiler.avr_support.path=  "-I{build.core.path}/avr" 
 
 # this can be overriden in boards.txt
@@ -79,7 +81,7 @@ archive_file_path={build.path}/{archive_file}
 recipe.ar.pattern="{compiler.path}{compiler.ar.cmd}" {compiler.ar.flags} {compiler.ar.extra_flags} "{archive_file_path}" "{object_file}"
 
 ## Combine gc-sections, archives, and objects
-recipe.c.combine.pattern="{compiler.path}{compiler.c.elf.cmd}" -mcpu={build.mcu} -mthumb {compiler.c.elf.flags} "-T{build.variant.path}/linker_script.ld" "-Wl,-Map,{build.path}/{build.project_name}.map" {compiler.c.elf.extra_flags} -o "{build.path}/{build.project_name}.elf" "-L{build.path}" -Wl,--cref -Wl,--check-sections -Wl,--gc-sections -Wl,--entry=Reset_Handler -Wl,--unresolved-symbols=report-all -Wl,--warn-common -Wl,--warn-section-align {object_files} "{build.path}/{archive_file}" --specs=nano.specs --specs=nosys.specs -lm 
+recipe.c.combine.pattern="{compiler.path}{compiler.c.elf.cmd}" -mthumb --specs=nosys.specs --specs=nano.specs -mcpu={build.mcu} {compiler.c.elf.flags} "-T{build.variant.path}/linker_script.ld" "-Wl,-Map,{build.path}/{build.project_name}.map" {compiler.c.elf.extra_flags} -o "{build.path}/{build.project_name}.elf" "-L{build.path}" -Wl,--cref -Wl,--check-sections -Wl,--gc-sections -Wl,--entry=Reset_Handler -Wl,--unresolved-symbols=report-all -Wl,--warn-common -Wl,--warn-section-align {object_files} "{build.path}/{archive_file}" -lm 
 
 ## Create output (bin file)
 recipe.objcopy.bin.pattern="{compiler.path}{compiler.elf2hex.cmd}" {compiler.elf2hex.flags} {compiler.elf2hex.extra_flags} "{build.path}/{build.project_name}.elf" "{build.path}/{build.project_name}.hex"
