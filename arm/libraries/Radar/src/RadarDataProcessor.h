@@ -20,8 +20,8 @@
 // #define FREQ_WIDTH SENSE2GO_SAMPLING_RATE / SENSE2GO_BUFFER_SIZE
 // (km/h) / Hz
 #define RATIO_FREQ_TO_SPEED 0.0225
+#define RADAR_MAX_BUFFER_SIZE 256
 
-// TODO return all the info in one single callback function?
 typedef struct
 {
   bool detectSpeed;
@@ -30,9 +30,9 @@ typedef struct
 
 typedef struct
 {
-  int16_t *dataI;
-  int16_t *dataQ;
-  int16_t *magnitudes; // power spectrum
+  int16_t dataI[RADAR_MAX_BUFFER_SIZE];
+  int16_t dataQ[RADAR_MAX_BUFFER_SIZE];
+  int16_t magnitudes[RADAR_MAX_BUFFER_SIZE]; // power spectrum
   float speed;
   int max_magnitude;
   int motion;
@@ -58,8 +58,10 @@ class RadarDataProcessorClass
 protected:
   int _interruptTimer;
 
-  // TODO replace with base class & init child class
+  // TODO pre-define all classes
+  BGT24LTR11 _bgt24ltr11;
   BGTRadar *_radar;
+
   RADAR_t _radarType;
   ALGORITHM_t _algo;
 
@@ -73,7 +75,7 @@ protected:
 
   float _freqWidth;
 
-  int16_t *_hanningWindow;
+  int16_t _hanningWindow[RADAR_MAX_BUFFER_SIZE];
 
   int _timer;
 
@@ -104,7 +106,7 @@ public:
   bool _available;
 
   // FFT buffer
-  int16_t *_imag;
+  int16_t _imag[RADAR_MAX_BUFFER_SIZE];
 
   RadarDataProcessorClass();
 

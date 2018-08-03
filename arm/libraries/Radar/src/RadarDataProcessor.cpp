@@ -5,7 +5,9 @@ RadarDataProcessorClass::RadarDataProcessorClass()
     _fft = FFTAnalyzer();
     _maxMagFreq = {0, 0};
     _algo = {false, false};
-    _result = {nullptr, nullptr, nullptr, 0.0, 0, 0};
+    _result.speed = 0.0;
+    _result.max_magnitude = 0;
+    _result.motion = 0;
 }
 
 RadarDataProcessorClass::~RadarDataProcessorClass()
@@ -20,7 +22,6 @@ bool RadarDataProcessorClass::available()
 
 void RadarDataProcessorClass::initHanningWindow(uint8_t windowLength)
 {
-    _hanningWindow = new int16_t[_radarBufferSize];
     // w(n) = 0.5 (1-cos(2*pi*n/(N-1))), 0<=n<=(N-1)
     float frac = TWO_PI / (windowLength - 1);
     for (int i = 0; i < windowLength; i++)
@@ -35,16 +36,12 @@ void RadarDataProcessorClass::begin()
 
     _radar->begin();
 
-    // initialize buffer
+    // initialize buffer -- not necessary with fixed buffer size
     _radarBufferSize = (_radar->_config).radar_buffersize;
     _fftOrder = log2(_radarBufferSize);
     if (_radarBufferSize <= 0)
         return;
 
-    _result.dataI = new int16_t[_radarBufferSize];
-    _result.dataQ = new int16_t[_radarBufferSize];
-    _result.magnitudes = new int16_t[_radarBufferSize];
-    _imag = new int16_t[_radarBufferSize];
     initHanningWindow(_radarBufferSize);
     _freqWidth = (_radar->_config).sampling_rate / _radarBufferSize;
 
@@ -78,8 +75,8 @@ void RadarDataProcessorClass::begin(RADAR_t radarType, void (*cb)(RESULT_t *resu
     switch (_radarType)
     {
     case RADAR_BGT24LTR11:
-    //CAUSES LINKING BUG
-        _radar = new BGT24LTR11();
+        _bgt24ltr11 = BGT24LTR11();
+        _radar = &_bgt24ltr11;
         break;
     default:
         // error: wrong data type
@@ -90,15 +87,8 @@ void RadarDataProcessorClass::begin(RADAR_t radarType, void (*cb)(RESULT_t *resu
 
 void RadarDataProcessorClass::end()
 {
-    // delete radar?
     deleteTask(RadarDataProcessorClass::samplingTask);
     deleteTask(RadarDataProcessorClass::algoTask);
-
-    delete[] _result.dataI;
-    delete[] _result.dataQ;
-    delete[] _result.magnitudes;
-    delete[] _imag;
-    delete[] _hanningWindow;
 }
 
 void RadarDataProcessorClass::startAcq(void)
@@ -267,11 +257,3 @@ void RadarDataProcessorClass::configureRadar(BGT_RADAR_CONFIG_t config)
 }
 
 RadarDataProcessorClass RadarDataProcessor = RadarDataProcessorClass();
-
-// without this dummy call Arduino IDE complains undefined reference to `_sbrk'; PlatformIO does not need this
-extern "C" void *_sbrk(int incr);
-void dummy_sbrk_caller() __attribute__((__used__));
-void dummy_sbrk_caller()
-{
-  _sbrk(0);
-}
