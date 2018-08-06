@@ -2,6 +2,10 @@
    It's been tested with an XMC4700 relax kit and should also work with other 4000 boards. However it can't be run on XMC1100 boards.
  */
 
+#if (UC_FAMILY == XMC1)
+#error "USB not supported on this board"
+#else
+  
 #include <FFTAnalyzer.h>
 #include <I2S.h>
 
@@ -54,3 +58,4 @@ void loop()
     last_flag = detected_flag;
   }
 }
+#endif

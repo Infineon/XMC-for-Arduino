@@ -17,8 +17,10 @@
 
 #define TWO_PI 6.28318530718
 
-// #define FREQ_WIDTH SENSE2GO_SAMPLING_RATE / SENSE2GO_BUFFER_SIZE
-// (km/h) / Hz
+/**
+ * @brief Constant for convert Doppler frequency to speed. (10 km/h)/(444.4 Hz) = 0.0225
+ * 
+ */
 #define RATIO_FREQ_TO_SPEED 0.0225
 #define RADAR_MAX_BUFFER_SIZE 256
 
@@ -58,7 +60,7 @@ class RadarDataProcessorClass
 protected:
   int _interruptTimer;
 
-  // TODO pre-define all classes
+  // TODO: pre-define all classes, BGT24MTR11 etc.
   BGT24LTR11 _bgt24ltr11;
   BGTRadar *_radar;
 
@@ -105,7 +107,10 @@ protected:
 public:
   bool _available;
 
-  // FFT buffer
+  /**
+   * @brief Buffer to store the imaginary parts of the FFT spectrum
+   * 
+   */
   int16_t _imag[RADAR_MAX_BUFFER_SIZE];
 
   RadarDataProcessorClass();
@@ -114,11 +119,18 @@ public:
 
   bool available();
 
+  /**
+   * @brief Turns on the radar chip and starts sampling
+   * 
+   * @param radarType Type of the radar, e.g., RADAR_BGT24LTR11.
+   * @param cb Callback function whose argument is the pointer to the computation results (FFT spectrum, object speed, etc) of the raw I/Q data
+   */
   void begin(RADAR_t radarType, void (*cb)(RESULT_t *result) = nullptr);
 
-  // use serial input to select mode
-  void setMode(ALGORITHM_t algorithm);
-
+  /**
+   * @brief Stops the radar. Needs to be called before reconfigure radar parameters.
+   * 
+   */
   void end();
 
   void enableMotionDetection();
