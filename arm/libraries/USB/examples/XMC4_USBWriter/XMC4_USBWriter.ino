@@ -1,4 +1,7 @@
-/*This example demonstrates how to realize a simple two-way communication with USB. Open COM22 and enter c, then the 26 letters should be printed
+/*
+  Hint: after uploading, you need to reconnect the relax kit with the other port that is not used for uploading sketch; you can also let both ports connected
+  
+  This example demonstrates how to realize a simple two-way communication with USB. Open COM22 and enter c, then the 26 letters should be printed
   This example can have problem when run with the task mechanism (startTask()), if nothing works better polling should be used*/
 
 #if (UC_FAMILY == XMC1)

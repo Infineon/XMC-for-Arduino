@@ -5,11 +5,9 @@
 
  Controls the mouse from pushbuttons.
 
- The mouse movement is always relative. This sketch reads
- four pushbuttons, and uses them to set the movement of the mouse.
+ The mouse movement is always relative. This sketch reads four pushbuttons, and uses them to set the movement of the mouse.
 
- WARNING:  When you use the Mouse.move() command, the Arduino takes
- over your mouse!  Make sure you have control before you use the mouse commands.
+ Hint: after uploading, you need to reconnect the relax kit with the other port that is not used for uploading sketch; you can also let both ports connected
 
  this code is in the public domain
 
