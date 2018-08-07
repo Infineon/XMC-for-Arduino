@@ -22,11 +22,16 @@
  * 
  *  SCL (for channel selection) on the breakout can be left unconnected if only one microphone is used. When 2 microphones are connected, the SCL ports on the microphones should be
  *  pulled low/high respectively for transmission on left/right channels.
+ * 
  *
  *	@subsection Implementation
  *  This library uses interrupts to read data from a microphone. The microcontroller generates a WA (word address, or WS for word select) which is output to LRCL port of the microphone.
  *  This signal controls the timing of data transmission. On the rising edge of the WA signal the right channel transmits and on the falling edge the left channel transmits. Therefore interrupts
  *  are enabled for both falling and rising edge, which starts the reading of sensor data from the FIFO buffer. 
+ * 
+ *  @subsection Future work
+ *  This library, however, is not working properly with the preliminary silicon microphone shield from Infineon. The data sampled experience severe glichtes, for which the easiest solution 
+ *  would be to manually filter out the bad samples.
  * 
  */
 

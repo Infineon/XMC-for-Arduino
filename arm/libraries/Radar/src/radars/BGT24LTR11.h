@@ -68,7 +68,7 @@
  * this constant, as well as the cycle time, is set appropriately (from my experiments it should be around 200 ms, then the cycle time should be more than 300 ms). This has no effect if the chip is left on all time.
  * 
  */
-#define SENSE2GO_SETTLE_TIME 180000
+#define SENSE2GO_SETTLE_TIME 220000
 
 class BGT24LTR11 : public BGTRadar
 {

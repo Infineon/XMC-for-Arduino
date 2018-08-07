@@ -1,7 +1,7 @@
 /*Caution: this example has only been tested with XMC4700 relax kit.*/
 
 #if (UC_FAMILY == XMC1)
-#error "USB not supported on this board"
+#error "CMSIS DSP not supported on this board"
 #else
   
 #include <MFCC.h>

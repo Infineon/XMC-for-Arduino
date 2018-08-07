@@ -1,6 +1,6 @@
 
 #if (UC_FAMILY == XMC1)
-#error "USB not supported on this board"
+#error "CMSIS DSP not supported on this board"
 #else
   
 #include "staticAudioInput.h"

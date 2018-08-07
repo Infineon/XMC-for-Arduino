@@ -148,7 +148,6 @@ XMC1300_Sense2GoL.upload.tool=xmcprog
 XMC1300_Sense2GoL.upload.speed=115200
 XMC1300_Sense2GoL.upload.resetmethod=ck
 XMC1300_Sense2GoL.upload.maximum_size=125160
-XMC1300_Sense2GoL.upload.maximum_data_size=4920
 XMC1300_Sense2GoL.upload.wait_for_upload_port=true
 
 XMC1300_Sense2GoL.communication=usb
