@@ -66,7 +66,7 @@
 
 #ifndef ENDPOINTSTREAM_XMC4000_H_
 #define ENDPOINTSTREAM_XMC4000_H_
-
+#if defined(USB0)
 		#include "../../Common/Common.h"
 		#include "../USBMode.h"
 		#include "../USBTask.h"
@@ -435,5 +435,5 @@
 #endif
 
 #endif /* USBD_ENDPOINTSTREAM_XMC4000_H_ */
-
+#endif
 /** @} */

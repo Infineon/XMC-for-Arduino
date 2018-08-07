@@ -65,7 +65,7 @@
 
 #ifndef ENDPOINT_XMC4000_H_
 #define ENDPOINT_XMC4000_H_
-
+#if defined(USB0)
 		#include "../../Common/Common.h"
 		#include "../USBTask.h"
 		#include "../USBInterrupt.h"
@@ -407,3 +407,4 @@
 /** @} */
 
 #endif /* ENDPOINT_XMC4000_H_ */
+#endif

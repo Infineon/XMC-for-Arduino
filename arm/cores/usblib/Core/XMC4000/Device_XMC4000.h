@@ -62,7 +62,7 @@
 
 #ifndef __USBDEVICE_XMC4000_H__
 #define __USBDEVICE_XMC4000_H__
-
+#if defined(USB0)
 	/* Includes: */
         #include "../../Common/Common.h"
 		#include "../USBController.h"
@@ -126,6 +126,6 @@
 		#endif
             
 #endif /* __USBDEVICE_XMC4000_H__ */
-
+#endif
 /** @} */
 

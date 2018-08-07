@@ -27,7 +27,7 @@
   arising out of or in connection with the use or performance of
   this software.
 */
-
+#if defined(USB0) 
 #define  __INCLUDE_FROM_USBTASK_C
 #define  __INCLUDE_FROM_USB_DRIVER
 #include "USBTask.h"
@@ -87,3 +87,4 @@ static void USB_HostTask(void)
 }
 #endif
 
+#endif

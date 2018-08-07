@@ -60,7 +60,7 @@
 
 #ifndef _HID_CLASS_H_
 #define _HID_CLASS_H_
-
+#if defined(USB0) 
 	/* Macros: */
 		#define __INCLUDE_FROM_USB_DRIVER
 		#define __INCLUDE_FROM_HID_DRIVER
@@ -77,6 +77,6 @@
 		#endif
 
 #endif
-
+#endif
 /** @} */
 

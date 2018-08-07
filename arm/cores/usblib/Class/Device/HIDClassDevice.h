@@ -52,7 +52,7 @@
 
 #ifndef _HID_CLASS_DEVICE_H_
 #define _HID_CLASS_DEVICE_H_
-
+#if defined(USB0)
 	/* Includes: */
 		#include "../../usblib.h"
 		#include "../Common/HIDClassCommon.h"
@@ -204,6 +204,6 @@
 			}
 		#endif
 #endif
-
+#endif
 /** @} */
 

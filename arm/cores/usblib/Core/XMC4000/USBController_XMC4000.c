@@ -27,7 +27,7 @@
   arising out of or in connection with the use or performance of
   this software.
 */
-
+#if defined(USB0)
 #include "../../Common/Common.h"
 
 #define  __INCLUDE_FROM_USB_DRIVER
@@ -558,3 +558,4 @@ void USBD_SetEndpointBuffer(uint8_t addr,uint8_t *buf,uint16_t len) {
 	}
 }
 
+#endif

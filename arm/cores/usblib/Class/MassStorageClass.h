@@ -59,7 +59,7 @@
 
 #ifndef _MS_CLASS_H_
 #define _MS_CLASS_H_
-
+#if defined(USB0)
 	/* Macros: */
 		#define __INCLUDE_FROM_USB_DRIVER
 		#define __INCLUDE_FROM_MS_DRIVER
@@ -76,6 +76,6 @@
 		#endif
 
 #endif
-
+#endif
 /** @} */
 

@@ -38,7 +38,7 @@
  *
  * @brief Source file for LUFA Endpoint Streaming functions
  */
-
+#if defined(USB0)
 #include "../../Common/Common.h"
 
 #define  __INCLUDE_FROM_USB_DRIVER
@@ -302,5 +302,5 @@ uint8_t Endpoint_Null_Stream(uint16_t Length,
 		}
 		return ENDPOINT_RWSTREAM_NoError;
 }
-
+#endif
 #endif

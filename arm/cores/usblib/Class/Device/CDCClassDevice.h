@@ -70,7 +70,7 @@
 
 #ifndef _CDC_CLASS_DEVICE_H_
 #define _CDC_CLASS_DEVICE_H_
-
+#if defined(USB0)
 	/* Includes: */
 		#include "../../usblib.h"
 		#include "../Common/CDCClassCommon.h"
@@ -342,6 +342,6 @@
 		#endif
 
 #endif
-
+#endif
 /** @} */
 

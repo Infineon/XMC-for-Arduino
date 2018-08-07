@@ -27,7 +27,7 @@
   arising out of or in connection with the use or performance of
   this software.
 */
-
+#if defined(USB0)
 #define  __INCLUDE_FROM_USB_DRIVER
 #include "../../Core/USBMode.h"
 
@@ -347,4 +347,4 @@ __WEAK void EVENT_CDC_Device_BreakSent(USB_ClassInfo_CDC_Device_t* const CDCInte
 
 
 #endif
-
+#endif

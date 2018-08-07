@@ -47,9 +47,10 @@
 
 #ifndef __USBCONTROLLER_XMC4000_H__
 #define __USBCONTROLLER_XMC4000_H__
-        
+#if defined(USB0)       
     /* Includes: */
     #include <xmc_usbd.h>
+    
 		#include "../../Common/Common.h"
 		#include "../USBMode.h"
 		#include "../Events.h"
@@ -279,7 +280,7 @@
 		#if defined(__cplusplus)
 			}
 		#endif
-
+#endif  
 #endif
 
 /** @} */

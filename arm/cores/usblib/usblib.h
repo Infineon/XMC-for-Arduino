@@ -374,7 +374,7 @@
 
 #ifndef __USB_H__
 #define __USB_H__
-
+#if defined(USB0) 
 	/* Macros: */
 		#define __INCLUDE_FROM_USB_DRIVER
 
@@ -412,4 +412,4 @@
 		#include "Class/MassStorageClass.h"
 
 #endif
-
+#endif

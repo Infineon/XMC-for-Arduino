@@ -38,6 +38,7 @@
  *
  * @brief Source file for LUFA endpoint functions
  */
+#if defined(USB0)
 #include "../../Common/Common.h"
 #define  __INCLUDE_FROM_USB_DRIVER
 #include "../USBmode.h"
@@ -246,4 +247,5 @@ bool Endpoint_ConfigureEndpointTable(const USB_Endpoint_Table_t* const Table,
 	return true;
 }
 
+#endif
 #endif

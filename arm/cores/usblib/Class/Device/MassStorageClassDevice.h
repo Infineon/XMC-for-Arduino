@@ -52,7 +52,7 @@
 
 #ifndef _MS_CLASS_DEVICE_H_
 #define _MS_CLASS_DEVICE_H_
-
+#if defined(USB0)
 	/* Includes: */
 		#include "../../usblib.h"
 		#include "../Common/MassStorageClassCommon.h"
@@ -156,6 +156,6 @@
 		#endif
 
 #endif
-
+#endif
 /** @} */
 
