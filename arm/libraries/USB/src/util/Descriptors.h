@@ -39,7 +39,7 @@
 extern "C" {
 #endif
 	/* Includes: */
-		#include "./usblib/usblib.h"
+		#include <usblib.h>
 
 	/* Macros: */
 		/** Endpoint number of the CDC device-to-host notification IN endpoint. */

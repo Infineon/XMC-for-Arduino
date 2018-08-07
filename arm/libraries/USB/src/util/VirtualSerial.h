@@ -41,7 +41,7 @@ extern "C"
 #endif
   /* Includes: */
 #include "Descriptors.h"
-#include "./usblib/usblib.h"
+#include <usblib.h>
 
   /* Global variables: */
   extern const XMC_SCU_CLOCK_CONFIG_t clk_config;

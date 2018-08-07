@@ -50,6 +50,7 @@ compiler.size.cmd=arm-none-eabi-size
 compiler.define=-DARDUINO=
 compiler.arm.cmsis.path=  "-I{compiler.cmsys_rc2_include.path}/XMCLib/inc"  "-I{compiler.dsp_include.path}"  "-I{compiler.cmsys_include.path}"  "-I{compiler.cmsys_rc2_include.path}/LIBS"  "-I{build.variant.path}"  "-I{build.variant.config_path}"
 compiler.avr_support.path=  "-I{build.core.path}/avr" 
+compiler.usb.path = "-I{runtime.platform.path}/cores/usblib"
 
 # this can be overriden in boards.txt
 flag.selected=UNDEFINED_DEBUG
@@ -68,12 +69,12 @@ build.usb_manufacturer="Unknown"
 # ----------------
 
 ## Compile c files
-recipe.c.o.pattern="{compiler.path}{compiler.c.cmd}" {compiler.c.flags} -DXMC{build.board.version}_{build.board.type} -D{build.board_variant} -DF_CPU={build.f_cpu} -DARDUINO={build.board.version} -DARDUINO_{build.board} -DARDUINO_ARCH_{build.arch} {compiler.c.extra_flags} {build.extra_flags} {compiler.arm.cmsis.path} {compiler.avr_support.path} {includes} "{source_file}" -o "{object_file}"
+recipe.c.o.pattern="{compiler.path}{compiler.c.cmd}" {compiler.c.flags} -DXMC{build.board.version}_{build.board.type} -D{build.board_variant} -DF_CPU={build.f_cpu} -DARDUINO={build.board.version} -DARDUINO_{build.board} -DARDUINO_ARCH_{build.arch} {compiler.c.extra_flags} {build.extra_flags} {compiler.arm.cmsis.path} {compiler.avr_support.path} {compiler.usb.path} {includes} "{source_file}" -o "{object_file}"
 ## Compile c++ files
-recipe.cpp.o.pattern="{compiler.path}{compiler.cpp.cmd}" {compiler.cpp.flags} -DXMC{build.board.version}_{build.board.type} -D{build.board_variant} -DF_CPU={build.f_cpu} -DARDUINO={build.board.version} -DARDUINO_{build.board} -DARDUINO_ARCH_{build.arch} {compiler.cpp.extra_flags} {build.extra_flags} {compiler.arm.cmsis.path} {compiler.avr_support.path} {includes} "{source_file}" -o "{object_file}"
+recipe.cpp.o.pattern="{compiler.path}{compiler.cpp.cmd}" {compiler.cpp.flags} -DXMC{build.board.version}_{build.board.type} -D{build.board_variant} -DF_CPU={build.f_cpu} -DARDUINO={build.board.version} -DARDUINO_{build.board} -DARDUINO_ARCH_{build.arch} {compiler.cpp.extra_flags} {build.extra_flags} {compiler.arm.cmsis.path} {compiler.avr_support.path} {compiler.usb.path} {includes} "{source_file}" -o "{object_file}"
 
 ## Compile S files
-recipe.S.o.pattern="{compiler.path}{compiler.S.cmd}" {compiler.S.flags} -DXMC{build.board.version}_{build.board.type} -D{build.board_variant} -DF_CPU={build.f_cpu} -DARDUINO={build.board.version} -DARDUINO_{build.board} -DARDUINO_ARCH_{build.arch} {compiler.S.extra_flags} {build.extra_flags} {compiler.arm.cmsis.path} {compiler.avr_support.path} {includes} "{source_file}" -o "{object_file}"
+recipe.S.o.pattern="{compiler.path}{compiler.S.cmd}" {compiler.S.flags} -DXMC{build.board.version}_{build.board.type} -D{build.board_variant} -DF_CPU={build.f_cpu} -DARDUINO={build.board.version} -DARDUINO_{build.board} -DARDUINO_ARCH_{build.arch} {compiler.S.extra_flags} {build.extra_flags} {compiler.arm.cmsis.path} {compiler.avr_support.path} {compiler.usb.path} {includes} "{source_file}" -o "{object_file}"
 
 ## Create archives
 # archive_file_path is needed for backwards compatibility with IDE 1.6.5 or older, IDE 1.6.6 or newer overrides this value
