@@ -16,8 +16,8 @@ compiler.warning_flags.all=-Wall -Wextra
 compiler.path={runtime.tools.arm-none-eabi-gcc.path}/bin/
 compiler.cmsys_rc2_include.path={runtime.platform.path}/cores/xmc_lib
 compiler.cmsys_include.path={compiler.cmsys_rc2_include.path}/CMSIS/Include
+compiler.nn_include.path={compiler.cmsys_rc2_include.path}/CMSIS/NN/Include
 compiler.dsp_include.path={compiler.cmsys_rc2_include.path}/CMSIS/DSP/Include
-
 
 build.core.path ={runtime.platform.path}/core
 build.variant.path ={runtime.platform.path}/variants/{build.variant}
@@ -48,7 +48,7 @@ compiler.elf2hex.cmd=arm-none-eabi-objcopy
 #compiler.ldflags=-mcpu={build.mcu} -mthumb -Wl,--cref -Wl,--check-sections -Wl,--gc-sections -Wl,--unresolved-symbols=report-all -Wl,--warn-common -Wl,--warn-section-align --specs=nano.specs --specs=nosys.specs
 compiler.size.cmd=arm-none-eabi-size
 compiler.define=-DARDUINO=
-compiler.arm.cmsis.path=  "-I{compiler.cmsys_rc2_include.path}/XMCLib/inc"  "-I{compiler.dsp_include.path}"  "-I{compiler.cmsys_include.path}"  "-I{compiler.cmsys_rc2_include.path}/LIBS"  "-I{build.variant.path}"  "-I{build.variant.config_path}"
+compiler.arm.cmsis.path=  "-I{compiler.cmsys_rc2_include.path}/XMCLib/inc"  "-I{compiler.dsp_include.path}" "-I{compiler.nn_include.path}" "-I{compiler.cmsys_include.path}"  "-I{compiler.cmsys_rc2_include.path}/LIBS"  "-I{build.variant.path}"  "-I{build.variant.config_path}"
 compiler.avr_support.path=  "-I{build.core.path}/avr" 
 compiler.usb.path = "-I{runtime.platform.path}/cores/usblib"
 
