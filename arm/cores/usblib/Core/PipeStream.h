@@ -50,8 +50,8 @@
 #define __PIPE_STREAM_H__
 
 	/* Includes: */
-		#include "../Common/Common.h"
-		#include "USBMode.h"
+		#include <../Common/Common.h>
+		#include <USBMode.h>
 
 	/* Enable C linkage for C++ Compilers: */
 		#if defined(__cplusplus)

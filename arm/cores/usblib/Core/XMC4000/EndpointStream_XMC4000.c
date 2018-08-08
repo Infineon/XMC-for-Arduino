@@ -39,17 +39,17 @@
  * @brief Source file for LUFA Endpoint Streaming functions
  */
 #if defined(USB0)
-#include "../../Common/Common.h"
+#include <../../Common/Common.h>
 
 #define  __INCLUDE_FROM_USB_DRIVER
-#include "../USBMode.h"
+#include <../USBMode.h>
 
 /*Flag to indicate the zlp to be sent or not*/
 volatile uint8_t zlp_flag = 0;
 
 #if defined(USB_CAN_BE_DEVICE)
 
-#include "EndpointStream_XMC4000.h"
+#include <EndpointStream_XMC4000.h>
 
 uint8_t Endpoint_Write_Stream_LE (const void *const Buffer, uint16_t Length, uint16_t *const BytesProcessed)  {
 	USBD_Endpoint_t* ep = &device.Endpoints[device.CurrentEndpoint];

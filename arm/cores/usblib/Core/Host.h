@@ -50,8 +50,8 @@
 #define __USBHOST_H__
 
 	/* Includes: */
-		#include "../../../Common/Common.h"
-		#include "USBMode.h"
+		#include <../../../Common/Common.h>
+		#include <USBMode.h>
 
 	/* Enable C linkage for C++ Compilers: */
 		#if defined(__cplusplus)
@@ -123,9 +123,9 @@
 
 	/* Architecture Includes: */
 		#if (ARCH == ARCH_AVR8)
-			#include "AVR8/Host_AVR8.h"
+			#include <AVR8/Host_AVR8.h>
 		#elif (ARCH == ARCH_UC3)
-			#include "UC3/Host_UC3.h"
+			#include <UC3/Host_UC3.h>
 		#endif
 
 	/* Disable C linkage for C++ Compilers: */

@@ -64,11 +64,11 @@
 #define __USBDEVICE_XMC4000_H__
 #if defined(USB0)
 	/* Includes: */
-        #include "../../Common/Common.h"
-		#include "../USBController.h"
-		#include "../StdDescriptors.h"
-		#include "../USBInterrupt.h"
-		#include "../Endpoint.h"
+        #include <../../Common/Common.h>
+		#include <../USBController.h>
+		#include <../StdDescriptors.h>
+		#include <../USBInterrupt.h>
+		#include <../Endpoint.h>
 
 	/* Enable C linkage for C++ Compilers: */
 		#if defined(__cplusplus)

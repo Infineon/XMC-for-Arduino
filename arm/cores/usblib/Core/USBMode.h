@@ -66,7 +66,7 @@
 		#endif
 
 	/* Includes: */
-		#include "../Common/Common.h"
+		#include <../Common/Common.h>
 
 	/* Public Interface - May be used in end-application: */
 	#if defined(__DOXYGEN__)

@@ -28,11 +28,11 @@
   this software.
 */
 #if defined(USB0)
-#include "../../Common/Common.h"
+#include <../../Common/Common.h>
 
 #define  __INCLUDE_FROM_USB_DRIVER
 #define  __INCLUDE_FROM_USB_CONTROLLER_C
-#include "../USBController.h"
+#include <../USBController.h>
 
 USB_Device_t device;
 

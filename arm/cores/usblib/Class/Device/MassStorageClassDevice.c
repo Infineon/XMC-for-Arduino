@@ -29,14 +29,14 @@
 */
 #if defined(USB0)
 #define  __INCLUDE_FROM_USB_DRIVER
-#include "../../Core/USBMode.h"
+#include <../../Core/USBMode.h>
 
 #if defined(USB_CAN_BE_DEVICE)
 
 #define  __INCLUDE_FROM_MS_DRIVER
 #define  __INCLUDE_FROM_MASSSTORAGE_DEVICE_C
 #define  INTERRUPT_CONTROL_ENDPOINT 
-#include "MassStorageClassDevice.h"
+#include <MassStorageClassDevice.h>
 
 void MS_Device_ProcessControlRequest(USB_ClassInfo_MS_Device_t* const MSInterfaceInfo)
 {

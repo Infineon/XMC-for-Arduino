@@ -50,8 +50,8 @@
 #define __ENDPOINT_STREAM_H__
 
 	/* Includes: */
-		#include "../Common/Common.h"
-		#include "USBMode.h"
+		#include <../Common/Common.h>
+		#include <USBMode.h>
 
 	/* Enable C linkage for C++ Compilers: */
 		#if defined(__cplusplus)
@@ -105,7 +105,7 @@
 			};
 
 	/* Architecture Includes: */
-		#include "XMC4000/EndpointStream_XMC4000.h"
+		#include <XMC4000/EndpointStream_XMC4000.h>
 
 	/* Disable C linkage for C++ Compilers: */
 		#if defined(__cplusplus)

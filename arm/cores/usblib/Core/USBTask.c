@@ -30,7 +30,7 @@
 #if defined(USB0) 
 #define  __INCLUDE_FROM_USBTASK_C
 #define  __INCLUDE_FROM_USB_DRIVER
-#include "USBTask.h"
+#include <USBTask.h>
 
 volatile bool        USB_IsInitialized;
 USB_Request_Header_t USB_ControlRequest;

@@ -51,7 +51,7 @@
 #define _HID_CLASS_COMMON_H_
 
 	/* Includes: */
-		#include "../../Core/StdDescriptors.h"
+		#include <../../Core/StdDescriptors.h>
 		#include "HIDParser.h"
 
 	/* Enable C linkage for C++ Compilers: */

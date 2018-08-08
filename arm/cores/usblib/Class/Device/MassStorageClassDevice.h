@@ -54,8 +54,8 @@
 #define _MS_CLASS_DEVICE_H_
 #if defined(USB0)
 	/* Includes: */
-		#include "../../usblib.h"
-		#include "../Common/MassStorageClassCommon.h"
+		#include <../../usblib.h>
+		#include <../Common/MassStorageClassCommon.h>
 
 	/* Enable C linkage for C++ Compilers: */
 		#if defined(__cplusplus)

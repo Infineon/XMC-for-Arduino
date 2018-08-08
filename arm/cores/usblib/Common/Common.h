@@ -68,14 +68,14 @@
 		#include <string.h>
 		#include <stddef.h>
 
-		#include "Architectures.h"
-		#include "BoardTypes.h"
-		#include "ArchitectureSpecific.h"
-		#include "CompilerSpecific.h"
-		#include "Attributes.h"
+		#include <Architectures.h>
+		#include <BoardTypes.h>
+		#include <ArchitectureSpecific.h>
+		#include <CompilerSpecific.h>
+		#include <Attributes.h>
 
 		#if defined(USE_LUFA_CONFIG_HEADER)
-			#include "LUFAConfig.h"
+			#include <LUFAConfig.h>
 		#endif
 
 	/* Enable C linkage for C++ Compilers: */
@@ -94,7 +94,7 @@
 			#include <xmc_common.h>
 
 			#define ARCH_LITTLE_ENDIAN
-			#include "Endianness.h"
+			#include <Endianness.h>
 
 		#endif
 

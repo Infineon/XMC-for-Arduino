@@ -67,7 +67,7 @@
 #define __HIDPARSER_H__
 
 	/* Includes: */
-		#include "../../Common/Common.h"
+		#include <../../Common/Common.h>
 
 		#include "HIDReportData.h"
 		#include "HIDClassCommon.h"

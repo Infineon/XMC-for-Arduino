@@ -42,19 +42,19 @@
 #define __USBTASK_H__
 #if defined(USB0) 
 	/* Includes: */
-		#include "../Common/Common.h"
-		#include "USBMode.h"
-		#include "USBController.h"
-		#include "Events.h"
-		#include "StdRequestType.h"
-		#include "StdDescriptors.h"
+		#include <../Common/Common.h>
+		#include <USBMode.h>
+		#include <USBController.h>
+		#include <Events.h>
+		#include <StdRequestType.h>
+		#include <StdDescriptors.h>
 
 		#if defined(USB_CAN_BE_DEVICE)
-			#include "DeviceStandardReq.h"
+			#include <DeviceStandardReq.h>
 		#endif
 
 		#if defined(USB_CAN_BE_HOST)
-			#include "HostStandardReq.h"
+			#include <HostStandardReq.h>
 		#endif
 
 	/* Enable C linkage for C++ Compilers: */

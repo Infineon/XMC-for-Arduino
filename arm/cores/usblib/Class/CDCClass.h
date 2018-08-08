@@ -65,14 +65,14 @@
 		#define __INCLUDE_FROM_CDC_DRIVER
 
 	/* Includes: */
-		#include "../Core/USBMode.h"
+		#include <../Core/USBMode.h>
 
 		#if defined(USB_CAN_BE_DEVICE)
-			#include "Device/CDCClassDevice.h"
+			#include <Device/CDCClassDevice.h>
 		#endif
 
 		#if defined(USB_CAN_BE_HOST)
-			#include "Host/CDCClassHost.h"
+			#include <Host/CDCClassHost.h>
 		#endif
 
 #endif

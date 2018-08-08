@@ -66,10 +66,10 @@
 #ifndef ENDPOINT_XMC4000_H_
 #define ENDPOINT_XMC4000_H_
 #if defined(USB0)
-		#include "../../Common/Common.h"
-		#include "../USBTask.h"
-		#include "../USBInterrupt.h"
-		#include "../USBController.h"
+		#include <../../Common/Common.h>
+		#include <../USBTask.h>
+		#include <../USBInterrupt.h>
+		#include <../USBController.h>
 
 /* Enable C linkage for C++ Compilers: */
 #if defined(__cplusplus)

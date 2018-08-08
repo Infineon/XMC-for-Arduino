@@ -51,11 +51,11 @@
     /* Includes: */
     #include <xmc_usbd.h>
     
-		#include "../../Common/Common.h"
-		#include "../USBMode.h"
-		#include "../Events.h"
-		#include "../USBTask.h"
-		#include "../USBInterrupt.h"
+		#include <../../Common/Common.h>
+		#include <../USBMode.h>
+		#include <../Events.h>
+		#include <../USBTask.h>
+		#include <../USBInterrupt.h>
 
 	/* Enable C linkage for C++ Compilers: */
 		#if defined(__cplusplus)
@@ -270,10 +270,10 @@
 
     	/* Includes: */
     		#if defined(USB_CAN_BE_DEVICE) || defined(__DOXYGEN__)
-    			#include "../Device.h"
-    			#include "../Endpoint.h"
-    			#include "../DeviceStandardReq.h"
-    			#include "../EndpointStream.h"
+    			#include <../Device.h>
+    			#include <../Endpoint.h>
+    			#include <../DeviceStandardReq.h>
+    			#include <../EndpointStream.h>
     		#endif
 
 	/* Disable C linkage for C++ Compilers: */

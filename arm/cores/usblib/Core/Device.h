@@ -50,11 +50,11 @@
 #define __USBDEVICE_H__
 
 	/* Includes: */
-		#include "../Common/Common.h"
-		#include "USBMode.h"
-		#include "StdDescriptors.h"
-		#include "USBInterrupt.h"
-		#include "Endpoint.h"
+		#include <../Common/Common.h>
+		#include <USBMode.h>
+		#include <StdDescriptors.h>
+		#include <USBInterrupt.h>
+		#include <Endpoint.h>
 
 	/* Enable C linkage for C++ Compilers: */
 		#if defined(__cplusplus)
@@ -140,7 +140,7 @@
 			                                    ) ATTR_WARN_UNUSED_RESULT ATTR_NON_NULL_PTR_ARG(3);
 
 	/* Architecture Includes: */
-        #include "XMC4000/Device_XMC4000.h"
+        #include <XMC4000/Device_XMC4000.h>
         
 	/* Disable C linkage for C++ Compilers: */
 		#if defined(__cplusplus)

@@ -54,8 +54,8 @@
 #define _HID_CLASS_DEVICE_H_
 #if defined(USB0)
 	/* Includes: */
-		#include "../../usblib.h"
-		#include "../Common/HIDClassCommon.h"
+		#include <../../usblib.h>
+		#include <../Common/HIDClassCommon.h>
 	/* Enable C linkage for C++ Compilers: */
 		#if defined(__cplusplus)
 			extern "C" {

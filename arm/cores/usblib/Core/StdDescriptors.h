@@ -50,9 +50,9 @@
 #define __USBDESCRIPTORS_H__
 
 	/* Includes: */
-		#include "../Common/Common.h"
-		#include "USBMode.h"
-		#include "Events.h"
+		#include <../Common/Common.h>
+		#include <USBMode.h>
+		#include <Events.h>
 
 	/* Enable C linkage for C++ Compilers: */
 		#if defined(__cplusplus)

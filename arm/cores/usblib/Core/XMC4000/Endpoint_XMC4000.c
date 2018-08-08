@@ -39,13 +39,13 @@
  * @brief Source file for LUFA endpoint functions
  */
 #if defined(USB0)
-#include "../../Common/Common.h"
+#include <../../Common/Common.h>
 #define  __INCLUDE_FROM_USB_DRIVER
-#include "../USBmode.h"
+#include <../USBmode.h>
 
 #if defined(USB_CAN_BE_DEVICE)
 
-#include "../EndPoint.h"
+#include <../EndPoint.h>
 
 
 #define USB_STREAM_TIMEOUT_MS 100

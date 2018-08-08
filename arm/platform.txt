@@ -50,7 +50,7 @@ compiler.size.cmd=arm-none-eabi-size
 compiler.define=-DARDUINO=
 compiler.arm.cmsis.path=  "-I{compiler.cmsys_rc2_include.path}/XMCLib/inc"  "-I{compiler.dsp_include.path}" "-I{compiler.nn_include.path}" "-I{compiler.cmsys_include.path}"  "-I{compiler.cmsys_rc2_include.path}/LIBS"  "-I{build.variant.path}"  "-I{build.variant.config_path}"
 compiler.avr_support.path=  "-I{build.core.path}/avr" 
-compiler.usb.path = "-I{runtime.platform.path}/cores/usblib"
+compiler.usb.path = "-I{runtime.platform.path}/cores/usblib" "-I{runtime.platform.path}/cores/usblib/Common" "-I{runtime.platform.path}/cores/usblib/Class" "-I{runtime.platform.path}/cores/usblib/Class/Common" "-I{runtime.platform.path}/cores/usblib/Class/Device" "-I{runtime.platform.path}/cores/usblib/Core" "-I{runtime.platform.path}/cores/usblib/Core/XMC4000" 
 
 # this can be overriden in boards.txt
 flag.selected=UNDEFINED_DEBUG
