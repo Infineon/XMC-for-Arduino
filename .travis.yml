@@ -1,14 +1,6 @@
 language: python
 python:
   - "2.7"
-cache:
-    directories:
-        - "~/.platformio"
-addons:
-  apt_packages:
-    - lib32bz2-1.0
-    - lib32ncurses5
-    - lib32z1
     
 env:
   # defining this variable creates multiple jobs in Travis
@@ -31,7 +23,7 @@ env:
   - PLATFORMIO_PROJECT_DIR=examples/spi/DigitalPotControl
   - PLATFORMIO_PROJECT_DIR=examples/ultrasonic/betterecho
   - PLATFORMIO_PROJECT_DIR=examples/ultrasonic/simple-echo
-
+  - PLATFORMIO_PROJECT_DIR=examples/radar/doppler_speed
 install:
   - zip -r /tmp/framework-arduinoxmc.zip ./arm  
   - git clone https://github.com/Infineon/platformio-infineonxmc.git /tmp/builder
