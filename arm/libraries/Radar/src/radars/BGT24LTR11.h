@@ -10,7 +10,7 @@
 #define CH_I A0
 #define CH_Q A1
 
-#if (XMC_BOARD == XMC1300_Sense2GoL)
+#ifdef XMC1300_Sense2GoL
 /**
  * @brief The pin to turn on the radar chip. This is used when you are using the original Sense2GoL board
  * 

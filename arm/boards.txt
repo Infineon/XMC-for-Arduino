@@ -1,5 +1,3 @@
-# for future boards with USB function: add -DUSB0 in extra_flags to build usblib
-
 ####################################################
 menu.UART=Serial Output Selection
 
@@ -201,7 +199,7 @@ XMC4700_Relax_Kit.build.variant=XMC4700
 XMC4700_Relax_Kit.build.board_variant=XMC4700_Relax_Kit
 XMC4700_Relax_Kit.build.flash_size=2000K
 XMC4700_Relax_Kit.build.flash_ld=linker_script.ld
-XMC4700_Relax_Kit.build.extra_flags=-DARM_MATH_CM4 -DARM_MATH_DSP -DUSB0
+XMC4700_Relax_Kit.build.extra_flags=-DARM_MATH_CM4 -DARM_MATH_DSP
 
 ####################################################
 # Not up to date

@@ -20,7 +20,7 @@ BGT24LTR11::~BGT24LTR11()
 void BGT24LTR11::begin()
 {
 // turn on radar
-#if (XMC_BOARD == XMC1300_Sense2GoL)
+#ifdef XMC1300_Sense2GoL
 	pinMode(SENSE2GO_ON_PIN, OUTPUT);
 	digitalWrite(SENSE2GO_ON_PIN, LOW);
 #endif
@@ -29,7 +29,7 @@ void BGT24LTR11::begin()
 
 void BGT24LTR11::startAcq(void)
 {
-#if (XMC_BOARD == XMC1300_Sense2GoL)
+#ifdef XMC1300_Sense2GoL
 	digitalWrite(SENSE2GO_ON_PIN, LOW);
 	// timing of this delay reveals that the actual delay is much less than specified
 	delayMicroseconds(SENSE2GO_SETTLE_TIME);
@@ -38,7 +38,7 @@ void BGT24LTR11::startAcq(void)
 
 void BGT24LTR11::endAcq(void)
 {
-#if (XMC_BOARD == XMC1300_Sense2GoL)
+#ifdef XMC1300_Sense2GoL
 	digitalWrite(SENSE2GO_ON_PIN, HIGH);
 #endif
 }
