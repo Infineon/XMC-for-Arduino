@@ -2,7 +2,7 @@
   
   Print input from USB (COM22) to Serial (COM14). Caution: ports not always fixed*/
 
-#if (UC_FAMILY == XMC1)
+#if !defined(USB0)
 #error "USB not supported on this board"
 #else
   

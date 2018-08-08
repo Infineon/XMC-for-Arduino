@@ -4,7 +4,7 @@
   This example demonstrates how to realize a simple two-way communication with USB. Open COM22 and enter c, then the 26 letters should be printed
   This example can have problem when run with the task mechanism (startTask()), if nothing works better polling should be used*/
 
-#if (UC_FAMILY == XMC1)
+#if !defined(USB0)
 #error "USB not supported on this board"
 #else
   
