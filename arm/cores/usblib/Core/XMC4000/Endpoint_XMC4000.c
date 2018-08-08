@@ -41,7 +41,7 @@
 #if defined(USB0)
 #include <../../Common/Common.h>
 #define  __INCLUDE_FROM_USB_DRIVER
-#include <../USBmode.h>
+#include <../USBMode.h>
 
 #if defined(USB_CAN_BE_DEVICE)
 

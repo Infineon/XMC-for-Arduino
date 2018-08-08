@@ -68,7 +68,7 @@
 		#include <../USBController.h>
 		#include <../StdDescriptors.h>
 		#include <../USBInterrupt.h>
-		#include <../Endpoint.h>
+		#include <../EndPoint.h>
 
 	/* Enable C linkage for C++ Compilers: */
 		#if defined(__cplusplus)

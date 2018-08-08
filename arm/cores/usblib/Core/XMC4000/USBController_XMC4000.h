@@ -271,7 +271,7 @@
     	/* Includes: */
     		#if defined(USB_CAN_BE_DEVICE) || defined(__DOXYGEN__)
     			#include <../Device.h>
-    			#include <../Endpoint.h>
+    			#include <../EndPoint.h>
     			#include <../DeviceStandardReq.h>
     			#include <../EndpointStream.h>
     		#endif

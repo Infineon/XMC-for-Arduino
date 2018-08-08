@@ -398,7 +398,7 @@
 
 		#if defined(USB_CAN_BE_DEVICE) || defined(__DOXYGEN__)
 			#include <Core/Device.h>
-			#include <Core/Endpoint.h>
+			#include <Core/EndPoint.h>
 			#include <Core/DeviceStandardReq.h>
 			#include <Core/EndpointStream.h>
 		#endif
