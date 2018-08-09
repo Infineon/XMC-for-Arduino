@@ -4,7 +4,7 @@
  * @file RadarDataProcessor.h
  * @date 2018-07-23
  * 
- * @bug LED1 LOW/HIGH reversed
+ * @bug LED1 LOW/HIGH reversed on the sense2gol board
  * @bug Serial print cannot be used in the callback (USIC interrupts possibly mess up Systick interrupts)
  * @bug ADC settling takes unusually long
  */
@@ -65,8 +65,17 @@ protected:
   BGTRadar *_radar;
 
   RADAR_t _radarType;
+
+  /**
+   * @brief Defines which algorithms are used, such as speed/motion detection
+   * 
+   */
   ALGORITHM_t _algo;
 
+  /**
+   * @brief 
+   * 
+   */
   RESULT_t _result;
 
   FFTAnalyzer _fft;
@@ -77,6 +86,10 @@ protected:
 
   float _freqWidth;
 
+  /**
+   * @brief Hanning window for pre-FFT processing
+   * 
+   */
   int16_t _hanningWindow[RADAR_MAX_BUFFER_SIZE];
 
   int _timer;
@@ -93,10 +106,18 @@ protected:
 
   void initHanningWindow(uint8_t);
 
+  /**
+   * @brief Sampling task that runs every cycle time (defined in radar child classes)
+   * 
+   */
   static void samplingTask(int, int16_t);
 
   void runAlgorithm(void);
 
+  /**
+   * @brief Task to execute algorithms on the sampled data, runs once after every sampling task is finished.
+   * 
+   */
   static void algoTask(int, int16_t);
 
   void detectMovingDirection(void);
