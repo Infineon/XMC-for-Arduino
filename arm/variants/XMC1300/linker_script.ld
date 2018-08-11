@@ -220,6 +220,7 @@ SECTIONS
     {
         . = ORIGIN(SRAM) + LENGTH(SRAM) - stack_size - (2 * no_init_size);
         Heap_Bank1_End = .;
+        end = Heap_Bank1_End; 
         __stack_start = .;
          . = . + stack_size;
         __stack_end = .;
