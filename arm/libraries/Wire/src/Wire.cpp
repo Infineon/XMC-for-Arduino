@@ -774,8 +774,18 @@ extern "C" {
     {
         Wire.ProtocolHandler();
     }
+	
+    void USIC1_3_IRQHandler()
+    {
+        Wire1.ReceiveHandler();
+    }
+
+    void USIC1_4_IRQHandler()
+    {
+        Wire1.ProtocolHandler();
+    }
 #endif
-}
+} // extern "C" 
 
 // Preinstantiate Objects //////////////////////////////////////////////////////
 
