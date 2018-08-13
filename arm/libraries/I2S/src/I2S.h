@@ -29,10 +29,6 @@
  *  This signal controls the timing of data transmission. On the rising edge of the WA signal the right channel transmits and on the falling edge the left channel transmits. Therefore interrupts
  *  are enabled for both falling and rising edge, which starts the reading of sensor data from the FIFO buffer. 
  * 
- *  @subsection Future work
- *  This library, however, is not working properly with the preliminary silicon microphone shield from Infineon. The data sampled experience severe glichtes, for which the easiest solution 
- *  would be to manually filter out the bad samples.
- * 
  */
 
 #ifndef I2S_h
