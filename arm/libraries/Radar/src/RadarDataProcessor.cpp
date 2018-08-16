@@ -4,7 +4,7 @@ RadarDataProcessorClass::RadarDataProcessorClass()
 {
     _fft = FFTAnalyzer();
     _maxMagFreq = {0, 0};
-    _algo = {false, false};
+    _algo = {false, false, false};
     _result.speed = 0.0;
     _result.max_magnitude = 0;
     _result.motion = 0;
@@ -36,14 +36,16 @@ void RadarDataProcessorClass::begin()
 
     _radar->begin();
 
-    // initialize buffer -- not necessary with fixed buffer size
-    _radarBufferSize = (_radar->_config).radar_buffersize;
-    _fftOrder = log2(_radarBufferSize);
-    if (_radarBufferSize <= 0)
+    _radarFftSize = (_radar->_config).fft_size;
+    if (_radarFftSize > RADAR_MAX_BUFFER_SIZE)
+        _radarFftSize = RADAR_MAX_BUFFER_SIZE;
+
+    _fftOrder = log2(_radarFftSize);
+    if (_radarFftSize <= 0)
         return;
 
-    initHanningWindow(_radarBufferSize);
-    _freqWidth = (_radar->_config).sampling_rate / _radarBufferSize;
+    initHanningWindow(_radarFftSize);
+    _freqWidth = (_radar->_config).sampling_rate / _radarFftSize;
 
     // configure task to be executed periodically
     _timer = addTask(RadarDataProcessorClass::samplingTask);
@@ -101,8 +103,7 @@ void RadarDataProcessorClass::endAcq(void)
 {
     _radar->endAcq();
 
-    // finished sampling, run the detection algorithm
-    // TODO: make sure this startTask always pairs up with deleteTask in runAlgorithm
+    // finished sampling, run the detection algorithm algoTask
     startTask(_interruptTimer);
 }
 
@@ -114,10 +115,11 @@ void RadarDataProcessorClass::sampleInQ(void)
 
 void RadarDataProcessorClass::runAlgorithm(void)
 {
-    if (_algo.detectSpeed)
-        detectSpeed();
-    if (_algo.detectMovingDirection)
-        detectMovingDirection();
+    // be sure that the time for running all the enabled algorithms plus time for ADC conversion should be shorter than cycle time
+    if (_algo.fft)
+        computeFft();
+    if (_algo.detectMotionSimple)
+        detectMotionWithRawData();
 
     // user callback
     if (_cb)
@@ -125,7 +127,7 @@ void RadarDataProcessorClass::runAlgorithm(void)
         _cb(&_result);
     }
 
-    // this task only runs once, having the effect of an interrupt
+    // the interrupt time must be deleted in every cycle!
     deleteTask(_interruptTimer);
 
     _available = true;
@@ -136,32 +138,81 @@ void RadarDataProcessorClass::algoTask(int taskId, int16_t param)
     RadarDataProcessor.runAlgorithm();
 }
 
-void RadarDataProcessorClass::detectSpeed()
+void RadarDataProcessorClass::computeFft()
 {
     // mean removal
     int sum = 0;
-    for (int i = 0; i < _radarBufferSize; i++)
+    for (int i = 0; i < _radarFftSize; i++)
     {
         sum += _result.dataI[i];
     }
     sum = sum >> _fftOrder;
-    for (int i = 0; i < _radarBufferSize; i++)
+
+    // windowing -> move to fft analyzer
+    for (int i = 0; i < _radarFftSize; i++)
     {
-        _result.magnitudes[i] = FIX_MPY((_result.dataI[i] - sum), _hanningWindow[i]);
-        _imag[i] = 0;
+        _result.realI[i] = FIX_MPY((_result.dataI[i] - sum), _hanningWindow[i]);
+
+        // _result.dataQ[i] = FIX_MPY((_result.dataQ[i] - sum), _hanningWindow[i]);
+        _result.imagI[i] = 0;
     }
 
-    // in-place fft, takes about 1.2 ms
-    _fft.fix_fft(_result.magnitudes, _imag, _fftOrder, 0);
+    // in-place fft
+    _fft.fix_fft(_result.realI, _result.imagI, _fftOrder, 0);
 
     //the first half of real fft values replaced by power spectrum
-    _maxMagFreq = _fft.compute_magnitude(_result.magnitudes, _imag, _radarBufferSize / 2);
+    _maxMagFreq = _fft.compute_magnitude(_result.realI, _result.imagI, _result.magnitudes, _radarFftSize / 2);
+    bool detected = _maxMagFreq.mag > (_radar->_algoParams).magnitude_thresh;
+    if (_algo.detectMotionFft)
+    {
+        int16_t maxImagI = _result.imagI[_maxMagFreq.freq];
+        int16_t maxRealI = _result.realI[_maxMagFreq.freq];
 
-    _result.speed = (RATIO_FREQ_TO_SPEED * _freqWidth * _maxMagFreq.freq);
+        for (int i = 0; i < _radarFftSize; i++)
+        {
+            _result.realQ[i] = FIX_MPY((_result.dataQ[i] - sum), _hanningWindow[i]);
+            _result.imagQ[i] = 0;
+        }
+
+        // TODO: only one-point fft needed
+        _fft.fix_fft(_result.realQ, _result.imagQ, _fftOrder, 0);
+
+        int16_t maxImagQ = _result.imagQ[_maxMagFreq.freq];
+        int16_t maxRealQ = _result.realQ[_maxMagFreq.freq];
+
+        // TODO use integer atan2, e.g. CORDIC version from xmc_math
+        if (maxRealQ && maxRealI && detected)
+        {
+            float phase_shift = atan2(maxImagI, maxRealI) - atan2(maxImagQ, maxRealQ);
+            if (phase_shift < -3.14)
+                phase_shift += 6.28;
+            else if (phase_shift > 3.14)
+                phase_shift -= 6.28;
+
+            if (phase_shift > 0)
+                _result.motion = 1;
+            else if (phase_shift < 0)
+                _result.motion = 0;
+            else
+                _result.motion = 2;
+
+            _result.phase_shift = phase_shift;
+        }
+        else
+        {
+            _result.phase_shift = 0;
+            _result.motion = 2;
+        }
+    }
+
+    if (detected)
+        _result.speed = (RATIO_FREQ_TO_SPEED * _freqWidth * _maxMagFreq.freq);
+    else
+        _result.speed = 0;
     _result.max_magnitude = _maxMagFreq.mag;
 }
 
-void RadarDataProcessorClass::detectMovingDirection(void)
+void RadarDataProcessorClass::detectMotionWithRawData(void)
 {
     int8_t motion = 0;
 
@@ -172,7 +223,7 @@ void RadarDataProcessorClass::detectMovingDirection(void)
         next_is_max = false;
     }
 
-    for (uint16_t i = 0; i < (_radarBufferSize - 1) / 2; i++)
+    for (uint16_t i = 0; i < (_radarFftSize - 1) / 2; i++)
     {
         if ((_result.dataI[i] < (2048 - 200)) ||
             (_result.dataI[i] > (2048 + 200)))
@@ -231,28 +282,39 @@ void RadarDataProcessorClass::samplingTask(int taskId, int16_t param)
     RadarDataProcessor.endAcq();
 }
 
-void RadarDataProcessorClass::enableMotionDetection()
+void RadarDataProcessorClass::enableSimpleMotionDetection()
 {
-    _algo.detectMovingDirection = 1;
+    _algo.detectMotionSimple = 1;
+    _algo.detectMotionFft = 0;
 }
+
+void RadarDataProcessorClass::enableFftMotionDetection()
+{
+    if (!_algo.fft)
+        _algo.fft = 1;
+    _algo.detectMotionFft = 1;
+    _algo.detectMotionSimple = 0;
+}
+
 void RadarDataProcessorClass::disableMotionDetection()
 {
-    _algo.detectMovingDirection = 0;
+    _algo.detectMotionSimple = 0;
+    _algo.detectMotionFft = 0;
 }
-void RadarDataProcessorClass::enableSpeedDetection()
+void RadarDataProcessorClass::enableFft()
 {
-    _algo.detectSpeed = 1;
+    _algo.fft = 1;
 }
-void RadarDataProcessorClass::disableSpeedDetection()
+void RadarDataProcessorClass::disableFft()
 {
-    _algo.detectSpeed = 0;
+    _algo.fft = 0;
 }
 
 void RadarDataProcessorClass::configureRadar(BGT_RADAR_CONFIG_t config)
 {
     end();
     _radar->setConfig(config);
-    _freqWidth = config.sampling_rate / config.radar_buffersize;
+    _freqWidth = config.sampling_rate / config.fft_size;
     begin();
 }
 

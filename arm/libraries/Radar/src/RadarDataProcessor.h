@@ -17,35 +17,17 @@
 
 #define TWO_PI 6.28318530718
 
-/**
- * @brief Constant for convert Doppler frequency to speed. (10 km/h)/(444.4 Hz) = 0.0225
- * 
- */
+/** Constant for convert Doppler frequency to speed. (10 km/h)/(444.4 Hz) = 0.0225 */
 #define RATIO_FREQ_TO_SPEED 0.0225
 #define RADAR_MAX_BUFFER_SIZE 256
 
 typedef struct
 {
-  bool detectSpeed;
-  bool detectMovingDirection;
+  // two versions of motion detection are implemented
+  bool detectMotionSimple;
+  bool detectMotionFft;
+  bool fft;
 } ALGORITHM_t;
-
-typedef struct
-{
-  int16_t dataI[RADAR_MAX_BUFFER_SIZE];
-  int16_t dataQ[RADAR_MAX_BUFFER_SIZE];
-  int16_t magnitudes[RADAR_MAX_BUFFER_SIZE]; // power spectrum
-  float speed;
-  int max_magnitude;
-  int motion;
-} RESULT_t;
-
-typedef enum
-{
-  RADAR_BGT24LTR11 = 0, // sense2go
-  RADAR_BGT24MTR11 = 1  // distance2go
-  // add more types here
-} RADAR_t;
 
 typedef enum
 {
@@ -54,10 +36,49 @@ typedef enum
   NO_MOTION = 2
 } MOTION_t;
 
+
+/**
+ * @struct Results passed back to the user callback
+ * 
+ */
+typedef struct
+{
+  int16_t dataI[RADAR_MAX_BUFFER_SIZE];
+  int16_t dataQ[RADAR_MAX_BUFFER_SIZE];
+  /** real parts of I data's FFT spectrum*/
+  int16_t realI[RADAR_MAX_BUFFER_SIZE];
+  /** imaginary parts of I data's FFT spectrum*/
+  int16_t imagI[RADAR_MAX_BUFFER_SIZE];
+  int16_t realQ[RADAR_MAX_BUFFER_SIZE];
+  int16_t imagQ[RADAR_MAX_BUFFER_SIZE];
+  /** power spectrum*/
+  int16_t magnitudes[RADAR_MAX_BUFFER_SIZE]; 
+  float speed;
+  float phase_shift;
+  int max_magnitude;
+  int motion;
+} RESULT_t;
+
+/**
+ * @enum Radar types
+ * 
+ */
+typedef enum
+{
+  /** Sense2GoL*/
+  RADAR_BGT24LTR11 = 0, 
+  /** Distance2Go*/
+  RADAR_BGT24MTR11 = 1  
+  // add more types here
+} RADAR_t;
+
 class RadarDataProcessorClass
 {
-
 protected:
+  /**
+   * @brief A dummy timer used only to generate an interrupt
+   * 
+   */
   int _interruptTimer;
 
   // TODO: pre-define all classes, BGT24MTR11 etc.
@@ -66,23 +87,15 @@ protected:
 
   RADAR_t _radarType;
 
-  /**
-   * @brief Defines which algorithms are used, such as speed/motion detection
-   * 
-   */
   ALGORITHM_t _algo;
 
-  /**
-   * @brief 
-   * 
-   */
   RESULT_t _result;
 
   FFTAnalyzer _fft;
 
   int _fftOrder;
 
-  int _radarBufferSize;
+  int _radarFftSize;
 
   float _freqWidth;
 
@@ -94,6 +107,10 @@ protected:
 
   int _timer;
 
+  /**
+   * @brief Magnitude and frequency pair at the frequency peak.
+   * 
+   */
   MAX_MAG_FRQ_t _maxMagFreq;
 
   void (*_cb)(RESULT_t *result);
@@ -120,19 +137,18 @@ protected:
    */
   static void algoTask(int, int16_t);
 
-  void detectMovingDirection(void);
+  /**
+   * @brief This algorithm works by comparing the phase shifts of I and Q data
+   * 
+   */
+  void detectMotionWithRawData(void);
 
-  void detectSpeed();
+  void computeFft();
+
   void begin();
 
 public:
   bool _available;
-
-  /**
-   * @brief Buffer to store the imaginary parts of the FFT spectrum
-   * 
-   */
-  int16_t _imag[RADAR_MAX_BUFFER_SIZE];
 
   RadarDataProcessorClass();
 
@@ -144,7 +160,7 @@ public:
    * @brief Turns on the radar chip and starts sampling
    * 
    * @param radarType Type of the radar, e.g., RADAR_BGT24LTR11.
-   * @param cb Callback function whose argument is the pointer to the computation results (FFT spectrum, object speed, etc) of the raw I/Q data
+   * @param cb Callback function whose argument is the pointer to the computation results
    */
   void begin(RADAR_t radarType, void (*cb)(RESULT_t *result) = nullptr);
 
@@ -154,10 +170,15 @@ public:
    */
   void end();
 
-  void enableMotionDetection();
+  /**
+   * @brief Enables the motion detection algorithm, which is called in runAlgorithm
+   * 
+   */
+  void enableSimpleMotionDetection();
+  void enableFftMotionDetection();
   void disableMotionDetection();
-  void enableSpeedDetection();
-  void disableSpeedDetection();
+  void enableFft();
+  void disableFft();
   void configureRadar(BGT_RADAR_CONFIG_t config);
 };
 

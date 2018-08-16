@@ -43,7 +43,7 @@ Caution: use the default settings if modifying parameters cause the microphone t
 Please refer to the data sheets of your microphone for the rate of the sampling rate. 
 
 If you are using XMC1000 family boards, the default sampling rate is 12 kHz when you call `I2S.begin();`
-Also make sure you use a lower baud rate when you are using XMC1000 boards, since both `Serial` and `I2S` use USCI interrupts, and the older boards seem not able to handle a large number of interrupts.
+Also make sure you use a lower baud rate when you are using XMC1000 boards, since both `Serial` and `I2S` use USIC interrupts, and the older boards seem not able to handle a large number of interrupts.
 
 However, if you are using an XMC4000 board such as a XMC4700 relax kit, you shouldn't have to worry about these issues.
 

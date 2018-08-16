@@ -71,7 +71,7 @@ public:
 
   int fix_fft(short *, short *, short, short);
 
-  MAX_MAG_FRQ_t compute_magnitude(short *, short *, short);
+  MAX_MAG_FRQ_t compute_magnitude(short *, short *, short *, short);
 };
 
 #endif

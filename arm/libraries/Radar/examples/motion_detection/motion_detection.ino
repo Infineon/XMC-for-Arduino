@@ -11,9 +11,12 @@ void callback(RESULT_t *result)
 
 void setup()
 {
-  Serial.begin(115200);
+  Serial.begin(9600);
   RadarDataProcessor.begin(RADAR_BGT24LTR11, callback);
-  RadarDataProcessor.enableMotionDetection();
+  // you can try out both versions of motion detection algorithms
+
+  // RadarDataProcessor.enableSimpleMotionDetection();
+  RadarDataProcessor.enableFftMotionDetection();
   Serial.println("Init done!");
 }
 

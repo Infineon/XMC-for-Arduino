@@ -3,15 +3,13 @@
 #include <RadarDataProcessor.h>
 
 #define DETECTING_MAG_THRESH 100
-// for displaying
-#define SPECTRUM_RANGE SENSE2GO_BUFFER_SIZE / 4
 
 #define SPECTRUM_SIZE SENSE2GO_BUFFER_SIZE / 2
 
 int16_t magnitudes[SPECTRUM_SIZE];
 bool available = false;
 
-BGT_RADAR_CONFIG_t user_config = {radar_buffersize : 128,
+BGT_RADAR_CONFIG_t user_config = {fft_size : 128,
                                   cycle_time : 100,
                                   sampling_rate : 3000};
 
@@ -27,9 +25,9 @@ void callback(RESULT_t * result)
 
 void setup()
 {
-  Serial.begin(115200);
+  Serial.begin(9600);
   RadarDataProcessor.begin(RADAR_BGT24LTR11, callback);
-  RadarDataProcessor.enableSpeedDetection();
+  RadarDataProcessor.enableFft();
   RadarDataProcessor.configureRadar(user_config);
   Serial.println("Init done!");
 }
@@ -38,7 +36,7 @@ void loop()
 {
   if (available)
   {
-    for (int i = 0; i < SENSE2GO_BUFFER_SIZE/4; i++)
+    for (int i = 0; i < SPECTRUM_SIZE; i++)
       Serial.println(magnitudes[i]);
     available = false;
   }
