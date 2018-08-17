@@ -152,8 +152,6 @@ void RadarDataProcessorClass::computeFft()
     for (int i = 0; i < _radarFftSize; i++)
     {
         _result.realI[i] = FIX_MPY((_result.dataI[i] - sum), _hanningWindow[i]);
-
-        // _result.dataQ[i] = FIX_MPY((_result.dataQ[i] - sum), _hanningWindow[i]);
         _result.imagI[i] = 0;
     }
 
@@ -165,8 +163,8 @@ void RadarDataProcessorClass::computeFft()
     bool detected = _maxMagFreq.mag > (_radar->_algoParams).magnitude_thresh;
     if (_algo.detectMotionFft)
     {
-        int16_t maxImagI = _result.imagI[_maxMagFreq.freq];
-        int16_t maxRealI = _result.realI[_maxMagFreq.freq];
+        float maxImagI = (float) _result.imagI[_maxMagFreq.freq];
+        float maxRealI = (float) _result.realI[_maxMagFreq.freq];
 
         for (int i = 0; i < _radarFftSize; i++)
         {
@@ -177,8 +175,8 @@ void RadarDataProcessorClass::computeFft()
         // TODO: only one-point fft needed
         _fft.fix_fft(_result.realQ, _result.imagQ, _fftOrder, 0);
 
-        int16_t maxImagQ = _result.imagQ[_maxMagFreq.freq];
-        int16_t maxRealQ = _result.realQ[_maxMagFreq.freq];
+        float maxImagQ = (float) _result.imagQ[_maxMagFreq.freq];
+        float maxRealQ = (float) _result.realQ[_maxMagFreq.freq];
 
         // TODO use integer atan2, e.g. CORDIC version from xmc_math
         if (maxRealQ && maxRealI && detected)
