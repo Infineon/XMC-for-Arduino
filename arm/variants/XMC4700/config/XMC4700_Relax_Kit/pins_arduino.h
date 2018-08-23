@@ -105,6 +105,9 @@
 #define BUTTON2     27  // Additional BUTTON2
 #define GND         50  // GND
 
+#define EXT_INTR_0  2
+#define EXT_INTR_1  3
+
 #define digitalPinToInterrupt(p)    ((p) == 2 ? 0 : ((p) == 3 ? 1 : NOT_AN_INTERRUPT))
 
 #ifdef ARDUINO_MAIN

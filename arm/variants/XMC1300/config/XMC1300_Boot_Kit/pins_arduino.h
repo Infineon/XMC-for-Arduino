@@ -98,6 +98,9 @@
 #define LED6        28  // Extended LEDs P0.9
 #define GND         34  // GND
 
+#define EXT_INTR_0  12
+#define EXT_INTR_1  13
+
 #define digitalPinToInterrupt(p)    ((p) == 14 ? 0 : ((p) == 15 ? 1 : NOT_AN_INTERRUPT))
 
 #ifdef ARDUINO_MAIN
