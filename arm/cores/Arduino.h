@@ -109,7 +109,7 @@ extern "C" {
         bool                            enabled         ;
     } XMC_PWM4_t;
 
-#ifdef CCU8V2
+#if defined (CCU8V2) ||defined (CCU8V3)
     /*
     * XMC PWM type (CCU8)
     */
