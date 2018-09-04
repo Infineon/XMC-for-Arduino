@@ -54,6 +54,11 @@ extern "C" {
 #define clockCyclesToMicroseconds(a)    ( ((a) * 1000L) / (F_CPU / 1000L) )
 #define microsecondsToClockCycles(a)    ( (a) * (F_CPU / 1000000L) )
 
+#if defined(XMC1400_Boot_Kit)
+#define Serial_IRQHandler0 IRQ9_Handler
+#else
+#define Serial_IRQHandler0 USIC0_0_IRQHandler
+#endif
 //****************************************************************************
 // @Typedefs
 //****************************************************************************
@@ -182,7 +187,7 @@ extern "C" {
     extern const uint8_t mapping_pin_PWM4[][ 2 ];
     extern XMC_PWM4_t mapping_pwm4[];
     extern XMC_ADC_t mapping_adc[];
-#ifdef CCU8V2
+#if defined (CCU8V2) || defined(CCU8V3)
     extern const uint8_t mapping_pin_PWM8[][ 2 ];
     extern XMC_PWM8_t mapping_pwm8[];
 #endif

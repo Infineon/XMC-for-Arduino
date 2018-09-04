@@ -45,18 +45,11 @@ if( serialEvent1 )
 #endif
 }
 
-
-#ifndef XMC1400_Boot_Kit
-void USIC0_0_IRQHandler( void )
+void Serial_IRQHandler0( void )
 {
 Serial.IrqHandler();
 }
-#else
-void IRQ9_Handler()
-{
-Serial.IrqHandler();  
-}
-#endif // !XMC1400_Boot_Kit
+
 
 #if (NUM_SERIAL > 1)
 void USIC1_0_IRQHandler( void )

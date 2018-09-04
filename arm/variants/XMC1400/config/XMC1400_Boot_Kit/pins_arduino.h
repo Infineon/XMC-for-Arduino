@@ -31,7 +31,6 @@
 // @Defines
 //****************************************************************************
 #define XMC_BOARD           XMC1400 Boot Kit
-
 #define NUM_ANALOG_INPUTS   6
 #define NUM_PWM             4
 #define NUM_LEDS            4
@@ -86,14 +85,10 @@
    Putting both parts in array means if a PWM4 channel gets reassigned for
    another function later a gap in channel numbers will not mess things up */
 const uint8_t mapping_pin_PWM4[][ 2 ] = {
-                                        { 4, 0 },
-                                        { 6, 1 },
-                                        { 255, 255 } };
-
-
-const uint8_t mapping_pin_PWM8[][ 2 ] = {
                                         { 3, 0 },
-                                        { 9, 1 },
+                                        { 4, 1 },
+                                        { 6, 2 },
+                                        { 9, 3 },
                                         { 255, 255 } };
 
 
@@ -102,13 +97,13 @@ const XMC_PORT_PIN_t mapping_port_pin[] =
     /* 0  */    {XMC_GPIO_PORT1, 2}, // RX                                 P1.2
     /* 1  */    {XMC_GPIO_PORT1, 3}, // TX                                 P1.3
     /* 2  */    {XMC_GPIO_PORT0 , 0}, // External int 0                     P0.0
-    /* 3  */    {XMC_GPIO_PORT0 , 12}, // External int 1 / PWM40-3 output   P0.12
+    /* 3  */    {XMC_GPIO_PORT0 , 1}, // External int 1 / PWM80-3 output    P0.1
     /* 4  */    {XMC_GPIO_PORT1 , 0}, // PWM40-0 output                     P1.0
     /* 5  */    {XMC_GPIO_PORT0 , 2}, // GPIO                               P0.2
     /* 6  */    {XMC_GPIO_PORT1 , 1}, // PWM40-1 output                     P1.1
     /* 7  */    {XMC_GPIO_PORT0 , 4}, // GPIO                               P0.4
     /* 8  */    {XMC_GPIO_PORT0 , 13}, // GPIO                              P0.13
-    /* 9  */    {XMC_GPIO_PORT0 , 14}, // PWM40-2 output                    P0.14
+    /* 9  */    {XMC_GPIO_PORT1 , 8}, // PWM80-2 output                     P1.8
     /* 10  */   {XMC_GPIO_PORT1 , 5}, // SPI-SS                             P1.5
     /* 11  */   {XMC_GPIO_PORT1 , 6}, // SPI-MOSI                           P1.6
     /* 12  */   {XMC_GPIO_PORT0 , 6}, // SPI-MISO                           P0.6
@@ -132,19 +127,15 @@ const XMC_PORT_PIN_t mapping_port_pin[] =
 const XMC_PIN_INTERRUPT_t mapping_interrupt[] =
 {
     /* 0  */    {CCU40, CCU40_CC40, 0, 0, CCU40_IN0_P0_0},
-    /* 1  */    {CCU40, CCU40_CC40, 0, 1, CCU40_IN0_P0_12}
+    /* 1  */    {CCU40, CCU40_CC41, 1, 1, CCU40_IN1_P0_1}
 };
 
 XMC_PWM4_t mapping_pwm4[] =
 {
+    {CCU40, CCU40_CC41, 0, mapping_port_pin[3], P0_1_AF_CCU40_OUT1, XMC_CCU4_SLICE_PRESCALER_64, PWM4_TIMER_PERIOD, DISABLED},  // PWM disabled  4   
     {CCU40, CCU40_CC40, 0, mapping_port_pin[4], P1_0_AF_CCU40_OUT0, XMC_CCU4_SLICE_PRESCALER_64, PWM4_TIMER_PERIOD, DISABLED},  // PWM disabled  4   
-    {CCU40, CCU40_CC40, 0, mapping_port_pin[6], P1_1_AF_CCU40_OUT1, XMC_CCU4_SLICE_PRESCALER_64, PWM4_TIMER_PERIOD, DISABLED},  // PWM disabled  6  
-};
-
-XMC_PWM8_t mapping_pwm8[] =
-{
-    {CCU80, CCU80_CC80, 0, XMC_CCU8_SLICE_COMPARE_CHANNEL_1, mapping_port_pin[3], P0_12_AF_CCU80_OUT33, XMC_CCU8_SLICE_PRESCALER_64, PWM4_TIMER_PERIOD, DISABLED},  // PWM disabled  3   
-    {CCU80, CCU80_CC80, 0, XMC_CCU8_SLICE_COMPARE_CHANNEL_1, mapping_port_pin[9], P0_14_AF_CCU80_OUT31, XMC_CCU8_SLICE_PRESCALER_64, PWM4_TIMER_PERIOD, DISABLED},  // PWM disabled  9  
+    {CCU40, CCU40_CC41, 1, mapping_port_pin[6], P1_1_AF_CCU40_OUT1, XMC_CCU4_SLICE_PRESCALER_64, PWM4_TIMER_PERIOD, DISABLED},  // PWM disabled  6  
+    {CCU40, CCU40_CC40, 0, mapping_port_pin[9], P1_8_AF_CCU40_OUT0, XMC_CCU4_SLICE_PRESCALER_64, PWM4_TIMER_PERIOD, DISABLED},  // PWM disabled  6  
 };
 
 XMC_ADC_t mapping_adc[] =
