@@ -78,6 +78,24 @@
 #define GND 30  // non-existing
 #define digitalPinToInterrupt(p)    ((p) == 2 ? 0 : ((p) == 3 ? 1 : NOT_AN_INTERRUPT))
 
+/* Mapping interrupt handlers. Notice that XMC1400 can have interrupt handlers working in 3 modes, the defines below assues the mode A.
+   For details refer to assembly file and reference manual.
+*/
+// #define USIC0_0_IRQHandler IRQ9_Handler // UART
+#define USIC0_0_IRQn IRQ9_IRQn
+
+#define CCU40_0_IRQHandler IRQ21_Handler // interrupt 0 
+#define CCU40_0_IRQn IRQ21_IRQn 
+
+#define CCU40_1_IRQHandler IRQ22_Handler // interrupt 1 
+#define CCU40_1_IRQn IRQ22_IRQn
+
+#define USIC0_4_IRQHandler IRQ13_Handler // I2C
+#define USIC0_4_IRQn IRQ13_IRQn 
+
+#define USIC0_5_IRQHandler IRQ14_Handler // I2C
+#define USIC0_5_IRQn IRQ14_IRQn 
+
 #ifdef ARDUINO_MAIN
 
 /* Mapping of Arduino Pins to PWM4 channels as pin and PWM4 channel
@@ -97,17 +115,17 @@ const XMC_PORT_PIN_t mapping_port_pin[] =
     /* 0  */    {XMC_GPIO_PORT1, 2}, // RX                                 P1.2
     /* 1  */    {XMC_GPIO_PORT1, 3}, // TX                                 P1.3
     /* 2  */    {XMC_GPIO_PORT0 , 0}, // External int 0                     P0.0
-    /* 3  */    {XMC_GPIO_PORT0 , 1}, // External int 1 / PWM80-3 output    P0.1
-    /* 4  */    {XMC_GPIO_PORT1 , 0}, // PWM40-0 output                     P1.0
+    /* 3  */    {XMC_GPIO_PORT0 , 1}, // External int 1 / PWM40-1 output    P0.1
+    /* 4  */    {XMC_GPIO_PORT0 , 6}, // PWM40-0 output                     P0.6
     /* 5  */    {XMC_GPIO_PORT0 , 2}, // GPIO                               P0.2
-    /* 6  */    {XMC_GPIO_PORT1 , 1}, // PWM40-1 output                     P1.1
+    /* 6  */    {XMC_GPIO_PORT1 , 7}, // PWM40-1 output                     P1.7
     /* 7  */    {XMC_GPIO_PORT0 , 4}, // GPIO                               P0.4
     /* 8  */    {XMC_GPIO_PORT0 , 13}, // GPIO                              P0.13
     /* 9  */    {XMC_GPIO_PORT1 , 8}, // PWM80-2 output                     P1.8
-    /* 10  */   {XMC_GPIO_PORT1 , 5}, // SPI-SS                             P1.5
-    /* 11  */   {XMC_GPIO_PORT1 , 6}, // SPI-MOSI                           P1.6
-    /* 12  */   {XMC_GPIO_PORT0 , 6}, // SPI-MISO                           P0.6
-    /* 13  */   {XMC_GPIO_PORT1 , 4}, // SPI-SCK                            P1.4
+    /* 10  */   {XMC_GPIO_PORT0 , 9}, // SPI-SS                             P0.9
+    /* 11  */   {XMC_GPIO_PORT1 , 1}, // SPI-MOSI                           P1.1
+    /* 12  */   {XMC_GPIO_PORT1 , 0}, // SPI-MISO                           P1.0
+    /* 13  */   {XMC_GPIO_PORT0 , 7}, // SPI-SCK                            P0.7   
     /* 14  */   {XMC_GPIO_PORT2 , 3}, // AREF                               P2.3 (INPUT ONLY)
     /* 15  */   {XMC_GPIO_PORT2 , 1}, // I2C Data / Address SDA             P2.1
     /* 16  */   {XMC_GPIO_PORT2 , 0}, // I2C Clock SCL                      P2.0
@@ -132,9 +150,9 @@ const XMC_PIN_INTERRUPT_t mapping_interrupt[] =
 
 XMC_PWM4_t mapping_pwm4[] =
 {
-    {CCU40, CCU40_CC41, 0, mapping_port_pin[3], P0_1_AF_CCU40_OUT1, XMC_CCU4_SLICE_PRESCALER_64, PWM4_TIMER_PERIOD, DISABLED},  // PWM disabled  4   
-    {CCU40, CCU40_CC40, 0, mapping_port_pin[4], P1_0_AF_CCU40_OUT0, XMC_CCU4_SLICE_PRESCALER_64, PWM4_TIMER_PERIOD, DISABLED},  // PWM disabled  4   
-    {CCU40, CCU40_CC41, 1, mapping_port_pin[6], P1_1_AF_CCU40_OUT1, XMC_CCU4_SLICE_PRESCALER_64, PWM4_TIMER_PERIOD, DISABLED},  // PWM disabled  6  
+    {CCU40, CCU40_CC41, 1, mapping_port_pin[3], P0_1_AF_CCU40_OUT1, XMC_CCU4_SLICE_PRESCALER_64, PWM4_TIMER_PERIOD, DISABLED},  // PWM disabled  4   
+    {CCU40, CCU40_CC40, 0, mapping_port_pin[4], P0_6_AF_CCU40_OUT0, XMC_CCU4_SLICE_PRESCALER_64, PWM4_TIMER_PERIOD, DISABLED},  // PWM disabled  4   
+    {CCU40, CCU40_CC43, 3, mapping_port_pin[6], P1_7_AF_CCU40_OUT3, XMC_CCU4_SLICE_PRESCALER_64, PWM4_TIMER_PERIOD, DISABLED},  // PWM disabled  6  
     {CCU40, CCU40_CC40, 0, mapping_port_pin[9], P1_8_AF_CCU40_OUT0, XMC_CCU4_SLICE_PRESCALER_64, PWM4_TIMER_PERIOD, DISABLED},  // PWM disabled  6  
 };
 

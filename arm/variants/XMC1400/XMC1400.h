@@ -69,28 +69,39 @@ typedef enum {
   PendSV_IRQn                   =  -2,              /*!<  14  Pendable request for system service                              */
   SysTick_IRQn                  =  -1,              /*!<  15  System Tick Timer                                                */
 /* ---------------------  XMC1400 Specific Interrupt Numbers  --------------------- */
-  SCU_0_IRQn          =   0,   /*!< SCU SR0 Interrupt                        */
-  SCU_1_IRQn          =   1,   /*!< SCU SR1 Interrupt                        */
-  SCU_2_IRQn          =   2,   /*!< SCU SR2 Interrupt                        */
-  ERU0_0_IRQn         =   3,   /*!< ERU0 SR0 Interrupt                       */
-  ERU0_1_IRQn         =   4,   /*!< ERU0 SR1 Interrupt                       */
-  ERU0_2_IRQn         =   5,   /*!< ERU0 SR2 Interrupt                       */
-  ERU0_3_IRQn         =   6,   /*!< ERU0 SR3 Interrupt                       */
+  IRQ0_IRQn                     =   0,   
+  IRQ1_IRQn                     =   1,   
+  IRQ2_IRQn                     =   2,   
+  IRQ3_IRQn                     =   3,   
+  IRQ4_IRQn                     =   4,   
+  IRQ5_IRQn                     =   5,   
+  IRQ6_IRQn                     =   6,   
+  IRQ7_IRQn                     =   7,   
+  IRQ8_IRQn                     =   8,   
+  IRQ9_IRQn                     =   9,   
+  IRQ10_IRQn                    =  10,  
+  IRQ11_IRQn                    =  11,  
+  IRQ12_IRQn                    =  12,  
+  IRQ13_IRQn                    =  13,  
+  IRQ14_IRQn                    =  14,  
+  IRQ15_IRQn                    =  15,  
+  IRQ16_IRQn                    =  16,  
+  IRQ17_IRQn                    =  17,  
+  IRQ18_IRQn                    =  18,  
+  IRQ19_IRQn                    =  19,  
+  IRQ20_IRQn                    =  20,  
+  IRQ21_IRQn                    =  21,  
+  IRQ22_IRQn                    =  22,  
+  IRQ23_IRQn                    =  23,  
+  IRQ24_IRQn                    =  24,  
+  IRQ25_IRQn                    =  25,  
+  IRQ26_IRQn                    =  26,  
+  IRQ27_IRQn                    =  27,  
+  IRQ28_IRQn                    =  28,  
+  IRQ29_IRQn                    =  29,  
+  IRQ30_IRQn                    =  30,  
+  IRQ31_IRQn                    =  31 
   
-  USIC0_0_IRQn        =   9,   /*!< USIC SR0 Interrupt                       */
-  USIC0_1_IRQn        =  10,   /*!< USIC SR1 Interrupt                       */
-  USIC0_2_IRQn        =  11,   /*!< USIC SR2 Interrupt                       */
-  USIC0_3_IRQn        =  12,   /*!< USIC SR3 Interrupt                       */
-  USIC0_4_IRQn        =  13,   /*!< USIC SR4 Interrupt                       */
-  USIC0_5_IRQn        =  14,   /*!< USIC SR5 Interrupt                       */
-  
-  VADC0_C0_0_IRQn     =  15,   /*!< VADC SR0 Interrupt                       */
-  VADC0_C0_1_IRQn     =  16,   /*!< VADC SR1 Interrupt                       */
-  
-  CCU40_0_IRQn        =  21,   /*!< CCU40 SR0 Interrupt                      */
-  CCU40_1_IRQn        =  22,   /*!< CCU40 SR1 Interrupt                      */
-  CCU40_2_IRQn        =  23,   /*!< CCU40 SR2 Interrupt                      */
-  CCU40_3_IRQn        =  24,   /*!< CCU40 SR3 Interrupt                      */
 } IRQn_Type;
 
 

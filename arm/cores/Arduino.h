@@ -54,11 +54,6 @@ extern "C" {
 #define clockCyclesToMicroseconds(a)    ( ((a) * 1000L) / (F_CPU / 1000L) )
 #define microsecondsToClockCycles(a)    ( (a) * (F_CPU / 1000000L) )
 
-#if defined(XMC1400_Boot_Kit)
-#define Serial_IRQHandler0 IRQ9_Handler
-#else
-#define Serial_IRQHandler0 USIC0_0_IRQHandler
-#endif
 //****************************************************************************
 // @Typedefs
 //****************************************************************************
