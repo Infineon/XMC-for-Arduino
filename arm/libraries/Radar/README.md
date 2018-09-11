@@ -8,7 +8,7 @@ This library offers support for Infineon's [24GHz Radar Series](https://www.infi
 - [ ] Position2Go
 
 ## Interfaces
-- [x] RadarDataProcessor
+- [x] RadarDataProcessor<br/>
   Several algorithms are implemented to process raw data from the radar. The following functions can be called to enable/disable these algorithms:
   ```
   void enableSimpleMotionDetection();
@@ -17,11 +17,11 @@ This library offers support for Infineon's [24GHz Radar Series](https://www.infi
   void enableFft();
   void disableFft();
   ```
-  - [x] motion detection
+  - [x] motion detection<br/>
     Motion detection (approaching & departing) is implemented based on the phase shift. `enableSimpleMotionDetection` runs the algorithm based on comparing wav shapes of I and Q data, whereas `enableFftMotionDetection` is based on the phase difference of the FFT peaks of I and Q data.
-  - [x] speed detection
+  - [x] speed detection<br/>
     FFT peak frequency is proportional to the doppler speed.
-- [x] BGTRadar
+- [x] BGTRadar<br/>
   Defines radar configurations and parameters for algorithms (different radars might have different data formats)
   - [x] BGT24LTR11 (Sense2GoL)
 - [ ] Communication Library

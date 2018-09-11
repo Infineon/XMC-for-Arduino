@@ -7,6 +7,8 @@
 typedef struct
 {
 	int fft_size;
+	/** threshold of the FFT spectrum for motion detection */
+	int fft_threshold;
 	/** one cycle includes ADC sampling, running algorithms, user code, and some idle time*/
 	int cycle_time;
 	/** Rate of ADC sampling*/
@@ -14,12 +16,6 @@ typedef struct
 	/** Time needed for the radar chip to settle after being turned on*/
 	int settle_time;
 } BGT_RADAR_CONFIG_t;
-
-typedef struct
-{
-	int magnitude_thresh;
-} BGT_ALGO_PARAMS_t;
-
 
 class RadarDataProcessorClass;
 
@@ -45,11 +41,6 @@ class BGTRadar
 
 	BGT_RADAR_CONFIG_t _config{};
 
-	/**
-	 * @brief Parameters for data processing algorithms. Defined here (not in RadarDataProcessor) since these may vary from radar to radar.
-	 */
-	BGT_ALGO_PARAMS_t _algoParams{};
-	
 	int _samplingTime;
 };
 
