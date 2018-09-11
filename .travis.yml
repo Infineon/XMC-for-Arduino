@@ -49,7 +49,7 @@ script:
 after_success:
     # only build once (after one job by checking id, however this does not work reliably)
     - |
-      if [ $(($TRAVIS_JOB_ID - $TRAVIS_BUILD_ID)) -eq 2 ]; then
+      if [ $(($TRAVIS_JOB_ID - $TRAVIS_BUILD_ID)) -eq 1 ]; then
         export REPO_NAME=${LIB_NAME#*/}
         cd $LIB_PATH
         git clone https://github.com/Infineon/InfineonDoxyGenerator.git
