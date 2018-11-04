@@ -227,6 +227,13 @@ XMC_I2S_CH_STATUS_t I2SClass::_init(){
 XMC_I2S_CH_STATUS_t I2SClass::end()
 {
     XMC_I2S_CH_STATUS_t returnValue = XMC_I2S_CH_Stop(MASTER_CHANNEL);
+    XMC_USIC_CH_RXFIFO_DisableEvent(MASTER_CHANNEL, XMC_USIC_CH_RXFIFO_EVENT_CONF_ALTERNATE | XMC_USIC_CH_RXFIFO_EVENT_CONF_STANDARD);
+    XMC_I2S_CH_DisableEvent(MASTER_CHANNEL, XMC_I2S_CH_EVENT_STANDARD_RECEIVE | XMC_I2S_CH_EVENT_ALTERNATIVE_RECEIVE);
+    NVIC_DisableIRQ((IRQn_Type)i2s_config.protocol_irq_num);
+
+    XMC_USIC_CH_RXFIFO_ClearEvent(MASTER_CHANNEL, XMC_USIC_CH_RXFIFO_EVENT_ALTERNATE | XMC_USIC_CH_RXFIFO_EVENT_STANDARD);
+    XMC_I2S_CH_ClearStatusFlag(MASTER_CHANNEL, XMC_I2S_CH_STATUS_FLAG_ALTERNATIVE_RECEIVE_INDICATION  | XMC_I2S_CH_STATUS_FLAG_RECEIVE_INDICATION);
+
     disableMicrophones();
     if( returnValue == XMC_I2S_CH_STATUS_OK){
         _initialized = false;
@@ -260,6 +267,7 @@ uint8_t I2SClass::disableMicrophones(){
     // In the Filling Level Mode, only the standard receive is activated
     // Microphone selection is done in the ISR
     _microphoneSelection = NO_MICROPHONE;
+    _sampleInformation = NO_MICROPHONE;
     return _microphoneSelection;
 }
 
@@ -292,6 +300,7 @@ void I2SClass::_onSampleReceived()
     if( (XMC_USIC_CH_RXFIFO_IsEmpty(MASTER_CHANNEL) == true) || (_microphoneSelection == 0) ){
         XMC_I2S_CH_ClearStatusFlag(MASTER_CHANNEL, XMC_I2S_CH_STATUS_FLAG_RECEIVE_INDICATION | XMC_I2S_CH_STATUS_FLAG_ALTERNATIVE_RECEIVE_INDICATION);
         XMC_USIC_CH_RXFIFO_ClearEvent(MASTER_CHANNEL, XMC_USIC_CH_RXFIFO_EVENT_ALTERNATE | XMC_USIC_CH_RXFIFO_EVENT_STANDARD);
+        _sampleInformation = NO_MICROPHONE;
         return;
     }
 
@@ -317,6 +326,7 @@ void I2SClass::_onSampleReceived()
     // Check for the microphone data for WA=LOW
     if(((_microphoneSelection & ( MICROPHONE_LOW | MICROPHONE_LOW_HIGH )) != 0) && ( (buffer1 & (uint32_t)0x00000010) == 0) && !statusReturn){
         // Process the FIFO values for WA=HIGH
+        _sampleInformation = MICROPHONE_LOW;
         _lastValue = 0;
         _lastValue = ((uint32_t)retval1 << _shiftFirst ) & _firstShiftMask;
         _lastValue |= ((uint32_t)retval2 << _shiftSecond ) & _secondShiftMask;
@@ -334,6 +344,7 @@ void I2SClass::_onSampleReceived()
     // Check for the microphone data for WA=HIGH
     if(((_microphoneSelection & ( MICROPHONE_HIGH | MICROPHONE_LOW_HIGH )) != 0) && ((buffer1 & (uint32_t)0x00000010) != 0) && !statusReturn){
         // Process the FIFO values for WA=HIGH
+         _sampleInformation = MICROPHONE_HIGH;
         _lastValue = 0;
         _lastValue = ((uint32_t)retval1 << _shiftFirst ) & _firstShiftMask;
         _lastValue |= ((uint32_t)retval2 << _shiftSecond ) & _secondShiftMask;
@@ -350,7 +361,8 @@ void I2SClass::_onSampleReceived()
     // Process the defined function if it exists
     if (_onReceiveEvent){
         _onReceiveEvent();
-    }   
+    }
+    _sampleInformation = NO_MICROPHONE; 
     XMC_USIC_CH_RXFIFO_ClearEvent(MASTER_CHANNEL, XMC_USIC_CH_RXFIFO_EVENT_ALTERNATE | XMC_USIC_CH_RXFIFO_EVENT_STANDARD);
     XMC_I2S_CH_ClearStatusFlag(MASTER_CHANNEL, XMC_I2S_CH_STATUS_FLAG_RECEIVE_INDICATION | XMC_I2S_CH_STATUS_FLAG_ALTERNATIVE_RECEIVE_INDICATION);
     XMC_USIC_CH_RXFIFO_Flush(MASTER_CHANNEL);
@@ -434,5 +446,10 @@ void I2SClass::onReceive(void(*function)(void))
 {
   _onReceiveEvent = function;
 }
+
+I2SMicrophones_t I2SClass::getSampleInformation()
+  {
+      return _sampleInformation;
+  }
 
 I2SClass I2S = I2SClass();
