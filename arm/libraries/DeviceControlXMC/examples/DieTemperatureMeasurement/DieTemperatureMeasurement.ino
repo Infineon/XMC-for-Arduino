@@ -1,33 +1,48 @@
-
 /*
   Simple die temperature measurement for XMC devices
   Demonstrates the measure temperature of die using sensor.
   05 July 2017
+
+  Amended April 2018 Paul Carpenter, PC Services
+  Needs first serial port to display results at 115,200 baud
+
+  Add signon message
+  Take initial reading and to avoid high reading as first reading
+  Make board agnostic
+  Simplify code
  */
-
 #include <DeviceControlXMC.h>
-XMCClass xmc;
 
- uint32_t temperature = 0;
- 
-//The setup function is called once at startup of the sketch
-void setup()
+// For library macro printing
+#define str(x)  Serial.println( #x )
+#define str1(x) str(x)
+#define str2(x) Serial.print( #x )
+
+XMCClass devCtrl;
+
+uint32_t temperature = 0;
+
+
+void setup( )
 {
-  Serial.begin(9600);
+Serial.begin( 115200 );
+delay( 100 );
+Serial.println( "XMC Die Temperature in Degree C Demo  (V2.0)" );
+Serial.print( "Running on " );
+str2( XMC_BOARD );
+// dummy read to ensure first value which may be erroneous is ignored
+temperature = devCtrl.getTemperature();
 }
 
-// The loop function is called in an endless loop
-void loop()
+
+void loop( )
 {
+  delay( 1000 );
 
-  delay(1000);
+  /* If UC_FAMILY = XMC4 you can also calibrate temperature for finer measurements */
+  temperature = devCtrl.getTemperature();
 
-  /*If UC_FAMILY = XMC4 you can also calibrate temperature for finer measurements*/
-  temperature = xmc.getTemperature();
-
-  Serial.println();
-  Serial.print("Temperature of die is:");
-  Serial.print(temperature);
-
+  Serial.print( "Die Temperature\t" );
+  Serial.println( temperature );
 }
 

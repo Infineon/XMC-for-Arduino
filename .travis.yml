@@ -1,0 +1,59 @@
+language: python
+python:
+  - "2.7"
+sudo: required    
+env:
+    global:
+      - LIB_NAME=I2S
+      - LIB_PATH=./arm/libraries/I2S
+      - USR_NAME="Sun Yuxi (IFAG DES SDF FW)"
+      - USR_EMAIL="Yuxi.Sun@infineon.com"
+      - secure: eR/vXO8e4Se4Wgq4FeBSXOkHqZuZM5oygF6awDOr+xNBKhG3H7oVdJ2poNUqGvn2UbkhLQedB8P3rBQfOAb2YDccklCb4LhXU+gZ4dNoh+uVOhlZeVk1hnP4DHttFt1HBW5nbdNBMfNE4DQgF1D9NagwSt2nRrxWFZHD1uAvRyZvZ0RmBbclmb3TP/onIsdbdEhGX05Z9ztG7qtell+Rl/BrhVRzyshA2BSpX3qyDMUtL6DO1uSPLJhNsEAdnTaOQ0USEvdIbxeH8Wqi1ivK8nor3UdZ8jD/wME8YONgvl5aYOLDJCe17TOQDHLj2lMlwN43Xsxqyo/AFy4X6+8jQK792EA0y7hvNbwEwpinaCNtD1Rmjv8N362mrP9vYSJg17cs1RUtAtdp9K57r+yV7CxdJCjhipecJfkll+aMb2lV2+URfOVF7f3FXemuxBiyMxCYKKwJAdhLsuKCwmCMBEYXhgusq6GBBXfvwgn4F9o7hk9sUdIKovl4us5iLNv2/8rRRSP1AEaW8a1D2ADh6WVNg0SjqyNKvGhrv20jundVP76p35ucyVpTR3mLsziLiDDotwzGq3MVAkGEMBjQjsqHAW3riCNY+oJL3Niy/A8vNr4xJCUaPL0wTgug8XGb5QzXc2cGcp9zlUiFU1LNHMGoWkEFiAeu4Obi2fwV7wA=
+    matrix:
+      # defining this variable creates multiple jobs in Travis
+      # TODO keep these examples up-to-date with the ones in the core
+      #- PLATFORMIO_PROJECT_DIR=examples/arduino-blink
+      - PLATFORMIO_PROJECT_DIR=examples/arduino-wire/master_reader
+      - PLATFORMIO_PROJECT_DIR=examples/arduino-wire/master_writer
+      - PLATFORMIO_PROJECT_DIR=examples/arduino-wire/slave_receiver
+      - PLATFORMIO_PROJECT_DIR=examples/arduino-wire/slave_sender
+      # - PLATFORMIO_PROJECT_DIR=examples/device-control/DieTemperatureMeasurement
+      # - PLATFORMIO_PROJECT_DIR=examples/device-control/HeapMemoryMeasurement
+      # - PLATFORMIO_PROJECT_DIR=examples/device-control/SleepModeXMC1100
+      # - PLATFORMIO_PROJECT_DIR=examples/device-control/SleepModeXMC4700
+      # - PLATFORMIO_PROJECT_DIR=examples/device-control/StackMemoryMeasurement
+      # - PLATFORMIO_PROJECT_DIR=examples/ifx9201/MotorControl
+      # - PLATFORMIO_PROJECT_DIR=examples/rtc/AlarmRTC
+      # - PLATFORMIO_PROJECT_DIR=examples/rtc/HibernateRTCAlarm
+      # - PLATFORMIO_PROJECT_DIR=examples/rtc/SimpleRTC
+      # - PLATFORMIO_PROJECT_DIR=examples/spi/BarometricPressureSensor
+      # - PLATFORMIO_PROJECT_DIR=examples/spi/DigitalPotControl
+      # - PLATFORMIO_PROJECT_DIR=examples/ultrasonic/betterecho
+      # - PLATFORMIO_PROJECT_DIR=examples/ultrasonic/simple-echo
+      # - PLATFORMIO_PROJECT_DIR=examples/radar/doppler_speed
+install:
+  - zip -r /tmp/framework-arduinoxmc.zip ./arm  
+  - git clone https://github.com/Infineon/platformio-infineonxmc.git /tmp/builder
+  - cd /tmp/builder
+  - platform_json=$(<platform.json)
+  - rm platform.json
+  - jq '.packages."framework-arduinoxmc".version = "file:///tmp/framework-arduinoxmc.zip"' <<<"$platform_json" > platform.json
+
+  - pip install -U platformio
+  - platformio update
+  - platformio platform install -f file://. 
+
+script:
+  - platformio run -d $PLATFORMIO_PROJECT_DIR
+  
+after_success:
+    # only build once (after one job by checking id, however this does not work reliably)
+    - |
+      if [ $(($TRAVIS_JOB_ID - $TRAVIS_BUILD_ID)) -eq 1 ]; then
+        export REPO_NAME=${LIB_NAME#*/}
+        cd $LIB_PATH
+        git clone https://github.com/Infineon/InfineonDoxyGenerator.git
+        cd InfineonDoxyGenerator/docs
+        chmod +x publish_pdf.sh
+        ./publish_pdf.sh
+      fi  

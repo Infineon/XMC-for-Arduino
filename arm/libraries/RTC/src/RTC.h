@@ -35,6 +35,14 @@
 #ifndef _RTC_H_INCLUDED
 #define _RTC_H_INCLUDED
 
+#include "xmc_device.h"
+//****************************************************************************
+// @Board Check
+//****************************************************************************
+#if !defined(XMC1) || !defined(XMC4)
+#error Only XMC microcontrollers are supported by this library
+#endif
+
 //****************************************************************************
 // @Project Includes
 //****************************************************************************

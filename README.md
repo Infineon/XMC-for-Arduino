@@ -1,6 +1,16 @@
-﻿# Infineon's XMC Microcontroller Boards for Arduino
+[![Build Status](https://travis-ci.org/Infineon/XMC-for-Arduino.svg?branch=master)](https://travis-ci.org/Infineon/XMC-for-Arduino)
+# Infineon's XMC Microcontroller Boards for Arduino
 
-This repository integrates [Infineon's](https://www.infineon.com/) XMC microcontrollers into the [Arduino IDE](https://www.arduino.cc/en/main/software).
+This repository integrates [Infineon's](https://www.infineon.com/) XMC microcontrollers into the [Arduino IDE](https://www.arduino.cc/en/main/software) and [PlatformIO IDE](https://platformio.org/platformio-ide?utm_source=github&utm_medium=xmc-for-arduino).
+
+## Contents
+- [Supported Microcontroller Boards](#supported-microcontroller-boards)
+- [Additional Information](#additional-information)
+- [Installation Instructions](#installation-instructions)
+  * [Prework for SEGGER J-Link](#prework-for-segger-j-link)
+  * [Using Arduino IDE](#using-arduino-ide)
+  * [Using PlatformIO IDE](#using-platformio-ide)
+- [Additional Contributors](#additional-contributors)
 
 ## Supported Microcontroller Boards
 
@@ -35,7 +45,7 @@ If you have already installed '[DAVE™ - Development Platform for XMC™ Microc
 
 ![J-Link](https://raw.githubusercontent.com/infineon/assets/master/Pictures/J-Link_Packages.png)
 
-### Integration into the Arduino IDE
+### Using Arduino IDE
 
 ![Preferences](https://raw.githubusercontent.com/infineon/assets/master/Pictures/Preferences.png)
 
@@ -59,12 +69,22 @@ In the boards list **Tools** > **Board**, the XMC microcontroller boards are add
 
 ![Board List](https://raw.githubusercontent.com/infineon/assets/master/Pictures/Board_List.png)
 
-### Important Notes
+**Important Notes**
 
 * This integration will only work for Arduino IDE >=1.5
 * The XMC1100 Boot Kit has limitations if compared to the official Arduino boards (consult the [XMC-for-Arduino Wiki](https://github.com/Infineon/XMC-for-Arduino/wiki) for more information)
 * Refer also to the LICENSE.md/txt file for further information
 * Arduino 1.8.0 IDE might have problems with the XMC-for-Arduino releases
 
+### Using PlatformIO IDE
+
+- [What is PlatformIO?](http://docs.platformio.org/en/latest/what-is-platformio.html?utm_source=github&utm_medium=xmc-for-arduino)
+- [PlatformIO IDE](http://platformio.org/platformio-ide?utm_source=github&utm_medium=xmc-for-arduino)
+- [PlatformIO Core (CLI)](http://docs.platformio.org/en/latest/core.html?utm_source=github&utm_medium=xmc-for-arduino) (command line tool)
+- [Integration with Cloud and Desktop IDEs](http://docs.platformio.org/en/latest/ide.html?utm_source=github&utm_medium=xmc-for-arduino) -
+  Cloud9, Codeanywhere, Eclipse Che (Codenvy), Atom, CLion, Eclipse, Emacs, NetBeans, Qt Creator, Sublime Text, VIM, Visual Studio, and VSCode
+- [Project Examples](https://github.com/Infineon/platformio-infineonxmc/tree/master/examples)
+
 ## Additional Contributors
+
 * [Paul Carpenter](https://github.com/techpaul)

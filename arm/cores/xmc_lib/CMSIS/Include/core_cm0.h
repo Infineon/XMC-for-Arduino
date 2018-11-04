@@ -1,11 +1,11 @@
 /**************************************************************************//**
  * @file     core_cm0.h
  * @brief    CMSIS Cortex-M0 Core Peripheral Access Layer Header File
- * @version  V5.0.1
- * @date     25. November 2016
+ * @version  V5.0.3
+ * @date     10. January 2018
  ******************************************************************************/
 /*
- * Copyright (c) 2009-2016 ARM Limited. All rights reserved.
+ * Copyright (c) 2009-2018 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -23,8 +23,8 @@
  */
 
 #if   defined ( __ICCARM__ )
- #pragma system_include         /* treat file as system include file for MISRA check */
-#elif defined (__ARMCC_VERSION) && (__ARMCC_VERSION >= 6010050)
+  #pragma system_include         /* treat file as system include file for MISRA check */
+#elif defined (__clang__)
   #pragma clang system_header   /* treat file as system include file */
 #endif
 
@@ -60,11 +60,13 @@
   @{
  */
 
+#include "cmsis_version.h"
+ 
 /*  CMSIS CM0 definitions */
-#define __CM0_CMSIS_VERSION_MAIN  ( 5U)                                  /*!< [31:16] CMSIS HAL main version */
-#define __CM0_CMSIS_VERSION_SUB   ( 0U)                                  /*!< [15:0]  CMSIS HAL sub version */
+#define __CM0_CMSIS_VERSION_MAIN  (__CM_CMSIS_VERSION_MAIN)              /*!< \deprecated [31:16] CMSIS HAL main version */
+#define __CM0_CMSIS_VERSION_SUB   (__CM_CMSIS_VERSION_SUB)               /*!< \deprecated [15:0]  CMSIS HAL sub version */
 #define __CM0_CMSIS_VERSION       ((__CM0_CMSIS_VERSION_MAIN << 16U) | \
-                                    __CM0_CMSIS_VERSION_SUB           )  /*!< CMSIS HAL version number */
+                                    __CM0_CMSIS_VERSION_SUB           )  /*!< \deprecated CMSIS HAL version number */
 
 #define __CORTEX_M                (0U)                                   /*!< Cortex-M Core */
 
@@ -564,7 +566,12 @@ typedef struct
   @{
  */
 
-#ifndef CMSIS_NVIC_VIRTUAL
+#ifdef CMSIS_NVIC_VIRTUAL
+  #ifndef CMSIS_NVIC_VIRTUAL_HEADER_FILE
+    #define CMSIS_NVIC_VIRTUAL_HEADER_FILE "cmsis_nvic_virtual.h"
+  #endif
+  #include CMSIS_NVIC_VIRTUAL_HEADER_FILE
+#else
 /*#define NVIC_SetPriorityGrouping    __NVIC_SetPriorityGrouping   not available for Cortex-M0 */
 /*#define NVIC_GetPriorityGrouping    __NVIC_GetPriorityGrouping   not available for Cortex-M0 */
   #define NVIC_EnableIRQ              __NVIC_EnableIRQ
@@ -576,9 +583,15 @@ typedef struct
 /*#define NVIC_GetActive              __NVIC_GetActive             not available for Cortex-M0 */
   #define NVIC_SetPriority            __NVIC_SetPriority
   #define NVIC_GetPriority            __NVIC_GetPriority
+  #define NVIC_SystemReset            __NVIC_SystemReset
 #endif /* CMSIS_NVIC_VIRTUAL */
 
-#ifndef CMSIS_VECTAB_VIRTUAL
+#ifdef CMSIS_VECTAB_VIRTUAL
+  #ifndef CMSIS_VECTAB_VIRTUAL_HEADER_FILE
+    #define CMSIS_VECTAB_VIRTUAL_HEADER_FILE "cmsis_vectab_virtual.h"
+  #endif
+  #include CMSIS_VECTAB_VIRTUAL_HEADER_FILE
+#else
   #define NVIC_SetVector              __NVIC_SetVector
   #define NVIC_GetVector              __NVIC_GetVector
 #endif  /* (CMSIS_VECTAB_VIRTUAL) */
@@ -586,7 +599,7 @@ typedef struct
 #define NVIC_USER_IRQ_OFFSET          16
 
 
-/* Interrupt Priorities are WORD accessible only under ARMv6M                   */
+/* Interrupt Priorities are WORD accessible only under Armv6-M                  */
 /* The following MACROS handle generation of the register offset and byte masks */
 #define _BIT_SHIFT(IRQn)         (  ((((uint32_t)(int32_t)(IRQn))         )      &  0x03UL) * 8UL)
 #define _SHP_IDX(IRQn)           ( (((((uint32_t)(int32_t)(IRQn)) & 0x0FUL)-8UL) >>    2UL)      )
@@ -603,7 +616,7 @@ __STATIC_INLINE void __NVIC_EnableIRQ(IRQn_Type IRQn)
 {
   if ((int32_t)(IRQn) >= 0)
   {
-    NVIC->ISER[0U] = (uint32_t)(1UL << (((uint32_t)(int32_t)IRQn) & 0x1FUL));
+    NVIC->ISER[0U] = (uint32_t)(1UL << (((uint32_t)IRQn) & 0x1FUL));
   }
 }
 
@@ -620,7 +633,7 @@ __STATIC_INLINE uint32_t __NVIC_GetEnableIRQ(IRQn_Type IRQn)
 {
   if ((int32_t)(IRQn) >= 0)
   {
-    return((uint32_t)(((NVIC->ISER[0U] & (1UL << (((uint32_t)(int32_t)IRQn) & 0x1FUL))) != 0UL) ? 1UL : 0UL));
+    return((uint32_t)(((NVIC->ISER[0U] & (1UL << (((uint32_t)IRQn) & 0x1FUL))) != 0UL) ? 1UL : 0UL));
   }
   else
   {
@@ -639,7 +652,7 @@ __STATIC_INLINE void __NVIC_DisableIRQ(IRQn_Type IRQn)
 {
   if ((int32_t)(IRQn) >= 0)
   {
-    NVIC->ICER[0U] = (uint32_t)(1UL << (((uint32_t)(int32_t)IRQn) & 0x1FUL));
+    NVIC->ICER[0U] = (uint32_t)(1UL << (((uint32_t)IRQn) & 0x1FUL));
     __DSB();
     __ISB();
   }
@@ -658,7 +671,7 @@ __STATIC_INLINE uint32_t __NVIC_GetPendingIRQ(IRQn_Type IRQn)
 {
   if ((int32_t)(IRQn) >= 0)
   {
-    return((uint32_t)(((NVIC->ISPR[0U] & (1UL << (((uint32_t)(int32_t)IRQn) & 0x1FUL))) != 0UL) ? 1UL : 0UL));
+    return((uint32_t)(((NVIC->ISPR[0U] & (1UL << (((uint32_t)IRQn) & 0x1FUL))) != 0UL) ? 1UL : 0UL));
   }
   else
   {
@@ -677,7 +690,7 @@ __STATIC_INLINE void __NVIC_SetPendingIRQ(IRQn_Type IRQn)
 {
   if ((int32_t)(IRQn) >= 0)
   {
-    NVIC->ISPR[0U] = (uint32_t)(1UL << (((uint32_t)(int32_t)IRQn) & 0x1FUL));
+    NVIC->ISPR[0U] = (uint32_t)(1UL << (((uint32_t)IRQn) & 0x1FUL));
   }
 }
 
@@ -692,7 +705,7 @@ __STATIC_INLINE void __NVIC_ClearPendingIRQ(IRQn_Type IRQn)
 {
   if ((int32_t)(IRQn) >= 0)
   {
-    NVIC->ICPR[0U] = (uint32_t)(1UL << (((uint32_t)(int32_t)IRQn) & 0x1FUL));
+    NVIC->ICPR[0U] = (uint32_t)(1UL << (((uint32_t)IRQn) & 0x1FUL));
   }
 }
 
@@ -779,7 +792,7 @@ __STATIC_INLINE uint32_t __NVIC_GetVector(IRQn_Type IRQn)
   \brief   System Reset
   \details Initiates a system reset request to reset the MCU.
  */
-__STATIC_INLINE void NVIC_SystemReset(void)
+__STATIC_INLINE void __NVIC_SystemReset(void)
 {
   __DSB();                                                          /* Ensure all outstanding memory accesses included
                                                                        buffered write are completed before reset */

@@ -169,8 +169,10 @@ void TwoWire::end(void)
         
         XMC_GPIO_CONFIG_t default_output_port_config = {
             .mode = XMC_GPIO_MODE_OUTPUT_OPEN_DRAIN,
-            .input_hysteresis = XMC_GPIO_INPUT_HYSTERESIS_STANDARD,
-            .output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH
+            .output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH,
+#if UC_FAMILY == XMC1
+            .input_hysteresis = XMC_GPIO_INPUT_HYSTERESIS_STANDARD
+#endif
         };
 
 		XMC_I2C_CH_Stop(XMC_I2C_config->channel);
@@ -772,8 +774,18 @@ extern "C" {
     {
         Wire.ProtocolHandler();
     }
+	
+    void USIC1_3_IRQHandler()
+    {
+        Wire1.ReceiveHandler();
+    }
+
+    void USIC1_4_IRQHandler()
+    {
+        Wire1.ProtocolHandler();
+    }
 #endif
-}
+} // extern "C" 
 
 // Preinstantiate Objects //////////////////////////////////////////////////////
 

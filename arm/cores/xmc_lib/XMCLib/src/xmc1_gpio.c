@@ -43,12 +43,12 @@
  *     - Removed version macros and declaration of GetDriverVersion API
  *
  * @endcond
- *
  */
 
 #include "xmc_gpio.h"
 
 #if UC_FAMILY == XMC1
+
 
 /*******************************************************************************
  * MACROS
@@ -57,6 +57,7 @@
 #define PORT_PHCR_Msk             PORT0_PHCR0_PH0_Msk
 #define PORT_PHCR_Size            PORT0_PHCR0_PH0_Msk
 #define PORT_HWSEL_Msk            PORT0_HWSEL_HW0_Msk
+
 
 /*******************************************************************************
  * API IMPLEMENTATION
@@ -69,16 +70,16 @@ void XMC_GPIO_Init(XMC_GPIO_PORT_t *const port, const uint8_t pin, const XMC_GPI
   XMC_ASSERT("XMC_GPIO_Init: Invalid input hysteresis", XMC_GPIO_CHECK_INPUT_HYSTERESIS(config->input_hysteresis));
   
   /* Switch to input */
-  port->IOCR[pin >> 2U] &= ~(uint32_t)((uint32_t)PORT_IOCR_PC_Msk << (PORT_IOCR_PC_Size * (pin & 0x3U)));
+  port->IOCR[pin >> 2 ] &= ~(uint32_t)((uint32_t)PORT_IOCR_PC_Msk << (PORT_IOCR_PC_Size * (pin & 0x3U)));
 
   /* HW port control is disabled */
-  port->HWSEL &= ~(uint32_t)((uint32_t)PORT_HWSEL_Msk << ((uint32_t)pin << 1U));
+  port->HWSEL &= ~(uint32_t)((uint32_t)PORT_HWSEL_Msk << ((uint32_t)pin << 1 ));
 
   /* Set input hysteresis */
-  port->PHCR[(uint32_t)pin >> 3U] &= ~(uint32_t)((uint32_t)PORT_PHCR_Msk << ((uint32_t)PORT_PHCR_Size * ((uint32_t)pin & 0x7U)));
-  port->PHCR[(uint32_t)pin >> 3U] |= (uint32_t)config->input_hysteresis << ((uint32_t)PORT_PHCR_Size * ((uint32_t)pin & 0x7U));
+  port->PHCR[(uint32_t)pin >> 3 ] &= ~(uint32_t)((uint32_t)PORT_PHCR_Msk << ((uint32_t)PORT_PHCR_Size * ((uint32_t)pin & 0x7U)));
+  port->PHCR[(uint32_t)pin >> 3 ] |= (uint32_t)config->input_hysteresis << ((uint32_t)PORT_PHCR_Size * ((uint32_t)pin & 0x7U));
     
-  /* Enable digital input */
+  /* Enable digital Input/Output depending on pin */
   if (XMC_GPIO_CHECK_ANALOG_PORT(port))
   {    
     port->PDISC &= ~(uint32_t)((uint32_t)0x1U << pin);
@@ -87,8 +88,9 @@ void XMC_GPIO_Init(XMC_GPIO_PORT_t *const port, const uint8_t pin, const XMC_GPI
   port->OMR = (uint32_t)config->output_level << pin;
   
   /* Set mode */
-  port->IOCR[pin >> 2U] |= (uint32_t)config->mode << (PORT_IOCR_PC_Size * (pin & 0x3U));
+  port->IOCR[pin >> 2 ] |= (uint32_t)config->mode << (PORT_IOCR_PC_Size * (pin & 0x3U));
 }
+
 
 void XMC_GPIO_SetInputHysteresis(XMC_GPIO_PORT_t *const port, 
                                  const uint8_t pin, 
@@ -97,8 +99,8 @@ void XMC_GPIO_SetInputHysteresis(XMC_GPIO_PORT_t *const port,
   XMC_ASSERT("XMC_GPIO_SetInputHysteresis: Invalid port", XMC_GPIO_CHECK_PORT(port));
   XMC_ASSERT("XMC_GPIO_SetInputHysteresis: Invalid input hysteresis", XMC_GPIO_CHECK_INPUT_HYSTERESIS(hysteresis));
 
-  port->PHCR[(uint32_t)pin >> 3U] &= ~(uint32_t)((uint32_t)PORT_PHCR_Msk << ((uint32_t)PORT_PHCR_Size * ((uint32_t)pin & 0x7U)));
-  port->PHCR[(uint32_t)pin >> 3U] |= (uint32_t)hysteresis << ((uint32_t)PORT_PHCR_Size * ((uint32_t)pin & 0x7U));
+  port->PHCR[(uint32_t)pin >> 3 ] &= ~(uint32_t)((uint32_t)PORT_PHCR_Msk << ((uint32_t)PORT_PHCR_Size * ((uint32_t)pin & 0x7U)));
+  port->PHCR[(uint32_t)pin >> 3 ] |= (uint32_t)hysteresis << ((uint32_t)PORT_PHCR_Size * ((uint32_t)pin & 0x7U));
 }
 
 #endif /* UC_FAMILY == XMC1 */

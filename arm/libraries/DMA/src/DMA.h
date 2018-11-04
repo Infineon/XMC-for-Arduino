@@ -34,9 +34,10 @@
 #define DMA_H_
 
 #include <Arduino.h>
+
+#if (UC_FAMILY == XMC4)
+
 #include <xmc_dma.h>
-
-
 
 #define PERIPH_SUPPORTED 9
 
@@ -88,6 +89,8 @@ enum periph_t {
 	SPI1_CH1  = 11,
 	SPI2_CH0  = 20,	// SPI_2 and UART2 only with DMA1
 	SPI2_CH1  = 21,	// SPI_2 and UART2 only with DMA1
+
+	I2S2_CH0 = 20,
 };
 
 
@@ -123,6 +126,10 @@ public:
 
 	void beginDMATransaction(XMC_DMA_t *const _dma, uint8_t channel);
 };
+
+#else // UC_FAMILY != XMC4
+#error "DMA is not supported on your board!"
+#endif
 
 #endif /* DMA_H_ */
 
