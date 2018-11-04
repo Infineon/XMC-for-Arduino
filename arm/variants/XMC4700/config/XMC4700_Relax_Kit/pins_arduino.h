@@ -64,10 +64,20 @@
 #define PIN_SPI_MISO  12
 #define PIN_SPI_SCK   13
 
+extern uint8_t SS; 
+extern uint8_t MOSI;
+extern uint8_t MISO;
+extern uint8_t SCK;
+
 #define PIN_SPI_SS_SD    28
 #define PIN_SPI_MOSI_SD  29
 #define PIN_SPI_MISO_SD  30
 #define PIN_SPI_SCK_SD   31
+
+static const uint8_t SS_SD   = PIN_SPI_SS_SD;
+static const uint8_t MOSI_SD = PIN_SPI_MOSI_SD;
+static const uint8_t MISO_SD = PIN_SPI_MISO_SD;
+static const uint8_t SCK_SD  = PIN_SPI_SCK_SD;
 
 #define A0   0
 #define A1   1
@@ -104,9 +114,6 @@
 #define BUTTON1     26  // Additional BUTTON1
 #define BUTTON2     27  // Additional BUTTON2
 #define GND         50  // GND
-
-#define EXT_INTR_0  2
-#define EXT_INTR_1  3
 
 #define digitalPinToInterrupt(p)    ((p) == 2 ? 0 : ((p) == 3 ? 1 : NOT_AN_INTERRUPT))
 

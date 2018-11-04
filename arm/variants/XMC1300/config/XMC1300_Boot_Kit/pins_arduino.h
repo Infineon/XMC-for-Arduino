@@ -72,6 +72,11 @@
 #define PIN_SPI_MISO  23
 #define PIN_SPI_SCK   30
 
+extern uint8_t SS; 
+extern uint8_t MOSI;
+extern uint8_t MISO;
+extern uint8_t SCK;
+
 #define A0   0
 #define A1   1
 #define A2   2
@@ -97,9 +102,6 @@
 #define LED5        27  // Extended LEDs P0.8
 #define LED6        28  // Extended LEDs P0.9
 #define GND         34  // GND
-
-#define EXT_INTR_0  12
-#define EXT_INTR_1  13
 
 #define digitalPinToInterrupt(p)    ((p) == 14 ? 0 : ((p) == 15 ? 1 : NOT_AN_INTERRUPT))
 
