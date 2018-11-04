@@ -6,8 +6,8 @@
  * 
  * Open the serial monitor with baudrate of 1000000 to see the results.
  * 
- * Note: if 2 channels are used the values returned will be from both channels and thus look noisy
- * In this case, both values need to be separated
+ * Note: if 2 channels are used, the values returned from I2S.read() will be from both channels and thus look noisy
+ * In this case, both values need to be separated.
  */
 
 void setup()
