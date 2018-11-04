@@ -26,7 +26,7 @@ build.flash_ld_path ={build.variant.path}/{build.flash_ld}
 build.assembly_file ={build.variant.path}/Startup_{build.variant}.S
 
 compiler.c.cmd=arm-none-eabi-gcc
-compiler.c.flags=-mcpu={build.mcu} -mthumb -fpermissive -c -g -Os {compiler.warning_flags} -std=gnu11 -ffunction-sections -fdata-sections -nostdlib --param max-inline-insns-single=500 -MMD
+compiler.c.flags=-mcpu={build.mcu} -mthumb -c -g -Os {compiler.warning_flags} -std=gnu11 -ffunction-sections -fdata-sections -nostdlib --param max-inline-insns-single=500 -MMD
 compiler.c.extra_flags= 
 compiler.c.elf.cmd=arm-none-eabi-gcc
 compiler.c.elf.flags=-Os -Wl,--gc-sections -save-temps

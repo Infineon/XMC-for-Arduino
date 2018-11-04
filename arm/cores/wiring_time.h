@@ -38,71 +38,71 @@ extern "C" {
 
 #if ((UC_FAMILY == XMC4) && (F_CPU == 144000000U))
 // 142 NOPS
-#define NOPS_FOR_USEC() { asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); \
-                        asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); \
-                        asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); \
-						asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); \
-                        asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); \
-                        asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); \
-						asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); \
-						asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); \
-						asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); \
-						asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); \
-						asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); \
-						asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); \
-						asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); \
-						asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); \
-						asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); \
-						asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); \
-						asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); \
-						asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); \
-						asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); \
-						asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); \
-						asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); \
-						asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); \
-						asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); \
-						asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); \
-						asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); \
-						asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); \
-						asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); \
-						asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); \
-						asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); \
-						asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); \
-						asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); \
-						asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); \
-						asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); \
-						asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); \
-						asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); \
-						asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); \
-						asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); \
-						asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); \
-						asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); \
-						asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); \
-						asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); \
-						asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); \
-						asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); \
-						asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); \
-						asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); \
-						asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); \
-						asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); \
-                        asm volatile("nop"); }
+#define NOPS_FOR_USEC() { asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
+                        asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
+                        asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
+						asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
+                        asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
+                        asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
+						asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
+						asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
+						asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
+						asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
+						asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
+						asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
+						asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
+						asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
+						asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
+						asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
+						asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
+						asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
+						asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
+						asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
+						asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
+						asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
+						asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
+						asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
+						asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
+						asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
+						asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
+						asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
+						asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
+						asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
+						asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
+						asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
+						asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
+						asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
+						asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
+						asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
+						asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
+						asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
+						asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
+						asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
+						asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
+						asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
+						asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
+						asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
+						asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
+						asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
+						asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
+                        asm volatile("nop");}
 #elif ((UC_FAMILY == XMC1) && (F_CPU == 32000000U))
 // 16 NOPS
-#define NOPS_FOR_USEC() { asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); \
-						asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); \
-						asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); \
-						asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); \
-						asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); \
+#define NOPS_FOR_USEC() { asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
+						asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
+						asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
+						asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
+						asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
                         asm volatile("nop"); }
 #elif ((UC_FAMILY == XMC1) && (F_CPU == 48000000U))
 // 24 NOPS
-#define NOPS_FOR_USEC() { asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); \
-						asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); \
-						asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); \
-						asm volatile("nop"); asm volatile("nop"); asm volatile("nop"); \
-						asm volatile("nop"); asm volatile("nop");asm volatile("nop"); \
-						asm volatile("nop"); asm volatile("nop");asm volatile("nop"); \
-						asm volatile("nop"); asm volatile("nop");asm volatile("nop"); \	
+#define NOPS_FOR_USEC() { asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
+						asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
+						asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
+						asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
+						asm volatile("nop"); asm volatile("nop");asm volatile("nop");\
+						asm volatile("nop"); asm volatile("nop");asm volatile("nop");\
+						asm volatile("nop"); asm volatile("nop");asm volatile("nop");\
 						asm volatile("nop"); asm volatile("nop");asm volatile("nop"); } 		
 #else
 #error wiring_time: NOPS_FOR_USEC not defined

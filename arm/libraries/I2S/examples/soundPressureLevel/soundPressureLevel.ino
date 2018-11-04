@@ -6,7 +6,7 @@
  * 
  * Open the serial plotter with baudrate of 1000000 and make noise to see the results.
  *
- * It follows an example published by Sandeep Mistry (https://github.com/sandeepmistry)
+ * It is based on an example published by Sandeep Mistry (https://github.com/sandeepmistry)
  */
 
 void setup()

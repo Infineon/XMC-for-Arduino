@@ -56,14 +56,25 @@ extern "C"
 #define MASTER_WACLK PORT3, 10
 
 #elif defined(XMC1100_XMC2GO) || defined(XMC1100_Boot_Kit)
-/*U2C0*/
-/*DX0C(Inpunt) -> P0.6*/
+/*U0C1*/
+/*DX0C(Input) -> P0.6*/
 /*SCLKOUT(ALT6) -> P0.8*/
 /*WA(ALT6) -> P0.9*/
 #define MASTER_CHANNEL XMC_I2S0_CH1
 #define MASTER_MRST PORT0, 6
 #define INPUT_SOURCE USIC0_C1_DX0_P0_6
 #define MASTER_SCLK PORT0, 8
+#define MASTER_WACLK PORT0, 9
+
+#elif defined(XMC1100_Boot_Kit)
+/*U0C0*/
+/*DX0C(Input) -> P1.0*/
+/*SCLKOUT(ALT6) -> P0.7*/
+/*WA(ALT6) -> P0.9*/
+#define MASTER_CHANNEL XMC_I2S0_CH0
+#define MASTER_MRST PORT0, 11
+#define INPUT_SOURCE USIC0_C0_DX0_P1_0
+#define MASTER_SCLK PORT0, 7
 #define MASTER_WACLK PORT0, 9
 
 #endif

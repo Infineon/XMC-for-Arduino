@@ -100,6 +100,7 @@ private:
   int32_t _lastValue;    
   uint32_t _bitMask1;
   uint32_t _lastValueBuffer;
+  I2SMicrophones_t _sampleInformation;
 
   // Callback functions
   void (*_onReceiveEvent)(void);
@@ -253,6 +254,12 @@ public:
    * @return Overflow if last value could not be inserted into the ring buffer
    */
   bool getOverflow();
+
+  /**
+   * @brief Returns the information about the last sampled value. This information will be updated before the custom ISR runs, i.e. information is available to separate sampled values from peek()
+   * @return I2SMicrophones_t which indicates the sampled value - only NO_MICROPHONE, MICROPHONE_LOW, and MICROPHONE_HIGH will be returned
+   */
+  I2SMicrophones_t getSampleInformation();
 };
 
 extern I2SClass I2S;
