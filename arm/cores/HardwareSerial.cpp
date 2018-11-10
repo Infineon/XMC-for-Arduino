@@ -122,15 +122,19 @@ void HardwareSerial::begin(uint32_t speed, XMC_UART_MODE_t config)
   XMC_UART_CH_EnableDataTransmission(_XMC_UART_config->channel);
   XMC_USIC_CH_TXFIFO_EnableEvent(_XMC_UART_config->channel, XMC_USIC_CH_TXFIFO_EVENT_CONF_STANDARD);
 
+  XMC_UART_CH_EnableEvent(_XMC_UART_config->channel, XMC_UART_CH_EVENT_ALTERNATIVE_RECEIVE | XMC_UART_CH_EVENT_STANDARD_RECEIVE);
+  XMC_USIC_CH_SetInterruptNodePointer(_XMC_UART_config->channel, XMC_USIC_CH_INTERRUPT_NODE_POINTER_RECEIVE, _XMC_UART_config->irq_service_request);
+  XMC_USIC_CH_SetInterruptNodePointer(_XMC_UART_config->channel, XMC_USIC_CH_INTERRUPT_NODE_POINTER_ALTERNATE_RECEIVE, _XMC_UART_config->irq_service_request);
+
+  /*
     // Generate event when FIFO is half filled
   XMC_USIC_CH_RXFIFO_Configure(_XMC_UART_config->channel, 16, XMC_USIC_CH_FIFO_SIZE_16WORDS, (uint8_t)7);
   XMC_USIC_CH_RXFIFO_Flush(_XMC_UART_config->channel);
+  XMC_USIC_CH_RXFIFO_EnableEvent(_XMC_UART_config->channel, XMC_USIC_CH_RXFIFO_EVENT_CONF_STANDARD | XMC_USIC_CH_RXFIFO_EVENT_CONF_ALTERNATE);
+  XMC_USIC_CH_RXFIFO_SetInterruptNodePointer(_XMC_UART_config->channel, XMC_USIC_CH_RXFIFO_INTERRUPT_NODE_POINTER_STANDARD, _XMC_UART_config->irq_service_request);
+  XMC_USIC_CH_RXFIFO_SetInterruptNodePointer(_XMC_UART_config->channel, XMC_USIC_CH_RXFIFO_INTERRUPT_NODE_POINTER_ALTERNATE, _XMC_UART_config->irq_service_request);
+  */
 
-  XMC_UART_CH_EnableEvent(_XMC_UART_config->channel, XMC_UART_CH_EVENT_ALTERNATIVE_RECEIVE | XMC_UART_CH_EVENT_STANDARD_RECEIVE);
-
-  XMC_USIC_CH_SetInterruptNodePointer(_XMC_UART_config->channel, XMC_USIC_CH_INTERRUPT_NODE_POINTER_RECEIVE, _XMC_UART_config->irq_service_request);
-  XMC_USIC_CH_SetInterruptNodePointer(_XMC_UART_config->channel, XMC_USIC_CH_INTERRUPT_NODE_POINTER_ALTERNATE_RECEIVE, _XMC_UART_config->irq_service_request);
-  //XMC_USIC_CH_SetInterruptNodePointer(_XMC_UART_config->channel, XMC_USIC_CH_INTERRUPT_NODE_POINTER_TRANSMIT_BUFFER, _XMC_UART_config->irq_service_request );
   XMC_USIC_CH_TXFIFO_SetInterruptNodePointer(_XMC_UART_config->channel, XMC_USIC_CH_TXFIFO_INTERRUPT_NODE_POINTER_STANDARD, _XMC_UART_config->irq_service_request);
 
   NVIC_SetPriority(_XMC_UART_config->irq_num, 3);
@@ -205,20 +209,21 @@ void HardwareSerial::flush(void)
     XMC_USIC_CH_TriggerServiceRequest(_XMC_UART_config->channel, _XMC_UART_config->irq_service_request);  
   }
   // Wait until the FIFO buffer is empty
-  while( !XMC_USIC_CH_TXFIFO_IsEmpty((_XMC_UART_config->channel) )
+  while( !XMC_USIC_CH_TXFIFO_IsEmpty(_XMC_UART_config->channel ))
   {
     // Wait until the TXFIFO is empty
   }
   while (XMC_USIC_CH_GetTransmitBufferStatus(_XMC_UART_config->channel) == XMC_USIC_CH_TBUF_STATUS_BUSY){
     XMC_UART_CH_ClearStatusFlag(_XMC_UART_config->channel, XMC_UART_CH_STATUS_FLAG_TRANSMIT_SHIFT_INDICATION);
   }
-  while(XMC_UART_CH_GetStatusFlag(_XMC_UART_config->channel) & XMC_UART_CH_STATUS_FLAG_TRANSMIT_SHIFT_INDICATION == 0){
+  while( (XMC_UART_CH_GetStatusFlag(_XMC_UART_config->channel) & XMC_UART_CH_STATUS_FLAG_TRANSMIT_SHIFT_INDICATION) == 0){
     XMC_UART_CH_ClearStatusFlag(_XMC_UART_config->channel, XMC_UART_CH_STATUS_FLAG_TRANSMIT_SHIFT_INDICATION);
   }
 }
 
 size_t HardwareSerial::write(const uint8_t uc_data)
 {
+  /*
   // If the FIFO is completely filled, we send the data directly to the buffer
   // This is only possible if data in the buffer is not waiting
   // Otherwise, we would break temporal causality
@@ -228,6 +233,18 @@ size_t HardwareSerial::write(const uint8_t uc_data)
     XMC_USIC_CH_TXFIFO_PutData(_XMC_UART_config->channel, uc_data);
     //XMC_UART_CH_Transmit(_XMC_UART_config->channel, uc_data);
     return 1;
+  }
+  */
+
+  uint32_t status = XMC_UART_CH_GetStatusFlag( _XMC_UART_config->channel );
+
+  // Did we receive data?
+  if( ( status & ( XMC_UART_CH_STATUS_FLAG_ALTERNATIVE_RECEIVE_INDICATION | XMC_UART_CH_STATUS_FLAG_RECEIVE_INDICATION ) ) != 0U )
+  {
+  XMC_UART_CH_ClearStatusFlag( _XMC_UART_config->channel, (XMC_UART_CH_STATUS_FLAG_ALTERNATIVE_RECEIVE_INDICATION | XMC_UART_CH_STATUS_FLAG_RECEIVE_INDICATION ));
+
+  while( _XMC_UART_config->channel->RBUFSR & (USIC_CH_RBUFSR_RDV0_Msk | USIC_CH_RBUFSR_RDV1_Msk )) 
+    _rx_buffer->store_char( XMC_UART_CH_GetReceivedData( _XMC_UART_config->channel ) ); 
   }
 
   // If FIFO busy, we buffer
@@ -246,17 +263,16 @@ size_t HardwareSerial::write(const uint8_t uc_data)
 
 void HardwareSerial::IrqHandler(void)
 {
-  uint32_t status = XMC_UART_CH_GetStatusFlag(_XMC_UART_config->channel);
+  uint32_t status = XMC_USIC_CH_RXFIFO_GetEvent(_XMC_UART_config->channel);
 
   // Did we receive data?
-  if ((status & (XMC_UART_CH_STATUS_FLAG_ALTERNATIVE_RECEIVE_INDICATION | XMC_UART_CH_STATUS_FLAG_RECEIVE_INDICATION)) != 0U)
+  if ((status & (XMC_USIC_CH_RXFIFO_EVENT_STANDARD  | XMC_USIC_CH_RXFIFO_EVENT_ALTERNATE )) != 0U)
   {
-    XMC_UART_CH_ClearStatusFlag(_XMC_UART_config->channel,
-                                (XMC_UART_CH_STATUS_FLAG_ALTERNATIVE_RECEIVE_INDICATION |
-                                 XMC_UART_CH_STATUS_FLAG_RECEIVE_INDICATION));
+    XMC_USIC_CH_RXFIFO_ClearEvent(_XMC_UART_config->channel, (XMC_USIC_CH_RXFIFO_EVENT_STANDARD | XMC_USIC_CH_RXFIFO_EVENT_ALTERNATE));
 
-    while (_XMC_UART_config->channel->RBUFSR & (USIC_CH_RBUFSR_RDV0_Msk | USIC_CH_RBUFSR_RDV1_Msk))
-      _rx_buffer->store_char(XMC_UART_CH_GetReceivedData(_XMC_UART_config->channel));
+    while(!XMC_USIC_CH_RXFIFO_IsEmpty(_XMC_UART_config->channel)){
+      _rx_buffer->store_char(XMC_USIC_CH_RXFIFO_GetData(_XMC_UART_config->channel));
+    }
   }
 
   // Do we need to keep sending data?
