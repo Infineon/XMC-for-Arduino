@@ -11,7 +11,7 @@
 
 void setup()
 {
-    // Open serial communication with a baudrate of 115200
+    // Open serial communication with a baudrate of 1000000
     Serial.begin(1000000);
     // Wait until the serial port is connected
     while (!Serial);

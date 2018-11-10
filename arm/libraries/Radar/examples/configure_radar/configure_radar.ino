@@ -9,12 +9,15 @@
 int16_t magnitudes[SPECTRUM_SIZE];
 bool available = false;
 
-BGT_RADAR_CONFIG_t user_config = {fft_size : 128,
-                                  cycle_time : 100,
-                                  sampling_rate : 3000};
+BGT_RADAR_CONFIG_t user_config = {
+  fft_size : 128,
+  fft_threshold : DETECTING_MAG_THRESH,
+  cycle_time : 100,
+  sampling_rate : 3000
+};
 
 // this routine shouldn't take too long
-void callback(RESULT_t * result)
+void callback(RESULT_t *result)
 {
   for (int i = 0; i < SPECTRUM_SIZE; i++)
   {

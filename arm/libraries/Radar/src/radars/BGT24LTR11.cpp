@@ -2,11 +2,10 @@
 #include "BGT24LTR11.h"
 
 BGT_RADAR_CONFIG_t BGT24LTR11::default_config = {fft_size : SENSE2GO_BUFFER_SIZE,
+												 fft_threshold : SENSE2GO_MAG_THRESH,
 												 cycle_time : SENSE2GO_CYCLE_TIME,
 												 sampling_rate : SENSE2GO_SAMPLING_RATE,
 												 settle_time : SENSE2GO_SETTLE_TIME};
-
-BGT_ALGO_PARAMS_t BGT24LTR11::default_params = {magnitude_thresh : SENSE2GO_MAG_THRESH};
 
 BGT24LTR11::BGT24LTR11(BGT_RADAR_CONFIG_t radarConfig)
 {

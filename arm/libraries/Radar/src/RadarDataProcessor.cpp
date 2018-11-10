@@ -160,7 +160,7 @@ void RadarDataProcessorClass::computeFft()
 
     //the first half of real fft values replaced by power spectrum
     _maxMagFreq = _fft.compute_magnitude(_result.realI, _result.imagI, _result.magnitudes, _radarFftSize / 2);
-    bool detected = _maxMagFreq.mag > (_radar->_algoParams).magnitude_thresh;
+    bool detected = _maxMagFreq.mag > (_radar->_config).fft_threshold;
     if (_algo.detectMotionFft)
     {
         float maxImagI = (float) _result.imagI[_maxMagFreq.freq];
@@ -172,7 +172,7 @@ void RadarDataProcessorClass::computeFft()
             _result.imagQ[i] = 0;
         }
 
-        // TODO: only one-point fft needed
+        // TODO: only one-point fft needed for the Q data
         _fft.fix_fft(_result.realQ, _result.imagQ, _fftOrder, 0);
 
         float maxImagQ = (float) _result.imagQ[_maxMagFreq.freq];

@@ -32,7 +32,6 @@
 class BGT24LTR11 : public BGTRadar
 {
 	static BGT_RADAR_CONFIG_t default_config;
-	static BGT_ALGO_PARAMS_t default_params;
 
   public:
 	BGT24LTR11(BGT_RADAR_CONFIG_t radarConfig = default_config);
