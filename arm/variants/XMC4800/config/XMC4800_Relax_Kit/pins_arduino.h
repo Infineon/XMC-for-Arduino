@@ -75,12 +75,12 @@ static const uint8_t MOSI_SD = PIN_SPI_MOSI_SD;
 static const uint8_t MISO_SD = PIN_SPI_MISO_SD;
 static const uint8_t SCK_SD  = PIN_SPI_SCK_SD;
 
-#define A0   0
-#define A1   1
-#define A2   2
-#define A3   3
-#define A4   4
-#define A5   5
+#define A0   17
+#define A1   18
+#define A2   19
+#define A3   20
+#define A4   21
+#define A5   22
 
 #define LED_BUILTIN	13	// Standard Arduino LED
 #define LED1	    24	// Additional LED1
