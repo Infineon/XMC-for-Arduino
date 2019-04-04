@@ -111,12 +111,28 @@ void analogReference( uint8_t ulMode )
 analog_reference = ulMode;
 }
 
-// analogRead takes parameter of ADC channel number
+// analogRead takes parameter of ADC channel number or the pin
 // return 0 for invalid channel
 // Would prefer a return of 0xFFFFFFFF to be obvious in code/debug when wrong
 // instead of valid value as it has been done
-uint32_t analogRead( uint8_t channel )
+uint32_t analogRead( uint8_t pin )
 {
+//in case the given argument is a pin it gets translated to a channel number
+uint8_t channel = pin >= A0 ? pin - A0 : pin;
+	
+//XMC4700 is by now the only XMC Board which has more than 6 analog pins.
+//Therefore also if(NUM_ANALOG_INPUTS > 6) would work here, but it might be incompatible with future boards
+#if defined(XMC4700_Relax_Kit)
+if( pin >= A14 )
+{
+	channel = pin - A14 + 14;
+}
+else if( pin >= A6 )
+{
+	channel = pin - A6 + 6;
+}
+#endif
+	
 uint32_t value = 0;
 
 if( channel < NUM_ANALOG_INPUTS )
