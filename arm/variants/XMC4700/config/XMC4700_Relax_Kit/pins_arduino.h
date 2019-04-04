@@ -79,29 +79,29 @@ static const uint8_t MOSI_SD = PIN_SPI_MOSI_SD;
 static const uint8_t MISO_SD = PIN_SPI_MISO_SD;
 static const uint8_t SCK_SD  = PIN_SPI_SCK_SD;
 
-#define A0   0
-#define A1   1
-#define A2   2
-#define A3   3
-#define A4   4
-#define A5   5
+#define A0   17
+#define A1   18
+#define A2   19
+#define A3   20
+#define A4   21
+#define A5   22
 //Additional ADC ports starting here
-#define A6	 6		// ADC G2CH6 on P15.6
-#define A7	 7		// ADC G2CH5 on P15.5
-#define A8	 8		// ADC G2CH3 on P15.3
-#define A9	 9		// ADC G1CH7 on P14.15
-#define A10	 10		// ADC G1CH5 on P14.13
-#define A11	 11		// ADC G0CH7 on P14.7
-#define A12	 12		// ADC G3CH7 on P15.15
-#define A13	 13		// ADC G1CH1 on P14.9
-#define A14	 14		// ADC G1CH0 on P14.8
-#define A15	 15		// ADC G3CH6 on P15.14
-#define A16	 16		// ADC G0CH6 on P14.6
-#define A17	 17		// ADC G1CH4 on P14.12
-#define A18	 18		// ADC G1CH6 on P14.14
-#define A19	 19		// ADC G2CH2 on P15.2
-#define A20	 20		// ADC G2CH4 on P15.4
-#define A21	 21		// ADC G2CH7 on P15.7
+#define A6	 43		// ADC G2CH6 on P15.6
+#define A7	 44		// ADC G2CH5 on P15.5
+#define A8	 45		// ADC G2CH3 on P15.3
+#define A9	 46		// ADC G1CH7 on P14.15
+#define A10	 47		// ADC G1CH5 on P14.13
+#define A11	 48		// ADC G0CH7 on P14.7
+#define A12	 49		// ADC G3CH7 on P15.15
+#define A13	 50		// ADC G1CH1 on P14.9
+#define A14	 55		// ADC G1CH0 on P14.8
+#define A15	 56		// ADC G3CH6 on P15.14
+#define A16	 57		// ADC G0CH6 on P14.6
+#define A17	 58		// ADC G1CH4 on P14.12
+#define A18	 59		// ADC G1CH6 on P14.14
+#define A19	 60		// ADC G2CH2 on P15.2
+#define A20	 61		// ADC G2CH4 on P15.4
+#define A21	 62		// ADC G2CH7 on P15.7
 // ADC G3CH0 on P15.8	not available
 // ADC G3CH1 on P15.9	not available
 // ADC G3CH4 on P15.12	button
