@@ -68,8 +68,9 @@ extern uint8_t SCK;
 
 #define PIN_AREF      14
 
-#define A0   0
-#define A1   1
+//Might be wrong as mapping_port_pin[] seems to be incorrect
+#define A0   17
+#define A1   18
 
 // These 2 lines should be defined in higher level or examples
 #define CH_I A0
