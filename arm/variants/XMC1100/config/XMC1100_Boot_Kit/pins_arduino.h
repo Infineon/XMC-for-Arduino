@@ -74,12 +74,12 @@ extern uint8_t MOSI;
 extern uint8_t MISO;
 extern uint8_t SCK;
 
-#define A0   0
-#define A1   1
-#define A2   2
-#define A3   3
-#define A4   4
-#define A5   5
+#define A0   17
+#define A1   18
+#define A2   19
+#define A3   20
+#define A4   21
+#define A5   22
 
 #define AD_AUX_1    24  // AD_AUX
 #define AD_AUX_2    25  // AD_AUX
