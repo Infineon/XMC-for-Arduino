@@ -59,12 +59,12 @@
 #define PIN_SPI_MISO  12
 #define PIN_SPI_SCK   13
 
-#define A0   0
-#define A1   1
-#define A2   2
-#define A3   3
-#define A4   4
-#define A5   5
+#define A0   17
+#define A1   18
+#define A2   19
+#define A3   20
+#define A4   21
+#define A5   22
 
 #define LED_BUILTIN LED1  
 #define LED1        24  
