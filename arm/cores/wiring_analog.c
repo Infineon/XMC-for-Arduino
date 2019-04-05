@@ -120,14 +120,18 @@ uint32_t analogRead( uint8_t pin )
 //in case the given argument is a pin it gets translated to a channel number
 uint8_t channel = pin >= A0 ? pin - A0 : pin;
 	
-//XMC4700 is by now the only XMC Board which has more than 6 analog pins.
-//Therefore also if(NUM_ANALOG_INPUTS > 6) would work here, but it might be incompatible with future boards
-#if defined(XMC4700_Relax_Kit)
+//If there are more than the standard 6 pins
+#if defined(A14)
 if( pin >= A14 )
 {
 	channel = pin - A14 + 14;
 }
 else if( pin >= A6 )
+{
+	channel = pin - A6 + 6;
+}
+#elif defined(A6)
+if( pin >= A6 )
 {
 	channel = pin - A6 + 6;
 }
