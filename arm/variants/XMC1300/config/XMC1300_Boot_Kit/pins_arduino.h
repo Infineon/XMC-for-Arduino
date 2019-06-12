@@ -72,11 +72,6 @@
 #define PIN_SPI_MISO  23
 #define PIN_SPI_SCK   30
 
-extern uint8_t SS; 
-extern uint8_t MOSI;
-extern uint8_t MISO;
-extern uint8_t SCK;
-
 #define A0   0
 #define A1   1
 #define A2   2

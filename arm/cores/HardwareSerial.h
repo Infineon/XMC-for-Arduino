@@ -29,6 +29,10 @@ extern "C" {
 
 void serialEvent() __attribute__((weak));
 void serialEvent1() __attribute__((weak));
+#if  defined(XMC4800_IoT_Kit)
+void serialEvent2() __attribute__((weak));
+#endif
+
 
 //****************************************************************************
 // @Project Includes
@@ -129,6 +133,9 @@ extern HardwareSerial Serial;
 
 #if (NUM_SERIAL > 1)
 extern HardwareSerial Serial1;
+#endif
+#if defined(XMC4800_IoT_Kit)
+extern HardwareSerial Serial2;
 #endif
 
 #endif

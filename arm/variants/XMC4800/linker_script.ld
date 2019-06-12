@@ -1,15 +1,15 @@
 /**
  * @file XMC4800x2048.ld
- * @date 2016-03-08
+ * @date 2017-04-20
  *
  * @cond
  *********************************************************************************************************************
- * Linker file for the GNU C Compiler v1.2
+ * Linker file for the GNU C Compiler v1.3
  * Supported devices: XMC4800-E196x2048
  *                    XMC4800-F144x2048
  *                    XMC4800-F100x2048
  *
- * Copyright (c) 2015-2016, Infineon Technologies AG
+ * Copyright (c) 2015-2017, Infineon Technologies AG
  * All rights reserved.                        
  *                                             
  * Redistribution and use in source and binary forms, with or without modification,are permitted provided that the 
@@ -49,6 +49,12 @@
  *     - Fix size of BSS and DATA sections to be multiple of 4
  *     - Add assertion to check that region SRAM_combined does not overflowed no_init section  
  *             
+ * 2017-04-07:
+ *     - Added new symbols __text_size and eText
+ * 
+ * 2017-04-20:
+ *     - Change vtable location to flash area to save ram             
+ *
  * @endcond 
  *
  */
@@ -62,8 +68,10 @@ no_init_size = 64;
 
 MEMORY
 {
-  FLASH_1_cached(RX) : ORIGIN = 0x08000000, LENGTH = 0x00200000
-  FLASH_1_uncached(RX) : ORIGIN = 0x0C000000, LENGTH = 0x00200000
+  FLASH_0_cached(RX) : ORIGIN = 0x08000000, LENGTH = 0x00010000
+  FLASH_0_uncached(RX) : ORIGIN = 0x0C000000, LENGTH = 0x00010000
+  FLASH_1_cached(RX) : ORIGIN = 0x08020000, LENGTH = 0x001E0000
+  FLASH_1_uncached(RX) : ORIGIN = 0x0C020000, LENGTH = 0x001E0000
   PSRAM_1(!RX) : ORIGIN = 0x1FFE8000, LENGTH = 0x18000
   DSRAM_1_system(!RX) : ORIGIN = 0x20000000, LENGTH = 0x20000
   DSRAM_2_comm(!RX) : ORIGIN = 0x20020000, LENGTH = 0x20000
@@ -74,10 +82,14 @@ SECTIONS
 {
   /* TEXT section */
 
+  .reset :
+  {
+    KEEP(*(.reset));
+  } > FLASH_0_cached AT > FLASH_0_uncached
+
   .text :
   {
     sText = .;
-    KEEP(*(.reset));
     *(.text .text.* .gnu.linkonce.t.*);
 
     /* C++ Support */
@@ -100,8 +112,10 @@ SECTIONS
 
     *(.rodata .rodata.*)
     *(.gnu.linkonce.r*)
-     
-    . = ALIGN(4);   
+        
+    *(vtable)        
+
+    . = ALIGN(4);        
   } > FLASH_1_cached AT > FLASH_1_uncached
 
   .eh_frame_hdr : ALIGN (4)
@@ -141,10 +155,10 @@ SECTIONS
   /* functions with __attribute__((section(".ram_code"))) */
   .ram_code :
   {
-    . = ALIGN(4); /* section size must be multiple of 4 */        
+    . = ALIGN(4); /* section size must be multiply of 4 */        
     __ram_code_start = .;
     *(.ram_code)
-    . = ALIGN(4); /* section size must be multiple of 4 */
+    . = ALIGN(4); /* section size must be multiply of 4 */
     __ram_code_end = .;
   } > SRAM_combined AT > FLASH_1_uncached
   __ram_code_load = LOADADDR (.ram_code);
@@ -153,9 +167,8 @@ SECTIONS
   /* Standard DATA and user defined DATA/BSS/CONST sections */
   .data :
   {
-    . = ALIGN(4); /* section size must be multiple of 4 */        
+    . = ALIGN(4); /* section size must be multiply of 4 */        
     __data_start = .;
-    *(vtable)        
     * (.data);
     * (.data*);
     *(*.data);
@@ -181,22 +194,24 @@ SECTIONS
     KEEP(*(.fini_array))
     PROVIDE_HIDDEN (__fini_array_end = .);
 
-    . = ALIGN(4); /* section size must be multiple of 4 */
+    . = ALIGN(4); /* section size must be multiply of 4 */
     __data_end = .;
   } > SRAM_combined AT > FLASH_1_uncached
   __data_load = LOADADDR (.data);
   __data_size = __data_end - __data_start;
+  __text_size = (__exidx_end - sText) + __data_size + __ram_code_size;
+  eText = sText + __text_size;
         
   /* BSS section */
   .bss (NOLOAD) : 
   {
-    . = ALIGN(4); /* section size must be multiple of 4 */        
+    . = ALIGN(4); /* section size must be multiply of 4 */        
     __bss_start = .;
     * (.bss);
     * (.bss*);
     * (COMMON);
     *(.gnu.linkonce.b*)
-    . = ALIGN(4); /* section size must be multiple of 4 */
+    . = ALIGN(4); /* section size must be multiply of 4 */
     __bss_end = .;
   } > SRAM_combined
   __bss_size = __bss_end - __bss_start;
@@ -206,30 +221,25 @@ SECTIONS
 
   USB_RAM  (__bss_end + __shift_loc) (NOLOAD) :
   {
-    . = ALIGN(4); /* section size must be multiple of 4 */        
+    . = ALIGN(4); /* section size must be multiply of 4 */        
     USB_RAM_start = .;
     *(USB_RAM)
-    . = ALIGN(4); /* section size must be multiple of 4 */
+    . = ALIGN(4); /* section size must be multiply of 4 */
     USB_RAM_end = .;
   } > SRAM_combined
   USB_RAM_size = USB_RAM_end - USB_RAM_start;
 
   ETH_RAM (USB_RAM_end) (NOLOAD) :
   {
-    . = ALIGN(4); /* section size must be multiple of 4 */        
+    . = ALIGN(4); /* section size must be multiply of 4 */        
     ETH_RAM_start = .;
     *(ETH_RAM)
-    . = ALIGN(4); /* section size must be multiple of 4 */
+    . = ALIGN(4); /* section size must be multiply of 4 */
     ETH_RAM_end = .;
     . = ALIGN(8);
     Heap_Bank1_Start = .;
   } > SRAM_combined
   ETH_RAM_size = ETH_RAM_end - ETH_RAM_start;
-
-  __malloc_heap_start = Heap_Bank1_Start;
-  __malloc_heap_end = __malloc_heap_start + 0x2000;
-  end = __malloc_heap_end;
-  __malloc_heap_size = __malloc_heap_end - __malloc_heap_start;
 
   /* .no_init section contains chipid, SystemCoreClock and trimming data. See system.c file*/
   .no_init ORIGIN(SRAM_combined) + LENGTH(SRAM_combined) - no_init_size (NOLOAD) : 

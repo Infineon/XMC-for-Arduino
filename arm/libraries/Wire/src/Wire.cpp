@@ -764,7 +764,7 @@ extern "C" {
     }
 #endif
 
-#elif (UC_FAMILY == XMC4)
+#elif defined(XMC4700_Relax_kit)
     void USIC1_1_IRQHandler()
     {
         Wire.ReceiveHandler();
@@ -784,6 +784,17 @@ extern "C" {
     {
         Wire1.ProtocolHandler();
     }
+#elif defined(XMC4800_IoT_Kit)
+    void USIC0_0_IRQHandler()
+    {
+        Wire.ReceiveHandler();
+    }
+
+    void USIC0_1_IRQHandler()
+    {
+        Wire.ProtocolHandler();
+    }
+	
 #endif
 } // extern "C" 
 

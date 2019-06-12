@@ -60,7 +60,11 @@ typedef struct XMC_I2C
 extern XMC_I2C_t XMC_I2C_0;
 extern XMC_I2C_t XMC_I2C_1;
 
-#elif defined(XMC1100_Boot_Kit) || defined(XMC1300_Boot_Kit) || defined(XMC1400_Boot_Kit)
+#elif defined(XMC1100_Boot_Kit)
+#define NUM_I2C  1
+extern XMC_I2C_t XMC_I2C_0;
+
+#elif defined(XMC1300_Boot_Kit)
 #define NUM_I2C  1
 extern XMC_I2C_t XMC_I2C_0;
 
@@ -69,6 +73,9 @@ extern XMC_I2C_t XMC_I2C_0;
 extern XMC_I2C_t XMC_I2C_0;
 extern XMC_I2C_t XMC_I2C_1;
 
+#elif defined(XMC4800_IoT_Kit)
+#define NUM_I2C 1
+extern XMC_I2C_t XMC_I2C_0;
 
 #else
 #error XMC Board not supported

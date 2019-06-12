@@ -1,8 +1,7 @@
 
 #include "BGT24LTR11.h"
 
-BGT_RADAR_CONFIG_t BGT24LTR11::default_config = {fft_size : SENSE2GO_BUFFER_SIZE,
-												 fft_threshold : SENSE2GO_MAG_THRESH,
+BGT_RADAR_CONFIG_t BGT24LTR11::default_config = {radar_buffersize : SENSE2GO_BUFFER_SIZE,
 												 cycle_time : SENSE2GO_CYCLE_TIME,
 												 sampling_rate : SENSE2GO_SAMPLING_RATE,
 												 settle_time : SENSE2GO_SETTLE_TIME};
@@ -11,7 +10,6 @@ BGT24LTR11::BGT24LTR11(BGT_RADAR_CONFIG_t radarConfig)
 {
 	_config = radarConfig;
 
-	// sampling time (us) needs to be computed from sampling rate.
 	_samplingTime = int(1000000 / _config.sampling_rate);
 }
 
@@ -21,7 +19,7 @@ BGT24LTR11::~BGT24LTR11()
 
 void BGT24LTR11::begin()
 {
-	// turn on radar
+// turn on radar
 #ifdef XMC1300_Sense2GoL
 	pinMode(SENSE2GO_ON_PIN, OUTPUT);
 	digitalWrite(SENSE2GO_ON_PIN, LOW);
@@ -47,7 +45,7 @@ void BGT24LTR11::endAcq(void)
 
 void BGT24LTR11::sampleInQ(int16_t *bufferI, int16_t *bufferQ)
 {
-	for (uint16_t i = 0; i < _config.fft_size; i++)
+	for (uint16_t i = 0; i < _config.radar_buffersize; i++)
 	{
 		bufferI[i] = analogRead(CH_I);
 		bufferQ[i] = analogRead(CH_Q);

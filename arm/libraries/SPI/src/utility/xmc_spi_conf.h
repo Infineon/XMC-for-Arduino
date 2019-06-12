@@ -56,7 +56,11 @@ typedef struct XMC_SPI
 #define NUM_SPI  			1
 extern XMC_SPI_t XMC_SPI_0;
 
-#elif defined(XMC1100_Boot_Kit) || defined(XMC1300_Boot_Kit) || defined(XMC1400_Boot_Kit)
+#elif defined(XMC1100_Boot_Kit)
+#define NUM_SPI  			1
+extern XMC_SPI_t XMC_SPI_0;
+
+#elif defined(XMC1300_Boot_Kit)
 #define NUM_SPI  			1
 extern XMC_SPI_t XMC_SPI_0;
 
@@ -68,6 +72,12 @@ extern XMC_SPI_t XMC_SPI_1;
 extern XMC_SPI_t XMC_SPI_2;
 //extern XMC_SPI_t XMC_SPI_3;
 //extern XMC_SPI_t XMC_SPI_4;
+
+#elif defined(XMC4800_IoT_Kit)
+#define NUM_SPI  			1
+extern XMC_SPI_t XMC_SPI_0;
+
+
 #else
 #error XMC Board not supported
 #endif

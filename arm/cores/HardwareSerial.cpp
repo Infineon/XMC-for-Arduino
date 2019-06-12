@@ -43,8 +43,17 @@ if( serialEvent1 )
     serialEvent1();
   }
 #endif
+#if defined(XMC4800_IoT_Kit)
+if( serialEvent2 )
+  {
+  if( Serial2.available() )
+    serialEvent2();
+  }
+#endif
+
 }
 
+#if (  (XMC1100_Boot_Kit) || (XMC1100_XMC2GO) || (XMC1100_H_BRIDGE_2GO) || (XMC1300_Boot_Kit) || (XMC1300_Sense2GoL) || (XMC4700_Relax_Kit))
 void USIC0_0_IRQHandler( void )
 {
 Serial.IrqHandler();
@@ -57,6 +66,23 @@ void USIC1_0_IRQHandler( void )
 Serial1.IrqHandler();
 }
 #endif
+
+#endif
+
+#if  defined(XMC4800_IoT_Kit)
+
+void USIC1_0_IRQHandler(void)
+{
+	Serial.IrqHandler();
+}
+
+void USIC1_1_IRQHandler( void )
+{
+    Serial1.IrqHandler();
+}	
+
+#endif
+//TODO : ENable Conditional Compile Option for XMC4800 & ESP MikroBUS UART Communication using Dialogue Button In Arduino IDE.
 
 #ifdef __cplusplus
 }

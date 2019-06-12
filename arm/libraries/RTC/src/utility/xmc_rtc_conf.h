@@ -36,7 +36,7 @@
 #include <Arduino.h>
 #include <xmc_rtc.h>
 
-#if (defined (XMC1100_XMC2GO) || (XMC1100_H_BRIDGE2GO) || (XMC1300_Sense2GoL) || (XMC1100_Boot_Kit) || (XMC1300_Boot_Kit) || (XMC4700_Relax_Kit) )
+#if (defined (XMC1100_XMC2GO) || (XMC1100_H_BRIDGE2GO) || (XMC1300_Sense2GoL) || (XMC1100_Boot_Kit) || (XMC1300_Boot_Kit) || (XMC4700_Relax_Kit) || (XMC4800_IoT_Kit) )
 extern XMC_RTC_CONFIG_t XMC_RTC_default_t;
 #else
 #error XMC Board not supported

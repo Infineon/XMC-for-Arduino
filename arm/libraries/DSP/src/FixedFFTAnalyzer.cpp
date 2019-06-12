@@ -249,7 +249,7 @@ int FFTAnalyzer::fix_fft(short fr[], short fi[], short m, short inverse)
 	return scale;
 }
 
-MAX_MAG_FRQ_t FFTAnalyzer::compute_magnitude(short fr[], short fi[], short magnitudes[], short length)
+MAX_MAG_FRQ_t FFTAnalyzer::compute_magnitude(short fr[], short fi[], short length)
 {
   MAX_MAG_FRQ_t max = {0,0};
   int mag = 0;
@@ -262,7 +262,7 @@ MAX_MAG_FRQ_t FFTAnalyzer::compute_magnitude(short fr[], short fi[], short magni
       max.mag = mag;
     }
     // fr[i] = SquareRoot(mag);
-    magnitudes[i] = (mag>>8);
+    fr[i] = (mag>>8);
   }
   max.mag >>= 8;
   return max;
