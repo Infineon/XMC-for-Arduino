@@ -37,8 +37,7 @@
 /* On board LED is ON when digital output is 0, LOW, False, OFF */
 #define  XMC_LED_ON         0
 
-//#define NUM_DIGITAL_PINS    18
-#define NUM_ANALOG_INPUTS   6
+#define NUM_ANALOG_INPUTS   8
 #define NUM_PWM             4
 #define NUM_LEDS            7
 #define NUM_INTERRUPT       2
@@ -80,6 +79,8 @@ extern uint8_t SCK;
 #define A3   3
 #define A4   4
 #define A5   5
+#define A6   6
+#define A7   7
 
 #define AD_AUX_1    24  // AD_AUX
 #define AD_AUX_2    25  // AD_AUX
@@ -130,8 +131,8 @@ const XMC_PORT_PIN_t mapping_port_pin[] =
     /* 12  */   {XMC_GPIO_PORT1 , 0}, // SPI-MISO                           P1.0
     /* 13  */   {XMC_GPIO_PORT0 , 7}, // SPI-SCK / LED BUILTIN output       P0.7
     /* 14  */   {XMC_GPIO_PORT2 , 3}, // AREF                               P2.3 (INPUT ONLY)
-    /* 15  */   {XMC_GPIO_PORT2 , 1}, // I2C Data / Address SDA             P2.1
-    /* 16  */   {XMC_GPIO_PORT2 , 0}, // I2C Clock SCL                      P2.0
+    /* 15  */   {XMC_GPIO_PORT2 , 1}, // I2C Data / Address SDA / A7  ADC   P2.1
+    /* 16  */   {XMC_GPIO_PORT2 , 0}, // I2C Clock SCL / A6  ADC            P2.0
     /* 17  */   {XMC_GPIO_PORT2 , 6}, // A0 / ADC Input                     P2.6 (INPUT ONLY)
     /* 18  */   {XMC_GPIO_PORT2 , 8}, // A1 / ADC Input                     P2.8 (INPUT ONLY)
     /* 19  */   {XMC_GPIO_PORT2 , 9}, // A2 / ADC Input                     P2.9 (INPUT ONLY)
@@ -170,7 +171,9 @@ XMC_ADC_t mapping_adc[] =
     {VADC, 2, DISABLED},
     {VADC, 3, DISABLED},
     {VADC, 4, DISABLED},
-    {VADC, 7, DISABLED}
+    {VADC, 7, DISABLED},
+    {VADC, 5, DISABLED},
+    {VADC, 6, DISABLED}
 };
 
 /*

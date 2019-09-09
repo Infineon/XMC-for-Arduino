@@ -97,8 +97,8 @@ const uint8_t mapping_pin_PWM4[][ 2 ] = {
 
 const XMC_PORT_PIN_t mapping_port_pin[] =
 {
-    /* 0  */    {XMC_GPIO_PORT0, 7},    // SPI-MOSI                         P0.7
-    /* 1  */    {XMC_GPIO_PORT0 , 6},   // SPI-MISO                         P0.6
+    /* 0  */    {XMC_GPIO_PORT0, 6},    // SPI-MOSI                         P0.6
+    /* 1  */    {XMC_GPIO_PORT0 , 7},   // SPI-MISO                         P0.7
     /* 2  */    {XMC_GPIO_PORT0 , 8},   // SPI-SCK                          P0.8
     /* 3  */    {XMC_GPIO_PORT0 , 9},   // SPI-SS                           P0.9
     /* 4  */    {XMC_GPIO_PORT0 , 14},  // GPIO                             P0.14
@@ -110,7 +110,7 @@ const XMC_PORT_PIN_t mapping_port_pin[] =
     /* 10  */   {XMC_GPIO_PORT2 , 11},  // I2C Clock SCL                    P2.11
     /* 11  */   {XMC_GPIO_PORT2 , 10},  // I2C Data / Address SDA           P2.10
     /* 12  */   {XMC_GPIO_PORT2 , 9},   // A0 / ADC Input                   P2.9 (INPUT ONLY)
-    /* 13  */   {XMC_GPIO_PORT2 , 7},   // A1                               P2.7 (INPUT ONLY)
+    /* 13  */   {XMC_GPIO_PORT2 , 7},   // A1 / ADC Input                   P2.7 (INPUT ONLY)
     /* 14  */   {XMC_GPIO_PORT1 , 1},   // LED 1 output    (BUILTIN)        P1.1
     /* 15  */   {XMC_GPIO_PORT1 , 0},   // LED 2 output                     P1.0
     /* 16  */   {XMC_GPIO_PORT2 , 1},   // DEBUG_TX                         P2.1
