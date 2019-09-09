@@ -142,7 +142,7 @@ uint8_t IFX9201::forwards(uint8_t duty_cycle)
 	{
 		digitalWrite(m_Direction, HIGH);
 		analogWrite(m_PWM, DutyCycleToanlogWriteValue(duty_cycle));
-		digitalWrite(m_Disable, HIGH);
+		digitalWrite(m_Disable, LOW);
 	}
 	return ret;
 }
@@ -158,7 +158,7 @@ uint8_t IFX9201::backwards(uint8_t duty_cycle)
 	{
 		digitalWrite(m_Direction, LOW);
 		analogWrite(m_PWM, DutyCycleToanlogWriteValue(duty_cycle));
-		digitalWrite(m_Disable, HIGH);
+		digitalWrite(m_Disable, LOW);
 	}
 	return ret;
 }
@@ -174,7 +174,7 @@ uint8_t IFX9201::stop(void)
 	{
 		digitalWrite(m_Direction, LOW);
 		analogWrite(m_PWM, 0u);
-		digitalWrite(m_Disable, LOW);
+		digitalWrite(m_Disable, HIGH);
 	}
 	return ret;
 }

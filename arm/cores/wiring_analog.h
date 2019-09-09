@@ -40,7 +40,18 @@ extern "C" {
     extern void analogReference( uint8_t ulMode ) ;
 
     /*
-     * \brief Writes an analog value (PWM wave) to a pin.
+     * \brief Writes an analog value to a DAC or PWM wave to a pin.
+     *        DAC is straight write to DAC (if present on that pin)
+     *
+     *        PWM depends on analogWriteResolution()
+     *        Effect of value is the duty cycle for PWM output to be HIGH
+     *        Valid values are
+     *                   Write resolution (bits)
+     *        Value      8      10      12      16
+     *        OFF        0      0       0       0
+     *        ON always  255    1023    4095    65535
+     *
+     *        Values in between these values vary the duty cycle
      *
      * \param pin
      * \param value
@@ -50,7 +61,9 @@ extern "C" {
 	/*
      * \brief Sets the frequency for analogWrite PWM.
 	 * 
-	 * \note Default value is 490 Hz
+     *    Returns -1 for invalid pin or frequency
+     *             0 to F for valid prescaler set
+ 	 * \note Default value is 490 Hz
      *
      * \param pin
      * \param frequency in Hz
@@ -67,14 +80,16 @@ extern "C" {
     extern uint32_t analogRead( uint8_t pin ) ;
 
     /*
-     * \brief Set the resolution of analogRead return values. Default is 10 bits (range from 0 to 1023).
+     * \brief Set the resolution of analogRead return values in number of bits. Default is 10 bits (range from 0 to 1023).
      *
      * \param res
      */
     extern void analogReadResolution(uint8_t res);
 
     /*
-     * \brief Set the resolution of analogWrite parameters. Default is 8 bits (range from 0 to 255).
+     * \brief Set the resolution of analogWrite parameters in number of bits. 
+     *  Default (minimum) is 8 bits (range from 0 to 255).
+     *  Maximum is 16 bits (range 0 to 65535)
      *
      * \param res
      */
