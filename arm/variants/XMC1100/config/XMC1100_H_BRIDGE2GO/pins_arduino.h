@@ -137,7 +137,7 @@ const XMC_PIN_INTERRUPT_t mapping_interrupt[] =
 XMC_PWM4_t mapping_pwm4[] =
 {
     {CCU40, CCU40_CC40, 0, mapping_port_pin[8],  P0_0_AF_CCU40_OUT0,  XMC_CCU4_SLICE_PRESCALER_64, PWM4_TIMER_PERIOD, DISABLED}, // PWM disabled  8    P0.5
-    {CCU40, CCU40_CC43, 3, mapping_port_pin[10], P2_11_AF_CCU40_OUT3, XMC_CCU4_SLICE_PRESCALER_64, PWM4_TIMER_PERIOD, DISABLED}  // PWM disabled  10   P2.11
+    {CCU40, CCU40_CC42, 2, mapping_port_pin[11], P2_10_AF_CCU40_OUT2, XMC_CCU4_SLICE_PRESCALER_64, PWM4_TIMER_PERIOD, DISABLED}  // PWM disabled  10   P2.11
 };
 
 XMC_ADC_t mapping_adc[] =
