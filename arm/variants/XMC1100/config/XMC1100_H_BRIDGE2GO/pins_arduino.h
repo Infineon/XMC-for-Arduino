@@ -92,8 +92,8 @@ extern uint8_t SCK;
 //#define SCK 	PIN_SPI_SCK
 #define CSN 	PIN_SPI_SS
 #define DIR		6
-#define PWM 	10
-#define DIS		11
+#define DIS		10
+#define PWM 	11
 
 #define digitalPinToInterrupt(p)    (((p) == 9) ? 0 : NOT_AN_INTERRUPT)
 
@@ -103,7 +103,8 @@ extern uint8_t SCK;
    Putting both parts in array means if a PWM4 channel gets reassigned for
    another function later a gap in channel numbers will not mess things up */
    const uint8_t mapping_pin_PWM4[][ 2 ] = {
-    { 8, 10 },
+    { 8, 0 },
+    { 11, 1},
     { 255, 255 } };
 
 const XMC_PORT_PIN_t mapping_port_pin[] =
@@ -118,8 +119,8 @@ const XMC_PORT_PIN_t mapping_port_pin[] =
     /* 7  */    {XMC_GPIO_PORT2 , 6},   // GPIO		                        P2.6 (INPUT ONLY)
     /* 8  */    {XMC_GPIO_PORT0 , 5},   // PWM0 output                      P0.5
     /* 9  */    {XMC_GPIO_PORT0 , 0},   // External interrupt               P0.0
-    /* 10  */   {XMC_GPIO_PORT2 , 11},  // PWM / PWM1 output (Fixed on PCB) P2.11
-    /* 11  */   {XMC_GPIO_PORT2 , 10},  // DIS  (Fixed on PCB)              P2.10
+    /* 10  */   {XMC_GPIO_PORT2 , 11},  // DIS  (Fixed on PCB)              P2.11
+    /* 11  */   {XMC_GPIO_PORT2 , 10},  // PWM / PWM1 output (Fixed on PCB) P2.10
     /* 12  */   {XMC_GPIO_PORT2 , 9},   // A0 / ADC Input                   P2.9 (INPUT ONLY)
     /* 13  */   {XMC_GPIO_PORT2 , 7},   // A1 / ADC Input                   P2.7 (INPUT ONLY)
     /* 14  */   {XMC_GPIO_PORT1 , 1},   // LED1 output                      P1.1
