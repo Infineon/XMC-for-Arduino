@@ -62,10 +62,6 @@ public:
     String(const char* cstr = "");
     String(const String& str);
     String(const __FlashStringHelper* str);
-#ifdef __GXX_EXPERIMENTAL_CXX0X__
-    String(String && rval);
-    String(StringSumHelper && rval);
-#endif
     explicit String(char c);
     explicit String(unsigned char, unsigned char base = 10);
     explicit String(int, unsigned char base = 10);
@@ -92,10 +88,6 @@ public:
     String& operator = (const String& rhs);
     String& operator = (const char* cstr);
     String& operator = (const __FlashStringHelper* str);
-#ifdef __GXX_EXPERIMENTAL_CXX0X__
-    String& operator = (String && rval);
-    String& operator = (StringSumHelper && rval);
-#endif
 
     // concatenate (works w/ built-in types)
 
@@ -272,9 +264,6 @@ public:
     // copy and move
     String& copy(const char* cstr, unsigned int length);
     String& copy(const __FlashStringHelper* pstr, unsigned int length);
-#ifdef __GXX_EXPERIMENTAL_CXX0X__
-    void move(String& rhs);
-#endif
 };
 
 class StringSumHelper : public String

@@ -45,7 +45,6 @@ if( serialEvent1 )
 #endif
 }
 
-
 void USIC0_0_IRQHandler( void )
 {
 Serial.IrqHandler();

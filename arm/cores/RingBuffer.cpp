@@ -27,8 +27,10 @@
 
 // Constructors ////////////////////////////////////////////////////////////////
 
-RingBuffer::RingBuffer( void )
+RingBuffer::RingBuffer( int bufferSize )
 {
+    _bufferSize = bufferSize;
+    _aucBuffer = new uint8_t[_bufferSize];
     _iHead = 0 ;
     _iTail = 0 ;
 }
@@ -38,7 +40,7 @@ RingBuffer::RingBuffer( void )
 void RingBuffer::store_char( uint8_t c )
 {
     int i = _iHead + 1;
-    if( i >= SERIAL_BUFFER_SIZE )
+    if( i >= _bufferSize )
       i = 0;
 
     // if we should be storing the received character into the location

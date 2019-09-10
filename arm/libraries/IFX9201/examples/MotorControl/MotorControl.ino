@@ -19,8 +19,8 @@ void setup() {
   IFX9201_HBridge.begin(SPI, CSN, DIR, PWM, DIS);
 
   // Use PWM Mode
-  // Change the CSN, DIR, PWM, and DIS pins to custom ones for other boards
-  // IFX9201_HBridge.begin(CSN, DIR, PWM, DIS);
+  // Change the DIR, PWM, and DIS pins to custom ones for other boards
+  // IFX9201_HBridge.begin(DIR, PWM, DIS);
   
   delay(1000);        
 }

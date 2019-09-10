@@ -1,0 +1,34 @@
+#######################################
+# Syntax Coloring Map For I2S
+#######################################
+
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+begin                   KEYWORD2
+onReceive               KEYWORD2
+enableMicrophoneLow     KEYWORD2
+enableMicrophoneHigh    KEYWORD2
+disableMicrophones      KEYWORD2
+getMicrophones          KEYWORD2
+peek                    KEYWORD2
+flush                   KEYWORD2
+end                     KEYWORD2
+read                    KEYWORD2
+available               KEYWORD2
+enableMasterClock       KEYWORD2
+getOverflow             KEYWORD2
+#######################################
+# Instances (KEYWORD2)
+#######################################
+I2S         KEYWORD2
+
+
+#######################################
+# Constants (LITERAL1)
+#######################################
+
