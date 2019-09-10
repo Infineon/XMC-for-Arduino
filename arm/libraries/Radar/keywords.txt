@@ -1,0 +1,25 @@
+#######################################
+# Syntax Coloring Map For DSP Library
+#######################################
+
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+RESULT_t    KEYWORD1
+BGT_RADAR_CONFIG_t KEYWORD1
+RADAR_BGT24LTR11  KEYWORD1
+RADAR_BGT24MTR11  KEYWORD1
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+
+begin			      KEYWORD2
+end	            KEYWORD2
+available       KEYWORD2
+RadarDataProcessor	KEYWORD2
+#######################################
+# Constants (LITERAL1)
+#######################################
+APPROACHING LITERAL1
+DEPARTING   LITERAL1

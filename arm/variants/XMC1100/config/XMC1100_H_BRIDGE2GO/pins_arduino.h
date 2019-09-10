@@ -73,6 +73,11 @@
 #define PIN_SPI_MISO  0
 #define PIN_SPI_SCK   2
 
+extern uint8_t SS; 
+extern uint8_t MOSI;
+extern uint8_t MISO;
+extern uint8_t SCK;
+
 #define A0   0
 #define A1   1
 
@@ -87,8 +92,8 @@
 //#define SCK 	PIN_SPI_SCK
 #define CSN 	PIN_SPI_SS
 #define DIR		6
-#define PWM 	10
-#define DIS		11
+#define DIS		10
+#define PWM 	11
 
 #define digitalPinToInterrupt(p)    (((p) == 9) ? 0 : NOT_AN_INTERRUPT)
 
@@ -98,7 +103,8 @@
    Putting both parts in array means if a PWM4 channel gets reassigned for
    another function later a gap in channel numbers will not mess things up */
    const uint8_t mapping_pin_PWM4[][ 2 ] = {
-    { 8, 10 },
+    { 8, 0 },
+    { 11, 1},
     { 255, 255 } };
 
 const XMC_PORT_PIN_t mapping_port_pin[] =
@@ -113,8 +119,8 @@ const XMC_PORT_PIN_t mapping_port_pin[] =
     /* 7  */    {XMC_GPIO_PORT2 , 6},   // GPIO		                        P2.6 (INPUT ONLY)
     /* 8  */    {XMC_GPIO_PORT0 , 5},   // PWM0 output                      P0.5
     /* 9  */    {XMC_GPIO_PORT0 , 0},   // External interrupt               P0.0
-    /* 10  */   {XMC_GPIO_PORT2 , 11},  // PWM / PWM1 output (Fixed on PCB) P2.11
-    /* 11  */   {XMC_GPIO_PORT2 , 10},  // DIS  (Fixed on PCB)              P2.10
+    /* 10  */   {XMC_GPIO_PORT2 , 11},  // DIS  (Fixed on PCB)              P2.11
+    /* 11  */   {XMC_GPIO_PORT2 , 10},  // PWM / PWM1 output (Fixed on PCB) P2.10
     /* 12  */   {XMC_GPIO_PORT2 , 9},   // A0 / ADC Input                   P2.9 (INPUT ONLY)
     /* 13  */   {XMC_GPIO_PORT2 , 7},   // A1 / ADC Input                   P2.7 (INPUT ONLY)
     /* 14  */   {XMC_GPIO_PORT1 , 1},   // LED1 output                      P1.1
@@ -131,7 +137,7 @@ const XMC_PIN_INTERRUPT_t mapping_interrupt[] =
 XMC_PWM4_t mapping_pwm4[] =
 {
     {CCU40, CCU40_CC40, 0, mapping_port_pin[8],  P0_0_AF_CCU40_OUT0,  XMC_CCU4_SLICE_PRESCALER_64, PWM4_TIMER_PERIOD, DISABLED}, // PWM disabled  8    P0.5
-    {CCU40, CCU40_CC43, 3, mapping_port_pin[10], P2_11_AF_CCU40_OUT3, XMC_CCU4_SLICE_PRESCALER_64, PWM4_TIMER_PERIOD, DISABLED}  // PWM disabled  10   P2.11
+    {CCU40, CCU40_CC42, 2, mapping_port_pin[11], P2_10_AF_CCU40_OUT2, XMC_CCU4_SLICE_PRESCALER_64, PWM4_TIMER_PERIOD, DISABLED}  // PWM disabled  10   P2.11
 };
 
 XMC_ADC_t mapping_adc[] =
