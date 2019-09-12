@@ -40,7 +40,7 @@ extern "C" {
     extern void analogReference( uint8_t ulMode ) ;
 
     /*
-     * \brief Writes an analog value to a DAC or PWM wave to a pin.
+     * \brief Writes an analogue value to a DAC or PWM wave to a pin.
      *        DAC is straight write to DAC (if present on that pin)
      *
      *        PWM depends on analogWriteResolution()
@@ -54,48 +54,94 @@ extern "C" {
      *        Values in between these values vary the duty cycle
      *
      * \param pin
-     * \param value
+     * \param value must be 0 to max value for ADC WRITE resolution
+     *
+     * \return 0 = success, -1 = invalid value, -2 = wrong pin
      */
-    extern void analogWrite( uint8_t pin, uint16_t value ) ;
+    extern int16_t analogWrite( uint8_t pin, uint16_t value ) ;
 	
-	/*
+    /*
      * \brief Sets the frequency for analogWrite PWM.
-	 * 
-     *    Returns -1 for invalid pin or frequency
-     *             0 to F for valid prescaler set
- 	 * \note Default value is 490 Hz
+     * 
+     *    Returns -2 invalid pin
+     *            -1 invalid frequency
+     *             0 success
+     *
+     * \note Default value is 490 Hz
      *
      * \param pin
      * \param frequency in Hz
+     *
+     * \return 0 = success, -1 = invalid frequency, -2 = wrong pin
      */
     extern int16_t setAnalogWriteFrequency( uint8_t pin, uint32_t frequency ) ;
 
     /*
-     * \brief Reads the value from the specified analog pin.
+     * \brief Reads the value from the specified analog channel.
      *
-     * \param ulPin
+     * \param channel
      *
-     * \return Read value from selected pin, if no error.
+     * \return Read value from selected channel, or 0xFFFFFFFF for error.
      */
-    extern uint32_t analogRead( uint8_t pin ) ;
+    extern uint32_t analogRead( uint8_t channel ) ;
 
     /*
-     * \brief Set the resolution of analogRead return values in number of bits. Default is 10 bits (range from 0 to 1023).
+     * \brief Set the resolution of analogRead return values in number of bits.
+     * \note Default is 10 bits (range from 0 to 1023).
      *
-     * \param res
+     * \param res  - range 8 to 12
+     *
+     * \return valid bits set (8 to 12) or 255 for error
      */
-    extern void analogReadResolution(uint8_t res);
+    extern uint8_t analogReadResolution( uint8_t res );
 
     /*
      * \brief Set the resolution of analogWrite parameters in number of bits. 
-     *  Default (minimum) is 8 bits (range from 0 to 255).
+     * \note Default (minimum) is 8 bits (range from 0 to 16).
      *  Maximum is 16 bits (range 0 to 65535)
      *
-     * \param res
+     * \param res  - range 8 to 16
+     *
+     * \return valid bits set (8 to 16) or 255 for error
      */
-    extern void analogWriteResolution(uint8_t res);
+    extern uint8_t analogWriteResolution( uint8_t res );
 
-    extern void wiring_analog_init(void) ;
+    extern void wiring_analog_init( );
+
+    /*********************************************************
+     \brief Additional helper functions for other libraries
+    **********************************************************/
+    /*
+     * \brief Get the current resolution of analogRead in number of bits. 
+     *
+     * \return Current resolution in bits (8 to 12)
+     */
+    extern uint8_t getAnalogReadBits( );
+
+    /*
+     * \brief Get the current resolution of analogWrite in number of bits. 
+     *
+     * \return Current resolution in bits (8 to 16)
+     */
+    extern uint8_t getAnalogWriteBits( );
+
+    /*
+     * \brief Get the maximum value for current resolution for analogRead. 
+     * \note Default is 1023
+     * \note Maximum is 4095
+     *
+     * \return Current maximum value
+     */
+    extern uint16_t getAnalogReadMaximum( );
+
+    /*
+     * \brief Get the maximum value for current resolution for analogRite. 
+     * \note Default is 255
+     * \note Maximum is 65535
+     *
+     * \return Current maximum value
+     */
+    extern uint16_t getAnalogWriteMaximum(  );
 
 #ifdef __cplusplus
 }
