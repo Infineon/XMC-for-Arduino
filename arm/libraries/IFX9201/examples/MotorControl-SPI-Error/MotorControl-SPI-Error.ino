@@ -5,7 +5,7 @@
             
             Deliberate run time error to be caught in first movement
 
-    NOTE    In SPI mode Duty cycle CANNOT be changed and is fixed at 50%
+    NOTE    In SPI mode Duty cycle CANNOT be changed and is fixed at 100%
 
         Serial Baud Rate 115200
 */

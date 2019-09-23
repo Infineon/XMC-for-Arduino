@@ -38,6 +38,7 @@
     Improve duty cycle conversion to work with any analogWriteResolution
        (requires Pull request #106 merged for getAnalogWriteMaximum)
     Try to make code more readable
+    Correct Disable Pin polarity for correct operation
 */
 #include "Arduino.h"
 #include "IFX9201.h"
@@ -88,23 +89,28 @@ begin( );
 
 
 // Common begin
+// Note for SPI mode DIR, PWM and DIS must all be LOW
+// Otherwise IFX9201 reverts to PWM mode
 void IFX9201::begin( )
 {
-if( m_Mode == IFX9201Mode_SPI )
-  {
-  pinMode( m_SlaveSelect, OUTPUT );
-  digitalWrite( m_SlaveSelect, HIGH );
-  }
-
 pinMode( m_Disable, OUTPUT );
 pinMode( m_Direction, OUTPUT );
 pinMode( m_PWM, OUTPUT );
 
 digitalWrite( m_PWM, LOW );
 digitalWrite( m_Direction, LOW );
-digitalWrite( m_Disable, LOW );
 
-setPWMFreqency( IFX9201__DEFAULT_PWM_FREQUENCY );
+if( m_Mode == IFX9201Mode_SPI )
+  {
+  pinMode( m_SlaveSelect, OUTPUT );
+  digitalWrite( m_SlaveSelect, HIGH );
+  digitalWrite( m_Disable, LOW );        // To ensure we stay in SPI mode
+  }
+else        // PWM mode
+  {
+  digitalWrite( m_Disable, HIGH );        // Disable ON - MOSFET drivers OFF
+  setPWMFreqency( IFX9201__DEFAULT_PWM_FREQUENCY );
+  }
 }
 
 
@@ -130,6 +136,7 @@ return ret;
 }
 
 
+// forwards SPI or default PWM mode
 uint8_t IFX9201::forwards( )
 {
 uint8_t ret = IFX9201__NO_ERROR;
@@ -142,6 +149,7 @@ return ret;
 }
 
 
+// backwards SPI or default PWM mode
 uint8_t IFX9201::backwards( )
 {
 uint8_t ret = IFX9201__NO_ERROR;
@@ -154,6 +162,7 @@ return ret;
 }
 
 
+// forwards PWM mode ONLY
 uint8_t IFX9201::forwards( uint8_t duty_cycle )
 {
 uint8_t ret = IFX9201__NO_ERROR;
@@ -164,12 +173,13 @@ else
   {
   digitalWrite( m_Direction, HIGH );
   ret = DutyCycleToanlogWrite( duty_cycle );
-  digitalWrite( m_Disable, HIGH );
+  digitalWrite( m_Disable, LOW );        // Disable OFF - MOSFET drivers ON
   }
 return ret;
 }
 
 
+// backwards PWM mode ONLY
 uint8_t IFX9201::backwards( uint8_t duty_cycle )
 {
 uint8_t ret = IFX9201__NO_ERROR;
@@ -180,12 +190,13 @@ else
   {
   digitalWrite( m_Direction, LOW );
   ret = DutyCycleToanlogWrite( duty_cycle );
-  digitalWrite( m_Disable, HIGH );
+  digitalWrite( m_Disable, LOW );        // Disable OFF - MOSFET drivers ON
   }
 return ret;
 }
 
 
+// Stop both modes
 uint8_t IFX9201::stop( )
 {
 uint8_t ret = IFX9201__NO_ERROR;
@@ -196,7 +207,7 @@ else
   {
   digitalWrite( m_Direction, LOW );
   ret = DutyCycleToanlogWrite( 0 );
-  digitalWrite( m_Disable, LOW );
+  digitalWrite( m_Disable, HIGH );        // Disable ON - MOSFET drivers OFF
   }
 return ret;
 }

@@ -36,11 +36,11 @@
 #ifndef IFX9201_CONF_H
 #define IFX9201_CONF_H
 
+/*! \brief IFX9201 default values for PWM mode
+ */
 #define IFX9201__MAX_PWM_FREQ   20000u
 #define IFX9201__MAX_DUTY_CYCLE   100u
 
-/*! \brief IFX9201 default values
- */
 #define IFX9201__DEFAULT_DUTY_CYCLE 		50u
 #define IFX9201__DEFAULT_PWM_FREQUENCY		10000u
 
