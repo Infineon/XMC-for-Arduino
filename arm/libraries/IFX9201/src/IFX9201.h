@@ -81,7 +81,7 @@ class IFX9201
 		//! \brief Get content of REV Reg (only in SPI Mode)
 		uint8_t getREVReg( );
 		//! \brief Get content of CTRL Reg (only in SPI Mode)
-		uint8_t getCRTLReg( );
+		uint8_t getCTRLReg( );
 
 		//! \brief Set value of CTRL Reg (only in SPI Mode)
 		uint8_t setCTRLReg( uint8_t );

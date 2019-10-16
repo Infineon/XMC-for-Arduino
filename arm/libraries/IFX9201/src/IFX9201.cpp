@@ -236,7 +236,7 @@ return SPItransfer( IFX9201__RD_REV );
 }
 
 
-uint8_t IFX9201::getCRTLReg( )
+uint8_t IFX9201::getCTRLReg( )
 {
 SPItransfer( IFX9201__RD_CTRL );
 return SPItransfer( IFX9201__RD_CTRL );
