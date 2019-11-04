@@ -14,12 +14,12 @@ This repository integrates [Infineon's](https://www.infineon.com/) XMC microcont
 
 ## Supported Microcontroller Boards
 
-* [XMC1100 XMC 2Go](https://www.infineon.com/cms/en/product/evaluation-boards/KIT_XMC_2GO_XMC1100_V1/productType.html?productType=db3a304443537c4e01436ccecb5d154f)
+* [XMC1100 XMC 2Go](https://www.infineon.com/cms/en/product/evaluation-boards/kit_xmc_2go_xmc1100_v1/)
 * [XMC1100 H-Bridge 2Go](https://www.infineon.com/cms/de/product/evaluation-boards/h-bridge-kit-2go/)
-* [XMC1100 Boot Kit](https://www.infineon.com/cms/en/product/evaluation-boards/KIT_XMC11_BOOT_001/productType.html?productType=db3a30443b360d0e013b8f5163c46f62#ispnTab1)
+* [XMC1100 Boot Kit](https://www.infineon.com/cms/en/product/evaluation-boards/kit_xmc11_boot_001/)
 * [XMC1300 Boot Kit](https://www.infineon.com/cms/de/product/evaluation-boards/kit_xmc13_boot_001/)
 * [XMC1300 Sense2GoL](https://www.infineon.com/cms/de/product/evaluation-boards/demo-sense2gol/)
-* [XMC4700 Relax Kit](https://www.infineon.com/cms/en/product/evaluation-boards/KIT_XMC47_RELAX_LITE_V1/productType.html?productType=5546d46250cc1fdf0150f6a2788e6e89)
+* [XMC4700 Relax Kit](https://www.infineon.com/cms/en/product/evaluation-boards/kit_xmc47_relax_v1/)
 
 ## Additional Information
 
