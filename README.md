@@ -41,7 +41,7 @@ Additionally, please consult the [releases](https://github.com/Infineon/XMC-for-
 ### Prework for SEGGER J-Link
 
 In order to use and program the Infineon XMC microcontrollers in the Arduino IDE, [SEGGER J-Link](https://www.segger.com/downloads/jlink) must be installed on your PC. Please follow this link to [SEGGER J-Link](https://www.segger.com/downloads/jlink) and install the J-Link Software and Documentation Pack for your operating system.
-If you have already installed '[DAVE™ - Development Platform for XMC™ Microcontrollers](https://www.infineon.com/cms/de/product/microcontroller/32-bit-industrial-microcontroller-based-on-arm-registered-cortex-registered-m/dave-version-4-free-development-platform-for-code-generation/channel.html?channel=db3a30433580b37101359f8ee6963814)', you can skip this step as the respective drivers/programs are already installed on your system.
+If you have already installed '[DAVE™ - Development Platform for XMC™ Microcontrollers](https://infineoncommunity.com/dave-download_ID645)', you can skip this step as the respective drivers/programs are already installed on your system.
 
 ![J-Link](https://raw.githubusercontent.com/infineon/assets/master/Pictures/J-Link_Packages.png)
 
