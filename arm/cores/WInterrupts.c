@@ -33,6 +33,23 @@ static interrupt_cb_t interrupt_1_cb = NULL;
 //****************************************************************************
 // @Local Functions
 //****************************************************************************
+#if defined (XMC4700_Radar_Baseboard)
+void ERU0_3_IRQHandler(void)
+{
+	if (interrupt_0_cb)
+	{
+		interrupt_0_cb();
+	}
+}
+
+void ERU1_0_IRQHandler(void)
+{
+	if (interrupt_1_cb)
+	{
+		interrupt_1_cb();
+	}
+}
+#else
 void CCU40_0_IRQHandler(void)
 {
     if (interrupt_0_cb)
@@ -48,12 +65,55 @@ void CCU40_1_IRQHandler(void)
         interrupt_1_cb();
     }
 }
+#endif
 
 void attachInterrupt(uint32_t interrupt_num, interrupt_cb_t callback, uint32_t mode)
 {
     if (interrupt_num < NUM_INTERRUPT)
     {
         XMC_PIN_INTERRUPT_t pin_irq = mapping_interrupt[interrupt_num];
+#if defined (XMC4700_Radar_Baseboard)
+		XMC_ERU_ETL_EDGE_DETECTION_t event_config = 0;
+
+		switch (mode)
+		{
+		case CHANGE:
+			event_config = XMC_ERU_ETL_EDGE_DETECTION_BOTH;
+			break;
+
+		case RISING:
+			event_config = XMC_ERU_ETL_EDGE_DETECTION_RISING;
+			break;
+
+		case FALLING:
+			event_config = XMC_ERU_ETL_EDGE_DETECTION_FALLING;
+			break;
+
+		default:
+			event_config = XMC_CCU4_SLICE_EVENT_EDGE_SENSITIVITY_NONE;
+			break;
+		}
+
+		XMC_ERU_Enable(pin_irq.eru);
+		XMC_ERU_ETL_SetInput(pin_irq.eru, pin_irq.etl, pin_irq.input_a, pin_irq.input_b);
+		XMC_ERU_ETL_SetEdgeDetection(pin_irq.eru, pin_irq.etl, event_config);
+		XMC_ERU_ETL_SetSource(pin_irq.eru, pin_irq.etl, XMC_ERU_ETL_SOURCE_B);
+		XMC_ERU_ETL_EnableOutputTrigger(pin_irq.eru, pin_irq.etl, pin_irq.ogu);
+		XMC_ERU_OGU_SetServiceRequestMode(pin_irq.eru, pin_irq.ogu, XMC_ERU_OGU_SERVICE_REQUEST_ON_TRIGGER);
+		
+		if (pin_irq.irq_num == 0)
+		{
+			NVIC_SetPriority(ERU0_3_IRQn, 3);
+			interrupt_0_cb = callback;
+			NVIC_EnableIRQ(ERU0_3_IRQn);
+		}
+		else if (pin_irq.irq_num == 1)
+		{
+			NVIC_SetPriority(ERU1_0_IRQn, 3);
+			interrupt_1_cb = callback;
+			NVIC_EnableIRQ(ERU1_0_IRQn);
+		}
+#else
         XMC_CCU4_SLICE_EVENT_CONFIG_t event_config = {0};
 
         switch (mode)
@@ -113,24 +173,37 @@ void attachInterrupt(uint32_t interrupt_num, interrupt_cb_t callback, uint32_t m
             interrupt_1_cb = callback;
             NVIC_EnableIRQ(CCU40_1_IRQn);
         }
-    }
+#endif
+	}
 }
 
 void detachInterrupt(uint32_t interrupt_num)
 {
     if (interrupt_num < NUM_INTERRUPT)
     {
-        switch (interrupt_num)
+#if defined (XMC4700_Radar_Baseboard)
+		XMC_PIN_INTERRUPT_t pin_irq = mapping_interrupt[interrupt_num];
+		switch (pin_irq.irq_num)
         {
-            case 0:
+			case 0:
+				NVIC_DisableIRQ(ERU0_3_IRQn);
+				break;
+
+			case 1:
+				NVIC_DisableIRQ(ERU1_0_IRQn);
+				break;
+#else
+		switch (interrupt_num)
+		{
+			case 0:
                 NVIC_DisableIRQ(CCU40_0_IRQn);
                 break;
 
             case 1:
                 NVIC_DisableIRQ(CCU40_1_IRQn);
                 break;
-
-            default:
+#endif
+			default:
                 break;
         }
     }
