@@ -22,7 +22,8 @@ env:
       # - PLATFORMIO_PROJECT_DIR=examples/device-control/SleepModeXMC1100
       # - PLATFORMIO_PROJECT_DIR=examples/device-control/SleepModeXMC4700
       # - PLATFORMIO_PROJECT_DIR=examples/device-control/StackMemoryMeasurement
-      # - PLATFORMIO_PROJECT_DIR=examples/ifx9201/MotorControl
+      # - PLATFORMIO_PROJECT_DIR=examples/ifx9201/MotorControl-PWM
+      # - PLATFORMIO_PROJECT_DIR=examples/ifx9201/MotorControl-SPI
       # - PLATFORMIO_PROJECT_DIR=examples/rtc/AlarmRTC
       # - PLATFORMIO_PROJECT_DIR=examples/rtc/HibernateRTCAlarm
       # - PLATFORMIO_PROJECT_DIR=examples/rtc/SimpleRTC
