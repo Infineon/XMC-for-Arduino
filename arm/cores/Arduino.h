@@ -46,6 +46,7 @@ extern "C" {
 #include <xmc_vadc.h>
 #include <xmc_uart.h>
 #include <xmc_dac.h>
+#include <xmc_eru.h>
 
 //****************************************************************************
 // @Defines
@@ -85,6 +86,17 @@ extern "C" {
     /*
     * XMC pin interrupt type
     */
+#if defined (XMC4700_Radar_Baseboard)
+	typedef struct
+	{
+		XMC_ERU_t*              eru;
+		XMC_ERU_ETL_INPUT_A_t   input_a;
+		XMC_ERU_ETL_INPUT_B_t   input_b;
+		uint8_t                 etl;
+		uint8_t                 ogu;
+		uint8_t                 irq_num;
+	} XMC_PIN_INTERRUPT_t;
+#else
     typedef struct
     {
         XMC_CCU4_MODULE_t*      ccu         ;
@@ -93,6 +105,7 @@ extern "C" {
         uint8_t                 irq_num     ;
         XMC_CCU4_SLICE_INPUT_t  input       ;
     } XMC_PIN_INTERRUPT_t;
+#endif
 
     /*
     * XMC PWM type (CCU4)
