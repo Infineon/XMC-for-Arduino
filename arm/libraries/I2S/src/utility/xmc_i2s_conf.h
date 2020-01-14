@@ -26,8 +26,8 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.   
  */
 
-#ifndef XMC_I2C_CONF_H
-#define XMC_I2C_CONF_H
+#ifndef XMC_I2S_CONF_H
+#define XMC_I2S_CONF_H
 
 #ifdef __cplusplus
 extern "C"

@@ -22,6 +22,7 @@ This repository integrates [Infineon's](https://www.infineon.com/) XMC microcont
 * [XMC4700 Relax Kit](https://www.infineon.com/cms/en/product/evaluation-boards/kit_xmc47_relax_v1/)
 * [XMC4700 Radar Baseboard](https://www.infineon.com/cms/en/product/evaluation-boards/demo-radar-baseboard-xmc47/)
 
+
 ## Additional Information
 
 Please visit also the Wiki for additional information, e.g. datasheets, pin out diagrams, etc.:
