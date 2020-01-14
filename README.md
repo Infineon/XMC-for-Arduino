@@ -20,6 +20,8 @@ This repository integrates [Infineon's](https://www.infineon.com/) XMC microcont
 * [XMC1300 Boot Kit](https://www.infineon.com/cms/de/product/evaluation-boards/kit_xmc13_boot_001/)
 * [XMC1300 Sense2GoL](https://www.infineon.com/cms/de/product/evaluation-boards/demo-sense2gol/)
 * [XMC4700 Relax Kit](https://www.infineon.com/cms/en/product/evaluation-boards/kit_xmc47_relax_v1/)
+* [XMC4700 Radar Baseboard](https://www.infineon.com/cms/en/product/evaluation-boards/demo-radar-baseboard-xmc47/)
+
 
 ## Additional Information
 
@@ -33,6 +35,7 @@ Please visit also the Wiki for additional information, e.g. datasheets, pin out 
 * Page for [XMC1300 Boot Kit](https://github.com/Infineon/XMC-for-Arduino/wiki/XMC1300-Boot-Kit)
 * Page for [XMC1300 Sense2GoL](https://github.com/Infineon/XMC-for-Arduino/wiki/XMC1300-Sense2GoL)
 * Page for [XMC4700 Relax Kit](https://github.com/Infineon/XMC-for-Arduino/wiki/XMC4700-Relax-Kit)
+* Page for [XMC4700 Radar Baseboard](https://github.com/Infineon/XMC-for-Arduino/wiki/Radar-Baseboard-XMC4700)
 
 Additionally, please consult the [releases](https://github.com/Infineon/XMC-for-Arduino/releases) for information about the changes and new versions.
 

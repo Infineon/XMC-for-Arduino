@@ -90,9 +90,11 @@ XMC_VADC_GROUP_SetPowerMode( VADC_G1, XMC_VADC_GROUP_POWERMODE_NORMAL );
 #if(XMC_VADC_MAXIMUM_NUM_GROUPS > 2)
 /* Initialize Group */
 XMC_VADC_GROUP_Init( VADC_G2, &vadc_group_config );
+XMC_VADC_GROUP_Init( VADC_G3, &vadc_group_config );
 
 /* Switch on the converter of the Group*/
 XMC_VADC_GROUP_SetPowerMode( VADC_G2, XMC_VADC_GROUP_POWERMODE_NORMAL );
+XMC_VADC_GROUP_SetPowerMode( VADC_G3, XMC_VADC_GROUP_POWERMODE_NORMAL );
 #endif
 
 #endif

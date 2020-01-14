@@ -50,7 +50,6 @@ void USIC0_0_IRQHandler( void )
 Serial.IrqHandler();
 }
 
-
 #if (NUM_SERIAL > 1)
 void USIC1_0_IRQHandler( void )
 {
@@ -211,9 +210,13 @@ while( XMC_USIC_CH_GetTransmitBufferStatus( _XMC_UART_config->channel) == XMC_US
 size_t HardwareSerial::write( const uint8_t uc_data )
 {
 // Is the hardware currently busy?
+#if defined (SERIAL_USE_U1C1)
+if (_tx_buffer->_iTail != _tx_buffer->_iHead)
+#else
 if(( XMC_USIC_CH_GetTransmitBufferStatus( _XMC_UART_config->channel ) == XMC_USIC_CH_TBUF_STATUS_BUSY )
         || ( _tx_buffer->_iTail != _tx_buffer->_iHead ))
-  {
+#endif
+{
   // If busy we buffer
   int nextWrite = _tx_buffer->_iHead + 1;
   if( nextWrite >= SERIAL_BUFFER_SIZE )
