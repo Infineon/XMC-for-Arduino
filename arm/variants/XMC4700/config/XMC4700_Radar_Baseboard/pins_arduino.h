@@ -37,7 +37,7 @@
 // XMC_BOARD for stringifying into serial or other text outputs/logs
 // Note the actual name XMC and number MUST have a character between 
 // to avoid issues with other defined macros e.g. XMC1100
-#define XMC_BOARD           XMC 4700 Radar Baseboard
+#define XMC_BOARD           DEMO Radar BB XMC4700
 /* On board LED is ON when digital output is 0, LOW, False, OFF */
 #define XMC_LED_ON          0
 
@@ -86,7 +86,6 @@ static const uint8_t SCK_SD  = PIN_SPI_SCK_SD;
 #define A4   4
 #define A5   5
 
-//#define LED_BUILTIN 24  //Standard Arduino LED: Used LED1
 #define LED_RED     22  // LED Red channel
 #define LED_GREEN   23  // LED Green channel
 #define LED_BLUE    24  // LED Blue channel
@@ -159,6 +158,7 @@ const XMC_PORT_PIN_t mapping_port_pin[] =
 
 };
 
+#define INTERRUPT_USE_ERU
 const XMC_PIN_INTERRUPT_t mapping_interrupt[] =
 {
     /* 0  */    {XMC_ERU0, XMC_ERU_ETL_INPUT_A0, XMC_ERU_ETL_INPUT_B3, 2, 3, 0},
@@ -202,6 +202,7 @@ XMC_ADC_t mapping_adc[] =
  * Serial 0 is Debug port
  * Serial 1  is on-board port
  */
+#define SERIAL_USE_U1C1
 RingBuffer rx_buffer_0;
 RingBuffer tx_buffer_0;
 
