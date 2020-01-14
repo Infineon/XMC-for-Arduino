@@ -33,7 +33,7 @@ static interrupt_cb_t interrupt_1_cb = NULL;
 //****************************************************************************
 // @Local Functions
 //****************************************************************************
-#if defined (XMC4700_Radar_Baseboard)
+#if defined (INTERRUPT_USE_ERU)
 void ERU0_3_IRQHandler(void)
 {
 	if (interrupt_0_cb)
@@ -72,7 +72,7 @@ void attachInterrupt(uint32_t interrupt_num, interrupt_cb_t callback, uint32_t m
     if (interrupt_num < NUM_INTERRUPT)
     {
         XMC_PIN_INTERRUPT_t pin_irq = mapping_interrupt[interrupt_num];
-#if defined (XMC4700_Radar_Baseboard)
+#if defined (INTERRUPT_USE_ERU)
 		XMC_ERU_ETL_EDGE_DETECTION_t event_config = 0;
 
 		switch (mode)
@@ -181,7 +181,7 @@ void detachInterrupt(uint32_t interrupt_num)
 {
     if (interrupt_num < NUM_INTERRUPT)
     {
-#if defined (XMC4700_Radar_Baseboard)
+#if defined (INTERRUPT_USE_ERU)
 		XMC_PIN_INTERRUPT_t pin_irq = mapping_interrupt[interrupt_num];
 		switch (pin_irq.irq_num)
         {

@@ -86,7 +86,7 @@ extern "C" {
     /*
     * XMC pin interrupt type
     */
-#if defined (XMC4700_Radar_Baseboard)
+#if defined (INTERRUPT_USE_ERU)
 	typedef struct
 	{
 		XMC_ERU_t*              eru;
