@@ -1,6 +1,6 @@
 # The Pulsed Doppler Radar library for XMC4700
 
-The Pulsed Doppler Radar library initializes the [XMC4700 Radar Baseboard](https://github.com/Infineon/XMC-for-Arduino/wiki/Radar-Baseboard-XMC4700) firmware to run a pulsed doppler algorithm with the BGT24LTR11 Shield.
+The Pulsed Doppler Radar library initializes the [DEMO Radar BB XMC4700](https://github.com/Infineon/XMC-for-Arduino/wiki/DEMO-Radar-BB-XMC4700) firmware to run a pulsed doppler algorithm with the BGT24LTR11 Shield.
 This then enables the user to develop compelling applications such as motion detection, presence sensing, speed and direction detection.
 For a deeper understanding of the firmware and algorithm, please refer to:
 [S2GLP Software User Manual](https://www.infineon.com/dgdl/Infineon-S2GL_Application_Note_AN597-ApplicationNotes-v01_00-EN.pdf?fileId=5546d4626b2d8e69016b89403b9342aa)
@@ -84,14 +84,14 @@ Two Arduino sketch examples are provided in the current library release. These e
 This example sketch runs the Pulsed Doppler firmware and uses the on-board LED to indicate detection of motion and direction of motion.
 
 **Hardware required:**
-Radar Baseboard XMC4700 and BGT24LTR11 Shield
+DEMO Radar BB XMC4700 and SHIELD BGT24LTR11
 
 **Steps:**
 1.	In Arduino IDE, navigate to **File** --> **Examples** --> **IFXRadarPulsedDoppler** --> **Radar_Pulsed_Doppler_LED**
 
 ![Example1 Sketch](https://raw.githubusercontent.com/infineon/assets/master/Pictures/rbb_example1_sketch.png)
 
-2.	Navigate to **Tools** --> **Board** --> **XMC4700 Radar Baseboard** to select the Radar Baseboard as the target kit.
+2.	Navigate to **Tools** --> **Board** --> **DEMO Radar BB XMC4700** to select the Radar Baseboard as the target kit.
 
 ![Select Radar Baseboard](https://raw.githubusercontent.com/infineon/assets/master/Pictures/rbb_select_radar_baseboard.png)
 
@@ -132,7 +132,7 @@ This example sketch runs the Pulsed Doppler firmware and projects the results of
 and at the same time uses an external RGB LED to indicate motion and direction of motion.
 
 **Hardware required:**
-1) Radar Baseboard XMC4700 and BGT24LTR11 Shield
+1) DEMO Radar BB XMC4700 and SHIELD BGT24LTR11
 2) Annikken Andee U Shield (https://www.annikken.com/andee-u)
 3) RGB LED Lighting Shield with XMC1202 (https://www.infineon.com/cms/en/product/evaluation-boards/kit_led_xmc1202_as_01/)
 
@@ -141,7 +141,7 @@ and at the same time uses an external RGB LED to indicate motion and direction o
 
 ![Example2 Sketch](https://raw.githubusercontent.com/infineon/assets/master/Pictures/rbb_example2_sketch.png)
 
-2.	Navigate to **Tools** --> **Board** --> **XMC4700 Radar Baseboard** to select the Radar Baseboard as the target kit.
+2.	Navigate to **Tools** --> **Board** --> **DEMO Radar BB XMC4700** to select the Radar Baseboard as the target kit.
 
 ![Select Radar Baseboard](https://raw.githubusercontent.com/infineon/assets/master/Pictures/rbb_select_radar_baseboard.png)
 
@@ -162,7 +162,7 @@ For more information on setting up of the RGB LED Lighting Shield, please refer 
 ![RGB LED Shield Setup](https://raw.githubusercontent.com/infineon/assets/master/Pictures/rbb_RGB_LED_Shield_Setup.png)
 
 6.	Stack the Annikken Andee U shield onto the setup. Notice that there are several jumper wires on the Annikken Andee U board. 
-This is due to the hardware modifications required on the Radar Baseboard regarding the ISCP header as mentioned in [the XMC4700 Radar Baseboard Wiki](https://github.com/Infineon/XMC-for-Arduino/wiki/Radar-Baseboard-XMC4700). 
+This is due to the hardware modifications required on the Radar Baseboard regarding the ISCP header as mentioned in [the DEMO Radar BB XMC4700 Wiki](https://github.com/Infineon/XMC-for-Arduino/wiki/DEMO-Radar-BB-XMC4700). 
 The second diagram below illustrates the required connections.
 
 ![Annikken Andee U](https://raw.githubusercontent.com/infineon/assets/master/Pictures/rbb_Annikken_Andee_U.png)
