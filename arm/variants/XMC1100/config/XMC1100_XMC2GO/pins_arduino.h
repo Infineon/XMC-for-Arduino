@@ -40,8 +40,8 @@
 /* On board LED is ON when digital output is 1, HIGH, TRUE, ON */
 #define  XMC_LED_ON         1
 
-#define NUM_ANALOG_INPUTS   2
-#define NUM_PWM             1
+#define NUM_ANALOG_INPUTS   4
+#define NUM_PWM             4
 #define NUM_LEDS            2
 #define NUM_INTERRUPT       1
 #define NUM_SERIAL          1
@@ -78,6 +78,8 @@ extern uint8_t SCK;
 
 #define A0   0
 #define A1   1
+#define A2   2
+#define A3   3
 
 #define LED_BUILTIN 14  //Standard Arduino LED: Used LED1
 #define LED1        14  // Extended LEDs
@@ -93,24 +95,27 @@ extern uint8_t SCK;
    another function later a gap in channel numbers will not mess things up */
 const uint8_t mapping_pin_PWM4[][ 2 ] = {
                                         { 8, 0 },
+                                        { 1, 1 },
+                                        { 2, 2 },
+                                        { 3, 3 },
                                         { 255, 255 } };
 
 const XMC_PORT_PIN_t mapping_port_pin[] =
 {
-    /* 0  */    {XMC_GPIO_PORT0, 6},    // SPI-MOSI                         P0.6
-    /* 1  */    {XMC_GPIO_PORT0 , 7},   // SPI-MISO                         P0.7
-    /* 2  */    {XMC_GPIO_PORT0 , 8},   // SPI-SCK                          P0.8
-    /* 3  */    {XMC_GPIO_PORT0 , 9},   // SPI-SS                           P0.9
+    /* 0  */    {XMC_GPIO_PORT0 , 6},   // SPI-MOSI                         P0.6
+    /* 1  */    {XMC_GPIO_PORT0 , 7},   // SPI-MISO / PWM40-1 output        P0.7
+    /* 2  */    {XMC_GPIO_PORT0 , 8},   // SPI-SCK / PWM40-2 output         P0.8
+    /* 3  */    {XMC_GPIO_PORT0 , 9},   // SPI-SS  / PWM40-3 output         P0.9
     /* 4  */    {XMC_GPIO_PORT0 , 14},  // GPIO                             P0.14
     /* 5  */    {XMC_GPIO_PORT0 , 15},  // GPIO                             P0.15
     /* 6  */    {XMC_GPIO_PORT2 , 0},   // TX                               P2.0
     /* 7  */    {XMC_GPIO_PORT2 , 6},   // RX                               P2.6 (INPUT ONLY)
     /* 8  */    {XMC_GPIO_PORT0 , 5},   // PWM40-0 output                   P0.5
     /* 9  */    {XMC_GPIO_PORT0 , 0},   // External interrupt 0             P0.0
-    /* 10  */   {XMC_GPIO_PORT2 , 11},  // I2C Clock SCL                    P2.11
-    /* 11  */   {XMC_GPIO_PORT2 , 10},  // I2C Data / Address SDA           P2.10
-    /* 12  */   {XMC_GPIO_PORT2 , 9},   // A0 / ADC Input                   P2.9 (INPUT ONLY)
-    /* 13  */   {XMC_GPIO_PORT2 , 7},   // A1 / ADC Input                   P2.7 (INPUT ONLY)
+    /* 10  */   {XMC_GPIO_PORT2 , 11},  // I2C Clock SCL / A3 ADC           P2.11
+    /* 11  */   {XMC_GPIO_PORT2 , 10},  // I2C Data / Address SDA / A2 ADC  P2.10
+    /* 12  */   {XMC_GPIO_PORT2 , 9},   // A1 / ADC Input                   P2.9 (INPUT ONLY)
+    /* 13  */   {XMC_GPIO_PORT2 , 7},   // A0 / ADC Input                   P2.7 (INPUT ONLY)
     /* 14  */   {XMC_GPIO_PORT1 , 1},   // LED 1 output    (BUILTIN)        P1.1
     /* 15  */   {XMC_GPIO_PORT1 , 0},   // LED 2 output                     P1.0
     /* 16  */   {XMC_GPIO_PORT2 , 1},   // DEBUG_TX                         P2.1
@@ -124,13 +129,18 @@ const XMC_PIN_INTERRUPT_t mapping_interrupt[] =
 
 XMC_PWM4_t mapping_pwm4[] =
 {
-    {CCU40, CCU40_CC40, 0, mapping_port_pin[8], P0_0_AF_CCU40_OUT0, XMC_CCU4_SLICE_PRESCALER_64, PWM4_TIMER_PERIOD, DISABLED}  // PWM disabled  8    P0.5
+    {CCU40, CCU40_CC40, 0, mapping_port_pin[8], P0_5_AF_CCU40_OUT0, XMC_CCU4_SLICE_PRESCALER_64, PWM4_TIMER_PERIOD, DISABLED},  // PWM disabled  8    P0.5
+    {CCU40, CCU40_CC41, 1, mapping_port_pin[1], P0_7_AF_CCU40_OUT1, XMC_CCU4_SLICE_PRESCALER_64, PWM4_TIMER_PERIOD, DISABLED},  // PWM disabled  1    P0.7
+    {CCU40, CCU40_CC42, 2, mapping_port_pin[2], P0_8_AF_CCU40_OUT2, XMC_CCU4_SLICE_PRESCALER_64, PWM4_TIMER_PERIOD, DISABLED},   // PWM disabled  2    P0.8
+    {CCU40, CCU40_CC43, 3, mapping_port_pin[3], P0_9_AF_CCU40_OUT3, XMC_CCU4_SLICE_PRESCALER_64, PWM4_TIMER_PERIOD, DISABLED}   // PWM disabled  3    P0.9
 };
 
 XMC_ADC_t mapping_adc[] =
 {
+    {VADC, 1, DISABLED},
     {VADC, 2, DISABLED},
-    {VADC, 1, DISABLED}
+    {VADC, 3, DISABLED},
+    {VADC, 4, DISABLED}
 };
 
 /*
