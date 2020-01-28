@@ -1,4 +1,4 @@
-#ifdef UC_FAMILY == XMC4
+#ifdef XMC4_SERIES
 
 /*******************************************************************************
  Copyright (c) 2013, Infineon Technologies AG                                 **

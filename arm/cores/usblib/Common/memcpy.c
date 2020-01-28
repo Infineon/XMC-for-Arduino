@@ -1,4 +1,4 @@
-#ifdef UC_FAMILY == XMC4
+#ifdef XMC4_SERIES
 
 /* Copyright (C) 2013 - Adam Green (https://github.com/adamgreen)
 
