@@ -286,16 +286,16 @@ XMC4700_Radar_Baseboard.build.variant=XMC4700
 XMC4700_Radar_Baseboard.build.board_variant=XMC4700_Radar_Baseboard
 XMC4700_Radar_Baseboard.build.flash_size=2000K
 XMC4700_Radar_Baseboard.build.flash_ld=linker_script.ld
-XMC4700_Radar_Baseboard.build.extra_flags=-DARM_MATH_CM4 -DARM_MATH_DSP -DUSB0 -DINTERRUPT_USE_ERU -DSERIAL_USE_U1C1
+XMC4700_Radar_Baseboard.build.extra_flags=-DARM_MATH_CM4 -DARM_MATH_DSP -DUSB0 -DINTERRUPT_USE_ERU -DSERIAL_USE_U1C1 -DXMC4_SERIES
 
+XMC4700_Radar_Baseboard.menu.LIB.DSPNN=ARM DSP / ARM NN Framework
+XMC4700_Radar_Baseboard.menu.LIB.DSPNN.library.selected=-DARM_LIB_CMSIS_DSP -DARM_LIB_CMSIS_NN
 XMC4700_Radar_Baseboard.menu.LIB.NONE=None
 XMC4700_Radar_Baseboard.menu.LIB.NONE.library.selected=
 XMC4700_Radar_Baseboard.menu.LIB.NN=ARM NN Framework 
 XMC4700_Radar_Baseboard.menu.LIB.NN.library.selected=-DARM_LIB_CMSIS_NN
 XMC4700_Radar_Baseboard.menu.LIB.DSP=ARM DSP
 XMC4700_Radar_Baseboard.menu.LIB.DSP.library.selected=-DARM_LIB_CMSIS_DSP
-XMC4700_Radar_Baseboard.menu.LIB.DSPNN=ARM DSP / ARM NN Framework
-XMC4700_Radar_Baseboard.menu.LIB.DSPNN.library.selected=-DARM_LIB_CMSIS_DSP -DARM_LIB_CMSIS_NN
 
 ####################################################
 XMC4700_Relax_Kit.name=XMC4700 Relax Kit
@@ -326,18 +326,18 @@ XMC4700_Relax_Kit.build.board_variant=XMC4700_Relax_Kit
 XMC4700_Relax_Kit.build.flash_size=2000K
 XMC4700_Relax_Kit.build.flash_ld=linker_script.ld
 # Old version causes redefinition errors
-#XMC4700_Relax_Kit.build.extra_flags=-DARM_MATH_CM4 -DARM_MATH_DSP -DUSB0
+#XMC4700_Relax_Kit.build.extra_flags=-DARM_MATH_CM4 -DARM_MATH_DSP -DUSB0 -DXMC4_SERIES
 # New Version Sep-2019 PC
-XMC4700_Relax_Kit.build.extra_flags=-DARM_MATH_CM4
+XMC4700_Relax_Kit.build.extra_flags=-DARM_MATH_CM4 -DXMC4_SERIES
 
+XMC4700_Relax_Kit.menu.LIB.DSPNN=ARM DSP / ARM NN Framework
+XMC4700_Relax_Kit.menu.LIB.DSPNN.library.selected=-DARM_LIB_CMSIS_DSP -DARM_LIB_CMSIS_NN
 XMC4700_Relax_Kit.menu.LIB.NONE=None
 XMC4700_Relax_Kit.menu.LIB.NONE.library.selected=
 XMC4700_Relax_Kit.menu.LIB.NN=ARM NN Framework 
 XMC4700_Relax_Kit.menu.LIB.NN.library.selected=-DARM_LIB_CMSIS_NN
 XMC4700_Relax_Kit.menu.LIB.DSP=ARM DSP
 XMC4700_Relax_Kit.menu.LIB.DSP.library.selected=-DARM_LIB_CMSIS_DSP
-XMC4700_Relax_Kit.menu.LIB.DSPNN=ARM DSP / ARM NN Framework
-XMC4700_Relax_Kit.menu.LIB.DSPNN.library.selected=-DARM_LIB_CMSIS_DSP -DARM_LIB_CMSIS_NN
 
 ####################################################
 # Not up to date
@@ -370,11 +370,12 @@ XMC4700_Relax_Kit.menu.LIB.DSPNN.library.selected=-DARM_LIB_CMSIS_DSP -DARM_LIB_
 #XMC4800_Relax_Kit.build.flash_size=2000K
 #XMC4800_Relax_Kit.build.flash_ld=linker_script.ld
 
+#XMC4800_Relax_Kit.menu.LIB.DSPNN=ARM DSP / ARM NN Framework
+#XMC4800_Relax_Kit.menu.LIB.DSPNN.library.selected=-DARM_LIB_CMSIS_DSP -DARM_LIB_CMSIS_NN
 #XMC4800_Relax_Kit.menu.LIB.NONE=None
 #XMC4800_Relax_Kit.menu.LIB.NONE.library.selected=
 #XMC4800_Relax_Kit.menu.LIB.NN=ARM NN Framework 
 #XMC4800_Relax_Kit.menu.LIB.NN.library.selected=-DARM_LIB_CMSIS_NN
 #XMC4800_Relax_Kit.menu.LIB.DSP=ARM DSP
 #XMC4800_Relax_Kit.menu.LIB.DSP.library.selected=-DARM_LIB_CMSIS_DSP
-#XMC4800_Relax_Kit.menu.LIB.DSPNN=ARM DSP / ARM NN Framework
-#XMC4800_Relax_Kit.menu.LIB.DSPNN.library.selected=-DARM_LIB_CMSIS_DSP -DARM_LIB_CMSIS_NN
+
