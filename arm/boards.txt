@@ -30,7 +30,7 @@ XMC1100_Boot_Kit.build.variant=XMC1100
 XMC1100_Boot_Kit.build.board_variant=XMC1100_Boot_Kit
 XMC1100_Boot_Kit.build.flash_size=64K
 XMC1100_Boot_Kit.build.flash_ld=linker_script.ld
-XMC1100_Boot_Kit.build.extra_flags=-DARM_MATH_CM0
+XMC1100_Boot_Kit.build.extra_flags=-DARM_MATH_CM0 -DXMC1_SERIES
 
 XMC1100_Boot_Kit.menu.UART.debug=PC
 XMC1100_Boot_Kit.menu.UART.debug.uart.selected=-DSERIAL_HOSTPC
@@ -74,7 +74,7 @@ XMC1100_XMC2GO.build.variant=XMC1100
 XMC1100_XMC2GO.build.board_variant=XMC1100_XMC2GO
 XMC1100_XMC2GO.build.flash_size=64K
 XMC1100_XMC2GO.build.flash_ld=linker_script.ld
-XMC1100_XMC2GO.build.extra_flags=-DARM_MATH_CM0
+XMC1100_XMC2GO.build.extra_flags=-DARM_MATH_CM0 -DXMC1_SERIES
 
 XMC1100_XMC2GO.menu.UART.debug=PC
 XMC1100_XMC2GO.menu.UART.debug.uart.selected=-DSERIAL_HOSTPC
@@ -118,7 +118,8 @@ XMC1100_H_BRIDGE2GO.build.variant=XMC1100
 XMC1100_H_BRIDGE2GO.build.board_variant=XMC1100_H_BRIDGE2GO
 XMC1100_H_BRIDGE2GO.build.flash_size=64K
 XMC1100_H_BRIDGE2GO.build.flash_ld=linker_script.ld
-XMC1100_H_BRIDGE2GO.build.extra_flags=-DARM_MATH_CM0
+XMC1100_H_BRIDGE2GO.build.extra_flags=-DARM_MATH_CM0 -DXMC1_SERIES
+
 XMC1100_H_BRIDGE2GO.menu.UART.debug=PC
 XMC1100_H_BRIDGE2GO.menu.UART.debug.uart.selected=-DSERIAL_ONBOARD
 XMC1100_H_BRIDGE2GO.menu.UART.onBoard=On Board
@@ -161,7 +162,8 @@ XMC1300_Boot_Kit.build.variant=XMC1300
 XMC1300_Boot_Kit.build.board_variant=XMC1300_Boot_Kit
 XMC1300_Boot_Kit.build.flash_size=64K
 XMC1300_Boot_Kit.build.flash_ld=linker_script.ld
-XMC1300_Boot_Kit.build.extra_flags=-DARM_MATH_CM0
+XMC1300_Boot_Kit.build.extra_flags=-DARM_MATH_CM0 -DXMC1_SERIES
+
 XMC1300_Boot_Kit.menu.UART.debug=PC
 XMC1300_Boot_Kit.menu.UART.debug.uart.selected=-DSERIAL_HOSTPC
 XMC1300_Boot_Kit.menu.UART.onBoard=On Board
@@ -204,7 +206,7 @@ XMC1300_Sense2GoL.build.variant=XMC1300
 XMC1300_Sense2GoL.build.board_variant=XMC1300_Sense2GoL
 XMC1300_Sense2GoL.build.flash_size=64K
 XMC1300_Sense2GoL.build.flash_ld=linker_script.ld
-XMC1300_Sense2GoL.build.extra_flags=-DARM_MATH_CM0
+XMC1300_Sense2GoL.build.extra_flags=-DARM_MATH_CM0 -DXMC1_SERIES
 
 XMC1300_Sense2GoL.menu.LIB.NONE=None
 XMC1300_Sense2GoL.menu.LIB.NONE.library.selected=
@@ -243,7 +245,8 @@ XMC1300_Sense2GoL.menu.LIB.DSPNN.library.selected=-DARM_LIB_CMSIS_DSP -DARM_LIB_
 #XMC1400_Boot_Kit.build.board_variant=XMC1400_Boot_Kit
 #XMC1400_Boot_Kit.build.flash_size=200K
 #XMC1400_Boot_Kit.build.flash_ld=linker_script.ld
-#XMC1400_Boot_Kit.build.extra_flags=-DARM_MATH_CM0
+#XMC1400_Boot_Kit.build.extra_flags=-DARM_MATH_CM0 -DXMC1_SERIES
+
 #XMC1400_Boot_Kit.menu.UART.debug=PC
 #XMC1400_Boot_Kit.menu.UART.debug.uart.selected=-DSERIAL_HOSTPC
 #XMC1400_Boot_Kit.menu.UART.onBoard=On Board
@@ -369,6 +372,7 @@ XMC4700_Relax_Kit.menu.LIB.DSP.library.selected=-DARM_LIB_CMSIS_DSP
 #XMC4800_Relax_Kit.build.board_variant=XMC4800_Relax_Kit
 #XMC4800_Relax_Kit.build.flash_size=2000K
 #XMC4800_Relax_Kit.build.flash_ld=linker_script.ld
+#XMC4800_Relax_Kit.build.extra_flags=-DARM_MATH_CM4 -DXMC4_SERIES
 
 #XMC4800_Relax_Kit.menu.LIB.DSPNN=ARM DSP / ARM NN Framework
 #XMC4800_Relax_Kit.menu.LIB.DSPNN.library.selected=-DARM_LIB_CMSIS_DSP -DARM_LIB_CMSIS_NN
