@@ -1,3 +1,5 @@
+#ifdef ARM_LIB_CMSIS_NN
+
 /*
  * Copyright (C) 2010-2018 Arm Limited or its affiliates. All rights reserved.
  *
@@ -330,3 +332,5 @@ arm_fully_connected_q15_opt(const q15_t * pV,
 /**
  * @} end of FC group
  */
+
+#endif /* ARM_LIB_CMSIS_NN */
