@@ -1,3 +1,5 @@
+#ifdef ARM_LIB_CMSIS_DSP
+
 /* ----------------------------------------------------------------------
  * Project:      CMSIS DSP Library
  * Title:        arm_cfft_init_f32.c
@@ -129,3 +131,5 @@ arm_status arm_rfft_fast_init_f32(
 /**
  * @} end of RealFFT group
  */
+
+#endif /* ARM_LIB_CMSIS_DSP */

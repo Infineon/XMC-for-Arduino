@@ -1,3 +1,5 @@
+#ifdef ARM_LIB_CMSIS_DSP
+
 /* ----------------------------------------------------------------------
  * Project:      CMSIS DSP Library
  * Title:        arm_const_structs.h
@@ -64,3 +66,5 @@
    extern const arm_cfft_instance_q15 arm_cfft_sR_q15_len4096;
 
 #endif
+
+#endif /* ARM_LIB_CMSIS_DSP */
