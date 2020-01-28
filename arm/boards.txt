@@ -208,14 +208,14 @@ XMC1300_Sense2GoL.build.flash_size=64K
 XMC1300_Sense2GoL.build.flash_ld=linker_script.ld
 XMC1300_Sense2GoL.build.extra_flags=-DARM_MATH_CM0 -DXMC1_SERIES
 
+XMC1300_Sense2GoL.menu.LIB.DSPNN=ARM DSP / ARM NN Framework
+XMC1300_Sense2GoL.menu.LIB.DSPNN.library.selected=-DARM_LIB_CMSIS_DSP -DARM_LIB_CMSIS_NN
 XMC1300_Sense2GoL.menu.LIB.NONE=None
 XMC1300_Sense2GoL.menu.LIB.NONE.library.selected=
 XMC1300_Sense2GoL.menu.LIB.NN=ARM NN Framework 
 XMC1300_Sense2GoL.menu.LIB.NN.library.selected=-DARM_LIB_CMSIS_NN
 XMC1300_Sense2GoL.menu.LIB.DSP=ARM DSP
 XMC1300_Sense2GoL.menu.LIB.DSP.library.selected=-DARM_LIB_CMSIS_DSP
-XMC1300_Sense2GoL.menu.LIB.DSPNN=ARM DSP / ARM NN Framework
-XMC1300_Sense2GoL.menu.LIB.DSPNN.library.selected=-DARM_LIB_CMSIS_DSP -DARM_LIB_CMSIS_NN
 
 ####################################################
 #XMC1400_Boot_Kit.name=XMC1400 Boot Kit
