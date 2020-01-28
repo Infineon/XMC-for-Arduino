@@ -28,7 +28,8 @@ build.assembly_file ={build.variant.path}/Startup_{build.variant}.S
 
 compiler.c.cmd=arm-none-eabi-gcc
 compiler.c.flags=-mcpu={build.mcu} -mthumb -c -g -Os {compiler.warning_flags} -std=gnu11 -ffunction-sections -fdata-sections -nostdlib --param max-inline-insns-single=500 -MMD
-compiler.c.extra_flags= 
+#compiler.c.extra_flags=-ftime-report
+compiler.c.extra_flags=
 compiler.c.elf.cmd=arm-none-eabi-gcc
 compiler.c.elf.flags=-Os -Wl,--gc-sections -save-temps
 compiler.c.elf.extra_flags=
@@ -37,6 +38,7 @@ compiler.S.flags=-c -g -x assembler-with-cpp
 compiler.S.extra_flags=-w
 compiler.cpp.cmd=arm-none-eabi-g++
 compiler.cpp.flags=-mcpu={build.mcu} -mthumb -fpermissive -c -g -Os {compiler.warning_flags} -std=gnu++11 -ffunction-sections -fdata-sections -fno-threadsafe-statics -nostdlib --param max-inline-insns-single=500 -fno-rtti -fno-exceptions -MMD
+#compiler.cpp.extra_flags=-ftime-report
 compiler.cpp.extra_flags=
 compiler.ar.cmd=arm-none-eabi-ar
 compiler.ar.flags=rcs
