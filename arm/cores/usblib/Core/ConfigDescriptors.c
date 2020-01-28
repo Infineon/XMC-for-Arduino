@@ -1,3 +1,5 @@
+#ifdef UC_FAMILY == XMC4
+
 /*
              LUFA Library
      Copyright (C) Dean Camera, 2014.
@@ -143,3 +145,5 @@ uint8_t USB_GetNextDescriptorComp(uint16_t* const BytesRem,
 
     return DESCRIPTOR_SEARCH_COMP_EndOfDescriptor;
 }
+
+#endif /* UC_FAMILY == XMC4 */

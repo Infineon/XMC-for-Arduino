@@ -1,3 +1,5 @@
+#ifdef UC_FAMILY == XMC4
+
 /*
              LUFA Library
      Copyright (C) Dean Camera, 2013.
@@ -408,3 +410,4 @@
 
 #endif /* ENDPOINT_XMC4000_H_ */
 #endif
+#endif /* UC_FAMILY == XMC4 */

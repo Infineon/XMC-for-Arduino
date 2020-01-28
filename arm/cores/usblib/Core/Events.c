@@ -1,3 +1,5 @@
+#ifdef UC_FAMILY == XMC4
+
 /*
              LUFA Library
      Copyright (C) Dean Camera, 2014.
@@ -37,3 +39,5 @@ void USB_Event_Stub(void)
 
 }
 
+
+#endif /* UC_FAMILY == XMC4 */

@@ -1,3 +1,5 @@
+#ifdef UC_FAMILY == XMC4
+
 /*******************************************************************************
  Copyright (c) 2013, Infineon Technologies AG                                 **
  All rights reserved.                                                         **
@@ -249,3 +251,4 @@ bool Endpoint_ConfigureEndpointTable(const USB_Endpoint_Table_t* const Table,
 
 #endif
 #endif
+#endif /* UC_FAMILY == XMC4 */

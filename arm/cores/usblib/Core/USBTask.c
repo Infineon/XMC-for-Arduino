@@ -1,3 +1,5 @@
+#ifdef UC_FAMILY == XMC4
+
 /*
              LUFA Library
      Copyright (C) Dean Camera, 2014.
@@ -88,3 +90,4 @@ static void USB_HostTask(void)
 #endif
 
 #endif
+#endif /* UC_FAMILY == XMC4 */

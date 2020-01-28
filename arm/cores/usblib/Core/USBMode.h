@@ -1,3 +1,5 @@
+#ifdef UC_FAMILY == XMC4
+
 /*
              LUFA Library
      Copyright (C) Dean Camera, 2014.
@@ -119,3 +121,5 @@
 
 /** @} */
 
+
+#endif /* UC_FAMILY == XMC4 */
