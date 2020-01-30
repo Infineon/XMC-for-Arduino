@@ -1,8 +1,8 @@
 /*********************************************************************************************************************
  * @file     startup_XMC4800.S
  * @brief    CMSIS Core Device Startup File for Infineon XMC4800 Device Series
- * @version  V1.1
- * @date     05 Jan 2016
+ * @version  V1.2
+ * @date     24 Jan 2020
  *
  * @cond
  *********************************************************************************************************************
@@ -36,9 +36,17 @@
  **************************** Change history ********************************
  * V1.0,Sep, 03, 2015 JFT:Initial version
  * V1.1,Jan, 05, 2016 JFT:Fix .reset section attributes
+ * V1.2,Jan, 24, 2020, Silence compiler warning
  *
  * @endcond 
  */
+
+/* Silence "IT blocks containing more than one conditional instruction
+ * are deprecated in ARMv8" warning.
+ *
+ * XMC4800 is a Cortex-M4, which has an ARMv7E-M architecture.
+ */
+.arch  armv7e-m
 
 /* ===========START : MACRO DEFINITION MACRO DEFINITION ================== */
  

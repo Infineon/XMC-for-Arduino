@@ -8,6 +8,7 @@
 # TBD: versioning has to be fixed
 # ---------
 name=XMC Family
+<<<<<<< HEAD
 version=1.4
 
 # Build related core definitions
@@ -35,6 +36,9 @@ compiler.size.cmd=arm-none-eabi-size
 # ---------
 
 # Compiler definitions
+=======
+version=1.4.0
+>>>>>>> origin/develop
 
 compiler.warning_flags=-w
 compiler.warning_flags.none=-w
