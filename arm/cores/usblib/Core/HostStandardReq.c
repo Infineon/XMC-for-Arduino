@@ -1,3 +1,5 @@
+#ifdef XMC4_SERIES
+
 /*
              LUFA Library
      Copyright (C) Dean Camera, 2014.
@@ -320,3 +322,5 @@ uint8_t USB_Host_GetInterfaceAltSetting(const uint8_t InterfaceIndex,
 
 #endif
 
+
+#endif /* UC_FAMILY == XMC4 */

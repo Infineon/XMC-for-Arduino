@@ -1,3 +1,5 @@
+#ifdef ARM_LIB_CMSIS_DSP
+
 /* ----------------------------------------------------------------------
  * Project:      CMSIS DSP Library
  * Title:        arm_const_structs.c
@@ -377,3 +379,5 @@ const arm_rfft_instance_q15 arm_rfft_sR_q15_len8192 = {
 	(q15_t*)realCoefBQ15,
 	&arm_cfft_sR_q15_len4096
 };
+
+#endif /* ARM_LIB_CMSIS_DSP */

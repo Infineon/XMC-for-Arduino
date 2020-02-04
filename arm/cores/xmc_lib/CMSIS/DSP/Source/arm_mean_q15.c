@@ -1,3 +1,5 @@
+#ifdef ARM_LIB_CMSIS_DSP
+
 /* ----------------------------------------------------------------------
  * Project:      CMSIS DSP Library
  * Title:        arm_mean_q15.c
@@ -118,3 +120,5 @@ void arm_mean_q15(
 /**
  * @} end of mean group
  */
+
+#endif /* ARM_LIB_CMSIS_DSP */

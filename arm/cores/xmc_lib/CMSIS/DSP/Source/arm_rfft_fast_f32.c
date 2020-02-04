@@ -1,3 +1,5 @@
+#ifdef ARM_LIB_CMSIS_DSP
+
 /* ----------------------------------------------------------------------
  * Project:      CMSIS DSP Library
  * Title:        arm_rfft_f32.c
@@ -315,3 +317,5 @@ uint8_t ifftFlag)
 /**
 * @} end of RealFFT group
 */
+
+#endif /* ARM_LIB_CMSIS_DSP */

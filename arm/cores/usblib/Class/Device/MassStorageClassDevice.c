@@ -1,3 +1,5 @@
+#ifdef XMC4_SERIES
+
 /*
              LUFA Library
      Copyright (C) Dean Camera, 2014.
@@ -214,3 +216,5 @@ static void MS_Device_ReturnCommandStatus(USB_ClassInfo_MS_Device_t* const MSInt
 #endif
 #endif
 
+
+#endif /* UC_FAMILY == XMC4 */

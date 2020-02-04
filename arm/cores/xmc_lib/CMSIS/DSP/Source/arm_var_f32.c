@@ -1,3 +1,5 @@
+#ifdef ARM_LIB_CMSIS_DSP
+
 /* ----------------------------------------------------------------------
  * Project:      CMSIS DSP Library
  * Title:        arm_var_f32.c
@@ -179,3 +181,5 @@ void arm_var_f32(
 /**
  * @} end of variance group
  */
+
+#endif /* ARM_LIB_CMSIS_DSP */

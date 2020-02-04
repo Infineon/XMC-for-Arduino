@@ -1,3 +1,5 @@
+#ifdef XMC4_SERIES
+
 /*
              LUFA Library
      Copyright (C) Dean Camera, 2014.
@@ -348,3 +350,5 @@ __WEAK void EVENT_CDC_Device_BreakSent(USB_ClassInfo_CDC_Device_t* const CDCInte
 
 #endif
 #endif
+
+#endif /* UC_FAMILY == XMC4 */

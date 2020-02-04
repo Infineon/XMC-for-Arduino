@@ -1,3 +1,5 @@
+#ifdef XMC4_SERIES
+
 /*
              LUFA Library
      Copyright (C) Dean Camera, 2014.
@@ -559,3 +561,4 @@ void USBD_SetEndpointBuffer(uint8_t addr,uint8_t *buf,uint16_t len) {
 }
 
 #endif
+#endif /* UC_FAMILY == XMC4 */
