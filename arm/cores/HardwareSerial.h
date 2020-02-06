@@ -34,6 +34,7 @@ void serialEvent1() __attribute__((weak));
 // @Project Includes
 //****************************************************************************
 #include "Arduino.h"
+#include "xmc_config.h"
 #include "RingBuffer.h"
 #include "Stream.h"
 
