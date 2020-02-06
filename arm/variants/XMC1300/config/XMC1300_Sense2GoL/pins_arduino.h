@@ -173,38 +173,6 @@ XMC_ADC_t mapping_adc[] = {
 	{VADC, 4, VADC_G0, 0, 11, DISABLED}				// CH_Q
     };
  
-/*
- * UART objects
- */
-RingBuffer rx_buffer_0;
-RingBuffer tx_buffer_0;
-
-XMC_UART_t XMC_UART_0 =
-{
-  .channel 				= XMC_UART0_CH0,
-  .rx 					= {	.port = (XMC_GPIO_PORT_t *)PORT2_BASE,
-							.pin  = (uint8_t)6
-							},
-  .rx_config			= { .mode = XMC_GPIO_MODE_INPUT_TRISTATE,
-							.output_level     = XMC_GPIO_OUTPUT_LEVEL_HIGH,
-							.input_hysteresis = XMC_GPIO_INPUT_HYSTERESIS_STANDARD
-							},
-  .tx 					= {	.port = (XMC_GPIO_PORT_t *)PORT2_BASE,
-							.pin  = (uint8_t)0
-							},
-  .tx_config			= { .mode = (XMC_GPIO_MODE_t) XMC_GPIO_MODE_OUTPUT_PUSH_PULL_ALT6,
-							.output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH,
-							.input_hysteresis = XMC_GPIO_INPUT_HYSTERESIS_STANDARD
-							},
-  .input_source_dx0		= (XMC_USIC_INPUT_t)USIC0_C0_DX0_DX3INS,
-  .input_source_dx1		= XMC_INPUT_INVALID,
-  .input_source_dx2		= XMC_INPUT_INVALID,
-  .input_source_dx3		= (XMC_USIC_INPUT_t)USIC0_C0_DX3_P2_6,
-  .irq_num				= USIC0_0_IRQn,	
-  .irq_service_request	= 0
-};	
-
-HardwareSerial Serial( &XMC_UART_0, &rx_buffer_0, &tx_buffer_0 );
 #endif
 
 #endif

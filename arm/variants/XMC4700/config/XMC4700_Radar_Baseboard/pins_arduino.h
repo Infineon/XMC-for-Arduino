@@ -194,44 +194,6 @@ XMC_ADC_t mapping_adc[] =
     {VADC, 2, VADC_G2, 2, 2, DISABLED},
 };
 
-
-/*
- * UART objects
- *
- * Serial 0 is Debug port
- * Serial 1  is on-board port
- */
-#define SERIAL_USE_U1C1
-RingBuffer rx_buffer_0;
-RingBuffer tx_buffer_0;
-
-XMC_UART_t XMC_UART_0 =
-{
-  .channel              = XMC_UART1_CH1,
-  .rx                   = { .port = (XMC_GPIO_PORT_t*)PORT3_BASE,
-                            .pin  = (uint8_t)14
-                          },
-  .rx_config            = { .mode = XMC_GPIO_MODE_INPUT_TRISTATE,
-                            .output_level     = XMC_GPIO_OUTPUT_LEVEL_HIGH,
-                            .output_strength  = XMC_GPIO_OUTPUT_STRENGTH_STRONG_SOFT_EDGE
-                          },
-  .tx                   = { .port = (XMC_GPIO_PORT_t*)PORT3_BASE,
-                            .pin  = (uint8_t)15
-                          },
-  .tx_config            = { .mode = (XMC_GPIO_MODE_t) XMC_GPIO_MODE_OUTPUT_PUSH_PULL_ALT2,
-                            .output_level     = XMC_GPIO_OUTPUT_LEVEL_HIGH,
-                            .output_strength  = XMC_GPIO_OUTPUT_STRENGTH_STRONG_SOFT_EDGE
-                          },
-  .input_source_dx0     = (XMC_USIC_INPUT_t)USIC1_C1_DX0_P3_14,
-  .input_source_dx1     = XMC_INPUT_INVALID,
-  .input_source_dx2     = XMC_INPUT_INVALID,
-  .input_source_dx3     = XMC_INPUT_INVALID,
-  .irq_num              = USIC0_0_IRQn,
-  .irq_service_request  = 0
-};
-
-HardwareSerial Serial( &XMC_UART_0, &rx_buffer_0, &tx_buffer_0 );
-
 #endif
 
 #endif

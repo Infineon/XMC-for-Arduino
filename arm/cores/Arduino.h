@@ -224,7 +224,6 @@ extern "C" {
      * \brief Arduino Main loop function. Called in an endless loop.
      */
     extern void loop(void);
-
 	
 //****************************************************************************
 // @Arduino Core Includes
@@ -242,6 +241,11 @@ extern "C" {
 #include "WInterrupts.h"
 
 //****************************************************************************
+// @Board Variant Pinout Include
+//****************************************************************************
+#include <pins_arduino.h>
+
+//****************************************************************************
 // @Infineon Core Includes
 //****************************************************************************
 #include "reset.h"
@@ -256,8 +260,8 @@ extern "C" {
 #include "HardwareSerial.h"
 
 //****************************************************************************
-// @Board Variant Includes
+// @Board Variant Serial Include
 //****************************************************************************
-#include <pins_arduino.h>
+#include <serial_config.h>
 
 #endif  /*_ARDUINO_H_ */
