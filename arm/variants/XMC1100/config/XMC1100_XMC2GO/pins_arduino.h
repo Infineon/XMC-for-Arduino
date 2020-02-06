@@ -25,68 +25,7 @@
 #ifndef PINS_ARDUINO_H_
 #define PINS_ARDUINO_H_
 
-//****************************************************************************
-// @Project Includes
-//****************************************************************************
-#include <XMC1100.h>
-
-//****************************************************************************
-// @Defines
-//****************************************************************************
-// XMC_BOARD for stringifying into serial or other text outputs/logs
-// Note the actual name XMC and number MUST have a character between 
-// to avoid issues with other defined macros e.g. XMC1100
-#define XMC_BOARD           XMC 1100 XMC2GO
-/* On board LED is ON when digital output is 1, HIGH, TRUE, ON */
-#define  XMC_LED_ON         1
-
-#define NUM_ANALOG_INPUTS   4
-#define NUM_PWM             4
-#define NUM_LEDS            2
-#define NUM_INTERRUPT       1
-#define NUM_SERIAL          1
-#define NUM_TONE_PINS       4
-#define NUM_TASKS_VARIANT   8
-
-// Indicate unit has RTC/Alarm
-#define HAS_RTC             1
-
-// Defines will be either set by ArduinoIDE in the menu or manually
-#ifdef SERIAL_HOSTPC
-// Comment out following line to use Serial on pins (board)
-#define SERIAL_DEBUG    1
-#elif SERIAL_ONBOARD
-// No SERIAL_DEBUG will be defined, kept here for clarity
-#else
-// Define the SERIAL_DEBUG as default setting
-#define SERIAL_DEBUG    1
-#endif
-
-#define PWM4_TIMER_PERIOD (2041U)  // Generate 490Hz @fCCU=1MHz
-
-#define PCLK 64000000u 
- 
-#define PIN_SPI_SS    3
-#define PIN_SPI_MOSI  1
-#define PIN_SPI_MISO  0
-#define PIN_SPI_SCK   2
-
-extern uint8_t SS; 
-extern uint8_t MOSI;
-extern uint8_t MISO;
-extern uint8_t SCK;
-
-#define A0   0
-#define A1   1
-#define A2   2
-#define A3   3
-
-#define LED_BUILTIN 14  //Standard Arduino LED: Used LED1
-#define LED1        14  // Extended LEDs
-#define LED2        15  // Extended LEDs
-#define GND         32  // GND
-
-#define digitalPinToInterrupt(p)    (((p) == 9) ? 0 : NOT_AN_INTERRUPT)
+#include <xmc_config.h>
 
 #ifdef ARDUINO_MAIN
 /* Mapping of Arduino Pins to PWM4 channels as pin and PWM4 channel
