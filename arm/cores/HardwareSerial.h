@@ -23,12 +23,6 @@
 // @External Prototypes
 //****************************************************************************
 #ifdef __cplusplus
-extern "C" {
-    extern void serialEventRun(void);
-}
-
-void serialEvent() __attribute__((weak));
-void serialEvent1() __attribute__((weak));
 
 //****************************************************************************
 // @Project Includes
@@ -123,13 +117,6 @@ private:
     RingBuffer* _rx_buffer;
     RingBuffer* _tx_buffer;
 };
-
-extern HardwareSerial Serial;
-
-#if (NUM_SERIAL > 1)
-extern HardwareSerial Serial1;
-#endif
-
-#endif
+#endif  /* cplusplus */
 
 #endif /* HardwareSerial_h */
