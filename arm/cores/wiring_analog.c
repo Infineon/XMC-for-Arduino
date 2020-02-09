@@ -447,7 +447,7 @@ return _readMaximum;
 }
 
 
-/* Get the maximum value for current resolution for analogRite. 
+/* Get the maximum value for current resolution for analogWrite. 
     Default is 255
     Maximum is 65535
  */
