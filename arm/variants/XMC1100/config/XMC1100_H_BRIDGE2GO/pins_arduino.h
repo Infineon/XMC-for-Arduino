@@ -22,7 +22,6 @@
   Copyright (c) 2018 Infineon Technologies AG
   This file has been modified for the XMC microcontroller series.
 */
-
 #ifndef PINS_ARDUINO_H_
 #define PINS_ARDUINO_H_
 
@@ -41,7 +40,6 @@
 /* On board LED is ON when digital output is 1, HIGH, TRUE, ON */
 #define  XMC_LED_ON         1
 
-//#define NUM_DIGITAL_PINS    12
 #define NUM_ANALOG_INPUTS   2
 #define NUM_PWM             2
 #define NUM_LEDS            2
@@ -199,6 +197,35 @@ XMC_UART_t XMC_UART_0 =
 
 HardwareSerial Serial( &XMC_UART_0, &rx_buffer_0, &tx_buffer_0 );
 
+// Serial Interrupt and event handling
+#ifdef __cplusplus
+extern "C" {
 #endif
+void serialEventRun( );
+void serialEvent( ) __attribute__((weak));
 
+
+void serialEventRun( )
+{
+if( serialEvent )
+  {
+  if( Serial.available( ) )
+    serialEvent( );
+  }
+}
+
+
+void USIC0_0_IRQHandler( )
+{
+Serial.IrqHandler( );
+}
+#ifdef __cplusplus
+}
 #endif
+#endif  /* ARDUINO_MAIN */
+
+#ifdef __cplusplus
+extern HardwareSerial Serial;
+#endif  /* cplusplus */
+
+#endif // PINS_ARDUINO_H_

@@ -21,7 +21,6 @@
 //****************************************************************************
 #define _STDBOOL_H 1
 #include "Arduino.h"
-#include "WString.h"
 #include "itoa.h"
 #include "dtostrf.h"
 #include <stdlib.h>

@@ -19,48 +19,11 @@
 //****************************************************************************
 // @Project Includes
 //****************************************************************************
-#include "HardwareSerial.h"
+#include "Arduino.h"
 
 //****************************************************************************
 // @Local Functions
 //****************************************************************************
-
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-void serialEventRun( void )
-{
-if( serialEvent )
-  {
-  if( Serial.available() )
-    serialEvent();
-  }
-#if (NUM_SERIAL > 1)
-if( serialEvent1 )
-  {
-  if( Serial1.available() )
-    serialEvent1();
-  }
-#endif
-}
-
-void USIC0_0_IRQHandler( void )
-{
-Serial.IrqHandler();
-}
-
-#if (NUM_SERIAL > 1)
-void USIC1_0_IRQHandler( void )
-{
-Serial1.IrqHandler();
-}
-#endif
-
-#ifdef __cplusplus
-}
-#endif
-
 
 // Constructors ////////////////////////////////////////////////////////////////
 

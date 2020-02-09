@@ -22,7 +22,6 @@
   Copyright (c) 2019 Infineon Technologies AG
   This file has been modified for the XMC microcontroller series.
 */
-
 #ifndef PINS_ARDUINO_H_
 #define PINS_ARDUINO_H_
 
@@ -41,9 +40,9 @@
 /* On board LED is ON when digital output is 0, LOW, False, OFF */
 #define XMC_LED_ON          0
 // Pins that are allocated or free to be used as Analog input
-#define NUM_ANALOG_INPUTS   6 
+#define NUM_ANALOG_INPUTS   6
 #define NUM_PWM             6
-#define NUM_LEDS            0
+#define NUM_LEDS            3
 #define NUM_INTERRUPT       2
 #define NUM_SERIAL          1
 #define NUM_TONE_PINS       16
@@ -118,7 +117,7 @@ const XMC_PORT_PIN_t mapping_port_pin[] =
     /* 0  */    {XMC_GPIO_PORT3, 14},   // RX                           P3.14 (also DEBUG_RX)
     /* 1  */    {XMC_GPIO_PORT3, 15},   // TX                           P3.15 (also DEBUG_TX)
     /* 2  */    {XMC_GPIO_PORT0, 4},    // GPIO / External INT 2        P0.4
-    /* 3  */    {XMC_GPIO_PORT4, 6},    // PWM43-0 output / Ext INT 1   P4.6
+	/* 3  */    {XMC_GPIO_PORT4, 6},    // PWM43-0 output / Ext INT 1   P4.6
     /* 4  */    {XMC_GPIO_PORT2, 7},    // GPIO                         P2.7
     /* 5  */    {XMC_GPIO_PORT7, 6},    // PWM42-2 output               P7.6
     /* 6  */    {XMC_GPIO_PORT3, 10},   // PWM41-0 output               P3.10
@@ -147,7 +146,8 @@ const XMC_PORT_PIN_t mapping_port_pin[] =
     /* 29 */    {XMC_GPIO_PORT3, 6},    // SPI-SCK  (SD CARD)           P3.6
     /* 30  */   {XMC_GPIO_PORT1, 6},    // SD DATA 1                    P1.6
     /* 31  */   {XMC_GPIO_PORT1, 7},    // SD DATA 2                    P1.7
-    /* 32 */    {XMC_GPIO_PORT0, 3},    //  External INT 1 (Alt Pin 3)  P0.3
+
+	/* 32 */    {XMC_GPIO_PORT0, 3},    //  External INT 1 (Alt Pin 3)  P0.3
     /* 33 */    {XMC_GPIO_PORT0, 6},    //  PWM8 input2 (Alt Pin 5)     P0.6
     /* 34 */    {XMC_GPIO_PORT5, 0},    //  PWM8 input1 (Alt Pin 6)     P5.0
     /* 35 */    {XMC_GPIO_PORT9, 7},    //  SPI-CS3 (Alt Pin 7)         P9.7
@@ -232,6 +232,35 @@ XMC_UART_t XMC_UART_0 =
 
 HardwareSerial Serial( &XMC_UART_0, &rx_buffer_0, &tx_buffer_0 );
 
+// Serial Interrupt and event handling
+#ifdef __cplusplus
+extern "C" {
 #endif
+void serialEventRun( );
+void serialEvent( ) __attribute__((weak));
 
+
+void serialEventRun( )
+{
+if( serialEvent )
+  {
+  if( Serial.available( ) )
+    serialEvent( );
+  }
+}
+
+
+void USIC0_0_IRQHandler( )
+{
+Serial.IrqHandler( );
+}
+#ifdef __cplusplus
+}
 #endif
+#endif  /* ARDUINO_MAIN */
+
+#ifdef __cplusplus
+extern HardwareSerial Serial;
+#endif  /* cplusplus */
+
+#endif  /* PINS_ARDUINO_H_ */
