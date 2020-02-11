@@ -88,10 +88,12 @@ extern uint8_t SCK;
 #define SO 		PIN_SPI_MISO
 #define SI 		PIN_SPI_MOSI
 //#define SCK 	PIN_SPI_SCK
-#define CSN 	PIN_SPI_SS
-#define DIR		6
-#define DIS		10
-#define PWM 	11
+
+// Following for DOCUMENTATION only
+//#define CSN 	PIN_SPI_SS
+//#define DIR		6
+//#define DIS		10
+//#define PWM 	11
 
 #define digitalPinToInterrupt(p)    (((p) == 9) ? 0 : NOT_AN_INTERRUPT)
 
@@ -119,8 +121,8 @@ const XMC_PORT_PIN_t mapping_port_pin[] =
     /* 9  */    {XMC_GPIO_PORT0 , 0},   // External interrupt               P0.0
     /* 10  */   {XMC_GPIO_PORT2 , 11},  // DIS  (Fixed on PCB)              P2.11
     /* 11  */   {XMC_GPIO_PORT2 , 10},  // PWM / PWM1 output (Fixed on PCB) P2.10
-    /* 12  */   {XMC_GPIO_PORT2 , 9},   // A0 / ADC Input                   P2.9 (INPUT ONLY)
-    /* 13  */   {XMC_GPIO_PORT2 , 7},   // A1 / ADC Input                   P2.7 (INPUT ONLY)
+    /* 12  */   {XMC_GPIO_PORT2 , 9},   // A1 / ADC Input                   P2.9 (INPUT ONLY)
+    /* 13  */   {XMC_GPIO_PORT2 , 7},   // A0 / ADC Input                   P2.7 (INPUT ONLY)
     /* 14  */   {XMC_GPIO_PORT1 , 1},   // LED1 output                      P1.1
     /* 15  */   {XMC_GPIO_PORT1 , 0},   // LED2 output                      P1.0
     /* 16  */   {XMC_GPIO_PORT2 , 1},   // DEBUG_TX                         P2.1
@@ -140,8 +142,8 @@ XMC_PWM4_t mapping_pwm4[] =
 
 XMC_ADC_t mapping_adc[] =
 {
-    {VADC, 2, DISABLED},
-    {VADC, 1, DISABLED}
+    {VADC, 1, DISABLED},
+    {VADC, 2, DISABLED}
 };
 
 /*

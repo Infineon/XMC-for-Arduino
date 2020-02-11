@@ -6,8 +6,8 @@
  * DC motors and inductive loads.
  *
  * Have a look at the application note/datasheet for more information.
- *
- * Copyright (c) 2018 Infineon Technologies AG
+ */
+/* Copyright (c) 2018 Infineon Technologies AG
  *
  * Redistribution and use in source and binary forms, with or without modification,are permitted provided that the
  * following conditions are met:
@@ -29,7 +29,6 @@
  * WHETHER IN CONTRACT, STRICT LIABILITY,OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-
 /*!	\file IFX9201.cpp
  *	\brief This file defines functions and predefined instances from IFX9201.h
  */
@@ -38,11 +37,9 @@
     Improve duty cycle conversion to work with any analogWriteResolution
        (requires Pull request #106 merged for getAnalogWriteMaximum)
     Try to make code more readable
-    Correct Disable Pin polarity for correct operation
-*/
-#include "Arduino.h"
+    Correct Disable Pin polarity for correct operation */
+#include <Arduino.h>
 #include "IFX9201.h"
-
 
 // Instantiate
 IFX9201::IFX9201( )
