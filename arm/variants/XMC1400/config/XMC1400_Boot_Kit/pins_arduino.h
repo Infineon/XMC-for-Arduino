@@ -52,7 +52,7 @@
 
 #define PWM4_TIMER_PERIOD (2041U)  // Generate 490Hz @fCCU=1MHz
 
-#define PCLK 48000000u 
+#define PCLK 96000000u 
  
 #define PIN_SPI_SS    10
 #define PIN_SPI_MOSI  11
