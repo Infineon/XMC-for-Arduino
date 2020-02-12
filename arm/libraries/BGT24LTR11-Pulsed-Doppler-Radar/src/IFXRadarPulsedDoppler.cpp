@@ -2,7 +2,9 @@
 
 IFXRadarPulsedDoppler::IFXRadarPulsedDoppler()
 {
-
+	this->result_handler_registered = false;
+	this->error_handler_registered = false;
+	this->outDev = NULL;
 }
 
 uint8_t IFXRadarPulsedDoppler::setMinSpeed(float speedMs)
@@ -151,12 +153,11 @@ void IFXRadarPulsedDoppler::initHW(void)
   if (status)
   {
 	/* Placeholder for error handler code. The while loop below can be replaced with an user error handler. */
-	Serial.println("Low level HW initialization failed\n");
-    while (1U);
-  }
-  else
-  {
-	Serial.println("HW init success");
+	if( this->outDev != NULL)
+		this->outDev->println("Low level HW initialization failed\n");
+	
+    while (1U)
+		;
   }
 }
 
@@ -165,45 +166,23 @@ void IFXRadarPulsedDoppler::begin(void) // trigger algo_process() and init()
   radar_ard_init();
   if (radar_ard_is_initalized())
   {
-	  /* the follow code, shows how to get and set all the possible parameters of the solution */
-	  /* variables are declared as volatile, to easy debugging, in real project that is not required! */
-
-	  volatile float motion_sensitivity = radar_ard_get_motion_sensitivity();
-	  volatile float doppler_sensitivity = radar_ard_get_doppler_sensitivity();
-	  volatile float min_speed_kmph = radar_ard_get_min_speed_kmph();
-	  volatile float max_speed_kmph = radar_ard_get_max_speed_kmph();
-	  volatile uint32_t adc_sampling_freq_Hz = radar_ard_get_adc_sampling_freq_hz();
-	  volatile uint32_t frame_period_usec = radar_ard_get_frame_period_usec();
-	  volatile uint32_t num_skip_samples = radar_ard_get_num_skip_samples();
-	  volatile uint32_t num_samples = radar_ard_get_num_samples();
-	  volatile uint32_t pulse_width_usec = radar_ard_get_pulse_width_usec();
-	  volatile uint32_t min_frame_period_usec = radar_ard_get_min_frame_period_usec();
-	  volatile float current_consumsumption_mA = radar_ard_get_current_consumption_mA();
-
-	  volatile uint8_t error = 0;
-
-	  error |= radar_ard_set_motion_sensitivity(motion_sensitivity + 1);
-	  error |= radar_ard_set_doppler_sensitivity(doppler_sensitivity + 1);
-	  error |= radar_ard_set_min_speed_kmph(min_speed_kmph + 1);
-	  error |= radar_ard_set_max_speed_kmph(max_speed_kmph);
-	  error |= radar_ard_set_adc_sampling_freq_Hz(adc_sampling_freq_Hz + 1);
-	  error |= radar_ard_set_frame_period_usec(frame_period_usec + 1);
-	  error |= radar_ard_set_num_skip_samples(num_skip_samples);
-	  error |= radar_ard_set_num_samples(128);  // other values the 64, 128, 256 will cause an error
-	  error |= radar_ard_set_pulse_width_usec(pulse_width_usec + 1);
-
-	  /* add here other settings that are different from default/stored settings */
-	  if (!error)
+	  uint8_t error = radar_ard_start();
+	  if (error > 0 && error_handler_registered == false)
 	  {
-		  /* start the radar acquisition and processing */
-		  Serial.println("Starting radar...");
-		  radar_ard_start();
+		  if( this->outDev != NULL) 
+		  {
+			  this->outDev->print("Error on Start occured (");
+			  this->outDev->print(error);
+			  this->outDev->println(")");
+		  }
+		  while(1)
+			  ;
 	  }
-	  else
-	  {
-		  Serial.println("Init Error occured!\n");
-
-	  }
+  }
+  else
+  {
+    if( this->outDev != NULL)
+		this->outDev->print("Error on Init occured!");
   }
 }
 
@@ -269,4 +248,67 @@ uint8_t IFXRadarPulsedDoppler::getDirection(void)
 	direction = 2;
   }
   return direction;
+}
+
+uint32_t IFXRadarPulsedDoppler::getFrameCount(void) 
+{
+	return radar_ard_get_frame_count( );
+}
+
+void IFXRadarPulsedDoppler::parameterDump( void ) 
+{
+	parameterDump(this->outDev);
+}
+
+void IFXRadarPulsedDoppler::parameterDump(Print *outDev) 
+{
+	
+	if( outDev == NULL)
+		return;
+	
+	outDev->print("Motion Sensitivity    : ");
+    outDev->print(radar_ard_get_motion_sensitivity());
+    outDev->println("");
+	
+	outDev->print("Doppler Sensitivity   : ");
+    outDev->print(radar_ard_get_doppler_sensitivity());
+    outDev->println("");
+	
+	outDev->print("minimum speed         : ");
+	outDev->print(radar_ard_get_min_speed_kmph());
+	outDev->println(" km/h");
+    
+	outDev->print("minimum speed         : ");
+	outDev->print(radar_ard_get_max_speed_kmph());
+	outDev->println(" km/h");
+	
+	outDev->print("minimum speed         : ");
+	outDev->print(radar_ard_get_adc_sampling_freq_hz());
+	outDev->println(" Hz");
+    
+	outDev->print("frame period          : ");
+	outDev->print(radar_ard_get_frame_period_usec());
+	outDev->println(" usec");
+    
+	outDev->print("number of skip samples: ");
+	outDev->print(radar_ard_get_num_skip_samples());
+	outDev->println("");
+	
+	outDev->print("number of used samples: ");
+	outDev->print(radar_ard_get_num_samples());
+	outDev->println("");
+	
+	outDev->print("pulse width           : ");
+	outDev->print(radar_ard_get_pulse_width_usec());
+	outDev->println(" usec");
+    
+	outDev->print("min frame period      : ");
+	outDev->print(radar_ard_get_min_frame_period_usec());
+	outDev->println(" usec");
+
+}
+
+void IFXRadarPulsedDoppler::setPrintDev(Print *outDev)
+{
+	this->outDev = outDev;
 }

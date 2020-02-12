@@ -6,6 +6,11 @@
 
 class IFXRadarPulsedDoppler
 {
+private: 
+	bool result_handler_registered;
+	bool error_handler_registered;
+	Print *outDev;
+	
 public:
 	IFXRadarPulsedDoppler();
 
@@ -46,6 +51,12 @@ public:
 	float getVelocity(void); // get speed value with sign
 	uint8_t getDirection(void); // returns 0:no direction, 1:departing, 2:approaching
 	float getSpeed(void); // get speed value without sign
+	uint32_t getFrameCount(void); // get frame count of result
+	
+	// debug functions
+	void parameterDump(Print *outDev);
+	void parameterDump();
+	void setPrintDev(Print *outDev);
 };
 
 #endif

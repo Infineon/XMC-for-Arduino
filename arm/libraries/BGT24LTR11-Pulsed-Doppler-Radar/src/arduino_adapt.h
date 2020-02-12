@@ -158,7 +158,7 @@ uint8_t radar_ard_is_initalized( void );
 
 void radar_ard_stop( void );
 
-void radar_ard_start( void );
+uint8_t radar_ard_start( void );
 
 uint32_t radar_ard_hw_init(void);
 
@@ -224,7 +224,7 @@ uint8_t radar_ard_is_target_approaching( void );
 
 uint8_t radar_ard_is_motion( void );
 
-
+uint32_t radar_ard_get_frame_count( void );
 
 /* --- End of File -------------------------------------------------------- */
 
