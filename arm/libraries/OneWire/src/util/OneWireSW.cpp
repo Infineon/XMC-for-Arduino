@@ -1,5 +1,5 @@
+#include <Arduino.h>
 #include "OneWireSW.h"
-
 
 #define IFX_ONEWIRE_MODE_OD		0xC0C0C0C0
 #define IFX_ONEWIRE_PINOUTPUT	*mPortModeReg |= mPinModeMask & IFX_ONEWIRE_MODE_OD

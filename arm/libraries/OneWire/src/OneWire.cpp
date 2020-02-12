@@ -1,5 +1,4 @@
-/*
-Copyright (c) 2007, Jim Studt  (original old version - many contributors since)
+/* Copyright (c) 2007, Jim Studt  (original old version - many contributors since)
 
 The latest version of this library may be found at:
   http://www.pjrc.com/teensy/td_libs_OneWire.html
@@ -30,8 +29,8 @@ please contact Paul (this is pretty much the only reason to use
 private email about OneWire).
 
 OneWire is now very mature code.  No changes other than adding
-definitions for newer hardware support are anticipated.
-
+definitions for newer hardware support are anticipated.*/
+/*
 Version 2.3:
   Unknown chip fallback mode, Roger Clark
   Teensy-LC compatibility, Paul Stoffregen
@@ -86,8 +85,8 @@ the 256-byte lookup table to be loaded in RAM.  Tested in arduino-0010
 Jim Studt's original library was modified by Josh Larios.
 
 Tom Pollard, pollard@alum.mit.edu, contributed around May 20, 2008
-
-Permission is hereby granted, free of charge, to any person obtaining
+*/
+/* Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
 "Software"), to deal in the Software without restriction, including
 without limitation the rights to use, copy, modify, merge, publish,
@@ -111,8 +110,8 @@ think much of that remains.  In any event that was..
     (copyleft) 2006 by Derek Yerger - Free to distribute freely.
 
 The CRC code was excerpted and inspired by the Dallas Semiconductor
-sample code bearing this copyright.
-//---------------------------------------------------------------------------
+sample code bearing this copyright. */
+/*---------------------------------------------------------------------------
 // Copyright (C) 2000 Dallas Semiconductor Corporation, All Rights Reserved.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -138,7 +137,7 @@ sample code bearing this copyright.
 // Branding Policy.
 //--------------------------------------------------------------------------
 */
-
+#include <Arduino.h>
 #include "OneWire.h"
 #include "util/OneWireConf.h"
 
@@ -239,9 +238,8 @@ void OneWire::depower()
 	mImplementation->depower();
 }
 
-#if ONEWIRE_SEARCH
 
-//
+#if ONEWIRE_SEARCH
 // You need to use this function to start a search again from the beginning.
 // You do not need to do it for the first search, though you could.
 //
@@ -258,7 +256,7 @@ void OneWire::target_search(uint8_t family_code)
 	mImplementation->target_search(family_code);
 }
 
-//
+
 // Perform a search. If this function returns a '1' then it has
 // enumerated the next device and you may retrieve the ROM from the
 // OneWire::address variable. If there are no devices, no further
@@ -278,15 +276,12 @@ uint8_t OneWire::search(uint8_t *newAddr, bool search_mode /* = true */)
 {
 	mImplementation->search(newAddr, search_mode);
 }
-
 #endif
 
 #if ONEWIRE_CRC
 // The 1-Wire CRC scheme is described in Maxim Application Note 27:
 // "Understanding and Using Cyclic Redundancy Checks with Maxim iButton Products"
 //
-
-
 uint8_t OneWire::crc8(const uint8_t *addr, uint8_t len)
 {
 	return onewire::OneWireImpl::crc8(addr, len);

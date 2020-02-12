@@ -1,7 +1,5 @@
 #ifndef IFXRadarPulsedDoppler_h
 #define IFXRadarPulsedDoppler_h
-
-#include <Arduino.h>
 #include "arduino_adapt.h"
 
 class IFXRadarPulsedDoppler
@@ -33,7 +31,7 @@ public:
  
 	// control functions
 	void initHW(void);
-    void registerResultCallback(void(*callBackPtr)); // register function to be called when algo process is done
+    void registerResultCallback(void(*callBackPtr)); // register function to be called when also process is done
     void registerErrorCallback(void(*callBackPtr)); // register function to be called in case of error
 	void begin(void);
 	void end(void); 

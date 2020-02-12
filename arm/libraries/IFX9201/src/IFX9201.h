@@ -1,13 +1,12 @@
-/**
- * IFX9201.h - Library for Arduino to control the IFX9201 H-Bridge.
+/** IFX9201.h - Library for Arduino to control the IFX9201 H-Bridge.
  *
  * The IFX9201 is a general purpose 6A H-Bridge for industrial applications, home appliance and building
  * automation, power tools battery management and medical applications, designed for the control of small
  * DC motors and inductive loads.
  *
  * Have a look at the application note/datasheet for more information.
- *
- * Copyright (c) 2018 Infineon Technologies AG
+ */
+/* Copyright (c) 2018 Infineon Technologies AG 
  *
  * Redistribution and use in source and binary forms, with or without modification,are permitted provided that the
  * following conditions are met:
@@ -29,15 +28,14 @@
  * WHETHER IN CONTRACT, STRICT LIABILITY,OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-
 /*!	\file IFX9201.h
  *	\brief This file has to be included in projects that use Infineon's DC Motor Control Shield with IFX9201
  */
 #ifndef IFX9201_H
 #define IFX9201_H
 
-#include "SPI.h"
-#include "./util/IFX9201_conf.h"
+#include <SPI.h>
+#include "util/IFX9201_conf.h"
 
 //!	\brief	Class that represents an IFX9201 H-bridge
 class IFX9201
@@ -48,7 +46,6 @@ class IFX9201
 			IFX9201Mode_PWM = 0x00u,
 			IFX9201Mode_SPI = 0x01u
 		}IFX9201Mode_t;
-
 
 		//! \brief Standard constructor with default pin assignment
 		IFX9201( );

@@ -26,13 +26,12 @@
  * WHETHER IN CONTRACT, STRICT LIABILITY,OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE 
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.   
  */
-
 /** @file I2S.cpp
  *  @brief The I2S library for XMC to process audio data input
  *	@author Yuxi Sun
  *  @author Manuel Hollfelder
  */
-
+#include <Arduino.h>
 #include "I2S.h"
 
 I2SClass::I2SClass()

@@ -12,10 +12,9 @@
 #ifndef RADAR_DATA_PROCESSOR_H
 #define RADAR_DATA_PROCESSOR_H
 
+#include <Arduino.h>
 #include "radars/BGT24LTR11.h"
 #include "FixedFFTAnalyzer.h"
-
-#define TWO_PI 6.28318530718
 
 /** Constant for convert Doppler frequency to speed. (10 km/h)/(444.4 Hz) = 0.0225 */
 #define RATIO_FREQ_TO_SPEED 0.0225
@@ -127,7 +126,7 @@ protected:
    * @brief Sampling task that runs every cycle time (defined in radar child classes)
    * 
    */
-  static void samplingTask(int, int16_t);
+  static int samplingTask(int, int16_t);
 
   void runAlgorithm(void);
 
@@ -135,7 +134,7 @@ protected:
    * @brief Task to execute algorithms on the sampled data, runs once after every sampling task is finished.
    * 
    */
-  static void algoTask(int, int16_t);
+  static int algoTask(int, int16_t);
 
   /**
    * @brief This algorithm works by comparing the phase shifts of I and Q data

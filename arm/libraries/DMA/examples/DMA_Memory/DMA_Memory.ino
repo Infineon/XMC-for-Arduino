@@ -44,7 +44,7 @@ void dma_interrupt(void) {
   {
     /* Error array are not equal */
     __BKPT(0);
-    Serial.print("An error happend \n");
+    Serial.print("An error happened \n");
   }
   Serial.print("We have copied to destination this data: ");
   for(int i=0; i<DATA_LENGTH; i++)

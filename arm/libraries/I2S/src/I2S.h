@@ -26,7 +26,6 @@
  * WHETHER IN CONTRACT, STRICT LIABILITY,OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE 
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.   
  */
-
 /**
  *  @page The I2S library for XMC
  *  @section introduction Introduction
@@ -59,13 +58,10 @@
  *  This signal controls the timing of data transmission. On the rising edge of the WA signal the right channel transmits and on the falling edge the left channel transmits.
  * 
  */
-
 #ifndef I2S_h
 #define I2S_h
 
 #if defined(XMC4700_Relax_Kit) || defined(XMC1100_XMC2GO) || defined(XMC1100_Boot_Kit)
-
-#include <Arduino.h>
 #include "utility/xmc_i2s_conf.h"
 
 typedef enum {

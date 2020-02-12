@@ -1,7 +1,7 @@
 /**
     @file: arduino_adapter.c
 
-    @brief: Adapter for arduino type applications
+    @brief: Adapter for Arduino type applications
 */
 
 /* ===========================================================================
@@ -224,12 +224,7 @@ uint8_t radar_ard_is_target_approaching( void );
 
 uint8_t radar_ard_is_motion( void );
 
-
-
-/* --- End of File -------------------------------------------------------- */
-
 /* --- Close open blocks -------------------------------------------------- */
-
 /* Disable C linkage for C++ files */
 #ifdef __cplusplus
 } /* extern "C" */

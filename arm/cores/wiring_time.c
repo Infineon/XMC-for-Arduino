@@ -85,7 +85,7 @@ Callback functions Contents
     Functions MUST be VERY SMALL as many tasks have to run in less than 1 ms as
     well as the main code.
 
-    Do NOT use blocking or slow callbacks that use AT LEAST the following Ardunio
+    Do NOT use blocking or slow callbacks that use AT LEAST the following Arduino
     functions
         delay           (this would become recursive)
         .print, .write, println on Serial or Liquid Crystal
