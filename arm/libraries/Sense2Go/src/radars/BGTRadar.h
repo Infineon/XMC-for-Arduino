@@ -1,7 +1,5 @@
-
 #ifndef BGT_RADAR_H
 #define BGT_RADAR_H
-#include <Arduino.h>
 
 /** Radar configuration. Default values should be defined by child classes of BGTRadar.*/
 typedef struct
@@ -43,5 +41,4 @@ class BGTRadar
 
 	int _samplingTime;
 };
-
 #endif

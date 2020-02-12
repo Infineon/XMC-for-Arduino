@@ -1,3 +1,4 @@
+#include <Arduino.h>
 #include "OneWireHW.h"
 
 // SPI frequency to transmit 1 byte per microsecond

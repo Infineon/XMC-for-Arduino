@@ -1,5 +1,5 @@
+#include <Arduino.h>
 #include "OneWireImpl.h"
-
 
 namespace onewire 
 {

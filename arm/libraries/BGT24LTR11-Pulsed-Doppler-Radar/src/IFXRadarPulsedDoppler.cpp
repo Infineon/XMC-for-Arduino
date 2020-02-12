@@ -1,3 +1,4 @@
+#include <Arduino.h>
 #include "IFXRadarPulsedDoppler.h"
 
 IFXRadarPulsedDoppler::IFXRadarPulsedDoppler()
