@@ -1,3 +1,5 @@
+#ifdef XMC4_SERIES
+
 /* Copyright (C) 2013 - Adam Green (https://github.com/adamgreen)
 
    Licensed under the Apache License, Version 2.0 (the "License");
@@ -57,3 +59,4 @@ __attribute__((naked)) void thumb2_memcpy(void* pDest, const void* pSource, size
 #endif
 
 #endif
+#endif /* UC_FAMILY == XMC4 */

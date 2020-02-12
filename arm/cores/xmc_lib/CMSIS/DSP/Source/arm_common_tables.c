@@ -1,3 +1,5 @@
+#ifdef ARM_LIB_CMSIS_DSP
+
 /* ----------------------------------------------------------------------
  * Project:      CMSIS DSP Library
  * Title:        arm_common_tables.c
@@ -22174,3 +22176,5 @@ const q15_t sinTable_q15[FAST_MATH_TABLE_SIZE + 1] = {
 	-5998, -5602, -5205, -4808, -4410, -4011, -3612, -3212, -2811, -2411,
 	-2009, -1608, -1206, -804, -402, 0
 };
+
+#endif /* ARM_LIB_CMSIS_DSP */

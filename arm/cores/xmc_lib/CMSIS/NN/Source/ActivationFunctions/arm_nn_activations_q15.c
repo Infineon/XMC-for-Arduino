@@ -1,3 +1,5 @@
+#ifdef ARM_LIB_CMSIS_NN
+
 /*
  * Copyright (C) 2010-2018 Arm Limited or its affiliates. All rights reserved.
  *
@@ -99,3 +101,5 @@ void arm_nn_activations_direct_q15(q15_t * data, uint16_t size, uint16_t int_wid
 /**
  * @} end of Acti group
  */
+
+#endif /* ARM_LIB_CMSIS_NN */

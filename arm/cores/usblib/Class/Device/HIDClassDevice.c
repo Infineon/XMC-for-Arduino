@@ -1,3 +1,5 @@
+#ifdef XMC4_SERIES
+
 /*
              LUFA Library
      Copyright (C) Dean Camera, 2014.
@@ -211,3 +213,5 @@ void HID_Device_USBTask(USB_ClassInfo_HID_Device_t* const HIDInterfaceInfo, int8
 
 #endif
 #endif
+
+#endif /* UC_FAMILY == XMC4 */

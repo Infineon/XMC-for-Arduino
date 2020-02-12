@@ -1,5 +1,6 @@
 ####################################################
 menu.UART=Serial Output Selection
+menu.LIB=Additional Libraries
 
 ####################################################
 XMC1100_Boot_Kit.name=XMC1100 Boot Kit
@@ -29,11 +30,21 @@ XMC1100_Boot_Kit.build.variant=XMC1100
 XMC1100_Boot_Kit.build.board_variant=XMC1100_Boot_Kit
 XMC1100_Boot_Kit.build.flash_size=64K
 XMC1100_Boot_Kit.build.flash_ld=linker_script.ld
-XMC1100_Boot_Kit.build.extra_flags=-DARM_MATH_CM0
+XMC1100_Boot_Kit.build.extra_flags=-DARM_MATH_CM0 -DXMC1_SERIES
+
 XMC1100_Boot_Kit.menu.UART.debug=PC
-XMC1100_Boot_Kit.menu.UART.debug.flag.selected=SERIAL_HOSTPC
+XMC1100_Boot_Kit.menu.UART.debug.uart.selected=-DSERIAL_HOSTPC
 XMC1100_Boot_Kit.menu.UART.onBoard=On Board
-XMC1100_Boot_Kit.menu.UART.onBoard.flag.selected=SERIAL_ONBOARD
+XMC1100_Boot_Kit.menu.UART.onBoard.uart.selected=-DSERIAL_ONBOARD
+
+XMC1100_Boot_Kit.menu.LIB.NONE=None
+XMC1100_Boot_Kit.menu.LIB.NONE.library.selected=
+XMC1100_Boot_Kit.menu.LIB.NN=ARM NN Framework 
+XMC1100_Boot_Kit.menu.LIB.NN.library.selected=-DARM_LIB_CMSIS_NN
+XMC1100_Boot_Kit.menu.LIB.DSP=ARM DSP
+XMC1100_Boot_Kit.menu.LIB.DSP.library.selected=-DARM_LIB_CMSIS_DSP
+XMC1100_Boot_Kit.menu.LIB.DSPNN=ARM DSP / ARM NN Framework
+XMC1100_Boot_Kit.menu.LIB.DSPNN.library.selected=-DARM_LIB_CMSIS_DSP -DARM_LIB_CMSIS_NN
 
 ####################################################
 XMC1100_XMC2GO.name=XMC1100 XMC2Go
@@ -63,16 +74,21 @@ XMC1100_XMC2GO.build.variant=XMC1100
 XMC1100_XMC2GO.build.board_variant=XMC1100_XMC2GO
 XMC1100_XMC2GO.build.flash_size=64K
 XMC1100_XMC2GO.build.flash_ld=linker_script.ld
-XMC1100_XMC2GO.build.extra_flags=-DARM_MATH_CM0
-XMC1100_XMC2GO.menu.UART.debug=PC
-XMC1100_XMC2GO.menu.UART.debug.flag.selected=SERIAL_HOSTPC
-XMC1100_XMC2GO.menu.UART.onBoard=On Board
-XMC1100_XMC2GO.menu.UART.onBoard.flag.selected=SERIAL_ONBOARD
+XMC1100_XMC2GO.build.extra_flags=-DARM_MATH_CM0 -DXMC1_SERIES
 
 XMC1100_XMC2GO.menu.UART.debug=PC
-XMC1100_XMC2GO.menu.UART.debug.flag.selected=SERIAL_HOSTPC
+XMC1100_XMC2GO.menu.UART.debug.uart.selected=-DSERIAL_HOSTPC
 XMC1100_XMC2GO.menu.UART.onBoard=On Board
-XMC1100_XMC2GO.menu.UART.onBoard.flag.selected=SERIAL_ONBOARD
+XMC1100_XMC2GO.menu.UART.onBoard.uart.selected=-DSERIAL_ONBOARD
+
+XMC1100_XMC2GO.menu.LIB.NONE=None
+XMC1100_XMC2GO.menu.LIB.NONE.library.selected=
+XMC1100_XMC2GO.menu.LIB.NN=ARM NN Framework 
+XMC1100_XMC2GO.menu.LIB.NN.library.selected=-DARM_LIB_CMSIS_NN
+XMC1100_XMC2GO.menu.LIB.DSP=ARM DSP
+XMC1100_XMC2GO.menu.LIB.DSP.library.selected=-DARM_LIB_CMSIS_DSP
+XMC1100_XMC2GO.menu.LIB.DSPNN=ARM DSP / ARM NN Framework
+XMC1100_XMC2GO.menu.LIB.DSPNN.library.selected=-DARM_LIB_CMSIS_DSP -DARM_LIB_CMSIS_NN
 
 ####################################################
 XMC1100_H_BRIDGE2GO.name=XMC1100 H-Bridge 2Go
@@ -102,11 +118,21 @@ XMC1100_H_BRIDGE2GO.build.variant=XMC1100
 XMC1100_H_BRIDGE2GO.build.board_variant=XMC1100_H_BRIDGE2GO
 XMC1100_H_BRIDGE2GO.build.flash_size=64K
 XMC1100_H_BRIDGE2GO.build.flash_ld=linker_script.ld
-XMC1100_H_BRIDGE2GO.build.extra_flags=-DARM_MATH_CM0
+XMC1100_H_BRIDGE2GO.build.extra_flags=-DARM_MATH_CM0 -DXMC1_SERIES
+
 XMC1100_H_BRIDGE2GO.menu.UART.debug=PC
-XMC1100_H_BRIDGE2GO.menu.UART.debug.flag.selected=SERIAL_ONBOARD
+XMC1100_H_BRIDGE2GO.menu.UART.debug.uart.selected=-DSERIAL_ONBOARD
 XMC1100_H_BRIDGE2GO.menu.UART.onBoard=On Board
-XMC1100_H_BRIDGE2GO.menu.UART.onBoard.flag.selected=SERIAL_ONBOARD
+XMC1100_H_BRIDGE2GO.menu.UART.onBoard.uart.selected=-DSERIAL_ONBOARD
+
+XMC1100_H_BRIDGE2GO.menu.LIB.NONE=None
+XMC1100_H_BRIDGE2GO.menu.LIB.NONE.library.selected=
+XMC1100_H_BRIDGE2GO.menu.LIB.NN=ARM NN Framework 
+XMC1100_H_BRIDGE2GO.menu.LIB.NN.library.selected=-DARM_LIB_CMSIS_NN
+XMC1100_H_BRIDGE2GO.menu.LIB.DSP=ARM DSP
+XMC1100_H_BRIDGE2GO.menu.LIB.DSP.library.selected=-DARM_LIB_CMSIS_DSP
+XMC1100_H_BRIDGE2GO.menu.LIB.DSPNN=ARM DSP / ARM NN Framework
+XMC1100_H_BRIDGE2GO.menu.LIB.DSPNN.library.selected=-DARM_LIB_CMSIS_DSP -DARM_LIB_CMSIS_NN
 
 ####################################################
 XMC1300_Boot_Kit.name=XMC1300 Boot Kit
@@ -136,11 +162,21 @@ XMC1300_Boot_Kit.build.variant=XMC1300
 XMC1300_Boot_Kit.build.board_variant=XMC1300_Boot_Kit
 XMC1300_Boot_Kit.build.flash_size=64K
 XMC1300_Boot_Kit.build.flash_ld=linker_script.ld
-XMC1300_Boot_Kit.build.extra_flags=-DARM_MATH_CM0
+XMC1300_Boot_Kit.build.extra_flags=-DARM_MATH_CM0 -DXMC1_SERIES
+
 XMC1300_Boot_Kit.menu.UART.debug=PC
-XMC1300_Boot_Kit.menu.UART.debug.flag.selected=SERIAL_HOSTPC
+XMC1300_Boot_Kit.menu.UART.debug.uart.selected=-DSERIAL_HOSTPC
 XMC1300_Boot_Kit.menu.UART.onBoard=On Board
-XMC1300_Boot_Kit.menu.UART.onBoard.flag.selected=SERIAL_ONBOARD
+XMC1300_Boot_Kit.menu.UART.onBoard.uart.selected=-DSERIAL_ONBOARD
+
+XMC1300_Boot_Kit.menu.LIB.NONE=None
+XMC1300_Boot_Kit.menu.LIB.NONE.library.selected=
+XMC1300_Boot_Kit.menu.LIB.NN=ARM NN Framework 
+XMC1300_Boot_Kit.menu.LIB.NN.library.selected=-DARM_LIB_CMSIS_NN
+XMC1300_Boot_Kit.menu.LIB.DSP=ARM DSP
+XMC1300_Boot_Kit.menu.LIB.DSP.library.selected=-DARM_LIB_CMSIS_DSP
+XMC1300_Boot_Kit.menu.LIB.DSPNN=ARM DSP / ARM NN Framework
+XMC1300_Boot_Kit.menu.LIB.DSPNN.library.selected=-DARM_LIB_CMSIS_DSP -DARM_LIB_CMSIS_NN
 
 ###################################################
 XMC1300_Sense2GoL.name=XMC1300 Sense2GoL
@@ -170,7 +206,16 @@ XMC1300_Sense2GoL.build.variant=XMC1300
 XMC1300_Sense2GoL.build.board_variant=XMC1300_Sense2GoL
 XMC1300_Sense2GoL.build.flash_size=64K
 XMC1300_Sense2GoL.build.flash_ld=linker_script.ld
-XMC1300_Sense2GoL.build.extra_flags=-DARM_MATH_CM0
+XMC1300_Sense2GoL.build.extra_flags=-DARM_MATH_CM0 -DXMC1_SERIES
+
+XMC1300_Sense2GoL.menu.LIB.DSPNN=ARM DSP / ARM NN Framework
+XMC1300_Sense2GoL.menu.LIB.DSPNN.library.selected=-DARM_LIB_CMSIS_DSP -DARM_LIB_CMSIS_NN
+XMC1300_Sense2GoL.menu.LIB.NONE=None
+XMC1300_Sense2GoL.menu.LIB.NONE.library.selected=
+XMC1300_Sense2GoL.menu.LIB.NN=ARM NN Framework 
+XMC1300_Sense2GoL.menu.LIB.NN.library.selected=-DARM_LIB_CMSIS_NN
+XMC1300_Sense2GoL.menu.LIB.DSP=ARM DSP
+XMC1300_Sense2GoL.menu.LIB.DSP.library.selected=-DARM_LIB_CMSIS_DSP
 
 ####################################################
 #XMC1400_Boot_Kit.name=XMC1400 Boot Kit
@@ -200,11 +245,21 @@ XMC1300_Sense2GoL.build.extra_flags=-DARM_MATH_CM0
 #XMC1400_Boot_Kit.build.board_variant=XMC1400_Boot_Kit
 #XMC1400_Boot_Kit.build.flash_size=200K
 #XMC1400_Boot_Kit.build.flash_ld=linker_script.ld
-#XMC1400_Boot_Kit.build.extra_flags=-DARM_MATH_CM0
+#XMC1400_Boot_Kit.build.extra_flags=-DARM_MATH_CM0 -DXMC1_SERIES
+
 #XMC1400_Boot_Kit.menu.UART.debug=PC
-#XMC1400_Boot_Kit.menu.UART.debug.flag.selected=SERIAL_HOSTPC
+#XMC1400_Boot_Kit.menu.UART.debug.uart.selected=-DSERIAL_HOSTPC
 #XMC1400_Boot_Kit.menu.UART.onBoard=On Board
-#XMC1400_Boot_Kit.menu.UART.onBoard.flag.selected=SERIAL_ONBOARD
+#XMC1400_Boot_Kit.menu.UART.onBoard.uart.selected=-DSERIAL_ONBOARD
+
+#XMC1400_Boot_Kit.menu.LIB.NONE=None
+#XMC1400_Boot_Kit.menu.LIB.NONE.library.selected=
+#XMC1400_Boot_Kit.menu.LIB.NN=ARM NN Framework 
+#XMC1400_Boot_Kit.menu.LIB.NN.library.selected=-DARM_LIB_CMSIS_NN
+#XMC1400_Boot_Kit.menu.LIB.DSP=ARM DSP
+#XMC1400_Boot_Kit.menu.LIB.DSP.library.selected=-DARM_LIB_CMSIS_DSP
+#XMC1400_Boot_Kit.menu.LIB.DSPNN=ARM DSP / ARM NN Framework
+#XMC1400_Boot_Kit.menu.LIB.DSPNN.library.selected=-DARM_LIB_CMSIS_DSP -DARM_LIB_CMSIS_NN
 
 ####################################################
 XMC4700_Radar_Baseboard.name=DEMO Radar BB XMC4700
@@ -234,7 +289,16 @@ XMC4700_Radar_Baseboard.build.variant=XMC4700
 XMC4700_Radar_Baseboard.build.board_variant=XMC4700_Radar_Baseboard
 XMC4700_Radar_Baseboard.build.flash_size=2000K
 XMC4700_Radar_Baseboard.build.flash_ld=linker_script.ld
-XMC4700_Radar_Baseboard.build.extra_flags=-DARM_MATH_CM4 -DARM_MATH_DSP -DUSB0 -DINTERRUPT_USE_ERU -DSERIAL_USE_U1C1
+XMC4700_Radar_Baseboard.build.extra_flags=-DARM_MATH_CM4 -DINTERRUPT_USE_ERU -DSERIAL_USE_U1C1 -DXMC4_SERIES
+
+XMC4700_Radar_Baseboard.menu.LIB.DSPNN=ARM DSP / ARM NN Framework
+XMC4700_Radar_Baseboard.menu.LIB.DSPNN.library.selected=-DARM_LIB_CMSIS_DSP -DARM_LIB_CMSIS_NN
+XMC4700_Radar_Baseboard.menu.LIB.NONE=None
+XMC4700_Radar_Baseboard.menu.LIB.NONE.library.selected=
+XMC4700_Radar_Baseboard.menu.LIB.NN=ARM NN Framework 
+XMC4700_Radar_Baseboard.menu.LIB.NN.library.selected=-DARM_LIB_CMSIS_NN
+XMC4700_Radar_Baseboard.menu.LIB.DSP=ARM DSP
+XMC4700_Radar_Baseboard.menu.LIB.DSP.library.selected=-DARM_LIB_CMSIS_DSP
 
 ####################################################
 XMC4700_Relax_Kit.name=XMC4700 Relax Kit
@@ -264,10 +328,16 @@ XMC4700_Relax_Kit.build.variant=XMC4700
 XMC4700_Relax_Kit.build.board_variant=XMC4700_Relax_Kit
 XMC4700_Relax_Kit.build.flash_size=2000K
 XMC4700_Relax_Kit.build.flash_ld=linker_script.ld
-# Old version causes redefinition errors
-#XMC4700_Relax_Kit.build.extra_flags=-DARM_MATH_CM4 -DARM_MATH_DSP -DUSB0
-# New Version Sep-2019 PC
-XMC4700_Relax_Kit.build.extra_flags=-DARM_MATH_CM4
+XMC4700_Relax_Kit.build.extra_flags=-DARM_MATH_CM4 -DXMC4_SERIES
+
+XMC4700_Relax_Kit.menu.LIB.DSPNN=ARM DSP / ARM NN Framework
+XMC4700_Relax_Kit.menu.LIB.DSPNN.library.selected=-DARM_LIB_CMSIS_DSP -DARM_LIB_CMSIS_NN
+XMC4700_Relax_Kit.menu.LIB.NONE=None
+XMC4700_Relax_Kit.menu.LIB.NONE.library.selected=
+XMC4700_Relax_Kit.menu.LIB.NN=ARM NN Framework 
+XMC4700_Relax_Kit.menu.LIB.NN.library.selected=-DARM_LIB_CMSIS_NN
+XMC4700_Relax_Kit.menu.LIB.DSP=ARM DSP
+XMC4700_Relax_Kit.menu.LIB.DSP.library.selected=-DARM_LIB_CMSIS_DSP
 
 ####################################################
 # Not up to date
@@ -299,3 +369,14 @@ XMC4700_Relax_Kit.build.extra_flags=-DARM_MATH_CM4
 #XMC4800_Relax_Kit.build.board_variant=XMC4800_Relax_Kit
 #XMC4800_Relax_Kit.build.flash_size=2000K
 #XMC4800_Relax_Kit.build.flash_ld=linker_script.ld
+#XMC4800_Relax_Kit.build.extra_flags=-DARM_MATH_CM4 -DXMC4_SERIES
+
+#XMC4800_Relax_Kit.menu.LIB.DSPNN=ARM DSP / ARM NN Framework
+#XMC4800_Relax_Kit.menu.LIB.DSPNN.library.selected=-DARM_LIB_CMSIS_DSP -DARM_LIB_CMSIS_NN
+#XMC4800_Relax_Kit.menu.LIB.NONE=None
+#XMC4800_Relax_Kit.menu.LIB.NONE.library.selected=
+#XMC4800_Relax_Kit.menu.LIB.NN=ARM NN Framework 
+#XMC4800_Relax_Kit.menu.LIB.NN.library.selected=-DARM_LIB_CMSIS_NN
+#XMC4800_Relax_Kit.menu.LIB.DSP=ARM DSP
+#XMC4800_Relax_Kit.menu.LIB.DSP.library.selected=-DARM_LIB_CMSIS_DSP
+

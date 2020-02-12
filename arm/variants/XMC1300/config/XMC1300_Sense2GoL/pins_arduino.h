@@ -22,7 +22,6 @@
   Copyright (c) 2018 Infineon Technologies AG
   This file has been modified for the XMC microcontroller series.
 */
-
 #ifndef PINS_ARDUINO_H_
 #define PINS_ARDUINO_H_
 
@@ -205,6 +204,36 @@ XMC_UART_t XMC_UART_0 =
 };	
 
 HardwareSerial Serial( &XMC_UART_0, &rx_buffer_0, &tx_buffer_0 );
-#endif
 
+// Serial Interrupt and event handling
+#ifdef __cplusplus
+extern "C" {
 #endif
+void serialEventRun( );
+void serialEvent( ) __attribute__((weak));
+
+
+void serialEventRun( )
+{
+if( serialEvent )
+  {
+  if( Serial.available( ) )
+    serialEvent( );
+  }
+}
+
+
+void USIC0_0_IRQHandler( )
+{
+Serial.IrqHandler( );
+}
+#ifdef __cplusplus
+}
+#endif
+#endif  /* ARDUINO_MAIN */
+
+#ifdef __cplusplus
+extern HardwareSerial Serial;
+#endif  /* cplusplus */
+
+#endif // PINS_ARDUINO_H_

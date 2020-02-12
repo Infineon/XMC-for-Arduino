@@ -135,7 +135,7 @@ extern "C" {
     extern uint16_t getAnalogReadMaximum( );
 
     /*
-     * \brief Get the maximum value for current resolution for analogRite. 
+     * \brief Get the maximum value for current resolution for analogWrite. 
      * \note Default is 255
      * \note Maximum is 65535
      *

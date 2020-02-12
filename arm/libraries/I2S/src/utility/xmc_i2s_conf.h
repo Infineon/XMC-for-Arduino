@@ -34,8 +34,6 @@ extern "C"
 {
 #endif
 
-#include "xmc_common.h"
-#include "xmc_gpio.h"
 #include "xmc_i2s.h"
 
 #define BUFFER_SIZE 512

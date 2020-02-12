@@ -1,3 +1,5 @@
+#ifdef ARM_LIB_CMSIS_DSP
+
 /* ----------------------------------------------------------------------
  * Project:      CMSIS DSP Library
  * Title:        arm_common_tables.h
@@ -119,3 +121,5 @@ extern const q31_t sinTable_q31[FAST_MATH_TABLE_SIZE + 1];
 extern const q15_t sinTable_q15[FAST_MATH_TABLE_SIZE + 1];
 
 #endif /*  ARM_COMMON_TABLES_H */
+
+#endif /* ARM_LIB_CMSIS_DSP */

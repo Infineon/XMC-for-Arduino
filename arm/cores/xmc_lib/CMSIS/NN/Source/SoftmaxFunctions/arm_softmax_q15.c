@@ -1,3 +1,5 @@
+#ifdef ARM_LIB_CMSIS_NN
+
 /*
  * Copyright (C) 2010-2018 Arm Limited or its affiliates. All rights reserved.
  *
@@ -106,3 +108,5 @@ void arm_softmax_q15(const q15_t * vec_in, const uint16_t dim_vec, q15_t * p_out
 /**
  * @} end of Softmax group
  */
+
+#endif /* ARM_LIB_CMSIS_NN */

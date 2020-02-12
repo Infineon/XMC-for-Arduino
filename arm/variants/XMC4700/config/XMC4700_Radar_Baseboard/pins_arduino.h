@@ -22,7 +22,6 @@
   Copyright (c) 2019 Infineon Technologies AG
   This file has been modified for the XMC microcontroller series.
 */
-
 #ifndef PINS_ARDUINO_H_
 #define PINS_ARDUINO_H_
 
@@ -40,10 +39,10 @@
 #define XMC_BOARD           DEMO Radar BB XMC4700
 /* On board LED is ON when digital output is 0, LOW, False, OFF */
 #define XMC_LED_ON          0
-
-#define NUM_ANALOG_INPUTS   6 // Pins that are allocated or free to be used as Analog input
-#define NUM_PWM             5
-#define NUM_LEDS            0
+// Pins that are allocated or free to be used as Analog input
+#define NUM_ANALOG_INPUTS   6
+#define NUM_PWM             6
+#define NUM_LEDS            3
 #define NUM_INTERRUPT       2
 #define NUM_SERIAL          1
 #define NUM_TONE_PINS       16
@@ -233,6 +232,35 @@ XMC_UART_t XMC_UART_0 =
 
 HardwareSerial Serial( &XMC_UART_0, &rx_buffer_0, &tx_buffer_0 );
 
+// Serial Interrupt and event handling
+#ifdef __cplusplus
+extern "C" {
 #endif
+void serialEventRun( );
+void serialEvent( ) __attribute__((weak));
 
+
+void serialEventRun( )
+{
+if( serialEvent )
+  {
+  if( Serial.available( ) )
+    serialEvent( );
+  }
+}
+
+
+void USIC0_0_IRQHandler( )
+{
+Serial.IrqHandler( );
+}
+#ifdef __cplusplus
+}
 #endif
+#endif  /* ARDUINO_MAIN */
+
+#ifdef __cplusplus
+extern HardwareSerial Serial;
+#endif  /* cplusplus */
+
+#endif  /* PINS_ARDUINO_H_ */

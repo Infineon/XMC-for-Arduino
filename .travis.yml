@@ -1,60 +1,84 @@
-language: python
-python:
-  - "2.7"
-sudo: required    
-env:
-    global:
-      - LIB_NAME=I2S
-      - LIB_PATH=./arm/libraries/I2S
-      - USR_NAME="Sun Yuxi (IFAG DES SDF FW)"
-      - USR_EMAIL="Yuxi.Sun@infineon.com"
-      - secure: eR/vXO8e4Se4Wgq4FeBSXOkHqZuZM5oygF6awDOr+xNBKhG3H7oVdJ2poNUqGvn2UbkhLQedB8P3rBQfOAb2YDccklCb4LhXU+gZ4dNoh+uVOhlZeVk1hnP4DHttFt1HBW5nbdNBMfNE4DQgF1D9NagwSt2nRrxWFZHD1uAvRyZvZ0RmBbclmb3TP/onIsdbdEhGX05Z9ztG7qtell+Rl/BrhVRzyshA2BSpX3qyDMUtL6DO1uSPLJhNsEAdnTaOQ0USEvdIbxeH8Wqi1ivK8nor3UdZ8jD/wME8YONgvl5aYOLDJCe17TOQDHLj2lMlwN43Xsxqyo/AFy4X6+8jQK792EA0y7hvNbwEwpinaCNtD1Rmjv8N362mrP9vYSJg17cs1RUtAtdp9K57r+yV7CxdJCjhipecJfkll+aMb2lV2+URfOVF7f3FXemuxBiyMxCYKKwJAdhLsuKCwmCMBEYXhgusq6GBBXfvwgn4F9o7hk9sUdIKovl4us5iLNv2/8rRRSP1AEaW8a1D2ADh6WVNg0SjqyNKvGhrv20jundVP76p35ucyVpTR3mLsziLiDDotwzGq3MVAkGEMBjQjsqHAW3riCNY+oJL3Niy/A8vNr4xJCUaPL0wTgug8XGb5QzXc2cGcp9zlUiFU1LNHMGoWkEFiAeu4Obi2fwV7wA=
-    matrix:
-      # defining this variable creates multiple jobs in Travis
-      # TODO keep these examples up-to-date with the ones in the core
-      #- PLATFORMIO_PROJECT_DIR=examples/arduino-blink
-      - PLATFORMIO_PROJECT_DIR=examples/arduino-wire/master_reader
-      - PLATFORMIO_PROJECT_DIR=examples/arduino-wire/master_writer
-      - PLATFORMIO_PROJECT_DIR=examples/arduino-wire/slave_receiver
-      - PLATFORMIO_PROJECT_DIR=examples/arduino-wire/slave_sender
-      # - PLATFORMIO_PROJECT_DIR=examples/device-control/DieTemperatureMeasurement
-      # - PLATFORMIO_PROJECT_DIR=examples/device-control/HeapMemoryMeasurement
-      # - PLATFORMIO_PROJECT_DIR=examples/device-control/SleepModeXMC1100
-      # - PLATFORMIO_PROJECT_DIR=examples/device-control/SleepModeXMC4700
-      # - PLATFORMIO_PROJECT_DIR=examples/device-control/StackMemoryMeasurement
-      # - PLATFORMIO_PROJECT_DIR=examples/ifx9201/MotorControl-PWM
-      # - PLATFORMIO_PROJECT_DIR=examples/ifx9201/MotorControl-SPI
-      # - PLATFORMIO_PROJECT_DIR=examples/rtc/AlarmRTC
-      # - PLATFORMIO_PROJECT_DIR=examples/rtc/HibernateRTCAlarm
-      # - PLATFORMIO_PROJECT_DIR=examples/rtc/SimpleRTC
-      # - PLATFORMIO_PROJECT_DIR=examples/spi/BarometricPressureSensor
-      # - PLATFORMIO_PROJECT_DIR=examples/spi/DigitalPotControl
-      # - PLATFORMIO_PROJECT_DIR=examples/ultrasonic/betterecho
-      # - PLATFORMIO_PROJECT_DIR=examples/ultrasonic/simple-echo
-      # - PLATFORMIO_PROJECT_DIR=examples/radar/doppler_speed
-install:
-  - zip -r /tmp/framework-arduinoxmc.zip ./arm  
-  - git clone https://github.com/Infineon/platformio-infineonxmc.git /tmp/builder
-  - cd /tmp/builder
-  - platform_json=$(<platform.json)
-  - rm platform.json
-  - jq '.packages."framework-arduinoxmc".version = "file:///tmp/framework-arduinoxmc.zip"' <<<"$platform_json" > platform.json
+language: bash
+os: linux
+dist: bionic
 
-  - pip install -U platformio
-  - platformio update
-  - platformio platform install -f file://. 
+git:
+  depth: 1
 
-script:
-  - platformio run -d $PLATFORMIO_PROJECT_DIR
+jobs:
+  include:
   
-after_success:
-    # only build once (after one job by checking id, however this does not work reliably)
-    - |
-      if [ $(($TRAVIS_JOB_ID - $TRAVIS_BUILD_ID)) -eq 1 ]; then
-        export REPO_NAME=${LIB_NAME#*/}
-        cd $LIB_PATH
-        git clone https://github.com/Infineon/InfineonDoxyGenerator.git
-        cd InfineonDoxyGenerator/docs
-        chmod +x publish_pdf.sh
-        ./publish_pdf.sh
-      fi  
+    - stage: develop
+      if: branch = develop
+      addons:
+        apt:
+          packages:
+          - libc6-i386
+      cache:
+        directories:
+        - /home/travis/.arduino15/
+        - $HOME/arduino-ci/
+
+      before_install:
+        - sudo mkdir -p /home/travis/arduino-ci/
+        - PATH=$PATH:$HOME/arduino-ci
+        - export PATH
+        - if ! [ "$(ls /home/travis/arduino-ci/arduino-cli)" ]; then sudo curl -fsSL https://raw.githubusercontent.com/arduino/arduino-cli/master/install.sh | BINDIR=/home/travis/arduino-ci sudo sh; fi;
+        - echo /home/travis/arduino-ci
+        - sudo /home/travis/arduino-ci/arduino-cli core update-index --additional-urls https://github.com/Infineon/Assets/releases/download/current/package_infineon_index.json;
+        - sudo /home/travis/arduino-ci/arduino-cli core install Infineon:arm --additional-urls https://github.com/Infineon/Assets/releases/download/current/package_infineon_index.json
+        - PACKAGE_PATH=$(ls /home/travis/.arduino15/packages/Infineon/hardware/arm/)
+        - sudo rm /home/travis/.arduino15/packages/Infineon/hardware/arm/* -rf
+        - sudo mkdir /home/travis/.arduino15/packages/Infineon/hardware/arm/${PACKAGE_PATH}
+        - sudo mv ./arm/* /home/travis/.arduino15/packages/Infineon/hardware/arm/${PACKAGE_PATH}
+      script:
+        - BOARDS=(XMC1100_Boot_Kit XMC1100_XMC2GO XMC1100_H_BRIDGE2GO XMC1300_Boot_Kit XMC1300_Sense2GoL XMC4700_Radar_Baseboard XMC4700_Relax_Kit)
+        - sudo /home/travis/arduino-ci/arduino-cli sketch new ci-build
+        - for BOARD in ${BOARDS[@]}; do sudo /home/travis/arduino-ci/arduino-cli compile --verbose --fqbn Infineon:arm:$BOARD ci-build; done
+        
+      notifications:
+        email:
+          on_success: change
+          on_failure: change
+        
+    - stage: master
+      if: branch = master
+      addons:
+        apt:
+          packages:
+          - libc6-i386
+      cache:
+        directories:
+        - /home/travis/.arduino15/
+        - $HOME/arduino-ci/
+
+      before_install:
+        - sudo mkdir -p /home/travis/arduino-ci/
+        - PATH=$PATH:$HOME/arduino-ci
+        - export PATH
+        - if ! [ "$(ls /home/travis/arduino-ci/arduino-cli)" ]; then sudo curl -fsSL https://raw.githubusercontent.com/arduino/arduino-cli/master/install.sh | BINDIR=/home/travis/arduino-ci sudo sh; fi;
+        - echo /home/travis/arduino-ci
+        - sudo /home/travis/arduino-ci/arduino-cli core update-index --additional-urls https://github.com/Infineon/Assets/releases/download/current/package_infineon_index.json;
+        - sudo /home/travis/arduino-ci/arduino-cli core install Infineon:arm --additional-urls https://github.com/Infineon/Assets/releases/download/current/package_infineon_index.json
+        - PACKAGE_PATH=$(ls /home/travis/.arduino15/packages/Infineon/hardware/arm/)
+        - echo ${PACKAGE_PATH}
+        - sudo rm /home/travis/.arduino15/packages/Infineon/hardware/arm/* -rf
+        - sudo mkdir /home/travis/.arduino15/packages/Infineon/hardware/arm/${PACKAGE_PATH}
+        - sudo mv ./arm/* /home/travis/.arduino15/packages/Infineon/hardware/arm/${PACKAGE_PATH}
+        - ls /home/travis/.arduino15/packages/Infineon/hardware/arm/${PACKAGE_PATH}
+      script:
+         - BOARDS=(XMC1100_Boot_Kit XMC1100_XMC2GO XMC1100_H_BRIDGE2GO XMC1300_Boot_Kit XMC1300_Sense2GoL XMC4700_Radar_Baseboard XMC4700_Relax_Kit)
+         - sudo /home/travis/arduino-ci/arduino-cli sketch new ci-build
+         - for BOARD in ${BOARDS[@]}; do sudo /home/travis/arduino-ci/arduino-cli compile --fqbn Infineon:arm:$BOARD ci-build; done
+
+         - EXCLUDED_LIBRARIES=(DMA DSP LED I2S USB RTC BGT24LTR11-Pulsed-Doppler-Radar Radar)
+         - echo "Libraries which are excluded for the following build:"
+         - echo ${EXCLUDED_LIBRARIES[@]}
+         - OPTIONS=()
+         - for EXLIB in ${EXCLUDED_LIBRARIES[@]}; do OPTIONS=("${OPTIONS[@]}" '-not' '-path' '/home/travis/.arduino15/packages/Infineon/hardware/arm/*/libraries/'${EXLIB}'/*'); done
+         - for BOARD in ${BOARDS[@]}; do for d in $(find /home/travis/.arduino15/packages/Infineon/hardware/arm/*/libraries/* -name '*.ino' "${OPTIONS[@]}" -printf '%h\n'  | sort -u); do sudo /home/travis/arduino-ci/arduino-cli compile --verbose --fqbn Infineon:arm:$BOARD $d; done; done
+         
+      notifications:
+        email:
+          on_success: change
+          on_failure: change

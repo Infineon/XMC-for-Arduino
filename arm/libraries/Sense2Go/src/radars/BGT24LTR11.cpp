@@ -1,4 +1,4 @@
-
+#include <Arduino.h>
 #include "BGT24LTR11.h"
 
 BGT_RADAR_CONFIG_t BGT24LTR11::default_config = {fft_size : SENSE2GO_BUFFER_SIZE,

@@ -22,7 +22,6 @@
   Copyright (c) 2018 Infineon Technologies AG
   This file has been modified for the XMC microcontroller series.
 */
-
 #ifndef PINS_ARDUINO_H_
 #define PINS_ARDUINO_H_
 
@@ -39,7 +38,7 @@
 // to avoid issues with other defined macros e.g. XMC1100
 #define XMC_BOARD           XMC 4700 Relax Kit
 /* On board LED is ON when digital output is 0, LOW, False, OFF */
-#define  XMC_LED_ON         0
+#define XMC_LED_ON          0
 
 #define NUM_ANALOG_INPUTS   22
 #define NUM_PWM             23
@@ -400,6 +399,48 @@ HardwareSerial Serial( &XMC_UART_0, &rx_buffer_0, &tx_buffer_0 );
 // On-board port
 HardwareSerial Serial1( &XMC_UART_1, &rx_buffer_1, &tx_buffer_1 );
 
+// Serial Interrupt and event handling
+#ifdef __cplusplus
+extern "C" {
 #endif
+void serialEventRun( );
+void serialEvent( ) __attribute__((weak));
+void serialEvent1( ) __attribute__((weak));
 
+
+void serialEventRun( )
+{
+if( serialEvent )
+  {
+  if( Serial.available( ) )
+    serialEvent( );
+  }
+if( serialEvent1 )
+  {
+  if( Serial1.available( ) )
+    serialEvent1( );
+  }
+}
+
+
+void USIC0_0_IRQHandler( )
+{
+Serial.IrqHandler( );
+}
+
+
+void USIC1_0_IRQHandler( )
+{
+Serial1.IrqHandler( );
+}
+#ifdef __cplusplus
+}
 #endif
+#endif  /* ARDUINO_MAIN */
+
+#ifdef __cplusplus
+extern HardwareSerial Serial;
+extern HardwareSerial Serial1;
+#endif  /* cplusplus */
+
+#endif  /* PINS_ARDUINO_H_ */

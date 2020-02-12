@@ -1,4 +1,4 @@
-
+#include <Arduino.h>
 #include "BGTRadar.h"
 
 BGTRadar::BGTRadar()

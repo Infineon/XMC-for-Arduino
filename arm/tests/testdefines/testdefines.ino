@@ -1,6 +1,8 @@
-#include <Arduino.h>
-
-// Linker symbols to get falsh/RAM usage
+/* Example of how to access XMC defines and use for debug
+ *  
+ *  Updated 8-Feb-2020 Paul Carpenter
+ */
+// Linker symbols to get flash/RAM usage
 #if( UC_FAMILY == XMC1 )
 extern char VeneerStart, VeneerEnd, eROData;
 #endif
@@ -14,7 +16,7 @@ extern char sText, __initial_sp, __stack_start, __data_start, __data_end;
 
 uint32_t temp, code_size;
 
-void setup()
+void setup( )
 {
 delay( 60 );
 Serial.begin( 115200, SERIAL_8N1 );
@@ -107,6 +109,6 @@ Serial.println( temp );
 }
 
 
-void loop()
+void loop( )
 {
 }
