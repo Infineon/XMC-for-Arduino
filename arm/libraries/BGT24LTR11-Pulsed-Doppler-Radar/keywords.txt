@@ -44,6 +44,7 @@ getDopplerFreqHz	KEYWORD2
 getVelocity			KEYWORD2
 getDirection			KEYWORD2
 getSpeed			KEYWORD2
+getFrameCount			KEYWORD2
 
 #######################################
 # Constants (LITERAL1)

@@ -262,7 +262,7 @@ XMC1300_Sense2GoL.menu.LIB.DSP.library.selected=-DARM_LIB_CMSIS_DSP
 #XMC1400_Boot_Kit.menu.LIB.DSPNN.library.selected=-DARM_LIB_CMSIS_DSP -DARM_LIB_CMSIS_NN
 
 ####################################################
-XMC4700_Radar_Baseboard.name=DEMO Radar BB XMC4700
+XMC4700_Radar_Baseboard.name=XMC4700 Radar Baseboard
 XMC4700_Radar_Baseboard.upload.tool=xmcprog
 XMC4700_Radar_Baseboard.upload.speed=115200
 XMC4700_Radar_Baseboard.upload.resetmethod=ck
