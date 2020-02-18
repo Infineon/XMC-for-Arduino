@@ -32,8 +32,6 @@
 #define str(x)  Serial.println( #x )
 // print value of constant as string
 #define str1(x) str(x)
-// print constant name as string
-#define str2(x) Serial.print( #x )
 
 // IFX9201 Object
 IFX9201 IFX9201_HBridge = IFX9201( );
@@ -74,9 +72,9 @@ switch( err )
     default:    Serial.print( "Unknown error code of - " );
                 Serial.println( err );
     }
-#ifdef XMC_BOARD_NAME
+#ifdef XMC_BOARD
 Serial.print( "Running on - " );
-str1( XMC_BOARD_NAME );
+str1( XMC_BOARD );
 #endif
 }
 

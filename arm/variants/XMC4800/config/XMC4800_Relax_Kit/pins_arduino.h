@@ -53,7 +53,7 @@ Boston, MA  02111-1307  USA
 #define PWM4_TIMER_PERIOD (0x11EF)  // Generate 490Hz @fCCU=144MHz
 #define PWM8_TIMER_PERIOD (0x11EF)  // Generate 490Hz @fCCU=144MHz
 
-#define PCLK 64000000u 
+#define PCLK 144000000u 
  
 #define PIN_SPI_SS    10
 #define PIN_SPI_MOSI  11
