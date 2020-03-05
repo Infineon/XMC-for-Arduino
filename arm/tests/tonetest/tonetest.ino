@@ -6,7 +6,7 @@
    The main ones it tests are as many pins to have tones on as possible
    by toggling on-board LEDs at different frequencies and using the delay (in ms)
    function that is also used by the same timed task scheduler. Uses as many LEDs
-   as possible within th constraints of that board (unless used for RX and TX signals)
+   as possible within the constraints of that board (unless used for RX and TX signals)
 
    Assumes board has at LEAST TWO LEDs compiler error for NO LEDs or TONE PINS
    available
@@ -14,10 +14,11 @@
    Main uses for timed task scheduling at 1 ms resolution are
         delay()     function to wait for ms time interval
         tone()      setup burst or continuous tone on a GPIO pin
-        BGT24LTR11_CYCLE_TIMER_IRQHandler  scheduled task for radar sampling
+        BGT24LTR11_CYCLE_TIMER_IRQ  Handler  scheduled task for radar sampling
 
  Author: Paul Carpenter, PC Services
  Version 2      Update for more XMC_BOARD types and more LEDs used
+ Version 3      Updated to bring in line with correct XMC_BOARD usage as per PR
  */
 
 #include <Arduino.h>
@@ -70,15 +71,11 @@ Serial.println(  "PC Services Tone Test V2" );
 tone( LED1, 1 );
 tone( LED2, 2, 20000 );
 
-#ifdef XMC_BOARD
-
-#if XMC_BOARD == XMC1100_Boot_Kit || XMC_BOARD == XMC1300_Boot_Kit
+#if defined( XMC1100_Boot_Kit ) || defined( XMC1300_Boot_Kit )
 tone( LED5, 4, 1000 );
 tone( LED6, 8, 6000 );
-#elif XMC_BOARD == XMC1300_Sense2GoL
+#elif defined( XMC1300_Sense2GoL )
 tone( LED3, 4, 1000 );
-#endif
-
 #endif
 
 printstats();

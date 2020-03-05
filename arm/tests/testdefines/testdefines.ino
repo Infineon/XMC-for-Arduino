@@ -21,11 +21,11 @@ void setup( )
 delay( 60 );
 Serial.begin( 115200, SERIAL_8N1 );
 Serial.println( "PC Services - XMC-for-Arduino useful defines example" );
-#ifdef XMC_BOARD_NAME
+#ifdef XMC_BOARD
 Serial.read();
-str2( XMC_BOARD_NAME );
+str2( XMC_BOARD );
 Serial.write( '\t' );
-str1( XMC_BOARD_NAME );
+str1( XMC_BOARD );
 #endif
 Serial.print( "Family\t\t" );
 str1( UC_FAMILY );
