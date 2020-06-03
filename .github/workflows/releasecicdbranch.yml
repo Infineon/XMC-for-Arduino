@@ -1,0 +1,20 @@
+name: XMC release flow
+
+on:
+  release:
+    types: published
+
+jobs:
+  build:
+    name: Publish Release
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@cicd
+    - uses: actions/setup-python@v2
+      with:
+        python-version: '3.x'
+    - name: Build Release
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: bash ./.github/scripts/on-release.sh
