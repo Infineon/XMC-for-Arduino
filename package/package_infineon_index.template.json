@@ -22,15 +22,27 @@
                    "online":""
                 },
                 "boards":[
-                   {
-                      "name":" XMC1100 Boot Kit"
-                   },
-                   {
-                      "name":" XMC1100 XMC2Go"
-                   },
-                   {
-                      "name":" XMC4700 Relax Kit"
-                   }
+                  {
+                     "name":"XMC1100 Boot Kit"
+                  },
+                  {
+                     "name":"XMC1100 XMC2Go"
+                  },
+                  {
+                     "name":"XMC1100 H-Bridge 2Go"
+                  },
+                  {
+                     "name":"XMC1300 Boot Kit"
+                  },
+                  {
+                     "name":"XMC1300 Sense2GoL"
+                  },
+                  {
+                     "name":"XMC4700 Relax Kit"
+                  },
+				  {
+                     "name":"XMC4700 DEMO Radar BB"
+                  }
                 ],
                 "toolsDependencies":[
                    {
