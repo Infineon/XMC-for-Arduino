@@ -122,7 +122,7 @@ extern "C" {
         bool                            enabled         ;
     } XMC_PWM4_t;
 
-#if defined (CCU8V2) ||defined (CCU8V3)
+#if defined (CCU8V2) ||defined (CCU8V3) || defined(CCU8V1)
     /*
     * XMC PWM type (CCU8)
     */
@@ -195,7 +195,7 @@ extern "C" {
     extern const uint8_t mapping_pin_PWM4[][ 2 ];
     extern XMC_PWM4_t mapping_pwm4[];
     extern XMC_ADC_t mapping_adc[];
-#if defined (CCU8V2) || defined(CCU8V3)
+#if defined (CCU8V2) || defined(CCU8V3) || defined(CCU8V1)
     extern const uint8_t mapping_pin_PWM8[][ 2 ];
     extern XMC_PWM8_t mapping_pwm8[];
 #endif

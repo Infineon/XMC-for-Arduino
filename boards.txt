@@ -261,6 +261,48 @@ XMC1300_Sense2GoL.menu.LIB.DSP.library.selected=-DARM_LIB_CMSIS_DSP
 #XMC1400_Boot_Kit.menu.LIB.DSPNN=ARM DSP / ARM NN Framework
 #XMC1400_Boot_Kit.menu.LIB.DSPNN.library.selected=-DARM_LIB_CMSIS_DSP -DARM_LIB_CMSIS_NN
 
+
+####################################################
+XMC4400_Platform2GO.name=XMC4400 Platform 2GO
+XMC4400_Platform2GO.upload.tool=xmcprog
+XMC4400_Platform2GO.upload.speed=115200
+XMC4400_Platform2GO.upload.resetmethod=ck
+XMC4400_Platform2GO.upload.maximum_size=512000
+XMC4400_Platform2GO.upload.wait_for_upload_port=true
+   
+XMC4400_Platform2GO.communication=usb
+XMC4400_Platform2GO.protocol=dragon_isp
+XMC4400_Platform2GO.program.protocol=dragon_isp
+XMC4400_Platform2GO.program.tool=xmcprog
+XMC4400_Platform2GO.program.extra_params=-Pusb
+  
+XMC4400_Platform2GO.serial.disableDTR=true
+XMC4400_Platform2GO.serial.disableRTS=true
+   
+XMC4400_Platform2GO.build.mcu=cortex-m4
+XMC4400_Platform2GO.build.f_cpu=144000000L
+XMC4400_Platform2GO.build.board=ARM_XMC
+XMC4400_Platform2GO.build.board.version=4400
+XMC4400_Platform2GO.build.board.type=F100x512
+XMC4400_Platform2GO.build.board.v=512
+XMC4400_Platform2GO.build.core=./
+XMC4400_Platform2GO.build.variant=XMC4400
+XMC4400_Platform2GO.build.board_variant=XMC4400_Platform2GO
+XMC4400_Platform2GO.build.flash_size=500K
+XMC4400_Platform2GO.build.flash_ld=linker_script.ld
+XMC4400_Platform2GO.build.extra_flags=-DARM_MATH_CM4 -DARM_MATH_DSP 
+#-DUSB0
+
+
+XMC4400_Platform2GO.menu.LIB.DSPNN=ARM DSP / ARM NN Framework
+XMC4400_Platform2GO.menu.LIB.DSPNN.library.selected=-DARM_LIB_CMSIS_DSP -DARM_LIB_CMSIS_NN
+XMC4400_Platform2GO.menu.LIB.NONE=None
+XMC4400_Platform2GO.menu.LIB.NONE.library.selected=
+XMC4400_Platform2GO.menu.LIB.NN=ARM NN Framework 
+XMC4400_Platform2GO.menu.LIB.NN.library.selected=-DARM_LIB_CMSIS_NN
+XMC4400_Platform2GO.menu.LIB.DSP=ARM DSP
+XMC4400_Platform2GO.menu.LIB.DSP.library.selected=-DARM_LIB_CMSIS_DSP
+
 ####################################################
 XMC4700_Radar_Baseboard.name=DEMO Radar BB XMC4700
 XMC4700_Radar_Baseboard.upload.tool=xmcprog
