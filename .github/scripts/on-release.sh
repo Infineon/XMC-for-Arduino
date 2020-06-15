@@ -116,7 +116,7 @@ PACKAGE_ZIP="$PACKAGE_NAME.zip"
 
 # Copy all core files to the package folder
 echo "Copying files for packaging ..."
-cp -Rf "$GITHUB_WORKSPACE"           "$PKG_DIR/"
+# cp -Rf "$GITHUB_WORKSPACE/"           "$PKG_DIR/"
 
 
 # Remove unnecessary files in the package folder
