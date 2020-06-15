@@ -117,24 +117,22 @@ PACKAGE_ZIP="$PACKAGE_NAME.zip"
 
 # Copy all core files to the package folder
 echo "Copying files for packaging ..."
-cp -Rf "$GITHUB_WORKSPACE/"        "$PKG_DIR/"
-# cp -Rf "$GITHUB_WORKSPACE/cores"        "$PKG_DIR/"
-# cp -Rf "$GITHUB_WORKSPACE/libraries"    "$PKG_DIR/"
-# cp -Rf "$GITHUB_WORKSPACE/variants"     "$PKG_DIR/"
-# cp -Rf "$GITHUB_WORKSPACE/LICENSE.md"   "$PKG_DIR/"
-# cp -Rf "$GITHUB_WORKSPACE/README.md"    "$PKG_DIR/"
-# cp -Rf "$GITHUB_WORKSPACE/boards.txt"   "$PKG_DIR/"
-# cp -Rf "$GITHUB_WORKSPACE/keywords.txt" "$PKG_DIR/"
-# cp -Rf "$GITHUB_WORKSPACE/platform.txt" "$PKG_DIR/"
-# cp -Rf "$GITHUB_WORKSPACE/package.json" "$PKG_DIR/"
+mkdir -p "$PKG_DIR/cores" 
+cp -Rf "$GITHUB_WORKSPACE/cores/*"      "$PKG_DIR/cores"
+cp -Rf "$GITHUB_WORKSPACE/libraries"    "$PKG_DIR/"
+cp -Rf "$GITHUB_WORKSPACE/variants"     "$PKG_DIR/"
+cp -Rf "$GITHUB_WORKSPACE/LICENSE.md"   "$PKG_DIR/"
+cp -Rf "$GITHUB_WORKSPACE/README.md"    "$PKG_DIR/"
+cp -Rf "$GITHUB_WORKSPACE/boards.txt"   "$PKG_DIR/"
+cp -Rf "$GITHUB_WORKSPACE/keywords.txt" "$PKG_DIR/"
+cp -Rf "$GITHUB_WORKSPACE/platform.txt" "$PKG_DIR/"
+cp -Rf "$GITHUB_WORKSPACE/package.json" "$PKG_DIR/"
 
 
 # Remove unnecessary files in the package folder
 echo "Cleaning up folders ..."
 find "$PKG_DIR" -name '*.git*' -type f -delete
-find "$PKG_DIR" -name '*.*' -type f -delete
-find "$PKG_DIR" -type d -name "tests" -exec rm -rf {} +
-find "$PKG_DIR" -type d -name "package" -exec rm -rf {} +
+
 
 # Compress package folder
 echo "Creating ZIP ..."
