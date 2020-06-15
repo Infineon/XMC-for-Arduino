@@ -116,10 +116,8 @@ PACKAGE_ZIP="$PACKAGE_NAME.zip"
 
 
 # Copy all core files to the package folder
-echo "Copying files for packaging ..."
-mkdir -p "$PKG_DIR/temp" 
-cp -Rf  "$GITHUB_WORKSPACE/cores"       "$PKG_DIR/temp"
-mv  "$PKG_DIR/temp" "$PKG_DIR/cores"
+echo "Copying files for packaging ..." 
+cp -RTf  "$GITHUB_WORKSPACE/cores"      "$PKG_DIR/"
 cp -Rf "$GITHUB_WORKSPACE/libraries"    "$PKG_DIR/"
 cp -Rf "$GITHUB_WORKSPACE/variants"     "$PKG_DIR/"
 cp -Rf "$GITHUB_WORKSPACE/LICENSE.md"   "$PKG_DIR/"
