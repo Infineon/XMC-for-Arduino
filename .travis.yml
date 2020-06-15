@@ -8,8 +8,8 @@ git:
 jobs:
   include:
   
-    - stage: develop
-      if: branch = develop
+    - stage: xmc4400
+      if: branch = xmc4400
       addons:
         apt:
           packages:
