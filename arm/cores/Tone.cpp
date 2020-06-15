@@ -50,7 +50,7 @@ uint8_t tone_init = 0;
 
 static int8_t toneBegin( uint8_t _pin )
 {
-int8_t i = -1;
+int8_t i;
 
 // check all arrays initialised
 if( tone_init == 0 )
@@ -80,7 +80,7 @@ return ( i < NUM_TONE_PINS ) ? i : -1;
 }
 
 
-// frequency (in hertz) and duration (in milliseconds).
+// Frequency (in hertz) and duration (in milliseconds).
 // Max frequency usable = 500 Hz
 // Min frequency usable = 1 Hz
 // Duration default of 0 for permanently on
@@ -101,7 +101,7 @@ if( frequency > 0 && frequency <= 500 )
       timer_toggle_count[ _timer ] = 2 * frequency * duration/1000;
     else
       timer_toggle_count[ _timer ] = -1;        // Continuous
-    // Set int task parameters
+    // Set internal task parameters
     setParam( _timer, _timer );
     setInterval( _timer, (unsigned int)FREQUENCY_TO_MILLIS( frequency ) );
     startTask( _timer );
@@ -113,7 +113,7 @@ if( frequency > 0 && frequency <= 500 )
 // Stops tone at next 1ms Systick
 void noTone( uint8_t _pin )
 {
-int8_t i = -1;
+int8_t i;
 
 for( i = 0; i < NUM_TONE_PINS; i++ )
    if( tone_pins[ i ] == _pin )
