@@ -20,7 +20,8 @@ if [ $draft == "true" ]; then
 fi
 
 RELEASE_PRE=`echo $EVENT_JSON | jq -r '.release.prerelease'`
-RELEASE_TAG=`echo $EVENT_JSON | jq -r '.release.tag_name'`
+RELEASE_TAG_WITH_PREFIX=`echo $EVENT_JSON | jq -r '.release.tag_name'`
+RELEASE_TAG="${RELEASE_TAG_WITH_PREFIX:1}"
 RELEASE_BRANCH=`echo $EVENT_JSON | jq -r '.release.target_commitish'`
 RELEASE_ID=`echo $EVENT_JSON | jq -r '.release.id'`
 RELEASE_BODY=`echo $EVENT_JSON | jq -r '.release.body'`
@@ -116,7 +117,7 @@ PACKAGE_ZIP="$PACKAGE_NAME.zip"
 
 # Copy all core files to the package folder
 echo "Copying files for packaging ..."
-cp -Rf "$GITHUB_WORKSPACE/cores"        "$PKG_DIR/"
+cp -Rf "$GITHUB_WORKSPACE/cores"        "$PKG_DIR/cores"
 cp -Rf "$GITHUB_WORKSPACE/libraries"    "$PKG_DIR/"
 cp -Rf "$GITHUB_WORKSPACE/variants"     "$PKG_DIR/"
 cp -Rf "$GITHUB_WORKSPACE/LICENSE.md"   "$PKG_DIR/"
@@ -125,7 +126,6 @@ cp -Rf "$GITHUB_WORKSPACE/boards.txt"   "$PKG_DIR/"
 cp -Rf "$GITHUB_WORKSPACE/keywords.txt" "$PKG_DIR/"
 cp -Rf "$GITHUB_WORKSPACE/platform.txt" "$PKG_DIR/"
 cp -Rf "$GITHUB_WORKSPACE/package.json" "$PKG_DIR/"
-ls -la "$PKG_DIR/"
 
 
 # Remove unnecessary files in the package folder
