@@ -124,6 +124,8 @@ echo cp -Rf "$GITHUB_WORKSPACE/*.md"       "$PKG_DIR/"
 echo cp -Rf "$GITHUB_WORKSPACE/*.txt"      "$PKG_DIR/"
 echo cp -Rf "$GITHUB_WORKSPACE/*.json"     "$PKG_DIR/"
 
+echo ls -la "$PKG_DIR/"
+
 
 # Remove unnecessary files in the package folder
 echo "Cleaning up folders ..."
