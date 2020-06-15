@@ -119,6 +119,8 @@ PACKAGE_ZIP="$PACKAGE_NAME.zip"
 echo "Copying files for packaging ..."
 mkdir -p "$PKG_DIR/cores" 
 cp -Rf  "$GITHUB_WORKSPACE/cores"       "$PKG_DIR/cores"
+mv  "$PKG_DIR/cores" "$PKG_DIR/"
+rm  "$PKG_DIR/cores/cores" 
 cp -Rf "$GITHUB_WORKSPACE/libraries"    "$PKG_DIR/"
 cp -Rf "$GITHUB_WORKSPACE/variants"     "$PKG_DIR/"
 cp -Rf "$GITHUB_WORKSPACE/LICENSE.md"   "$PKG_DIR/"
@@ -220,7 +222,7 @@ echo "Preparing release notes ..."
 releaseNotes=""
 
 # Process annotated tags
-relNotesRaw=`git -C "$GITHUB_WORKSPACE" show -s --format=%b $RELEASE_TAG`
+relNotesRaw=`git -C "$GITHUB_WORKSPACE" show -s --format=%b $RELEASE_TAG_WITH_PREFIX`
 readarray -t msgArray <<<"$relNotesRaw"
 arrLen=${#msgArray[@]}
 if [ $arrLen > 3 ] && [ "${msgArray[0]:0:3}" == "tag" ]; then 
