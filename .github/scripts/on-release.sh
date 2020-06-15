@@ -118,7 +118,7 @@ PACKAGE_ZIP="$PACKAGE_NAME.zip"
 # Copy all core files to the package folder
 echo "Copying files for packaging ..." 
 mkdir -p "$PKG_DIR/cores/"
-mv   "$GITHUB_WORKSPACE/cores/arv"      "$PKG_DIR/cores"
+mv   "$GITHUB_WORKSPACE/cores/avr"      "$PKG_DIR/cores"
 mv   "$GITHUB_WORKSPACE/cores/usblib"   "$PKG_DIR/cores"
 mv   "$GITHUB_WORKSPACE/cores/xmc_lib"  "$PKG_DIR/cores"
 find "$GITHUB_WORKSPACE/cores" -type f -name "*" -exec cp {} "$PKG_DIR/cores" \;
