@@ -127,7 +127,7 @@ echo cp -Rf "$GITHUB_WORKSPACE/*.json"     "$PKG_DIR/"
 
 # Remove unnecessary files in the package folder
 echo "Cleaning up folders ..."
-find "$PKG_DIR" -name '*.git*' -type f -delete
+#find "$PKG_DIR" -name '*.git*' -type f -delete
 
 
 # Compress package folder
