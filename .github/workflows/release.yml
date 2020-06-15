@@ -1,4 +1,4 @@
-name: XMC release flow
+name: XMC-for-Arduino Release Automation
 
 on:
   release:
@@ -10,7 +10,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@xmc4400
+    - uses: actions/checkout@v2
+      with:
+        ref: xmc4400
     - uses: actions/setup-python@v1
       with:
         python-version: '3.x'
