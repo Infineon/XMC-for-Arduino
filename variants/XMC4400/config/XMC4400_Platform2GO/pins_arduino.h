@@ -316,21 +316,21 @@ RingBuffer tx_buffer_1;
 XMC_UART_t XMC_UART_0 =
   {
   .channel              = XMC_UART1_CH0,
-  .rx                   = { .port = (XMC_GPIO_PORT_t*)PORT1_BASE,
-                            .pin  = (uint8_t)15
+  .rx                   = { .port = (XMC_GPIO_PORT_t*)PORT0_BASE,
+                            .pin  = (uint8_t)5
                           },
   .rx_config            = { .mode = XMC_GPIO_MODE_INPUT_TRISTATE,
                             .output_level     = XMC_GPIO_OUTPUT_LEVEL_HIGH,
                             .output_strength  = XMC_GPIO_OUTPUT_STRENGTH_STRONG_SOFT_EDGE
                           },
-  .tx                   = { .port = (XMC_GPIO_PORT_t*)PORT0_BASE,
-                            .pin  = (uint8_t)5
+  .tx                   = { .port = (XMC_GPIO_PORT_t*)PORT1_BASE,
+                            .pin  = (uint8_t)15
                           },
   .tx_config            = { .mode = (XMC_GPIO_MODE_t) XMC_GPIO_MODE_OUTPUT_PUSH_PULL_ALT2,
                             .output_level     = XMC_GPIO_OUTPUT_LEVEL_HIGH,
                             .output_strength  = XMC_GPIO_OUTPUT_STRENGTH_STRONG_SOFT_EDGE
                           },
-  .input_source_dx0     = (XMC_USIC_INPUT_t)USIC1_C0_DX0_P2_15, // Is it the 2.15 ?? This is not defined for XMC4400 
+  .input_source_dx0     = (XMC_USIC_INPUT_t)USIC1_C0_DX0_P0_5,
   .input_source_dx1     = XMC_INPUT_INVALID,
   .input_source_dx2     = XMC_INPUT_INVALID,
   .input_source_dx3     = XMC_INPUT_INVALID,
@@ -359,7 +359,7 @@ XMC_UART_t XMC_UART_1 =
   .input_source_dx1     = XMC_INPUT_INVALID,
   .input_source_dx2     = XMC_INPUT_INVALID,
   .input_source_dx3     = XMC_INPUT_INVALID,
-  .irq_num              = USIC1_0_IRQn,
+  .irq_num              = USIC0_5_IRQn,
   .irq_service_request  = 0
    };
 
@@ -384,11 +384,13 @@ if( serialEvent )
   if( Serial.available( ) )
     serialEvent( );
   }
+#if (NUM_SERIAL > 1)
 if( serialEvent1 )
   {
   if( Serial1.available( ) )
     serialEvent1( );
   }
+#endif
 }
 
 
@@ -397,11 +399,18 @@ void USIC0_0_IRQHandler( )
 Serial.IrqHandler( );
 }
 
-
 void USIC1_0_IRQHandler( )
 {
 Serial1.IrqHandler( );
 }
+
+#if (NUM_SERIAL > 1)
+void USIC0_5_IRQHandler( void )
+{
+Serial1.IrqHandler();
+}
+#endif
+
 #ifdef __cplusplus
 }
 #endif  
@@ -412,4 +421,62 @@ extern HardwareSerial Serial;
 extern HardwareSerial Serial1;
 #endif  /* cplusplus */
 
+#endif
+
+
+
+/*************************************/
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+void serialEventRun( void )
+{
+if( serialEvent )
+  {
+  if( Serial.available() )
+    serialEvent();
+  }
+#if (NUM_SERIAL > 1)
+if( serialEvent1 )
+  {
+  if( Serial1.available() )
+    serialEvent1();
+  }
+#endif
+}
+
+void USIC0_0_IRQHandler( void )
+{
+Serial.IrqHandler();
+}
+
+#if defined(XMC4400_Platform2GO)
+void USIC1_0_IRQHandler( void )
+{
+Serial.IrqHandler();
+}
+#endif
+
+#if (NUM_SERIAL > 1)
+#if defined(XMC4400_Platform2GO)
+void USIC0_5_IRQHandler( void )
+{
+Serial1.IrqHandler();
+}
+
+#elif defined (XMC4700_Relax_Kit) || (XMC4800_Relax_Kit) 
+void USIC1_0_IRQHandler( void )
+{
+Serial1.IrqHandler();
+}
+#endif
+#endif
+
+#ifdef __cplusplus
+}
+#endif
+
+#ifdef __cplusplus
+}
 #endif

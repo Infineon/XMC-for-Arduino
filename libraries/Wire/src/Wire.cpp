@@ -764,7 +764,19 @@ extern "C" {
     }
 #endif
 
-#elif (UC_FAMILY == XMC4)
+#if defined(XMC4400_Platform2GO)
+    void USIC1_1_IRQHandler()
+    {
+        Wire.ReceiveHandler();
+    }
+
+    void USIC1_2_IRQHandler()
+    {
+        Wire.ProtocolHandler();
+    }
+#endif
+
+#elif defined(XMC4700_Relax_Kit)
     void USIC1_1_IRQHandler()
     {
         Wire.ReceiveHandler();
