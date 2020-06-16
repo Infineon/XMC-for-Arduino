@@ -51,7 +51,7 @@
                    {
                       "packager":"arduino",
                       "name":"arm-none-eabi-gcc",
-                      "version":"4.8.3-2014q1"
+                      "version":"5.4-2016q3"
                    },
                    {
                       "packager":"Infineon",
