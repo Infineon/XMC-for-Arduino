@@ -39,18 +39,18 @@
 #define XMC_BOARD		XMC 4400 Platform 2GO
 
 /* On board LED is ON when digital output is 0, LOW, False, OFF */
-#define XMC_LED_ON				0
+#define XMC_LED_ON				  0
 
 #define NUM_ANALOG_INPUTS		17
-#define NUM_PWM					17
-#define NUM_INTERRUPT			2
-#define NUM_SERIAL				2
-#define NUM_TONE_PINS			16
+#define NUM_PWM					    17
+#define NUM_INTERRUPT		  	2
+#define NUM_SERIAL				  1
+#define NUM_TONE_PINS			  16
 #define NUM_TASKS_VARIANT		32
 
 
 // Indicate unit has RTC/Alarm
-#define HAS_RTC					1
+#define HAS_RTC					    1
 
 //Serial ports
 
@@ -90,11 +90,11 @@ extern uint8_t SCK;
 #define A17	 17		// ADC G3CH1 on P15.9
 
 #define LED_BUILTIN 82	//Standard Arduino LED: Used LED1
-#define LED1		82	//Additional LED1
-#define LED2		77	//Additional LED2
-#define BUTTON1		87	//Additional BUTTON1
-#define BUTTON2		69	//Additional BUTTON2
-#define GND			94	//GND
+#define LED1		    82	//Additional LED1
+#define LED2		    77	//Additional LED2
+#define BUTTON1		  87	//Additional BUTTON1
+#define BUTTON2		  69	//Additional BUTTON2
+#define GND			    94	//GND
 
 #define digitalPinToInterrupt(p)    ((p) == 2 ? 0 : ((p) == 3 ? 1 : NOT_AN_INTERRUPT))
 
@@ -132,70 +132,69 @@ const uint8_t mapping_pin_DAC[][ 2 ] = {
 										
 const XMC_PORT_PIN_t mapping_port_pin[]=
 {
-	/* 0  */	{XMC_GPIO_PORT2 , 15}, 	//RX			P2.15
-	/* 1  */	{XMC_GPIO_PORT2 , 14},	//TX			P2.14
-	/* 2  */    {XMC_GPIO_PORT1 , 0},   // GPIO / External INT 0        P1.0
+	  /* 0  */	  {XMC_GPIO_PORT2 , 15}, 	//RX			                      P2.15
+	  /* 1  */	  {XMC_GPIO_PORT2 , 14},	//TX			                      P2.14
+	  /* 2  */    {XMC_GPIO_PORT1 , 0},   // GPIO / External INT 0        P1.0
     /* 3  */    {XMC_GPIO_PORT3 , 6},   // PWM42-0 / External INT 1     P3.6
     /* 4  */    {XMC_GPIO_PORT1 , 6},   // GPIO                         P1.6
-    /* 5  */    {XMC_GPIO_PORT3 , 3},  // PWM42-3 output               P3.3
-    /* 6  */    {XMC_GPIO_PORT3 , 4},  // PWM42-2 output               P3.4
-    /* 7  */    {XMC_GPIO_PORT1 , 14},   // GPIO                         P1.14
-    /* 8  */    {XMC_GPIO_PORT4 , 1},  // GPIO                         P4.1
-    /* 9  */    {XMC_GPIO_PORT0 , 11},  // PWM80-31 output               P0.11
-    /* 10 */   	{XMC_GPIO_PORT0 , 2},  // SPI-SS / PWM80-01 output      P0.2
+    /* 5  */    {XMC_GPIO_PORT3 , 3},   // PWM42-3 output               P3.3
+    /* 6  */    {XMC_GPIO_PORT3 , 4},   // PWM42-2 output               P3.4
+    /* 7  */    {XMC_GPIO_PORT1 , 14},  // GPIO                         P1.14
+    /* 8  */    {XMC_GPIO_PORT4 , 1},   // GPIO                         P4.1
+    /* 9  */    {XMC_GPIO_PORT0 , 11},  // PWM80-31 output              P0.11
+    /* 10 */   	{XMC_GPIO_PORT0 , 2},   // SPI-SS / PWM80-01 output     P0.2
     /* 11 */   	{XMC_GPIO_PORT1 , 9},   // SPI-MOSI / PWM41-2 output    P1.9
     /* 12 */   	{XMC_GPIO_PORT0 , 0},   // SPI-MISO                     P0.0
     /* 13 */   	{XMC_GPIO_PORT1 , 8},   // SPI-SCK                      P1.8
     /* 14 */   	{XMC_GPIO_PORT2 , 3},   // AREF TODO:                   P2.3
-    /* 15 */   	{XMC_GPIO_PORT2 , 5},  // I2C Data / Address SDA       P2.5
-    /* 16 */   	{XMC_GPIO_PORT3 , 0},  // I2C Clock SCL   				P3.0
-	/* 17  */   {XMC_GPIO_PORT14 , 0},  // A0 / ADC Input               P14.0 (INPUT ONLY)
+    /* 15 */   	{XMC_GPIO_PORT2 , 5},   // I2C Data / Address SDA       P2.5
+    /* 16 */   	{XMC_GPIO_PORT3 , 0},   // I2C Clock SCL   			      	P3.0
+	  /* 17  */   {XMC_GPIO_PORT14 , 0},  // A0 / ADC Input               P14.0 (INPUT ONLY)
     /* 18  */   {XMC_GPIO_PORT14 , 1},  // A1 / ADC Input               P14.1 (INPUT ONLY)
     /* 19  */   {XMC_GPIO_PORT14 , 2},  // A2 / ADC Input               P14.2 (INPUT ONLY)
     /* 20  */   {XMC_GPIO_PORT14 , 3},  // A3 / ADC Input               P14.3 (INPUT ONLY)
     /* 21  */   {XMC_GPIO_PORT14 , 4},  // A4 / ADC Input               P14.4 (INPUT ONLY)
     /* 22  */   {XMC_GPIO_PORT14 , 5},  // A5 / ADC Input               P14.5 (INPUT ONLY)
-
-    /* 23  */   {XMC_GPIO_PORT1 , 15},   // USB Debug RX                 P1.4
-    /* 24  */   {XMC_GPIO_PORT0 , 5},   // USB Debug TX                 P1.5
+    /* 23  */   {XMC_GPIO_PORT1 , 15},  // USB Debug RX                 P1.15
+    /* 24  */   {XMC_GPIO_PORT0 , 5},   // USB Debug TX                 P0.5
 	
 	//Additional pins for port X1 starting here
-	/* 25  */   {XMC_GPIO_PORT2 , 10},   // PWM42-2                      P3.4
-	/* 26  */   {XMC_GPIO_PORT2 , 8},   //  PWM80-32 I2C_1 SDA  // SPI_4 MOSI     P0.5
-	/* 27  */   {XMC_GPIO_PORT2 , 4},   // PWM41-1                     P0.3
-	/* 28  */   {XMC_GPIO_PORT2 , 2},   // PWM41-3                      P0.1
-	/* 29  */   {XMC_GPIO_PORT2 , 0},  //   PWM81-21                    P0.10
-	/* 30  */   {XMC_GPIO_PORT2 , 6},   //  PWM80-13                        P3.2
-	/* 31  */   {XMC_GPIO_PORT5 , 2},   //                              P3.1
-	/* 32  */   {XMC_GPIO_PORT5 , 0},  // A6 / ADC Input               P15.6 (INPUT ONLY)
-	/* 33  */   {XMC_GPIO_PORT1 , 14},  // A7 / ADC Input               P15.5 (INPUT ONLY)
-	/* 34  */   {XMC_GPIO_PORT1 , 12},  // A8 / ADC Input               P15.3 (INPUT ONLY)
-	/* 35  */   {XMC_GPIO_PORT1 , 10}, // A9 / ADC Input               P14.15 (INPUT ONLY)
-	/* 36  */   {XMC_GPIO_PORT1 , 4}, // A10 / ADC Input              P14.13 (INPUT ONLY)
-	/* 37  */   {XMC_GPIO_PORT1 , 2},  // A11 / ADC Input              P14.7 (INPUT ONLY)
-	/* 38  */   {XMC_GPIO_PORT1 , 0}, // A12 / ADC Input              P15.15 (INPUT ONLY)
-	/* 39  */   {XMC_GPIO_PORT1 , 8},  // DAC0 // A13 / ADC Input      P14.9 (INPUT ONLY)
-	/* 40  */   {XMC_GPIO_PORT1 , 6},  //                              P2.13
-	/* 41  */   {XMC_GPIO_PORT4 , 0},  //                              P5.10
-	/* 42  */   {XMC_GPIO_PORT2 , 14},  // PWM80-0                      P5.11
-	/* 43  */   {XMC_GPIO_PORT2 , 15},  //                              P1.14
-	/* 44  */   {XMC_GPIO_PORT4 , 1},  // DAC1 // A14 / ADC Input      P14.8 (INPUT ONLY)
-	/* 45  */   {XMC_GPIO_PORT1 , 7}, // A15 / ADC Input              P15.14 (INPUT ONLY)
-	/* 46  */   {XMC_GPIO_PORT1 , 9},  // A16 / ADC Input              P14.6 (INPUT ONLY)
-	/* 47  */   {XMC_GPIO_PORT1 , 1}, // A17 / ADC Input              P14.12 (INPUT ONLY)
-	/* 48  */   {XMC_GPIO_PORT1 , 3}, // A18 / ADC Input              P14.14 (INPUT ONLY)
-	/* 49  */   {XMC_GPIO_PORT1 , 5},  // A19 / ADC Input              P15.2 (INPUT ONLY)
-	/* 50  */   {XMC_GPIO_PORT1 , 11},  // A20 / ADC Input              P15.4 (INPUT ONLY)
-	/* 51  */   {XMC_GPIO_PORT1 , 13},  // A21 / ADC Input              P15.7 (INPUT ONLY)
-	/* 52  */   {XMC_GPIO_PORT1 , 15},  // PWM42-0                       P3.0
-	/* 53  */   {XMC_GPIO_PORT5 , 1},  // PWM80-1                       P0.9
-	/* 54  */   {XMC_GPIO_PORT5 , 7},  //   PWM81-02                            P0.0
-	/* 55  */   {XMC_GPIO_PORT2 , 7},  //    PWM80-03                           P0.2
-	/* 56  */   {XMC_GPIO_PORT2 , 1},  // SPI_4 MISO                    P0.4
-	/* 57  */   {XMC_GPIO_PORT2 , 3},  // PWM41-2                     P0.6
-	/* 58  */   {XMC_GPIO_PORT2 , 5}, // PWM40-0       P0.11
-	/* 59  */   {XMC_GPIO_PORT2 , 9}, // PWM80-22       P0.11
-	/* 60  */   {XMC_GPIO_PORT2 , 8}, // I2C_1 SCL // SPI_4 SCLK       P0.11
+	/* 25  */   {XMC_GPIO_PORT2 , 10},   // PWM42-2                       P3.4
+	/* 26  */   {XMC_GPIO_PORT2 , 8},    // PWM80-32 I2C_1 SDA  // SPI_4 MOSI     P0.5
+	/* 27  */   {XMC_GPIO_PORT2 , 4},    // PWM41-1                     P0.3
+	/* 28  */   {XMC_GPIO_PORT2 , 2},    // PWM41-3                      P0.1
+	/* 29  */   {XMC_GPIO_PORT2 , 0},    // PWM81-21                    P0.10
+	/* 30  */   {XMC_GPIO_PORT2 , 6},    //  PWM80-13                        P3.2
+	/* 31  */   {XMC_GPIO_PORT5 , 2},    //                              P3.1
+	/* 32  */   {XMC_GPIO_PORT5 , 0},    // A6 / ADC Input               P15.6 (INPUT ONLY)
+	/* 33  */   {XMC_GPIO_PORT1 , 14},   // A7 / ADC Input               P15.5 (INPUT ONLY)
+	/* 34  */   {XMC_GPIO_PORT1 , 12},   // A8 / ADC Input               P15.3 (INPUT ONLY)
+	/* 35  */   {XMC_GPIO_PORT1 , 10},   // A9 / ADC Input               P14.15 (INPUT ONLY)
+	/* 36  */   {XMC_GPIO_PORT1 , 4},    // A10 / ADC Input              P14.13 (INPUT ONLY)
+	/* 37  */   {XMC_GPIO_PORT1 , 2},    // A11 / ADC Input              P14.7 (INPUT ONLY)
+	/* 38  */   {XMC_GPIO_PORT1 , 0},    // A12 / ADC Input              P15.15 (INPUT ONLY)
+	/* 39  */   {XMC_GPIO_PORT1 , 8},    // DAC0 // A13 / ADC Input      P14.9 (INPUT ONLY)
+	/* 40  */   {XMC_GPIO_PORT1 , 6},    //                              P2.13
+	/* 41  */   {XMC_GPIO_PORT4 , 0},    //                              P5.10
+	/* 42  */   {XMC_GPIO_PORT2 , 14},   // PWM80-0                      P5.11
+	/* 43  */   {XMC_GPIO_PORT2 , 15},   //                              P1.14
+	/* 44  */   {XMC_GPIO_PORT4 , 1},    // DAC1 // A14 / ADC Input      P14.8 (INPUT ONLY)
+	/* 45  */   {XMC_GPIO_PORT1 , 7},    // A15 / ADC Input              P15.14 (INPUT ONLY)
+	/* 46  */   {XMC_GPIO_PORT1 , 9},    // A16 / ADC Input              P14.6 (INPUT ONLY)
+	/* 47  */   {XMC_GPIO_PORT1 , 1},    // A17 / ADC Input              P14.12 (INPUT ONLY)
+	/* 48  */   {XMC_GPIO_PORT1 , 3},    // A18 / ADC Input              P14.14 (INPUT ONLY)
+	/* 49  */   {XMC_GPIO_PORT1 , 5},    // A19 / ADC Input              P15.2 (INPUT ONLY)
+	/* 50  */   {XMC_GPIO_PORT1 , 11},   // A20 / ADC Input              P15.4 (INPUT ONLY)
+	/* 51  */   {XMC_GPIO_PORT1 , 13},   // A21 / ADC Input              P15.7 (INPUT ONLY)
+	/* 52  */   {XMC_GPIO_PORT1 , 15},   // PWM42-0                      P3.0
+	/* 53  */   {XMC_GPIO_PORT5 , 1},    // PWM80-1                      P0.9
+	/* 54  */   {XMC_GPIO_PORT5 , 7},    //   PWM81-02                   P0.0
+	/* 55  */   {XMC_GPIO_PORT2 , 7},    //    PWM80-03                  P0.2
+	/* 56  */   {XMC_GPIO_PORT2 , 1},    // SPI_4 MISO                   P0.4
+	/* 57  */   {XMC_GPIO_PORT2 , 3},    // PWM41-2                      P0.6
+	/* 58  */   {XMC_GPIO_PORT2 , 5},    // PWM40-0                      P0.11
+	/* 59  */   {XMC_GPIO_PORT2 , 9},    // PWM80-22                     P0.11
+	/* 60  */   {XMC_GPIO_PORT2 , 8},    // I2C_1 SCL // SPI_4 SCLK      P0.11
 
 	//Additional pins for port X2 starting here
 	/* 61  */   {XMC_GPIO_PORT14 , 8}, // PWM40-1                       P0.14
@@ -313,6 +312,8 @@ RingBuffer tx_buffer_0;
 RingBuffer rx_buffer_1;
 RingBuffer tx_buffer_1;
 
+#ifdef SERIAL_HOSTPC
+
 XMC_UART_t XMC_UART_0 =
   {
   .channel              = XMC_UART1_CH0,
@@ -326,7 +327,7 @@ XMC_UART_t XMC_UART_0 =
   .tx                   = { .port = (XMC_GPIO_PORT_t*)PORT1_BASE,
                             .pin  = (uint8_t)15
                           },
-  .tx_config            = { .mode = (XMC_GPIO_MODE_t) XMC_GPIO_MODE_OUTPUT_PUSH_PULL_ALT2,
+  .tx_config            = { .mode = (XMC_GPIO_MODE_t) XMC_GPIO_MODE_OUTPUT_PUSH_PULL_ALT4,
                             .output_level     = XMC_GPIO_OUTPUT_LEVEL_HIGH,
                             .output_strength  = XMC_GPIO_OUTPUT_STRENGTH_STRONG_SOFT_EDGE
                           },
@@ -338,7 +339,12 @@ XMC_UART_t XMC_UART_0 =
   .irq_service_request  = 0
   };
 
-XMC_UART_t XMC_UART_1 =
+// Debug port
+HardwareSerial Serial( &XMC_UART_0, &rx_buffer_0, &tx_buffer_0 );
+
+#elif SERIAL_ONBOARD
+
+XMC_UART_t XMC_UART_0 =
   {
   .channel              = XMC_UART1_CH0,
   .rx                   = { .port = (XMC_GPIO_PORT_t*)PORT2_BASE,
@@ -365,8 +371,13 @@ XMC_UART_t XMC_UART_1 =
 
 // Debug port
 HardwareSerial Serial( &XMC_UART_0, &rx_buffer_0, &tx_buffer_0 );
+
+#endif
+
+// Debug port
+//HardwareSerial Serial( &XMC_UART_0, &rx_buffer_0, &tx_buffer_0 );
 // On-board port
-HardwareSerial Serial1( &XMC_UART_1, &rx_buffer_1, &tx_buffer_1 );
+//HardwareSerial Serial1( &XMC_UART_1, &rx_buffer_1, &tx_buffer_1 );
 
 // Serial Interrupt and event handling
 #ifdef __cplusplus
@@ -394,15 +405,15 @@ if( serialEvent1 )
 }
 
 
-void USIC0_0_IRQHandler( )
+void USIC1_0_IRQHandler( )
 {
 Serial.IrqHandler( );
 }
 
-void USIC1_0_IRQHandler( )
-{
-Serial1.IrqHandler( );
-}
+//void USIC1_0_IRQHandler( )
+//{
+//Serial1.IrqHandler( );
+//}
 
 #if (NUM_SERIAL > 1)
 void USIC0_5_IRQHandler( void )

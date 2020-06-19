@@ -124,7 +124,7 @@ const XMC_PORT_PIN_t mapping_port_pin[] =
     /* 5  */    {XMC_GPIO_PORT0 , 2}, // GPIO                               P0.2
     /* 6  */    {XMC_GPIO_PORT0 , 3}, // PWM40-3 output                     P0.3
     /* 7  */    {XMC_GPIO_PORT0 , 4}, // GPIO                               P0.4
-    /* 8  */    {XMC_GPIO_PORT0 , 12}, // GPIO                              P0.12
+    /* 8  */    {XMC_GPIO_PORT0 , 12},// GPIO                               P0.12
     /* 9  */    {XMC_GPIO_PORT0 , 8}, // PWM40-2 output                     P0.8
     /* 10  */   {XMC_GPIO_PORT0 , 9}, // SPI-SS                             P0.9
     /* 11  */   {XMC_GPIO_PORT1 , 1}, // SPI-MOSI                           P1.1
@@ -136,18 +136,18 @@ const XMC_PORT_PIN_t mapping_port_pin[] =
     /* 17  */   {XMC_GPIO_PORT2 , 6}, // A0 / ADC Input                     P2.6 (INPUT ONLY)
     /* 18  */   {XMC_GPIO_PORT2 , 8}, // A1 / ADC Input                     P2.8 (INPUT ONLY)
     /* 19  */   {XMC_GPIO_PORT2 , 9}, // A2 / ADC Input                     P2.9 (INPUT ONLY)
-    /* 20  */   {XMC_GPIO_PORT2 , 10}, // A3 / ADC Input                    P2.10
-    /* 21  */   {XMC_GPIO_PORT2 , 11}, // A4 / ADC Input                    P2.11
+    /* 20  */   {XMC_GPIO_PORT2 , 10},// A3 / ADC Input                     P2.10
+    /* 21  */   {XMC_GPIO_PORT2 , 11},// A4 / ADC Input                     P2.11
     /* 22  */   {XMC_GPIO_PORT2 , 2}, // A5 / ADC Input                     P2.2 (INPUT ONLY)
     /* 23  */   {XMC_GPIO_PORT2 , 4}, // RESET input ( DO NOT USE as GPIO ) P2.4 (INPUT ONLY)
     /* 24  */   {XMC_GPIO_PORT2 , 5}, // AD_AUX                             P2.5 (INPUT ONLY)
-    /* 25  */   {XMC_GPIO_PORT2 , 7},  // AD_AUX                            P2.7 (INPUT ONLY)
-    /* 26  */   {XMC_GPIO_PORT0 , 5},  // AUX / GPIO / LED 1 output         P0.5
-    /* 27  */   {XMC_GPIO_PORT0 , 6},  // AUX / GPIO / LED 2 output         P0.6
-    /* 28  */   {XMC_GPIO_PORT0 , 10}, // AUX / GPIO                        P0.10
-    /* 29  */   {XMC_GPIO_PORT0 , 11}, // AUX / GPIO                        P0.11
-    /* 30  */   {XMC_GPIO_PORT0 , 13}, // AUX / GPIO                        P0.13
-    /* 31  */   {XMC_GPIO_PORT1 , 5}   // LED 6 output                      P1.5
+    /* 25  */   {XMC_GPIO_PORT2 , 7}, // AD_AUX                             P2.7 (INPUT ONLY)
+    /* 26  */   {XMC_GPIO_PORT0 , 5}, // AUX / GPIO / LED 1 output          P0.5
+    /* 27  */   {XMC_GPIO_PORT0 , 6}, // AUX / GPIO / LED 2 output          P0.6
+    /* 28  */   {XMC_GPIO_PORT0 , 10},// AUX / GPIO                         P0.10
+    /* 29  */   {XMC_GPIO_PORT0 , 11},// AUX / GPIO                         P0.11
+    /* 30  */   {XMC_GPIO_PORT0 , 13},// AUX / GPIO                         P0.13
+    /* 31  */   {XMC_GPIO_PORT1 , 5}  // LED 6 output                       P1.5
 };
 
 const XMC_PIN_INTERRUPT_t mapping_interrupt[] =
