@@ -122,7 +122,7 @@ XMC_SPI_t XMC_SPI_0 =
         .pin  = (uint8_t)9
     },
     .mosi_config      = {
-        .mode = XMC_GPIO_MODE_OUTPUT_PUSH_PULL_ALT1,
+        .mode = XMC_GPIO_MODE_OUTPUT_PUSH_PULL_ALT4,
         .output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH,
         .output_strength = XMC_GPIO_OUTPUT_STRENGTH_MEDIUM
     },
@@ -139,7 +139,7 @@ XMC_SPI_t XMC_SPI_0 =
         .pin  = (uint8_t)8
     },
     .sclkout_config   = {
-        .mode = XMC_GPIO_MODE_OUTPUT_PUSH_PULL_ALT1,
+        .mode = XMC_GPIO_MODE_OUTPUT_PUSH_PULL_ALT4,
         .output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH,
         .output_strength = XMC_GPIO_OUTPUT_STRENGTH_MEDIUM
     },
