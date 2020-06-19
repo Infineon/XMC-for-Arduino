@@ -49,7 +49,7 @@
                 ],
                 "toolsDependencies":[
                    {
-                      "packager":"arduino",
+                      "packager":"Infineon",
                       "name":"arm-none-eabi-gcc",
                       "version":"5.4-2016q3"
                    },
