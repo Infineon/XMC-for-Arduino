@@ -158,6 +158,8 @@ const XMC_PORT_PIN_t mapping_port_pin[]=
     /* 23  */   {XMC_GPIO_PORT1 , 15},  // USB Debug RX                 P1.15
     /* 24  */   {XMC_GPIO_PORT0 , 5},   // USB Debug TX                 P0.5
 	
+	
+	
 	//Additional pins for port X1 starting here
 	/* 25  */   {XMC_GPIO_PORT2 , 10},   // PWM42-2                       P3.4
 	/* 26  */   {XMC_GPIO_PORT2 , 8},    // PWM80-32 I2C_1 SDA  // SPI_4 MOSI     P0.5
@@ -231,6 +233,11 @@ const XMC_PORT_PIN_t mapping_port_pin[]=
 	/* 92  */   {XMC_GPIO_PORT14 , 3},  // SPI_2 MISO                    P3.12
 	/* 93  */   {XMC_GPIO_PORT15 , 3},  // SPI_2 MISO                    P3.12
 	/* 94  */   {XMC_GPIO_PORT14 , 9}  // SPI_2 MISO                    P3.12
+	
+	    //Define extra pins for Slot 1 & Slot 2 here
+
+    /* 95  */   {XMC_GPIO_PORT3 , 5},   // Chip Select - Slot 1           P3.5
+    /* 96  */   {XMC_GPIO_PORT1 , 7},   // Chip Select - Slot 2           P1.7
 };
 
 const XMC_PIN_INTERRUPT_t mapping_interrupt[] =

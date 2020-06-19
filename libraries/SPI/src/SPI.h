@@ -65,6 +65,17 @@
 #include "utility/SW_SPI.h"
 #endif
 
+#define pin_cs 	10
+
+#if defined(XMC1100_XMC2GO) || defined(XMC1100_H_BRIDGE2GO)
+#define pin_cs  3
+
+#elif defined(XMC4400_Platform2GO)
+#define pin_cs_slot_1  95
+#define pin_cs_slot_2  96
+
+#endif
+
 //****************************************************************************
 // @Class Definitions
 //****************************************************************************
