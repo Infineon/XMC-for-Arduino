@@ -226,7 +226,7 @@ XMC_I2C_t XMC_I2C_0 =
     .input_source_dx1 = XMC_INPUT_B,
     .slave_receive_irq_num                    = (IRQn_Type) 91,
     .slave_receive_irq_service_request        = 1 ,
-    .protocol_irq_num                   	  = (IRQn_Type) 91,
+    .protocol_irq_num                   	  = (IRQn_Type) 92,
     .protocol_irq_service_request       	  = 2
 };
 
