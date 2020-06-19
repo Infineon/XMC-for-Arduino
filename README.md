@@ -57,12 +57,12 @@ If you have already installed '[DAVE™ - Development Platform for XMC™ Microc
 Paste the following URL into the 'Additional Boards Manager URLs' input field under **File** > **Preferences** to add Infineon's microcontroller boards to the Arduino IDE.
 
 
-https://github.com/Infineon/XMC-for-Arduino/releases/download/latest/package_infineon_index.json
+https://github.com/Infineon/XMC-for-Arduino/releases/latest/download/package_infineon_index.json
 
 Easier to copy (no clickable link):
 
 ```
-https://github.com/Infineon/XMC-for-Arduino/releases/download/latest/package_infineon_index.json
+https://github.com/Infineon/XMC-for-Arduino/releases/latest/download/package_infineon_index.json
 ```
 
 :warning: **IMPORTANT NOTE!** :warning: 
