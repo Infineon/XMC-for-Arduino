@@ -19,7 +19,7 @@ This repository integrates [Infineon's](https://www.infineon.com/) XMC microcont
 * [XMC1100 Boot Kit](https://www.infineon.com/cms/en/product/evaluation-boards/kit_xmc11_boot_001/)
 * [XMC1300 Boot Kit](https://www.infineon.com/cms/de/product/evaluation-boards/kit_xmc13_boot_001/)
 * [XMC1300 Sense2GoL](https://www.infineon.com/cms/de/product/evaluation-boards/demo-sense2gol/)
-* [XMC4400 Platform 2Go](https://www.infineon.com/cms/en/product/evaluation-boards/kit_xmc47_relax_v1/)
+* [XMC4400 Platform 2Go](https://www.infineon.com/cms/en/product/evaluation-boards/kit_xmc_plt2go_xmc4400//)
 * [XMC4700 Relax Kit](https://www.infineon.com/cms/en/product/evaluation-boards/kit_xmc47_relax_v1/)
 * [DEMO Radar BB XMC4700](https://www.infineon.com/cms/en/product/evaluation-boards/demo-sense2gol-pulse/)
 
@@ -66,7 +66,7 @@ https://github.com/Infineon/XMC-for-Arduino/releases/download/latest/package_inf
 ```
 
 :warning: **IMPORTANT NOTE!** :warning: 
-The former package_index.json URL will no longer be maintained after version 1.5.0. Upcoming versions will not be shown available in the board manager. 
+The former "package_infineon_index.json" URL will no longer be maintained after version 1.5.0. Upcoming versions will not be shown available in the board manager. 
 ``` 
 https://github.com/Infineon/Assets/releases/download/current/package_infineon_index.json
 ```
