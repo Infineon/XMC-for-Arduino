@@ -71,8 +71,8 @@
 #define pin_cs  3
 
 #elif defined(XMC4400_Platform2GO)
-#define pin_cs_slot_1  25
-#define pin_cs_slot_2  26
+#define pin_cs_slot_1  95
+#define pin_cs_slot_2  96
 
 #endif
 
