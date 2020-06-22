@@ -161,7 +161,10 @@ int (* tasks[_MAX_TASKS])( int, int16_t );
 struct TaskList taskTable[ _MAX_TASKS ];
 
 unsigned long old_ms = 0;   // last execution time
-int running;                // Current task ID being checked or run
+int running = _MAX_TASKS;   // Current task ID being checked or run
+                            // Initialise to avoid fast CPU EXTREME edge case of
+                            // requesting task (mainly first Tone task) BEFORE the
+                            // FIRST SysTick interrupt (1 ms) after power up.
 
 /* SysTick counter */
 volatile uint32_t g_systick_count = 0U;
