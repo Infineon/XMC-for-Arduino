@@ -66,7 +66,7 @@ https://github.com/Infineon/XMC-for-Arduino/releases/latest/download/package_inf
 ```
 
 :warning: **IMPORTANT NOTE!** :warning: 
-The former "package_infineon_index.json" URL will no longer be maintained after version 1.5.0. Upcoming versions will not be shown available in the board manager. 
+The former "package_infineon_index.json" URL will no longer be maintained after version 1.4.0. Upcoming versions will not be shown available in the board manager. 
 ``` 
 https://github.com/Infineon/Assets/releases/download/current/package_infineon_index.json
 ```
