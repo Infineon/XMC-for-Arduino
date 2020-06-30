@@ -30,7 +30,11 @@
 //****************************************************************************
 // @Defines
 //****************************************************************************
-#define XMC_BOARD           XMC1400 Boot Kit
+#define XMC_BOARD           XMC 1400 Boot Kit
+
+/* On board LED is ON when digital output is 0, LOW, FALSE, OFF */
+#define  XMC_LED_ON         0 
+
 #define NUM_ANALOG_INPUTS   6
 #define NUM_PWM             4
 #define NUM_LEDS            4
