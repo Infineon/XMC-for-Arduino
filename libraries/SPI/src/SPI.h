@@ -164,6 +164,9 @@ public:
     void attachInterrupt();
     void detachInterrupt();
 
+    static void usingInterrupt(uint8_t interruptNumber){};
+    static void notUsingInterrupt(uint8_t interruptNumber){};
+
     void begin();
     void end();
 
