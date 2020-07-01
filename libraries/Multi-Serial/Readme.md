@@ -1,7 +1,6 @@
 # Multiple Serial Ports Examples
 
-Simple examples that use multiple serial ports of XMC boards to measure
-distances. Uses internal functions without requiring extra libraries.
+Simple examples that use multiple serial ports of XMC boards. Uses internal functions without requiring extra libraries.
 
 | | | |
 |:---|:---:|:---|
