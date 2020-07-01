@@ -150,8 +150,6 @@ class XMCClass
 			sleep_mode = SLEEP_MODE;
 #if (UC_FAMILY == XMC4)
 			power_mode = XMC_SCU_POWER_MODE_SLEEP;
-			hibernate = false;
-			hibernate_mode = XMC_SCU_HIB_HIBERNATE_MODE_EXTERNAL;
 #endif
 		}
 
@@ -166,8 +164,6 @@ class XMCClass
 
 #if (UC_FAMILY == XMC4)
 		/*Power Control*/
-		void configureHibernate(WakeupSource wkpsrc);	// Configure Hibernate & choose a waking up source
-		void enterHibernate(int mode);					// Enter Hibernate, EXTERNAL or INTERNAL
 		void configureSleepMode(sleepMode_t type, sysclock_t clk, usb_t usb0, sdmmc_t sdmmc, eth0_t ethernet, ebu_t  ebu, ccu_t ccu , wdt_t wdt, flash_t flash, clkpll_t pll, vco_t vco);	// Configure sleep mode type & peripherals status on sleep/deep sleep mode
 		void enterSleepMode();							// Enter Sleep Mode, called after sleep mode is configured
 		/* State Control*/
@@ -188,8 +184,6 @@ class XMCClass
 
 #if (UC_FAMILY == XMC4)
 		XMC_SCU_POWER_MODE_t power_mode;
-		XMC_SCU_HIB_HIBERNATE_MODE_t hibernate_mode;	// Stores type of hibernate mode, EXTERNAL or INTERNAL
-		bool hibernate;									// Set if hibernate mode is active
 #endif
 };
 
