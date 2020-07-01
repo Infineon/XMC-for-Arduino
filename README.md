@@ -87,6 +87,7 @@ In the boards list **Tools** > **Board**, the XMC microcontroller boards are add
 * The XMC1100 Boot Kit has limitations if compared to the official Arduino boards (consult the [XMC-for-Arduino Wiki](https://github.com/Infineon/XMC-for-Arduino/wiki) for more information)
 * Refer also to the LICENSE.md/txt file for further information
 * Arduino 1.8.0 IDE might have problems with the XMC-for-Arduino releases
+* XMC-for-Arduino support for 'arm-linux-gnueabihf' only until version 1.1.
 
 ### Using PlatformIO IDE
 
