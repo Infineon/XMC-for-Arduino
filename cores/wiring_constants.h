@@ -84,7 +84,7 @@ extern "C" {
 #define degrees(rad) ((rad)*RAD_TO_DEG)
 #define sq(x) ((x)*(x))
 
-#define map( x,  in_min,  in_max,  out_min,  out_max)   ((x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min)
+#define map( x, in_min, in_max, out_min, out_max)   ( ( (x - in_min) * (out_max - out_min) ) / (in_max - in_min) + out_min)
 
 #define interrupts() __enable_irq()
 #define noInterrupts() __disable_irq()

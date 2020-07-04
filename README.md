@@ -98,6 +98,13 @@ In the boards list **Tools** > **Board**, the XMC microcontroller boards are add
   Cloud9, Codeanywhere, Eclipse Che (Codenvy), Atom, CLion, Eclipse, Emacs, NetBeans, Qt Creator, Sublime Text, VIM, Visual Studio, and VSCode
 - [Project Examples](https://github.com/Infineon/platformio-infineonxmc/tree/master/examples)
 
+## Contributing and Third Party Libraries
+To contribute enhancements, fixes and the like see *Contributors.md*. in root folder
+
+Third Party or external library maintainers see *Libraries.md*. in root folder
+    
+Also see [Wiki](https://github.com/Infineon/XMC-for-Arduino/wiki) for any additional information
+
 ## Additional Contributors
 
 * [Paul Carpenter](https://github.com/techpaul)

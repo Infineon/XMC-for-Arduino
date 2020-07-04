@@ -1,6 +1,7 @@
 /* Example of how to access XMC defines and use for debug
  *  
  *  Updated 8-Feb-2020 Paul Carpenter
+ *  Updated 1-Jul-2020 Paul Carpenter - Prepare architecture change to xmc
  */
 // Linker symbols to get flash/RAM usage
 #if( UC_FAMILY == XMC1 )
@@ -56,10 +57,16 @@ str1( F_CPU );
 str2( ARDUINO );
 Serial.print( "\t\t" );
 str1( ARDUINO );
+#if defined ARDUINO_ARCH_ARM
 str2( ARDUINO_ARCH_ARM );
 Serial.write( ' ' );
 str1( ARDUINO_ARCH_ARM );
-
+#endif
+#if defined ARDUINO_ARCH_XMC
+str2( ARDUINO_ARCH_XMC );
+Serial.write( ' ' );
+str1( ARDUINO_ARCH_XMC );
+#endif
 Serial.print( "Library Version\t" );
 Serial.print( XMC_LIB_MAJOR_VERSION );
 Serial.print( '.' );
