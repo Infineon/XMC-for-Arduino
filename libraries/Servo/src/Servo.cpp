@@ -26,19 +26,19 @@ Servo::Servo() {}
 bool Servo::attach(uint8_t pin, uint16_t minWidth, uint16_t maxWidth,
                     int16_t minAngle, int16_t maxAngle)
 { 
-    if (this->isAttached || maxWidth < minWidth || maxAngle < minAngle ||
+    if (isAttached || maxWidth < minWidth || maxAngle < minAngle ||
         maxWidth > 20000)
             return false;
     
     pinMode(pin, OUTPUT);
     setAnalogWriteFrequency(pin, 50);
-    this->curUsec = (maxWidth + minWidth) / 2;
+    curUsec = (maxWidth + minWidth) / 2;
     this->minWidth = minWidth;
     this->maxWidth = maxWidth;
     this->minAngle = minAngle;
     this->maxAngle = maxAngle;
     this->pin = pin;
-    this->isAttached = true;
+    isAttached = true;
     
     SET_PWM;
     return true;
@@ -46,47 +46,47 @@ bool Servo::attach(uint8_t pin, uint16_t minWidth, uint16_t maxWidth,
 
 void Servo::write(uint16_t angle)
 {
-    if (!this->isAttached)
+    if (!isAttached)
         return;
 
-    angle = constrain(angle, this->minAngle, this->maxAngle);
+    angle = constrain(angle, minAngle, maxAngle);
 
-    this->curUsec = ANGLE2US(angle);
+    curUsec = ANGLE2US(angle);
     SET_PWM;
 }
 
 void Servo::writeMicroseconds(uint16_t usec)
 {
-    if (!this->isAttached)
+    if (!isAttached)
         return;
 
-    usec = constrain(usec, this->minWidth, this->maxWidth);
-    this->curUsec = usec;
+    usec = constrain(usec, minWidth, maxWidth);
+    curUsec = usec;
     SET_PWM;
 }
 
 uint16_t Servo::read()
 {
-    return US2ANGLE(this->curUsec);
+    return US2ANGLE(curUsec);
 }
 
 uint16_t Servo::readMicroseconds()
 {
-    return this->curUsec;
+    return curUsec;
 }
 
 bool Servo::attached()
 {
-    return this->isAttached;
+    return isAttached;
 }
 
 bool Servo::detach()
 {
-    if (!this->isAttached)
+    if (!isAttached)
         return false;
 
-    this->curUsec = 0;
-    this->isAttached = false;
+    curUsec = 0;
+    isAttached = false;
     
     SET_PWM;
     return true;

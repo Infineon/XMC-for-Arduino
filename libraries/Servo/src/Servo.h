@@ -30,20 +30,15 @@
 #define MIN_ANGLE 0
 #define MAX_ANGLE 180
 
-#define US2DUTY(USEC) map(USEC, 0, 20000, 0, (1 << getAnalogWriteBits()) - 1)
-
-#define US2ANGLE(USEC) map(USEC, this->minWidth, this->maxWidth, \
-        this->minAngle, this->maxAngle)
-
-#define ANGLE2US(ANGLE) map(ANGLE, this->minAngle, this->maxAngle, \
-        this->minWidth, this->maxWidth)
-
-#define SET_PWM analogWrite(this->pin, US2DUTY(this->curUsec))
+#define US2DUTY(USEC) map(USEC, 0, 20000, 0, getAnalogWriteMaximum())
+#define US2ANGLE(USEC) map(USEC, minWidth, maxWidth, minAngle, maxAngle)
+#define ANGLE2US(ANGLE) map(ANGLE, minAngle, maxAngle, minWidth, maxWidth)
+#define SET_PWM analogWrite(pin, US2DUTY(curUsec))
 
 class Servo {
-    public:
+public:
     Servo();
-	bool attach(uint8_t, uint16_t = MIN_WIDTH, uint16_t = MAX_WIDTH,
+    bool attach(uint8_t, uint16_t = MIN_WIDTH, uint16_t = MAX_WIDTH, \
                 int16_t = MIN_ANGLE, int16_t = MAX_ANGLE);
     void write(uint16_t);
     void writeMicroseconds(uint16_t);
@@ -52,7 +47,7 @@ class Servo {
     bool attached();
     bool detach();
 
-    private:
+private:
     uint8_t pin;
     uint16_t minWidth;
     uint16_t maxWidth;
