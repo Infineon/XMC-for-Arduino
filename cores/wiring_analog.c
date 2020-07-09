@@ -117,13 +117,13 @@ for( uint8_t chan = 0; chan < NUM_ANALOG_INPUTS; chan++ )
 }
 
 
-/* Set the resolution of analogRead return values in number of bits. 
+/* Set the resolution of analogRead return values in number of bits.
     Default is 10 bits (range from 0 to 1023)
     Maximum is 12 bits (range from 0 to 4095)
 
 PC Sept-2019 Change flow to trap invalid input first and leave at old setting if
     Invalid and return valid value or 255 for error, else return setting used
-     
+
     Add set maximum value for resolution
 */
 uint8_t analogReadResolution( uint8_t res )
@@ -137,14 +137,14 @@ return res;
 }
 
 
-/* Set the resolution of analogWrite parameters in number of bits. 
+/* Set the resolution of analogWrite parameters in number of bits.
 
     Default (minimum) is 8 bits (range from 0 to 255).
     Maximum is 16 bits (range 0 to 65535)
 
 PC Sept-2019 Change flow to trap invalid input first and leave at old setting if
     Invalid and return valid value or 255 for error, else return setting used
-     
+
     Add set maximum value for resolution
   */
 uint8_t analogWriteResolution( uint8_t res )
@@ -217,7 +217,7 @@ return value;
 }
 
 
-/* Helper function for analogWrite and setAnalogWriteFrequency to scan 
+/* Helper function for analogWrite and setAnalogWriteFrequency to scan
    mapping tables to determine for a given pin which PWM4, PWM8 or DAC
    channel to use
    Returns valid channel index or -1 for not listed
@@ -262,7 +262,6 @@ int16_t analogWrite( uint8_t pin, uint16_t value )
 {
 uint32_t compare_reg = 0;
 int16_t resource;
-int16_t ret = 0;
 
 if( value > _writeMaximum )
   return -1;
@@ -288,7 +287,7 @@ if( ( resource = scan_map_table( mapping_pin_PWM4, pin ) ) >= 0 )
     }
 
   if( value != 0 )
-        compare_reg  = ( ( value + 1 ) * ( pwm4->period_timer_val + 1 ) ) >> _writeResolution;
+    compare_reg  = ( ( value + 1 ) * ( pwm4->period_timer_val + 1 ) ) >> _writeResolution;
 
   XMC_CCU4_SLICE_SetTimerCompareMatch( pwm4->slice, compare_reg );
   XMC_CCU4_EnableShadowTransfer( pwm4->ccu, ( CCU4_GCSS_S0SE_Msk << ( 4 * pwm4->slice_num ) ) );
@@ -321,7 +320,7 @@ else
       }
 
     if( value != 0 )
-        compare_reg  = ( ( value + 1 ) * ( pwm8->period_timer_val + 1 ) ) >> _writeResolution;
+      compare_reg  = ( ( value + 1 ) * ( pwm8->period_timer_val + 1 ) ) >> _writeResolution;
 
     XMC_CCU8_SLICE_SetTimerCompareMatch( pwm8->slice, pwm8->slice_channel, compare_reg );
     XMC_CCU8_EnableShadowTransfer( pwm8->ccu, CCU8_GCSS_S0SE_Msk << ( 4 * pwm8->slice_num ) );
@@ -343,9 +342,9 @@ else
     XMC_DAC_CH_Write( dac->group, dac->channel, dacValue );
     }
 #endif
-else
-  ret = -2;
-return ret;
+  else
+    return -2;
+return 0;
 }
 
 
@@ -418,8 +417,8 @@ return ret;
 
 /* PC Sept-2019
     Add helper functions to get Read and Write resolution as bits or maximum value
-*/ 
-/* Get the current resolution of analogRead in number of bits. 
+*/
+/* Get the current resolution of analogRead in number of bits.
     Return Current resolution in bits (8 to 12)
  */
 uint8_t getAnalogReadBits( )
@@ -428,7 +427,7 @@ return _readResolution;
 }
 
 
-/* Get the current resolution of analogWrite in number of bits. 
+/* Get the current resolution of analogWrite in number of bits.
     Return Current resolution in bits (8 to 16)
  */
 uint8_t getAnalogWriteBits( )
@@ -437,7 +436,7 @@ return _writeResolution;
 }
 
 
-/* Get the maximum value for current resolution for analogRead. 
+/* Get the maximum value for current resolution for analogRead.
     Default is 1023
     Maximum is 4095
  */
@@ -447,7 +446,7 @@ return _readMaximum;
 }
 
 
-/* Get the maximum value for current resolution for analogWrite. 
+/* Get the maximum value for current resolution for analogWrite.
     Default is 255
     Maximum is 65535
  */

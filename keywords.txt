@@ -1,5 +1,5 @@
 #######################################
-# Syntax Coloring Map For Core
+# Syntax Colouring Map For Core
 #######################################
 
 #######################################
@@ -12,6 +12,10 @@
 
 digitalToggle	KEYWORD2
 setAnalogWriteFrequency	KEYWORD2
+getAnalogReadBits	KEYWORD2
+getAnalogWriteBits	KEYWORD2
+getAnalogReadMaximum	KEYWORD2
+getAnalogWriteMaximum	KEYWORD2
 
 #######################################
 # Instances (KEYWORD2)
