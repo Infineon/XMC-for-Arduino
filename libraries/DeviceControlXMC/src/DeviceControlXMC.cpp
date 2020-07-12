@@ -29,6 +29,7 @@
  * WHETHER IN CONTRACT, STRICT LIABILITY,OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+#include <Arduino.h>
 #include "DeviceControlXMC.h"
 
 extern caddr_t Heap_Bank1_Start;
@@ -54,50 +55,54 @@ void XMCClass::begin( )
 /* Wake up from sleep mode */
 void XMCClass::enterActiveMode( )
 {
-	 SCB->SCR = 0x00;
+SCB->SCR = 0x00;
 }
 
 
 /* Software Reset of MCU */
 void XMCClass::reset( )
 {
-   NVIC_SystemReset( );
+NVIC_SystemReset( );
 }
 
 
 /**
  *  Get Die temperature in Celsius
  * @return temp_celsius: Die temperature in Celsius
+ *
+ * Modified July 2020 Paul Carpenter - to allow negative temperatures 
+ * to be returned
  */
-uint32_t XMCClass::getTemperature( )
+int32_t XMCClass::getTemperature( )
 {
-	uint32_t temp_calc = 0, temp_celsius = 0;
-	temp_measurement_s = XMC_SCU_STATUS_ERROR;
+uint32_t temp_calc = 0;
+int32_t temp_celsius;
+temp_measurement_s = XMC_SCU_STATUS_ERROR;
 
 #if (UC_FAMILY == XMC4)
-	while( temp_calc == 0 )
-        {
-		if( temp_measurement_s == XMC_SCU_STATUS_OK )
-			temp_calc = XMC_SCU_GetTemperatureMeasurement( );
-		else
-          if( temp_measurement_s == XMC_SCU_STATUS_ERROR )
-			XMC_SCU_EnableTemperatureSensor( );
-		else
-          if( temp_measurement_s == XMC_SCU_STATUS_BUSY )
-			while( XMC_SCU_IsTemperatureSensorBusy( ) );
-		temp_measurement_s = XMC_SCU_StartTemperatureMeasurement( );
-        }
-	temp_celsius = ( temp_calc - 605 ) / 2.05;
+while( temp_calc == 0 )
+    {
+    if( temp_measurement_s == XMC_SCU_STATUS_OK )
+        temp_calc = XMC_SCU_GetTemperatureMeasurement( );
+    else
+      if( temp_measurement_s == XMC_SCU_STATUS_ERROR )
+        XMC_SCU_EnableTemperatureSensor( );
+    else
+      if( temp_measurement_s == XMC_SCU_STATUS_BUSY )
+        while( XMC_SCU_IsTemperatureSensorBusy( ) );
+    temp_measurement_s = XMC_SCU_StartTemperatureMeasurement( );
+    }
+temp_celsius = ( temp_calc - 605 ) / 2.05;
 
 #elif(UC_FAMILY == XMC1)
-	while( temp_calc == 0 )
-         {
-		 XMC_SCU_StartTempMeasurement( );
-		 temp_calc = XMC_SCU_CalcTemperature( );
-         }
-	temp_celsius = temp_calc - 273;
+while( temp_calc == 0 )
+     {
+     XMC_SCU_StartTempMeasurement( );
+     temp_calc = XMC_SCU_CalcTemperature( );
+     }
+temp_celsius = temp_calc - 273;
 #endif
-	return temp_celsius;
+return temp_celsius;
 }
 
 
@@ -118,25 +123,26 @@ uint32_t XMCClass::getTemperature( )
  */
 size_t XMCClass::freeHeapRAM( )
 {
-	size_t heap_free_s;
-	char *pnt;
+size_t heap_free_s;
+char *pnt;
 
-    // Set to initial total size
-    heap_free_s = total_heap_s;
-    heap_free_s &= ~0x03;   // align as last bytes probably not available
+// Set to initial total size
+heap_free_s = total_heap_s;
+heap_free_s &= ~0x03;   // align as last bytes probably not available
 
-    // loop in 4 byte (at least) multiples to satisfy alignment requirements
-	for( ; heap_free_s > 0; heap_free_s -= 4 )
-       {
-	   pnt = (char*)malloc( heap_free_s );
-	   if( pnt != NULL )
-		 break;
-	   }
-	free( pnt );
-	return heap_free_s;
+// loop in 4 byte (at least) multiples to satisfy alignment requirements
+for( ; heap_free_s > 0; heap_free_s -= 4 )
+   {
+   pnt = (char*)malloc( heap_free_s );
+   if( pnt != NULL )
+     break;
+   }
+free( pnt );
+return heap_free_s;
 }
 
 
+#if (UC_FAMILY == XMC4)
 /**
  *  Configure sleep mode.
  * @param 	type   (SLEEP_MODE or DEEP_SLEEP_MODE)
@@ -155,47 +161,47 @@ void XMCClass::configureSleepMode( sleepMode_t type, sysclock_t clk, usb_t usb,
                                     ccu_t ccu , wdt_t wdt, flash_t flash, clkpll_t pll,
                                     vco_t vco )
 {
-	sleep_config |= clk;
+sleep_config |= clk;
 #if defined(USB0)
-	sleep_config |= usb;
+sleep_config |= usb;
 #endif
 #if defined(SDMMC)
-	sleep_config |= sdmmc;
+sleep_config |= sdmmc;
 #endif
 #if defined(ETH0)
-	sleep_config |= ethernet;
+sleep_config |= ethernet;
 #endif
 #if defined(EBU)
-	sleep_config |= ebu;
+sleep_config |= ebu;
 #endif
 
-	sleep_config |= ccu;
-	sleep_config |= wdt;
+sleep_config |= ccu;
+sleep_config |= wdt;
 
-	if( type == SLEEP_MODE )
-      {
-	  power_mode = XMC_SCU_POWER_MODE_SLEEP;
-	  XMC_SCU_CLOCK_SetSleepConfig( sleep_config );
-	  }
-	else
-      if( type == DEEP_SLEEP_MODE )
-        {
-		if( flash == FLASH_OFF )
-		  sleep_config |= flash;
-		if( pll == PLL_OFF )
-		  sleep_config |= pll;
-		if( vco == VCO_OFF )
-		  sleep_config |=vco;
-		power_mode = XMC_SCU_POWER_MODE_DEEPSLEEP;
-		XMC_SCU_CLOCK_SetDeepSleepConfig( sleep_config );
-	    }
+if( type == SLEEP_MODE )
+  {
+  power_mode = XMC_SCU_POWER_MODE_SLEEP;
+  XMC_SCU_CLOCK_SetSleepConfig( sleep_config );
+  }
+else
+  if( type == DEEP_SLEEP_MODE )
+    {
+    if( flash == FLASH_OFF )
+      sleep_config |= flash;
+    if( pll == PLL_OFF )
+      sleep_config |= pll;
+    if( vco == VCO_OFF )
+      sleep_config |=vco;
+    power_mode = XMC_SCU_POWER_MODE_DEEPSLEEP;
+    XMC_SCU_CLOCK_SetDeepSleepConfig( sleep_config );
+    }
 }
 
 
 /* Device sleeps on exit of this function*/
 void XMCClass::enterSleepMode( )
 {
-	XMC_SCU_POWER_WaitForInterrupt( power_mode, 1 );
+XMC_SCU_POWER_WaitForInterrupt( power_mode, 1 );
 }
 
 
@@ -209,12 +215,12 @@ void XMCClass::enterSleepMode( )
  */
 void XMCClass::calibrateTemperatureSensor( uint32_t offset, uint32_t gain )
 {
-	/* Stop measurement */
-	SCU_GENERAL-> DTSCON &= (uint32_t)~SCU_GENERAL_DTSCON_START_Msk;
-	/* Calibrate */
-	XMC_SCU_CalibrateTemperatureSensor( offset, gain );
-	/* Start measurements */
-	XMC_SCU_StartTemperatureMeasurement( );
+/* Stop measurement */
+SCU_GENERAL-> DTSCON &= (uint32_t)~SCU_GENERAL_DTSCON_START_Msk;
+/* Calibrate */
+XMC_SCU_CalibrateTemperatureSensor( offset, gain );
+/* Start measurements */
+XMC_SCU_StartTemperatureMeasurement( );
 }
 #endif
 
@@ -232,31 +238,31 @@ void XMCClass::calibrateTemperatureSensor( uint32_t offset, uint32_t gain )
 void XMCClass::configureSleepMode( sleepMode_t type, usic_t usic,
                                    ledt_t ledt, ccu_t ccu, wdt_t wdt, flash_t flash )
 {
-	sleep_config |= usic;
+sleep_config |= usic;
 #if (defined (LEDTS0) || ( LEDTS1 )|| ( LEDTS2))
-	sleep_config |= ledt;
+sleep_config |= ledt;
 #else
-    XMC_UNUSED_ARG( ledt );
+XMC_UNUSED_ARG( ledt );
 #endif
 
-	sleep_config |= wdt;
-	sleep_config |= ccu;
+sleep_config |= wdt;
+sleep_config |= ccu;
 
-	if( type == DEEP_SLEEP_MODE )
-	  if( flash == FLASH_OFF )
-		SCU_CLK -> PWRSVCR |= flash;
+if( type == DEEP_SLEEP_MODE )
+  if( flash == FLASH_OFF )
+    SCU_CLK -> PWRSVCR |= flash;
 
-	SCU_CLK->CGATSET0 = sleep_config;	// Set sleep configuration
-	VADC->CLC &= ~VADC_CLC_EDIS_Msk;	// Enable sleep control
-	sleep_mode = type;					// Store sleep type
+SCU_CLK->CGATSET0 = sleep_config;	// Set sleep configuration
+VADC->CLC &= ~VADC_CLC_EDIS_Msk;	// Enable sleep control
+sleep_mode = type;					// Store sleep type
 }
 
 
 /* Device sleeps on exit of this function */
 void XMCClass::enterSleepMode( )
 {
-		SCB->SCR = sleep_mode | SCB_SCR_SLEEPONEXIT_Msk;
-	  __WFI();
+SCB->SCR = sleep_mode | SCB_SCR_SLEEPONEXIT_Msk;
+__WFI();
 }
 #endif
 

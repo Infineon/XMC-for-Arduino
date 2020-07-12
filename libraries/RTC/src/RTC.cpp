@@ -31,7 +31,7 @@
 /*!	\file RTC.cpp
  *	\brief This file defines functions and predefined instances from RTC.h
  */
-
+#include <Arduino.h>
 #include "RTC.h"
 
 //****************************************************************************
