@@ -8,7 +8,6 @@
 #include <RTC.h>
 #include <DeviceControlXMC.h>
 #include "utility/timer.h"
-#include <xmc_gpio.h>
 
 // Create an rtc object
  RTCClass rtc;

@@ -31,23 +31,18 @@
 /*!	\file RTC.h
  *	\brief This file has to be included in projects that use Infineon's XMC RTC module
  */
-
 #ifndef _RTC_H_INCLUDED
 #define _RTC_H_INCLUDED
 
 #include "xmc_device.h"
+#include "utility/xmc_rtc_conf.h"
+
 //****************************************************************************
 // @Board Check
 //****************************************************************************
 #if !defined(XMC1) || !defined(XMC4)
 #error Only XMC microcontrollers are supported by this library
 #endif
-
-//****************************************************************************
-// @Project Includes
-//****************************************************************************
-#include <Arduino.h>
-#include "utility/xmc_rtc_conf.h"
 
 //****************************************************************************
 // @Defines
