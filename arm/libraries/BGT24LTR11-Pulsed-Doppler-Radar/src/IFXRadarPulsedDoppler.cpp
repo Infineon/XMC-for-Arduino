@@ -165,10 +165,12 @@ void IFXRadarPulsedDoppler::initHW(void)
     while (1U)
 		;
   }
+  
 }
 
 void IFXRadarPulsedDoppler::begin(void) // trigger algo_process() and init()
 {
+  
   radar_ard_init();
   if (radar_ard_is_initalized())
   {
