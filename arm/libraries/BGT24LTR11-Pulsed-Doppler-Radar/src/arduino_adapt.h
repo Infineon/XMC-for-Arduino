@@ -1,7 +1,7 @@
 /**
     @file: arduino_adapter.c
 
-    @brief: Adapter for Arduino type applications
+    @brief: Adapter for arduino type applications
 */
 
 /* ===========================================================================
@@ -18,7 +18,11 @@
 #ifndef ARDUINO_ADAPTER_H_
 #define ARDUINO_ADAPTER_H_
 
-
+/* Enable C linkage if header is included in C++ files */
+#ifdef __cplusplus
+extern "C"
+{
+#endif /* __cplusplus */
 
 /*
 ==============================================================================
@@ -28,11 +32,6 @@
 
 #include <stdint.h>
 
-/* Enable C linkage if header is included in C++ files */
-#ifdef __cplusplus
-extern "C"
-{
-#endif /* __cplusplus */
 /*
 ==============================================================================
    2. DEFINES
@@ -227,7 +226,10 @@ uint8_t radar_ard_is_motion( void );
 
 uint32_t radar_ard_get_frame_count( void );
 
+/* --- End of File -------------------------------------------------------- */
+
 /* --- Close open blocks -------------------------------------------------- */
+
 /* Disable C linkage for C++ files */
 #ifdef __cplusplus
 } /* extern "C" */
