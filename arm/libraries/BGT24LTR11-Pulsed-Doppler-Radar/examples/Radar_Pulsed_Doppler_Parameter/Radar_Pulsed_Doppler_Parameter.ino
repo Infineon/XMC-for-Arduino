@@ -69,9 +69,15 @@ void setup() {
   radarDev.end();
   
   // apply very insensitive setting
+  if( radarDev.setMotionSensitivity(200) ) {
+     // Error occured, tell user
+     Serial.println("Error, motion sensitivity out of range!");
+  }
   
-  radarDev.setMotionSensitivity(300);
-  radarDev.setDopplerSensitivity(500);
+  if( radarDev.setDopplerSensitivity(400) ) {
+     // Error occured, tell user
+     Serial.println("Error, doppler sensitivity out of range!");
+  }
 
   radarDev.parameterDump(&Serial);
 
