@@ -91,7 +91,7 @@ Two Arduino sketch examples are provided in the current library release. These e
 This example sketch runs the Pulsed Doppler firmware and uses the on-board LED to indicate detection of motion and direction of motion.
 
 **Hardware required:**
-Radar Baseboard XMC4700 and BGT24LTR11 Shield
+XMC4700 Radar Baseboard and BGT24LTR11 Shield
 
 **Steps:**
 1.	In Arduino IDE, navigate to **File** --> **Examples** --> **IFXRadarPulsedDoppler** --> **Radar_Pulsed_Doppler_LED**
@@ -108,11 +108,11 @@ Radar Baseboard XMC4700 and BGT24LTR11 Shield
 
 ![Done Compiling](https://raw.githubusercontent.com/infineon/assets/master/Pictures/rbb_done_compiling.png)
 
-4.	Attach the BGT24LTR11 Shield to the Radar Baseboard XMC4700 via the SAMTEC connectors.
+4.	Attach the BGT24LTR11 Shield to the XMC4700 Radar Baseboard via the SAMTEC connectors.
 
 ![Connecting Boards](https://raw.githubusercontent.com/infineon/assets/master/Pictures/rbb_connecting_boards.png)
 
-5.	Connect the Radar Baseboard XMC4700 to the PC via a USB cable onto the **Debug** USB port.
+5.	Connect the XMC4700 Radar Baseboard to the PC via a USB cable onto the **Debug** USB port.
 
 ![Debug Port](https://raw.githubusercontent.com/infineon/assets/master/Pictures/rbb_debug_port.png)
 
@@ -139,7 +139,7 @@ This example sketch runs the Pulsed Doppler firmware and projects the results of
 and at the same time uses an external RGB LED to indicate motion and direction of motion.
 
 **Hardware required:**
-1) Radar Baseboard XMC4700 and BGT24LTR11 Shield
+1) XMC4700 Radar Baseboard and BGT24LTR11 Shield
 2) Annikken Andee U Shield (https://www.annikken.com/andee-u)
 3) RGB LED Lighting Shield with XMC1202 (https://www.infineon.com/cms/en/product/evaluation-boards/kit_led_xmc1202_as_01/)
 
@@ -158,11 +158,11 @@ and at the same time uses an external RGB LED to indicate motion and direction o
 
 ![Done Compiling](https://raw.githubusercontent.com/infineon/assets/master/Pictures/rbb_done_compiling.png)
 
-4.	Attach the BGT24LTR11 Shield to the Radar Baseboard XMC4700 via the SAMTEC connectors.
+4.	Attach the BGT24LTR11 Shield to the XMC4700 Radar Baseboard via the SAMTEC connectors.
 
 ![Connecting Boards](https://raw.githubusercontent.com/infineon/assets/master/Pictures/rbb_connecting_boards.png)
 
-5.	Stack the RGB LED Lighting Shield with XMC1202 onto the Radar Baseboard XMC4700 via the Arduino stack headers. 
+5.	Stack the RGB LED Lighting Shield with XMC1202 onto the XMC4700 Radar Baseboard via the Arduino stack headers. 
 Also connect an RGB LED and a 24 VDC power adapter to the RGB LED Lighting Shield. **Do not turn the power on yet!** 
 For more information on setting up of the RGB LED Lighting Shield, please refer to [Infineon RGB LED Lighting Shield with XMC1202 for Arduino - User Manual](https://www.infineon.com/dgdl/Infineon-Board_Manual_-_XMC1202_-_RGB_LED_Lighting_Shield_with_XMC1202_for_Arduino_-_v1_0-UM-v01_00-EN.pdf?fileId=5546d46249be182c0149ccca3860734d).
 
@@ -176,7 +176,7 @@ The second diagram below illustrates the required connections.
 
 ![Andee Jumpers](https://raw.githubusercontent.com/infineon/assets/master/Pictures/rbb_Andee_Jumpers.png)
 
-7.	Turn on the 24 VDC power supply to the RGB LED Lighting Shield and connect the Radar Baseboard XMC4700 to the PC via a USB cable onto the **Debug** USB port.
+7.	Turn on the 24 VDC power supply to the RGB LED Lighting Shield and connect the XMC4700 Radar Baseboard to the PC via a USB cable onto the **Debug** USB port.
 
 ![Debug Port](https://raw.githubusercontent.com/infineon/assets/master/Pictures/rbb_debug_port.png)
 
@@ -200,7 +200,7 @@ The RGB LED should turn on with white light, while the on-board LED will cycle b
 
 ![Andee GUI](https://raw.githubusercontent.com/infineon/assets/master/Pictures/rbb_Andee-GUI.png)
 
-In case this does not happen, disconnect from the app, press the reset button on the Radar Baseboard XMC4700 and retry the connection.
+In case this does not happen, disconnect from the app, press the reset button on the XMC4700 Radar Baseboard and retry the connection.
 
 Make some movement in front of the radar board and observe the measured speed and detected direction on the GUI. You may also observe the light from the RGB LED changing with regards to the motion and its direction.
 

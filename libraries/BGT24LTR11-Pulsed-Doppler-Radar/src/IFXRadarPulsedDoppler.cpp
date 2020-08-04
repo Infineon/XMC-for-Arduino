@@ -138,12 +138,18 @@ float IFXRadarPulsedDoppler::getCurrentConsumption(void)
   return currentMA;
 }
 
-void IFXRadarPulsedDoppler::registerResultCallback(void(*callBackPtr)) // register algo done callback function
+uint32_t IFXRadarPulsedDoppler::getFrameCount( void ) 
+{
+	uint32_t frameCount = radar_ard_get_frame_count();
+	return frameCount;
+}
+
+void IFXRadarPulsedDoppler::registerResultCallback(void(*callBackPtr)(void)) // register algo done callback function
 {
   radar_ard_register_result_handler(callBackPtr);
 }
 
-void IFXRadarPulsedDoppler::registerErrorCallback(void(*callBackPtr))
+void IFXRadarPulsedDoppler::registerErrorCallback(void(*callBackPtr)(uint32_t))
 {
   radar_ard_register_error_handler(callBackPtr);
 }
@@ -160,10 +166,12 @@ void IFXRadarPulsedDoppler::initHW(void)
     while (1U)
 		;
   }
+  
 }
 
 void IFXRadarPulsedDoppler::begin(void) // trigger algo_process() and init()
 {
+  
   radar_ard_init();
   if (radar_ard_is_initalized())
   {
@@ -250,12 +258,6 @@ uint8_t IFXRadarPulsedDoppler::getDirection(void)
   }
   return direction;
 }
-
-uint32_t IFXRadarPulsedDoppler::getFrameCount(void) 
-{
-	return radar_ard_get_frame_count( );
-}
-
 void IFXRadarPulsedDoppler::parameterDump( void ) 
 {
 	parameterDump(this->outDev);

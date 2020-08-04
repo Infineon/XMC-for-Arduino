@@ -1,6 +1,9 @@
 #ifndef IFXRadarPulsedDoppler_h
 #define IFXRadarPulsedDoppler_h
+
+#include <Arduino.h>
 #include "arduino_adapt.h"
+#include <stdint.h>
 
 class IFXRadarPulsedDoppler
 {
@@ -33,11 +36,12 @@ public:
     uint32_t getPulseWidth(void);
     uint32_t getMinFramePeriod(void); // get the minimum frame period in usec
     float getCurrentConsumption(void); // get the current consumed by the board in mA
+	uint32_t getFrameCount(void);		// get the current radar frame count 
  
 	// control functions
 	void initHW(void);
-    void registerResultCallback(void(*callBackPtr)); // register function to be called when also process is done
-    void registerErrorCallback(void(*callBackPtr)); // register function to be called in case of error
+    void registerResultCallback(void(*callBackPtr)()); // register function to be called when algo process is done
+    void registerErrorCallback(void(*callBackPtr)(uint32_t)); // register function to be called in case of error
 	void begin(void);
 	void end(void); 
 	void run(void); // run radar process
@@ -49,7 +53,6 @@ public:
 	float getVelocity(void); // get speed value with sign
 	uint8_t getDirection(void); // returns 0:no direction, 1:departing, 2:approaching
 	float getSpeed(void); // get speed value without sign
-	uint32_t getFrameCount(void); // get frame count of result
 	
 	// debug functions
 	void parameterDump(Print *outDev);
