@@ -36,9 +36,7 @@
 // XMC_BOARD for stringifying into serial or other text outputs/logs
 // Note the actual name XMC and number MUST have a character between 
 // to avoid issues with other defined macros e.g. XMC1100
-#define XMC_BOARD      		XMC4700_RADAR_BASEBOARD
-#define XMC_BOARD_NAME      "XMC4700 Radar Baseboard"
-
+#define XMC_BOARD           DEMO Radar BB XMC4700
 /* On board LED is ON when digital output is 0, LOW, False, OFF */
 #define XMC_LED_ON          0
 // Pins that are allocated or free to be used as Analog input
@@ -46,7 +44,7 @@
 #define NUM_PWM             6
 #define NUM_LEDS            3
 #define NUM_INTERRUPT       2
-#define NUM_SERIAL          2
+#define NUM_SERIAL          1
 #define NUM_TONE_PINS       16
 #define NUM_TASKS_VARIANT   32
 
@@ -127,13 +125,8 @@ const XMC_PORT_PIN_t mapping_port_pin[] =
     /* 8  */    {XMC_GPIO_PORT9, 6},    // GPIO / SPI_CS_2              P9.6
     /* 9  */    {XMC_GPIO_PORT1, 1},    // PWM40-2 output               P1.1
     /* 10 */    {XMC_GPIO_PORT9, 2},    // SPI-CS0                      P9.2
-#if NUM_SERIAL > 1
-    /* 11  */   {XMC_GPIO_PORT9, 3},    // TX1				            P9.3
-    /* 12  */   {XMC_GPIO_PORT9, 4},    // RX1              		    P9.4
-#else
     /* 11  */   {XMC_GPIO_PORT9, 3},    // SPI_MOSI                     P9.3
     /* 12  */   {XMC_GPIO_PORT9, 4},    // SPI-MISO                     P9.4
-#endif
     /* 13  */   {XMC_GPIO_PORT9, 1},    // SPI-SCK                      P9.1
     /* 14  */   {XMC_GPIO_PORT2, 14},   // I2C Data / Address SDA       P2.14
     /* 15  */   {XMC_GPIO_PORT5, 8},    // I2C Clock SCL                P5.8
@@ -163,9 +156,8 @@ const XMC_PORT_PIN_t mapping_port_pin[] =
     /* 38 */    {XMC_GPIO_PORT0, 10},   //  PWM80-0 output (Alt Pin 11) P0.10
 
 };
-#if !defined(INTERRUPT_USE_ERU)
-	#define INTERRUPT_USE_ERU
-#endif
+
+#define INTERRUPT_USE_ERU
 const XMC_PIN_INTERRUPT_t mapping_interrupt[] =
 {
     /* 0  */    {XMC_ERU0, XMC_ERU_ETL_INPUT_A0, XMC_ERU_ETL_INPUT_B3, 2, 3, 0},
@@ -209,9 +201,7 @@ XMC_ADC_t mapping_adc[] =
  * Serial 0 is Debug port
  * Serial 1  is on-board port
  */
-#if !defined(SERIAL_USE_U1C1)
-	#define SERIAL_USE_U1C1
-#endif
+#define SERIAL_USE_U1C1
 RingBuffer rx_buffer_0;
 RingBuffer tx_buffer_0;
 
@@ -236,104 +226,41 @@ XMC_UART_t XMC_UART_0 =
   .input_source_dx1     = XMC_INPUT_INVALID,
   .input_source_dx2     = XMC_INPUT_INVALID,
   .input_source_dx3     = XMC_INPUT_INVALID,
-  .irq_num              = USIC1_0_IRQn,
+  .irq_num              = USIC0_0_IRQn,
   .irq_service_request  = 0
 };
 
 HardwareSerial Serial( &XMC_UART_0, &rx_buffer_0, &tx_buffer_0 );
 
-
-
-
-#if NUM_SERIAL > 1
-RingBuffer rx_buffer_1;
-RingBuffer tx_buffer_1;
-
-XMC_UART_t XMC_UART_1 =
-{
-  .channel              = XMC_UART2_CH0,
-  .rx                   = { .port = (XMC_GPIO_PORT_t*)PORT9_BASE,
-                            .pin  = (uint8_t)4
-                          },
-  .rx_config            = { .mode = XMC_GPIO_MODE_INPUT_TRISTATE,
-                            .output_level     = XMC_GPIO_OUTPUT_LEVEL_HIGH,
-                            .output_strength  = XMC_GPIO_OUTPUT_STRENGTH_STRONG_SOFT_EDGE
-                          },
-  .tx                   = { .port = (XMC_GPIO_PORT_t*)PORT9_BASE,
-                            .pin  = (uint8_t)3
-                          },
-  .tx_config            = { .mode = (XMC_GPIO_MODE_t) XMC_GPIO_MODE_OUTPUT_PUSH_PULL_ALT2,
-                            .output_level     = XMC_GPIO_OUTPUT_LEVEL_HIGH,
-                            .output_strength  = XMC_GPIO_OUTPUT_STRENGTH_STRONG_SOFT_EDGE
-                          },
-  .input_source_dx0     = (XMC_USIC_INPUT_t)USIC2_C0_DX0_P9_4,
-  .input_source_dx1     = XMC_INPUT_INVALID,
-  .input_source_dx2     = XMC_INPUT_INVALID,
-  .input_source_dx3     = XMC_INPUT_INVALID,
-  .irq_num              = USIC2_0_IRQn,  
- // .irq_num              = 96,  // DAVE uses 98!!
-  .irq_service_request  = 0
-};
-
-HardwareSerial Serial1( &XMC_UART_1, &rx_buffer_1, &tx_buffer_1 );
-
-#endif // NUM_SERIAL
-
 // Serial Interrupt and event handling
 #ifdef __cplusplus
 extern "C" {
 #endif
-
-
 void serialEventRun( );
 void serialEvent( ) __attribute__((weak));
-void serialEvent1( ) __attribute__((weak));
 
 
 void serialEventRun( )
 {
-	if( serialEvent )
-    {
-		if( Serial.available( ) )
-			serialEvent( );
-	}
- #if NUM_SERIAL > 1
-	if( serialEvent1 )
-    {
-		if( Serial1.available( ) )
-			serialEvent1( );
-	}
- #endif
-   
+if( serialEvent )
+  {
+  if( Serial.available( ) )
+    serialEvent( );
+  }
 }
 
-/* for serial */
-void USIC1_0_IRQHandler( )
+
+void USIC0_0_IRQHandler( )
 {
 Serial.IrqHandler( );
 }
-
-/* for serial1 */
-void USIC2_0_IRQHandler( )
-{
-Serial1.IrqHandler( );
-}
-
-
 #ifdef __cplusplus
 }
 #endif
-
-
-
 #endif  /* ARDUINO_MAIN */
 
 #ifdef __cplusplus
-
 extern HardwareSerial Serial;
-#if NUM_SERIAL > 1
-extern HardwareSerial Serial1;
-#endif
 #endif  /* cplusplus */
 
 #endif  /* PINS_ARDUINO_H_ */
