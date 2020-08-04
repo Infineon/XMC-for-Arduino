@@ -1,0 +1,139 @@
+# XMC platform
+# ------------------------------
+# For more info:
+# https://arduino.github.io/arduino-cli/platform-specification/
+
+# The information about this Arduino compatible environment
+# ---------
+name=XMC Family
+version=1.5.0
+
+# Build related core definitions
+# ---------
+build.core.path ={runtime.platform.path}/core
+build.variant.path ={runtime.platform.path}/variants/{build.variant}
+build.variant.config_path ={runtime.platform.path}/variants/{build.variant}/config/{build.board_variant}
+build.flash_ld_path ={build.variant.path}/{build.flash_ld}
+build.assembly_file ={build.variant.path}/Startup_{build.variant}.S
+
+# Arduino boards.txt & Arduino IDE menu related definitions
+# This can be overwritten/changed in boards.txt
+# ---------
+uart.selected=
+build.menu_flags={uart.selected} {library.selected}
+
+# Toolchain binaries
+# ---------
+compiler.path={runtime.tools.arm-none-eabi-gcc.path}/bin/
+compiler.c.cmd=arm-none-eabi-gcc
+compiler.cpp.cmd=arm-none-eabi-g++
+compiler.ar.cmd=arm-none-eabi-ar
+compiler.size.cmd=arm-none-eabi-size
+compiler.c.elf.cmd=arm-none-eabi-gcc
+compiler.S.cmd=arm-none-eabi-gcc
+compiler.objcopy.cmd=arm-none-eabi-objcopy
+compiler.elf2hex.cmd=arm-none-eabi-objcopy
+
+# Toolchain definitions
+# ---------
+
+# Compiler definitions
+compiler.warning_flags=-w
+compiler.define=-DARDUINO=
+
+# Compiler include paths for include files
+compiler.xmclib_include.path={runtime.platform.path}/cores/xmc_lib
+compiler.cmsis_include.path={compiler.xmclib_include.path}/CMSIS/Include
+compiler.nn_include.path={compiler.xmclib_include.path}/CMSIS/NN/Include
+compiler.dsp_include.path={compiler.xmclib_include.path}/CMSIS/DSP/Include
+
+compiler.arm.cmsis.path=  "-I{compiler.xmclib_include.path}/XMCLib/inc"  "-I{compiler.dsp_include.path}" "-I{compiler.nn_include.path}" "-I{compiler.cmsis_include.path}"  "-I{compiler.xmclib_include.path}/LIBS"  "-I{build.variant.path}"  "-I{build.variant.config_path}"
+compiler.avr_support.path=  "-I{build.core.path}/avr" 
+compiler.usb.path = "-I{runtime.platform.path}/cores/usblib" "-I{runtime.platform.path}/cores/usblib/Common" "-I{runtime.platform.path}/cores/usblib/Class" "-I{runtime.platform.path}/cores/usblib/Class/Common" "-I{runtime.platform.path}/cores/usblib/Class/Device" "-I{runtime.platform.path}/cores/usblib/Core" "-I{runtime.platform.path}/cores/usblib/Core/XMC4000" 
+
+# USB Flags
+build.usb_flags=-DUSB_VID={build.vid} -DUSB_PID={build.pid} -DUSBCON '-DUSB_MANUFACTURER={build.usb_manufacturer}' '-DUSB_PRODUCT={build.usb_product}'
+# Default usb manufacturer will be replaced at compile time using numeric vendor ID if available or by board's specific value.
+build.usb_manufacturer="Unknown"
+
+# GCC related definitions
+compiler.c.flags=-mcpu={build.mcu} -mthumb -c -g -Os {compiler.warning_flags} -std=gnu11 -ffunction-sections -fdata-sections -nostdlib --param max-inline-insns-single=500 -MMD
+#compiler.c.extra_flags=-ftime-report
+compiler.c.extra_flags=
+
+compiler.c.elf.flags=-Os -Wl,--gc-sections -save-temps
+compiler.c.elf.extra_flags=
+
+# G++ related definitions
+compiler.cpp.flags=-mcpu={build.mcu} -mthumb -fpermissive -c -g -Os {compiler.warning_flags} -std=gnu++11 -ffunction-sections -fdata-sections -fno-threadsafe-statics -nostdlib --param max-inline-insns-single=500 -fno-rtti -fno-exceptions -MMD
+#compiler.cpp.extra_flags=-ftime-report
+compiler.cpp.extra_flags=
+
+# Assembler related definitions
+compiler.S.flags=-mcpu={build.mcu} -mthumb -c -g -x assembler-with-cpp
+compiler.S.extra_flags=-w
+
+# Archives & binaries related definitions
+compiler.ar.flags=rcs
+compiler.ar.extra_flags=
+
+compiler.elf2hex.flags=-O ihex
+compiler.elf2hex.extra_flags=
+
+compiler.libraries.ldflags=
+
+# Compile patterns
+# ----------------
+
+## Compile C files
+recipe.c.o.pattern="{compiler.path}{compiler.c.cmd}" {compiler.c.flags} -DXMC{build.board.version}_{build.board.type} -D{build.board_variant} -DF_CPU={build.f_cpu} -DARDUINO={build.board.version} -DARDUINO_{build.board} -DARDUINO_ARCH_{build.arch} {compiler.c.extra_flags} {build.extra_flags} {build.menu_flags} {compiler.arm.cmsis.path} {compiler.avr_support.path} {compiler.usb.path} {includes} "{source_file}" -o "{object_file}"
+
+## Compile C++ files
+recipe.cpp.o.pattern="{compiler.path}{compiler.cpp.cmd}" {compiler.cpp.flags} -DXMC{build.board.version}_{build.board.type} -D{build.board_variant} -DF_CPU={build.f_cpu} -DARDUINO={build.board.version} -DARDUINO_{build.board} -DARDUINO_ARCH_{build.arch} {compiler.cpp.extra_flags} {build.extra_flags} {build.menu_flags} {compiler.arm.cmsis.path} {compiler.avr_support.path} {compiler.usb.path} {includes} "{source_file}" -o "{object_file}"
+
+## Compile S files
+recipe.S.o.pattern="{compiler.path}{compiler.S.cmd}" {compiler.S.flags} -DXMC{build.board.version}_{build.board.type} -D{build.board_variant} -DF_CPU={build.f_cpu} -DARDUINO={build.board.version} -DARDUINO_{build.board} -DARDUINO_ARCH_{build.arch} {compiler.S.extra_flags} {build.extra_flags} {build.menu_flags} {compiler.arm.cmsis.path} {compiler.avr_support.path} {compiler.usb.path} {includes} "{source_file}" -o "{object_file}"
+
+# Linker patterns
+# ----------------
+
+## Combine gc-sections, archives, and objects
+recipe.c.combine.pattern="{compiler.path}{compiler.c.elf.cmd}" -mthumb --specs=nosys.specs --specs=nano.specs -mcpu={build.mcu} {compiler.c.elf.flags} "-T{build.variant.path}/linker_script.ld" "-Wl,-Map,{build.path}/{build.project_name}.map" {compiler.c.elf.extra_flags} -o "{build.path}/{build.project_name}.elf" "-L{build.path}" -Wl,--cref -Wl,--check-sections -Wl,--gc-sections -Wl,--entry=Reset_Handler -Wl,--unresolved-symbols=report-all -Wl,--warn-common -Wl,--warn-section-align {object_files} "{build.path}/{archive_file}" -lm 
+
+## Create archives
+# ----------------
+
+# Archive_file_path is needed for backwards compatibility with IDE 1.6.5 or older, IDE 1.6.6 or newer overrides this value
+archive_file_path={build.path}/{archive_file}
+recipe.ar.pattern="{compiler.path}{compiler.ar.cmd}" {compiler.ar.flags} {compiler.ar.extra_flags} "{archive_file_path}" "{object_file}"
+
+# Create output files
+# ----------------
+
+## Create output (bin file)
+recipe.objcopy.bin.pattern="{compiler.path}{compiler.elf2hex.cmd}" {compiler.elf2hex.flags} {compiler.elf2hex.extra_flags}"{build.path}/{build.project_name}.elf" "{build.path}/{build.project_name}.hex"
+
+## Save hex
+recipe.output.tmp_file={build.project_name}.bin
+recipe.output.save_file={build.project_name}.{build.variant}.bin
+
+## Compute size
+# ----------------
+
+recipe.size.pattern="{compiler.path}{compiler.size.cmd}" -A --common "{build.path}/{build.project_name}.elf"
+recipe.size.regex=^(\.text|\.eh_frame)\s+([0-9]+).*
+# Recipe to show SRAM size used
+recipe.size.regex.data=^(?:\.data|\.VENEER_Code|\.ram_code|\.bss|\.no_init|\Stack)\s+([0-9]+).*
+
+# ARM uploader/programmers tools
+# ----------------
+
+tools.xmcprog.path={runtime.tools.XMCFlasher.path}
+tools.xmcprog.jar_file=XMCFlasher.jar
+tools.xmcprog.erase.params = -e -device "XMC{build.board.version}-{build.board.v}" 
+tools.xmcprog.erase.pattern=java -jar "{path}/{jar_file}" {erase.params}
+tools.xmcprog.upload.protocol=
+tools.xmcprog.upload.params.verbose=
+tools.xmcprog.upload.params.quiet=
+tools.xmcprog.upload.params =-p "{build.path}/{build.project_name}.hex"  -device "XMC{build.board.version}-{build.board.v}" 
+tools.xmcprog.upload.pattern=java -jar "{path}/{jar_file}" {upload.params}

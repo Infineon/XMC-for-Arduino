@@ -1,0 +1,60 @@
+#######################################
+# Syntax Colouring Map For Core
+#######################################
+
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+
+digitalToggle	KEYWORD2
+setAnalogWriteFrequency	KEYWORD2
+getAnalogReadBits	KEYWORD2
+getAnalogWriteBits	KEYWORD2
+getAnalogReadMaximum	KEYWORD2
+getAnalogWriteMaximum	KEYWORD2
+
+#######################################
+# Instances (KEYWORD2)
+#######################################
+
+#######################################
+# Constants (LITERAL1)
+#######################################
+
+INPUT_PULLDOWN	LITERAL1	Constants	RESERVED_WORD_2
+OUTPUT_OPENDRAIN	LITERAL1	Constants	RESERVED_WORD_2
+NUM_DIGITAL_PINS	LITERAL1
+NUM_ANALOG_INPUTS	LITERAL1
+NUM_PWM	LITERAL1
+NUM_LEDS	LITERAL1
+NUM_INTERRUPT	LITERAL1
+NUM_SERIAL	LITERAL1
+
+A0	LITERAL1
+A1	LITERAL1
+A2	LITERAL1
+A3	LITERAL1
+A4	LITERAL1
+A5	LITERAL1
+
+LED1	LITERAL1
+LED2	LITERAL1
+
+# XMC1xxx Boot Kits only
+LED3	LITERAL1
+LED4	LITERAL1
+LED5	LITERAL1
+LED6	LITERAL1
+
+# XMC4700 only
+BUTTON1	LITERAL1
+BUTTON2	LITERAL1
+
+# Radar Baseboard XMC4700 only
+LED_RED	LITERAL1
+LED_BLUE	LITERAL1
+LED_GREEN	LITERAL1

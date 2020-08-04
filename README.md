@@ -19,6 +19,7 @@ This repository integrates [Infineon's](https://www.infineon.com/) XMC microcont
 * [XMC1100 Boot Kit](https://www.infineon.com/cms/en/product/evaluation-boards/kit_xmc11_boot_001/)
 * [XMC1300 Boot Kit](https://www.infineon.com/cms/de/product/evaluation-boards/kit_xmc13_boot_001/)
 * [XMC1300 Sense2GoL](https://www.infineon.com/cms/de/product/evaluation-boards/demo-sense2gol/)
+* [XMC4400 Platform 2Go](https://www.infineon.com/cms/en/product/evaluation-boards/kit_xmc_plt2go_xmc4400//)
 * [XMC4700 Relax Kit](https://www.infineon.com/cms/en/product/evaluation-boards/kit_xmc47_relax_v1/)
 * [XMC4700 Radar Baseboard](https://www.infineon.com/cms/en/product/evaluation-boards/demo-sense2gol-pulse/)
 
@@ -34,6 +35,7 @@ Please visit also the Wiki for additional information, e.g. datasheets, pin out 
 * Page for [XMC1100 Boot Kit](https://github.com/Infineon/XMC-for-Arduino/wiki/XMC1100-Boot-Kit)
 * Page for [XMC1300 Boot Kit](https://github.com/Infineon/XMC-for-Arduino/wiki/XMC1300-Boot-Kit)
 * Page for [XMC1300 Sense2GoL](https://github.com/Infineon/XMC-for-Arduino/wiki/XMC1300-Sense2GoL)
+* Page for [XMC4400 Platform 2Go](https://github.com/Infineon/XMC-for-Arduino/wiki/XMC4400-Platform2Go)
 * Page for [XMC4700 Relax Kit](https://github.com/Infineon/XMC-for-Arduino/wiki/XMC4700-Relax-Kit)
 * Page for [XMC4700 Radar Baseboard](https://github.com/Infineon/XMC-for-Arduino/wiki/DEMO-Radar-BB-XMC4700)
 
@@ -54,11 +56,18 @@ If you have already installed '[DAVE™ - Development Platform for XMC™ Microc
 
 Paste the following URL into the 'Additional Boards Manager URLs' input field under **File** > **Preferences** to add Infineon's microcontroller boards to the Arduino IDE.
 
-https://github.com/Infineon/Assets/releases/download/current/package_infineon_index.json
+
+https://github.com/Infineon/XMC-for-Arduino/releases/latest/download/package_infineon_index.json
 
 Easier to copy (no clickable link):
 
 ```
+https://github.com/Infineon/XMC-for-Arduino/releases/latest/download/package_infineon_index.json
+```
+
+:warning: **IMPORTANT NOTE!** :warning: 
+The former "package_infineon_index.json" URL will no longer be maintained after version 1.4.0. Upcoming versions will not be shown available in the board manager. 
+``` 
 https://github.com/Infineon/Assets/releases/download/current/package_infineon_index.json
 ```
 
@@ -78,6 +87,7 @@ In the boards list **Tools** > **Board**, the XMC microcontroller boards are add
 * The XMC1100 Boot Kit has limitations if compared to the official Arduino boards (consult the [XMC-for-Arduino Wiki](https://github.com/Infineon/XMC-for-Arduino/wiki) for more information)
 * Refer also to the LICENSE.md/txt file for further information
 * Arduino 1.8.0 IDE might have problems with the XMC-for-Arduino releases
+* XMC-for-Arduino support for 'arm-linux-gnueabihf' only until version 1.1.
 
 ### Using PlatformIO IDE
 
@@ -87,6 +97,13 @@ In the boards list **Tools** > **Board**, the XMC microcontroller boards are add
 - [Integration with Cloud and Desktop IDEs](http://docs.platformio.org/en/latest/ide.html?utm_source=github&utm_medium=xmc-for-arduino) -
   Cloud9, Codeanywhere, Eclipse Che (Codenvy), Atom, CLion, Eclipse, Emacs, NetBeans, Qt Creator, Sublime Text, VIM, Visual Studio, and VSCode
 - [Project Examples](https://github.com/Infineon/platformio-infineonxmc/tree/master/examples)
+
+## Contributing and Third Party Libraries
+To contribute enhancements, fixes and the like see *Contributors.md*. in root folder
+
+Third Party or external library maintainers see *Libraries.md*. in root folder
+    
+Also see [Wiki](https://github.com/Infineon/XMC-for-Arduino/wiki) for any additional information
 
 ## Additional Contributors
 

@@ -1,0 +1,63 @@
+#######################################
+# Syntax Coloring Map For DeviceControlXMC Library
+#######################################
+
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+
+XMCClass	KEYWORD1
+
+
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+
+begin	KEYWORD2
+enterActiveMode	KEYWORD2
+reset	KEYWORD2
+configureSleepMode	KEYWORD2
+enterSleepMode	KEYWORD2
+getTemperature	KEYWORD2
+calibrateTemperatureSensor	KEYWORD2
+freeHeapRAM	KEYWORD2
+
+
+#######################################
+# Constants (LITERAL1)
+#######################################
+
+SLEEP_MODE	LITERAL1
+DEEP_SLEEP_MODE	LITERAL1
+
+WAKEUP_ON_RTC	LITERAL1
+WAKEUP_ON_WATCHDOG	LITERAL1
+WAKEUP_ON_IN_SIGNAL_POS_EDGE	LITERAL1
+WAKEUP_ON_IN_SIGNAL_NEG_EDGE	LITERAL1
+
+SYSCLK_FOFI	LITERAL1
+SYSCLK_FPLL	LITERAL1
+USB_ON	LITERAL1
+USB_OFF	LITERAL1
+SDMMC_ON	LITERAL1
+SDMMC_OFF	LITERAL1
+ETH_ON	LITERAL1
+ETH_OFF	LITERAL1
+EBU_ON	LITERAL1
+EBU_OFF	LITERAL1
+CCU_ON	LITERAL1
+CCU_OFF	LITERAL1
+WDT_ON	LITERAL1
+WDT_OFF	LITERAL1
+FLASH_ON	LITERAL1
+FLASH_OFF	LITERAL1
+PLL_ON	LITERAL1
+PLL_OFF	LITERAL1
+VCO_ON	LITERAL1
+VCO_OFF	LITERAL1
+
+USIC_ON	LITERAL1
+USIC_OFF	LITERAL1
+LEDT_ON	LITERAL1
+LEDT_OFF	LITERAL1
