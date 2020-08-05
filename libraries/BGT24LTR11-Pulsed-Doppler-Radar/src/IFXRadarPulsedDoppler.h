@@ -1,9 +1,13 @@
 #ifndef IFXRadarPulsedDoppler_h
 #define IFXRadarPulsedDoppler_h
 
-#include <Arduino.h>
 #include "arduino_adapt.h"
 #include <stdint.h>
+
+#if not defined XMC4700_Radar_Baseboard
+#error  "Pulsed Radar is NOT supported on this board"
+#endif
+
 
 class IFXRadarPulsedDoppler
 {

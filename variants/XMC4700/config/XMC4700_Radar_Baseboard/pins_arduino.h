@@ -157,7 +157,6 @@ const XMC_PORT_PIN_t mapping_port_pin[] =
 
 };
 
-#define INTERRUPT_USE_ERU
 const XMC_PIN_INTERRUPT_t mapping_interrupt[] =
 {
     /* 0  */    {XMC_ERU0, XMC_ERU_ETL_INPUT_A0, XMC_ERU_ETL_INPUT_B3, 2, 3, 0},
@@ -199,9 +198,8 @@ XMC_ADC_t mapping_adc[] =
  * UART objects
  *
  * Serial 0 is Debug port
- * Serial 1  is on-board port
  */
-#define SERIAL_USE_U1C1
+
 RingBuffer rx_buffer_0;
 RingBuffer tx_buffer_0;
 
