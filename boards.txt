@@ -121,7 +121,7 @@ XMC1100_H_BRIDGE2GO.build.flash_ld=linker_script.ld
 XMC1100_H_BRIDGE2GO.build.extra_flags=-DARM_MATH_CM0 -DXMC1_SERIES
 
 XMC1100_H_BRIDGE2GO.menu.UART.debug=PC
-XMC1100_H_BRIDGE2GO.menu.UART.debug.uart.selected=-DSERIAL_ONBOARD
+XMC1100_H_BRIDGE2GO.menu.UART.debug.uart.selected=-DSERIAL_HOSTPC
 XMC1100_H_BRIDGE2GO.menu.UART.onBoard=On Board
 XMC1100_H_BRIDGE2GO.menu.UART.onBoard.uart.selected=-DSERIAL_ONBOARD
 
