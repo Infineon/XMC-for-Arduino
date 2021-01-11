@@ -104,6 +104,22 @@ extern "C" {
 						asm volatile("nop"); asm volatile("nop");asm volatile("nop");\
 						asm volatile("nop"); asm volatile("nop");asm volatile("nop");\
 						asm volatile("nop"); asm volatile("nop");asm volatile("nop"); } 		
+#elif ((UC_FAMILY == XMC4) && (F_CPU == 80000000U))
+// 40 NOPS
+#define NOPS_FOR_USEC() { asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
+						asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
+						asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
+						asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
+						asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
+						asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
+						asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
+						asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
+						asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
+						asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
+						asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
+						asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
+						asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
+						asm volatile("nop"); }
 #else
 #error wiring_time: NOPS_FOR_USEC not defined
 #endif
