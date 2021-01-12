@@ -115,7 +115,7 @@ const uint8_t mapping_pin_PWM4[][ 2 ] = {
                                         { 255, 255 } };
 
 const XMC_PORT_PIN_t mapping_port_pin[] =
-{
+    {
     /* 0  */    {XMC_GPIO_PORT1, 2}, // RX / LED 3 output                  P1.2
     /* 1  */    {XMC_GPIO_PORT1, 3}, // TX / LED 4 output                  P1.3
     /* 2  */    {XMC_GPIO_PORT1, 4}, // External int 0 / LED 5 output      P1.4
@@ -148,7 +148,7 @@ const XMC_PORT_PIN_t mapping_port_pin[] =
     /* 29  */   {XMC_GPIO_PORT0, 11},// AUX / GPIO                         P0.11
     /* 30  */   {XMC_GPIO_PORT0, 13},// AUX / GPIO                         P0.13
     /* 31  */   {XMC_GPIO_PORT1, 5}  // LED 6 output                       P1.5
-};
+    };
 
 const XMC_PIN_INTERRUPT_t mapping_interrupt[] =
 {
