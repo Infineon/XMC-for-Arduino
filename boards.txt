@@ -266,7 +266,7 @@ XMC4200_Distance2Go.name=XMC4200 Distance2Go
 XMC4200_Distance2Go.upload.tool=xmcprog
 XMC4200_Distance2Go.upload.speed=115200
 XMC4200_Distance2Go.upload.resetmethod=ck
-XMC4200_Distance2Go.upload.maximum_size=512000
+XMC4200_Distance2Go.upload.maximum_size=262144
 XMC4200_Distance2Go.upload.wait_for_upload_port=true
    
 XMC4200_Distance2Go.communication=usb
