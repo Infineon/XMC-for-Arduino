@@ -97,11 +97,6 @@ const uint8_t mapping_pin_PWM4[][ 2 ] = {
                                         { 6, 2 },
                                         { 9, 3 },
                                         { 255, 255 } };
-
-const uint8_t mapping_pin_DAC[][ 2 ] = {
-                                        { 61, 0 },
-                                        { 94, 1 },
-                                        { 255, 255 } };
                     
 const XMC_PORT_PIN_t mapping_port_pin[]=
 {
@@ -125,8 +120,8 @@ const XMC_PORT_PIN_t mapping_port_pin[]=
   /* 7  */ /* pin 16 */    {XMC_GPIO_PORT14 , 0},  // A0 - ADC G0CH0, IFI low gain
   /*    */ /* pin 17  */   //{XMC_GPIO_PORT , },   // VSSA/VAGND
   /*    */ /* pin 18  */   //{XMC_GPIO_PORT , },   // VDDA/VAREF
-  /* 8  */ /* pin 19  */   {XMC_GPIO_PORT14 , 9},  // A7 - ADC G1CH1, DAC OUT_1, IFQ low gain
-  /* 9  */ /* pin 20  */   {XMC_GPIO_PORT14 , 8},  // A6 - ADC G1CH0, DAC OUT_0
+  /* 8  */ /* pin 19  */   {XMC_GPIO_PORT14 , 9},  // A7 - ADC G1CH1, IFQ low gain
+  /* 9  */ /* pin 20  */   {XMC_GPIO_PORT14 , 8},  // A6 - ADC G1CH0,
   /* 10 */ /* pin 21  */   {XMC_GPIO_PORT2 , 5},   
   /* 11 */ /* pin 22  */   {XMC_GPIO_PORT2 , 4},  
   /* 12 */ /* pin 23  */   {XMC_GPIO_PORT2 , 3}, 
@@ -171,23 +166,18 @@ XMC_PWM4_t mapping_pwm4[] =
   {CCU40, CCU40_CC43, 3, mapping_port_pin[21] , P1_0_AF_CCU40_OUT3 ,  XMC_CCU4_SLICE_PRESCALER_64, PWM4_TIMER_PERIOD, DISABLED}, // PWM disabled   P1.0
 };
 
-XMC_ARD_DAC_t mapping_dac[] =
-{
-  {XMC_DAC0, 1, 12},
-  {XMC_DAC0, 0, 12}
-};
-
 XMC_ADC_t mapping_adc[] =
 {
+  // global, channel, group, group num, result reg, disabled
   //Result reg numbers are now equal to channel numbers
   {VADC, 0, VADC_G0, 0, 0, DISABLED}, // A0 ADC G0CH0 P14.0 
-  {VADC, 1, VADC_G0, 0, 1, DISABLED}, // A1 ADC G0CH3 P14.3
-  {VADC, 1, VADC_G0, 0, 1, DISABLED}, // A2 ADC G0CH4 P14.4
-  {VADC, 1, VADC_G0, 0, 1, DISABLED}, // A3 ADC G0CH5 P14.5
-  {VADC, 1, VADC_G0, 0, 1, DISABLED}, // A4 ADC G0CH6 P14.6
-  {VADC, 1, VADC_G0, 0, 1, DISABLED}, // A5 ADC G0CH7 P14.7
-  {VADC, 1, VADC_G0, 0, 1, DISABLED}, // A6 ADC G1CH0 P14.8
-  {VADC, 1, VADC_G0, 0, 1, DISABLED}, // A7 ADC G1CH1 P14.9
+  {VADC, 3, VADC_G0, 0, 3, DISABLED}, // A1 ADC G0CH3 P14.3
+  {VADC, 4, VADC_G0, 0, 4, DISABLED}, // A2 ADC G0CH4 P14.4
+  {VADC, 5, VADC_G0, 0, 5, DISABLED}, // A3 ADC G0CH5 P14.5
+  {VADC, 6, VADC_G0, 0, 6, DISABLED}, // A4 ADC G0CH6 P14.6
+  {VADC, 7, VADC_G0, 0, 7, DISABLED}, // A5 ADC G0CH7 P14.7
+  {VADC, 0, VADC_G1, 1, 0, DISABLED}, // A6 ADC G1CH0 P14.8
+  {VADC, 1, VADC_G1, 1, 1, DISABLED}, // A7 ADC G1CH1 P14.9
 };
 
 /*
@@ -208,8 +198,7 @@ XMC_UART_t XMC_UART_0 =
   { 
     .mode              = XMC_GPIO_MODE_INPUT_TRISTATE,
     .output_level      = XMC_GPIO_OUTPUT_LEVEL_HIGH,
-    .output_strength   = XMC_GPIO_OUTPUT_STRENGTH_STRONG_SOFT_EDGE,
-    .input_hysteresis  = XMC_GPIO_INPUT_HYSTERESIS_STANDARD
+    .output_strength   = XMC_GPIO_OUTPUT_STRENGTH_STRONG_SOFT_EDGE
   },
   .tx = { 
     .port              = (XMC_GPIO_PORT_t *)PORT0_BASE,
@@ -219,8 +208,7 @@ XMC_UART_t XMC_UART_0 =
   { 
     .mode              = (XMC_GPIO_MODE_t) XMC_GPIO_MODE_OUTPUT_PUSH_PULL_ALT2,
     .output_level      = XMC_GPIO_OUTPUT_LEVEL_HIGH,
-    .output_strength   = XMC_GPIO_OUTPUT_STRENGTH_STRONG_SOFT_EDGE,
-    .input_hysteresis  = XMC_GPIO_INPUT_HYSTERESIS_STANDARD
+    .output_strength   = XMC_GPIO_OUTPUT_STRENGTH_STRONG_SOFT_EDGE
   },
   .input_source_dx0    = (XMC_USIC_INPUT_t)USIC1_C1_DX0_P0_0,
   .input_source_dx1    = XMC_INPUT_INVALID,
