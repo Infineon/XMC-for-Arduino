@@ -289,8 +289,7 @@ XMC4200_Distance2Go.build.variant=XMC4200
 XMC4200_Distance2Go.build.board_variant=XMC4200_Distance2Go
 XMC4200_Distance2Go.build.flash_size=256K
 XMC4200_Distance2Go.build.flash_ld=linker_script.ld
-XMC4200_Distance2Go.build.extra_flags=-DARM_MATH_CM4 -DARM_MATH_DSP 
-#-DUSB0
+XMC4200_Distance2Go.build.extra_flags=-DARM_MATH_CM4 -DARM_MATH_DSP -DXMC4_SERIES
 
 XMC4200_Distance2Go.menu.UART.debug=PC
 XMC4200_Distance2Go.menu.UART.debug.uart.selected=-DSERIAL_HOSTPC
