@@ -122,6 +122,26 @@ const XMC_PORT_PIN_t mapping_port_pin[] = {
 	/* 27   pin 47  */   {XMC_GPIO_PORT0, 3},
 	/* 28   pin 48  */   {XMC_GPIO_PORT0, 2}
 	};
+	
+	/*      pin 3  */    // USB_DM
+	/*      pin 4  */    // USB_DP
+	/*      pin 5  */    // VDDP
+	/*      pin 6  */    // VDDC
+	/*      pin 7  */    // HIB_IO_0
+	/*      pin 8  */    // RTC_XTAL1
+	/*      pin 9  */    // RTC_XTAL2
+	/*      pin 10 */    // VBAT
+	/*      pin 17  */   // VSSA/VAGND
+	/*      pin 18  */   // VDDA/VAREF
+	/*      pin 27  */   // VSS
+	/*      pin 28  */   // VDDP
+	/*      pin 29  */   // XTAL1
+	/*      pin 30  */   // XTAL2
+	/*      pin 31  */   // VDDC
+	/*      pin 32  */   // PORST
+	/*      pin 33  */   // TMS, Data pin for debugging via SWD/SPD
+	/*      pin 34  */   // TCK, Clock pin for debugging via SWD
+	/*      pin 41  */   // VDDP
 
 const XMC_PIN_INTERRUPT_t mapping_interrupt[] = {
     /* 0  */    {CCU41, CCU41_CC40, 0, 0, CCU41_IN0_P2_5},
