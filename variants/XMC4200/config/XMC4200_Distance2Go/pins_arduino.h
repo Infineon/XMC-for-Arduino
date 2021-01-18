@@ -91,8 +91,6 @@ extern uint8_t SCK;
             { 9, 3 },
             { 255, 255 } };
 
-	const uint8_t mapping_pin_PWM8[][ 2 ] = { { 255, 255 } };
-
 const XMC_PORT_PIN_t mapping_port_pin[] = {
 	/* 0    pin 1  */    {XMC_GPIO_PORT0, 1},   // UART TX
 	/* 1    pin 2  */    {XMC_GPIO_PORT0, 0},   // UART RX
@@ -137,9 +135,6 @@ XMC_PWM4_t mapping_pwm4[] = {
 	{CCU40, CCU40_CC42, 2, mapping_port_pin[20] , P1_1_AF_CCU40_OUT2 ,  XMC_CCU4_SLICE_PRESCALER_64, PWM4_TIMER_PERIOD, DISABLED}, // PWM disabled   P1.1
 	{CCU40, CCU40_CC43, 3, mapping_port_pin[21] , P1_0_AF_CCU40_OUT3 ,  XMC_CCU4_SLICE_PRESCALER_64, PWM4_TIMER_PERIOD, DISABLED}  // PWM disabled   P1.0
 	};
-
-
-XMC_PWM8_t mapping_pwm8[1];
 
 XMC_ADC_t mapping_adc[] = {
 	{VADC, 0, VADC_G0, 0, 0, DISABLED}, // A0 ADC G0CH0 P14.0
