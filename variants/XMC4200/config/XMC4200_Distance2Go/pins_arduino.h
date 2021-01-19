@@ -73,8 +73,8 @@ extern uint8_t SCK;
 #define A6  6   //ADC G1CH0 P14.8
 #define A7  7   //ADC G1CH1 P14.9
 
-#define LED_BUILTIN 34  //Standard Arduino LED: Used LED1
-#define LED1        34  //Additional LED1 P2.0
+#define LED_BUILTIN 25  //Standard Arduino LED: Used LED1
+#define LED1        25  //Additional LED1 P2.0
 #define GND         14  //GND
 
 #define digitalPinToInterrupt(p)    ((p) == 2 ? 0 : ((p) == 3 ? 1 : NOT_AN_INTERRUPT))
@@ -92,8 +92,8 @@ extern uint8_t SCK;
             { 255, 255 } };
 
 const XMC_PORT_PIN_t mapping_port_pin[] = {
-	/* 0    pin 1  */    {XMC_GPIO_PORT0, 1},   // UART TX
-	/* 1    pin 2  */    {XMC_GPIO_PORT0, 0},   // UART RX
+	/* 0    pin 1  */    {XMC_GPIO_PORT0, 1},   // UART1 TX
+	/* 1    pin 2  */    {XMC_GPIO_PORT0, 0},   // UART1 RX
 	/* 2    pin 11 */    {XMC_GPIO_PORT14, 7},  // A5 - ADC G0CH7
 	/* 3    pin 12 */    {XMC_GPIO_PORT14, 6},  // A4 - ADC G0CH6
 	/* 4    pin 13 */    {XMC_GPIO_PORT14, 5},  // A3 - ADC G0CH5
@@ -108,8 +108,8 @@ const XMC_PORT_PIN_t mapping_port_pin[] = {
 	/* 13   pin 24  */   {XMC_GPIO_PORT2, 2},
 	/* 14   pin 25  */   {XMC_GPIO_PORT2, 1},   // PLL - MUXOUT
 	/* 15   pin 26  */   {XMC_GPIO_PORT2, 0},   // LED31 (red LED)
-	/* 16   pin 35  */   {XMC_GPIO_PORT1, 5},
-	/* 17   pin 36  */   {XMC_GPIO_PORT1, 4},
+	/* 16   pin 35  */   {XMC_GPIO_PORT1, 5},   // UART2 TX, CAN TX
+	/* 17   pin 36  */   {XMC_GPIO_PORT1, 4},   // UART2 RX, CAN RX
 	/* 18   pin 37  */   {XMC_GPIO_PORT1, 3},   // PLL - TRIG 2
 	/* 19   pin 38  */   {XMC_GPIO_PORT1, 2},   // PLL - TRIG 1
 	/* 20   pin 39  */   {XMC_GPIO_PORT1, 1},   // PLL - MOD
@@ -175,20 +175,20 @@ RingBuffer tx_buffer_0;
 
 XMC_UART_t XMC_UART_0 =
 {
-  .channel             = XMC_UART0_CH0,
+  .channel             = XMC_UART1_CH1,
   .rx                  = { .port = (XMC_GPIO_PORT_t *)PORT0_BASE,
                            .pin  = (uint8_t)0
                            },
   .rx_config           = { .mode = XMC_GPIO_MODE_INPUT_TRISTATE,
-                           .output_level      = XMC_GPIO_OUTPUT_LEVEL_HIGH,
-                           .output_strength   = XMC_GPIO_OUTPUT_STRENGTH_STRONG_SOFT_EDGE
+  	                       .output_level     = XMC_GPIO_OUTPUT_LEVEL_HIGH,
+                           .output_strength  = XMC_GPIO_OUTPUT_STRENGTH_STRONG_SOFT_EDGE
                            },
   .tx                  = { .port = (XMC_GPIO_PORT_t *)PORT0_BASE,
                            .pin  = (uint8_t)1
                            },
   .tx_config           = { .mode = (XMC_GPIO_MODE_t) XMC_GPIO_MODE_OUTPUT_PUSH_PULL_ALT2,
-                           .output_level      = XMC_GPIO_OUTPUT_LEVEL_HIGH,
-                           .output_strength   = XMC_GPIO_OUTPUT_STRENGTH_STRONG_SOFT_EDGE
+  	                       .output_level     = XMC_GPIO_OUTPUT_LEVEL_HIGH,
+                           .output_strength  = XMC_GPIO_OUTPUT_STRENGTH_STRONG_SOFT_EDGE
                            },
   .input_source_dx0    = (XMC_USIC_INPUT_t)USIC1_C1_DX0_P0_0,
   .input_source_dx1    = XMC_INPUT_INVALID,
