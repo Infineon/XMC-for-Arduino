@@ -73,9 +73,9 @@ extern uint8_t SCK;
 #define A6  6   //ADC G1CH0 P14.8
 #define A7  7   //ADC G1CH1 P14.9
 
-#define LED_BUILTIN 25  //Standard Arduino LED: Used LED1
-#define LED1        25  //Additional LED1 P2.0
-#define GND         14  //GND
+#define LED_BUILTIN 15  //Standard Arduino LED: Used LED1
+#define LED1        15  //Additional LED1 P2.0
+#define GND         29  //GND
 
 #define digitalPinToInterrupt(p)    ((p) == 2 ? 0 : ((p) == 3 ? 1 : NOT_AN_INTERRUPT))
 
@@ -85,10 +85,10 @@ extern uint8_t SCK;
    Putting both parts in array means if a PWM4 channel gets reassigned for
    another function later a gap in channel numbers will not mess things up */
 	const uint8_t mapping_pin_PWM4[][ 2 ] = {
-            { 3, 0 },
-            { 5, 1 },
-            { 6, 2 },
-            { 9, 3 },
+            { 18, 0 },
+            { 19, 1 },
+            { 20, 2 },
+            { 21, 3 },
             { 255, 255 } };
 
 const XMC_PORT_PIN_t mapping_port_pin[] = {
