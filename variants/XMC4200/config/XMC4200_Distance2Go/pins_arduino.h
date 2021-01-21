@@ -175,26 +175,26 @@ RingBuffer tx_buffer_0;
 
 XMC_UART_t XMC_UART_0 =
 {
-  .channel             = XMC_UART0_CH0,
-  .rx                  = { .port = (XMC_GPIO_PORT_t *)PORT1_BASE,
-                           .pin  = (uint8_t)4
+  .channel             = XMC_UART1_CH1,
+  .rx                  = { .port = (XMC_GPIO_PORT_t *)PORT0_BASE,
+                           .pin  = (uint8_t)0
                            },
   .rx_config           = { .mode = XMC_GPIO_MODE_INPUT_TRISTATE,
   	                       .output_level     = XMC_GPIO_OUTPUT_LEVEL_HIGH,
                            .output_strength  = XMC_GPIO_OUTPUT_STRENGTH_STRONG_SOFT_EDGE
                            },
-  .tx                  = { .port = (XMC_GPIO_PORT_t *)PORT1_BASE,
-                           .pin  = (uint8_t)5
+  .tx                  = { .port = (XMC_GPIO_PORT_t *)PORT0_BASE,
+                           .pin  = (uint8_t)1
                            },
   .tx_config           = { .mode = (XMC_GPIO_MODE_t) XMC_GPIO_MODE_OUTPUT_PUSH_PULL_ALT2,
   	                       .output_level     = XMC_GPIO_OUTPUT_LEVEL_HIGH,
                            .output_strength  = XMC_GPIO_OUTPUT_STRENGTH_STRONG_SOFT_EDGE
                            },
-  .input_source_dx0    = (XMC_USIC_INPUT_t)USIC0_C0_DX0_P1_4, // U0C0.DX0B
+  .input_source_dx0    = (XMC_USIC_INPUT_t)USIC1_C1_DX0_P0_0,
   .input_source_dx1    = XMC_INPUT_INVALID,
   .input_source_dx2    = XMC_INPUT_INVALID,
   .input_source_dx3    = XMC_INPUT_INVALID,
-  .irq_num             = USIC0_3_IRQn, // 87
+  .irq_num             = USIC1_1_IRQn, 
   .irq_service_request = 0
 };	
 
@@ -217,18 +217,7 @@ if( serialEvent )
   }
 }
 
-
-void USIC0_0_IRQHandler( )
-{
-Serial.IrqHandler( );
-}
-
-void USIC0_3_IRQHandler( )
-{
-Serial.IrqHandler( );
-}
-
-void USIC0_5_IRQHandler( )
+void USIC1_1_IRQHandler( )
 {
 Serial.IrqHandler( );
 }
