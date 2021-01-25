@@ -3,7 +3,6 @@
 
 IFXRadarPulsedDoppler::IFXRadarPulsedDoppler()
 {
-	this->result_handler_registered = false;
 	this->error_handler_registered = false;
 	this->outDev = NULL;
 }

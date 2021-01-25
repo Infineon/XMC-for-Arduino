@@ -5,9 +5,7 @@
 class IFXRadarPulsedDoppler
 {
 private: 
-	//bool result_handler_registered;
-	//bool error_handler_registered;
-    //bool raw_data_handler_registered;
+	bool error_handler_registered;
 	Print *outDev;
 	
 public:
