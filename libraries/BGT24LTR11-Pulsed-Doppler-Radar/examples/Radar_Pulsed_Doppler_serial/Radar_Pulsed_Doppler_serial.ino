@@ -1,18 +1,19 @@
 #include <IFXRadarPulsedDoppler.h>
+#include <LED.h>
 
 // IFX Radar Pulsed Doppler Object
 IFXRadarPulsedDoppler radarDev;
+LED Led;
 
 void myErrorCallback( uint32_t error ) 
 {
   Serial.print("--- ERROR: 0x");
   Serial.println( error, HEX);
   
-  // turn on LEDs for error
-  digitalWrite(LED_GREEN, LOW);
-  digitalWrite(LED_RED, LOW);
-  digitalWrite(LED_BLUE, LOW);
-  
+  Led.On( LED_GREEN );
+  Led.On( LED_RED );
+  Led.On( LED_BLUE );
+
   while( 1 )
     ; 
 }
@@ -24,33 +25,33 @@ void myResultCallback(void)
   if(targetDirection == 1)
   {
     // turn on Red LED for departing target
-    digitalWrite(LED_GREEN, HIGH);
-    digitalWrite(LED_RED, LOW);
-    digitalWrite(LED_BLUE, HIGH);
+    Led.Off( LED_GREEN );
+    Led.On( LED_RED );
+    Led.Off( LED_BLUE );
     Serial.println("departing");
   }
   else if(targetDirection == 2)
   {
     // turn on Green LED for approaching target
-    digitalWrite(LED_GREEN, LOW);
-    digitalWrite(LED_RED, HIGH);
-    digitalWrite(LED_BLUE, HIGH);      
+    Led.On( LED_GREEN );
+    Led.Off( LED_RED );
+    Led.Off( LED_BLUE );
     Serial.println("approaching");
   }
   else if(radarDev.targetAvailable() == true)
   {
     // turn on Blue LED for just normal motion with no meaningful direction
-    digitalWrite(LED_GREEN, HIGH);
-    digitalWrite(LED_RED, HIGH);
-    digitalWrite(LED_BLUE, LOW);
+    Led.Off( LED_GREEN );
+    Led.Off( LED_RED );
+    Led.On( LED_BLUE );
     Serial.println("motion");
   }
   else
   {
     // turn off LEDs for no motion
-    digitalWrite(LED_GREEN, HIGH);
-    digitalWrite(LED_RED, HIGH);
-    digitalWrite(LED_BLUE, HIGH);
+    Led.Off( LED_GREEN );
+    Led.Off( LED_RED );
+    Led.Off( LED_BLUE );
   }
 }
 
@@ -62,12 +63,13 @@ float raw_q[256];
 
 void setup() {
 
-  pinMode(LED_RED, OUTPUT);
-  digitalWrite(LED_RED, HIGH);
-  pinMode(LED_GREEN, OUTPUT);
-  digitalWrite(LED_GREEN, HIGH);
-  pinMode(LED_BLUE, OUTPUT);
-  digitalWrite(LED_BLUE, HIGH);
+  Led.Add( LED_RED );
+  Led.Add( LED_GREEN );
+  Led.Add( LED_BLUE );
+  
+  Led.Off( LED_RED );
+  Led.Off( LED_GREEN );
+  Led.Off( LED_BLUE );
 
   Serial.begin(115200);  
 
