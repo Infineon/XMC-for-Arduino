@@ -138,12 +138,12 @@ float IFXRadarPulsedDoppler::getCurrentConsumption(void)
   return currentMA;
 }
 
-void IFXRadarPulsedDoppler::registerResultCallback(void(*callBackPtr)) // register algo done callback function
+void IFXRadarPulsedDoppler::registerResultCallback(void(*callBackPtr)( void ) ) // register algo done callback function
 {
   radar_ard_register_result_handler(callBackPtr);
 }
 
-void IFXRadarPulsedDoppler::registerErrorCallback(void(*callBackPtr))
+void IFXRadarPulsedDoppler::registerErrorCallback(void(*callBackPtr)(uint32_t))
 {
   radar_ard_register_error_handler(callBackPtr);
 }

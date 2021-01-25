@@ -36,7 +36,7 @@
 // XMC_BOARD for stringifying into serial or other text outputs/logs
 // Note the actual name XMC and number MUST have a character between 
 // to avoid issues with other defined macros e.g. XMC1100
-#define XMC_BOARD           DEMO Radar BB XMC4700
+#define XMC_BOARD          Radar BB XMC4700
 /* On board LED is ON when digital output is 0, LOW, False, OFF */
 #define XMC_LED_ON          0
 // Pins that are allocated or free to be used as Analog input

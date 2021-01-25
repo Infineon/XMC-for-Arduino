@@ -36,8 +36,8 @@ public:
  
 	// control functions
 	void initHW(void);
-    void registerResultCallback(void(*callBackPtr)); // register function to be called when also process is done
-    void registerErrorCallback(void(*callBackPtr)); // register function to be called in case of error
+    void registerResultCallback(void(*callBackPtr)(void)); // register function to be called when also process is done
+    void registerErrorCallback(void(*callBackPtr)(uint32_t error)); // register function to be called in case of error
 	void begin(void);
 	void end(void); 
 	void run(void); // run radar process
