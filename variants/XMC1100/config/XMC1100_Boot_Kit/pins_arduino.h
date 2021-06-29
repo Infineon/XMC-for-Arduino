@@ -211,7 +211,7 @@ XMC_UART_t XMC_UART_0 =
 #ifdef SERIAL_DEBUG
   .input_source_dx0     = (XMC_USIC_INPUT_t)USIC0_C1_DX0_P1_3,
 #else
-  .input_source_dx0     = (XMC_USIC_INPUT_t)USIC0_C0_DX0_P1_2,
+  .input_source_dx0     = (XMC_USIC_INPUT_t)USIC0_C1_DX0_P1_2,
 #endif
   .input_source_dx1     = XMC_INPUT_INVALID,
   .input_source_dx2     = XMC_INPUT_INVALID,
