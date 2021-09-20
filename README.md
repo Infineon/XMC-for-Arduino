@@ -87,6 +87,7 @@ In the boards list **Tools** > **Board**, the XMC microcontroller boards are add
 * The XMC1100 Boot Kit has limitations if compared to the official Arduino boards (consult the [XMC-for-Arduino Wiki](https://github.com/Infineon/XMC-for-Arduino/wiki) for more information)
 * Refer also to the LICENSE.md/txt file for further information
 * Arduino 1.8.0 IDE might have problems with the XMC-for-Arduino releases
+* XMC-for-Arduino support for 'arm-linux-gnueabihf' only until version 1.1.
 
 ### Using PlatformIO IDE
 
@@ -96,6 +97,13 @@ In the boards list **Tools** > **Board**, the XMC microcontroller boards are add
 - [Integration with Cloud and Desktop IDEs](http://docs.platformio.org/en/latest/ide.html?utm_source=github&utm_medium=xmc-for-arduino) -
   Cloud9, Codeanywhere, Eclipse Che (Codenvy), Atom, CLion, Eclipse, Emacs, NetBeans, Qt Creator, Sublime Text, VIM, Visual Studio, and VSCode
 - [Project Examples](https://github.com/Infineon/platformio-infineonxmc/tree/master/examples)
+
+## Contributing and Third Party Libraries
+To contribute enhancements, fixes and the like see *Contributors.md*. in root folder
+
+Third Party or external library maintainers see *Libraries.md*. in root folder
+    
+Also see [Wiki](https://github.com/Infineon/XMC-for-Arduino/wiki) for any additional information
 
 ## Additional Contributors
 

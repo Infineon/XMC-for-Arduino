@@ -29,10 +29,10 @@
  * WHETHER IN CONTRACT, STRICT LIABILITY,OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE 
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.   
  */
-
+#include <Arduino.h>
 #include "xmc_rtc_conf.h"
 
-#if (defined (XMC1100_XMC2GO) || (XMC1100_H_BRIDGE2GO) || (XMC1300_Sense2GoL) || (XMC1100_Boot_Kit) || (XMC1300_Boot_Kit) || (XMC4700_Relax_Kit) )
+#if defined HAS_RTC
 XMC_RTC_CONFIG_t XMC_RTC_default_t = {
 	.prescaler = 0x7fffU,
 	.time = {

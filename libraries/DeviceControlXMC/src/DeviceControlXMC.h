@@ -35,7 +35,6 @@
 //****************************************************************************
 // @Project Includes
 //****************************************************************************
-#include <Arduino.h>
 #include <xmc_scu.h>
 
 extern const size_t total_heap_s;
@@ -143,40 +142,34 @@ class XMCClass
 		/* Constructor */
 		XMCClass()
 		{
+			temp_measurement_s = XMC_SCU_STATUS_ERROR;
 			sleep = false;
 			deep_sleep = false;
 			sleep_config = 0x00;
-			temp_measurement_s = XMC_SCU_STATUS_ERROR;
 			sleep_mode = SLEEP_MODE;
 #if (UC_FAMILY == XMC4)
 			power_mode = XMC_SCU_POWER_MODE_SLEEP;
-			hibernate = false;
-			hibernate_mode = XMC_SCU_HIB_HIBERNATE_MODE_EXTERNAL;
 #endif
 		}
 
 		void begin(); 				// Nothing in this function yet
+		/* State Control*/
+		int32_t getTemperature();	// Device Temperature control
 		/*Power Control*/
 		void enterActiveMode();		// Wake up from sleep. This function should be called in interrupt handler.
 		void reset();				// Software reset of device
-		/* State Control*/
-		uint32_t getTemperature();	// Device Temperature control
 
    		size_t freeHeapRAM();
 
 #if (UC_FAMILY == XMC4)
-		/*Power Control*/
-		void configureHibernate(WakeupSource wkpsrc);	// Configure Hibernate & choose a waking up source
-		void enterHibernate(int mode);					// Enter Hibernate, EXTERNAL or INTERNAL
-		void configureSleepMode(sleepMode_t type, sysclock_t clk, usb_t usb0, sdmmc_t sdmmc, eth0_t ethernet, ebu_t  ebu, ccu_t ccu , wdt_t wdt, flash_t flash, clkpll_t pll, vco_t vco);	// Configure sleep mode type & peripherals status on sleep/deep sleep mode
-		void enterSleepMode();							// Enter Sleep Mode, called after sleep mode is configured
 		/* State Control*/
 		void calibrateTemperatureSensor(uint32_t offset, uint32_t gain);	// Calibrate temperature
-
+		/*Power Control*/
+		void configureSleepMode(sleepMode_t type, sysclock_t clk, usb_t usb0, sdmmc_t sdmmc, eth0_t ethernet, ebu_t  ebu, ccu_t ccu , wdt_t wdt, flash_t flash, clkpll_t pll, vco_t vco);	// Configure sleep mode type & peripherals status on sleep/deep sleep mode
 #elif(UC_FAMILY == XMC1)
 		void configureSleepMode(sleepMode_t type, usic_t usic, ledt_t ledt, ccu_t ccu,wdt_t wdt, flash_t flash);	// Configure sleep mode type & peripherals status on sleep/deep sleep mode
-		void enterSleepMode();							// Enter Sleep Mode, called after sleep mode is configured
 #endif
+		void enterSleepMode();							// Enter Sleep Mode, called after sleep mode is configured
 
 	private:
 		void init();							// Nothing in this function yet
@@ -188,8 +181,6 @@ class XMCClass
 
 #if (UC_FAMILY == XMC4)
 		XMC_SCU_POWER_MODE_t power_mode;
-		XMC_SCU_HIB_HIBERNATE_MODE_t hibernate_mode;	// Stores type of hibernate mode, EXTERNAL or INTERNAL
-		bool hibernate;									// Set if hibernate mode is active
 #endif
 };
 

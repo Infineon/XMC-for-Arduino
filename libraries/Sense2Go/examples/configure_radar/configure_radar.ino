@@ -6,41 +6,43 @@
 
 #define SPECTRUM_SIZE SENSE2GO_BUFFER_SIZE / 2
 
-int16_t magnitudes[SPECTRUM_SIZE];
+int16_t magnitudes[SPECTRUM_SIZE ];
 bool available = false;
 
-BGT_RADAR_CONFIG_t user_config = {
+BGT_RADAR_CONFIG_t user_config = 
+  {
   fft_size : 128,
   fft_threshold : DETECTING_MAG_THRESH,
   cycle_time : 100,
   sampling_rate : 3000
-};
+  };
 
+  
 // this routine shouldn't take too long
-void callback(RESULT_t *result)
+void callback( RESULT_t *result )
 {
-  for (int i = 0; i < SPECTRUM_SIZE; i++)
-  {
-    magnitudes[i] = result->magnitudes[i];
-  }
-  available = true;
+for( int i = 0; i < SPECTRUM_SIZE; i++ )
+   magnitudes[ i ] = result->magnitudes[ i ];
+available = true;
 }
 
-void setup()
+
+void setup( )
 {
-  Serial.begin(9600);
-  RadarDataProcessor.begin(RADAR_BGT24LTR11, callback);
-  RadarDataProcessor.enableFft();
-  RadarDataProcessor.configureRadar(user_config);
-  Serial.println("Init done!");
+Serial.begin( 9600 );
+RadarDataProcessor.begin( RADAR_BGT24LTR11, callback );
+RadarDataProcessor.enableFft( );
+RadarDataProcessor.configureRadar( user_config );
+Serial.println( "Init done!" );
 }
 
-void loop()
+
+void loop( )
 {
-  if (available)
+if( available )
   {
-    for (int i = 0; i < SPECTRUM_SIZE; i++)
-      Serial.println(magnitudes[i]);
-    available = false;
+  for( int i = 0; i < SPECTRUM_SIZE; i++ )
+     Serial.println( magnitudes[ i ] );
+  available = false;
   }
 }

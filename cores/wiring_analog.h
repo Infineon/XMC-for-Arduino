@@ -59,10 +59,10 @@ extern "C" {
      * \return 0 = success, -1 = invalid value, -2 = wrong pin
      */
     extern int16_t analogWrite( uint8_t pin, uint16_t value ) ;
-	
+
     /*
      * \brief Sets the frequency for analogWrite PWM.
-     * 
+     *
      *    Returns -2 invalid pin
      *            -1 invalid frequency
      *             0 success
@@ -77,7 +77,7 @@ extern "C" {
     extern int16_t setAnalogWriteFrequency( uint8_t pin, uint32_t frequency ) ;
 
     /*
-     * \brief Reads the value from the specified analog channel.
+     * \brief Reads the value from the specified analogue channel.
      *
      * \param channel
      *
@@ -96,7 +96,7 @@ extern "C" {
     extern uint8_t analogReadResolution( uint8_t res );
 
     /*
-     * \brief Set the resolution of analogWrite parameters in number of bits. 
+     * \brief Set the resolution of analogWrite parameters in number of bits.
      * \note Default (minimum) is 8 bits (range from 0 to 16).
      *  Maximum is 16 bits (range 0 to 65535)
      *
@@ -112,21 +112,21 @@ extern "C" {
      \brief Additional helper functions for other libraries
     **********************************************************/
     /*
-     * \brief Get the current resolution of analogRead in number of bits. 
+     * \brief Get the current resolution of analogRead in number of bits.
      *
      * \return Current resolution in bits (8 to 12)
      */
     extern uint8_t getAnalogReadBits( );
 
     /*
-     * \brief Get the current resolution of analogWrite in number of bits. 
+     * \brief Get the current resolution of analogWrite in number of bits.
      *
      * \return Current resolution in bits (8 to 16)
      */
     extern uint8_t getAnalogWriteBits( );
 
     /*
-     * \brief Get the maximum value for current resolution for analogRead. 
+     * \brief Get the maximum value for current resolution for analogRead.
      * \note Default is 1023
      * \note Maximum is 4095
      *
@@ -135,7 +135,7 @@ extern "C" {
     extern uint16_t getAnalogReadMaximum( );
 
     /*
-     * \brief Get the maximum value for current resolution for analogWrite. 
+     * \brief Get the maximum value for current resolution for analogWrite.
      * \note Default is 255
      * \note Maximum is 65535
      *

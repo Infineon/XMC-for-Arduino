@@ -1,12 +1,12 @@
 # XMC platform
 # ------------------------------
 # For more info:
-# https://github.com/arduino/Arduino/wiki/Arduino-IDE-1.5---3rd-party-Hardware-specification
+# https://arduino.github.io/arduino-cli/platform-specification/
 
 # The information about this Arduino compatible environment
 # ---------
 name=XMC Family
-version=1.5.0
+version=1.6.0
 
 # Build related core definitions
 # ---------

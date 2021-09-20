@@ -17,8 +17,6 @@ XMCClass	KEYWORD1
 begin	KEYWORD2
 enterActiveMode	KEYWORD2
 reset	KEYWORD2
-configureHibernate	KEYWORD2
-enterHibernate	KEYWORD2
 configureSleepMode	KEYWORD2
 enterSleepMode	KEYWORD2
 getTemperature	KEYWORD2
