@@ -18,7 +18,7 @@
   Public License along with this library; if not, write to the
   Free Software Foundation, Inc., 59 Temple Place, Suite 330,
   Boston, MA  02111-1307  USA
-  
+
   Copyright (c) 2018 Infineon Technologies AG
   This file has been modified for the XMC microcontroller series.
 */
@@ -34,16 +34,22 @@
 // @Defines
 //****************************************************************************
 // XMC_BOARD for stringifying into serial or other text outputs/logs
-// Note the actual name XMC and number MUST have a character between 
+// Note the actual name XMC and number MUST have a character between
 // to avoid issues with other defined macros e.g. XMC1100
 #define XMC_BOARD           XMC 1100 XMC2GO
+
 /* On board LED is ON when digital output is 1, HIGH, TRUE, ON */
 #define  XMC_LED_ON         1
 
-#define NUM_ANALOG_INPUTS   4
-#define NUM_PWM             4
+// Following were defines now evaluated by compilation as const variables
+// After definitions of associated mapping arrays
+extern const uint8_t NUM_DIGITAL;
+extern const uint8_t GND;
+extern const uint8_t NUM_PWM4;
+extern const uint8_t NUM_PWM;
+extern const uint8_t NUM_INTERRUPT;
+extern const uint8_t NUM_ANALOG_INPUTS;
 #define NUM_LEDS            2
-#define NUM_INTERRUPT       1
 #define NUM_SERIAL          1
 #define NUM_TONE_PINS       4
 #define NUM_TASKS_VARIANT   8
@@ -64,14 +70,14 @@
 
 #define PWM4_TIMER_PERIOD (2041U)  // Generate 490Hz @fCCU=1MHz
 
-#define PCLK 64000000u 
- 
+#define PCLK 64000000u
+
 #define PIN_SPI_SS    3
 #define PIN_SPI_MOSI  1
 #define PIN_SPI_MISO  0
 #define PIN_SPI_SCK   2
 
-extern uint8_t SS; 
+extern uint8_t SS;
 extern uint8_t MOSI;
 extern uint8_t MISO;
 extern uint8_t SCK;
@@ -81,27 +87,16 @@ extern uint8_t SCK;
 #define A2   2
 #define A3   3
 
-#define LED_BUILTIN 14  //Standard Arduino LED: Used LED1
 #define LED1        14  // Extended LEDs
 #define LED2        15  // Extended LEDs
-#define GND         32  // GND
+#define LED_BUILTIN LED1  //Standard Arduino LED: Used LED1
 
 #define digitalPinToInterrupt(p)    (((p) == 9) ? 0 : NOT_AN_INTERRUPT)
 
 #ifdef ARDUINO_MAIN
-/* Mapping of Arduino Pins to PWM4 channels as pin and PWM4 channel
-   last entry 255 for both parts.
-   Putting both parts in array means if a PWM4 channel gets reassigned for
-   another function later a gap in channel numbers will not mess things up */
-const uint8_t mapping_pin_PWM4[][ 2 ] = {
-                                        { 8, 0 },
-                                        { 1, 1 },
-                                        { 2, 2 },
-                                        { 3, 3 },
-                                        { 255, 255 } };
-
+// Mapping of digital pins and comments
 const XMC_PORT_PIN_t mapping_port_pin[] =
-{
+    {
     /* 0  */    {XMC_GPIO_PORT0 , 6},   // SPI-MISO                         P0.6
     /* 1  */    {XMC_GPIO_PORT0 , 7},   // SPI-MOSI / PWM40-1 output        P0.7
     /* 2  */    {XMC_GPIO_PORT0 , 8},   // SPI-SCK / PWM40-2 output         P0.8
@@ -120,28 +115,48 @@ const XMC_PORT_PIN_t mapping_port_pin[] =
     /* 15  */   {XMC_GPIO_PORT1 , 0},   // LED 2 output                     P1.0
     /* 16  */   {XMC_GPIO_PORT2 , 1},   // DEBUG_TX                         P2.1
     /* 17  */   {XMC_GPIO_PORT2 , 2}    // DEBUG_RX                         P2.2 (INPUT ONLY)
-};
+    };
+const uint8_t GND = ( sizeof( mapping_port_pin ) / sizeof( XMC_PORT_PIN_t ) );
+const uint8_t NUM_DIGITAL = ( sizeof( mapping_port_pin ) / sizeof( XMC_PORT_PIN_t ) );;
 
 const XMC_PIN_INTERRUPT_t mapping_interrupt[] =
-{
+    {
     /* 0  */    {CCU40, CCU40_CC40, 0, 0, CCU40_IN0_P0_0}
-};
+    };
+const uint8_t NUM_INTERRUPT = ( sizeof( mapping_interrupt ) / sizeof( XMC_PIN_INTERRUPT_t ) );
 
+/* Mapping of Arduino Pins to PWM4 channels as pin and index in PWM4 channel
+   mapping array XMC_PWM4_t mapping_pwm4[]
+   last entry 255 for both parts.
+   Putting both parts in array means if a PWM4 channel gets reassigned for
+   another function later a gap in channel numbers will not mess things up */
+const uint8_t mapping_pin_PWM4[][ 2 ] = {
+                                        { 8, 0 },
+                                        { 1, 1 },
+                                        { 2, 2 },
+                                        { 3, 3 },
+                                        { 255, 255 } };
+
+/* Configurations of PWM channels for CCU4 type */
 XMC_PWM4_t mapping_pwm4[] =
-{
+    {
     {CCU40, CCU40_CC40, 0, mapping_port_pin[8], P0_5_AF_CCU40_OUT0, XMC_CCU4_SLICE_PRESCALER_64, PWM4_TIMER_PERIOD, DISABLED},  // PWM disabled  8    P0.5
     {CCU40, CCU40_CC41, 1, mapping_port_pin[1], P0_7_AF_CCU40_OUT1, XMC_CCU4_SLICE_PRESCALER_64, PWM4_TIMER_PERIOD, DISABLED},  // PWM disabled  1    P0.7
     {CCU40, CCU40_CC42, 2, mapping_port_pin[2], P0_8_AF_CCU40_OUT2, XMC_CCU4_SLICE_PRESCALER_64, PWM4_TIMER_PERIOD, DISABLED},   // PWM disabled  2    P0.8
     {CCU40, CCU40_CC43, 3, mapping_port_pin[3], P0_9_AF_CCU40_OUT3, XMC_CCU4_SLICE_PRESCALER_64, PWM4_TIMER_PERIOD, DISABLED}   // PWM disabled  3    P0.9
-};
+    };
+const uint8_t NUM_PWM  = ( sizeof( mapping_pwm4 ) / sizeof( XMC_PWM4_t ) );
+const uint8_t NUM_PWM4  = ( sizeof( mapping_pwm4 ) / sizeof( XMC_PWM4_t ) );
 
+/* Analog Pin mappings and configurations */
 XMC_ADC_t mapping_adc[] =
-{
+    {
     {VADC, 1, DISABLED},
     {VADC, 2, DISABLED},
     {VADC, 3, DISABLED},
     {VADC, 4, DISABLED}
-};
+    };
+const uint8_t NUM_ANALOG_INPUTS = ( sizeof( mapping_adc ) / sizeof( XMC_ADC_t ) );
 
 /*
  * UART objects
