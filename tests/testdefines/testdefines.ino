@@ -1,9 +1,6 @@
-/* Example of how to access XMC defines and use for debug
- *  
- *  Updated 8-Feb-2020 Paul Carpenter
- *  Updated 1-Jul-2020 Paul Carpenter - Prepare architecture change to xmc
- */
-// Linker symbols to get flash/RAM usage
+#include <Arduino.h>
+
+// Linker symbols to get falsh/RAM usage
 #if( UC_FAMILY == XMC1 )
 extern char VeneerStart, VeneerEnd, eROData;
 #endif
@@ -17,13 +14,17 @@ extern char sText, __initial_sp, __stack_start, __data_start, __data_end;
 
 uint32_t temp, code_size;
 
-void setup( )
+void setup()
 {
 delay( 60 );
 Serial.begin( 115200, SERIAL_8N1 );
 Serial.println( "PC Services - XMC-for-Arduino useful defines example" );
+Serial.print( "Built on: " );
+Serial.print( __DATE__ );
+Serial.print( "  " );
+Serial.println( __TIME__ );
+
 #ifdef XMC_BOARD
-Serial.read();
 str2( XMC_BOARD );
 Serial.write( '\t' );
 str1( XMC_BOARD );
@@ -43,6 +44,11 @@ str2( ARDUINO_ARM_XMC );
 Serial.write( '\t' );
 str1( ARDUINO_ARM_XMC );
 #endif
+#if defined ARDUINO_ARCH_CORTEX-M4
+str2( ARDUINO_ARM_XMC );
+Serial.write( '\t' );
+str1( ARDUINO_ARM_XMC );
+#endif
 #if defined UC_RAM
 str2( UC_RAM );
 Serial.print( "\t\t" );
@@ -57,16 +63,10 @@ str1( F_CPU );
 str2( ARDUINO );
 Serial.print( "\t\t" );
 str1( ARDUINO );
-#if defined ARDUINO_ARCH_ARM
 str2( ARDUINO_ARCH_ARM );
 Serial.write( ' ' );
 str1( ARDUINO_ARCH_ARM );
-#endif
-#if defined ARDUINO_ARCH_XMC
-str2( ARDUINO_ARCH_XMC );
-Serial.write( ' ' );
-str1( ARDUINO_ARCH_XMC );
-#endif
+
 Serial.print( "Library Version\t" );
 Serial.print( XMC_LIB_MAJOR_VERSION );
 Serial.print( '.' );
@@ -113,9 +113,40 @@ Serial.println( code_size );
 Serial.print( "Ram less Stack\t" );
 temp = &Heap_Bank1_Start - &__data_start;
 Serial.println( temp );
+
+Serial.print( "\nCapabilities\nDigital Pins\t" );
+Serial.println( NUM_DIGITAL );
+Serial.print( "PWM4\t\t" );
+Serial.println( NUM_PWM4 );
+#ifdef CCU8V2
+Serial.print( "PWM8\t\t" );
+Serial.println( NUM_PWM8 );
+#endif
+Serial.print( "PWM\t\t" );
+Serial.println( NUM_PWM );
+Serial.print( "Ints\t\t" );
+Serial.println( NUM_INTERRUPT );
+Serial.print( "ADC\t\t" );
+Serial.println( NUM_ANALOG_INPUTS );
+#ifdef DAC
+Serial.print( "DAC\t\t" );
+Serial.println( NUM_ANALOG_OUTPUTS );
+#endif
+
+str2( NUM_LEDS );
+Serial.write( '\t' );
+str1( NUM_LEDS );
+#ifdef BUTTON1
+str2( NUM_BUTTONS );
+Serial.write( '\t' );
+str1( NUM_BUTTONS );
+#endif
+str2( NUM_SERIAL );
+Serial.write( '\t' );
+str1( NUM_SERIAL );
 }
 
 
-void loop( )
+void loop()
 {
 }

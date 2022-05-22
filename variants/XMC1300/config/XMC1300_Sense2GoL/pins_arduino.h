@@ -34,15 +34,22 @@
 //****************************************************************************
 // XMC_BOARD for stringifying into serial or other text outputs/logs
 // Note the actual name XMC and number MUST have a character between
-// to avoid issues with other defined macros e.g. XMC1100
+// to avoid issues with other defined macros e.g. XMC1300
 #define XMC_BOARD           XMC 1300 Sense2GoL
+
 /* On board LED is ON when digital output is 0, LOW, False, OFF */
 #define  XMC_LED_ON         0
 
-#define NUM_ANALOG_INPUTS   2
-#define NUM_PWM             2
+// Following were defines now evaluated by compilation as const variables
+// After definitions of associated mapping arrays
+extern const uint8_t NUM_DIGITAL;
+extern const uint8_t GND;
+extern const uint8_t NUM_PWM4;
+extern const uint8_t NUM_PWM8;
+extern const uint8_t NUM_PWM;
+extern const uint8_t NUM_INTERRUPT;
+extern const uint8_t NUM_ANALOG_INPUTS;
 #define NUM_LEDS            3
-#define NUM_INTERRUPT       0
 #define NUM_SERIAL          1
 // Following could be 4 unless add/delete task has issues
 #define NUM_TONE_PINS       0
@@ -69,29 +76,16 @@ extern uint8_t SCK;
 // Actual on board signal is TX_ON
 #define BGT_ON  2
 
-#define LED_BUILTIN 3   // Standard Arduino LED
 #define LED1    3       // Extended LEDs P0.5 D5
 #define LED2    5       // Extended LEDs P0.7 D4
 #define LED3    7       // Extended LEDs P0.9 D3
-#define GND     16      // GND
+#define LED_BUILTIN LED1 // Standard Arduino LED
 
-// Disable interrupts
-//#define digitalPinToInterrupt(p)    ((p) == 2 ? 0 : ((p) == 3 ? 1 : NOT_AN_INTERRUPT))
+// Disable external interrupt pins
 #define digitalPinToInterrupt(p)    NOT_AN_INTERRUPT
 
 #ifdef ARDUINO_MAIN
-/* Mapping of Arduino Pins to PWM4 channels as pin and PWM4 channel
-   last entry 255 for both parts.
-   Putting both parts in array means if a PWM4 channel gets reassigned for
-   another function later a gap in channel numbers will not mess things up */
-   const uint8_t mapping_pin_PWM4[][ 2 ] = {
-            { 0, 6 },
-            { 0, 8 },
-            { 255, 255 } };
-
-// these arrays map port names (e.g. port B) to the
-// appropriate addresses for various functions (e.g. reading
-// and writing)
+// Mapping of digital pins and comments
 const XMC_PORT_PIN_t mapping_port_pin[] = {
     /* 0  */    { XMC_GPIO_PORT2, 6 },  // PIN_RX                 P2.6
     /* 1  */    { XMC_GPIO_PORT2 ,0 },  // PIN_TX                 P2.0
@@ -108,21 +102,51 @@ const XMC_PORT_PIN_t mapping_port_pin[] = {
     /* 12  */   { XMC_GPIO_PORT2 ,10 }, // NOT CONNECTED          P2.10
     /* 13  */   { XMC_GPIO_PORT2 ,11 }  // A1 / ADC Input         P2.11
     };
+const uint8_t GND = ( sizeof( mapping_port_pin ) / sizeof( XMC_PORT_PIN_t ) );
+const uint8_t NUM_DIGITAL = ( sizeof( mapping_port_pin ) / sizeof( XMC_PORT_PIN_t ) );;
 
-const XMC_PIN_INTERRUPT_t mapping_interrupt[] = {
-//    /* 0  */    { CCU40, CCU40_CC40, 0, 0, CCU40_IN0_U0C0_DX2INS },
-//    /* 1  */    { CCU40, CCU40_CC40, 0, 1, CCU40_IN0_P0_0 }
+const XMC_PIN_INTERRUPT_t mapping_interrupt[] =
+    {
     };
+const uint8_t NUM_INTERRUPT = ( sizeof( mapping_interrupt ) / sizeof( XMC_PIN_INTERRUPT_t ) );
 
-XMC_PWM4_t mapping_pwm4[] = {
+/* Mapping of Arduino Pins to PWM4 channels as pin and index in PWM4 channel
+   mapping array XMC_PWM4_t mapping_pwm4[]
+   last entry 255 for both parts.
+   Putting both parts in array means if a PWM4 channel gets reassigned for
+   another function later a gap in channel numbers will not mess things up */
+const uint8_t mapping_pin_PWM4[][ 2 ] = {
+                                        { 0, 6 },
+                                        { 0, 8 },
+                                        { 255, 255 } };
+
+/* Configurations of PWM channels for CCU4 type */
+XMC_PWM4_t mapping_pwm4[] =
+    {
     { CCU40, CCU40_CC40, 0, mapping_port_pin[ 4 ], P0_6_AF_CCU40_OUT0, XMC_CCU4_SLICE_PRESCALER_64, PWM4_TIMER_PERIOD, DISABLED },  // PWM disabled 3   P0.6
     { CCU40, CCU40_CC42, 2, mapping_port_pin[ 6 ], P0_8_AF_CCU40_OUT2, XMC_CCU4_SLICE_PRESCALER_64, PWM4_TIMER_PERIOD, DISABLED }   // PWM disabled 9   P0.8
     };
+const uint8_t NUM_PWM4  = ( sizeof( mapping_pwm4 ) / sizeof( XMC_PWM4_t ) );
 
-XMC_ADC_t mapping_adc[] = {
+/* Mapping in same manner as PWM4 for PWM8 channels */
+const uint8_t mapping_pin_PWM8[][ 2 ] = {
+                                        { 255, 255 } };
+
+/* Configurations of PWM channels for CCU8 type */
+XMC_PWM8_t mapping_pwm8[] =
+    {
+    };
+const uint8_t NUM_PWM8 = ( sizeof( mapping_pwm8 ) / sizeof( XMC_PWM8_t ) );
+const uint8_t NUM_PWM  = ( sizeof( mapping_pwm4 ) / sizeof( XMC_PWM4_t ) )
+                        + ( sizeof( mapping_pwm8 ) / sizeof( XMC_PWM8_t ) );
+
+/* Analog Pin mappings and configurations */
+XMC_ADC_t mapping_adc[] =
+    {
     { VADC, 2, VADC_G0, 2, 2, DISABLED },  // A0 - CH_I
     { VADC, 4, VADC_G0, 4, 4, DISABLED }   // A1 - CH_Q
     };
+const uint8_t NUM_ANALOG_INPUTS = ( sizeof( mapping_adc ) / sizeof( XMC_ADC_t ) );
 
 /*
  * UART objects
