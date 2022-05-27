@@ -51,7 +51,7 @@
                    {
                       "packager":"Infineon",
                       "name":"arm-none-eabi-gcc",
-                      "version":"5.4-2016q3"
+                      "version":"10.3-2021.10"
                    },
                    {
                       "packager":"Infineon",
@@ -139,6 +139,33 @@
                    }
                 ]
              },
+             {
+               "name":"arm-none-eabi-gcc",
+               "version":"10.3-2021.10",
+               "systems":[
+                  {
+                     "host":"i686-mingw32",
+                     "archiveFileName":"gcc-arm-none-eabi-10.3-2021.10-win32.zip",
+                     "url":"https://developer.arm.com/-/media/Files/downloads/gnu-rm/10.3-2021.10/gcc-arm-none-eabi-10.3-2021.10-win32.zip",
+                     "checksum":"SHA-256:d287439b3090843f3f4e29c7c41f81d958a5323aecefcf705c203bfd8ae3f2e7",
+                     "size":"200578763"
+                  },
+                  {
+                     "host":"x86_64-apple-darwin",
+                     "url":"https://developer.arm.com/-/media/Files/downloads/gnu-rm/10.3-2021.10/gcc-arm-none-eabi-10.3-2021.10-mac.tar.bz2",
+                     "archiveFileName":"gcc-arm-none-eabi-10.3-2021.10-mac.tar.bz2",
+                     "checksum":"SHA-256:fb613dacb25149f140f73fe9ff6c380bb43328e6bf813473986e9127e2bc283b",
+                     "size":"158961466"
+                  },
+                  {
+                     "host":"x86_64-pc-linux-gnu",
+                     "url":"https://developer.arm.com/-/media/Files/downloads/gnu-rm/10.3-2021.10/gcc-arm-none-eabi-10.3-2021.10-x86_64-linux.tar.bz2",
+                     "archiveFileName":"gcc-arm-none-eabi-10.3-2021.10-x86_64-linux.tar.bz2",
+                     "checksum":"SHA-256:97dbb4f019ad1650b732faffcc881689cedc14e2b7ee863d390e0a41ef16c9a3",
+                     "size":"157089706"
+                  }
+               ]
+            },
              {
                 "name":"XMCFlasher",
                 "version":"1.2.0",
