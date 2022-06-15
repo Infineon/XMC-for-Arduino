@@ -86,8 +86,8 @@ extern const uint8_t NUM_ANALOG_INPUTS;
 #define AD_AUX_1    22  // AD_AUX
 #define AD_AUX_2    23  // AD_AUX
 #define AD_AUX_3    24  // AD_AUX
-#define AD_AUX_3    25  // AD_AUX
-#define AUX_3       26  // AUX
+#define AD_AUX_4    25  // AD_AUX
+#define AUX_1       26  // AUX
 
 #define LED1        13
 #define LED2        26
