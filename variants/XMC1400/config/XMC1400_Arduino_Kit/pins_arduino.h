@@ -117,6 +117,9 @@ extern const uint8_t NUM_ANALOG_INPUTS;
 #define USIC0_5_IRQHandler IRQ14_Handler // I2C
 #define USIC0_5_IRQn IRQ14_IRQn
 
+#define SCU_1_IRQHandler IRQ1_Handler //RTC
+#define SCU_1_IRQn IRQ1_IRQn
+
 #ifdef ARDUINO_MAIN //index is arduino pin count 
 // Mapping of digital pins and comments
 const XMC_PORT_PIN_t mapping_port_pin[] =

@@ -64,6 +64,10 @@ extern XMC_I2C_t XMC_I2C_1;
 #define NUM_I2C  1
 extern XMC_I2C_t XMC_I2C_0;
 
+#elif defined(XMC1400_Arduino_Kit)
+#define NUM_I2C  1
+extern XMC_I2C_t XMC_I2C_0;
+
 #elif defined(XMC4400_Platform2GO)
 #define NUM_I2C  1
 extern XMC_I2C_t XMC_I2C_0;
