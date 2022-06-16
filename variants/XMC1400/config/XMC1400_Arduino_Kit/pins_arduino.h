@@ -102,7 +102,7 @@ extern const uint8_t NUM_ANALOG_INPUTS;
 /* Mapping interrupt handlers. Notice that XMC1400 can have interrupt handlers working in 3 modes, the defines below assumes the mode A.
    For details refer to assembly file and reference manual.
 */
-// #define USIC0_0_IRQHandler IRQ9_Handler // UART
+#define USIC0_0_IRQHandler IRQ9_Handler // UART
 #define USIC0_0_IRQn IRQ9_IRQn
 
 #define CCU40_0_IRQHandler IRQ21_Handler // interrupt 0
