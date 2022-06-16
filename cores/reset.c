@@ -26,7 +26,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.   
  */
 #include <reset.h>
-#ifdef XMC1100_Boot_Kit
+#if defined(XMC1100_Boot_Kit) || defined(XMC1400_Arduino_Kit)
 #include <xmc_eru.h>
 #include <xmc_scu.h>
 
