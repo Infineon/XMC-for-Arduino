@@ -43,7 +43,6 @@
 extern const uint8_t NUM_DIGITAL;
 extern const uint8_t GND;
 extern const uint8_t NUM_PWM4;
-extern const uint8_t NUM_PWM8;
 extern const uint8_t NUM_PWM;
 extern const uint8_t NUM_INTERRUPT;
 extern const uint8_t NUM_ANALOG_INPUTS;
