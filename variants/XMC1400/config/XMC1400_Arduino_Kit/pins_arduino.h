@@ -199,8 +199,8 @@ XMC_ADC_t mapping_adc[] =
     { VADC, 1, VADC_G0, 0, 11, DISABLED },  //A1
     { VADC, 2, VADC_G0, 0, 9, DISABLED },   //A2   
     { VADC, 3, VADC_G0, 0, 12, DISABLED },  //A3
-    { VADC, 5, VADC_G0, 0, 10, DISABLED },  //A4
-    { VADC, 6, VADC_G0, 0, 7, DISABLED },   //A5
+    { VADC, 6, VADC_G0, 0, 7, DISABLED },   //A4
+    { VADC, 5, VADC_G0, 0, 10, DISABLED },  //A5
     // Additional channels added here
     { VADC, 4, VADC_G0, 0, 5, DISABLED },   //AUX 22
     { VADC, 1, VADC_G1, 1, 1, DISABLED },   //AUX 23  
