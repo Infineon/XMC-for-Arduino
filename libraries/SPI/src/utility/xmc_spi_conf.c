@@ -110,7 +110,7 @@ XMC_SPI_t XMC_SPI_0 =
 #elif defined(XMC1400_Arduino_Kit) 
 XMC_SPI_t XMC_SPI_0 =
 {
-    .channel          = XMC_SPI0_CH1,
+    .channel          = XMC_SPI1_CH1,
     .channel_config   = {
         .baudrate = 15984375U,
         .bus_mode = (XMC_SPI_CH_BUS_MODE_t)XMC_SPI_CH_BUS_MODE_MASTER,
