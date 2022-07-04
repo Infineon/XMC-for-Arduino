@@ -97,6 +97,16 @@ jobs:
             multiSerial: true
             dma: true
             alarmRtc: true
+          - fqbn: Infineon:arm:XMC1400_Arduino_Kit
+            i2s: false
+            dieTemp: true
+            heapMem: true
+            sleep1100: true
+            sleep4700 : false
+            stackMem: false
+            multiSerial: false
+            dma: false
+            alarmRtc: false
 
         # Make board type-specific customizations to the matrix jobs
         include:

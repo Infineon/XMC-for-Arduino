@@ -261,6 +261,50 @@ XMC1300_Sense2GoL.menu.LIB.DSP.library.selected=-DARM_LIB_CMSIS_DSP
 #XMC1400_Boot_Kit.menu.LIB.DSPNN=ARM DSP / ARM NN Framework
 #XMC1400_Boot_Kit.menu.LIB.DSPNN.library.selected=-DARM_LIB_CMSIS_DSP -DARM_LIB_CMSIS_NN
 
+####################################################
+XMC1400_Arduino_Kit.name=XMC1400 Kit for Arduino
+XMC1400_Arduino_Kit.upload.tool=xmcprog
+XMC1400_Arduino_Kit.upload.speed=115200
+XMC1400_Arduino_Kit.upload.resetmethod=ck
+XMC1400_Arduino_Kit.upload.maximum_size=204800
+XMC1400_Arduino_Kit.upload.wait_for_upload_port=true
+
+XMC1400_Arduino_Kit.communication=usb
+XMC1400_Arduino_Kit.protocol=dragon_isp
+XMC1400_Arduino_Kit.program.protocol=dragon_isp
+XMC1400_Arduino_Kit.program.tool=xmcprog
+XMC1400_Arduino_Kit.program.extra_params=-Pusb
+
+XMC1400_Arduino_Kit.serial.disableDTR=true
+XMC1400_Arduino_Kit.serial.disableRTS=true
+
+XMC1400_Arduino_Kit.build.mcu=cortex-m0
+XMC1400_Arduino_Kit.build.f_cpu=48000000L
+XMC1400_Arduino_Kit.build.board=ARM_XMC
+XMC1400_Arduino_Kit.build.board.version=1402
+XMC1400_Arduino_Kit.build.board.type=T038x0200
+XMC1400_Arduino_Kit.build.board.v=0200
+XMC1400_Arduino_Kit.build.core=./
+XMC1400_Arduino_Kit.build.variant=XMC1400
+XMC1400_Arduino_Kit.build.board_variant=XMC1400_Arduino_Kit
+XMC1400_Arduino_Kit.build.flash_size=200K
+XMC1400_Arduino_Kit.build.flash_ld=linker_script_200k.ld
+XMC1400_Arduino_Kit.build.extra_flags=-DARM_MATH_CM0 -DXMC1_SERIES
+
+XMC1400_Arduino_Kit.menu.UART.debug=PC
+XMC1400_Arduino_Kit.menu.UART.debug.uart.selected=-DSERIAL_HOSTPC
+XMC1400_Arduino_Kit.menu.UART.onBoard=On Board
+XMC1400_Arduino_Kit.menu.UART.onBoard.uart.selected=-DSERIAL_ONBOARD
+
+XMC1400_Arduino_Kit.menu.LIB.NONE=None
+XMC1400_Arduino_Kit.menu.LIB.NONE.library.selected=
+XMC1400_Arduino_Kit.menu.LIB.NN=ARM NN Framework
+XMC1400_Arduino_Kit.menu.LIB.NN.library.selected=-DARM_LIB_CMSIS_NN
+XMC1400_Arduino_Kit.menu.LIB.DSP=ARM DSP
+XMC1400_Arduino_Kit.menu.LIB.DSP.library.selected=-DARM_LIB_CMSIS_DSP
+XMC1400_Arduino_Kit.menu.LIB.DSPNN=ARM DSP / ARM NN Framework
+XMC1400_Arduino_Kit.menu.LIB.DSPNN.library.selected=-DARM_LIB_CMSIS_DSP -DARM_LIB_CMSIS_NN
+
 
 ####################################################
 XMC4400_Platform2GO.name=XMC4400 Platform 2GO
