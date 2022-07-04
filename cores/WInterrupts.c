@@ -140,13 +140,7 @@ void attachInterrupt(uint32_t interrupt_num, interrupt_cb_t callback, uint32_t m
 
         if (pin_irq.irq_num == 0)
         {
-#if defined(XMC1100_Boot_Kit)
-            /* P1_4 external interrupt goes through USIC to CCU4 */
-            XMC_USIC_CH_Enable(XMC_USIC0_CH0);
-            XMC_USIC_CH_SetInputSource(XMC_USIC0_CH0, XMC_USIC_CH_INPUT_DX5, USIC0_C0_DX5_P1_4);
-            XMC_USIC_CH_SetInputSource(XMC_USIC0_CH0, XMC_USIC_CH_INPUT_DX2, USIC0_C0_DX2_DX5INS);
-#endif
-#if defined(XMC1400_Arduino_Kit)
+#if defined(XMC1100_Boot_Kit) || defined(XMC1400_Arduino_Kit)
             /* P1_4 external interrupt goes through USIC to CCU4 */
             XMC_USIC_CH_Enable(XMC_USIC0_CH0);
             XMC_USIC_CH_SetInputSource(XMC_USIC0_CH0, XMC_USIC_CH_INPUT_DX5, USIC0_C0_DX5_P1_4);

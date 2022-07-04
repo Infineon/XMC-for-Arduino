@@ -80,15 +80,22 @@ extern const uint8_t NUM_ANALOG_INPUTS;
 #define A3   3
 #define A4   4
 #define A5   5
+//duplicate defines for AD_AUX_n
+#define A6   6
+#define A7   7
+#define A8   8
+#define A9   9
+
 
 #define AD_AUX_1    6  // AD_AUX
 #define AD_AUX_2    7  // AD_AUX
 #define AD_AUX_3    8  // AD_AUX
 #define AD_AUX_4    9  // AD_AUX
+
 #define AUX_1       26  // AUX
 
 #define LED1        13
-#define LED2        26
+#define LED2        2
 #define LED3        27
 #define LED_BUILTIN LED1
 
@@ -127,7 +134,7 @@ const XMC_PORT_PIN_t mapping_port_pin[] =
     {
     /* 0  */    {XMC_GPIO_PORT1, 2}, // RX                                        P1.2
     /* 1  */    {XMC_GPIO_PORT1, 3}, // TX                                        P1.3
-    /* 2  */    {XMC_GPIO_PORT0 , 5}, // GPIO / LED2                              P0.5
+    /* 2  */    {XMC_GPIO_PORT0 , 5}, // GPIO / LED2 output                       P0.5
     /* 3  */    {XMC_GPIO_PORT1 , 1}, // External int 0 / PWM40-1 output          P1.1
     /* 4  */    {XMC_GPIO_PORT1 , 0}, // PWM40-0 output                           P1.0
     /* 5  */    {XMC_GPIO_PORT0 , 2}, // GPIO                                     P0.2
@@ -139,7 +146,7 @@ const XMC_PORT_PIN_t mapping_port_pin[] =
     /* 11  */   {XMC_GPIO_PORT0 , 1}, // SPI-MOSI                                 P0.1
     /* 12  */   {XMC_GPIO_PORT0 , 0}, // SPI-MISO                                 P0.0
     /* 13  */   {XMC_GPIO_PORT0 , 3}, // SPI-SCK                                  P0.3
-    /* 14  */   {XMC_GPIO_PORT2 , 3}, // AREF                                     P2.3 (INPUT ONLY)
+    /* 14  */   {XMC_GPIO_PORT2 , 3}, // AREF * DO NOT USE as GPIO or REF **      P2.3 (INPUT ONLY)
     /* 15  */   {XMC_GPIO_PORT2 , 6}, // A0 / ADC Input                           P2.6 (INPUT ONLY)
     /* 16  */   {XMC_GPIO_PORT2 , 8}, // A1 / ADC Input                           P2.8 (INPUT ONLY)
     /* 17  */   {XMC_GPIO_PORT2 , 9}, // A2 / ADC Input                           P2.9 (INPUT ONLY)
@@ -147,12 +154,12 @@ const XMC_PORT_PIN_t mapping_port_pin[] =
     /* 19  */   {XMC_GPIO_PORT2 , 1}, // A4  / I2C Data / Address SDA             P2.1
     /* 20  */   {XMC_GPIO_PORT2 , 0}, // A5  / I2C Clock SCL                      P2.0
     /* 21  */   {XMC_GPIO_PORT2 , 4}, // RESET input ( DO NOT USE as GPIO )       P2.4 (INPUT ONLY)
-    /* 22 */    {XMC_GPIO_PORT2 , 11}, // GPIO / AD_AUX Additional Pin            P2.11
-    /* 23 */    {XMC_GPIO_PORT2 , 7}, // GPIO / AD_AUX Additional Pin             P2.7
-    /* 24 */    {XMC_GPIO_PORT2 , 5}, // GPIO / AD_AUX Additional Pin             P2.5
-    /* 25 */    {XMC_GPIO_PORT2 , 2}, // GPIO / AD_AUX Additional Pin             P2.2
+    /* 22 */    {XMC_GPIO_PORT2 , 11}, // GPIO / AD_AUX_1 Additional Pin          P2.11
+    /* 23 */    {XMC_GPIO_PORT2 , 7}, // GPIO / AD_AUX_2 Additional Pin           P2.7
+    /* 24 */    {XMC_GPIO_PORT2 , 5}, // GPIO / AD_AUX_3 Additional Pin           P2.5
+    /* 25 */    {XMC_GPIO_PORT2 , 2}, // GPIO / AD_AUX_4 Additional Pin           P2.2
     /* 26 */    {XMC_GPIO_PORT1 , 4}, // External int 1                           P1.4
-    /* 27 */    {XMC_GPIO_PORT1 , 5} // LED3                                      P1.5
+    /* 27 */    {XMC_GPIO_PORT1 , 5} // LED3 output                               P1.5
     };
 
    
