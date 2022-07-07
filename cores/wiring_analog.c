@@ -295,7 +295,7 @@ if( ( resource = scan_map_table( mapping_pin_PWM4, pin ) ) >= 0 )
                                   ( XMC_GPIO_MODE_OUTPUT_PUSH_PULL | pwm4->port_mode ) );
   XMC_CCU4_SLICE_StartTimer( pwm4->slice );
   }
-#ifdef CCU8V2
+#if defined(CCU8V2) || defined(CCU8V1)
 else
   if( ( resource = scan_map_table( mapping_pin_PWM8, pin ) ) >= 0 )
     {
@@ -391,7 +391,7 @@ if( frequency < PCLK )
       }
     ret = 0;
     }
-#ifdef CCU8V2
+#if defined (CCU8V2) || defined (CCU8V1)
   else
     if ( ( resource = scan_map_table( mapping_pin_PWM8, pin ) ) >= 0 )
       {
