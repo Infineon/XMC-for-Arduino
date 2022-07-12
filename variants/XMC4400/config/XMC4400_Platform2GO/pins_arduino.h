@@ -126,7 +126,7 @@ const XMC_PORT_PIN_t mapping_port_pin[]=
     /* 17  */   {XMC_GPIO_PORT14, 0},   // A0 / ADC Input                               P14.0 (INPUT ONLY)                      
     /* 18  */   {XMC_GPIO_PORT14, 1},   // A1 / ADC Input                               P14.1 (INPUT ONLY)
     /* 19  */   {XMC_GPIO_PORT14, 2},   // A2 / ADC Input                               P14.2 (INPUT ONLY)
-    /* 20  */   {XMC_GPIO_PORT14, 3},   // A3 / ADC Input                               P14.3 (INPUT ONLY)                    X2-32
+    /* 20  */   {XMC_GPIO_PORT14, 3},   // A3 / ADC Input                               P14.3 (INPUT ONLY)                    X2-31
     /* 21  */   {XMC_GPIO_PORT14, 4},   // A4 / ADC Input / SDA / GPIO                  P14.4 (Hardwired to SDA)              X2-24    
     /* 22  */   {XMC_GPIO_PORT14, 5},   // A5 / ADC Input / SCL                         P14.5 (Hardwired to SCL)              X2-30  
     /* 23  */   {XMC_GPIO_PORT1, 15},   // USB Debug RX                                 P1.15                                 X1-22
@@ -161,7 +161,7 @@ const XMC_PORT_PIN_t mapping_port_pin[]=
 
     //Additional pins for port X2 starting here
     /* 50  */   {XMC_GPIO_PORT14, 8},   // A14 / DAC 0 Output                           P14.8                                 X2-33
-    /* 51  */   {XMC_GPIO_PORT15, 2},   // A12 - ADC Input                              P15.2 (INPUT ONLY)                    X2-31
+    /* 51  */   {XMC_GPIO_PORT15, 2},   // A12 - ADC Input                              P15.2 (INPUT ONLY)                    X2-32
     /* 52  */   {XMC_GPIO_PORT14, 15},  // A11 - ADC Input                              P14.15 (INPUT ONLY)                   X2-29
     /* 53  */   {XMC_GPIO_PORT15, 9},   // A17 - ADC Input / ETH_CRS                    P15.9                                 X2-27
     /* 54  */   {XMC_GPIO_PORT14, 6},   // A6 / AN1_2GO_1 - ADC Input                   P14.6 (INPUT ONLY)                    X2-25
