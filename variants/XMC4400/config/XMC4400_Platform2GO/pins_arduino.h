@@ -174,7 +174,7 @@ const XMC_PORT_PIN_t mapping_port_pin[]=
     /* 61  */   {XMC_GPIO_PORT3, 5},    // CS_2GO_1                                     P3.5 (Chip Select - Slot 1)           X2-3
     /* 62  */   {XMC_GPIO_PORT0, 7},    // LED2                                         P0.7                                  X2-1  
     /* 63  */   {XMC_GPIO_PORT0, 8},    // QSPI_CLK                                     P0.8                                  X2-4
-    /* 64  */   {XMC_GPIO_PORT0, 12},   // CS_MB                                        P0.12                                 X2-10
+    /* 64  */   {XMC_GPIO_PORT0, 12},   // CS_MB                                        P0.12 (Chip Select - MikroBUS)        X2-10
     /* 65  */   {XMC_GPIO_PORT0, 6},    // LED1                                         P0.6                                  X2-12
     /* 66  */   {XMC_GPIO_PORT0, 4},    // ETH_TXEN                                     P0.4                                  X2-14
     /* 67  */   {XMC_GPIO_PORT0, 9},    // GPIO4_2GO_1 / PWM80-01 / PWM                 P0.9                                  X2-20
