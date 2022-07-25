@@ -118,7 +118,7 @@ const XMC_PORT_PIN_t mapping_port_pin[]=
     /* 8  */    {XMC_GPIO_PORT4, 1},    // GPIO / IO_2                                  P4.1                                  X1-6
     /* 9  */    {XMC_GPIO_PORT0, 11},   // PWM80-31 output / PWM3                       P0.11                                 X2-7
     /* 10 */    {XMC_GPIO_PORT0, 2},    // SPI-SS / PWM80-01 / PWM4                     P0.2                                  X2-16                           
-    /* 11 */    {XMC_GPIO_PORT1, 9},    // SPI-MOSI / PWM41-2                           P1.9                                  X1-10
+    /* 11 */    {XMC_GPIO_PORT1, 9},    // SPI-MOSI                                     P1.9                                  X1-10
     /* 12 */    {XMC_GPIO_PORT0, 0},    // SPI-MISO                                     P0.0                                  X2-12
     /* 13 */    {XMC_GPIO_PORT1, 8},    // SPI-SCK / GPIO                               P1.8                                  X1-9
     /* 14 */    {XMC_GPIO_PORT2, 3},    // AREF TODO: / ETH_RXD1 / PWM41-2              P2.3                                  X1-32
