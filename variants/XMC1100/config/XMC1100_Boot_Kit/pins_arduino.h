@@ -120,8 +120,8 @@ const XMC_PORT_PIN_t mapping_port_pin[] =
     /* 7  */    {XMC_GPIO_PORT0, 4}, // GPIO                               P0.4
     /* 8  */    {XMC_GPIO_PORT0, 12},// GPIO                               P0.12
     /* 9  */    {XMC_GPIO_PORT0, 8}, // PWM40-2 output                     P0.8
-    /* 10  */   {XMC_GPIO_PORT0, 9}, // SPI-SS                             P0.9
-    /* 11  */   {XMC_GPIO_PORT1, 1}, // SPI-MOSI                           P1.1
+    /* 10  */   {XMC_GPIO_PORT0, 9}, // SPI-SS / PWM40-3 output            P0.9
+    /* 11  */   {XMC_GPIO_PORT1, 1}, // SPI-MOSI / PWM40-1 output          P1.1
     /* 12  */   {XMC_GPIO_PORT1, 0}, // SPI-MISO                           P1.0
     /* 13  */   {XMC_GPIO_PORT0, 7}, // SPI-SCK / LED BUILTIN output       P0.7
     /* 14  */   {XMC_GPIO_PORT2, 3}, // AREF ** DO NOT USE as GPIO or REF ** P2.3
@@ -163,15 +163,19 @@ const uint8_t mapping_pin_PWM4[][ 2 ] = {
                                         { 4, 1 },
                                         { 6, 2 },
                                         { 9, 3 },
+                                        { 10, 4 },
+                                        { 11, 5 },
                                         { 255, 255 } };
 
 /* Configurations of PWM channels for CCU4 type */
 XMC_PWM4_t mapping_pwm4[] =
     {
-    {CCU40, CCU40_CC40, 0, mapping_port_pin[3], P0_0_AF_CCU40_OUT0, XMC_CCU4_SLICE_PRESCALER_64, PWM4_TIMER_PERIOD, DISABLED},  // PWM disabled  3   P0.0
-    {CCU40, CCU40_CC41, 1, mapping_port_pin[4], P0_1_AF_CCU40_OUT1, XMC_CCU4_SLICE_PRESCALER_64, PWM4_TIMER_PERIOD, DISABLED},  // PWM disabled  4   P0.1
-    {CCU40, CCU40_CC43, 3, mapping_port_pin[6], P0_3_AF_CCU40_OUT3, XMC_CCU4_SLICE_PRESCALER_64, PWM4_TIMER_PERIOD, DISABLED},  // PWM disabled  6   P0.3
-    {CCU40, CCU40_CC42, 2, mapping_port_pin[9], P0_8_AF_CCU40_OUT2, XMC_CCU4_SLICE_PRESCALER_64, PWM4_TIMER_PERIOD, DISABLED}   // PWM disabled  9   P0.8
+    {CCU40, CCU40_CC40, 0, mapping_port_pin[3], P0_0_AF_CCU40_OUT0, XMC_CCU4_SLICE_PRESCALER_64, PWM4_TIMER_PERIOD, DISABLED},   // PWM disabled  3   P0.0
+    {CCU40, CCU40_CC41, 1, mapping_port_pin[4], P0_1_AF_CCU40_OUT1, XMC_CCU4_SLICE_PRESCALER_64, PWM4_TIMER_PERIOD, DISABLED},   // PWM disabled  4   P0.1
+    {CCU40, CCU40_CC43, 3, mapping_port_pin[6], P0_3_AF_CCU40_OUT3, XMC_CCU4_SLICE_PRESCALER_64, PWM4_TIMER_PERIOD, DISABLED},   // PWM disabled  6   P0.3
+    {CCU40, CCU40_CC42, 2, mapping_port_pin[9], P0_8_AF_CCU40_OUT2, XMC_CCU4_SLICE_PRESCALER_64, PWM4_TIMER_PERIOD, DISABLED},   // PWM disabled  9   P0.8
+    {CCU40, CCU40_CC43, 3, mapping_port_pin[10], P0_9_AF_CCU40_OUT3, XMC_CCU4_SLICE_PRESCALER_64, PWM4_TIMER_PERIOD, DISABLED},  // PWM disabled 10   P0.9
+    {CCU40, CCU40_CC41, 1, mapping_port_pin[11], P1_1_AF_CCU40_OUT1, XMC_CCU4_SLICE_PRESCALER_64, PWM4_TIMER_PERIOD, DISABLED}   // PWM disabled 11   P1.1
     };
 const uint8_t NUM_PWM  = ( sizeof( mapping_pwm4 ) / sizeof( XMC_PWM4_t ) );
 const uint8_t NUM_PWM4  = ( sizeof( mapping_pwm4 ) / sizeof( XMC_PWM4_t ) );
