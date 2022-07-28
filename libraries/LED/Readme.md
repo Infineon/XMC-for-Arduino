@@ -5,8 +5,9 @@
 **Author** | : | Paul Carpenter
  | | | PC Services
  | | | www.pcserviceselectronics.co.uk
-**Version** | : | V1.00
-**Date** | : | July 2018
+**Version** | : | V1.01
+**Updated** | : | July 2022
+Date | : | July 2018
 
 Infineon XMC-for-Arduino RTC Library, to assist in making board agnostic examples that
 will work the same across all boards. This file will be available in the library folder.
@@ -35,28 +36,31 @@ Unfortunately the on-board LEDs on the XMC range of boards work differently betw
 models. There is no consistent, on board LED driven by the same state to be ON across all
 models of board so we end up with
 
-| Board | ON state |
-| :----  | :---: |
- XMC1100 Boot Kit | Low
- XMC1100 XMC2GO | High
- XMC1100 XMC H Bridge2GO | High
- XMC1300 Boot Kit  | Low
- XMC1300 Sense2GOL | Low
- XMC4700 Relax Kit | Low
+| Board | Normal LEDs <br>ON state | LED_BUILTIN <br>Separate |  LED_BUILTIN <br>ON state
+| :----  | :---: | :---: | :---: |
+ XMC1100 Boot Kit | Low | Yes | High
+ XMC1100 XMC2GO | High | No | High
+ XMC1100 XMC H Bridge2GO | High| No | High
+ XMC1300 Boot Kit  | Low | No | Low
+ XMC1300 Sense2GOL | Low| No | Low
+ XMC1400 Arduino Kit | Low | Yes | High
+ XMC4400 Platform2Go | High| No | High
+ XMC4700 Relax Kit | High| No | High
+ XMC4700 Relax Kit Lite | High| No | High
 
 [Back to top](#table-of-contents)
 ### LEDs on Different Boards
 Matrix of available on board LED names or LED they map to, known currently.
 
-| LED Macro | XMC1100<BR>Boot Kit | XMC1100<BR>XMC2GO | XMC1100<BR>HBRIDGE2GO | XMC1300<BR>Boot Kit | XMC1300<BR>Sense2GOL | XMC4700<BR>Relax |
-| --- | :--: | :--: | :--: | :--: | :--: | :--: |
- LED_BUILTIN | Y | LED1 | LED1 | LED1 | LED1 | LED1
- LED1 | Y | Y | Y | Y | Y | Y 
- LED2 | Y | Y | Y | Y | Y | Y 
- LED3 | Y | - | - | Y | Y | - 
- LED4 | Y | - | - | Y | - | - 
- LED5 | Y | - | - | Y | - | - 
- LED5 | Y | - | - | Y | - | - 
+| LED Macro | XMC1100 <BR>Boot Kit | XMC1100 <BR>XMC2GO | XMC1100 <BR>HBRIDGE2GO | XMC1300 <BR>Boot Kit | XMC1300 <BR>Sense2GOL | XMC1400 <br>Arduino Kit | XMC4400 <br>Platform2Go | XMC4700 <BR>Relax Kit | XMC4700 <BR>Relax Kit Lite |
+| --- | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: |
+ LED_BUILTIN | Y | LED1 | LED1 | LED1 | LED1 | Y | LED1 | LED1 | LED1
+ LED1 | Y | Y | Y | Y | Y | Y | Y | Y | Y 
+ LED2 | Y | Y | Y | Y | Y | Y | Y | Y | Y
+ LED3 | Y | - | - | Y | Y | - | - | - | - 
+ LED4 | Y | - | - | Y | - | - | - | - | - 
+ LED5 | Y | - | - | Y | - | - | - | - | - 
+ LED6 | Y | - | - | Y | - | - | - | - | - 
 
 [Back to top](#table-of-contents)
 ## Requirements for Adding New Boards

@@ -35,8 +35,8 @@
 //****************************************************************************
 #define XMC_BOARD       XMC 4400 Platform 2GO
 
-/* On board LED is ON when digital output is 0, LOW, False, OFF */
-#define XMC_LED_ON          0
+/* On board LED is ON when digital output is 1, HIGH, TRUE, ON */
+#define  XMC_LED_ON         1
 
 // Following were defines now evaluated by compilation as const variables
 // After definitions of associated mapping arrays
