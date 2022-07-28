@@ -350,7 +350,6 @@ XMC4200_Platform2GO.menu.LIB.NN.library.selected=-DARM_LIB_CMSIS_NN
 XMC4200_Platform2GO.menu.LIB.DSP=ARM DSP
 XMC4200_Platform2GO.menu.LIB.DSP.library.selected=-DARM_LIB_CMSIS_DSP
 
-
 ####################################################
 XMC4400_Platform2GO.name=XMC4400 Platform 2GO
 XMC4400_Platform2GO.upload.tool=xmcprog
