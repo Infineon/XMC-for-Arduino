@@ -49,6 +49,8 @@
 #include <xmc_scu.h>
 #include <xmc_ccu4.h>
 
+#include "Arduino.h" // since interrupt symbols are defined in pins_arduino.h for XMC 1400 series instead of the device-specific header file (XMC1400.h).
+
 /*********************************************************************************************************************
  * API IMPLEMENTATION
  ********************************************************************************************************************/

@@ -140,7 +140,7 @@ void attachInterrupt(uint32_t interrupt_num, interrupt_cb_t callback, uint32_t m
 
         if (pin_irq.irq_num == 0)
         {
-#if defined(XMC1100_Boot_Kit)
+#if defined(XMC1100_Boot_Kit) || defined(XMC1400_Arduino_Kit)
             /* P1_4 external interrupt goes through USIC to CCU4 */
             XMC_USIC_CH_Enable(XMC_USIC0_CH0);
             XMC_USIC_CH_SetInputSource(XMC_USIC0_CH0, XMC_USIC_CH_INPUT_DX5, USIC0_C0_DX5_P1_4);
@@ -159,9 +159,14 @@ void attachInterrupt(uint32_t interrupt_num, interrupt_cb_t callback, uint32_t m
         else if (pin_irq.irq_num == 1)
         {
 #if defined(XMC1300_Boot_Kit)
-            /* P0_13 external interrupt goes through USIC to CCU4 */
+            /* P0_13 external interrupt goes through USIC to CCU4 */ 
             XMC_USIC_CH_Enable(XMC_USIC0_CH0);			
 			XMC_USIC_CH_SetInputSource(XMC_USIC0_CH0, XMC_USIC_CH_INPUT_DX2, USIC0_C0_DX2_P0_13);
+#endif
+#if defined(XMC1400_Arduino_Kit)
+            /* P1_1 external interrupt goes through USIC to CCU4 */        
+            XMC_USIC_CH_Enable(XMC_USIC0_CH1);
+            XMC_USIC_CH_SetInputSource(XMC_USIC0_CH1, XMC_USIC_CH_INPUT_DX2, USIC0_C1_DX2_P1_1);
 #endif
             XMC_CCU4_SLICE_EnableMultipleEvents(pin_irq.slice, XMC_CCU4_SLICE_MULTI_IRQ_ID_EVENT1);
             XMC_CCU4_SLICE_SetInterruptNode(pin_irq.slice, XMC_CCU4_SLICE_IRQ_ID_EVENT1, 1);
