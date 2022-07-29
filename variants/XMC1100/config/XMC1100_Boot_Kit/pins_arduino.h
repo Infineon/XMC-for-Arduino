@@ -54,9 +54,6 @@ extern const uint8_t NUM_ANALOG_INPUTS;
 // Indicate unit has RTC/Alarm for simpler RTC control
 #define HAS_RTC
 
-// Indicate variant has a GPIO pin used for Reset pin
-#define HAS_GPIO_RESET      1
-
 // Defines will be either set by ArduinoIDE in the menu or manually
 #ifdef SERIAL_HOSTPC
 // Comment out following line to use Serial on pins (board)
@@ -68,8 +65,7 @@ extern const uint8_t NUM_ANALOG_INPUTS;
 #define SERIAL_DEBUG    1
 #endif
 
-// Generate 490Hz @fCCU=1MHz
-#define PWM4_TIMER_PERIOD (2041U)
+#define PWM4_TIMER_PERIOD (2041U)  // Generate 490Hz @fCCU=1MHz
 
 #define PCLK 64000000u
 
@@ -92,23 +88,21 @@ extern uint8_t SCK;
 #define A6   6
 #define A7   7
 
-// AD_AUX Connector
-#define AD_AUX_1    23
-#define AD_AUX_2    24
-// AUX Connector
-#define AUX_1       25
-#define AUX_2       26
-#define AUX_3       27
-#define AUX_4       28
-#define AUX_5       29
+#define AD_AUX_1    24  // AD_AUX
+#define AD_AUX_2    25  // AD_AUX
+#define AUX_1       26  // AUX
+#define AUX_2       27  // AUX
+#define AUX_3       28  // AUX
+#define AUX_4       29  // AUX
+#define AUX_5       30  // AUX
 
-#define LED_BUILTIN 13
-#define LED1        25
-#define LED2        26
-#define LED3        0
-#define LED4        1
-#define LED5        2
-#define LED6        30
+#define LED_BUILTIN 13  // Standard Arduino LED pin 13
+#define LED1        26  // Extended LEDs P0.5
+#define LED2        27  // Extended LEDs P0.6
+#define LED3        0   // Extended LEDs P1.2
+#define LED4        1   // Extended LEDs P1.3
+#define LED5        2   // Extended LEDs P1.4
+#define LED6        31  // Extended LEDs P1.5
 
 #define digitalPinToInterrupt(p)    ((p) == 2 ? 0 : ((p) == 3 ? 1 : NOT_AN_INTERRUPT))
 
@@ -139,14 +133,15 @@ const XMC_PORT_PIN_t mapping_port_pin[] =
     /* 20  */   {XMC_GPIO_PORT2, 10},// A3 / ADC Input                     P2.10
     /* 21  */   {XMC_GPIO_PORT2, 11},// A4 / ADC Input                     P2.11
     /* 22  */   {XMC_GPIO_PORT2, 2}, // A5 / ADC Input                     P2.2 (INPUT ONLY)
-    /* 23  */   {XMC_GPIO_PORT2, 5}, // AD_AUX                             P2.5 (INPUT ONLY)
-    /* 24  */   {XMC_GPIO_PORT2, 7}, // AD_AUX                             P2.7 (INPUT ONLY)
-    /* 25  */   {XMC_GPIO_PORT0, 5}, // AUX / GPIO / LED 1 output          P0.5
-    /* 26  */   {XMC_GPIO_PORT0, 6}, // AUX / GPIO / LED 2 output          P0.6
-    /* 27  */   {XMC_GPIO_PORT0, 10},// AUX / GPIO                         P0.10
-    /* 28  */   {XMC_GPIO_PORT0, 11},// AUX / GPIO                         P0.11
-    /* 29  */   {XMC_GPIO_PORT0, 13},// AUX / GPIO                         P0.13
-    /* 30  */   {XMC_GPIO_PORT1, 5}  // LED 6 output                       P1.5
+    /* 23  */   {XMC_GPIO_PORT2, 4}, // RESET input ( DO NOT USE as GPIO ) P2.4 (INPUT ONLY)
+    /* 24  */   {XMC_GPIO_PORT2, 5}, // AD_AUX                             P2.5 (INPUT ONLY)
+    /* 25  */   {XMC_GPIO_PORT2, 7}, // AD_AUX                             P2.7 (INPUT ONLY)
+    /* 26  */   {XMC_GPIO_PORT0, 5}, // AUX / GPIO / LED 1 output          P0.5
+    /* 27  */   {XMC_GPIO_PORT0, 6}, // AUX / GPIO / LED 2 output          P0.6
+    /* 28  */   {XMC_GPIO_PORT0, 10},// AUX / GPIO                         P0.10
+    /* 29  */   {XMC_GPIO_PORT0, 11},// AUX / GPIO                         P0.11
+    /* 30  */   {XMC_GPIO_PORT0, 13},// AUX / GPIO                         P0.13
+    /* 31  */   {XMC_GPIO_PORT1, 5}  // LED 6 output                       P1.5
     };
 const uint8_t GND = ( sizeof( mapping_port_pin ) / sizeof( XMC_PORT_PIN_t ) );
 const uint8_t NUM_DIGITAL = ( sizeof( mapping_port_pin ) / sizeof( XMC_PORT_PIN_t ) );;
