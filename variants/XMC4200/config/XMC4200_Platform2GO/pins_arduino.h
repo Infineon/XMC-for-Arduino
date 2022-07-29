@@ -35,8 +35,8 @@
 //****************************************************************************
 #define XMC_BOARD       XMC 4200 Platform 2GO
 
-/* On board LED is ON when digital output is 0, LOW, False, OFF */
-#define XMC_LED_ON          0
+/* On board LED is ON when digital output is 1, HIGH, TRUE, ON */
+#define XMC_LED_ON          1
 
 // Following were defines now evaluated by compilation as const variables
 // After definitions of associated mapping arrays
@@ -125,8 +125,8 @@ const XMC_PORT_PIN_t mapping_port_pin[]=
     /* 17  */   {XMC_GPIO_PORT14, 6},   // A1 / ADC Input                         P14.6 (INPUT ONLY)                  X2-25
     /* 18  */   {XMC_GPIO_PORT14, 7},   // A2 / ADC Input                         P14.7 (INPUT ONLY)                  X2-28
     /* 19  */   {XMC_GPIO_PORT14, 8},   // A3 / ADC Input / AN_MikroBus / DAC0    P14.8 (INPUT ONLY)                  X2-33
-    /* 20  */   {XMC_GPIO_PORT14, 4},   // A4 / ADC Input / SDA / AN1_2GO_1       P14.4 (Hardwired to SDA)            X2-24
-    /* 21  */   {XMC_GPIO_PORT14, 5},   // A5 / ADC Input / SCL / AN2_2GO_2       P14.5 (Hardwired to SCL)            X2-30
+    /* 20  */   {XMC_GPIO_PORT14, 4},   // A6 / ADC Input / SDA / AN1_2GO_1       P14.4 (Hardwired to SDA)            X2-24
+    /* 21  */   {XMC_GPIO_PORT14, 5},   // A7 / ADC Input / SCL / AN2_2GO_2       P14.5 (Hardwired to SCL)            X2-30
     
     //Additional pins for port X1 starting here
     /* 22  */   {XMC_GPIO_PORT1, 1},    // PWM_MikroBus                           P1.1                                X1-12
@@ -225,14 +225,17 @@ const uint8_t NUM_ANALOG_OUTPUTS = ( sizeof( mapping_dac ) / sizeof( XMC_ARD_DAC
 XMC_ADC_t mapping_adc[] =
     {
     //Result reg numbers are now equal to channel numbers
-    {VADC, 0, VADC_G0, 0, 0, DISABLED},
-    {VADC, 1, VADC_G0, 0, 1, DISABLED},
-    {VADC, 2, VADC_G1, 1, 2, DISABLED},
-    {VADC, 3, VADC_G1, 1, 3, DISABLED},
-    {VADC, 0, VADC_G2, 2, 0, DISABLED},
-    {VADC, 1, VADC_G2, 2, 1, DISABLED},
+    {VADC, 0, VADC_G0, 0, 0, DISABLED}, //A0
+    {VADC, 6, VADC_G0, 0, 1, DISABLED}, //A1
+    {VADC, 7, VADC_G0, 0, 2, DISABLED}, //A2
+    {VADC, 0, VADC_G1, 1, 0, DISABLED}, //A3
+    {VADC, 0, VADC_G1, 1, 0, DISABLED}, //A4
+    {VADC, 0, VADC_G1, 1, 0, DISABLED}, //A5
     //Additional ADC channels starting here
-    {VADC, 6, VADC_G2, 2, 6, DISABLED},
+    {VADC, 4, VADC_G0, 0, 3, DISABLED}, //A6
+    {VADC, 5, VADC_G0, 0, 4, DISABLED}, //A7
+    
+    {VADC, 6, VADC_G2, 2, 6, DISABLED},  
     {VADC, 5, VADC_G2, 2, 5, DISABLED},
     {VADC, 3, VADC_G2, 2, 3, DISABLED},
     {VADC, 7, VADC_G1, 1, 7, DISABLED},
