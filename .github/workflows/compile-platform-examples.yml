@@ -158,7 +158,6 @@ jobs:
             - libraries/LED
             - libraries/RTC/examples/SimpleRTC
             - libraries/SPI
-            - libraries/Sense2Go
             - libraries/Wire
             # Board-specific sketches
             ${{ matrix.i2s-sketch-paths }}
