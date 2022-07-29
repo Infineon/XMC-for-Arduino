@@ -156,7 +156,6 @@ jobs:
           sketch-paths: |
             # Compile these sketches for all boards
             - libraries/LED
-            - libraries/OneWire
             - libraries/RTC/examples/SimpleRTC
             - libraries/SPI
             - libraries/Sense2Go
