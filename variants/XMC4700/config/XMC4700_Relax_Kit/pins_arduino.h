@@ -64,8 +64,10 @@ extern const uint8_t NUM_ANALOG_OUTPUTS;
 
 // Board has two serial ports pre-assigned to debug and on-board
 
-#define PWM4_TIMER_PERIOD (0x11EF)  // Generate 490Hz @fCCU=144MHz
-#define PWM8_TIMER_PERIOD (0x11EF)  // Generate 490Hz @fCCU=144MHz
+// Generate 490Hz @fCCU=144MHz
+#define PWM4_TIMER_PERIOD (0x11EF)
+// Generate 490Hz @fCCU=144MHz
+#define PWM8_TIMER_PERIOD (0x11EF)
 
 #define PCLK 144000000u
 
@@ -96,33 +98,34 @@ static const uint8_t SCK_SD  = PIN_SPI_SCK_SD;
 #define A4   4
 #define A5   5
 //Additional ADC ports starting here
-#define A6   6      // ADC G2CH6 on P15.6
-#define A7   7      // ADC G2CH5 on P15.5
-#define A8   8      // ADC G2CH3 on P15.3
-#define A9   9      // ADC G1CH7 on P14.15
-#define A10  10     // ADC G1CH5 on P14.13
-#define A11  11     // ADC G0CH7 on P14.7
-#define A12  12     // ADC G3CH7 on P15.15
-#define A13  13     // ADC G1CH1 on P14.9
-#define A14  14     // ADC G1CH0 on P14.8
-#define A15  15     // ADC G3CH6 on P15.14
-#define A16  16     // ADC G0CH6 on P14.6
-#define A17  17     // ADC G1CH4 on P14.12
-#define A18  18     // ADC G1CH6 on P14.14
-#define A19  19     // ADC G2CH2 on P15.2
-#define A20  20     // ADC G2CH4 on P15.4
-#define A21  21     // ADC G2CH7 on P15.7
+#define A6   6
+#define A7   7
+#define A8   8
+#define A9   9
+#define A10  10
+#define A11  11
+#define A12  12
+#define A13  13
+#define A14  14
+#define A15  15
+#define A16  16
+#define A17  17
+#define A18  18
+#define A19  19
+#define A20  20
+#define A21  21
 // ADC G3CH0 on P15.8   not available
 // ADC G3CH1 on P15.9   not available
 // ADC G3CH4 on P15.12  button
 // ADC G3CH5 on P15.13  button
 
 
-#define LED1        24  // Additional LED1
-#define LED2        25  // Additional LED2
-#define LED_BUILTIN LED1 //Standard Arduino LED: Uses LED1
-#define BUTTON1     26  // Additional BUTTON1
-#define BUTTON2     27  // Additional BUTTON2
+#define LED1        24
+#define LED2        25
+#define LED_BUILTIN LED1
+
+#define BUTTON1     26
+#define BUTTON2     27
 
 #define digitalPinToInterrupt(p)    ((p) == 2 ? 0 : ((p) == 3 ? 1 : NOT_AN_INTERRUPT))
 
@@ -244,8 +247,8 @@ const uint8_t NUM_DIGITAL = ( sizeof( mapping_port_pin ) / sizeof( XMC_PORT_PIN_
 
 const XMC_PIN_INTERRUPT_t mapping_interrupt[] =
     {
-    /* 0  */    {CCU40, CCU40_CC43, 3, 0, CCU40_IN3_P1_0},
-    /* 1  */    {CCU40, CCU40_CC42, 2, 1, CCU40_IN2_P1_1}
+    /* 0 */    {CCU40, CCU40_CC43, 3, 0, CCU40_IN3_P1_0},
+    /* 1 */    {CCU40, CCU40_CC42, 2, 1, CCU40_IN2_P1_1}
     };
 const uint8_t NUM_INTERRUPT = ( sizeof( mapping_interrupt ) / sizeof( XMC_PIN_INTERRUPT_t ) );
 
