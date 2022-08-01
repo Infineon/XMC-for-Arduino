@@ -262,9 +262,6 @@ XMC_UART_t XMC_UART_0 =
   .irq_service_request  = 0
   };
 
-// Debug port
-HardwareSerial Serial( &XMC_UART_0, &rx_buffer_0, &tx_buffer_0 );
-
 #elif SERIAL_ONBOARD
 XMC_UART_t XMC_UART_0 =
   {
@@ -291,8 +288,6 @@ XMC_UART_t XMC_UART_0 =
   .irq_service_request  = 0
    };
 
-// Debug port
-
 #endif
 
 // Single Object instantiated of the HardwareSerial class for single serial interface
@@ -304,7 +299,6 @@ extern "C" {
 #endif
 void serialEventRun( );
 void serialEvent( ) __attribute__((weak));
-
 
 void serialEventRun( )
 {
