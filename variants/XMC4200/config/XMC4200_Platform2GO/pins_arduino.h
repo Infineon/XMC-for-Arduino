@@ -75,24 +75,14 @@ extern uint8_t MISO;
 extern uint8_t SCK;
 
 #define A0  0       // ADC G0CH0 P14.0
-#define A1  1       // ADC G0CH1 P14.1
-#define A2  2       // ADC G0CH2 P14.2
-#define A3  3       // ADC G0CH3 P14.3
+#define A1  1       // ADC G0CH6 P14.6
+#define A2  2       // ADC G0CH7 P14.7
+#define A3  3       // ADC G1CH0 P14.8
 #define A4  4       // ADC G0CH4 P14.4
 #define A5  5       // ADC G0CH5 P14.5
 //Additional ADC ports starting here
-#define A6   6      // ADC G0CH6 on P14.6
-#define A7   7      // ADC G0CH7 on P14.7
-#define A8   8      // ADC G1CH4 on P14.12
-#define A9   9      // ADC G1CH5 on P14.13
-#define A10  10     // ADC G1CH6 on P14.14
-#define A11  11     // ADC G1CH7 on P14.15
-#define A12  12     // ADC G2CH2 on P15.2
-#define A13  13     // ADC G2CH3 on P15.3
-#define A14  14     // ADC G1CH0 on P14.8
-#define A15  15     // ADC G1CH1 on P14.9
-#define A16  16     // ADC G3CH0 on P15.8
-#define A17  17     // ADC G3CH1 on P15.9
+#define A6   6      // ADC G1CH6 on P14.14
+#define A7   7      // ADC G1CH1 on P14.9
 
 #define LED1        36  // Additional LED1
 #define LED_BUILTIN LED1  // Standard Arduino LED: Uses LED1
@@ -125,8 +115,8 @@ const XMC_PORT_PIN_t mapping_port_pin[]=
     /* 17  */   {XMC_GPIO_PORT14, 6},   // A1 / ADC Input                         P14.6 (INPUT ONLY)                  X2-25
     /* 18  */   {XMC_GPIO_PORT14, 7},   // A2 / ADC Input                         P14.7 (INPUT ONLY)                  X2-28
     /* 19  */   {XMC_GPIO_PORT14, 8},   // A3 / ADC Input / AN_MikroBus / DAC0    P14.8 (INPUT ONLY)                  X2-33
-    /* 20  */   {XMC_GPIO_PORT14, 4},   // A6 / ADC Input / SDA / AN1_2GO_1       P14.4 (Hardwired to SDA)            X2-24
-    /* 21  */   {XMC_GPIO_PORT14, 5},   // A7 / ADC Input / SCL / AN2_2GO_2       P14.5 (Hardwired to SCL)            X2-30
+    /* 20  */   {XMC_GPIO_PORT14, 4},   // A4 / ADC Input / SDA / AN1_2GO_1       P14.4 (Hardwired to SDA)            X2-24
+    /* 21  */   {XMC_GPIO_PORT14, 5},   // A5 / ADC Input / SCL / AN2_2GO_2       P14.5 (Hardwired to SCL)            X2-30
     
     //Additional pins for port X1 starting here
     /* 22  */   {XMC_GPIO_PORT1, 1},    // PWM_MikroBus                           P1.1                                X1-12
@@ -150,9 +140,9 @@ const XMC_PORT_PIN_t mapping_port_pin[]=
     /* 38  */   {XMC_GPIO_PORT0, 10},   // INT_MikroBus                           P0.10                               X2-15
     /* 39  */   {XMC_GPIO_PORT0, 2},    // SPI-CS_2GO_1                           P0.2                                X2-16
     /* 40  */   {XMC_GPIO_PORT0, 9},    // SPI-CS_2GO_2                           P0.9                                X2-20
-    /* 41  */   {XMC_GPIO_PORT14, 14},  // AN2_2GO_1                              P14.14                              X2-21
+    /* 41  */   {XMC_GPIO_PORT14, 14},  // AN2_2GO_1 / A6 / ADC Input             P14.14 (INPUT ONLY)                 X2-21
     /* 42  */   {XMC_GPIO_PORT14, 3},   // CAN_RX                                 P14.3                               X2-32
-    /* 43  */   {XMC_GPIO_PORT14, 9},   // AN1_2GO_2 / DAC1                       P14.9                               X2-36
+    /* 43  */   {XMC_GPIO_PORT14, 9},   // AN1_2GO_2 / A7 / ADC Input / DAC1      P14.9 (INPUT ONLY)                  X2-36
     };
 
 const uint8_t GND = ( sizeof( mapping_port_pin ) / sizeof( XMC_PORT_PIN_t ) );
@@ -229,24 +219,11 @@ XMC_ADC_t mapping_adc[] =
     {VADC, 6, VADC_G0, 0, 1, DISABLED}, //A1
     {VADC, 7, VADC_G0, 0, 2, DISABLED}, //A2
     {VADC, 0, VADC_G1, 1, 0, DISABLED}, //A3
-    {VADC, 0, VADC_G1, 1, 0, DISABLED}, //A4
-    {VADC, 0, VADC_G1, 1, 0, DISABLED}, //A5
+    {VADC, 4, VADC_G0, 0, 3, DISABLED}, //A4
+    {VADC, 5, VADC_G0, 0, 4, DISABLED}, //A5
     //Additional ADC channels starting here
-    {VADC, 4, VADC_G0, 0, 3, DISABLED}, //A6
-    {VADC, 5, VADC_G0, 0, 4, DISABLED}, //A7
-    
-    {VADC, 6, VADC_G2, 2, 6, DISABLED},  
-    {VADC, 5, VADC_G2, 2, 5, DISABLED},
-    {VADC, 3, VADC_G2, 2, 3, DISABLED},
-    {VADC, 7, VADC_G1, 1, 7, DISABLED},
-    {VADC, 5, VADC_G1, 1, 5, DISABLED},
-    {VADC, 7, VADC_G0, 0, 7, DISABLED},
-    {VADC, 7, VADC_G3, 3, 7, DISABLED},
-    {VADC, 1, VADC_G1, 1, 1, DISABLED},
-    {VADC, 0, VADC_G1, 1, 0, DISABLED},
-    {VADC, 6, VADC_G3, 3, 6, DISABLED},
-    {VADC, 6, VADC_G0, 0, 6, DISABLED},
-    {VADC, 4, VADC_G1, 1, 4, DISABLED},
+    {VADC, 6, VADC_G1, 1, 1, DISABLED}, //A6
+    {VADC, 1, VADC_G1, 1, 2, DISABLED}, //A7
     };
 const uint8_t NUM_ANALOG_INPUTS = ( sizeof( mapping_adc ) / sizeof( XMC_ADC_t ) );
 
