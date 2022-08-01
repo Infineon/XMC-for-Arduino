@@ -121,9 +121,9 @@ const XMC_PORT_PIN_t mapping_port_pin[]=
     /* 21  */   {XMC_GPIO_PORT14, 5},   // A5 / ADC Input / SCL / AN2_2GO_2       P14.5 (Hardwired to SCL)            X2-30
     
     //Additional pins for port X1 starting here
-    /* 22  */   {XMC_GPIO_PORT1, 1},    // PWM_MikroBus                           P1.1                                X1-12
-    /* 23  */   {XMC_GPIO_PORT1, 2},    // PWM / GPIO4_S2GO_1                     P1.2                                X1-13
-    /* 24  */   {XMC_GPIO_PORT1, 3},    // PWM / GPIO4_2GO_2                      P1.3                                X1-14
+    /* 22  */   {XMC_GPIO_PORT1, 1},    // PWM_MikroBus / PWM40-2                 P1.1                                X1-12
+    /* 23  */   {XMC_GPIO_PORT1, 2},    // PWM / PWM40-1 / GPIO4_S2GO_1           P1.2                                X1-13
+    /* 24  */   {XMC_GPIO_PORT1, 3},    // PWM / PWM40-0 / GPIO4_2GO_2            P1.3                                X1-14
     /* 25  */   {XMC_GPIO_PORT1, 4},    // PC_TXD                                 P1.4                                X1-15
     /* 26  */   {XMC_GPIO_PORT1, 5},    // PC_RXD                                 P1.5                                X1-16
     /* 27  */   {XMC_GPIO_PORT1, 15},   // BUTTON1                                P1.15                               X1-22
