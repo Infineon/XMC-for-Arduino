@@ -54,17 +54,17 @@ extern const uint8_t NUM_ANALOG_OUTPUTS;
 #define NUM_BUTTONS         1
 #define NUM_SERIAL          1
 #define NUM_TONE_PINS       7
-#define NUM_TASKS_VARIANT   7
+#define NUM_TASKS_VARIANT   12
 
 // Indicate unit has RTC/Alarm
 #define HAS_RTC                 1
 
-//Generate 490Hz @fCCU=144MHz
-#define PWM4_TIMER_PERIOD (0x11EF)
-// Generate 490Hz @fCCU=144MHz  
-#define PWM8_TIMER_PERIOD (0x11EF)  
+//Generate 2198Hz @fCCU=80MHz
+#define PWM4_TIMER_PERIOD (0xFFFF)
+// Generate 2198Hz @fCCU=80MHz  
+#define PWM8_TIMER_PERIOD (0xFFFF)  
 
-#define PCLK 64000000u
+#define PCLK 80000000u
 
 #define PIN_SPI_SS      10
 #define PIN_SPI_MOSI    11

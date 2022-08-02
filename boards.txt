@@ -323,7 +323,7 @@ XMC4200_Platform2GO.serial.disableDTR=true
 XMC4200_Platform2GO.serial.disableRTS=true
 
 XMC4200_Platform2GO.build.mcu=cortex-m4
-XMC4200_Platform2GO.build.f_cpu=144000000L
+XMC4200_Platform2GO.build.f_cpu=80000000L
 XMC4200_Platform2GO.build.board=ARM_XMC
 XMC4200_Platform2GO.build.board.version=4200
 XMC4200_Platform2GO.build.board.type=F64x256
