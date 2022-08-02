@@ -7,12 +7,18 @@ and images for wiki.
 
 xmc4700-X1-X2.csv   XMC4700 Relax Kit (and Lite) CSV of X1 and X2 connector pinout
 
-to follow soon
-
 xmc4400-X1-X2.csv   XMC4400 Platform 2 Go CSV of X1 and X2 connector pinout
 
 ### Folder wiki/Pictures
 
-    <Image>.jpg JPEG updates of Pinout image for wiki
-    SVG         folder of source version(s) in SVG format
-    PNG         folder of intermediate version(s) in PNG format
+File/Folder | Description
+| :--: | ----- |
+| board_PO.jpg | JPEG updates of Pinout image for wiki |
+| SVG | folder of source version(s) in SVG format |
+| PNG | folder of intermediate version(s) in PNG format |
+
+### Folder wiki/Eagle
+
+File/Folder | Description
+| :--: | ----- |
+| INF-XMC.lbr | - Eagle library for symbol and footprints of Infineon XMC processors |
