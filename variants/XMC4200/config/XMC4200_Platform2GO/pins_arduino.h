@@ -116,7 +116,7 @@ const XMC_PORT_PIN_t mapping_port_pin[]=
     /* 16  */   {XMC_GPIO_PORT14, 0},   // A0 / ADC Input                         P14.0 (INPUT ONLY)                  X2-34
     /* 17  */   {XMC_GPIO_PORT14, 6},   // A1 / ADC Input                         P14.6 (INPUT ONLY)                  X2-25
     /* 18  */   {XMC_GPIO_PORT14, 7},   // A2 / ADC Input                         P14.7 (INPUT ONLY)                  X2-28
-    /* 19  */   {XMC_GPIO_PORT14, 8},   // A3 / ADC Input / AN_MikroBus / DAC0    P14.8 (INPUT ONLY)                  X2-33
+    /* 19  */   {XMC_GPIO_PORT14, 8},   // A3 / ADC Input / AN_MikroBus / DAC0    P14.8                               X2-33
     /* 20  */   {XMC_GPIO_PORT14, 4},   // A4 / ADC Input / SDA / AN1_2GO_1       P14.4 (Hardwired to SDA)            X2-24
     /* 21  */   {XMC_GPIO_PORT14, 5},   // A5 / ADC Input / SCL / AN2_2GO_2       P14.5 (Hardwired to SCL)            X2-30
     
@@ -144,7 +144,7 @@ const XMC_PORT_PIN_t mapping_port_pin[]=
     /* 40  */   {XMC_GPIO_PORT0, 9},    // SPI-CS_2GO_2                           P0.9                                X2-20
     /* 41  */   {XMC_GPIO_PORT14, 14},  // AN2_2GO_1 / A6 / ADC Input             P14.14 (INPUT ONLY)                 X2-21
     /* 42  */   {XMC_GPIO_PORT14, 3},   // CAN_RX                                 P14.3                               X2-32
-    /* 43  */   {XMC_GPIO_PORT14, 9},   // AN1_2GO_2 / A7 / ADC Input / DAC1      P14.9 (INPUT ONLY)                  X2-36
+    /* 43  */   {XMC_GPIO_PORT14, 9},   // AN1_2GO_2 / A7 / ADC Input / DAC1      P14.9                               X2-36
     };
 
 const uint8_t GND = ( sizeof( mapping_port_pin ) / sizeof( XMC_PORT_PIN_t ) );
