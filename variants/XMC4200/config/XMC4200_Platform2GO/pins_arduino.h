@@ -59,10 +59,10 @@ extern const uint8_t NUM_ANALOG_OUTPUTS;
 // Indicate unit has RTC/Alarm
 #define HAS_RTC                 1
 
-//Generate 2198Hz @fCCU=80MHz
-#define PWM4_TIMER_PERIOD (0xFFFF)
-// Generate 2198Hz @fCCU=80MHz  
-#define PWM8_TIMER_PERIOD (0xFFFF)  
+//Generate 490Hz @fCCU=80MHz
+#define PWM4_TIMER_PERIOD (0x09F7)
+// Generate 490Hz @fCCU=80MHz  
+#define PWM8_TIMER_PERIOD (0x09F7)  
 
 #define PCLK 80000000u
 
