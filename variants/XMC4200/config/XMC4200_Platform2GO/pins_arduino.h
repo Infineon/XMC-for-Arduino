@@ -152,8 +152,8 @@ const uint8_t NUM_DIGITAL = ( sizeof( mapping_port_pin ) / sizeof( XMC_PORT_PIN_
 
 const XMC_PIN_INTERRUPT_t mapping_interrupt[] =
     {
-    /* 0  */    {CCU40, CCU40_CC43, 3, 0, CCU40_IN3_P1_0},
-    /* 1  */    {CCU41, CCU41_CC43, 3, 1, CCU41_IN3_P2_2}
+    /* 0  */    {XMC_ERU0, XMC_ERU_ETL_INPUT_A0, XMC_ERU_ETL_INPUT_B0, 3, 3, 0},
+    /* 1  */    {XMC_ERU0, XMC_ERU_ETL_INPUT_A0, XMC_ERU_ETL_INPUT_B2, 1, 0, 1},
     };
 const uint8_t NUM_INTERRUPT = ( sizeof( mapping_interrupt ) / sizeof( XMC_PIN_INTERRUPT_t ) );
 

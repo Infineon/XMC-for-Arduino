@@ -42,6 +42,15 @@ void ERU0_3_IRQHandler(void)
 	}
 }
 
+#if defined(XMC4200_Platform2GO)
+void ERU0_0_IRQHandler(void)
+{
+	if (interrupt_1_cb)
+	{
+		interrupt_1_cb();
+	}
+}
+#else
 void ERU1_0_IRQHandler(void)
 {
 	if (interrupt_1_cb)
@@ -49,6 +58,8 @@ void ERU1_0_IRQHandler(void)
 		interrupt_1_cb();
 	}
 }
+#endif
+
 #else
 void CCU40_0_IRQHandler(void)
 {
@@ -109,10 +120,16 @@ void attachInterrupt(uint32_t interrupt_num, interrupt_cb_t callback, uint32_t m
 		}
 		else if (pin_irq.irq_num == 1)
 		{
-			NVIC_SetPriority(ERU1_0_IRQn, 3);
+#if defined(XMC4200_Platform2GO)            
+			NVIC_SetPriority(ERU0_0_IRQn, 3);
+			interrupt_1_cb = callback;
+			NVIC_EnableIRQ(ERU0_0_IRQn);     
+#else            
+            NVIC_SetPriority(ERU1_0_IRQn, 3);
 			interrupt_1_cb = callback;
 			NVIC_EnableIRQ(ERU1_0_IRQn);
-		}
+#endif		
+        }
 #else
         XMC_CCU4_SLICE_EVENT_CONFIG_t event_config = {0};
 
@@ -195,7 +212,11 @@ void detachInterrupt(uint32_t interrupt_num)
 				break;
 
 			case 1:
-				NVIC_DisableIRQ(ERU1_0_IRQn);
+#if defined(XMC4200_Platform2GO)              
+				NVIC_DisableIRQ(ERU0_0_IRQn);
+#else
+                NVIC_DisableIRQ(ERU1_0_IRQn);
+#endif
 				break;
 #else
 		switch (interrupt_num)
