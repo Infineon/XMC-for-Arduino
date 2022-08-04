@@ -305,6 +305,45 @@ XMC1400_Arduino_Kit.menu.LIB.DSP.library.selected=-DARM_LIB_CMSIS_DSP
 XMC1400_Arduino_Kit.menu.LIB.DSPNN=ARM DSP / ARM NN Framework
 XMC1400_Arduino_Kit.menu.LIB.DSPNN.library.selected=-DARM_LIB_CMSIS_DSP -DARM_LIB_CMSIS_NN
 
+####################################################
+XMC4200_Platform2GO.name=XMC4200 Platform 2GO
+XMC4200_Platform2GO.upload.tool=xmcprog
+XMC4200_Platform2GO.upload.speed=115200
+XMC4200_Platform2GO.upload.resetmethod=ck
+XMC4200_Platform2GO.upload.maximum_size=262144
+XMC4200_Platform2GO.upload.wait_for_upload_port=true
+
+XMC4200_Platform2GO.communication=usb
+XMC4200_Platform2GO.protocol=dragon_isp
+XMC4200_Platform2GO.program.protocol=dragon_isp
+XMC4200_Platform2GO.program.tool=xmcprog
+XMC4200_Platform2GO.program.extra_params=-Pusb
+
+XMC4200_Platform2GO.serial.disableDTR=true
+XMC4200_Platform2GO.serial.disableRTS=true
+
+XMC4200_Platform2GO.build.mcu=cortex-m4
+XMC4200_Platform2GO.build.f_cpu=80000000L
+XMC4200_Platform2GO.build.board=ARM_XMC
+XMC4200_Platform2GO.build.board.version=4200
+XMC4200_Platform2GO.build.board.type=F64x256
+XMC4200_Platform2GO.build.board.v=256
+XMC4200_Platform2GO.build.core=./
+XMC4200_Platform2GO.build.variant=XMC4200
+XMC4200_Platform2GO.build.board_variant=XMC4200_Platform2GO
+XMC4200_Platform2GO.build.flash_size=256K
+XMC4200_Platform2GO.build.flash_ld=linker_script.ld
+XMC4200_Platform2GO.build.extra_flags=-DARM_MATH_CM4 -DARM_MATH_DSP -DINTERRUPT_USE_ERU
+#-DUSB0
+
+XMC4200_Platform2GO.menu.LIB.NONE=None
+XMC4200_Platform2GO.menu.LIB.NONE.library.selected=
+XMC4200_Platform2GO.menu.LIB.DSPNN=ARM DSP / ARM NN Framework
+XMC4200_Platform2GO.menu.LIB.DSPNN.library.selected=-DARM_LIB_CMSIS_DSP -DARM_LIB_CMSIS_NN
+XMC4200_Platform2GO.menu.LIB.NN=ARM NN Framework
+XMC4200_Platform2GO.menu.LIB.NN.library.selected=-DARM_LIB_CMSIS_NN
+XMC4200_Platform2GO.menu.LIB.DSP=ARM DSP
+XMC4200_Platform2GO.menu.LIB.DSP.library.selected=-DARM_LIB_CMSIS_DSP
 
 ####################################################
 XMC4400_Platform2GO.name=XMC4400 Platform 2GO
