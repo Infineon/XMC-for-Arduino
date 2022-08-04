@@ -234,10 +234,19 @@ const uint8_t NUM_ANALOG_INPUTS = ( sizeof( mapping_adc ) / sizeof( XMC_ADC_t ) 
  * UART objects
  *
  */
+
+// Since both the UART interfaces are present on different USIC instances,
+// both can be enabled independently. 
+
+// Serial is PC-DEBUG interface
+// Serial1  is ONBOARD interface
+
 RingBuffer rx_buffer_0;
 RingBuffer tx_buffer_0;
 
-#ifdef SERIAL_HOSTPC
+RingBuffer rx_buffer_1;
+RingBuffer tx_buffer_1;
+
 XMC_UART_t XMC_UART_0 =
   {
   .channel              = XMC_UART0_CH0,
@@ -263,8 +272,7 @@ XMC_UART_t XMC_UART_0 =
   .irq_service_request  = 0
   };
 
-#elif SERIAL_ONBOARD
-XMC_UART_t XMC_UART_0 =
+XMC_UART_t XMC_UART_1 =
   {
   .channel              = XMC_UART1_CH0,
   .rx                   = { .port = (XMC_GPIO_PORT_t*)PORT2_BASE,
@@ -289,10 +297,11 @@ XMC_UART_t XMC_UART_0 =
   .irq_service_request  = 0
    };
 
-#endif
 
-// Single Object instantiated of the HardwareSerial class for single serial interface
+// Object instantiated of the HardwareSerial class for UART PC (debug) interface
 HardwareSerial Serial( &XMC_UART_0, &rx_buffer_0, &tx_buffer_0 );
+// Object instantiated of the HardwareSerial class for UART ONBOARD interface
+HardwareSerial Serial1( &XMC_UART_1, &rx_buffer_1, &tx_buffer_1 );
 
 // Serial Interrupt and event handling
 #ifdef __cplusplus
@@ -300,6 +309,7 @@ extern "C" {
 #endif
 void serialEventRun( );
 void serialEvent( ) __attribute__((weak));
+void serialEvent1( ) __attribute__((weak));
 
 void serialEventRun( )
 {
@@ -308,12 +318,17 @@ if( serialEvent )
   if( Serial.available( ) )
     serialEvent( );
   }
+if( serialEvent1 )
+  {
+  if( Serial1.available( ) )
+    serialEvent1( );
+  }
 }
 
 // IRQ Handler of Serial Onboard (USIC1) 
 void USIC1_0_IRQHandler( )
 {
-  Serial.IrqHandler( );
+  Serial1.IrqHandler( );
 }
 
 // IRQ Handler of Serial to PC USB (USIC0)
@@ -329,5 +344,6 @@ void USIC0_0_IRQHandler( )
 
 #ifdef __cplusplus
 extern HardwareSerial Serial;
+extern HardwareSerial Serial1;
 #endif  /* cplusplus */
 #endif
