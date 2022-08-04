@@ -88,6 +88,7 @@ extern uint8_t SCK;
 
 #define LED1        36  // Additional LED1
 #define LED_BUILTIN LED1  // Standard Arduino LED: Uses LED1
+#define LED2 LED1 // Dummy LED define macro; added to comply with LED Library examples in CI/CD workflow 
 #define BUTTON1     27  // Additional BUTTON1
 
 #define digitalPinToInterrupt(p)    ((p) == 2 ? 0 : ((p) == 3 ? 1 : NOT_AN_INTERRUPT))
@@ -250,7 +251,7 @@ XMC_UART_t XMC_UART_0 =
   .tx                   = { .port = (XMC_GPIO_PORT_t*)PORT1_BASE,
                             .pin  = (uint8_t)5
                           },
-  .tx_config            = { .mode = (XMC_GPIO_MODE_t) XMC_GPIO_MODE_OUTPUT_PUSH_PULL_ALT2, //HW controlled function (HWO)
+  .tx_config            = { .mode = (XMC_GPIO_MODE_t) XMC_GPIO_MODE_OUTPUT_PUSH_PULL_ALT2,
                             .output_level     = XMC_GPIO_OUTPUT_LEVEL_HIGH,
                             .output_strength  = XMC_GPIO_OUTPUT_STRENGTH_STRONG_SOFT_EDGE
                           },
