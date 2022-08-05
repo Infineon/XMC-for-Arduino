@@ -2,7 +2,8 @@
 
    Demonstrates the use of the on board LED library
 
-   Works with any XMC board that has TWO LEDs on board
+   Works with any XMC board that has at least ONE LED on board
+   Better with two
 */
 #include <LED.h>
 
@@ -12,16 +13,21 @@ LED Led;
 void setup( )
 {
 Led.Add( LED1 );            // Configure the LEDs
-Led.Add( LED2 );              
+Led.Off( LED1 );            // Set default state of LEDs
 
-Led.On( LED2 );             // Set default state of LEDs
-Led.Off( LED1 );
+#if NUM_LEDS > 1
+Led.Add( LED2 );
+Led.On( LED2 );
+#endif
 }
 
 
 void loop( )
 {
 delay( 1000 );
-Led.Off( LED2 );
 Led.Toggle( LED1 );
+
+#if NUM_LEDS > 1
+Led.Off( LED2 );
+#endif
 }

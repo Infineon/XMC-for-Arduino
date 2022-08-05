@@ -44,6 +44,10 @@
 #error This board NOT supported by this library (Check pins_arduino.h)
 #endif
 
+#if not defined( NUM_LEDS ) || ( NUM_LEDS < 1 )
+#error Current selected board does NOT support on board LEDs
+#endif
+
 //****************************************************************************
 // @Project Includes
 //****************************************************************************
