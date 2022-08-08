@@ -42,7 +42,7 @@ models of board so we end up with
  XMC1100 XMC H Bridge2GO | High
  XMC1300 Boot Kit  | Low
  XMC1300 Sense2GOL | Low
- XMC4700 Relax Kit | Low
+ XMC4700 Relax Kit | High
 
 [Back to top](#table-of-contents)
 ### LEDs on Different Boards
