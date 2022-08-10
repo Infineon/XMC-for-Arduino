@@ -68,6 +68,10 @@ extern XMC_SPI_t XMC_SPI_0;
 #define NUM_SPI  			1
 extern XMC_SPI_t XMC_SPI_0;
 
+#elif defined(XMC4200_Platform2GO)
+#define NUM_SPI  			1
+extern XMC_SPI_t XMC_SPI_0;
+
 #elif defined(XMC4700_Relax_Kit)
 #define NUM_SPI  			3
 #define XMC_SPI_for_xmc_SD	XMC_SPI_1

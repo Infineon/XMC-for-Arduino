@@ -48,6 +48,9 @@
                   },
                   {
                      "name":"XMC1400 Kit for Arduino"
+                  },
+                  {
+                     "name":"XMC4200 Platform 2Go"
                   }
                 ],
                 "toolsDependencies":[

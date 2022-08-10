@@ -264,6 +264,38 @@ XMC_I2C_t XMC_I2C_0 =
     .protocol_irq_service_request       	  = 2
 };
 
+#elif defined (XMC4200_Platform2GO)
+XMC_I2C_t XMC_I2C_0 =
+{
+    .channel          = XMC_I2C0_CH1,
+    .channel_config   = {
+        .baudrate = (uint32_t)(100000U),
+        .address = 0U
+    },
+    .sda              = {
+        .port = (XMC_GPIO_PORT_t*)PORT2_BASE,
+        .pin  = (uint8_t)5
+    },
+    .sda_config       = {
+        .mode = XMC_GPIO_MODE_OUTPUT_OPEN_DRAIN_ALT2,
+        .output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH
+    },
+    .scl              = {
+        .port = (XMC_GPIO_PORT_t*)PORT3_BASE,
+        .pin  = (uint8_t)0
+    },
+    .scl_config       = {
+        .mode = XMC_GPIO_MODE_OUTPUT_OPEN_DRAIN_ALT2,
+        .output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH
+    },
+    .input_source_dx0 = XMC_INPUT_B,
+    .input_source_dx1 = XMC_INPUT_B,
+    .slave_receive_irq_num                    = (IRQn_Type) 84,
+    .slave_receive_irq_service_request        = 1 ,
+    .protocol_irq_num                   	  = (IRQn_Type) 85,
+    .protocol_irq_service_request       	  = 2
+};
+
 
 #elif defined(XMC4700_Relax_Kit)
 XMC_I2C_t XMC_I2C_0 =
