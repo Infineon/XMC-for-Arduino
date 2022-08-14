@@ -5,9 +5,9 @@ and images for wiki.
 
 ### folder wiki contains
 
-xmc4700-X1-X2.csv   XMC4700 Relax Kit (and Lite) CSV of X1 and X2 connector pinout
-
-xmc4400-X1-X2.csv   XMC4400 Platform 2 Go CSV of X1 and X2 connector pinout
+- xmc4200-X1-X2.csv   XMC4200 Platform 2 Go CSV of X1 and X2 connector pinout
+- xmc4400-X1-X2.csv   XMC4400 Platform 2 Go CSV of X1 and X2 connector pinout
+- xmc4700-X1-X2.csv   XMC4700 Relax Kit (and Lite) CSV of X1 and X2 connector pinout
 
 ### Folder wiki/Pictures
 
