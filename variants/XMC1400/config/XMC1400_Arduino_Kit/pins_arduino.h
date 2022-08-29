@@ -54,6 +54,9 @@ extern const uint8_t NUM_ANALOG_INPUTS;
 // Indicate unit has RTC/Alarm
 #define HAS_RTC             1
 
+// Indicate variant has a GPIO pin used for Reset pin
+#define HAS_GPIO_RESET      1
+
 // Defines will be either set by ArduinoIDE in the menu or manually
 #ifdef SERIAL_HOSTPC
 // Comment out following line to use Serial on pins (board)
@@ -92,17 +95,17 @@ extern const uint8_t NUM_ANALOG_INPUTS;
 #define AD_AUX_3    8  // AD_AUX
 #define AD_AUX_4    9  // AD_AUX
 
-#define AUX_1       26  // AUX
+#define AUX_1       25  // AUX
 
 #define LED1        13
 #define LED2        2
-#define LED3        27
+#define LED3        26
 #define LED_BUILTIN LED1
 
 #define EXT_INTR_0  3
-#define EXT_INTR_1  26
+#define EXT_INTR_1  25
 
-#define digitalPinToInterrupt(p)    ((p) == 3 ? 0 : ((p) == 26 ? 1 : NOT_AN_INTERRUPT))
+#define digitalPinToInterrupt(p)    ((p) == 3 ? 0 : ((p) == 25 ? 1 : NOT_AN_INTERRUPT))
 
 /* Mapping interrupt handlers. Notice that XMC1400 can have interrupt handlers working in 3 modes, the defines below assumes the mode A.
    For details refer to assembly file and reference manual.
@@ -128,7 +131,8 @@ extern const uint8_t NUM_ANALOG_INPUTS;
 #define ERU0_0_IRQHandler IRQ3_Handler // RESET
 #define ERU0_0_IRQn IRQ3_IRQn
 
-#ifdef ARDUINO_MAIN //index is arduino pin count 
+#ifdef ARDUINO_MAIN 
+//index is Arduino pin count 
 // Mapping of digital pins and comments
 const XMC_PORT_PIN_t mapping_port_pin[] =
     {
@@ -153,13 +157,12 @@ const XMC_PORT_PIN_t mapping_port_pin[] =
     /* 18  */   {XMC_GPIO_PORT2 , 10}, // A3 / ADC Input                          P2.10
     /* 19  */   {XMC_GPIO_PORT2 , 1}, // A4  / I2C Data / Address SDA             P2.1
     /* 20  */   {XMC_GPIO_PORT2 , 0}, // A5  / I2C Clock SCL                      P2.0
-    /* 21  */   {XMC_GPIO_PORT2 , 4}, // RESET input ( DO NOT USE as GPIO )       P2.4 (INPUT ONLY)
-    /* 22 */    {XMC_GPIO_PORT2 , 11}, // GPIO / AD_AUX_1 Additional Pin          P2.11
-    /* 23 */    {XMC_GPIO_PORT2 , 7}, // GPIO / AD_AUX_2 Additional Pin           P2.7
-    /* 24 */    {XMC_GPIO_PORT2 , 5}, // GPIO / AD_AUX_3 Additional Pin           P2.5
-    /* 25 */    {XMC_GPIO_PORT2 , 2}, // GPIO / AD_AUX_4 Additional Pin           P2.2
-    /* 26 */    {XMC_GPIO_PORT1 , 4}, // External int 1                           P1.4
-    /* 27 */    {XMC_GPIO_PORT1 , 5} // LED3 output                               P1.5
+    /* 21  */   {XMC_GPIO_PORT2 , 11}, // GPIO / AD_AUX_1 Additional Pin          P2.11
+    /* 22 */    {XMC_GPIO_PORT2 , 7}, // GPIO / AD_AUX_2 Additional Pin           P2.7
+    /* 23 */    {XMC_GPIO_PORT2 , 5}, // GPIO / AD_AUX_3 Additional Pin           P2.5
+    /* 24 */    {XMC_GPIO_PORT2 , 2}, // GPIO / AD_AUX_4 Additional Pin           P2.2
+    /* 25 */    {XMC_GPIO_PORT1 , 4}, // External int 1                           P1.4
+    /* 26 */    {XMC_GPIO_PORT1 , 5} // LED3 output                               P1.5
     };
 
    
@@ -209,10 +212,10 @@ XMC_ADC_t mapping_adc[] =
     { VADC, 6, VADC_G0, 0, 7, DISABLED },   //A4
     { VADC, 5, VADC_G0, 0, 10, DISABLED },  //A5
     // Additional channels added here
-    { VADC, 4, VADC_G0, 0, 5, DISABLED },   //AUX 22
-    { VADC, 1, VADC_G1, 1, 1, DISABLED },   //AUX 23  
-    { VADC, 7, VADC_G1, 1, 2, DISABLED },   //AUX 24
-    { VADC, 7, VADC_G0, 0, 3, DISABLED }    //AUX 25
+    { VADC, 4, VADC_G0, 0, 5, DISABLED },   //AUX 21
+    { VADC, 1, VADC_G1, 1, 1, DISABLED },   //AUX 22  
+    { VADC, 7, VADC_G1, 1, 2, DISABLED },   //AUX 23
+    { VADC, 7, VADC_G0, 0, 3, DISABLED }    //AUX 24
 };
 
 const uint8_t NUM_ANALOG_INPUTS = ( sizeof( mapping_adc ) / sizeof( XMC_ADC_t ) );

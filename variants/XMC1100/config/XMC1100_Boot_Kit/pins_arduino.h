@@ -54,6 +54,9 @@ extern const uint8_t NUM_ANALOG_INPUTS;
 // Indicate unit has RTC/Alarm for simpler RTC control
 #define HAS_RTC
 
+// Indicate variant has a GPIO pin used for Reset pin
+#define HAS_GPIO_RESET      1
+
 // Defines will be either set by ArduinoIDE in the menu or manually
 #ifdef SERIAL_HOSTPC
 // Comment out following line to use Serial on pins (board)
@@ -65,7 +68,8 @@ extern const uint8_t NUM_ANALOG_INPUTS;
 #define SERIAL_DEBUG    1
 #endif
 
-#define PWM4_TIMER_PERIOD (2041U)  // Generate 490Hz @fCCU=1MHz
+// Generate 490Hz @fCCU=1MHz
+#define PWM4_TIMER_PERIOD (2041U)
 
 #define PCLK 64000000u
 
@@ -88,21 +92,23 @@ extern uint8_t SCK;
 #define A6   6
 #define A7   7
 
-#define AD_AUX_1    24  // AD_AUX
-#define AD_AUX_2    25  // AD_AUX
-#define AUX_1       26  // AUX
-#define AUX_2       27  // AUX
-#define AUX_3       28  // AUX
-#define AUX_4       29  // AUX
-#define AUX_5       30  // AUX
+// AD_AUX Connector
+#define AD_AUX_1    24
+#define AD_AUX_2    25
+// AUX Connector
+#define AUX_1       26
+#define AUX_2       27
+#define AUX_3       28
+#define AUX_4       29
+#define AUX_5       30
 
-#define LED_BUILTIN 13  // Standard Arduino LED pin 13
-#define LED1        26  // Extended LEDs P0.5
-#define LED2        27  // Extended LEDs P0.6
-#define LED3        0   // Extended LEDs P1.2
-#define LED4        1   // Extended LEDs P1.3
-#define LED5        2   // Extended LEDs P1.4
-#define LED6        31  // Extended LEDs P1.5
+#define LED_BUILTIN 13
+#define LED1        26
+#define LED2        27
+#define LED3        0
+#define LED4        1
+#define LED5        2
+#define LED6        31
 
 #define digitalPinToInterrupt(p)    ((p) == 2 ? 0 : ((p) == 3 ? 1 : NOT_AN_INTERRUPT))
 
@@ -122,7 +128,7 @@ const XMC_PORT_PIN_t mapping_port_pin[] =
     /* 9  */    {XMC_GPIO_PORT0, 8}, // PWM40-2 output                     P0.8
     /* 10  */   {XMC_GPIO_PORT0, 9}, // SPI-SS / PWM40-3 output            P0.9
     /* 11  */   {XMC_GPIO_PORT1, 1}, // SPI-MOSI / PWM40-1 output          P1.1
-    /* 12  */   {XMC_GPIO_PORT1, 0}, // SPI-MISO                           P1.0
+   /* 12  */   {XMC_GPIO_PORT1, 0}, // SPI-MISO                           P1.0
     /* 13  */   {XMC_GPIO_PORT0, 7}, // SPI-SCK / LED BUILTIN output       P0.7
     /* 14  */   {XMC_GPIO_PORT2, 3}, // AREF ** DO NOT USE as GPIO or REF ** P2.3
     /* 15  */   {XMC_GPIO_PORT2, 1}, // I2C Data / Address SDA / A7  ADC   P2.1

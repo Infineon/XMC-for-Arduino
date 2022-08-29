@@ -43,7 +43,7 @@ wiring_time_init();
 wiring_analog_init();
 // Initialize the reset pin for the XMC1100 Boot Kit series and XMC1400 Kit for Arduino as they are based on Arduino form-factor
 // Hence, a dedicated reset pin is required. 
-#if defined(XMC1100_Boot_Kit) || defined(XMC1400_Arduino_Kit)
+#ifdef HAS_GPIO_RESET
   reset_init();
 #endif
 

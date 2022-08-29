@@ -65,8 +65,10 @@ extern const uint8_t NUM_ANALOG_OUTPUTS;
 
 // Board has two serial ports pre-assigned to debug and on-board
 
-#define PWM4_TIMER_PERIOD (0x11EF)  // Generate 490Hz @fCCU=144MHz
-#define PWM8_TIMER_PERIOD (0x11EF)  // Generate 490Hz @fCCU=144MHz
+// Generate 490Hz @fCCU=144MHz
+#define PWM4_TIMER_PERIOD (0x11EF)
+// Generate 490Hz @fCCU=144MHz
+#define PWM8_TIMER_PERIOD (0x11EF)
 
 #define PCLK 144000000u
 
@@ -97,10 +99,14 @@ static const uint8_t SCK_SD  = PIN_SPI_SCK_SD;
 #define A4   4
 #define A5   5
 
-#define LED_RED     22  // LED Red channel
-#define LED_GREEN   23  // LED Green channel
-#define LED_BLUE    24  // LED Blue channel
-#define BUTTON1     25  // Additional BUTTON1
+// LED Red channel
+#define LED_RED     22
+// LED Green channel
+#define LED_GREEN   23
+// LED Blue channel
+#define LED_BLUE    24
+// Additional BUTTON1
+#define BUTTON1     25
 
 #define digitalPinToInterrupt(p)    ((p) == 2 ? 0 : ((p) == 32 ? 1 : NOT_AN_INTERRUPT))
 

@@ -69,8 +69,10 @@ extern const uint8_t NUM_ANALOG_INPUTS;
 #define SERIAL_DEBUG    1
 #endif
 
-#define PWM4_TIMER_PERIOD (2041U)  // Generate 490Hz @fCCU=1MHz
-#define PWM8_TIMER_PERIOD (2041U)  // Generate 490Hz @fCCU=1MHz
+// Generate 490Hz @fCCU=1MHz
+#define PWM4_TIMER_PERIOD (2041U)
+// Generate 490Hz @fCCU=1MHz
+#define PWM8_TIMER_PERIOD (2041U)
 
 #define PCLK 64000000u
 
@@ -99,21 +101,21 @@ extern uint8_t SCK;
 
 #define PIN_SPI_SS_2  23
 
-#define AD_AUX_1    24  // AD_AUX
-#define AD_AUX_2    25  // AD_AUX
-#define AUX_1       26  // AUX
-#define AUX_2       27  // AUX
-#define AUX_3       28  // AUX
-#define AUX_4       29  // AUX
-#define AUX_5       30  // AUX
+#define AD_AUX_1    24
+#define AD_AUX_2    25
+#define AUX_1       26
+#define AUX_2       27
+#define AUX_3       28
+#define AUX_4       29
+#define AUX_5       30
 
-#define LED1        24  // Extended LEDs P0.0
-#define LED2        25  // Extended LEDs P0.1
-#define LED3        29	// Extended LEDs P0.6
-#define LED4        30  // Extended LEDs P0.7
-#define LED5        27  // Extended LEDs P0.8
-#define LED6        28  // Extended LEDs P0.9
-#define LED_BUILTIN LED1 	// Standard Arduino LED
+#define LED1        24
+#define LED2        25
+#define LED3        29
+#define LED4        30
+#define LED5        27
+#define LED6        28
+#define LED_BUILTIN LED1
 
 #define digitalPinToInterrupt(p)    ((p) == 14 ? 0 : ((p) == 15 ? 1 : NOT_AN_INTERRUPT))
 
