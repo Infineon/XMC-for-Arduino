@@ -311,25 +311,45 @@ RingBuffer rx_buffer_1;
 RingBuffer tx_buffer_1;
 #endif
 
-#ifdef SERIAL_HOSTPC
 XMC_UART_t XMC_UART_0 =
   {
   .channel              = XMC_UART1_CH0,
-  .rx                   = { .port = (XMC_GPIO_PORT_t*)PORT0_BASE,
+  .rx                   = { 
+#ifdef SERIAL_HOSTPC    
+                            .port = (XMC_GPIO_PORT_t*)PORT0_BASE,
                             .pin  = (uint8_t)5
+#elif SERIAL_ONBOARD
+                            .port = (XMC_GPIO_PORT_t*)PORT2_BASE,
+                            .pin  = (uint8_t)15
+#endif                            
                           },
   .rx_config            = { .mode = XMC_GPIO_MODE_INPUT_TRISTATE,
                             .output_level     = XMC_GPIO_OUTPUT_LEVEL_HIGH,
                             .output_strength  = XMC_GPIO_OUTPUT_STRENGTH_STRONG_SOFT_EDGE
                           },
-  .tx                   = { .port = (XMC_GPIO_PORT_t*)PORT1_BASE,
+  .tx                   = {
+#ifdef SERIAL_HOSTPC 
+                            .port = (XMC_GPIO_PORT_t*)PORT1_BASE,
                             .pin  = (uint8_t)15
+#elif SERIAL_ONBOARD       
+                            .port = (XMC_GPIO_PORT_t*)PORT2_BASE,
+                            .pin  = (uint8_t)14    
+#endif                                             
                           },
-  .tx_config            = { .mode = (XMC_GPIO_MODE_t) XMC_GPIO_MODE_OUTPUT_PUSH_PULL_ALT4,
+  .tx_config            = { 
+#ifdef SERIAL_HOSTPC    
+                            .mode = (XMC_GPIO_MODE_t) XMC_GPIO_MODE_OUTPUT_PUSH_PULL_ALT4,
+#elif SERIAL_ONBOARD
+                            .mode = (XMC_GPIO_MODE_t) XMC_GPIO_MODE_OUTPUT_PUSH_PULL_ALT2,
+#endif                                   
                             .output_level     = XMC_GPIO_OUTPUT_LEVEL_HIGH,
                             .output_strength  = XMC_GPIO_OUTPUT_STRENGTH_STRONG_SOFT_EDGE
                           },
+#ifdef SERIAL_HOSTPC                          
   .input_source_dx0     = (XMC_USIC_INPUT_t)USIC1_C0_DX0_P0_5,
+#elif SERIAL_ONBOARD
+  .input_source_dx0     = (XMC_USIC_INPUT_t)USIC1_C0_DX0_P2_15,
+#endif    
   .input_source_dx1     = XMC_INPUT_INVALID,
   .input_source_dx2     = XMC_INPUT_INVALID,
   .input_source_dx3     = XMC_INPUT_INVALID,
@@ -337,38 +357,9 @@ XMC_UART_t XMC_UART_0 =
   .irq_service_request  = 0
   };
 
-// Debug port
+// Single Hardware Serial object for both UART interfaces 
 HardwareSerial Serial( &XMC_UART_0, &rx_buffer_0, &tx_buffer_0 );
 
-#elif SERIAL_ONBOARD
-XMC_UART_t XMC_UART_0 =
-  {
-  .channel              = XMC_UART1_CH0,
-  .rx                   = { .port = (XMC_GPIO_PORT_t*)PORT2_BASE,
-                            .pin  = (uint8_t)15
-                          },
-  .rx_config            = { .mode = XMC_GPIO_MODE_INPUT_TRISTATE,
-                            .output_level     = XMC_GPIO_OUTPUT_LEVEL_HIGH,
-                            .output_strength  = XMC_GPIO_OUTPUT_STRENGTH_STRONG_SOFT_EDGE
-                          },
-  .tx                   = { .port = (XMC_GPIO_PORT_t*)PORT2_BASE,
-                            .pin  = (uint8_t)14
-                          },
-  .tx_config            = { .mode = (XMC_GPIO_MODE_t) XMC_GPIO_MODE_OUTPUT_PUSH_PULL_ALT2,
-                            .output_level     = XMC_GPIO_OUTPUT_LEVEL_HIGH,
-                            .output_strength  = XMC_GPIO_OUTPUT_STRENGTH_STRONG_SOFT_EDGE
-                          },
-  .input_source_dx0     = (XMC_USIC_INPUT_t)USIC1_C0_DX0_P2_15,
-  .input_source_dx1     = XMC_INPUT_INVALID,
-  .input_source_dx2     = XMC_INPUT_INVALID,
-  .input_source_dx3     = XMC_INPUT_INVALID,
-  .irq_num              = USIC1_0_IRQn,
-  .irq_service_request  = 0
-   };
-
-// Debug port
-HardwareSerial Serial( &XMC_UART_0, &rx_buffer_0, &tx_buffer_0 );
-#endif
 
 // Serial Interrupt and event handling
 #ifdef __cplusplus
