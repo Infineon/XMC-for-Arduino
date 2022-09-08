@@ -362,7 +362,7 @@ XMC_UART_t XMC_UART_0 =
   .input_source_dx1     = XMC_INPUT_INVALID,
   .input_source_dx2     = XMC_INPUT_INVALID,
   .input_source_dx3     = XMC_INPUT_INVALID,
-  .irq_num              = USIC0_5_IRQn,
+  .irq_num              = USIC1_0_IRQn,
   .irq_service_request  = 0
    };
 
