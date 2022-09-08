@@ -306,10 +306,6 @@ const uint8_t NUM_ANALOG_INPUTS = ( sizeof( mapping_adc ) / sizeof( XMC_ADC_t ) 
  */
 RingBuffer rx_buffer_0;
 RingBuffer tx_buffer_0;
-#if (NUM_SERIAL > 1)
-RingBuffer rx_buffer_1;
-RingBuffer tx_buffer_1;
-#endif
 
 XMC_UART_t XMC_UART_0 =
   {
@@ -367,8 +363,6 @@ extern "C" {
 #endif
 void serialEventRun( );
 void serialEvent( ) __attribute__((weak));
-void serialEvent1( ) __attribute__((weak));
-
 
 void serialEventRun( )
 {
@@ -377,27 +371,12 @@ if( serialEvent )
   if( Serial.available( ) )
     serialEvent( );
   }
-#if (NUM_SERIAL > 1)
-if( serialEvent1 )
-  {
-  if( Serial1.available( ) )
-    serialEvent1( );
-  }
-#endif
 }
-
 
 void USIC1_0_IRQHandler( )
 {
 Serial.IrqHandler( );
 }
-
-#if (NUM_SERIAL > 1)
-void USIC0_5_IRQHandler( void )
-{
-Serial1.IrqHandler();
-}
-#endif
 
 #ifdef __cplusplus
 }
@@ -406,9 +385,6 @@ Serial1.IrqHandler();
 
 #ifdef __cplusplus
 extern HardwareSerial Serial;
-#if (NUM_SERIAL > 1)
-extern HardwareSerial Serial1;
-#endif
 #endif  /* cplusplus */
 
 #endif
