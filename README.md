@@ -4,13 +4,16 @@
 This repository integrates [Infineon's](https://www.infineon.com/) XMC microcontrollers into the [Arduino IDE](https://www.arduino.cc/en/main/software) and [PlatformIO IDE](https://platformio.org/platformio-ide?utm_source=github&utm_medium=xmc-for-arduino).
 
 ## Contents
-- [Supported Microcontroller Boards](#supported-microcontroller-boards)
-- [Additional Information](#additional-information)
-- [Installation Instructions](#installation-instructions)
-  * [Prework for SEGGER J-Link](#prework-for-segger-j-link)
-  * [Using Arduino IDE](#using-arduino-ide)
-  * [Using PlatformIO IDE](#using-platformio-ide)
-- [Additional Contributors](#additional-contributors)
+- [Infineon's XMC Microcontroller Boards for Arduino](#infineons-xmc-microcontroller-boards-for-arduino)
+  - [Contents](#contents)
+  - [Supported Microcontroller Boards](#supported-microcontroller-boards)
+  - [Additional Information](#additional-information)
+  - [Installation Instructions](#installation-instructions)
+    - [Prework for SEGGER J-Link](#prework-for-segger-j-link)
+    - [Using Arduino IDE](#using-arduino-ide)
+    - [Using PlatformIO IDE](#using-platformio-ide)
+  - [Contributing and Third Party Libraries](#contributing-and-third-party-libraries)
+  - [Additional Contributors](#additional-contributors)
 
 ## Supported Microcontroller Boards
 
@@ -21,7 +24,7 @@ This repository integrates [Infineon's](https://www.infineon.com/) XMC microcont
 * [XMC1300 Sense2GoL](https://www.infineon.com/cms/de/product/evaluation-boards/demo-sense2gol/)
 * [XMC4400 Platform 2Go](https://www.infineon.com/cms/en/product/evaluation-boards/kit_xmc_plt2go_xmc4400//)
 * [XMC4700 Relax Kit](https://www.infineon.com/cms/en/product/evaluation-boards/kit_xmc47_relax_v1/)
-* [DEMO Radar BB XMC4700](https://www.infineon.com/cms/en/product/evaluation-boards/demo-sense2gol-pulse/)
+* [XMC4700 Sense2GoL Pulse](https://www.infineon.com/cms/en/product/evaluation-boards/demo-sense2gol-pulse/)
 
 
 ## Additional Information
