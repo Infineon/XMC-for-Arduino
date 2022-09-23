@@ -96,12 +96,12 @@ extern uint8_t SCK;
 #define A16  16
 #define A17  17
 
-#define LED1        65
-#define LED2        62
+#define LED1        66
+#define LED2        63
 #define LED_BUILTIN LED1
 
-#define BUTTON1     68
-#define BUTTON2     57
+#define BUTTON1     69
+#define BUTTON2     58
 
 #define digitalPinToInterrupt(p)    ((p) == 2 ? 0 : ((p) == 3 ? 1 : NOT_AN_INTERRUPT))
 
@@ -144,9 +144,9 @@ const XMC_PORT_PIN_t mapping_port_pin[]=
     //Additional pins for port X1 starting here
     /* 25 */  {XMC_GPIO_PORT2, 10}, // GPIO / ETH_LED                         P2.10                          X1-37
     /* 26 */  {XMC_GPIO_PORT2, 8},  // GPIO / ETH_TXDO / PWM80-32             P2.8                           X1-35                
-    /* 27 */  {XMC_GPIO_PORT2, 4},  // GPIO / ETH_RXER                        P2.4                           X1-33
+    /* 27 */  {XMC_GPIO_PORT2, 4},  // GPIO / ETH_RXER / PWM41-1              P2.4                           X1-33
     /* 28 */  {XMC_GPIO_PORT2, 3},  // ETH_RXD1 / PWM41-2                     P2.3                           X1-32
-    /* 29 */  {XMC_GPIO_PORT2, 2},  // GPIO / ETH_RXDO                        P2.2                           X1-31
+    /* 29 */  {XMC_GPIO_PORT2, 2},  // GPIO / ETH_RXDO / PWM41-3              P2.2                           X1-31
     /* 30 */  {XMC_GPIO_PORT2, 0},  // GPIO / ETH_MDIO / PWM81-21             P2.0                           X1-29
     /* 31 */  {XMC_GPIO_PORT2, 6},  // PWM80-13 / GPIO4_2GO_2                 P2.6                           X1-27
     /* 32 */  {XMC_GPIO_PORT5, 2},  // GPIO / RST                             P5.2                           X1-25
@@ -214,8 +214,8 @@ const uint8_t mapping_pin_PWM4[][ 2 ] = {
                                         { 5, 1 },   // PWM1
                                         { 6, 2 },   // PWM2
                                         { 27, 3 },  // PWM
-                                        { 28, 4 },  // PWM
-                                        { 14, 5 },  // PWM
+                                        { 29, 4 },  // PWM
+                                        { 28, 5 },  // PWM
                                         { 15, 6 },  // PWM
                                         { 255, 255 } };
 
@@ -227,8 +227,8 @@ XMC_PWM4_t mapping_pwm4[] =
     {CCU42, CCU42_CC42, 2, mapping_port_pin[6], P3_4_AF_CCU42_OUT2,  XMC_CCU4_SLICE_PRESCALER_64, PWM4_TIMER_PERIOD, DISABLED}, // PWM disabled  6  P3.4
 
     {CCU41, CCU41_CC41, 1, mapping_port_pin[27], P2_4_AF_CCU41_OUT1, XMC_CCU4_SLICE_PRESCALER_64, PWM4_TIMER_PERIOD, DISABLED}, // PWM disabled  27   P2.4
-    {CCU41, CCU41_CC43, 3, mapping_port_pin[28], P2_2_AF_CCU41_OUT3, XMC_CCU4_SLICE_PRESCALER_64, PWM4_TIMER_PERIOD, DISABLED}, // PWM disabled  28   P2.2
-    {CCU41, CCU41_CC42, 2, mapping_port_pin[14], P2_3_AF_CCU41_OUT2, XMC_CCU4_SLICE_PRESCALER_64, PWM4_TIMER_PERIOD, DISABLED}, // PWM disabled  14   P2.3
+    {CCU41, CCU41_CC43, 3, mapping_port_pin[29], P2_2_AF_CCU41_OUT3, XMC_CCU4_SLICE_PRESCALER_64, PWM4_TIMER_PERIOD, DISABLED}, // PWM disabled  29   P2.2
+    {CCU41, CCU41_CC42, 2, mapping_port_pin[28], P2_3_AF_CCU41_OUT2, XMC_CCU4_SLICE_PRESCALER_64, PWM4_TIMER_PERIOD, DISABLED}, // PWM disabled  28   P2.3
     {CCU41, CCU41_CC40, 0, mapping_port_pin[15], P2_5_AF_CCU41_OUT0, XMC_CCU4_SLICE_PRESCALER_64, PWM4_TIMER_PERIOD, DISABLED}, // PWM disabled  15   P2.5
     };
 const uint8_t NUM_PWM4 = ( sizeof( mapping_pwm4 ) / sizeof( XMC_PWM4_t ) );
@@ -238,12 +238,12 @@ const uint8_t mapping_pin_PWM8[][ 2 ] = {
                                         { 9,  0 },  // PWM3
                                         { 10, 1 },  // PWM4
                                         { 26, 2 },  // PWM
-                                        { 29, 3 },  // PWM
-                                        { 30, 4 },  // PWM
-                                        { 45, 5 },  // PWM
-                                        { 46, 6 },  // PWM
-                                        { 48, 7 },  // PWM
-                                        { 67, 8 },  // PWM
+                                        { 30, 3 },  // PWM
+                                        { 31, 4 },  // PWM
+                                        { 46, 5 },  // PWM
+                                        { 47, 6 },  // PWM
+                                        { 49, 7 },  // PWM
+                                        { 68, 8 },  // PWM
                                         { 255, 255 } };
 
 /* Configurations of PWM channels for CCU8 type */
@@ -253,12 +253,12 @@ XMC_PWM8_t mapping_pwm8[] =
     {CCU80, CCU80_CC80, 0, XMC_CCU8_SLICE_COMPARE_CHANNEL_1, mapping_port_pin[10],  P0_2_AF_CCU80_OUT01, XMC_CCU8_SLICE_PRESCALER_64, PWM8_TIMER_PERIOD, DISABLED}, // PWM disabled  10 P0.2
     //additional pwm outputs starting here
     {CCU80, CCU80_CC83, 3, XMC_CCU8_SLICE_COMPARE_CHANNEL_2, mapping_port_pin[26], P2_8_AF_CCU80_OUT32,  XMC_CCU8_SLICE_PRESCALER_64, PWM8_TIMER_PERIOD, DISABLED}, // PWM disabled  26 P2.8
-    {CCU81, CCU81_CC82, 2, XMC_CCU8_SLICE_COMPARE_CHANNEL_1, mapping_port_pin[29], P2_0_AF_CCU81_OUT21,  XMC_CCU8_SLICE_PRESCALER_64, PWM8_TIMER_PERIOD, DISABLED}, // PWM disabled  29 P2.0
-    {CCU80, CCU80_CC81, 1, XMC_CCU8_SLICE_COMPARE_CHANNEL_2, mapping_port_pin[30], P2_6_AF_CCU80_OUT13,  XMC_CCU8_SLICE_PRESCALER_64, PWM8_TIMER_PERIOD, DISABLED}, // PWM disabled  30 P2.6
-    {CCU81, CCU81_CC80, 0, XMC_CCU8_SLICE_COMPARE_CHANNEL_2, mapping_port_pin[45], P5_7_AF_CCU81_OUT02,  XMC_CCU8_SLICE_PRESCALER_64, PWM8_TIMER_PERIOD, DISABLED}, // PWM disabled  45 P5.7
-    {CCU80, CCU80_CC80, 0, XMC_CCU8_SLICE_COMPARE_CHANNEL_2, mapping_port_pin[46], P2_7_AF_CCU80_OUT03,  XMC_CCU8_SLICE_PRESCALER_64, PWM8_TIMER_PERIOD, DISABLED}, // PWM disabled  46 P2.7
-    {CCU80, CCU80_CC82, 2, XMC_CCU8_SLICE_COMPARE_CHANNEL_2, mapping_port_pin[48], P2_9_AF_CCU80_OUT22,  XMC_CCU8_SLICE_PRESCALER_64, PWM8_TIMER_PERIOD, DISABLED}, // PWM disabled  48 P2.9
-    {CCU80, CCU80_CC81, 1, XMC_CCU8_SLICE_COMPARE_CHANNEL_2, mapping_port_pin[67], P0_9_AF_CCU80_OUT12,  XMC_CCU8_SLICE_PRESCALER_64, PWM8_TIMER_PERIOD, DISABLED}  // PWM disabled  67 P0.9    
+    {CCU81, CCU81_CC82, 2, XMC_CCU8_SLICE_COMPARE_CHANNEL_1, mapping_port_pin[30], P2_0_AF_CCU81_OUT21,  XMC_CCU8_SLICE_PRESCALER_64, PWM8_TIMER_PERIOD, DISABLED}, // PWM disabled  30 P2.0
+    {CCU80, CCU80_CC81, 1, XMC_CCU8_SLICE_COMPARE_CHANNEL_2, mapping_port_pin[31], P2_6_AF_CCU80_OUT13,  XMC_CCU8_SLICE_PRESCALER_64, PWM8_TIMER_PERIOD, DISABLED}, // PWM disabled  31 P2.6
+    {CCU81, CCU81_CC80, 0, XMC_CCU8_SLICE_COMPARE_CHANNEL_2, mapping_port_pin[46], P5_7_AF_CCU81_OUT02,  XMC_CCU8_SLICE_PRESCALER_64, PWM8_TIMER_PERIOD, DISABLED}, // PWM disabled  46 P5.7
+    {CCU80, CCU80_CC80, 0, XMC_CCU8_SLICE_COMPARE_CHANNEL_2, mapping_port_pin[47], P2_7_AF_CCU80_OUT03,  XMC_CCU8_SLICE_PRESCALER_64, PWM8_TIMER_PERIOD, DISABLED}, // PWM disabled  47 P2.7
+    {CCU80, CCU80_CC82, 2, XMC_CCU8_SLICE_COMPARE_CHANNEL_2, mapping_port_pin[49], P2_9_AF_CCU80_OUT22,  XMC_CCU8_SLICE_PRESCALER_64, PWM8_TIMER_PERIOD, DISABLED}, // PWM disabled  49 P2.9
+    {CCU80, CCU80_CC81, 1, XMC_CCU8_SLICE_COMPARE_CHANNEL_2, mapping_port_pin[68], P0_9_AF_CCU80_OUT12,  XMC_CCU8_SLICE_PRESCALER_64, PWM8_TIMER_PERIOD, DISABLED}  // PWM disabled  68 P0.9    
     };
 
 const uint8_t NUM_PWM8 = ( sizeof( mapping_pwm8 ) / sizeof( XMC_PWM8_t ) );
@@ -268,8 +268,8 @@ const uint8_t NUM_PWM  = ( sizeof( mapping_pwm4 ) / sizeof( XMC_PWM4_t ) )
 /* Analog Pin mappings and configurations */
 #ifdef DAC
 const uint8_t mapping_pin_DAC[][ 2 ] = {
-                                        { 50, 0 },
-                                        { 72, 1 },
+                                        { 51, 0 },
+                                        { 73, 1 },
                                         { 255, 255 } };
 
 /* Analog Pin mappings and configurations */
