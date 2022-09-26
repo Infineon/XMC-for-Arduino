@@ -102,6 +102,16 @@ jobs:
             multiSerial: false
             dma: false
             alarmRtc: false
+          - fqbn: Infineon:arm:XMC4200_Platform2GO
+            i2s: false
+            dieTemp: false
+            heapMem: false
+            sleep1100: false
+            sleep4700 : false
+            stackMem: true
+            multiSerial: false
+            dma: false
+            alarmRtc: true
 
         # Make board type-specific customizations to the matrix jobs
         include:

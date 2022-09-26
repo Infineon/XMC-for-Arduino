@@ -1,11 +1,10 @@
 /*  Simple LED library flashes on board LED Every second
 
-   Simple RTC for Infineon XMC boards with RTC
-   Demonstrates the use of the LED library
+   Demonstrates the use of the on board LED library
 
-   Works with any XMC board that has TWO LEDs on board
+   Works with any XMC board that has at least ONE LED on board
+   Better with two
 */
-/* For on board LEDs */
 #include <LED.h>
 
 /* Create an LED object */
@@ -14,18 +13,21 @@ LED Led;
 void setup( )
 {
 Led.Add( LED1 );            // Configure the LEDs
-Led.Add( LED2 );              
+Led.Off( LED1 );            // Set default state of LEDs
 
-// Set default state of LEDs
+#if NUM_LEDS > 1
+Led.Add( LED2 );
 Led.On( LED2 );
-Led.Off( LED1 );
+#endif
 }
 
 
 void loop( )
 {
 delay( 1000 );
-Led.Off( LED2 );
 Led.Toggle( LED1 );
 
+#if NUM_LEDS > 1
+Led.Off( LED2 );
+#endif
 }

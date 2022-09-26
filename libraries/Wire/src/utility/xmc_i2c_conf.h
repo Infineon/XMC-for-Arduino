@@ -72,6 +72,9 @@ extern XMC_I2C_t XMC_I2C_0;
 #define NUM_I2C  1
 extern XMC_I2C_t XMC_I2C_0;
 
+#elif defined(XMC4200_Platform2GO)
+#define NUM_I2C  1
+extern XMC_I2C_t XMC_I2C_0;
 
 #elif defined(XMC4700_Relax_Kit)
 #define NUM_I2C  2
