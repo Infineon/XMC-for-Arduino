@@ -123,23 +123,23 @@ const XMC_PORT_PIN_t mapping_port_pin[]=
     /* 11 */  {XMC_GPIO_PORT1, 9},  // SPI-MOSI                               P1.9                           X1-10
     /* 12 */  {XMC_GPIO_PORT0, 0},  // SPI-MISO                               P0.0                           X2-18
     /* 13 */  {XMC_GPIO_PORT1, 8},  // SPI-SCK / GPIO                         P1.8                           X1-9
-    /* 14 */  {XMC_GPIO_PORT2, 3},  // AREF TODO: / ETH_RXD1 / PWM41-2        P2.3                           X1-32
-    /* 15 */  {XMC_GPIO_PORT2, 5},  // I2C Data / Address SDA / A4 / PWM41-0  P2.5  (Hardwired to A4)        X1-34
-    /* 16 */  {XMC_GPIO_PORT3, 0},  // I2C Clock SCL  / A5 - ADC Input        P3.0  (Hardwired to A5)        X2-19
-    /* 17 */  {XMC_GPIO_PORT14, 0}, // A0 / ADC Input                         P14.0 (INPUT ONLY)               
-    /* 18 */  {XMC_GPIO_PORT14, 1}, // A1 / ADC Input                         P14.1 (INPUT ONLY)
-    /* 19 */  {XMC_GPIO_PORT14, 2}, // A2 / ADC Input                         P14.2 (INPUT ONLY)
-    /* 20 */  {XMC_GPIO_PORT14, 3}, // A3 / ADC Input                         P14.3 (INPUT ONLY)             X2-31
-    /* 21 */  {XMC_GPIO_PORT14, 4}, // A4 / ADC Input / SDA / GPIO            P14.4 (Hardwired to SDA)       X2-24    
-    /* 22 */  {XMC_GPIO_PORT14, 5}, // A5 / ADC Input / SCL                   P14.5 (Hardwired to SCL)       X2-30  
-    /* 23 */  {XMC_GPIO_PORT1, 15}, // USB Debug RX                           P1.15                          X1-22
-    /* 24 */  {XMC_GPIO_PORT0, 5},  // USB Debug TX                           P0.5                           X2-9  
+    /* 14 */  {XMC_GPIO_PORT2, 5},  // I2C Data / Address SDA / A4 / PWM41-0  P2.5  (Hardwired to A4)        X1-34
+    /* 15 */  {XMC_GPIO_PORT3, 0},  // I2C Clock SCL  / A5 - ADC Input        P3.0  (Hardwired to A5)        X2-19
+    /* 16 */  {XMC_GPIO_PORT14, 0}, // A0 / ADC Input                         P14.0 (INPUT ONLY)               
+    /* 17 */  {XMC_GPIO_PORT14, 1}, // A1 / ADC Input                         P14.1 (INPUT ONLY)
+    /* 18 */  {XMC_GPIO_PORT14, 2}, // A2 / ADC Input                         P14.2 (INPUT ONLY)
+    /* 19 */  {XMC_GPIO_PORT14, 3}, // A3 / ADC Input                         P14.3 (INPUT ONLY)             X2-31
+    /* 20 */  {XMC_GPIO_PORT14, 4}, // A4 / ADC Input / SDA / GPIO            P14.4 (Hardwired to SDA)       X2-24    
+    /* 21 */  {XMC_GPIO_PORT14, 5}, // A5 / ADC Input / SCL                   P14.5 (Hardwired to SCL)       X2-30  
+    /* 22 */  {XMC_GPIO_PORT1, 15}, // USB Debug RX                           P1.15                          X1-22
+    /* 23 */  {XMC_GPIO_PORT0, 5},  // USB Debug TX                           P0.5                           X2-9  
 
     //Additional pins for port X1 starting here
-    /* 25 */  {XMC_GPIO_PORT2, 10}, // GPIO / ETH_LED                         P2.10                          X1-37
-    /* 26 */  {XMC_GPIO_PORT2, 8},  // GPIO / ETH_TXDO / PWM80-32             P2.8                           X1-35                
-    /* 27 */  {XMC_GPIO_PORT2, 4},  // GPIO / ETH_RXER                        P2.4                           X1-33
-    /* 28 */  {XMC_GPIO_PORT2, 2},  // GPIO / ETH_RXDO                        P2.2                           X1-31
+    /* 24 */  {XMC_GPIO_PORT2, 10}, // GPIO / ETH_LED                         P2.10                          X1-37
+    /* 25 */  {XMC_GPIO_PORT2, 8},  // GPIO / ETH_TXDO / PWM80-32             P2.8                           X1-35                
+    /* 26 */  {XMC_GPIO_PORT2, 4},  // GPIO / ETH_RXER / PWM41-1              P2.4                           X1-33
+    /* 27 */  {XMC_GPIO_PORT2, 3},  // ETH_RXD1 / PWM41-2                     P2.3                           X1-32
+    /* 28 */  {XMC_GPIO_PORT2, 2},  // GPIO / ETH_RXDO / PWM41-3              P2.2                           X1-31
     /* 29 */  {XMC_GPIO_PORT2, 0},  // GPIO / ETH_MDIO / PWM81-21             P2.0                           X1-29
     /* 30 */  {XMC_GPIO_PORT2, 6},  // PWM80-13 / GPIO4_2GO_2                 P2.6                           X1-27  
     /* 31 */  {XMC_GPIO_PORT5, 2},  // GPIO / RST                             P5.2                           X1-25
@@ -206,10 +206,10 @@ const uint8_t mapping_pin_PWM4[][ 2 ] = {
                                         { 3, 0 },   // PWM0
                                         { 5, 1 },   // PWM1
                                         { 6, 2 },   // PWM2
-                                        { 27, 3 },  // PWM
-                                        { 28, 4 },  // PWM
-                                        { 14, 5 },  // PWM
-                                        { 15, 6 },  // PWM
+                                        { 14, 3 },  // PWM
+                                        { 26, 4 },  // PWM
+                                        { 27, 5 },  // PWM
+                                        { 28, 6 },  // PWM
                                         { 255, 255 } };
 
 /* Configurations of PWM channels for CCU4 type */
@@ -219,10 +219,10 @@ XMC_PWM4_t mapping_pwm4[] =
     {CCU42, CCU42_CC43, 3, mapping_port_pin[5], P3_3_AF_CCU42_OUT3,  XMC_CCU4_SLICE_PRESCALER_64, PWM4_TIMER_PERIOD, DISABLED}, // PWM disabled  5  P3.3
     {CCU42, CCU42_CC42, 2, mapping_port_pin[6], P3_4_AF_CCU42_OUT2,  XMC_CCU4_SLICE_PRESCALER_64, PWM4_TIMER_PERIOD, DISABLED}, // PWM disabled  6  P3.4
 
-    {CCU41, CCU41_CC41, 1, mapping_port_pin[27], P2_4_AF_CCU41_OUT1, XMC_CCU4_SLICE_PRESCALER_64, PWM4_TIMER_PERIOD, DISABLED}, // PWM disabled  27   P2.4
+    {CCU41, CCU41_CC40, 0, mapping_port_pin[14], P2_5_AF_CCU41_OUT0, XMC_CCU4_SLICE_PRESCALER_64, PWM4_TIMER_PERIOD, DISABLED}, // PWM disabled  14   P2.5
+    {CCU41, CCU41_CC41, 1, mapping_port_pin[26], P2_4_AF_CCU41_OUT1, XMC_CCU4_SLICE_PRESCALER_64, PWM4_TIMER_PERIOD, DISABLED}, // PWM disabled  26   P2.4
+    {CCU41, CCU41_CC42, 2, mapping_port_pin[27], P2_3_AF_CCU41_OUT2, XMC_CCU4_SLICE_PRESCALER_64, PWM4_TIMER_PERIOD, DISABLED}, // PWM disabled  27   P2.3
     {CCU41, CCU41_CC43, 3, mapping_port_pin[28], P2_2_AF_CCU41_OUT3, XMC_CCU4_SLICE_PRESCALER_64, PWM4_TIMER_PERIOD, DISABLED}, // PWM disabled  28   P2.2
-    {CCU41, CCU41_CC42, 2, mapping_port_pin[14], P2_3_AF_CCU41_OUT2, XMC_CCU4_SLICE_PRESCALER_64, PWM4_TIMER_PERIOD, DISABLED}, // PWM disabled  14   P2.3
-    {CCU41, CCU41_CC40, 0, mapping_port_pin[15], P2_5_AF_CCU41_OUT0, XMC_CCU4_SLICE_PRESCALER_64, PWM4_TIMER_PERIOD, DISABLED}, // PWM disabled  15   P2.5
     };
 const uint8_t NUM_PWM4 = ( sizeof( mapping_pwm4 ) / sizeof( XMC_PWM4_t ) );
 
@@ -230,7 +230,7 @@ const uint8_t NUM_PWM4 = ( sizeof( mapping_pwm4 ) / sizeof( XMC_PWM4_t ) );
 const uint8_t mapping_pin_PWM8[][ 2 ] = {
                                         { 9,  0 },  // PWM3
                                         { 10, 1 },  // PWM4
-                                        { 26, 2 },  // PWM
+                                        { 25, 2 },  // PWM
                                         { 29, 3 },  // PWM
                                         { 30, 4 },  // PWM
                                         { 45, 5 },  // PWM
@@ -245,7 +245,7 @@ XMC_PWM8_t mapping_pwm8[] =
     {CCU80, CCU80_CC83, 3, XMC_CCU8_SLICE_COMPARE_CHANNEL_1, mapping_port_pin[9],  P0_11_AF_CCU80_OUT31, XMC_CCU8_SLICE_PRESCALER_64, PWM8_TIMER_PERIOD, DISABLED}, // PWM disabled  9  P0.11
     {CCU80, CCU80_CC80, 0, XMC_CCU8_SLICE_COMPARE_CHANNEL_1, mapping_port_pin[10],  P0_2_AF_CCU80_OUT01, XMC_CCU8_SLICE_PRESCALER_64, PWM8_TIMER_PERIOD, DISABLED}, // PWM disabled  10 P0.2
     //additional pwm outputs starting here
-    {CCU80, CCU80_CC83, 3, XMC_CCU8_SLICE_COMPARE_CHANNEL_2, mapping_port_pin[26], P2_8_AF_CCU80_OUT32,  XMC_CCU8_SLICE_PRESCALER_64, PWM8_TIMER_PERIOD, DISABLED}, // PWM disabled  26 P2.8
+    {CCU80, CCU80_CC83, 3, XMC_CCU8_SLICE_COMPARE_CHANNEL_2, mapping_port_pin[25], P2_8_AF_CCU80_OUT32,  XMC_CCU8_SLICE_PRESCALER_64, PWM8_TIMER_PERIOD, DISABLED}, // PWM disabled  25 P2.8
     {CCU81, CCU81_CC82, 2, XMC_CCU8_SLICE_COMPARE_CHANNEL_1, mapping_port_pin[29], P2_0_AF_CCU81_OUT21,  XMC_CCU8_SLICE_PRESCALER_64, PWM8_TIMER_PERIOD, DISABLED}, // PWM disabled  29 P2.0
     {CCU80, CCU80_CC81, 1, XMC_CCU8_SLICE_COMPARE_CHANNEL_2, mapping_port_pin[30], P2_6_AF_CCU80_OUT13,  XMC_CCU8_SLICE_PRESCALER_64, PWM8_TIMER_PERIOD, DISABLED}, // PWM disabled  30 P2.6
     {CCU81, CCU81_CC80, 0, XMC_CCU8_SLICE_COMPARE_CHANNEL_2, mapping_port_pin[45], P5_7_AF_CCU81_OUT02,  XMC_CCU8_SLICE_PRESCALER_64, PWM8_TIMER_PERIOD, DISABLED}, // PWM disabled  45 P5.7
