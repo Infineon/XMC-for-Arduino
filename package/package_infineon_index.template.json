@@ -11,7 +11,7 @@
           "platforms":[
              {
                 "name":"Infineon's XMC Microcontroller",
-                "architecture":"arm",
+                "architecture":"xmc",
                 "version":"",
                 "category":"Contributed",
                 "url":"",
@@ -29,28 +29,16 @@
                      "name":"XMC1100 XMC2Go"
                   },
                   {
-                     "name":"XMC1100 H-Bridge 2Go"
+                     "name":"XMC1400 Kit for Arduino"
                   },
                   {
-                     "name":"XMC1300 Boot Kit"
-                  },
-                  {
-                     "name":"XMC1300 Sense2GoL"
+                     "name":"XMC4200 Platform 2Go"
                   },
                   {
                      "name":"XMC4400 Platform 2Go"
                   },
                   {
                      "name":"XMC4700 Relax Kit"
-                  },
-				      {
-                     "name":"XMC4700 DEMO Radar BB"
-                  },
-                  {
-                     "name":"XMC1400 Kit for Arduino"
-                  },
-                  {
-                     "name":"XMC4200 Platform 2Go"
                   }
                 ],
                 "toolsDependencies":[
