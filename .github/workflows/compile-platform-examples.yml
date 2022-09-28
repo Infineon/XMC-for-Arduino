@@ -1,0 +1,204 @@
+
+name: Compile Examples
+
+# See: https://docs.github.com/en/actions/reference/events-that-trigger-workflows
+on:
+  push:
+    paths:
+      - ".github/workflows/compile-platform-examples.ya?ml"
+      - "cores/**"
+      - "libraries/**"
+      - "variants/**"
+      - "boards.txt"
+      - "platform.txt"
+  pull_request:
+    paths:
+      - ".github/workflows/compile-platform-examples.ya?ml"
+      - "cores/**"
+      - "libraries/**"
+      - "variants/**"
+      - "boards.txt"
+      - "platform.txt"
+  workflow_dispatch:
+  repository_dispatch:
+
+jobs:
+  build:
+    name: ${{ matrix.board.fqbn }}
+    runs-on: ubuntu-latest
+
+    env:
+      SKETCHES_REPORTS_PATH: sketches-reports
+
+    strategy:
+      fail-fast: false
+
+      matrix:
+        board:
+          - fqbn: Infineon:arm:XMC1100_Boot_Kit
+            i2s: true
+            dieTemp: true
+            heapMem: true
+            sleep1100: true
+            sleep4700 : false
+            stackMem: true
+            multiSerial: false
+            dma: false
+            alarmRtc: false
+          - fqbn: Infineon:arm:XMC1100_XMC2GO
+            i2s: true
+            dieTemp: true
+            heapMem: true
+            sleep1100: true
+            sleep4700 : false
+            stackMem: true
+            multiSerial: false
+            dma: false
+            alarmRtc: false
+          - fqbn: Infineon:arm:XMC1100_H_BRIDGE2GO
+            i2s: false
+            dieTemp: true
+            heapMem: true
+            sleep1100: true
+            sleep4700 : false
+            stackMem: true
+            multiSerial: false
+            dma: false
+            alarmRtc: false
+          - fqbn: Infineon:arm:XMC1300_Boot_Kit
+            i2s: false
+            dieTemp: true
+            heapMem: true
+            sleep1100: true
+            sleep4700 : false
+            stackMem: true
+            multiSerial: false
+            dma: false
+            alarmRtc: false
+          # - fqbn: Infineon:arm:XMC1300_Sense2GoL
+          #   serial: true
+          - fqbn: Infineon:arm:XMC4400_Platform2GO
+            i2s: false
+            dieTemp: false
+            heapMem: false
+            sleep1100: false
+            sleep4700 : false
+            stackMem: true
+            multiSerial: false
+            dma: false
+            alarmRtc: true
+          - fqbn: Infineon:arm:XMC4700_Relax_Kit
+            i2s: true
+            dieTemp: true
+            heapMem: true
+            sleep1100: false
+            sleep4700 : true
+            stackMem: true
+            multiSerial: true
+            dma: true
+            alarmRtc: true
+          - fqbn: Infineon:arm:XMC1400_Arduino_Kit
+            i2s: false
+            dieTemp: true
+            heapMem: true
+            sleep1100: true
+            sleep4700 : false
+            stackMem: false
+            multiSerial: false
+            dma: false
+            alarmRtc: false
+          - fqbn: Infineon:arm:XMC4200_Platform2GO
+            i2s: false
+            dieTemp: false
+            heapMem: false
+            sleep1100: false
+            sleep4700 : false
+            stackMem: true
+            multiSerial: false
+            dma: false
+            alarmRtc: true
+
+        # Make board type-specific customizations to the matrix jobs
+        include:
+          - board:
+              i2s: true
+            i2s-sketch-paths: |
+              - libraries/I2S
+          - board:
+              dieTemp: true
+            dieTemp-sketch-paths: |
+              - libraries/DeviceControlXMC/examples/DieTemperatureMeasurement
+          - board:
+              heapMem: true
+            heapMem-sketch-paths: |
+              - libraries/DeviceControlXMC/examples/HeapMemoryMeasurement
+          - board:
+              sleep1100: true
+            sleep1100-sketch-paths: |
+              - libraries/DeviceControlXMC/examples/SleepModeXMC1100
+          - board:
+              sleep4700: true
+            sleep4700-sketch-paths: |
+              - libraries/DeviceControlXMC/examples/SleepModeXMC4700
+          - board:
+              stackMem: true
+            stackMem-sketch-paths: |
+              - libraries/DeviceControlXMC/examples/StackMemoryMeasurement
+          - board:
+              multiSerial: true
+            multiSerial-sketch-paths: |
+              - libraries/Multi-Serial
+          - board:
+              dma: true
+            dma-sketch-paths: |
+              - libraries/DMA
+          - board:
+              alarmRtc: true
+            alarmRtc-sketch-paths: |
+              - libraries/RTC/examples/AlarmRTC
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Compile examples
+        uses: arduino/compile-sketches@v1
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          fqbn: ${{ matrix.board.fqbn }}
+          platforms: |
+            # Use Boards Manager to install the latest release of the platform to get the toolchain.
+            - name: Infineon:arm
+              source-url: https://github.com/Infineon/XMC-for-Arduino/releases/latest/download/package_infineon_index.json
+
+            - source-path: ./
+              name: Infineon:arm
+          sketch-paths: |
+            # Compile these sketches for all boards
+            - libraries/IFX9201
+            - libraries/LED
+            - libraries/OneWire
+            - libraries/RTC/examples/SimpleRTC
+            - libraries/SPI
+            - libraries/Sense2Go
+            - libraries/Ultrasonic
+            - libraries/Wire
+            # Board-specific sketches
+            ${{ matrix.i2s-sketch-paths }}
+            ${{ matrix.dieTemp-sketch-paths }}
+            ${{ matrix.heapMem-sketch-paths }}
+            ${{ matrix.sleep1100-sketch-paths }}
+            ${{ matrix.sleep4700-sketch-paths }}
+            ${{ matrix.stackMem-sketch-paths }}
+            ${{ matrix.multiSerial-sketch-paths }}
+            ${{ matrix.dma-sketch-paths }}
+            ${{ matrix.alarmRtc-sketch-paths }}
+          enable-deltas-report: true
+          sketches-report-path: ${{ env.SKETCHES_REPORTS_PATH }}
+
+      - name: Save sketches report as workflow artifact
+        uses: actions/upload-artifact@v2
+        with:
+          if-no-files-found: error
+          path: ${{ env.SKETCHES_REPORTS_PATH }}
+          name: ${{ env.SKETCHES_REPORTS_PATH }}

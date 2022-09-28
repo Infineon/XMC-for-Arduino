@@ -1,0 +1,75 @@
+Additional pins for port X1,,,,,
+Description,Pin,Port,,X1 pin,Other
+NC,,,,X1-37,
+IO_1,7,P2.8,,X1-35,IOL-8
+PWM41-1 output / PWM2,6,P2.4,,X1-33,IOL-7
+PWM41-3 / PWM0 / External INT 1,3,P2.2,,X1-31,IOL-4
+CAN_TX,29,P2.0,,X1-29,
+IO_2,8,P2-6,,X1-27,IOH-1
+NC,,,,X1-25,
+NC,,,,X1-23,
+NC,,,,X1-21,
+NC,,,,X1-19,
+NC,,,,X1-17,
+USB Debug TX,35,P1.4,,X1-15,
+PWM / PWM40-1 / GPIO4_S2GO_1,23,P1.2,,X1-13,
+GPIO / External INT 0,2,P1.0,,X1-11,IOL-3
+SPI-SCK,13,P1.8,,X1-9,IOH-6
+NC,,,,X1-7,
+NC,,,,X1-5,
+TX,1,P2.14,,X1-3,IOL-2
+RX,0,P2.15,,X1-4,IOL-1
+NC,,,,X1-6,
+SPI-CS,10,P1.7,,X1-8,IOH-3
+SPI-MOSI,11,P1.9,,X1-10,IOH-4
+PWM_MikroBus / PWM40-2,22,P1.1,,X1-12,
+PWM / PWM40-0 / GPIO4_2GO_2,24,P1.3,,X1-14,
+USB Debug RX,41,P1.5,,X1-16,
+NC,,,,X1-18,
+NC,,,,X1-20,
+BUTTON1,27,P1.15,Button,X1-22,Switch
+NC,,,,X1-24,
+NC,,,,X1-26,
+RST_MikroBus,28,P2.7,,X1-28,
+GPIO1_2GO_2,30,P2.1,,X1-30,
+PWM41-2 output / PWM1,5,P2.3,,X1-32,IOL-6
+I2C Data / Address SDA / A4,14,P2.5,(Hardwired to A4),X1-34,IOH-9
+IO_0,4,P2.9,,X1-36,IOL-5
+NC,,,,X1-38,
+Additional pins for port X2,,,,,
+Description,Pin,Port,,X2 pin,Other
+A3 / ADC Input / AN_MikroBus / DAC0,19,P14.8,,X2-33,Analog-4
+NC,,,,X2-31,
+NC,,,,X2-29,
+NC,,,,X2-27,
+A1 / ADC Input,17,P14.6,(INPUT ONLY),X2-25,Analog-2
+NC,,,,X2-23,
+AN2_2GO_1 / A6 / ADC Input,41,P14.14,(INPUT ONLY),X2-21,
+I2C Clock SCL  / A5 - ADC Input,15,P3.0,(Hardwired to A5),X2-19,IOH-10
+NC,,,,X2-17,
+INT_MikroBus,38,P0.10,,X2-15,
+LED1,36,P0.1,,X2-13,LED
+INT / GPIO3_2GO_2,34,P0.3,,X2-11,
+INT / GPIO3_2GO_1,33,P0.5,,X2-9,
+PWM80-31 output / PWM3,9,P0.11,,X2-7,IOH-2
+NC,,,,X2-5,
+NC,,,,X2-3,
+SPI-CS_MikroBus,31,P0.7,,X2-1,
+RST / GPIO2_2GO_1,32,P0.8,,X2-4,
+NC,,,,X2-6,
+NC,,,,X2-8,
+NC,,,,X2-10,
+RST / GPIO2_2GO_2,35,P0.6,,X2-12,
+GPIO1_S2GO_1,37,P0.4,,X2-14,
+SPI-CS_2GO_1,39,P0.2,,X2-16,
+SPI-MISO,12,P0.0,,X2-18,IOH-5
+SPI-CS_2GO_2,40,P0.9,,X2-20,
+NC,,,,X2-22,
+A4 / ADC Input / SDA / AN1_2GO_1,20,P14.4,(Hardwired to SDA),X2-24,Analog-5
+NC,,,,X2-26,
+A2 / ADC Input,18,P14.7,(INPUT ONLY),X2-28,Amalog-3
+A5 / ADC Input / SCL / AN2_2GO_2,21,P14.5,(Hardwired to SCL),X2-30,Analog-6
+CAN_RX,42,P14.3,(INPUT ONLY),X2-32,
+A0 / ADC Input,16,P14.0,Potentiometer,X2-34,Analog-1
+AN1_2GO_2 / A7 / ADC Input / DAC1,43,P14.9,,X2-36,
+AREF,,,,X2-38,IOH-8

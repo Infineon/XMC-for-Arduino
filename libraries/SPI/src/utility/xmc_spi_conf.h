@@ -60,7 +60,15 @@ extern XMC_SPI_t XMC_SPI_0;
 #define NUM_SPI  			1
 extern XMC_SPI_t XMC_SPI_0;
 
+#elif defined(XMC1400_Arduino_Kit)
+#define NUM_SPI  			1
+extern XMC_SPI_t XMC_SPI_0;
+
 #elif defined(XMC4400_Platform2GO)
+#define NUM_SPI  			1
+extern XMC_SPI_t XMC_SPI_0;
+
+#elif defined(XMC4200_Platform2GO)
 #define NUM_SPI  			1
 extern XMC_SPI_t XMC_SPI_0;
 

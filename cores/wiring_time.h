@@ -86,6 +86,37 @@ extern "C" {
 						asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
 						asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
                         asm volatile("nop");}
+
+#elif ((UC_FAMILY == XMC4) && (F_CPU == 80000000U))
+// 80 NOPS
+#define NOPS_FOR_USEC() { asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
+                        asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
+                        asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
+						asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
+                        asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
+                        asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
+						asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
+						asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
+						asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
+						asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
+						asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
+						asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
+						asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
+						asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
+						asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
+						asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
+						asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
+						asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
+						asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
+						asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
+						asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
+						asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
+						asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
+						asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
+						asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
+						asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
+						asm volatile("nop"); asm volatile("nop");}
+						
 #elif ((UC_FAMILY == XMC1) && (F_CPU == 32000000U))
 // 16 NOPS
 #define NOPS_FOR_USEC() { asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
