@@ -133,9 +133,9 @@ static const uint8_t SCK_SD  = PIN_SPI_SCK_SD;
 // Mapping of digital pins and comments
 /***
 IMPORTANT NOTE
-    Extra entry at Arduino pin 23 is PLACEHOLDER
-    Duplicate wrong entry, but removing would mean changing many other
-    documents and reducing many pins for defines by 1
+    Extra entries at Arduino pin 23 & 14 are PLACEHOLDERS
+    Invalid pin assignments, but removing would mean changing many other
+    documents and pins defines -> might break legacy code.
 ***/
 const XMC_PORT_PIN_t mapping_port_pin[] =
     {
@@ -153,7 +153,7 @@ const XMC_PORT_PIN_t mapping_port_pin[] =
     /* 11  */   {XMC_GPIO_PORT3, 8},   // SPI-MOSI / PWM41-2 / PWM5    P3.8
     /* 12  */   {XMC_GPIO_PORT3, 7},   // SPI-MISO                     P3.7
     /* 13  */   {XMC_GPIO_PORT3, 9},   // SPI-SCK                      P3.9
-    /* 14  */   {XMC_GPIO_PORT2, 3},   // AREF TODO:                   P2.3
+    /* 14  */   {XMC_GPIO_PORT2, 3},   // --- Note: DUMMY pin assignment, to prevent incompatibility of legacy code! INVALID ---
     /* 15  */   {XMC_GPIO_PORT3, 15},  // I2C Data / Address SDA / A4  P3.15 (Hardwired to A4)
     /* 16  */   {XMC_GPIO_PORT0, 13},  // I2C Clock SCL / A5           P0.13 (Hardwired to A5)
     /* 17  */   {XMC_GPIO_PORT14, 0},  // A0 / ADC Input               P14.0 (INPUT ONLY)
