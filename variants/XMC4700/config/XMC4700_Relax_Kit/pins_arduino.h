@@ -120,23 +120,17 @@ static const uint8_t SCK_SD  = PIN_SPI_SCK_SD;
 // ADC G3CH5 on P15.13  button
 
 
-#define LED1        24
-#define LED2        25
+#define LED1        22
+#define LED2        23
 #define LED_BUILTIN LED1
 
-#define BUTTON1     26
-#define BUTTON2     27
+#define BUTTON1     24
+#define BUTTON2     25
 
 #define digitalPinToInterrupt(p)    ((p) == 2 ? 0 : ((p) == 3 ? 1 : NOT_AN_INTERRUPT))
 
 #ifdef ARDUINO_MAIN
 // Mapping of digital pins and comments
-/***
-IMPORTANT NOTE
-    Extra entry at Arduino pin 23 is PLACEHOLDER
-    Duplicate wrong entry, but removing would mean changing many other
-    documents and reducing many pins for defines by 1
-***/
 const XMC_PORT_PIN_t mapping_port_pin[] =
     {
     /* 0  */    {XMC_GPIO_PORT2, 15},  // RX                           P2.15
@@ -153,94 +147,92 @@ const XMC_PORT_PIN_t mapping_port_pin[] =
     /* 11  */   {XMC_GPIO_PORT3, 8},   // SPI-MOSI / PWM41-2 / PWM5    P3.8
     /* 12  */   {XMC_GPIO_PORT3, 7},   // SPI-MISO                     P3.7
     /* 13  */   {XMC_GPIO_PORT3, 9},   // SPI-SCK                      P3.9
-    /* 14  */   {XMC_GPIO_PORT2, 3},   // AREF TODO:                   P2.3
-    /* 15  */   {XMC_GPIO_PORT3, 15},  // I2C Data / Address SDA / A4  P3.15 (Hardwired to A4)
-    /* 16  */   {XMC_GPIO_PORT0, 13},  // I2C Clock SCL / A5           P0.13 (Hardwired to A5)
-    /* 17  */   {XMC_GPIO_PORT14, 0},  // A0 / ADC Input               P14.0 (INPUT ONLY)
-    /* 18  */   {XMC_GPIO_PORT14, 1},  // A1 / ADC Input               P14.1 (INPUT ONLY)
-    /* 19  */   {XMC_GPIO_PORT14, 2},  // A2 / ADC Input               P14.2 (INPUT ONLY)
-    /* 20  */   {XMC_GPIO_PORT14, 3},  // A3 / ADC Input               P14.3 (INPUT ONLY)
-    /* 21  */   {XMC_GPIO_PORT14, 4},  // A4 / ADC Input / SDA         P14.4 (Hardwired to SDA)
-    /* 22  */   {XMC_GPIO_PORT14, 5},  // A5 / ADC Input / SCL         P14.5 (Hardwired to SCL)
-    /* 23  */   {XMC_GPIO_PORT3, 12},  // DUPLICATE INVALID            INVALID
-    /* 24  */   {XMC_GPIO_PORT5, 9},   // Additional LED1              P5.9
-    /* 25  */   {XMC_GPIO_PORT5, 8},   // Additional LED2              P5.8
-    /* 26  */   {XMC_GPIO_PORT15, 13}, // Additional BUTTON1           P15.13 (INPUT ONLY)
-    /* 27  */   {XMC_GPIO_PORT15, 12}, // Additional BUTTON2           P15.12 (INPUT ONLY)
-    /* 28  */   {XMC_GPIO_PORT4, 1},   // SPI_SS_3 (SD CARD)           P4.1
-    /* 29  */   {XMC_GPIO_PORT3, 5},   // SPI-MOSI (SD CARD)           P3.5
-    /* 30  */   {XMC_GPIO_PORT4, 0},   // SPI-MISO (SD CARD)           P4.0
-    /* 31  */   {XMC_GPIO_PORT3, 6},   // SPI-SCK  (SD CARD)           P3.6
-    /* 32  */   {XMC_GPIO_PORT1, 6},   //                              P1.6
-    /* 33  */   {XMC_GPIO_PORT1, 7},   //                              P1.7
-    /* 34  */   {XMC_GPIO_PORT1, 4},   // USB Debug RX                 P1.4
-    /* 35  */   {XMC_GPIO_PORT1, 5},   // USB Debug TX                 P1.5
+    /* 14  */   {XMC_GPIO_PORT3, 15},  // I2C Data / Address SDA / A4  P3.15 (Hardwired to A4)
+    /* 15  */   {XMC_GPIO_PORT0, 13},  // I2C Clock SCL / A5           P0.13 (Hardwired to A5)
+    /* 16  */   {XMC_GPIO_PORT14, 0},  // A0 / ADC Input               P14.0 (INPUT ONLY)
+    /* 17  */   {XMC_GPIO_PORT14, 1},  // A1 / ADC Input               P14.1 (INPUT ONLY)
+    /* 18  */   {XMC_GPIO_PORT14, 2},  // A2 / ADC Input               P14.2 (INPUT ONLY)
+    /* 19  */   {XMC_GPIO_PORT14, 3},  // A3 / ADC Input               P14.3 (INPUT ONLY)
+    /* 20  */   {XMC_GPIO_PORT14, 4},  // A4 / ADC Input / SDA         P14.4 (Hardwired to SDA)
+    /* 21  */   {XMC_GPIO_PORT14, 5},  // A5 / ADC Input / SCL         P14.5 (Hardwired to SCL)
+    /* 22  */   {XMC_GPIO_PORT5, 9},   // Additional LED1              P5.9
+    /* 23  */   {XMC_GPIO_PORT5, 8},   // Additional LED2              P5.8
+    /* 24  */   {XMC_GPIO_PORT15, 13}, // Additional BUTTON1           P15.13 (INPUT ONLY)
+    /* 25  */   {XMC_GPIO_PORT15, 12}, // Additional BUTTON2           P15.12 (INPUT ONLY)
+    /* 26  */   {XMC_GPIO_PORT4, 1},   // SPI_SS_3 (SD CARD)           P4.1
+    /* 27  */   {XMC_GPIO_PORT3, 5},   // SPI-MOSI (SD CARD)           P3.5
+    /* 28  */   {XMC_GPIO_PORT4, 0},   // SPI-MISO (SD CARD)           P4.0
+    /* 29  */   {XMC_GPIO_PORT3, 6},   // SPI-SCK  (SD CARD)           P3.6
+    /* 30  */   {XMC_GPIO_PORT1, 6},   //                              P1.6
+    /* 31  */   {XMC_GPIO_PORT1, 7},   //                              P1.7
+    /* 32  */   {XMC_GPIO_PORT1, 4},   // USB Debug RX                 P1.4
+    /* 33  */   {XMC_GPIO_PORT1, 5},   // USB Debug TX                 P1.5
 
     //Additional pins for port X1 starting here
-    /* 36  */   {XMC_GPIO_PORT3, 4},   // PWM42-2 / PWM12              P3.4     X1-1
-    /* 37  */   {XMC_GPIO_PORT0, 5},   // I2C_1 SDA  // SPI_4 MOSI     P0.5     X1-3
-    /* 38  */   {XMC_GPIO_PORT0, 3},   // PWM80-2 / PWM10              P0.3     X1-5
-    /* 39  */   {XMC_GPIO_PORT0, 1},   // PWM80-1 / PWM9               P0.1     X1-7
-    /* 40  */   {XMC_GPIO_PORT0, 10},  //                              P0.10    X1-9
-    /* 41  */   {XMC_GPIO_PORT3, 2},   //                              P3.2     X1-11
-    /* 42  */   {XMC_GPIO_PORT3, 1},   //                              P3.1     X1-13
-    /* 43  */   {XMC_GPIO_PORT15, 6},  // A6 / ADC Input               P15.6    X1-15
-    /* 44  */   {XMC_GPIO_PORT15, 5},  // A7 / ADC Input               P15.5    X1-17
-    /* 45  */   {XMC_GPIO_PORT15, 3},  // A8 / ADC Input               P15.3    X1-19
-    /* 46  */   {XMC_GPIO_PORT14, 15}, // A9 / ADC Input               P14.15   X1-21
-    /* 47  */   {XMC_GPIO_PORT14, 13}, // A10 / ADC Input              P14.13   X1-23
-    /* 48  */   {XMC_GPIO_PORT14, 7},  // A11 / ADC Input              P14.7    X1-25
-    /* 49  */   {XMC_GPIO_PORT15, 15}, // A12 / ADC Input              P15.15   X1-27
-    /* 50  */   {XMC_GPIO_PORT14, 9},  // DAC0 // A13 / ADC Input      P14.9    X1-29
-    /* 51  */   {XMC_GPIO_PORT2, 13},  //                              P2.13    X1-31
-    /* 52  */   {XMC_GPIO_PORT5, 10},  //                              P5.10    X1-33
-    /* 53  */   {XMC_GPIO_PORT5, 11},  // PWM80-0 / PWM6               P5.11    X1-34
-    /* 54  */   {XMC_GPIO_PORT1, 14},  //                              P1.14    X1-32
-    /* 55  */   {XMC_GPIO_PORT14, 8},  // DAC1 // A14 / ADC Input      P14.8    X1-30
-    /* 56  */   {XMC_GPIO_PORT15, 14}, // A15 / ADC Input              P15.14   X1-28
-    /* 57  */   {XMC_GPIO_PORT14, 6},  // A16 / ADC Input              P14.6    X1-26
-    /* 58  */   {XMC_GPIO_PORT14, 12}, // A17 / ADC Input              P14.12   X1-24
-    /* 59  */   {XMC_GPIO_PORT14, 14}, // A18 / ADC Input              P14.14   X1-22
-    /* 60  */   {XMC_GPIO_PORT15, 2},  // A19 / ADC Input              P15.2    X1-20
-    /* 61  */   {XMC_GPIO_PORT15, 4},  // A20 / ADC Input              P15.4    X1-18
-    /* 62  */   {XMC_GPIO_PORT15, 7},  // A21 / ADC Input              P15.7    X1-16
-    /* 63  */   {XMC_GPIO_PORT3, 0},   // PWM42-0 / PWM7               P3.0     X1-14
-    /* 64  */   {XMC_GPIO_PORT0, 9},   // PWM80-1 / PWM8               P0.9     X1-12
-    /* 65  */   {XMC_GPIO_PORT0, 0},   //                              P0.0     X1-10
-    /* 66  */   {XMC_GPIO_PORT0, 2},   //                              P0.2     X1-8
-    /* 67  */   {XMC_GPIO_PORT0, 4},   // SPI_4 MISO                   P0.4     X1-6
-    /* 68  */   {XMC_GPIO_PORT0, 6},   // PWM80-3 / PWM11              P0.6     X1-4
-    /* 69  */   {XMC_GPIO_PORT0, 11},  // I2C_1 SCL // SPI_4 SCLK      P0.11    X1-2
+    /* 34  */   {XMC_GPIO_PORT3, 4},   // PWM42-2 / PWM12              P3.4     X1-1
+    /* 35  */   {XMC_GPIO_PORT0, 5},   // I2C_1 SDA  / SPI_4 MOSI      P0.5     X1-3
+    /* 36  */   {XMC_GPIO_PORT0, 3},   // PWM80-2 / PWM10              P0.3     X1-5
+    /* 37  */   {XMC_GPIO_PORT0, 1},   // PWM80-1 / PWM9               P0.1     X1-7
+    /* 38  */   {XMC_GPIO_PORT0, 10},  //                              P0.10    X1-9
+    /* 39  */   {XMC_GPIO_PORT3, 2},   //                              P3.2     X1-11
+    /* 40  */   {XMC_GPIO_PORT3, 1},   //                              P3.1     X1-13
+    /* 41  */   {XMC_GPIO_PORT15, 6},  // A6 / ADC Input               P15.6    X1-15
+    /* 42  */   {XMC_GPIO_PORT15, 5},  // A7 / ADC Input               P15.5    X1-17
+    /* 43  */   {XMC_GPIO_PORT15, 3},  // A8 / ADC Input               P15.3    X1-19
+    /* 44  */   {XMC_GPIO_PORT14, 15}, // A9 / ADC Input               P14.15   X1-21
+    /* 45  */   {XMC_GPIO_PORT14, 13}, // A10 / ADC Input              P14.13   X1-23
+    /* 46  */   {XMC_GPIO_PORT14, 7},  // A11 / ADC Input              P14.7    X1-25
+    /* 47  */   {XMC_GPIO_PORT15, 15}, // A12 / ADC Input              P15.15   X1-27
+    /* 48  */   {XMC_GPIO_PORT14, 9},  // DAC0 / A13 / ADC Input       P14.9    X1-29
+    /* 49  */   {XMC_GPIO_PORT2, 13},  //                              P2.13    X1-31
+    /* 50  */   {XMC_GPIO_PORT5, 10},  //                              P5.10    X1-33
+    /* 51  */   {XMC_GPIO_PORT5, 11},  // PWM80-0 / PWM6               P5.11    X1-34
+    /* 52  */   {XMC_GPIO_PORT1, 14},  //                              P1.14    X1-32
+    /* 53  */   {XMC_GPIO_PORT14, 8},  // DAC1 / A14 / ADC Input       P14.8    X1-30
+    /* 54  */   {XMC_GPIO_PORT15, 14}, // A15 / ADC Input              P15.14   X1-28
+    /* 55  */   {XMC_GPIO_PORT14, 6},  // A16 / ADC Input              P14.6    X1-26
+    /* 56  */   {XMC_GPIO_PORT14, 12}, // A17 / ADC Input              P14.12   X1-24
+    /* 57  */   {XMC_GPIO_PORT14, 14}, // A18 / ADC Input              P14.14   X1-22
+    /* 58  */   {XMC_GPIO_PORT15, 2},  // A19 / ADC Input              P15.2    X1-20
+    /* 59 */    {XMC_GPIO_PORT15, 4},  // A20 / ADC Input              P15.4    X1-18
+    /* 60  */   {XMC_GPIO_PORT15, 7},  // A21 / ADC Input              P15.7    X1-16
+    /* 61  */   {XMC_GPIO_PORT3, 0},   // PWM42-0 / PWM7               P3.0     X1-14
+    /* 62  */   {XMC_GPIO_PORT0, 9},   // PWM80-1 / PWM8               P0.9     X1-12
+    /* 63  */   {XMC_GPIO_PORT0, 0},   //                              P0.0     X1-10
+    /* 64  */   {XMC_GPIO_PORT0, 2},   //                              P0.2     X1-8
+    /* 65  */   {XMC_GPIO_PORT0, 4},   // SPI_4 MISO                   P0.4     X1-6
+    /* 66  */   {XMC_GPIO_PORT0, 6},   // PWM80-3 / PWM11              P0.6     X1-4
+    /* 67  */   {XMC_GPIO_PORT0, 11},  // I2C_1 SCL / SPI_4 SCLK       P0.11    X1-2
 
     //Additional pins for port X2 starting here
-    /* 70  */   {XMC_GPIO_PORT3, 13},  // SPI_2 SCLK                   P3.13    X2-1
-    /* 71  */   {XMC_GPIO_PORT3, 11},  // SPI_2 MOSI                   P3.11    X2-3
-    /* 72  */   {XMC_GPIO_PORT0, 14},  // PWM40-1 / PWM21              P0.14    X2-5
-    /* 73  */   {XMC_GPIO_PORT3, 14},  //                              P3.14    X2-7
-    /* 74  */   {XMC_GPIO_PORT0, 7},   //                              P0.7     X2-9
-    /* 75  */   {XMC_GPIO_PORT1, 2},   //                              P1.2     X2-11
-    /* 76  */   {XMC_GPIO_PORT6, 1},   //                              P6.1     X2-13
-    /* 77  */   {XMC_GPIO_PORT5, 3},   //                              P5.3     X2-15
-    /* 78  */   {XMC_GPIO_PORT6, 5},   // PWM43-0 / PWM17              P6.5     X2-17
-    /* 79  */   {XMC_GPIO_PORT1, 15},  // PWM81-0 / PWM16              P1.15    X2-19
-    /* 80  */   {XMC_GPIO_PORT5, 1},   // SPI_3 MOSI                   P5.1     X2-21
-    /* 81  */   {XMC_GPIO_PORT5, 3},   // PWM81-2 / PWM15              P5.3     X2-23
-    /* 82  */   {XMC_GPIO_PORT5, 5},   // PWM81-1 / PWM14              P5.5     X2-25
-    /* 83  */   {XMC_GPIO_PORT5, 7},   // PWM81-0 / PWM13              P5.7     X2-27
-    /* 84  */   {XMC_GPIO_PORT2, 6},   //                              P2.6     X2-28
-    /* 85  */   {XMC_GPIO_PORT5, 6},   //                              P5.6     X2-26
-    /* 86  */   {XMC_GPIO_PORT5, 4},   //                              P5.4     X2-24
-    /* 87  */   {XMC_GPIO_PORT5, 2},   //                              P5.2     X2-22
-    /* 88  */   {XMC_GPIO_PORT5, 0},   // SPI_3 MISO                   P5.0     X2-20
-    /* 89  */   {XMC_GPIO_PORT6, 6},   //                              P6.6     X2-18
-    /* 90  */   {XMC_GPIO_PORT6, 4},   // PWM43-1 / PWM18              P6.4     X2-16
-    /* 91  */   {XMC_GPIO_PORT6, 2},   // PWM43-3 / PWM19              P6.2     X2-14
-    /* 92  */   {XMC_GPIO_PORT6, 0},   //                              P6.0     X2-12
-    /* 93  */   {XMC_GPIO_PORT0, 8},   // SPI_3 SCLK                   P0.8     X2-10
-    /* 94  */   {XMC_GPIO_PORT3, 3},   //                              P3.3     X2-8
-    /* 95  */   {XMC_GPIO_PORT0, 15},  // PWM40-0 / PWM20              P0.15    X2-6
-    /* 96  */   {XMC_GPIO_PORT0, 12},  // PWM40-3 / PWM22              P0.12    X2-4
-    /* 97  */   {XMC_GPIO_PORT3, 12}   // ECAT0.P1_LINK_ACT            P3.12    X2-2
+    /* 68  */   {XMC_GPIO_PORT3, 13},  // SPI_2 SCLK                   P3.13    X2-1
+    /* 69  */   {XMC_GPIO_PORT3, 11},  // SPI_2 MOSI                   P3.11    X2-3
+    /* 70  */   {XMC_GPIO_PORT0, 14},  // PWM40-1 / PWM21              P0.14    X2-5
+    /* 71  */   {XMC_GPIO_PORT3, 14},  //                              P3.14    X2-7
+    /* 72  */   {XMC_GPIO_PORT0, 7},   //                              P0.7     X2-9
+    /* 73  */   {XMC_GPIO_PORT1, 2},   //                              P1.2     X2-11
+    /* 74  */   {XMC_GPIO_PORT6, 1},   //                              P6.1     X2-13
+    /* 75  */   {XMC_GPIO_PORT5, 3},   //                              P5.3     X2-15
+    /* 76  */   {XMC_GPIO_PORT6, 5},   // PWM43-0 / PWM17              P6.5     X2-17
+    /* 77  */   {XMC_GPIO_PORT1, 15},  // PWM81-0 / PWM16              P1.15    X2-19
+    /* 78  */   {XMC_GPIO_PORT5, 1},   // SPI_3 MOSI                   P5.1     X2-21
+    /* 79 */    {XMC_GPIO_PORT5, 3},   // PWM81-2 / PWM15              P5.3     X2-23
+    /* 80  */   {XMC_GPIO_PORT5, 5},   // PWM81-1 / PWM14              P5.5     X2-25
+    /* 81  */   {XMC_GPIO_PORT5, 7},   // PWM81-0 / PWM13              P5.7     X2-27
+    /* 82  */   {XMC_GPIO_PORT2, 6},   //                              P2.6     X2-28
+    /* 83  */   {XMC_GPIO_PORT5, 6},   //                              P5.6     X2-26
+    /* 84  */   {XMC_GPIO_PORT5, 4},   //                              P5.4     X2-24
+    /* 85  */   {XMC_GPIO_PORT5, 2},   //                              P5.2     X2-22
+    /* 86  */   {XMC_GPIO_PORT5, 0},   // SPI_3 MISO                   P5.0     X2-20
+    /* 87  */   {XMC_GPIO_PORT6, 6},   //                              P6.6     X2-18
+    /* 88  */   {XMC_GPIO_PORT6, 4},   // PWM43-1 / PWM18              P6.4     X2-16
+    /* 89  */   {XMC_GPIO_PORT6, 2},   // PWM43-3 / PWM19              P6.2     X2-14
+    /* 90  */   {XMC_GPIO_PORT6, 0},   //                              P6.0     X2-12
+    /* 91  */   {XMC_GPIO_PORT0, 8},   // SPI_3 SCLK                   P0.8     X2-10
+    /* 92  */   {XMC_GPIO_PORT3, 3},   //                              P3.3     X2-8
+    /* 93  */   {XMC_GPIO_PORT0, 15},  // PWM40-0 / PWM20              P0.15    X2-6
+    /* 94  */   {XMC_GPIO_PORT0, 12},  // PWM40-3 / PWM22              P0.12    X2-4
+    /* 95  */   {XMC_GPIO_PORT3, 12}   // ECAT0.P1_LINK_ACT            P3.12    X2-2
     };
 const uint8_t GND = ( sizeof( mapping_port_pin ) / sizeof( XMC_PORT_PIN_t ) );
 const uint8_t NUM_DIGITAL = ( sizeof( mapping_port_pin ) / sizeof( XMC_PORT_PIN_t ) );;
@@ -261,14 +253,14 @@ const uint8_t mapping_pin_PWM4[][ 2 ] = {
                                         { 3, 0 },   // PWM0
                                         { 10, 1 },  // PWM4
                                         { 11, 2 },  // PWM5
-                                        { 95, 3 },  // PWM20
-                                        { 72, 4 },  // PWM21
-                                        { 96, 5 },  // PWM22
-                                        { 63, 6 },  // PWM7
-                                        { 36, 7 },  // PWM12
-                                        { 78, 8 },  // PWM17
-                                        { 90, 9 },  // PWM18
-                                        { 91, 10 }, // PWM19
+                                        { 93, 3 },  // PWM20
+                                        { 70, 4 },  // PWM21
+                                        { 94, 5 },  // PWM22
+                                        { 61, 6 },  // PWM7
+                                        { 34, 7 },  // PWM12
+                                        { 76, 8 },  // PWM17
+                                        { 88, 9 },  // PWM18
+                                        { 89, 10 }, // PWM19
                                         { 255, 255 } };
 
 /* Configurations of PWM channels for CCU4 type */
@@ -277,14 +269,14 @@ XMC_PWM4_t mapping_pwm4[] =
     {CCU40, CCU40_CC42, 2, mapping_port_pin[3], P1_1_AF_CCU40_OUT2,  XMC_CCU4_SLICE_PRESCALER_64, PWM4_TIMER_PERIOD, DISABLED},     // PWM disabled  3   P1.1
     {CCU41, CCU41_CC40, 0, mapping_port_pin[10], P3_10_AF_CCU41_OUT0,  XMC_CCU4_SLICE_PRESCALER_64, PWM4_TIMER_PERIOD, DISABLED},   // PWM disabled  10  P3.10
     {CCU41, CCU41_CC42, 2, mapping_port_pin[11], P3_8_AF_CCU41_OUT2,  XMC_CCU4_SLICE_PRESCALER_64, PWM4_TIMER_PERIOD, DISABLED},    // PWM disabled  11  P3.8
-    {CCU40, CCU40_CC40, 0, mapping_port_pin[95], P0_15_AF_CCU40_OUT0, XMC_CCU4_SLICE_PRESCALER_64, PWM4_TIMER_PERIOD, DISABLED},    // PWM disabled  95  P0.15
-    {CCU40, CCU40_CC41, 1, mapping_port_pin[72], P0_14_AF_CCU40_OUT1, XMC_CCU4_SLICE_PRESCALER_64, PWM4_TIMER_PERIOD, DISABLED},    // PWM disabled  72  P0.14
-    {CCU40, CCU40_CC43, 3, mapping_port_pin[96], P0_12_AF_CCU40_OUT3, XMC_CCU4_SLICE_PRESCALER_64, PWM4_TIMER_PERIOD, DISABLED},    // PWM disabled  96  P0.12
-    {CCU42, CCU42_CC40, 0, mapping_port_pin[63], P3_0_AF_CCU42_OUT0, XMC_CCU4_SLICE_PRESCALER_64, PWM4_TIMER_PERIOD, DISABLED},     // PWM disabled  63  P3.0
-    {CCU42, CCU42_CC42, 2, mapping_port_pin[36], P3_4_AF_CCU42_OUT2, XMC_CCU4_SLICE_PRESCALER_64, PWM4_TIMER_PERIOD, DISABLED},     // PWM disabled  36  P3.4
-    {CCU43, CCU43_CC40, 0, mapping_port_pin[78], P6_5_AF_CCU43_OUT0, XMC_CCU4_SLICE_PRESCALER_64, PWM4_TIMER_PERIOD, DISABLED},     // PWM disabled  78  P6.5
-    {CCU43, CCU43_CC41, 1, mapping_port_pin[90], P6_4_AF_CCU43_OUT1, XMC_CCU4_SLICE_PRESCALER_64, PWM4_TIMER_PERIOD, DISABLED},     // PWM disabled  90  P6.4
-    {CCU43, CCU43_CC43, 3, mapping_port_pin[91], P6_2_AF_CCU43_OUT3, XMC_CCU4_SLICE_PRESCALER_64, PWM4_TIMER_PERIOD, DISABLED}      // PWM disabled  91  P6.2
+    {CCU40, CCU40_CC40, 0, mapping_port_pin[93], P0_15_AF_CCU40_OUT0, XMC_CCU4_SLICE_PRESCALER_64, PWM4_TIMER_PERIOD, DISABLED},    // PWM disabled  93  P0.15
+    {CCU40, CCU40_CC41, 1, mapping_port_pin[70], P0_14_AF_CCU40_OUT1, XMC_CCU4_SLICE_PRESCALER_64, PWM4_TIMER_PERIOD, DISABLED},    // PWM disabled  70  P0.14
+    {CCU40, CCU40_CC43, 3, mapping_port_pin[93], P0_12_AF_CCU40_OUT3, XMC_CCU4_SLICE_PRESCALER_64, PWM4_TIMER_PERIOD, DISABLED},    // PWM disabled  93  P0.12
+    {CCU42, CCU42_CC40, 0, mapping_port_pin[61], P3_0_AF_CCU42_OUT0, XMC_CCU4_SLICE_PRESCALER_64, PWM4_TIMER_PERIOD, DISABLED},     // PWM disabled  61  P3.0
+    {CCU42, CCU42_CC42, 2, mapping_port_pin[33], P3_4_AF_CCU42_OUT2, XMC_CCU4_SLICE_PRESCALER_64, PWM4_TIMER_PERIOD, DISABLED},     // PWM disabled  33  P3.4
+    {CCU43, CCU43_CC40, 0, mapping_port_pin[76], P6_5_AF_CCU43_OUT0, XMC_CCU4_SLICE_PRESCALER_64, PWM4_TIMER_PERIOD, DISABLED},     // PWM disabled  76  P6.5
+    {CCU43, CCU43_CC41, 1, mapping_port_pin[88], P6_4_AF_CCU43_OUT1, XMC_CCU4_SLICE_PRESCALER_64, PWM4_TIMER_PERIOD, DISABLED},     // PWM disabled  88  P6.4
+    {CCU43, CCU43_CC43, 3, mapping_port_pin[89], P6_2_AF_CCU43_OUT3, XMC_CCU4_SLICE_PRESCALER_64, PWM4_TIMER_PERIOD, DISABLED}      // PWM disabled  89  P6.2
     };
 const uint8_t NUM_PWM4 = ( sizeof( mapping_pwm4 ) / sizeof( XMC_PWM4_t ) );
 
@@ -293,15 +285,15 @@ const uint8_t mapping_pin_PWM8[][ 2 ] = {
                                         { 5, 0 },   // PWM1
                                         { 6, 1 },   // PWM2
                                         { 9, 2 },   // PWM3
-                                        { 53, 3 },  // PWM6
-                                        { 39, 4 },  // PWM9
-                                        { 64, 5 },  // PWM8
-                                        { 38, 6 },  // PWM10
-                                        { 68, 7 },  // PWM11
-                                        { 79, 8 },  // PWM16
-                                        { 83, 9 },  // PWM13
-                                        { 82, 10 }, // PWM14
-                                        { 81, 11 }, // PWM15
+                                        { 51, 3 },  // PWM6
+                                        { 37, 4 },  // PWM9
+                                        { 62, 5 },  // PWM8
+                                        { 36, 6 },  // PWM10
+                                        { 66, 7 },  // PWM11
+                                        { 77, 8 },  // PWM16
+                                        { 81, 9 },  // PWM13
+                                        { 80, 10 }, // PWM14
+                                        { 79, 11 }, // PWM15
                                         { 255, 255 } };
 
 /* Configurations of PWM channels for CCU8 type */
@@ -310,15 +302,15 @@ XMC_PWM8_t mapping_pwm8[] =
     {CCU81, CCU81_CC83, 3, XMC_CCU8_SLICE_COMPARE_CHANNEL_2, mapping_port_pin[5],  P2_12_AF_CCU81_OUT33, XMC_CCU8_SLICE_PRESCALER_64, PWM8_TIMER_PERIOD, DISABLED}, // PWM disabled  5  P2.12
     {CCU80, CCU80_CC82, 2, XMC_CCU8_SLICE_COMPARE_CHANNEL_2, mapping_port_pin[6],  P2_11_AF_CCU80_OUT22, XMC_CCU8_SLICE_PRESCALER_64, PWM8_TIMER_PERIOD, DISABLED}, // PWM disabled  6  P2.11
     {CCU81, CCU81_CC81, 1, XMC_CCU8_SLICE_COMPARE_CHANNEL_1, mapping_port_pin[9],  P1_11_AF_CCU81_OUT11, XMC_CCU8_SLICE_PRESCALER_64, PWM8_TIMER_PERIOD, DISABLED}, // PWM disabled  9  P1.11
-    {CCU80, CCU80_CC80, 0, XMC_CCU8_SLICE_COMPARE_CHANNEL_1, mapping_port_pin[53], P5_11_AF_CCU80_OUT00, XMC_CCU8_SLICE_PRESCALER_64, PWM8_TIMER_PERIOD, DISABLED}, // PWM disabled  53 P5.11
-    {CCU80, CCU80_CC81, 1, XMC_CCU8_SLICE_COMPARE_CHANNEL_1, mapping_port_pin[39], P0_1_AF_CCU80_OUT11,  XMC_CCU8_SLICE_PRESCALER_64, PWM8_TIMER_PERIOD, DISABLED}, // PWM disabled  39 P0.1
-    {CCU80, CCU80_CC81, 1, XMC_CCU8_SLICE_COMPARE_CHANNEL_2, mapping_port_pin[64], P0_9_AF_CCU80_OUT12,  XMC_CCU8_SLICE_PRESCALER_64, PWM8_TIMER_PERIOD, DISABLED}, // PWM disabled  64 P0.9
-    {CCU80, CCU80_CC82, 2, XMC_CCU8_SLICE_COMPARE_CHANNEL_1, mapping_port_pin[38], P0_3_AF_CCU80_OUT20,  XMC_CCU8_SLICE_PRESCALER_64, PWM8_TIMER_PERIOD, DISABLED}, // PWM disabled  38 P0.3
-    {CCU80, CCU80_CC83, 3, XMC_CCU8_SLICE_COMPARE_CHANNEL_1, mapping_port_pin[68], P0_6_AF_CCU80_OUT30,  XMC_CCU8_SLICE_PRESCALER_64, PWM8_TIMER_PERIOD, DISABLED}, // PWM disabled  68 P0.6
-    {CCU81, CCU81_CC80, 0, XMC_CCU8_SLICE_COMPARE_CHANNEL_1, mapping_port_pin[79], P1_15_AF_CCU81_OUT00, XMC_CCU8_SLICE_PRESCALER_64, PWM8_TIMER_PERIOD, DISABLED}, // PWM disabled  79 P1.15
-    {CCU81, CCU81_CC80, 0, XMC_CCU8_SLICE_COMPARE_CHANNEL_2, mapping_port_pin[83], P5_7_AF_CCU81_OUT02,  XMC_CCU8_SLICE_PRESCALER_64, PWM8_TIMER_PERIOD, DISABLED}, // PWM disabled  83 P5.7
-    {CCU81, CCU81_CC81, 1, XMC_CCU8_SLICE_COMPARE_CHANNEL_2, mapping_port_pin[82], P5_5_AF_CCU81_OUT12,  XMC_CCU8_SLICE_PRESCALER_64, PWM8_TIMER_PERIOD, DISABLED}, // PWM disabled  82 P5.5
-    {CCU81, CCU81_CC82, 2, XMC_CCU8_SLICE_COMPARE_CHANNEL_2, mapping_port_pin[81], P5_3_AF_CCU81_OUT22,  XMC_CCU8_SLICE_PRESCALER_64, PWM8_TIMER_PERIOD, DISABLED}  // PWM disabled  81 P5.3
+    {CCU80, CCU80_CC80, 0, XMC_CCU8_SLICE_COMPARE_CHANNEL_1, mapping_port_pin[51], P5_11_AF_CCU80_OUT00, XMC_CCU8_SLICE_PRESCALER_64, PWM8_TIMER_PERIOD, DISABLED}, // PWM disabled  51 P5.11
+    {CCU80, CCU80_CC81, 1, XMC_CCU8_SLICE_COMPARE_CHANNEL_1, mapping_port_pin[37], P0_1_AF_CCU80_OUT11,  XMC_CCU8_SLICE_PRESCALER_64, PWM8_TIMER_PERIOD, DISABLED}, // PWM disabled  37 P0.1
+    {CCU80, CCU80_CC81, 1, XMC_CCU8_SLICE_COMPARE_CHANNEL_2, mapping_port_pin[62], P0_9_AF_CCU80_OUT12,  XMC_CCU8_SLICE_PRESCALER_64, PWM8_TIMER_PERIOD, DISABLED}, // PWM disabled  62 P0.9
+    {CCU80, CCU80_CC82, 2, XMC_CCU8_SLICE_COMPARE_CHANNEL_1, mapping_port_pin[36], P0_3_AF_CCU80_OUT20,  XMC_CCU8_SLICE_PRESCALER_64, PWM8_TIMER_PERIOD, DISABLED}, // PWM disabled  36 P0.3
+    {CCU80, CCU80_CC83, 3, XMC_CCU8_SLICE_COMPARE_CHANNEL_1, mapping_port_pin[66], P0_6_AF_CCU80_OUT30,  XMC_CCU8_SLICE_PRESCALER_64, PWM8_TIMER_PERIOD, DISABLED}, // PWM disabled  66 P0.6
+    {CCU81, CCU81_CC80, 0, XMC_CCU8_SLICE_COMPARE_CHANNEL_1, mapping_port_pin[77], P1_15_AF_CCU81_OUT00, XMC_CCU8_SLICE_PRESCALER_64, PWM8_TIMER_PERIOD, DISABLED}, // PWM disabled  77 P1.15
+    {CCU81, CCU81_CC80, 0, XMC_CCU8_SLICE_COMPARE_CHANNEL_2, mapping_port_pin[81], P5_7_AF_CCU81_OUT02,  XMC_CCU8_SLICE_PRESCALER_64, PWM8_TIMER_PERIOD, DISABLED}, // PWM disabled  81 P5.7
+    {CCU81, CCU81_CC81, 1, XMC_CCU8_SLICE_COMPARE_CHANNEL_2, mapping_port_pin[80], P5_5_AF_CCU81_OUT12,  XMC_CCU8_SLICE_PRESCALER_64, PWM8_TIMER_PERIOD, DISABLED}, // PWM disabled  80 P5.5
+    {CCU81, CCU81_CC82, 2, XMC_CCU8_SLICE_COMPARE_CHANNEL_2, mapping_port_pin[79], P5_3_AF_CCU81_OUT22,  XMC_CCU8_SLICE_PRESCALER_64, PWM8_TIMER_PERIOD, DISABLED}  // PWM disabled  79 P5.3
     };
 const uint8_t NUM_PWM8 = ( sizeof( mapping_pwm8 ) / sizeof( XMC_PWM8_t ) );
 const uint8_t NUM_PWM  = ( sizeof( mapping_pwm4 ) / sizeof( XMC_PWM4_t ) )
@@ -327,8 +319,8 @@ const uint8_t NUM_PWM  = ( sizeof( mapping_pwm4 ) / sizeof( XMC_PWM4_t ) )
 /* Analog Pin mappings and configurations */
 #ifdef DAC
 const uint8_t mapping_pin_DAC[][ 2 ] = {
-                                        { 50, 0 },
-                                        { 55, 1 },
+                                        { 48, 0 },
+                                        { 53, 1 },
                                         { 255, 255 } };
 XMC_ARD_DAC_t mapping_dac[] =
     {
