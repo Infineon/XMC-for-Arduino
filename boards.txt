@@ -391,7 +391,7 @@ XMC4400_Platform2GO.menu.LIB.DSP=ARM DSP
 XMC4400_Platform2GO.menu.LIB.DSP.library.selected=-DARM_LIB_CMSIS_DSP
 
 ####################################################
-XMC4700_Radar_Baseboard.name=DEMO Radar BB XMC4700
+XMC4700_Radar_Baseboard.name=XMC4700 Radar Baseboard
 XMC4700_Radar_Baseboard.upload.tool=xmcprog
 XMC4700_Radar_Baseboard.upload.speed=115200
 XMC4700_Radar_Baseboard.upload.resetmethod=ck

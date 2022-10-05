@@ -37,7 +37,7 @@
 // Note the actual name XMC and number MUST have a character between
 // to avoid issues with other defined macros e.g. XMC1100
 
-#define XMC_BOARD          Radar BB XMC4700
+#define XMC_BOARD          XMC 4700 Radar Baseboard
 
 /* On board LED is ON when digital output is 0, LOW, False, OFF */
 #define XMC_LED_ON          0
