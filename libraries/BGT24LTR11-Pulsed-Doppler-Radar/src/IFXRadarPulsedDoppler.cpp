@@ -3,7 +3,6 @@
 
 IFXRadarPulsedDoppler::IFXRadarPulsedDoppler()
 {
-	this->result_handler_registered = false;
 	this->error_handler_registered = false;
 	this->outDev = NULL;
 }
@@ -66,15 +65,19 @@ float IFXRadarPulsedDoppler::getDopplerSensitivity(void)
   return threshold;
 }
 
-uint8_t IFXRadarPulsedDoppler::setFramePeriod(uint8_t periodUs)
+bool IFXRadarPulsedDoppler::setFramePeriod(uint32_t periodUs)
 {
-  uint8_t status = radar_ard_set_frame_period_usec(periodUs);
-  return status;
+  
+  uint8_t retValue = radar_ard_set_frame_period_usec(periodUs);
+  if( retValue )
+     return true;
+     
+  return false;
 }
 
-uint8_t IFXRadarPulsedDoppler::getFramePeriod(void)
+uint32_t IFXRadarPulsedDoppler::getFramePeriod(void)
 {
-  uint8_t periodUs = radar_ard_get_frame_period_usec();
+  uint32_t periodUs = radar_ard_get_frame_period_usec();
   return periodUs;
 }
 
@@ -138,14 +141,35 @@ float IFXRadarPulsedDoppler::getCurrentConsumption(void)
   return currentMA;
 }
 
-void IFXRadarPulsedDoppler::registerResultCallback(void(*callBackPtr)) // register algo done callback function
+bool IFXRadarPulsedDoppler::enableAlgoProcessing( bool enableAlgo )
 {
-  radar_ard_register_result_handler(callBackPtr);
+    uint8_t currStatus = 0;
+    if(enableAlgo) 
+        currStatus = radar_ard_set_do_algo_processing( 1 );
+    else
+        currStatus = radar_ard_set_do_algo_processing( 0 );
+    
+    if( currStatus )
+        return true;
+
+    return false;
 }
 
-void IFXRadarPulsedDoppler::registerErrorCallback(void(*callBackPtr))
+
+
+void IFXRadarPulsedDoppler::registerResultCallback(void(*callBackPtr)( void ) ) // register algo done callback function
 {
-  radar_ard_register_error_handler(callBackPtr);
+  (void) radar_ard_register_result_handler(callBackPtr);
+}
+
+void IFXRadarPulsedDoppler::registerErrorCallback(void(*callBackPtr)(uint32_t))
+{
+  (void) radar_ard_register_error_handler(callBackPtr);
+}
+
+void IFXRadarPulsedDoppler::registerRawDataCallback(void(*callBackPtr)(raw_data_context_t))
+{
+  (void) radar_ard_register_raw_data_handler(callBackPtr);
 }
 
 void IFXRadarPulsedDoppler::initHW(void)
@@ -256,6 +280,23 @@ uint32_t IFXRadarPulsedDoppler::getFrameCount(void)
 	return radar_ard_get_frame_count( );
 }
 
+ // raw data context functions, call only in raw_data_callback
+uint32_t IFXRadarPulsedDoppler::getRawDataFrameCount( raw_data_context_t raw_data_context )
+{
+    return radar_ard_get_frame_raw_data( raw_data_context );
+}
+
+void IFXRadarPulsedDoppler::getRawData( raw_data_context_t raw_data_context, float *p_raw_data_i, float *p_raw_data_q, uint16_t max_num_samples, uint8_t high_gain_input )
+{
+    radar_ard_get_raw_data( raw_data_context, p_raw_data_i, p_raw_data_q, max_num_samples, high_gain_input );
+}
+
+uint16_t IFXRadarPulsedDoppler::getNumRawDataSamples( raw_data_context_t raw_data_context )
+{
+    return radar_ard_get_num_raw_data_samples( raw_data_context );
+}
+
+// debug functions
 void IFXRadarPulsedDoppler::parameterDump( void ) 
 {
 	parameterDump(this->outDev);
@@ -279,11 +320,11 @@ void IFXRadarPulsedDoppler::parameterDump(Print *outDev)
 	outDev->print(radar_ard_get_min_speed_kmph());
 	outDev->println(" km/h");
     
-	outDev->print("minimum speed         : ");
+	outDev->print("maximum speed         : ");
 	outDev->print(radar_ard_get_max_speed_kmph());
 	outDev->println(" km/h");
 	
-	outDev->print("minimum speed         : ");
+	outDev->print("sampling frequency    : ");
 	outDev->print(radar_ard_get_adc_sampling_freq_hz());
 	outDev->println(" Hz");
     
