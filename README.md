@@ -30,7 +30,7 @@ Please visit also the Wiki for additional information, e.g. datasheets, pin out 
 
 * Page for [XMC1100 XMC 2Go](https://github.com/Infineon/XMC-for-Arduino/wiki/XMC-2Go)
 * Page for [XMC1100 Boot Kit](https://github.com/Infineon/XMC-for-Arduino/wiki/XMC1100-Boot-Kit)
-* Page for [XMC1400 Arduino Kit](https://github.com/Infineon/XMC-for-Arduino/wiki/XMC1400-Kit-for-Arduino)
+* Page for [XMC1400 Kit for Arduino](https://github.com/Infineon/XMC-for-Arduino/wiki/XMC1400-Kit-for-Arduino)
 * Page for [XMC4200 Platform 2Go](https://github.com/Infineon/XMC-for-Arduino/wiki/XMC4200-Platform2Go)
 * Page for [XMC4400 Platform 2Go](https://github.com/Infineon/XMC-for-Arduino/wiki/XMC4400-Platform2Go)
 * Page for [XMC4700 Relax Kit](https://github.com/Infineon/XMC-for-Arduino/wiki/XMC4700-Relax-Kit)
