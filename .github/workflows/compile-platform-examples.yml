@@ -35,49 +35,25 @@ jobs:
 
       matrix:
         board:
-          - fqbn: Infineon:arm:XMC1100_Boot_Kit
+          - fqbn: Infineon:xmc:XMC1100_Boot_Kit
             i2s: true
             dieTemp: true
             heapMem: true
             sleep1100: true
             sleep4700 : false
             stackMem: true
-            multiSerial: false
             dma: false
             alarmRtc: false
-          - fqbn: Infineon:arm:XMC1100_XMC2GO
+          - fqbn: Infineon:xmc:XMC1100_XMC2GO
             i2s: true
             dieTemp: true
             heapMem: true
             sleep1100: true
             sleep4700 : false
             stackMem: true
-            multiSerial: false
             dma: false
             alarmRtc: false
-          - fqbn: Infineon:arm:XMC1100_H_BRIDGE2GO
-            i2s: false
-            dieTemp: true
-            heapMem: true
-            sleep1100: true
-            sleep4700 : false
-            stackMem: true
-            multiSerial: false
-            dma: false
-            alarmRtc: false
-          - fqbn: Infineon:arm:XMC1300_Boot_Kit
-            i2s: false
-            dieTemp: true
-            heapMem: true
-            sleep1100: true
-            sleep4700 : false
-            stackMem: true
-            multiSerial: false
-            dma: false
-            alarmRtc: false
-          # - fqbn: Infineon:arm:XMC1300_Sense2GoL
-          #   serial: true
-          - fqbn: Infineon:arm:XMC4400_Platform2GO
+          - fqbn: Infineon:xmc:XMC4200_Platform2GO
             i2s: false
             dieTemp: false
             heapMem: false
@@ -87,7 +63,16 @@ jobs:
             multiSerial: false
             dma: false
             alarmRtc: true
-          - fqbn: Infineon:arm:XMC4700_Relax_Kit
+          - fqbn: Infineon:xmc:XMC4400_Platform2GO
+            i2s: false
+            dieTemp: false
+            heapMem: false
+            sleep1100: false
+            sleep4700 : false
+            stackMem: true
+            dma: false
+            alarmRtc: false
+          - fqbn: Infineon:xmc:XMC4700_Relax_Kit
             i2s: true
             dieTemp: true
             heapMem: true
@@ -97,7 +82,7 @@ jobs:
             multiSerial: true
             dma: true
             alarmRtc: true
-          - fqbn: Infineon:arm:XMC1400_Arduino_Kit
+          - fqbn: Infineon:xmc:XMC1400_Arduino_Kit
             i2s: false
             dieTemp: true
             heapMem: true
@@ -107,16 +92,6 @@ jobs:
             multiSerial: false
             dma: false
             alarmRtc: false
-          - fqbn: Infineon:arm:XMC4200_Platform2GO
-            i2s: false
-            dieTemp: false
-            heapMem: false
-            sleep1100: false
-            sleep4700 : false
-            stackMem: true
-            multiSerial: false
-            dma: false
-            alarmRtc: true
 
         # Make board type-specific customizations to the matrix jobs
         include:
@@ -145,10 +120,6 @@ jobs:
             stackMem-sketch-paths: |
               - libraries/DeviceControlXMC/examples/StackMemoryMeasurement
           - board:
-              multiSerial: true
-            multiSerial-sketch-paths: |
-              - libraries/Multi-Serial
-          - board:
               dma: true
             dma-sketch-paths: |
               - libraries/DMA
@@ -156,7 +127,6 @@ jobs:
               alarmRtc: true
             alarmRtc-sketch-paths: |
               - libraries/RTC/examples/AlarmRTC
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
@@ -168,20 +138,16 @@ jobs:
           fqbn: ${{ matrix.board.fqbn }}
           platforms: |
             # Use Boards Manager to install the latest release of the platform to get the toolchain.
-            - name: Infineon:arm
+            - name: Infineon:xmc
               source-url: https://github.com/Infineon/XMC-for-Arduino/releases/latest/download/package_infineon_index.json
 
             - source-path: ./
-              name: Infineon:arm
+              name: Infineon:xmc
           sketch-paths: |
             # Compile these sketches for all boards
-            - libraries/IFX9201
             - libraries/LED
-            - libraries/OneWire
             - libraries/RTC/examples/SimpleRTC
             - libraries/SPI
-            - libraries/Sense2Go
-            - libraries/Ultrasonic
             - libraries/Wire
             # Board-specific sketches
             ${{ matrix.i2s-sketch-paths }}

@@ -15,14 +15,11 @@ This repository integrates [Infineon's](https://www.infineon.com/) XMC microcont
 ## Supported Microcontroller Boards
 
 * [XMC1100 XMC 2Go](https://www.infineon.com/cms/en/product/evaluation-boards/kit_xmc_2go_xmc1100_v1/)
-* [XMC1100 H-Bridge 2Go](https://www.infineon.com/cms/de/product/evaluation-boards/h-bridge-kit-2go/)
 * [XMC1100 Boot Kit](https://www.infineon.com/cms/en/product/evaluation-boards/kit_xmc11_boot_001/)
-* [XMC1300 Boot Kit](https://www.infineon.com/cms/de/product/evaluation-boards/kit_xmc13_boot_001/)
-* [XMC1300 Sense2GoL](https://www.infineon.com/cms/de/product/evaluation-boards/demo-sense2gol/)
+* [XMC1400 Kit for Arduino](https://www.infineon.com/cms/en/product/evaluation-boards/kit_xmc1400_arduino/)
+* [XMC4200 Platform 2Go](https://www.infineon.com/cms/en/product/evaluation-boards/kit_xmc_plt2go_xmc4200/)
 * [XMC4400 Platform 2Go](https://www.infineon.com/cms/en/product/evaluation-boards/kit_xmc_plt2go_xmc4400//)
 * [XMC4700 Relax Kit](https://www.infineon.com/cms/en/product/evaluation-boards/kit_xmc47_relax_v1/)
-* [XMC4700 Radar Baseboard](https://www.infineon.com/cms/en/product/evaluation-boards/demo-sense2gol-pulse/)
-
 
 ## Additional Information
 
@@ -31,13 +28,11 @@ Please visit also the Wiki for additional information, e.g. datasheets, pin out 
 [XMC-for-Arduino Wiki](https://github.com/Infineon/XMC-for-Arduino/wiki)
 
 * Page for [XMC1100 XMC 2Go](https://github.com/Infineon/XMC-for-Arduino/wiki/XMC-2Go)
-* Page for [XMC1100 H-Bridge 2Go](https://github.com/Infineon/XMC-for-Arduino/wiki/XMC1100-H%E2%80%90Bridge-2Go)
 * Page for [XMC1100 Boot Kit](https://github.com/Infineon/XMC-for-Arduino/wiki/XMC1100-Boot-Kit)
-* Page for [XMC1300 Boot Kit](https://github.com/Infineon/XMC-for-Arduino/wiki/XMC1300-Boot-Kit)
-* Page for [XMC1300 Sense2GoL](https://github.com/Infineon/XMC-for-Arduino/wiki/XMC1300-Sense2GoL)
+* Page for [XMC1400 Kit for Arduino](https://github.com/Infineon/XMC-for-Arduino/wiki/XMC1400-Kit-for-Arduino)
+* Page for [XMC4200 Platform 2Go](https://github.com/Infineon/XMC-for-Arduino/wiki/XMC4200-Platform2Go)
 * Page for [XMC4400 Platform 2Go](https://github.com/Infineon/XMC-for-Arduino/wiki/XMC4400-Platform2Go)
 * Page for [XMC4700 Relax Kit](https://github.com/Infineon/XMC-for-Arduino/wiki/XMC4700-Relax-Kit)
-* Page for [XMC4700 Radar Baseboard](https://github.com/Infineon/XMC-for-Arduino/wiki/DEMO-Radar-BB-XMC4700)
 
 Additionally, please consult the [releases](https://github.com/Infineon/XMC-for-Arduino/releases) for information about the changes and new versions.
 
@@ -63,12 +58,6 @@ Easier to copy (no clickable link):
 
 ```
 https://github.com/Infineon/XMC-for-Arduino/releases/latest/download/package_infineon_index.json
-```
-
-:warning: **IMPORTANT NOTE!** :warning: 
-The former "package_infineon_index.json" URL will no longer be maintained after version 1.4.0. Upcoming versions will not be shown available in the board manager. 
-``` 
-https://github.com/Infineon/Assets/releases/download/current/package_infineon_index.json
 ```
 
 ![Adding a Board JSON](https://raw.githubusercontent.com/infineon/assets/master/Pictures/Preferences_JSON.png)
@@ -99,6 +88,7 @@ In the boards list **Tools** > **Board**, the XMC microcontroller boards are add
 - [Project Examples](https://github.com/Infineon/platformio-infineonxmc/tree/master/examples)
 
 ## Contributing and Third Party Libraries
+
 To contribute enhancements, fixes and the like see *Contributors.md*. in root folder
 
 Third Party or external library maintainers see *Libraries.md*. in root folder

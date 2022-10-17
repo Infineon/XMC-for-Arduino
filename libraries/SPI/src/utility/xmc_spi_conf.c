@@ -29,7 +29,7 @@
 //****************************************************************************
 #include "xmc_spi_conf.h"
 
-#if defined(XMC1100_XMC2GO) || defined(XMC1100_H_BRIDGE2GO)
+#if defined(XMC1100_XMC2GO)
 XMC_SPI_t XMC_SPI_0 =
 {
 	.channel          = XMC_SPI0_CH1,
@@ -68,7 +68,7 @@ XMC_SPI_t XMC_SPI_0 =
 	}
 };
 
-#elif defined(XMC1100_Boot_Kit) || defined(XMC1300_Boot_Kit) || defined(XMC1400_Boot_Kit)
+#elif defined(XMC1100_Boot_Kit) || defined(XMC1400_Boot_Kit)
 XMC_SPI_t XMC_SPI_0 =
 {
     .channel          = XMC_SPI0_CH0,
