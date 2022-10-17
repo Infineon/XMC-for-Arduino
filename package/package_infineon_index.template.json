@@ -11,7 +11,7 @@
           "platforms":[
              {
                 "name":"Infineon's XMC Microcontroller",
-                "architecture":"xmc",
+                "architecture":"arm",
                 "version":"",
                 "category":"Contributed",
                 "url":"",
