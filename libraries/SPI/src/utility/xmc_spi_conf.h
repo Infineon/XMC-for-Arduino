@@ -52,11 +52,11 @@ typedef struct XMC_SPI
 
 #define XMC_SPI_default 	XMC_SPI_0
 
-#if defined(XMC1100_XMC2GO) || defined(XMC1100_H_BRIDGE2GO)
+#if defined(XMC1100_XMC2GO)
 #define NUM_SPI  			1
 extern XMC_SPI_t XMC_SPI_0;
 
-#elif defined(XMC1100_Boot_Kit) || defined(XMC1300_Boot_Kit) || defined(XMC1400_Boot_Kit)
+#elif defined(XMC1100_Boot_Kit) || defined(XMC1400_Boot_Kit)
 #define NUM_SPI  			1
 extern XMC_SPI_t XMC_SPI_0;
 
