@@ -21,7 +21,6 @@ This repository integrates [Infineon's](https://www.infineon.com/) XMC microcont
 * [XMC4400 Platform 2Go](https://www.infineon.com/cms/en/product/evaluation-boards/kit_xmc_plt2go_xmc4400//)
 * [XMC4700 Relax Kit](https://www.infineon.com/cms/en/product/evaluation-boards/kit_xmc47_relax_v1/)
 
-
 ## Additional Information
 
 Please visit also the Wiki for additional information, e.g. datasheets, pin out diagrams, etc.:
