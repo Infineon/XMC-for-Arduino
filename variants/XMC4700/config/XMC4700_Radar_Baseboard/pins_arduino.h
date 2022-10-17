@@ -36,7 +36,8 @@
 // XMC_BOARD for stringifying into serial or other text outputs/logs
 // Note the actual name XMC and number MUST have a character between
 // to avoid issues with other defined macros e.g. XMC1100
-#define XMC_BOARD           DEMO Radar BB XMC 4700
+
+#define XMC_BOARD          XMC 4700 Radar Baseboard
 
 /* On board LED is ON when digital output is 0, LOW, False, OFF */
 #define XMC_LED_ON          0
@@ -65,8 +66,10 @@ extern const uint8_t NUM_ANALOG_OUTPUTS;
 
 // Board has two serial ports pre-assigned to debug and on-board
 
-#define PWM4_TIMER_PERIOD (0x11EF)  // Generate 490Hz @fCCU=144MHz
-#define PWM8_TIMER_PERIOD (0x11EF)  // Generate 490Hz @fCCU=144MHz
+// Generate 490Hz @fCCU=144MHz
+#define PWM4_TIMER_PERIOD (0x11EF)
+// Generate 490Hz @fCCU=144MHz
+#define PWM8_TIMER_PERIOD (0x11EF)
 
 #define PCLK 144000000u
 
@@ -97,10 +100,14 @@ static const uint8_t SCK_SD  = PIN_SPI_SCK_SD;
 #define A4   4
 #define A5   5
 
-#define LED_RED     22  // LED Red channel
-#define LED_GREEN   23  // LED Green channel
-#define LED_BLUE    24  // LED Blue channel
-#define BUTTON1     25  // Additional BUTTON1
+// LED Red channel
+#define LED_RED     22
+// LED Green channel
+#define LED_GREEN   23
+// LED Blue channel
+#define LED_BLUE    24
+// Additional BUTTON1
+#define BUTTON1     25
 
 #define digitalPinToInterrupt(p)    ((p) == 2 ? 0 : ((p) == 32 ? 1 : NOT_AN_INTERRUPT))
 
@@ -151,7 +158,7 @@ const XMC_PORT_PIN_t mapping_port_pin[] =
 const uint8_t GND = ( sizeof( mapping_port_pin ) / sizeof( XMC_PORT_PIN_t ) );
 const uint8_t NUM_DIGITAL = ( sizeof( mapping_port_pin ) / sizeof( XMC_PORT_PIN_t ) );;
 
-#define INTERRUPT_USE_ERU
+
 const XMC_PIN_INTERRUPT_t mapping_interrupt[] =
     {
     /* 0  */    {XMC_ERU0, XMC_ERU_ETL_INPUT_A0, XMC_ERU_ETL_INPUT_B3, 2, 3, 0},
@@ -225,12 +232,8 @@ const uint8_t NUM_ANALOG_INPUTS = ( sizeof( mapping_adc ) / sizeof( XMC_ADC_t ) 
  *
  * Serial 0 is Debug port
  * Serial 1  is on-board port
- *
- * See many XMC1x00 pins_arduino.h for proper way to handle HOSTPC
-*/
-/* Following define gives REDFINITION Warning against the define for
-    INTERRUPT_USE_ERU above */
-#define SERIAL_USE_U1C1
+ */
+
 RingBuffer rx_buffer_0;
 RingBuffer tx_buffer_0;
 

@@ -58,7 +58,8 @@ extern const uint8_t NUM_ANALOG_INPUTS;
 // Indicate unit has RTC/Alarm
 #define HAS_RTC             1
 
-#define PWM4_TIMER_PERIOD (2041U)  // Generate 490Hz @fCCU=1MHz
+// Generate 490Hz @fCCU=1MHz
+#define PWM4_TIMER_PERIOD (2041U)
 
 #define PCLK 64000000u
 
@@ -76,10 +77,10 @@ extern uint8_t SCK;
 // Actual on board signal is TX_ON
 #define BGT_ON  2
 
-#define LED1    3       // Extended LEDs P0.5 D5
-#define LED2    5       // Extended LEDs P0.7 D4
-#define LED3    7       // Extended LEDs P0.9 D3
-#define LED_BUILTIN LED1 // Standard Arduino LED
+#define LED1    3
+#define LED2    5
+#define LED3    7
+#define LED_BUILTIN LED1
 
 // Disable external interrupt pins
 #define digitalPinToInterrupt(p)    NOT_AN_INTERRUPT

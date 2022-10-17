@@ -5,7 +5,7 @@
 */
 
 /* ===========================================================================
-** Copyright (C) 2019 Infineon Technologies AG
+** Copyright (C) 2019-2021 Infineon Technologies AG
 ** All rights reserved.
 ** ===========================================================================
 **
@@ -123,6 +123,9 @@ extern "C"
 #define RADAR_ERR_UNSUPPORTED_RESOLUTION      	0x0051  /**< The specified sample
                                                            resolution is out of
                                                            range. */
+
+#define RADAR_ERR_INVALID_POINTER				0x0052 /**< Invalid pointer as argument */
+
 #define   RF_SHIELD_BOARD_INVALID_PARAM     	0xFE01   /**< Status in case of invalid parameter */
 #define   RF_SHIELD_BOARD_SUPPORTED         	0xFE02   /**< Status for supported RF shield with valid board ID */
 #define   RF_SHIELD_BOARD_UNSUPPORTED      		0xFE03   /**< Status for unsupported RF shield board
@@ -139,8 +142,13 @@ extern "C"
 ==============================================================================
 */
 
+typedef void* raw_data_context_t;
+
 typedef void(*ard_error_handler_cb)(uint32_t error);
 typedef void(*ard_result_handler_cb)( void );
+typedef void(*ard_raw_data_handler_cb)(raw_data_context_t context);
+
+
 
 /*
 ==============================================================================
@@ -151,6 +159,8 @@ typedef void(*ard_result_handler_cb)( void );
 ard_error_handler_cb radar_ard_register_error_handler( ard_error_handler_cb handler );
 
 ard_result_handler_cb radar_ard_register_result_handler( ard_result_handler_cb handler);
+
+ard_raw_data_handler_cb radar_ard_register_raw_data_handler( ard_raw_data_handler_cb handler);
 
 void radar_ard_init(void);
 
@@ -226,7 +236,19 @@ uint8_t radar_ard_is_motion( void );
 
 uint32_t radar_ard_get_frame_count( void );
 
+uint8_t radar_ard_set_do_algo_processing( uint8_t do_processing );
+
+/* for usage in raw data handler only */
+uint32_t radar_ard_get_frame_raw_data( raw_data_context_t p_raw_data_context );
+
+void radar_ard_get_raw_data( raw_data_context_t raw_data_context, float *p_raw_data_i, float *p_raw_data_q, uint16_t max_num_samples, uint8_t high_gain_input );
+
+uint16_t radar_ard_get_num_raw_data_samples( raw_data_context_t p_raw_data_context );
+
+/* --- End of File -------------------------------------------------------- */
+
 /* --- Close open blocks -------------------------------------------------- */
+
 /* Disable C linkage for C++ files */
 #ifdef __cplusplus
 } /* extern "C" */

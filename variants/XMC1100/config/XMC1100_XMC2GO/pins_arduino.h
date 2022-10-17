@@ -68,7 +68,8 @@ extern const uint8_t NUM_ANALOG_INPUTS;
 #define SERIAL_DEBUG    1
 #endif
 
-#define PWM4_TIMER_PERIOD (2041U)  // Generate 490Hz @fCCU=1MHz
+// Generate 490Hz @fCCU=1MHz
+#define PWM4_TIMER_PERIOD (2041U)
 
 #define PCLK 64000000u
 
@@ -87,9 +88,9 @@ extern uint8_t SCK;
 #define A2   2
 #define A3   3
 
-#define LED1        14  // Extended LEDs
-#define LED2        15  // Extended LEDs
-#define LED_BUILTIN LED1  //Standard Arduino LED: Used LED1
+#define LED1        14
+#define LED2        15
+#define LED_BUILTIN LED1
 
 #define digitalPinToInterrupt(p)    (((p) == 9) ? 0 : NOT_AN_INTERRUPT)
 
