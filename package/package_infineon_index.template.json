@@ -10,7 +10,7 @@
           },
           "platforms":[
              {
-                "name":"Infineon's XMC Microcontroller",
+                "name":"Infineon's XMC Microcontroller V1.x",
                 "architecture":"arm",
                 "version":"",
                 "category":"Contributed",
@@ -19,7 +19,7 @@
                 "checksum":"",
                 "size":"",
                 "help":{
-                   "online":""
+                   "online":"https://github.com/Infineon/XMC-for-Arduino/wiki"
                 },
                 "boards":[
                   {
