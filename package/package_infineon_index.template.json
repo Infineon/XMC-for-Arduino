@@ -10,7 +10,7 @@
           },
           "platforms":[
              {
-                "name":"Infineon's XMC Microcontroller V1.x",
+                "name":"Infineon's XMC Microcontroller",
                 "architecture":"arm",
                 "version":"",
                 "category":"Contributed",
