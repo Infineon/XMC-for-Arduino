@@ -49,6 +49,8 @@ If you have already installed '[DAVE™ - Development Platform for XMC™ Microc
 
 ![J-Link](https://raw.githubusercontent.com/infineon/assets/master/Pictures/J-Link_Packages.png)
 
+**Note:** The XMC-for-Arduino BSP installs the **XMC Flasher** tool used to flash the compiled firmware (.hex) into the XMC device. However this tool requires **Java(TM) SE Runtime Environment** to be installed in the host system. Java(TM) SE Runtime Environment version **1.8.0** is known to be compatible with the tool.  
+
 ### Using Arduino IDE
 
 ![Preferences](https://raw.githubusercontent.com/infineon/assets/master/Pictures/Preferences.png)
