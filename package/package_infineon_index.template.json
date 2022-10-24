@@ -19,7 +19,7 @@
                 "checksum":"",
                 "size":"",
                 "help":{
-                   "online":""
+                   "online":"https://github.com/Infineon/XMC-for-Arduino/wiki"
                 },
                 "boards":[
                   {
