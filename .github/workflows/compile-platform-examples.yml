@@ -53,7 +53,7 @@ jobs:
             stackMem: true
             dma: false
             alarmRtc: false
-          - fqbn: Infineon:arm:XMC1300_Boot_Kit
+          - fqbn: Infineon:xmc:XMC1300_Boot_Kit
             i2s: false
             dieTemp: true
             heapMem: true
