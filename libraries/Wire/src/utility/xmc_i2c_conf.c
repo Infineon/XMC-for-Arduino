@@ -96,7 +96,7 @@ XMC_I2C_t XMC_I2C_1 =
     .protocol_irq_service_request       	  = 3
 };
 
-#elif defined(XMC1100_Boot_Kit) || defined(XMC1400_Boot_Kit) 
+#elif defined(XMC1100_Boot_Kit) || defined(XMC1300_Boot_Kit) || defined(XMC1400_Boot_Kit) 
 XMC_I2C_t XMC_I2C_0 =
 {
     .channel          = XMC_I2C0_CH0,

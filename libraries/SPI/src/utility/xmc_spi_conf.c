@@ -68,7 +68,7 @@ XMC_SPI_t XMC_SPI_0 =
 	}
 };
 
-#elif defined(XMC1100_Boot_Kit) || defined(XMC1400_Boot_Kit)
+#elif defined(XMC1100_Boot_Kit) || defined(XMC1300_Boot_Kit) || defined(XMC1400_Boot_Kit)
 XMC_SPI_t XMC_SPI_0 =
 {
     .channel          = XMC_SPI0_CH0,
