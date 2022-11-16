@@ -223,7 +223,7 @@ XMC_SPI_t XMC_SPI_0 =
     },
 };
 
-#elif defined(XMC4700_Relax_Kit)
+#elif defined(XMC4700_Relax_Kit) || defined(XMC4700_Radar_Baseboard)
 XMC_SPI_t XMC_SPI_0 =
 {
     .channel          = XMC_SPI2_CH0,
