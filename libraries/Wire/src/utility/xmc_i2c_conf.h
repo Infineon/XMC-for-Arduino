@@ -76,7 +76,7 @@ extern XMC_I2C_t XMC_I2C_0;
 #define NUM_I2C  1
 extern XMC_I2C_t XMC_I2C_0;
 
-#elif defined(XMC4700_Relax_Kit)
+#elif defined(XMC4700_Relax_Kit) || defined(XMC4700_Radar_Baseboard)
 #define NUM_I2C  2
 extern XMC_I2C_t XMC_I2C_0;
 extern XMC_I2C_t XMC_I2C_1;
