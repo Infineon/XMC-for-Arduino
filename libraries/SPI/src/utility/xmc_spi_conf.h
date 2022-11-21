@@ -72,7 +72,7 @@ extern XMC_SPI_t XMC_SPI_0;
 #define NUM_SPI  			1
 extern XMC_SPI_t XMC_SPI_0;
 
-#elif defined(XMC4700_Relax_Kit)
+#elif defined(XMC4700_Relax_Kit) || defined(XMC4700_Radar_Baseboard)
 #define NUM_SPI  			3
 #define XMC_SPI_for_xmc_SD	XMC_SPI_1
 extern XMC_SPI_t XMC_SPI_0;

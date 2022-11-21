@@ -30,7 +30,7 @@
 #include "xmc_i2c_conf.h"
 
 #if defined(XMC1100_XMC2GO)
-XMC_I2C_t XMC_I2C_0 =
+XMC_I2C_t  XMC_I2C_0 =
 {
     .channel          = XMC_I2C0_CH1,
     .channel_config   = {
@@ -297,7 +297,7 @@ XMC_I2C_t XMC_I2C_0 =
 };
 
 
-#elif defined(XMC4700_Relax_Kit)
+#elif defined(XMC4700_Relax_Kit) ||defined(XMC4700_Radar_Baseboard)
 XMC_I2C_t XMC_I2C_0 =
 {
     .channel          = XMC_I2C1_CH1,

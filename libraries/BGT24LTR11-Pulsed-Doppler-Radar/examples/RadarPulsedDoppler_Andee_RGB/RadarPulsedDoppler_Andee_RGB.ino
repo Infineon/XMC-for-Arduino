@@ -4,6 +4,7 @@
 // Always include these libraries. Annikken Andee needs them
 // to work with the Arduino!
 #include <SPI.h>
+//Download Andee Library from Library manager
 #include <Andee.h>
 
 // Pre-defined threshold for "fast" speed 
