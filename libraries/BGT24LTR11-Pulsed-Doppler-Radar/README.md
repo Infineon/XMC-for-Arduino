@@ -216,6 +216,12 @@ The pre-defined fast speed threshold can be changed within the Arduino sketch.
 
 ![Predefined Threshold](https://raw.githubusercontent.com/infineon/assets/master/Pictures/rbb_Predefined_Threshold.png)
 
+## Known Issues
+
+### Warnings after Compilation
+
+There could be warnings appearing even after the successful compilation of examples. They are due to the static library of USB and from the external Andee.h library. 
+
 ## Additional Information
 See also our [Wiki](https://github.com/Infineon/XMC-for-Arduino/wiki/Core-Libraries) and doxygen-generated [documentation page](https://github.com/Infineon/InfineonDoxyGenerator).
 
