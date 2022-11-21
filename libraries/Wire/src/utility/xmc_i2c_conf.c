@@ -30,7 +30,7 @@
 #include "xmc_i2c_conf.h"
 
 #if defined(XMC1100_XMC2GO)
-XMC_I2C_t  =
+XMC_I2C_t  XMC_I2C_0 =
 {
     .channel          = XMC_I2C0_CH1,
     .channel_config   = {
