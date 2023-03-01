@@ -12,6 +12,7 @@ This repository integrates [Infineon's](https://www.infineon.com/) XMC microcont
     - [Prework for SEGGER J-Link](#prework-for-segger-j-link)
     - [Using Arduino IDE](#using-arduino-ide)
       - [Separation of release packages from version 2.0.0 onwards](#separation-of-release-packages-from-version-200-onwards)
+    - [Known Issues](#known-issues)
     - [Using PlatformIO IDE](#using-platformio-ide)
   - [Contributing and Third Party Libraries](#contributing-and-third-party-libraries)
   - [Additional Contributors](#additional-contributors)
@@ -101,6 +102,10 @@ Any new board or feature integration will only be done in the *XMC Family V2.x*
 
 ![Board list v1x](https://raw.githubusercontent.com/Infineon/Assets/version-2.x/Pictures/Board_List_v2x.png.jpg)
 
+
+### Known Issues
+
+* :warning: While using the pins connected to the **LEDs** configured as **INPUT**, there might be some abberation in behavior due to the presence of the series resistor of the LED, as it causes a voltage drop on the pin. In case of such an occurance, it is advised to desolder the series resistor and the LED and thereby using the pin as INPUT.  
 
 ### Using PlatformIO IDE
 
