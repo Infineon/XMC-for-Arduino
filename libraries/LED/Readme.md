@@ -5,8 +5,8 @@
 **Author** | : | Paul Carpenter
  | | | PC Services
  | | | www.pcserviceselectronics.co.uk
-**Version** | : | V1.0.3
-**Updated** | : | August 2022
+**Version** | : | V1.0.4
+**Updated** | : | February 2023
 Date | : | July 2018
 
 Infineon XMC-for-Arduino LED Library, to assist in making board agnostic examples that
@@ -49,6 +49,7 @@ models of board so we end up with
  XMC4700 Relax Kit | High| No | High
  XMC4700 Relax Kit Lite | High| No | High
 
+Library references a macro (#define) in pins_arduino.h, so on boards that have reversed to normal Arduino definition the library handles it and also handles when LED_BUILTIN is referenced and that board has different LED_BUILTIN operation to other LEDs. This way ALL references to ON or OFF using this library always works. (Added in V1.0.4)
 [Back to top](#table-of-contents)
 ### LEDs on Different Boards
 Matrix of available on board LED names or LED they map to, known currently.
@@ -75,6 +76,11 @@ operation this file must include a #define macro based on XMC_LED_ON as below -
 ~~~
 /* On board LED is ON when digital output is 0, LOW, False, OFF */
 #define  XMC_LED_ON 0
+~~~
+Additionally there is an issue where LED_BUILTIN is not standard 1, HIGH, TRUE, ON is ON, so add extra define
+~~~
+/* On board LED_BUILTIN is NOT standard LED is ON when digital output is 0, LOW, False, OFF */
+#define  XMC_LED_BUILTIN_REVERSED 1
 ~~~
 [Back to top](#table-of-contents)
 ## Known Limitations
