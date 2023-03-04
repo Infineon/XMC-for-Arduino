@@ -61,14 +61,28 @@ pinMode( pin, OUTPUT );
 /* Set LED On for specified pin */
 void LED::On( int pin )
 {
-digitalWrite( pin, XMC_LED_ON );
+if( pin == LED_BUILTIN )
+#ifdef XMC_LED_BUILTIN_REVERSED
+  digitalWrite( pin, false );
+#else
+  digitalWrite( pin, true );
+#endif
+else
+  digitalWrite( pin, XMC_LED_ON );
 }
 
 
 /* Set LED Off for specified pin */
 void LED::Off( int pin )
 {
-digitalWrite( pin, !XMC_LED_ON );
+if( pin == LED_BUILTIN )
+#ifdef XMC_LED_BUILTIN_REVERSED
+  digitalWrite( pin, true );
+#else
+  digitalWrite( pin, false );
+#endif
+else
+  digitalWrite( pin, !XMC_LED_ON );
 }
 
 

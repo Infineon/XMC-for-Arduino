@@ -39,6 +39,8 @@
 
 /* On board LED is ON when digital output is 0, LOW, False, OFF */
 #define  XMC_LED_ON         0
+/* On board LED_BUILTIN is NOT standard LED is ON when digital output is 0, LOW, False, OFF */
+#define  XMC_LED_BUILTIN_REVERSED 1
 
 // Following were defines now evaluated by compilation as const variables
 // After definitions of associated mapping arrays
