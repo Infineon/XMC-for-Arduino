@@ -5,8 +5,8 @@
 **Author** | : | Paul Carpenter
  | | | PC Services
  | | | www.pcserviceselectronics.co.uk
-**Version** | : | V1.0.3
-**Updated** | : | August 2022
+**Version** | : | V1.0.4
+**Updated** | : | March 2023
 Date | : | July 2018
 
 Infineon XMC-for-Arduino LED Library, to assist in making board agnostic examples that
@@ -42,18 +42,20 @@ models of board so we end up with
  XMC1100 XMC2GO | High | No | High
  XMC1100 XMC H Bridge2GO | High| No | High
  XMC1300 Boot Kit  | Low | No | Low
- XMC1300 Sense2GOL | Low| No | Low
+ XMC1300 Sense2GO | Low| No | Low
  XMC1400 Arduino Kit | Low | Yes | High
  XMC4200 Platform2Go | High| No | High
  XMC4400 Platform2Go | High| No | High
  XMC4700 Relax Kit | High| No | High
  XMC4700 Relax Kit Lite | High| No | High
 
+** NOTE ** After Version 2.0 of XMC-for-Arduino, some boards were dropped (e.g. XMC1300 Sense2GO) they are still shown here for those using old versions of XMC-for-Arduino, and for history.
+
 [Back to top](#table-of-contents)
 ### LEDs on Different Boards
 Matrix of available on board LED names or LED they map to, known currently.
 
-| LED Macro | XMC1100 <BR>Boot Kit | XMC1100 <BR>XMC2GO | XMC1100 <BR>HBRIDGE2GO | XMC1300 <BR>Boot Kit | XMC1300 <BR>Sense2GOL | XMC1400 <br>Arduino Kit | XMC4200 <br>Platform2Go | XMC4400 <br>Platform2Go | XMC4700 <BR>Relax Kit | XMC4700 <BR>Relax Kit Lite |
+| LED Macro | XMC1100 <BR>Boot Kit | XMC1100 <BR>XMC2GO | XMC1100 <BR>HBRIDGE2GO | XMC1300 <BR>Boot Kit | XMC1300 <BR>Sense2GO | XMC1400 <br>Arduino Kit | XMC4200 <br>Platform2Go | XMC4400 <br>Platform2Go | XMC4700 <BR>Relax Kit | XMC4700 <BR>Relax Kit Lite |
 | --- | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: |
  LED_BUILTIN | Y | LED1 | LED1 | LED1 | LED1 | Y | LED1 | LED1 | LED1 | LED1
  LED1 | Y | Y | Y | Y | Y | Y | Y | Y | Y | Y
