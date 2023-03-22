@@ -55,6 +55,7 @@ extern const uint8_t NUM_ANALOG_OUTPUTS;
 #define NUM_SERIAL          1
 #define NUM_TONE_PINS       7
 #define NUM_TASKS_VARIANT   12
+#define NUM_SPI  			      1
 
 // Indicate unit has RTC/Alarm
 #define HAS_RTC                 1
@@ -302,6 +303,43 @@ XMC_UART_t XMC_UART_1 =
 HardwareSerial Serial( &XMC_UART_0, &rx_buffer_0, &tx_buffer_0 );
 // Object instantiated of the HardwareSerial class for UART ONBOARD interface
 HardwareSerial Serial1( &XMC_UART_1, &rx_buffer_1, &tx_buffer_1 );
+
+XMC_SPI_t XMC_SPI_0 =
+{
+    .channel          = XMC_SPI1_CH1,
+    .channel_config   = {
+        .baudrate = 20003906U,
+        .bus_mode = (XMC_SPI_CH_BUS_MODE_t)XMC_SPI_CH_BUS_MODE_MASTER,
+        .selo_inversion = XMC_SPI_CH_SLAVE_SEL_INV_TO_MSLS,
+        .parity_mode = XMC_USIC_CH_PARITY_MODE_NONE
+    },
+    .mosi             = {
+        .port = (XMC_GPIO_PORT_t*)PORT1_BASE,
+        .pin  = (uint8_t)9
+    },
+    .mosi_config      = {
+        .mode = XMC_GPIO_MODE_OUTPUT_PUSH_PULL_ALT4,
+        .output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH,
+        .output_strength = XMC_GPIO_OUTPUT_STRENGTH_MEDIUM
+    },
+    .miso             = {
+        .port = (XMC_GPIO_PORT_t*)PORT0_BASE,
+        .pin  = (uint8_t)0
+    },
+    .miso_config      = {
+        .mode = XMC_GPIO_MODE_INPUT_TRISTATE,
+    },
+    .input_source     = XMC_INPUT_D,
+    .sclkout = {
+        .port = (XMC_GPIO_PORT_t*)PORT1_BASE,
+        .pin  = (uint8_t)8
+    },
+    .sclkout_config   = {
+        .mode = XMC_GPIO_MODE_OUTPUT_PUSH_PULL_ALT4,
+        .output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH,
+        .output_strength = XMC_GPIO_OUTPUT_STRENGTH_MEDIUM
+    },
+};
 
 // Serial Interrupt and event handling
 #ifdef __cplusplus

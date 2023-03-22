@@ -53,6 +53,7 @@ extern const uint8_t NUM_ANALOG_INPUTS;
 #define NUM_SERIAL          1
 #define NUM_TONE_PINS       4
 #define NUM_TASKS_VARIANT   8
+#define NUM_SPI  			      1
 
 // Indicate unit has RTC/Alarm
 #define HAS_RTC             1
@@ -204,8 +205,6 @@ XMC_UART_t XMC_UART_0 =
   };  
 
 HardwareSerial Serial( &XMC_UART_0, &rx_buffer_0, &tx_buffer_0 );
-
-#define NUM_SPI  			1
 
 XMC_SPI_t XMC_SPI_0 =
 {
