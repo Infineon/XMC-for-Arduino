@@ -56,7 +56,8 @@ extern "C" {
 #define clockCyclesToMicroseconds(a)    ( ((a) * 1000L) / (F_CPU / 1000L) )
 #define microsecondsToClockCycles(a)    ( (a) * (F_CPU / 1000000L) )
 
-#define XMC_SPI_default XMC_SPI_0
+// default XMC_SPI instance is XMC_SPI_0 for all variants
+#define XMC_SPI_default                 XMC_SPI_0
 
 //****************************************************************************
 // @Typedefs
