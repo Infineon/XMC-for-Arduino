@@ -222,7 +222,17 @@ extern "C" {
 #endif
 	extern XMC_UART_t XMC_UART_debug;
 	extern XMC_UART_t XMC_UART_on_board;
+    
+#if defined(XMC1100_XMC2GO) || defined(XMC1100_Boot_Kit) || defined(XMC1300_Boot_Kit) || defined(XMC1400_Arduino_Kit) || defined(XMC4400_Platform2GO) || defined(XMC4200_Platform2GO)     
     extern XMC_SPI_t XMC_SPI_0;
+#elif defined(XMC4700_Relax_Kit)
+    extern XMC_SPI_t XMC_SPI_0;
+    // XMC4700 Relax Kit has more than one SPI instances    
+    extern XMC_SPI_t XMC_SPI_1;
+    extern XMC_SPI_t XMC_SPI_2;
+#else
+    #error XMC Board not supported         
+#endif
 
 //****************************************************************************
 // @Prototypes Of Global Functions
