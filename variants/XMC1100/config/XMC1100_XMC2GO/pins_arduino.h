@@ -201,9 +201,49 @@ XMC_UART_t XMC_UART_0 =
 #endif
   .irq_num              = USIC0_0_IRQn,
   .irq_service_request  = 0
-  };
+  };  
 
 HardwareSerial Serial( &XMC_UART_0, &rx_buffer_0, &tx_buffer_0 );
+
+#define NUM_SPI  			1
+
+XMC_SPI_t XMC_SPI_0 =
+{
+	.channel          = XMC_SPI0_CH1,
+	.channel_config   = {
+		.baudrate = 15984375U,
+		.bus_mode = (XMC_SPI_CH_BUS_MODE_t)XMC_SPI_CH_BUS_MODE_MASTER,
+		.selo_inversion = XMC_SPI_CH_SLAVE_SEL_INV_TO_MSLS,
+		.parity_mode = XMC_USIC_CH_PARITY_MODE_NONE
+	},
+	.mosi             = {
+		.port = (XMC_GPIO_PORT_t*)PORT0_BASE,
+		.pin  = (uint8_t)7
+	},
+	.mosi_config      = {
+		.mode = XMC_GPIO_MODE_OUTPUT_PUSH_PULL_ALT7,
+		.output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH,
+		.input_hysteresis = XMC_GPIO_INPUT_HYSTERESIS_STANDARD
+	},
+	.miso             = {
+		.port = (XMC_GPIO_PORT_t*)PORT0_BASE,
+		.pin  = (uint8_t)6
+	},
+	.miso_config      = {
+		.mode = XMC_GPIO_MODE_INPUT_TRISTATE,
+		.input_hysteresis = XMC_GPIO_INPUT_HYSTERESIS_STANDARD
+	},
+	.input_source     = XMC_INPUT_C,
+	.sclkout          = {
+		.port = (XMC_GPIO_PORT_t*)PORT0_BASE,
+		.pin  = (uint8_t)8
+	},
+	.sclkout_config   = {
+		.mode = XMC_GPIO_MODE_OUTPUT_PUSH_PULL_ALT7,
+		.output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH,
+		.input_hysteresis = XMC_GPIO_INPUT_HYSTERESIS_STANDARD
+	}
+};
 
 // Serial Interrupt and event handling
 #ifdef __cplusplus

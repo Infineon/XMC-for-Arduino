@@ -37,52 +37,37 @@
 // @Typedefs
 //****************************************************************************
 
-typedef struct XMC_SPI
-{
-    XMC_USIC_CH_t*        channel        ;
-    XMC_SPI_CH_CONFIG_t   channel_config  ;
-    XMC_PORT_PIN_t        mosi            ;
-    XMC_GPIO_CONFIG_t     mosi_config     ;
-    XMC_PORT_PIN_t        miso            ;
-    XMC_GPIO_CONFIG_t     miso_config     ;
-    XMC_USIC_INPUT_t      input_source    ;
-    XMC_PORT_PIN_t        sclkout         ;
-    XMC_GPIO_CONFIG_t     sclkout_config  ;
-} XMC_SPI_t;
+// #if defined(XMC1100_XMC2GO)
+// // #define NUM_SPI  			1
+// // extern XMC_SPI_t XMC_SPI_0;
 
-#define XMC_SPI_default 	XMC_SPI_0
+// #elif defined(XMC1100_Boot_Kit) || defined(XMC1300_Boot_Kit) || defined(XMC1400_Boot_Kit)
+// #define NUM_SPI  			1
+// extern XMC_SPI_t XMC_SPI_0;
 
-#if defined(XMC1100_XMC2GO)
-#define NUM_SPI  			1
-extern XMC_SPI_t XMC_SPI_0;
+// #elif defined(XMC1400_Arduino_Kit)
+// #define NUM_SPI  			1
+// extern XMC_SPI_t XMC_SPI_0;
 
-#elif defined(XMC1100_Boot_Kit) || defined(XMC1300_Boot_Kit) || defined(XMC1400_Boot_Kit)
-#define NUM_SPI  			1
-extern XMC_SPI_t XMC_SPI_0;
+// #elif defined(XMC4400_Platform2GO)
+// #define NUM_SPI  			1
+// extern XMC_SPI_t XMC_SPI_0;
 
-#elif defined(XMC1400_Arduino_Kit)
-#define NUM_SPI  			1
-extern XMC_SPI_t XMC_SPI_0;
+// #elif defined(XMC4200_Platform2GO)
+// #define NUM_SPI  			1
+// extern XMC_SPI_t XMC_SPI_0;
 
-#elif defined(XMC4400_Platform2GO)
-#define NUM_SPI  			1
-extern XMC_SPI_t XMC_SPI_0;
-
-#elif defined(XMC4200_Platform2GO)
-#define NUM_SPI  			1
-extern XMC_SPI_t XMC_SPI_0;
-
-#elif defined(XMC4700_Relax_Kit)
-#define NUM_SPI  			3
-#define XMC_SPI_for_xmc_SD	XMC_SPI_1
-extern XMC_SPI_t XMC_SPI_0;
-extern XMC_SPI_t XMC_SPI_1;
-extern XMC_SPI_t XMC_SPI_2;
-//extern XMC_SPI_t XMC_SPI_3;
-//extern XMC_SPI_t XMC_SPI_4;
-#else
-#error XMC Board not supported
-#endif
+// #elif defined(XMC4700_Relax_Kit)
+// #define NUM_SPI  			3
+// #define XMC_SPI_for_xmc_SD	XMC_SPI_1
+// extern XMC_SPI_t XMC_SPI_0;
+// extern XMC_SPI_t XMC_SPI_1;
+// extern XMC_SPI_t XMC_SPI_2;
+// //extern XMC_SPI_t XMC_SPI_3;
+// //extern XMC_SPI_t XMC_SPI_4;
+// #else
+// #error XMC Board not supported
+// #endif
 
 
 #endif /* XMC_SPI_CONF_H */

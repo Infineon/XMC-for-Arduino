@@ -47,6 +47,7 @@ extern "C" {
 #include <xmc_uart.h>
 #include <xmc_dac.h>
 #include <xmc_eru.h>
+#include <xmc_spi.h>
 
 //****************************************************************************
 // @Defines
@@ -54,6 +55,8 @@ extern "C" {
 #define clockCyclesPerMicrosecond()     ( F_CPU / 1000000L )
 #define clockCyclesToMicroseconds(a)    ( ((a) * 1000L) / (F_CPU / 1000L) )
 #define microsecondsToClockCycles(a)    ( (a) * (F_CPU / 1000000L) )
+
+#define XMC_SPI_default XMC_SPI_0
 
 //****************************************************************************
 // @Typedefs
@@ -187,6 +190,19 @@ extern "C" {
         uint32_t                irq_service_request ;
     } XMC_UART_t;
 
+    typedef struct
+    {
+    XMC_USIC_CH_t*        channel        ;
+    XMC_SPI_CH_CONFIG_t   channel_config  ;
+    XMC_PORT_PIN_t        mosi            ;
+    XMC_GPIO_CONFIG_t     mosi_config     ;
+    XMC_PORT_PIN_t        miso            ;
+    XMC_GPIO_CONFIG_t     miso_config     ;
+    XMC_USIC_INPUT_t      input_source    ;
+    XMC_PORT_PIN_t        sclkout         ;
+    XMC_GPIO_CONFIG_t     sclkout_config  ;
+    } XMC_SPI_t;
+
 //****************************************************************************
 // @Imported Global Variables
 //****************************************************************************
@@ -205,6 +221,7 @@ extern "C" {
 #endif
 	extern XMC_UART_t XMC_UART_debug;
 	extern XMC_UART_t XMC_UART_on_board;
+    extern XMC_SPI_t XMC_SPI_0;
 
 //****************************************************************************
 // @Prototypes Of Global Functions
