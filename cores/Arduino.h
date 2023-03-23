@@ -48,6 +48,7 @@ extern "C" {
 #include <xmc_dac.h>
 #include <xmc_eru.h>
 #include <xmc_spi.h>
+#include <xmc_i2c.h>
 
 //****************************************************************************
 // @Defines
@@ -58,6 +59,8 @@ extern "C" {
 
 // default XMC_SPI instance is XMC_SPI_0 for all variants
 #define XMC_SPI_default                 XMC_SPI_0
+// default XMC_I2C instance is XMC_I2C_0 for all variants
+#define XMC_I2C_default 	            XMC_I2C_0
 
 //****************************************************************************
 // @Typedefs
@@ -207,6 +210,25 @@ extern "C" {
     XMC_GPIO_CONFIG_t     sclkout_config  ;
     } XMC_SPI_t;
 
+     /*
+    * XMC I2C type
+    */
+    typedef struct
+{
+    XMC_USIC_CH_t* channel;
+    XMC_I2C_CH_CONFIG_t   channel_config;
+    XMC_PORT_PIN_t        sda;
+    XMC_GPIO_CONFIG_t     sda_config;
+    XMC_PORT_PIN_t        scl;
+    XMC_GPIO_CONFIG_t     scl_config;
+    XMC_USIC_INPUT_t      input_source_dx0;
+    XMC_USIC_INPUT_t      input_source_dx1;
+    IRQn_Type             slave_receive_irq_num;
+    uint32_t              slave_receive_irq_service_request;
+    IRQn_Type             protocol_irq_num;
+    uint32_t              protocol_irq_service_request;
+} XMC_I2C_t;
+
 //****************************************************************************
 // @Imported Global Variables
 //****************************************************************************
@@ -236,6 +258,13 @@ extern "C" {
 #else
     #error XMC Board not supported         
 #endif
+
+#if defined(XMC1100_XMC2GO)
+    extern XMC_I2C_t XMC_I2C_0;
+    extern XMC_I2C_t XMC_I2C_1;
+#else
+    #error XMC Board not supported 
+#endif 
 
 //****************************************************************************
 // @Prototypes Of Global Functions
