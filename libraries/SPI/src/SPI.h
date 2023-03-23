@@ -59,9 +59,7 @@
 #define SPI_CLOCK_DIV128 128
 
 
-#if !defined(USE_SW_SPI)
-#include "utility/xmc_spi_conf.h"
-#else
+#if defined(USE_SW_SPI)
 #include "utility/SW_SPI.h"
 #endif
 

@@ -191,6 +191,9 @@ extern "C" {
         uint32_t                irq_service_request ;
     } XMC_UART_t;
 
+    /*
+    * XMC SPI type
+    */
     typedef struct
     {
     XMC_USIC_CH_t*        channel        ;
