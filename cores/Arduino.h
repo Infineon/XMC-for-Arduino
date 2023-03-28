@@ -210,7 +210,7 @@ extern "C" {
     XMC_GPIO_CONFIG_t     sclkout_config  ;
     } XMC_SPI_t;
 
-     /*
+    /*
     * XMC I2C type
     */
     typedef struct
@@ -248,23 +248,14 @@ extern "C" {
 	extern XMC_UART_t XMC_UART_debug;
 	extern XMC_UART_t XMC_UART_on_board;
     
-#if defined(XMC1100_XMC2GO) || defined(XMC1100_Boot_Kit) || defined(XMC1300_Boot_Kit) || defined(XMC1400_Arduino_Kit) || defined(XMC4400_Platform2GO) || defined(XMC4200_Platform2GO)     
     extern XMC_SPI_t XMC_SPI_0;
-#elif defined(XMC4700_Relax_Kit)
-    extern XMC_SPI_t XMC_SPI_0;
-    // XMC4700 Relax Kit has more than one SPI instances    
+    // Some boards for eg. XMC4700 Relax Kit has more than one SPI instance   
     extern XMC_SPI_t XMC_SPI_1;
     extern XMC_SPI_t XMC_SPI_2;
-#else
-    #error XMC Board not supported         
-#endif
 
-//#if defined(XMC1100_XMC2GO) //TODO: check disassmbly output if unused vars are in binary. else use ifdef NUM_SPI, NUM_I2C  
     extern XMC_I2C_t XMC_I2C_0;
+    // Some boards for eg. XMC4700 Relax Kit has more than one I2C instance
     extern XMC_I2C_t XMC_I2C_1;
-//#else
-//    #error XMC Board not supported 
-//#endif 
 
 //****************************************************************************
 // @Prototypes Of Global Functions
