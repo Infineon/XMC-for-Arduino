@@ -58,7 +58,8 @@ extern const uint8_t NUM_ANALOG_OUTPUTS;
 #define NUM_SERIAL          2
 #define NUM_TONE_PINS       16
 #define NUM_TASKS_VARIANT   32
-#define NUM_SPI  			      3
+#define NUM_SPI  			3
+#define NUM_I2C             2
 
 // to use SPI_for_xmc_SD if desired by user
 #define XMC_SPI_for_xmc_SD	XMC_SPI_1
@@ -428,6 +429,7 @@ HardwareSerial Serial( &XMC_UART_0, &rx_buffer_0, &tx_buffer_0 );
 // On-board port
 HardwareSerial Serial1( &XMC_UART_1, &rx_buffer_1, &tx_buffer_1 );
 
+//Three SPI instances possible
 XMC_SPI_t XMC_SPI_0 =
 {
     .channel          = XMC_SPI2_CH0,
@@ -539,6 +541,7 @@ XMC_SPI_t XMC_SPI_2 =
     },
 };
 
+//Only two serial objects are possible: Serial and Serial1 so anymore serial interfaces has to overwrite/reuse the existing serial objects
 // Will overwrite Serial
 //XMC_SPI_t XMC_SPI_3 =
 //{
@@ -614,6 +617,68 @@ XMC_SPI_t XMC_SPI_2 =
 //        .output_strength = XMC_GPIO_OUTPUT_STRENGTH_MEDIUM
 //    },
 //};
+
+//Two I2C instances possible
+XMC_I2C_t XMC_I2C_0 =
+{
+    .channel          = XMC_I2C1_CH1,
+    .channel_config   = {
+        .baudrate = (uint32_t)(100000U),
+        .address = 0U
+    },
+    .sda              = {
+        .port = (XMC_GPIO_PORT_t*)PORT3_BASE,
+        .pin  = (uint8_t)15
+    },
+    .sda_config       = {
+        .mode = XMC_GPIO_MODE_OUTPUT_OPEN_DRAIN_ALT2,
+        .output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH
+    },
+    .scl              = {
+        .port = (XMC_GPIO_PORT_t*)PORT0_BASE,
+        .pin  = (uint8_t)13
+    },
+    .scl_config       = {
+        .mode = XMC_GPIO_MODE_OUTPUT_OPEN_DRAIN_ALT2,
+        .output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH
+    },
+    .input_source_dx0 = XMC_INPUT_A,
+    .input_source_dx1 = XMC_INPUT_B,
+    .slave_receive_irq_num                    = (IRQn_Type) 91,
+    .slave_receive_irq_service_request        = 1 ,
+    .protocol_irq_num                		  = (IRQn_Type) 92,
+    .protocol_irq_service_request     		  = 2
+};
+XMC_I2C_t XMC_I2C_1 =
+{
+    .channel          = XMC_I2C1_CH0,
+    .channel_config   = {
+        .baudrate = (uint32_t)(100000U),
+        .address = 0U
+    },
+    .sda              = {
+        .port = (XMC_GPIO_PORT_t*)PORT0_BASE,
+        .pin  = (uint8_t)5
+    },
+    .sda_config       = {
+        .mode = XMC_GPIO_MODE_OUTPUT_OPEN_DRAIN_ALT2,
+        .output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH
+    },
+    .scl              = {
+        .port = (XMC_GPIO_PORT_t*)PORT0_BASE,
+        .pin  = (uint8_t)11
+    },
+    .scl_config       = {
+        .mode = XMC_GPIO_MODE_OUTPUT_OPEN_DRAIN_ALT2,
+        .output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH
+    },
+    .input_source_dx0 = XMC_INPUT_B,
+    .input_source_dx1 = XMC_INPUT_A,
+    .slave_receive_irq_num                    = (IRQn_Type) 93,
+    .slave_receive_irq_service_request        = 3 ,
+    .protocol_irq_num                  		  = (IRQn_Type) 94,
+    .protocol_irq_service_request     		  = 4
+};
 
 // Serial Interrupt and event handling
 #ifdef __cplusplus

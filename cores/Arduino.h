@@ -259,12 +259,12 @@ extern "C" {
     #error XMC Board not supported         
 #endif
 
-#if defined(XMC1100_XMC2GO)
+//#if defined(XMC1100_XMC2GO) //TODO: check disassmbly output if unused vars are in binary. else use ifdef NUM_SPI, NUM_I2C  
     extern XMC_I2C_t XMC_I2C_0;
     extern XMC_I2C_t XMC_I2C_1;
-#else
-    #error XMC Board not supported 
-#endif 
+//#else
+//    #error XMC Board not supported 
+//#endif 
 
 //****************************************************************************
 // @Prototypes Of Global Functions

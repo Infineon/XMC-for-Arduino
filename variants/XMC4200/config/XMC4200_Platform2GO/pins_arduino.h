@@ -56,6 +56,7 @@ extern const uint8_t NUM_ANALOG_OUTPUTS;
 #define NUM_TONE_PINS       7
 #define NUM_TASKS_VARIANT   12
 #define NUM_SPI  			      1
+#define NUM_I2C             1
 
 // Indicate unit has RTC/Alarm
 #define HAS_RTC                 1
@@ -304,6 +305,7 @@ HardwareSerial Serial( &XMC_UART_0, &rx_buffer_0, &tx_buffer_0 );
 // Object instantiated of the HardwareSerial class for UART ONBOARD interface
 HardwareSerial Serial1( &XMC_UART_1, &rx_buffer_1, &tx_buffer_1 );
 
+//SPI instance
 XMC_SPI_t XMC_SPI_0 =
 {
     .channel          = XMC_SPI1_CH1,
@@ -339,6 +341,38 @@ XMC_SPI_t XMC_SPI_0 =
         .output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH,
         .output_strength = XMC_GPIO_OUTPUT_STRENGTH_MEDIUM
     },
+};
+
+//I2C instance
+XMC_I2C_t XMC_I2C_0 =
+{
+    .channel          = XMC_I2C0_CH1,
+    .channel_config   = {
+        .baudrate = (uint32_t)(100000U),
+        .address = 0U
+    },
+    .sda              = {
+        .port = (XMC_GPIO_PORT_t*)PORT2_BASE,
+        .pin  = (uint8_t)5
+    },
+    .sda_config       = {
+        .mode = XMC_GPIO_MODE_OUTPUT_OPEN_DRAIN_ALT2,
+        .output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH
+    },
+    .scl              = {
+        .port = (XMC_GPIO_PORT_t*)PORT3_BASE,
+        .pin  = (uint8_t)0
+    },
+    .scl_config       = {
+        .mode = XMC_GPIO_MODE_OUTPUT_OPEN_DRAIN_ALT2,
+        .output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH
+    },
+    .input_source_dx0 = XMC_INPUT_B,
+    .input_source_dx1 = XMC_INPUT_B,
+    .slave_receive_irq_num                    = (IRQn_Type) 84,
+    .slave_receive_irq_service_request        = 1 ,
+    .protocol_irq_num                   	  = (IRQn_Type) 85,
+    .protocol_irq_service_request       	  = 2
 };
 
 // Serial Interrupt and event handling
