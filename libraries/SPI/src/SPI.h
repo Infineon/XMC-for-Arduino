@@ -60,7 +60,7 @@
 
 
 #if defined(USE_SW_SPI)
-#include "utility/SW_SPI.h"
+#include "SW_SPI.h"
 #endif
 
 //#define pin_cs 	10
