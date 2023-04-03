@@ -49,6 +49,7 @@ extern "C" {
 #include <xmc_eru.h>
 #include <xmc_spi.h>
 #include <xmc_i2c.h>
+#include <xmc_i2s.h>
 
 //****************************************************************************
 // @Defines
@@ -61,6 +62,8 @@ extern "C" {
 #define XMC_SPI_default                 XMC_SPI_0
 // default XMC_I2C instance is XMC_I2C_0 for all variants
 #define XMC_I2C_default 	            XMC_I2C_0
+// used by XMC_I2S
+#define BUFFER_SIZE                     512
 
 //****************************************************************************
 // @Typedefs
@@ -199,35 +202,47 @@ extern "C" {
     */
     typedef struct
     {
-    XMC_USIC_CH_t*        channel        ;
-    XMC_SPI_CH_CONFIG_t   channel_config  ;
-    XMC_PORT_PIN_t        mosi            ;
-    XMC_GPIO_CONFIG_t     mosi_config     ;
-    XMC_PORT_PIN_t        miso            ;
-    XMC_GPIO_CONFIG_t     miso_config     ;
-    XMC_USIC_INPUT_t      input_source    ;
-    XMC_PORT_PIN_t        sclkout         ;
-    XMC_GPIO_CONFIG_t     sclkout_config  ;
+        XMC_USIC_CH_t*        channel        ;
+        XMC_SPI_CH_CONFIG_t   channel_config  ;
+        XMC_PORT_PIN_t        mosi            ;
+        XMC_GPIO_CONFIG_t     mosi_config     ;
+        XMC_PORT_PIN_t        miso            ;
+        XMC_GPIO_CONFIG_t     miso_config     ;
+        XMC_USIC_INPUT_t      input_source    ;
+        XMC_PORT_PIN_t        sclkout         ;
+        XMC_GPIO_CONFIG_t     sclkout_config  ;
     } XMC_SPI_t;
 
     /*
     * XMC I2C type
     */
     typedef struct
-{
-    XMC_USIC_CH_t* channel;
-    XMC_I2C_CH_CONFIG_t   channel_config;
-    XMC_PORT_PIN_t        sda;
-    XMC_GPIO_CONFIG_t     sda_config;
-    XMC_PORT_PIN_t        scl;
-    XMC_GPIO_CONFIG_t     scl_config;
-    XMC_USIC_INPUT_t      input_source_dx0;
-    XMC_USIC_INPUT_t      input_source_dx1;
-    IRQn_Type             slave_receive_irq_num;
-    uint32_t              slave_receive_irq_service_request;
-    IRQn_Type             protocol_irq_num;
-    uint32_t              protocol_irq_service_request;
-} XMC_I2C_t;
+    {
+        XMC_USIC_CH_t* channel;
+        XMC_I2C_CH_CONFIG_t   channel_config;
+        XMC_PORT_PIN_t        sda;
+        XMC_GPIO_CONFIG_t     sda_config;
+        XMC_PORT_PIN_t        scl;
+        XMC_GPIO_CONFIG_t     scl_config;
+        XMC_USIC_INPUT_t      input_source_dx0;
+        XMC_USIC_INPUT_t      input_source_dx1;
+        IRQn_Type             slave_receive_irq_num;
+        uint32_t              slave_receive_irq_service_request;
+        IRQn_Type             protocol_irq_num;
+        uint32_t              protocol_irq_service_request;
+    } XMC_I2C_t;
+
+    /*
+    * XMC I2S type
+    */
+    typedef struct
+    {
+        XMC_GPIO_CONFIG_t input_config;
+        XMC_GPIO_CONFIG_t sclk_config;
+        XMC_GPIO_CONFIG_t wa_config;
+        IRQn_Type protocol_irq_num;
+        uint32_t protocol_irq_service_request;
+    } XMC_I2S_t;
 
 //****************************************************************************
 // @Imported Global Variables
@@ -256,6 +271,8 @@ extern "C" {
     extern XMC_I2C_t XMC_I2C_0;
     // Some boards for eg. XMC4700 Relax Kit has more than one I2C instance
     extern XMC_I2C_t XMC_I2C_1;
+    
+    extern XMC_I2S_t i2s_config;
 
 //****************************************************************************
 // @Prototypes Of Global Functions

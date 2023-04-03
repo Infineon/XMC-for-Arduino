@@ -85,6 +85,17 @@ extern uint8_t MOSI;
 extern uint8_t MISO;
 extern uint8_t SCK;
 
+// XMC_I2S defines
+/*U0C1*/
+/*DX0C(Input) -> P0.6*/
+/*SCLKOUT(ALT6) -> P0.8*/
+/*WA(ALT6) -> P0.9*/
+#define MASTER_CHANNEL  XMC_I2S0_CH1
+#define MASTER_MRST     PORT0, 6
+#define INPUT_SOURCE    USIC0_C1_DX0_P0_6
+#define MASTER_SCLK     PORT0, 8
+#define MASTER_WACLK    PORT0, 9
+
 #define A0   0
 #define A1   1
 #define A2   2
@@ -311,6 +322,28 @@ XMC_I2C_t XMC_I2C_1 =
     .slave_receive_irq_service_request        = 2 ,
     .protocol_irq_num                   	  = (IRQn_Type) USIC0_3_IRQn,
     .protocol_irq_service_request       	  = 3
+};
+
+// XMC_I2S instance
+XMC_I2S_t i2s_config = 
+{
+    .input_config = {
+        .mode = XMC_GPIO_MODE_INPUT_TRISTATE, 
+        .output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH,
+        .input_hysteresis = XMC_GPIO_INPUT_HYSTERESIS_STANDARD 
+    },
+    .sclk_config = {
+        .mode = XMC_GPIO_MODE_OUTPUT_PUSH_PULL_ALT7,
+        .output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH,
+        .input_hysteresis = XMC_GPIO_INPUT_HYSTERESIS_STANDARD
+    },
+    .wa_config = {
+        .mode = XMC_GPIO_MODE_OUTPUT_PUSH_PULL_ALT7, 
+        .output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH,
+        .input_hysteresis = XMC_GPIO_INPUT_HYSTERESIS_STANDARD
+    },
+    .protocol_irq_num                        = (IRQn_Type) USIC0_2_IRQn,
+    .protocol_irq_service_request            = 2
 };
 
 // Serial Interrupt and event handling

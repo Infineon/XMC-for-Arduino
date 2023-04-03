@@ -35,7 +35,7 @@ The library has been tested with the XMC4700 Relax Kit, XMC1100 XMC 2Go, and XMC
 
 `Ensure that level shifting is in place as the microphone board has 3.3 V logic level, XMC1100 Boot Kit has 5 V by default.`
 
-This configuration is defined in `utility\xmc_i2s_conf.h`.
+This configuration is defined in the respective board configuration files `pins_arduino.h`.
 
 If we take the pin out of XMC for Arduino, the respective pins for SPI are redefined.
 Therefore, SPI cannot be used anymore in combination with I2S - please keep this in mind. On the other hand, using `SPI.begin()` and `I2S.begin()` will reactivate the original setting and switching between both interfaces is possible on the fly.

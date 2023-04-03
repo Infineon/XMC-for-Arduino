@@ -96,6 +96,20 @@ static const uint8_t MOSI_SD = PIN_SPI_MOSI_SD;
 static const uint8_t MISO_SD = PIN_SPI_MISO_SD;
 static const uint8_t SCK_SD  = PIN_SPI_SCK_SD;
 
+// XMC_I2S defines
+/*U2C0*/
+/*DX0C -> P3.7*/
+/*SCLKOUT(ALT1) -> P3.9*/
+/*WA(ALT1) -> P3.10*/
+#define MASTER_CHANNEL      XMC_I2S2_CH0
+// master transmit slave receive
+#define MASTER_MTSR         PORT3, 8
+// master receive slave transmit
+#define MASTER_MRST         PORT3, 7
+#define INPUT_SOURCE        USIC2_C0_DX0_P3_7
+#define MASTER_SCLK         PORT3, 9
+#define MASTER_WACLK        PORT3, 10
+
 #define A0   0
 #define A1   1
 #define A2   2
@@ -678,6 +692,16 @@ XMC_I2C_t XMC_I2C_1 =
     .slave_receive_irq_service_request        = 3 ,
     .protocol_irq_num                  		  = (IRQn_Type) 94,
     .protocol_irq_service_request     		  = 4
+};
+
+// XMC_I2S instance
+XMC_I2S_t i2s_config = 
+{
+    .input_config = {.mode = XMC_GPIO_MODE_INPUT_TRISTATE, .output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH},
+    .sclk_config = {.mode = XMC_GPIO_MODE_OUTPUT_PUSH_PULL_ALT1, .output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH},
+    .wa_config = {.mode = XMC_GPIO_MODE_OUTPUT_PUSH_PULL_ALT1, .output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH},
+    .protocol_irq_num = (IRQn_Type)USIC2_2_IRQn,
+    .protocol_irq_service_request = 2
 };
 
 // Serial Interrupt and event handling
