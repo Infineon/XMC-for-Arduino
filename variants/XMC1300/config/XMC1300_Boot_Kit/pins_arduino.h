@@ -54,6 +54,8 @@ extern const uint8_t NUM_ANALOG_INPUTS;
 #define NUM_SERIAL          1
 #define NUM_TONE_PINS       4
 #define NUM_TASKS_VARIANT   8
+#define NUM_SPI  			1
+#define NUM_I2C             1
 
 // Indicate unit has RTC/Alarm
 #define HAS_RTC             1
@@ -266,6 +268,79 @@ XMC_UART_t XMC_UART_0 =
   };
 
 HardwareSerial Serial( &XMC_UART_0, &rx_buffer_0, &tx_buffer_0 );
+
+//SPI instance
+XMC_SPI_t XMC_SPI_0 =
+{
+    .channel          = XMC_SPI0_CH0,
+    .channel_config   = {
+        .baudrate = 15984375U,
+        .bus_mode = (XMC_SPI_CH_BUS_MODE_t)XMC_SPI_CH_BUS_MODE_MASTER,
+        .selo_inversion = XMC_SPI_CH_SLAVE_SEL_INV_TO_MSLS,
+        .parity_mode = XMC_USIC_CH_PARITY_MODE_NONE
+    },
+    .mosi             = {
+        .port = (XMC_GPIO_PORT_t*)PORT1_BASE,
+        .pin  = (uint8_t)1
+    },
+    .mosi_config      = {
+        .mode = XMC_GPIO_MODE_OUTPUT_PUSH_PULL_ALT6,
+        .output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH,
+        .input_hysteresis = XMC_GPIO_INPUT_HYSTERESIS_STANDARD
+    },
+    .miso             = {
+        .port = (XMC_GPIO_PORT_t*)PORT1_BASE,
+        .pin  = (uint8_t)0
+    },
+    .miso_config      = {
+        .mode = XMC_GPIO_MODE_INPUT_TRISTATE,
+        .input_hysteresis = XMC_GPIO_INPUT_HYSTERESIS_STANDARD
+    },
+    .input_source     = XMC_INPUT_C,
+    .sclkout          = {
+        .port = (XMC_GPIO_PORT_t*)PORT0_BASE,
+        .pin  = (uint8_t)7
+    },
+    .sclkout_config   = {
+        .mode = XMC_GPIO_MODE_OUTPUT_PUSH_PULL_ALT6,
+        .output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH,
+        .input_hysteresis = XMC_GPIO_INPUT_HYSTERESIS_STANDARD
+    }
+};
+
+//I2C instance
+XMC_I2C_t XMC_I2C_0 =
+{
+    .channel          = XMC_I2C0_CH0,
+    .channel_config   = {
+        .baudrate = (uint32_t)(100000U),
+        .address = 0U
+    },
+    .sda              = {
+        .port = (XMC_GPIO_PORT_t*)PORT2_BASE,
+        .pin  = (uint8_t)1
+    },
+    .sda_config       = {
+        .mode = XMC_GPIO_MODE_OUTPUT_OPEN_DRAIN_ALT6,
+        .output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH,
+        .input_hysteresis = XMC_GPIO_INPUT_HYSTERESIS_STANDARD
+    },
+    .scl              = {
+        .port = (XMC_GPIO_PORT_t*)PORT2_BASE,
+        .pin  = (uint8_t)0
+    },
+    .scl_config       = {
+        .mode = XMC_GPIO_MODE_OUTPUT_OPEN_DRAIN_ALT7,
+        .output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH,
+        .input_hysteresis = XMC_GPIO_INPUT_HYSTERESIS_STANDARD
+    },
+    .input_source_dx0 = XMC_INPUT_F,
+    .input_source_dx1 = XMC_INPUT_E,
+    .slave_receive_irq_num                    = (IRQn_Type) USIC0_4_IRQn,
+    .slave_receive_irq_service_request        = 4 ,
+    .protocol_irq_num                   	  = (IRQn_Type) USIC0_5_IRQn,
+    .protocol_irq_service_request       	  = 5
+};
 
 // Serial Interrupt and event handling
 #ifdef __cplusplus
