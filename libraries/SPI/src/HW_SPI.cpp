@@ -99,11 +99,11 @@ void SPIClass::init()
     /* Configure the data input line selected */
     XMC_SPI_CH_SetInputSource(XMC_SPI_config->channel, XMC_SPI_CH_INPUT_DIN0, (uint8_t)XMC_SPI_config->input_source);
 
-    /* Initialize SPI SCLK out pin */
-    XMC_GPIO_Init((XMC_GPIO_PORT_t*)XMC_SPI_config->sclkout.port, (uint8_t)XMC_SPI_config->sclkout.pin, &(XMC_SPI_config->sclkout_config));
-
     /* Start the SPI_Channel */
     XMC_SPI_CH_Start(XMC_SPI_config->channel);
+
+    /* Initialize SPI SCLK out pin */
+    XMC_GPIO_Init((XMC_GPIO_PORT_t*)XMC_SPI_config->sclkout.port, (uint8_t)XMC_SPI_config->sclkout.pin, &(XMC_SPI_config->sclkout_config));
 
     /* Configure the input pin properties */
     XMC_GPIO_Init((XMC_GPIO_PORT_t*)XMC_SPI_config->miso.port, (uint8_t)XMC_SPI_config->miso.pin, &(XMC_SPI_config->miso_config));
