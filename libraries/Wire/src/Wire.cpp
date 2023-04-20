@@ -96,10 +96,7 @@ void TwoWire::begin(void)
   							   0,
   							   XMC_USIC_CH_FIFO_SIZE_16WORDS,
   								(uint32_t)(15));
-
-    XMC_GPIO_Init((XMC_GPIO_PORT_t*)XMC_I2C_config->sda.port, (uint8_t)XMC_I2C_config->sda.pin, &(XMC_I2C_config->sda_config));
-    XMC_GPIO_Init((XMC_GPIO_PORT_t*)XMC_I2C_config->scl.port, (uint8_t)XMC_I2C_config->scl.pin, &(XMC_I2C_config->scl_config));
-	
+    
     XMC_USIC_CH_SetInterruptNodePointer(XMC_I2C_config->channel,
                                         XMC_USIC_CH_INTERRUPT_NODE_POINTER_PROTOCOL,
                                         XMC_I2C_config->protocol_irq_service_request);
@@ -109,6 +106,9 @@ void TwoWire::begin(void)
     XMC_I2C_CH_EnableEvent(XMC_I2C_config->channel, (uint32_t)(XMC_I2C_CH_EVENT_NACK | XMC_I2C_CH_EVENT_DATA_LOST | XMC_I2C_CH_EVENT_ARBITRATION_LOST | XMC_I2C_CH_EVENT_ERROR));
 
     XMC_I2C_CH_Start(XMC_I2C_config->channel);
+    
+    XMC_GPIO_Init((XMC_GPIO_PORT_t*)XMC_I2C_config->sda.port, (uint8_t)XMC_I2C_config->sda.pin, &(XMC_I2C_config->sda_config));
+    XMC_GPIO_Init((XMC_GPIO_PORT_t*)XMC_I2C_config->scl.port, (uint8_t)XMC_I2C_config->scl.pin, &(XMC_I2C_config->scl_config));
 }
 
 void TwoWire::begin(uint8_t address)
@@ -125,9 +125,6 @@ void TwoWire::begin(uint8_t address)
 
     XMC_USIC_CH_SetInputSource(XMC_I2C_config->channel, XMC_USIC_CH_INPUT_DX0, XMC_I2C_config->input_source_dx0);
     XMC_USIC_CH_SetInputSource(XMC_I2C_config->channel, XMC_USIC_CH_INPUT_DX1, XMC_I2C_config->input_source_dx1);
-
-    XMC_GPIO_Init((XMC_GPIO_PORT_t*)XMC_I2C_config->sda.port, (uint8_t)XMC_I2C_config->sda.pin, &(XMC_I2C_config->sda_config));
-    XMC_GPIO_Init((XMC_GPIO_PORT_t*)XMC_I2C_config->scl.port, (uint8_t)XMC_I2C_config->scl.pin, &(XMC_I2C_config->scl_config));
 
     XMC_USIC_CH_SetInterruptNodePointer(XMC_I2C_config->channel,
                                         XMC_USIC_CH_INTERRUPT_NODE_POINTER_RECEIVE,
@@ -154,6 +151,9 @@ void TwoWire::begin(uint8_t address)
     XMC_I2C_CH_EnableEvent(XMC_I2C_config->channel, (uint32_t)((uint32_t)XMC_I2C_CH_EVENT_SLAVE_READ_REQUEST | (uint32_t)XMC_I2C_CH_EVENT_STOP_CONDITION_RECEIVED));
 
     XMC_I2C_CH_Start(XMC_I2C_config->channel);
+
+    XMC_GPIO_Init((XMC_GPIO_PORT_t*)XMC_I2C_config->sda.port, (uint8_t)XMC_I2C_config->sda.pin, &(XMC_I2C_config->sda_config));
+    XMC_GPIO_Init((XMC_GPIO_PORT_t*)XMC_I2C_config->scl.port, (uint8_t)XMC_I2C_config->scl.pin, &(XMC_I2C_config->scl_config));
 }
 
 void TwoWire::begin(int address)
@@ -166,19 +166,7 @@ void TwoWire::end(void)
     //  Only disable HW when USIC is used for I2C
 	if((XMC_I2C_config->channel->CCR & USIC_CH_CCR_MODE_Msk) == XMC_USIC_CH_OPERATING_MODE_I2C)
 	{
-        
-        XMC_GPIO_CONFIG_t default_output_port_config = {
-            .mode = XMC_GPIO_MODE_OUTPUT_OPEN_DRAIN,
-            .output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH,
-#if UC_FAMILY == XMC1
-            .input_hysteresis = XMC_GPIO_INPUT_HYSTERESIS_STANDARD
-#endif
-        };
-
-		XMC_I2C_CH_Stop(XMC_I2C_config->channel);
-
-		XMC_GPIO_Init((XMC_GPIO_PORT_t*)XMC_I2C_config->sda.port, (uint8_t)XMC_I2C_config->sda.pin, &default_output_port_config);
-		XMC_GPIO_Init((XMC_GPIO_PORT_t*)XMC_I2C_config->scl.port, (uint8_t)XMC_I2C_config->scl.pin, &default_output_port_config);
+        XMC_I2C_CH_Stop(XMC_I2C_config->channel);
 
 		XMC_USIC_CH_SetInputSource(XMC_I2C_config->channel, XMC_USIC_CH_INPUT_DX0, XMC_INPUT_A);
 		XMC_USIC_CH_SetInputSource(XMC_I2C_config->channel, XMC_USIC_CH_INPUT_DX1, XMC_INPUT_A);
