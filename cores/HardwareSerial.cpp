@@ -56,8 +56,6 @@ uart_ch_config.stop_bits = (uint8_t)(( config & 0x0f0U ) >> 4 );
 
 XMC_UART_CH_Init( _XMC_UART_config->channel, &uart_ch_config );
 
-XMC_GPIO_Init( _XMC_UART_config->rx.port, _XMC_UART_config->rx.pin, &(_XMC_UART_config->rx_config) );
-
 // dx0 is UART RX: source must be set
 XMC_USIC_CH_SetInputSource( _XMC_UART_config->channel, XMC_USIC_CH_INPUT_DX0, 
                             _XMC_UART_config->input_source_dx0 );
@@ -92,10 +90,13 @@ XMC_USIC_CH_SetInterruptNodePointer(_XMC_UART_config->channel,
                                         _XMC_UART_config->irq_service_request );
 NVIC_SetPriority(_XMC_UART_config->irq_num, 3);
 NVIC_EnableIRQ(_XMC_UART_config->irq_num);
+
+XMC_UART_CH_Start( _XMC_UART_config->channel );
+
 // TX pin setup put here to avoid startup corrupted characters being first sent
 XMC_GPIO_Init( _XMC_UART_config->tx.port, _XMC_UART_config->tx.pin, &(_XMC_UART_config->tx_config) );
 
-XMC_UART_CH_Start( _XMC_UART_config->channel );
+XMC_GPIO_Init( _XMC_UART_config->rx.port, _XMC_UART_config->rx.pin, &(_XMC_UART_config->rx_config) );
 }
 
 
