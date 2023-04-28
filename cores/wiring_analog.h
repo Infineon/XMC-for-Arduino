@@ -85,6 +85,8 @@ extern "C" {
      */
     extern uint32_t analogRead( uint8_t channel ) ;
 
+    extern uint32_t analogRead_special( uint8_t channel ) ;
+
     /*
      * \brief Set the resolution of analogRead return values in number of bits.
      * \note Default is 10 bits (range from 0 to 1023).
