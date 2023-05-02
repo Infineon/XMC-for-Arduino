@@ -16,7 +16,7 @@ getAnalogReadBits	KEYWORD2
 getAnalogWriteBits	KEYWORD2
 getAnalogReadMaximum	KEYWORD2
 getAnalogWriteMaximum	KEYWORD2
-analogRead_special      KEYWORD2
+analogRead_variableGain KEYWORD2
 
 #######################################
 # Instances (KEYWORD2)

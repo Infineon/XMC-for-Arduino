@@ -216,8 +216,19 @@ if( channel < NUM_ANALOG_INPUTS )
 return value;
 }
 
-uint32_t analogRead_special( uint8_t channel )
+/* analogRead_variableGain takes parameter of ADC channel number and gain value
+      return 0xFFFFFFFF for invalid channel
+
+     gain value    gain factor
+         0             1
+         1             3
+         2             6
+         3             12 
+*/ 
+
+uint32_t analogRead_variableGain( uint8_t channel, uint8_t gain_value )
 {
+#if(XMC_VADC_SHS_AVAILABLE == 1U)
 uint32_t value;
 
 value = 0xFFFFFFFF;
@@ -243,8 +254,8 @@ if( channel < NUM_ANALOG_INPUTS )
     /* Add channel into the Background Request Source Channel Select Register */
     XMC_VADC_GLOBAL_BackgroundAddChannelToSequence( VADC, (uint32_t)adc->group_num,
                                                           (uint32_t)adc->channel_num );                                                         
-
-    XMC_VADC_GLOBAL_SHS_SetGainFactor(SHS0,3,XMC_VADC_GROUP_INDEX_0,(uint32_t)adc->channel_num);                                                          
+    /* Set the gain factor of the Sample and hold module*/
+    XMC_VADC_GLOBAL_SHS_SetGainFactor( SHS0, gain_value, (uint32_t)adc->group_num, (uint32_t)adc->channel_num );                                                          
     }
   /* Start conversion manually using load event trigger*/
   XMC_VADC_GLOBAL_BackgroundTriggerConversion( VADC );
@@ -254,7 +265,8 @@ if( channel < NUM_ANALOG_INPUTS )
   if( !(adc->enabled) )
     /* Add a channel to the background source. */
     VADC->BRSSEL[ ADC_CONVERSION_GROUP ] = (uint32_t)( 1U << adc->channel_num );
-    XMC_VADC_GLOBAL_SHS_SetGainFactor(SHS0,1,XMC_VADC_GROUP_INDEX_0,(uint32_t)adc->channel_num);   
+  /* Set the gain factor of the Sample and hold module */
+  XMC_VADC_GLOBAL_SHS_SetGainFactor( SHS0, gain_value, XMC_VADC_GROUP_INDEX_0, (uint32_t)adc->channel_num );
   // Generates conversion request
   XMC_VADC_GLOBAL_BackgroundTriggerConversion( VADC );
 
@@ -262,8 +274,9 @@ if( channel < NUM_ANALOG_INPUTS )
   while( ( ( value = XMC_VADC_GLOBAL_GetDetailedResult( VADC ) ) & VADC_GLOBRES_VF_Msk) == 0u );
 #endif
   value = ( ( value & VADC_GLOBRES_RESULT_Msk) >> ( ADC_MAX_READ_RESOLUTION - _readResolution ) );
-  }
 return value;
+  }
+#endif
 }
 
 

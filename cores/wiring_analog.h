@@ -85,7 +85,21 @@ extern "C" {
      */
     extern uint32_t analogRead( uint8_t channel ) ;
 
-    extern uint32_t analogRead_special( uint8_t channel ) ;
+    /*
+     * \brief Reads the value from the specified analogue channel and add variable gain at input.
+     *
+     * \param channel
+     * \param gain_factor
+     * 
+     * gain value   gain factor
+     *    0            1
+     *    1            3
+     *    2            6
+     *    3            12
+     *
+     * \return Read value from selected channel, or 0xFFFFFFFF for error.
+     */
+    extern uint32_t analogRead_variableGain( uint8_t channel, uint8_t gain_value ) ;
 
     /*
      * \brief Set the resolution of analogRead return values in number of bits.
