@@ -223,7 +223,8 @@ return value;
          0             1
          1             3
          2             6
-         3             12 
+         3             12
+    Also, refer to macros in wiring_analog.h          
 */ 
 
 uint32_t analogRead_variableGain( uint8_t channel, uint8_t gain_value )
