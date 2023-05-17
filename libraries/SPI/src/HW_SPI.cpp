@@ -99,17 +99,17 @@ void SPIClass::init()
     /* Configure the data input line selected */
     XMC_SPI_CH_SetInputSource(XMC_SPI_config->channel, XMC_SPI_CH_INPUT_DIN0, (uint8_t)XMC_SPI_config->input_source);
 
+    /* Start the SPI_Channel */
+    XMC_SPI_CH_Start(XMC_SPI_config->channel);
+
+    /* Initialize SPI SCLK out pin */
+    XMC_GPIO_Init((XMC_GPIO_PORT_t*)XMC_SPI_config->sclkout.port, (uint8_t)XMC_SPI_config->sclkout.pin, &(XMC_SPI_config->sclkout_config));
+
     /* Configure the input pin properties */
     XMC_GPIO_Init((XMC_GPIO_PORT_t*)XMC_SPI_config->miso.port, (uint8_t)XMC_SPI_config->miso.pin, &(XMC_SPI_config->miso_config));
 
     /* Configure the output pin properties */
     XMC_GPIO_Init((XMC_GPIO_PORT_t*)XMC_SPI_config->mosi.port, (uint8_t)XMC_SPI_config->mosi.pin, &(XMC_SPI_config->mosi_config));
-
-    /* Initialize SPI SCLK out pin */
-    XMC_GPIO_Init((XMC_GPIO_PORT_t*)XMC_SPI_config->sclkout.port, (uint8_t)XMC_SPI_config->sclkout.pin, &(XMC_SPI_config->sclkout_config));
-
-    /* Start the SPI_Channel */
-    XMC_SPI_CH_Start(XMC_SPI_config->channel);
 
     interruptMode = SPI_IMODE_NONE;
     interruptSave = 0;
@@ -122,27 +122,7 @@ void SPIClass::end()
     // Only disable HW when USIC is used for SPI
 	if((XMC_SPI_config->channel->CCR & USIC_CH_CCR_MODE_Msk) == XMC_USIC_CH_OPERATING_MODE_SPI)
 	{
-		XMC_GPIO_CONFIG_t default_input_port_config = {
-            .mode = XMC_GPIO_MODE_INPUT_TRISTATE,
-            .output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH,
-#if UC_FAMILY == XMC1
-            .input_hysteresis = XMC_GPIO_INPUT_HYSTERESIS_STANDARD
-#endif
-        };
-		
-		XMC_GPIO_CONFIG_t default_output_port_config = {
-            .mode = XMC_GPIO_MODE_OUTPUT_PUSH_PULL,
-            .output_level = XMC_GPIO_OUTPUT_LEVEL_LOW,
-#if UC_FAMILY == XMC1
-            .input_hysteresis = XMC_GPIO_INPUT_HYSTERESIS_STANDARD
-#endif
-        };
-
 		XMC_SPI_CH_Stop(XMC_SPI_config->channel);
-
-		XMC_GPIO_Init((XMC_GPIO_PORT_t*)XMC_SPI_config->miso.port, (uint8_t)XMC_SPI_config->miso.pin, &default_input_port_config);
-		XMC_GPIO_Init((XMC_GPIO_PORT_t*)XMC_SPI_config->mosi.port, (uint8_t)XMC_SPI_config->mosi.pin, &default_output_port_config);
-		XMC_GPIO_Init((XMC_GPIO_PORT_t*)XMC_SPI_config->sclkout.port, (uint8_t)XMC_SPI_config->sclkout.pin, &default_output_port_config);
 
 		XMC_SPI_config->channel->DXCR[XMC_USIC_CH_INPUT_DX0] = (uint32_t)(XMC_SPI_config->channel->DXCR[XMC_USIC_CH_INPUT_DX0] | (USIC_CH_DX0CR_DSEN_Msk)) & (~USIC_CH_DX0CR_INSW_Msk);
 		XMC_USIC_CH_SetInputSource(XMC_SPI_config->channel, XMC_USIC_CH_INPUT_DX0, XMC_INPUT_A);
