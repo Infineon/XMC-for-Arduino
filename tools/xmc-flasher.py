@@ -91,12 +91,12 @@ def parser():
             return super().__init__(option_strings, dest, nargs=0, default=argparse.SUPPRESS, **kwargs)
         
         def __call__(self, parser, namespace, values, option_string, **kwargs):
-            print('xmc-upload version: ' + version)
+            print('xmc-flasher version: ' + version)
             parser.exit()
 
     # General parser
-    parser  = argparse.ArgumentParser(description="xmc-upload tool")
-    parser.add_argument('-v','--version', action=ver_action, help='xmc-upload version')
+    parser  = argparse.ArgumentParser(description="xmc-flasher tool")
+    parser.add_argument('-v','--version', action=ver_action, help='xmc-flasher version')
     subparser = parser.add_subparsers()
     parser.set_defaults(func=main_parser_func)
 
