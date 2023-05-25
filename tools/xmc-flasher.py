@@ -77,6 +77,9 @@ def  debug(device, port, elfile):
 
 def parser():
 
+    def main_parser_func(args):
+        parser.print_help()
+
     def parser_upload_func(args):
         upload(args.device, args.port, args.binfile)
 
@@ -93,10 +96,9 @@ def parser():
 
     # General parser
     parser  = argparse.ArgumentParser(description="xmc-upload tool")
-
     parser.add_argument('-v','--version', action=ver_action, help='xmc-upload version')
     subparser = parser.add_subparsers()
-    # parser.set_defaults(func=main_parser_func)
+    parser.set_defaults(func=main_parser_func)
 
     # Upload parser
     parser_upload = subparser.add_parser('upload', description='Upload binary command')
