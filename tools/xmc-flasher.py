@@ -1,4 +1,4 @@
-import argparse, serial, subprocess, os, sys
+import argparse, serial, subprocess, os, sys, re
 from serial.tools.list_ports import comports
 
 version = '0.1.0'
@@ -60,6 +60,10 @@ def remove_jlink_command_file(cmd_file):
     if os.path.exists(cmd_file):
         os.remove(cmd_file)
 
+def remove_console_output_file(console_output_file):
+    if os.path.exists(console_output_file):
+        os.remove(console_output_file)        
+
 def jlink_commander(device, serial_num, cmd_file, console_output=False):
     jlink_cmd = [jlinkexe, '-autoconnect', '1','-exitonerror', '1', '-nogui', '1', '-device', device, '-selectemubysn', serial_num, '-if', 'swd', '-speed', '4000', '-commandfile', cmd_file]
 
@@ -76,27 +80,48 @@ def jlink_commander(device, serial_num, cmd_file, console_output=False):
     except:
         raise Exception("jlink error")
     
-def process_console_output(addr):
+def process_console_output(string):
     with open('console.output','r') as f:
         lines = f.readlines()
         lines[0].split('\n')
        
     for line in lines :
-        if addr in line and '=' in line:
+        if string in line and '=' in line:
             print(line)
 
+def get_mem_contents(addr, bytes, device, port):
     
-def check_device(device, port):
+    serial_num = get_device_serial_number(port)
+    jlink_cmd_file = create_jlink_mem_read_command_file(addr, bytes) # todo: comes from proper metafile
+    jlink_commander(device, serial_num, jlink_cmd_file, True)
+    remove_jlink_command_file(jlink_cmd_file)
+    
+    with open('console.output','r') as f:
+        lines = f.readlines()
+        lines[0].split('\n')
 
+    remove_console_output_file('console.output')
+
+    reg_contents = ""   
+    for line in lines :
+        if addr in line and '=' in line:
+            print(line)
+            reg_contents = re.findall('[0-9,A-F]+', line)
+            break
+    
+    reg_contents.remove(addr) # remove the addr from the list, just keep reg contents
+    reg_contents.reverse() # jlink returns LSB first, so reverse it to get MSB on the left side
+    print(reg_contents)
+
+
+
+def check_device(device, port):
     device_reg_addr = '40010004'
     device_reg_bytes = '4'
 
-    serial_num = get_device_serial_number(port)
-    jlink_cmd_file = create_jlink_mem_read_command_file(device_reg_addr, device_reg_bytes) # todo: comes from proper metafile
-    jlink_commander(device, serial_num, jlink_cmd_file, True)
-    remove_jlink_command_file(jlink_cmd_file)
-
-    process_console_output(device_reg_addr)
+    get_mem_contents(device_reg_addr, device_reg_bytes, device, port)
+   
+    
 
 
 
