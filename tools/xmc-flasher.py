@@ -1,4 +1,4 @@
-import argparse, serial, subprocess, os, sys, re
+import argparse, serial, subprocess, os, sys, re, json
 from serial.tools.list_ports import comports
 
 version = '0.1.0'
@@ -105,30 +105,56 @@ def get_mem_contents(addr, bytes, device, port):
     reg_contents = ""   
     for line in lines :
         if addr in line and '=' in line:
-            print(line)
+            print(line) #here
             reg_contents = re.findall('[0-9,A-F]+', line)
             break
     
     reg_contents.remove(addr) # remove the addr from the list, just keep reg contents
     reg_contents.reverse() # jlink returns LSB first, so reverse it to get MSB on the left side
-    print(reg_contents)
+    print(reg_contents) #here
+    reg_contents = ''.join(reg_contents)
+    print(reg_contents) #here
+    return reg_contents
 
+def read_master_data(device):
+    try:
+        f = open('xmc-data.json', 'rb')
+    except OSError:
+        print("Could not open/read master data file!:")
+        sys.exit()
+
+    return json.load(f)
 
 
 def check_device(device, port):
-    device_reg_addr = '40010004'
-    device_reg_bytes = '4'
 
-    get_mem_contents(device_reg_addr, device_reg_bytes, device, port)
-   
-    
+    master_data = read_master_data(device)
+    # get value from reg
+    device_value = get_mem_contents(master_data[device]['IDCHIP']['addr'], master_data[device]['IDCHIP']['size'], device, port)
+    device_value_masked = (int('0x'+device_value,16)) & (int('0x'+master_data[device]['IDCHIP']['mask'],16)) # take only those bits which are needed
+    device_value_masked = f'{device_value_masked:x}'
+    device_value_masked = device_value_masked.zfill(int(master_data[device]['IDCHIP']['size'])*2)
+
+    #compare with stored master data
+    if not device_value_masked == master_data[device]['IDCHIP']['value']:
+        raise Exception("Device connected does not match the selected device to flash")
 
 
 
 def check_mem(device, port):
-    jlink_cmd_file = create_jlink_loadbin_command_file(binfile)
-    jlink_commander(device, serial_num, jlink_cmd_file)
-    remove_jlink_command_file(jlink_cmd_file)        
+
+    master_data = read_master_data(device)
+    # get value from reg
+    device_value = get_mem_contents(master_data[device]['FLSIZE']['addr'], master_data[device]['FLSIZE']['size'], device, port)
+    device_value = int('0x'+device_value,16) & '0x0003f000' # bit 17 to bit 12 are needed
+    device_value = device_value >> '12' 
+    # device_value_masked = (int('0x'+device_value,16)) & (int('0x'+master_data[device]['IDCHIP']['mask'],16)) # take only those bits which are needed
+    # device_value_masked = f'{device_value_masked:x}'
+    # device_value_masked = device_value_masked.zfill(int(master_data[device]['IDCHIP']['size'])*2)
+
+    #compare with stored master data
+    # if not device_value_masked == master_data[device]['IDCHIP']['value']:
+    #     raise Exception("Device connected does not match the selected device to flash")       
 
 def upload(device, port, binfile):
     serial_num = get_device_serial_number(port)
@@ -151,8 +177,8 @@ def parser():
         parser.print_help()
 
     def parser_upload_func(args):
-        check_device(args.device, args.port)
-        #check_mem(args.device, args.port)
+        #check_device(args.device, args.port)
+        check_mem(args.device, args.port)
         #upload(args.device, args.port, args.binfile)
 
     def parser_erase_func(args):
