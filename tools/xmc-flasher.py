@@ -135,6 +135,8 @@ def check_device(device, port):
     device_value_masked = f'{device_value_masked:x}'
     device_value_masked = device_value_masked.zfill(int(master_data[device]['IDCHIP']['size'])*2)
 
+    print(f"Device is: {device.split('-')[0]}")
+   
     #compare with stored master data
     if not device_value_masked == master_data[device]['IDCHIP']['value']:
         raise Exception("Device connected does not match the selected device to flash")
@@ -146,15 +148,17 @@ def check_mem(device, port):
     master_data = read_master_data(device)
     # get value from reg
     device_value = get_mem_contents(master_data[device]['FLSIZE']['addr'], master_data[device]['FLSIZE']['size'], device, port)
-    device_value = int('0x'+device_value,16) & '0x0003f000' # bit 17 to bit 12 are needed
-    device_value = device_value >> '12' 
-    # device_value_masked = (int('0x'+device_value,16)) & (int('0x'+master_data[device]['IDCHIP']['mask'],16)) # take only those bits which are needed
-    # device_value_masked = f'{device_value_masked:x}'
-    # device_value_masked = device_value_masked.zfill(int(master_data[device]['IDCHIP']['size'])*2)
+    device_value = int('0x'+device_value,16) & int('0x0003f000',16) # bit 17 to bit 12 are needed
+    device_value = device_value >> int(master_data[device]['FLSIZE']['bitposition_LSB'])
+    flash_size = (device_value-1)*4 # flash size given by (ADDR-1)*4 
+    flash_size = str(flash_size).zfill(4)
+    
+    print(f"Flash size is: {int(flash_size)}kB")
 
-    #compare with stored master data
-    # if not device_value_masked == master_data[device]['IDCHIP']['value']:
-    #     raise Exception("Device connected does not match the selected device to flash")       
+    #compare with selected device 
+    if not flash_size == device.split('-')[1]:
+        raise Exception("Memory size of device connected does not match that of the selected device to flash")
+     
 
 def upload(device, port, binfile):
     serial_num = get_device_serial_number(port)
@@ -177,7 +181,7 @@ def parser():
         parser.print_help()
 
     def parser_upload_func(args):
-        #check_device(args.device, args.port)
+        check_device(args.device, args.port)
         check_mem(args.device, args.port)
         #upload(args.device, args.port, args.binfile)
 
