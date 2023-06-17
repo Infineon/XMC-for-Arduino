@@ -76,6 +76,9 @@ def jlink_commander(device, serial_num, cmd_file, console_output=False):
             out, err = jlink_proc.communicate()
             with open('console.output', 'w') as f:
                 f.write(out)
+        else:
+            for line in jlink_proc.stdout:
+                print(line, end='')
         jlink_proc.wait()
     except:
         raise Exception("jlink error")
@@ -105,15 +108,12 @@ def get_mem_contents(addr, bytes, device, port):
     reg_contents = ""   
     for line in lines :
         if addr in line and '=' in line:
-            print(line) #here
             reg_contents = re.findall('[0-9,A-F]+', line)
             break
     
     reg_contents.remove(addr) # remove the addr from the list, just keep reg contents
     reg_contents.reverse() # jlink returns LSB first, so reverse it to get MSB on the left side
-    print(reg_contents) #here
     reg_contents = ''.join(reg_contents)
-    print(reg_contents) #here
     return reg_contents
 
 def read_master_data(device):
@@ -144,21 +144,34 @@ def check_device(device, port):
 
 
 def check_mem(device, port):
-
-    master_data = read_master_data(device)
-    # get value from reg
-    device_value = get_mem_contents(master_data[device]['FLSIZE']['addr'], master_data[device]['FLSIZE']['size'], device, port)
-    device_value = int('0x'+device_value,16) & int('0x0003f000',16) # bit 17 to bit 12 are needed
-    device_value = device_value >> int(master_data[device]['FLSIZE']['bitposition_LSB'])
-    flash_size = (device_value-1)*4 # flash size given by (ADDR-1)*4 
-    flash_size = str(flash_size).zfill(4)
     
-    print(f"Flash size is: {int(flash_size)}kB")
+    if "XMC1" in device: 
+        master_data = read_master_data(device)
+        # get value from reg
+        device_value = get_mem_contents(master_data[device]['FLSIZE']['addr'], master_data[device]['FLSIZE']['size'], device, port)
+        device_value = int('0x'+device_value,16) & int('0x0003f000',16) # bit 17 to bit 12 are needed
+        device_value = device_value >> int(master_data[device]['FLSIZE']['bitposition_LSB'])
+        flash_size = (device_value-1)*4 #flash size given by (ADDR-1)*4 
+        flash_size = str(flash_size).zfill(4)
+        
+        print(f"Flash size is: {int(flash_size)}kB")
 
-    #compare with selected device 
-    if not flash_size == device.split('-')[1]:
-        raise Exception("Memory size of device connected does not match that of the selected device to flash")
-     
+        #compare with selected device 
+        if not flash_size == device.split('-')[1]:
+            raise Exception("Memory size of device connected does not match that of the selected device to flash")
+        
+    else: #XMC4 series
+        master_data = read_master_data(device)
+        # get value from reg
+        device_value = get_mem_contents(master_data[device]['FLASH0_ID']['addr'], master_data[device]['FLASH0_ID']['size'], device, port)     
+        device_value_masked = (int('0x'+device_value,16)) & (int('0x'+master_data[device]['FLASH0_ID']['mask'],16)) # take only those bits which are needed
+        device_value_masked = f'{device_value_masked:x}'
+        device_value_masked = device_value_masked.zfill(int(master_data[device]['FLASH0_ID']['size'])*2)
+       
+        #compare with stored master data
+        if not device_value_masked.upper() == master_data[device]['FLASH0_ID']['value']:
+            raise Exception("Memory size of device connected does not match that of the selected device to flash")
+
 
 def upload(device, port, binfile):
     serial_num = get_device_serial_number(port)
@@ -183,7 +196,7 @@ def parser():
     def parser_upload_func(args):
         check_device(args.device, args.port)
         check_mem(args.device, args.port)
-        #upload(args.device, args.port, args.binfile)
+        upload(args.device, args.port, args.binfile)
 
     def parser_erase_func(args):
         erase(args.device, args.port)
