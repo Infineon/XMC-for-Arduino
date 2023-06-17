@@ -1,4 +1,4 @@
-import argparse, serial, subprocess, os, sys, re, json
+import argparse, serial, subprocess, os, sys, re, json, warnings
 from serial.tools.list_ports import comports
 
 version = '0.1.0'
@@ -155,6 +155,11 @@ def check_mem(device, port):
         flash_size = str(flash_size).zfill(4)
         
         print(f"Flash size is: {int(flash_size)}kB")
+
+        # special case for XMC2GO-32kB variant, bypass check
+        if "XMC1100" in device and int(flash_size) == 32:
+            warnings.warn("XMC2GO 32kB varaint detected!")
+            return
 
         #compare with selected device 
         if not flash_size == device.split('-')[1]:
