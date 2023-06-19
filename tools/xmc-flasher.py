@@ -118,7 +118,7 @@ def get_mem_contents(addr, bytes, device, port):
 
 def read_master_data(device):
     try:
-        f = open('xmc-data.json', 'rb')
+        f = open(os.getcwd() + "\\tools\\xmc-data.json", 'rb')
     except OSError:
         print("Could not open/read master data file!:")
         sys.exit()
