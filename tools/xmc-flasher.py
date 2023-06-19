@@ -1,5 +1,6 @@
 import argparse, serial, subprocess, os, sys, re, json, warnings
 from serial.tools.list_ports import comports
+from xmc_data import XMC_master_data
 
 version = '0.1.0'
 
@@ -116,19 +117,13 @@ def get_mem_contents(addr, bytes, device, port):
     reg_contents = ''.join(reg_contents)
     return reg_contents
 
-def read_master_data(device):
-    try:
-        f = open(os.getcwd() + "\\tools\\xmc-data.json", 'rb')
-    except OSError:
-        print("Could not open/read master data file!:")
-        sys.exit()
-
-    return json.load(f)
+def read_master_data():
+    return XMC_master_data
 
 
 def check_device(device, port):
 
-    master_data = read_master_data(device)
+    master_data = read_master_data()
     # get value from reg
     device_value = get_mem_contents(master_data[device]['IDCHIP']['addr'], master_data[device]['IDCHIP']['size'], device, port)
     device_value_masked = (int('0x'+device_value,16)) & (int('0x'+master_data[device]['IDCHIP']['mask'],16)) # take only those bits which are needed
@@ -146,7 +141,7 @@ def check_device(device, port):
 def check_mem(device, port):
     
     if "XMC1" in device: 
-        master_data = read_master_data(device)
+        master_data = read_master_data()
         # get value from reg
         device_value = get_mem_contents(master_data[device]['FLSIZE']['addr'], master_data[device]['FLSIZE']['size'], device, port)
         device_value = int('0x'+device_value,16) & int('0x0003f000',16) # bit 17 to bit 12 are needed
@@ -166,7 +161,7 @@ def check_mem(device, port):
             raise Exception("Memory size of device connected does not match that of the selected device to flash")
         
     else: #XMC4 series
-        master_data = read_master_data(device)
+        master_data = read_master_data()
         # get value from reg
         device_value = get_mem_contents(master_data[device]['FLASH0_ID']['addr'], master_data[device]['FLASH0_ID']['size'], device, port)     
         device_value_masked = (int('0x'+device_value,16)) & (int('0x'+master_data[device]['FLASH0_ID']['mask'],16)) # take only those bits which are needed
