@@ -1,6 +1,6 @@
 import argparse, serial, subprocess, os, sys, re, json, warnings
 from serial.tools.list_ports import comports
-from xmc_data import XMC_master_data
+from xmc_data import xmc_master_data
 
 version = '0.1.0'
 
@@ -118,7 +118,7 @@ def get_mem_contents(addr, bytes, device, port):
     return reg_contents
 
 def read_master_data():
-    return XMC_master_data
+    return xmc_master_data
 
 
 def check_device(device, port):

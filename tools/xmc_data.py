@@ -1,6 +1,6 @@
 
 
-XMC_master_data = {
+xmc_master_data = {
     "XMC1100-0064":{
        "IDCHIP":{
           "addr":"40010004",
