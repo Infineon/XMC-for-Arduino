@@ -1,5 +1,6 @@
-import argparse, serial, subprocess, os, sys
+import argparse, serial, subprocess, os, sys, re, json, warnings
 from serial.tools.list_ports import comports
+from xmc_data import xmc_master_data
 
 version = '0.1.0'
 
@@ -40,6 +41,15 @@ def create_jlink_loadbin_command_file(binfile):
 
     return cmd_jlink
 
+def create_jlink_mem_read_command_file(addr, bytes):
+    cmd_jlink = 'cmd.jlink'
+    #cmd_log_enable
+    cmd_mem_read = 'mem ' + addr +', '+ bytes  + '\n' # todo: store register maps, bytes in file
+    with open(cmd_jlink,'w') as f:
+        f.writelines([cmd_mem_read, 'r\n', 'g\n', 'exit\n'])
+
+    return cmd_jlink
+
 def create_jlink_erase_command_file():
     cmd_jlink = 'cmd.jlink'
     with open(cmd_jlink,'w') as f:
@@ -51,14 +61,117 @@ def remove_jlink_command_file(cmd_file):
     if os.path.exists(cmd_file):
         os.remove(cmd_file)
 
-def jlink_commander(device, serial_num, cmd_file):
+def remove_console_output_file(console_output_file):
+    if os.path.exists(console_output_file):
+        os.remove(console_output_file)        
+
+def jlink_commander(device, serial_num, cmd_file, console_output=False):
     jlink_cmd = [jlinkexe, '-autoconnect', '1','-exitonerror', '1', '-nogui', '1', '-device', device, '-selectemubysn', serial_num, '-if', 'swd', '-speed', '4000', '-commandfile', cmd_file]
 
+    #if console_output is True:
+        #jlink_cmd.append('-log ') #todo: pipe this in a better way
+
     try:
-        jlink_proc = subprocess.Popen(jlink_cmd)
+        jlink_proc = subprocess.Popen(jlink_cmd, stdout=subprocess.PIPE, universal_newlines=True)
+        if console_output is True:
+            out, err = jlink_proc.communicate()
+            with open('console.output', 'w') as f:
+                f.write(out)
+        else:
+            for line in jlink_proc.stdout:
+                print(line, end='')
         jlink_proc.wait()
     except:
         raise Exception("jlink error")
+    
+def process_console_output(string):
+    with open('console.output','r') as f:
+        lines = f.readlines()
+        lines[0].split('\n')
+       
+    for line in lines :
+        if string in line and '=' in line:
+            print(line)
+
+def get_mem_contents(addr, bytes, device, port):
+    
+    serial_num = get_device_serial_number(port)
+    jlink_cmd_file = create_jlink_mem_read_command_file(addr, bytes) # todo: comes from proper metafile
+    jlink_commander(device, serial_num, jlink_cmd_file, True)
+    remove_jlink_command_file(jlink_cmd_file)
+    
+    with open('console.output','r') as f:
+        lines = f.readlines()
+        lines[0].split('\n')
+
+    remove_console_output_file('console.output')
+
+    reg_contents = ""   
+    for line in lines :
+        if addr in line and '=' in line:
+            reg_contents = re.findall('[0-9,A-F]+', line)
+            break
+    
+    reg_contents.remove(addr) # remove the addr from the list, just keep reg contents
+    reg_contents.reverse() # jlink returns LSB first, so reverse it to get MSB on the left side
+    reg_contents = ''.join(reg_contents)
+    return reg_contents
+
+def read_master_data():
+    return xmc_master_data
+
+
+def check_device(device, port):
+
+    master_data = read_master_data()
+    # get value from reg
+    device_value = get_mem_contents(master_data[device]['IDCHIP']['addr'], master_data[device]['IDCHIP']['size'], device, port)
+    device_value_masked = (int('0x'+device_value,16)) & (int('0x'+master_data[device]['IDCHIP']['mask'],16)) # take only those bits which are needed
+    device_value_masked = f'{device_value_masked:x}'
+    device_value_masked = device_value_masked.zfill(int(master_data[device]['IDCHIP']['size'])*2)
+
+    print(f"Device is: {device.split('-')[0]}")
+   
+    #compare with stored master data
+    if not device_value_masked == master_data[device]['IDCHIP']['value']:
+        raise Exception("Device connected does not match the selected device to flash")
+
+
+
+def check_mem(device, port):
+    
+    if "XMC1" in device: 
+        master_data = read_master_data()
+        # get value from reg
+        device_value = get_mem_contents(master_data[device]['FLSIZE']['addr'], master_data[device]['FLSIZE']['size'], device, port)
+        device_value = int('0x'+device_value,16) & int('0x0003f000',16) # bit 17 to bit 12 are needed
+        device_value = device_value >> int(master_data[device]['FLSIZE']['bitposition_LSB'])
+        flash_size = (device_value-1)*4 #flash size given by (ADDR-1)*4 
+        flash_size = str(flash_size).zfill(4)
+        
+        print(f"Flash size is: {int(flash_size)}kB")
+
+        # special case for XMC2GO-32kB variant, bypass check
+        if "XMC1100" in device and int(flash_size) == 32:
+            warnings.warn("XMC2GO 32kB varaint detected!")
+            return
+
+        #compare with selected device 
+        if not flash_size == device.split('-')[1]:
+            raise Exception("Memory size of device connected does not match that of the selected device to flash")
+        
+    else: #XMC4 series
+        master_data = read_master_data()
+        # get value from reg
+        device_value = get_mem_contents(master_data[device]['FLASH0_ID']['addr'], master_data[device]['FLASH0_ID']['size'], device, port)     
+        device_value_masked = (int('0x'+device_value,16)) & (int('0x'+master_data[device]['FLASH0_ID']['mask'],16)) # take only those bits which are needed
+        device_value_masked = f'{device_value_masked:x}'
+        device_value_masked = device_value_masked.zfill(int(master_data[device]['FLASH0_ID']['size'])*2)
+       
+        #compare with stored master data
+        if not device_value_masked.upper() == master_data[device]['FLASH0_ID']['value']:
+            raise Exception("Memory size of device connected does not match that of the selected device to flash")
+
 
 def upload(device, port, binfile):
     serial_num = get_device_serial_number(port)
@@ -81,6 +194,8 @@ def parser():
         parser.print_help()
 
     def parser_upload_func(args):
+        check_device(args.device, args.port)
+        check_mem(args.device, args.port)
         upload(args.device, args.port, args.binfile)
 
     def parser_erase_func(args):
