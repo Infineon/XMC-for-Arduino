@@ -61,9 +61,6 @@
 #ifndef I2S_h
 #define I2S_h
 
-#if defined(XMC4700_Relax_Kit) || defined(XMC1100_XMC2GO) || defined(XMC1100_Boot_Kit)
-#include "utility/xmc_i2s_conf.h"
-
 typedef enum {
   I2S_PHILIPS_MODE,
   I2S_RIGHT_JUSTIFIED_MODE,
@@ -259,9 +256,5 @@ public:
 };
 
 extern I2SClass I2S;
-
-#else
-#error "Only XMC4700 Relax Kit, XMC1100 XMC2Go or XMC1100 Boot Kit is supported for I2S"
-#endif
 
 #endif /* I2S_h */

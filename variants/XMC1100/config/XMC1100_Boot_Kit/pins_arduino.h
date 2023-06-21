@@ -50,6 +50,8 @@ extern const uint8_t NUM_ANALOG_INPUTS;
 #define NUM_SERIAL          1
 #define NUM_TONE_PINS       4
 #define NUM_TASKS_VARIANT   8
+#define NUM_SPI  			1
+#define NUM_I2C             1
 
 // Indicate unit has RTC/Alarm for simpler RTC control
 #define HAS_RTC
@@ -82,6 +84,29 @@ extern uint8_t SS;
 extern uint8_t MOSI;
 extern uint8_t MISO;
 extern uint8_t SCK;
+
+// XMC_I2S defines
+/*U0C1*/
+/*DX0C(Input) -> P0.6*/
+/*SCLKOUT(ALT6) -> P0.8*/
+/*WA(ALT6) -> P0.9*/
+#define MASTER_CHANNEL  XMC_I2S0_CH1
+#define MASTER_MRST     PORT0, 6
+#define INPUT_SOURCE    USIC0_C1_DX0_P0_6
+#define MASTER_SCLK     PORT0, 8
+#define MASTER_WACLK    PORT0, 9
+
+// Uncomment this to use the second I2S interface, 
+// uses some of the same pins as SPI!
+// /*U0C0*/
+// /*DX0C(Input) -> P1.0*/
+// /*SCLKOUT(ALT6) -> P0.7*/
+// /*WA(ALT6) -> P0.9*/
+// #define MASTER_CHANNEL  XMC_I2S0_CH0
+// #define MASTER_MRST     PORT0, 11
+// #define INPUT_SOURCE    USIC0_C0_DX0_P1_0
+// #define MASTER_SCLK     PORT0, 7
+// #define MASTER_WACLK    PORT0, 9
 
 #define A0   0
 #define A1   1
@@ -170,6 +195,7 @@ const uint8_t mapping_pin_PWM4[][ 2 ] = {
                                         { 9, 3 },
                                         { 10, 4 },
                                         { 11, 5 },
+                                        { 20, 6 },
                                         { 255, 255 } };
 
 /* Configurations of PWM channels for CCU4 type */
@@ -180,7 +206,8 @@ XMC_PWM4_t mapping_pwm4[] =
     {CCU40, CCU40_CC43, 3, mapping_port_pin[6], P0_3_AF_CCU40_OUT3, XMC_CCU4_SLICE_PRESCALER_64, PWM4_TIMER_PERIOD, DISABLED},   // PWM disabled  6   P0.3
     {CCU40, CCU40_CC42, 2, mapping_port_pin[9], P0_8_AF_CCU40_OUT2, XMC_CCU4_SLICE_PRESCALER_64, PWM4_TIMER_PERIOD, DISABLED},   // PWM disabled  9   P0.8
     {CCU40, CCU40_CC43, 3, mapping_port_pin[10], P0_9_AF_CCU40_OUT3, XMC_CCU4_SLICE_PRESCALER_64, PWM4_TIMER_PERIOD, DISABLED},  // PWM disabled 10   P0.9
-    {CCU40, CCU40_CC41, 1, mapping_port_pin[11], P1_1_AF_CCU40_OUT1, XMC_CCU4_SLICE_PRESCALER_64, PWM4_TIMER_PERIOD, DISABLED}   // PWM disabled 11   P1.1
+    {CCU40, CCU40_CC41, 1, mapping_port_pin[11], P1_1_AF_CCU40_OUT1, XMC_CCU4_SLICE_PRESCALER_64, PWM4_TIMER_PERIOD, DISABLED},  // PWM disabled 11   P1.1
+    {CCU40, CCU40_CC42, 2, mapping_port_pin[20], P2_10_AF_CCU40_OUT2, XMC_CCU4_SLICE_PRESCALER_64, PWM4_TIMER_PERIOD, DISABLED}  // PWM disabled 20   P2.10
     };
 const uint8_t NUM_PWM  = ( sizeof( mapping_pwm4 ) / sizeof( XMC_PWM4_t ) );
 const uint8_t NUM_PWM4  = ( sizeof( mapping_pwm4 ) / sizeof( XMC_PWM4_t ) );
@@ -244,6 +271,101 @@ XMC_UART_t XMC_UART_0 =
   };
 
 HardwareSerial Serial( &XMC_UART_0, &rx_buffer_0, &tx_buffer_0 );
+
+// SPI instance
+XMC_SPI_t XMC_SPI_0 =
+{
+    .channel          = XMC_SPI0_CH0,
+    .channel_config   = {
+        .baudrate = 15984375U,
+        .bus_mode = (XMC_SPI_CH_BUS_MODE_t)XMC_SPI_CH_BUS_MODE_MASTER,
+        .selo_inversion = XMC_SPI_CH_SLAVE_SEL_INV_TO_MSLS,
+        .parity_mode = XMC_USIC_CH_PARITY_MODE_NONE
+    },
+    .mosi             = {
+        .port = (XMC_GPIO_PORT_t*)PORT1_BASE,
+        .pin  = (uint8_t)1
+    },
+    .mosi_config      = {
+        .mode = XMC_GPIO_MODE_OUTPUT_PUSH_PULL_ALT6,
+        .output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH,
+        .input_hysteresis = XMC_GPIO_INPUT_HYSTERESIS_STANDARD
+    },
+    .miso             = {
+        .port = (XMC_GPIO_PORT_t*)PORT1_BASE,
+        .pin  = (uint8_t)0
+    },
+    .miso_config      = {
+        .mode = XMC_GPIO_MODE_INPUT_TRISTATE,
+        .input_hysteresis = XMC_GPIO_INPUT_HYSTERESIS_STANDARD
+    },
+    .input_source     = XMC_INPUT_C,
+    .sclkout          = {
+        .port = (XMC_GPIO_PORT_t*)PORT0_BASE,
+        .pin  = (uint8_t)7
+    },
+    .sclkout_config   = {
+        .mode = XMC_GPIO_MODE_OUTPUT_PUSH_PULL_ALT6,
+        .output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH,
+        .input_hysteresis = XMC_GPIO_INPUT_HYSTERESIS_STANDARD
+    }
+};
+
+//I2C instance
+XMC_I2C_t XMC_I2C_0 =
+{
+    .channel          = XMC_I2C0_CH0,
+    .channel_config   = {
+        .baudrate = (uint32_t)(100000U),
+        .address = 0U
+    },
+    .sda              = {
+        .port = (XMC_GPIO_PORT_t*)PORT2_BASE,
+        .pin  = (uint8_t)1
+    },
+    .sda_config       = {
+        .mode = XMC_GPIO_MODE_OUTPUT_OPEN_DRAIN_ALT6,
+        .output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH,
+        .input_hysteresis = XMC_GPIO_INPUT_HYSTERESIS_STANDARD
+    },
+    .scl              = {
+        .port = (XMC_GPIO_PORT_t*)PORT2_BASE,
+        .pin  = (uint8_t)0
+    },
+    .scl_config       = {
+        .mode = XMC_GPIO_MODE_OUTPUT_OPEN_DRAIN_ALT7,
+        .output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH,
+        .input_hysteresis = XMC_GPIO_INPUT_HYSTERESIS_STANDARD
+    },
+    .input_source_dx0 = XMC_INPUT_F,
+    .input_source_dx1 = XMC_INPUT_E,
+    .slave_receive_irq_num                    = (IRQn_Type) USIC0_4_IRQn,
+    .slave_receive_irq_service_request        = 4 ,
+    .protocol_irq_num                   	  = (IRQn_Type) USIC0_5_IRQn,
+    .protocol_irq_service_request       	  = 5
+};
+
+// XMC_I2S instance
+XMC_I2S_t i2s_config = 
+{
+    .input_config = {
+        .mode = XMC_GPIO_MODE_INPUT_TRISTATE, 
+        .output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH,
+        .input_hysteresis = XMC_GPIO_INPUT_HYSTERESIS_STANDARD 
+    },
+    .sclk_config = {
+        .mode = XMC_GPIO_MODE_OUTPUT_PUSH_PULL_ALT7,
+        .output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH,
+        .input_hysteresis = XMC_GPIO_INPUT_HYSTERESIS_STANDARD
+    },
+    .wa_config = {
+        .mode = XMC_GPIO_MODE_OUTPUT_PUSH_PULL_ALT7, 
+        .output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH,
+        .input_hysteresis = XMC_GPIO_INPUT_HYSTERESIS_STANDARD
+    },
+    .protocol_irq_num                        = (IRQn_Type) USIC0_2_IRQn,
+    .protocol_irq_service_request            = 2
+};
 
 // Serial Interrupt and event handling
 #ifdef __cplusplus
