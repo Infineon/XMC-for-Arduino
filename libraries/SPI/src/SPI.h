@@ -150,7 +150,7 @@ public:
 
     uint8_t transfer(uint8_t data);
     inline uint16_t transfer16(uint16_t data);
-    inline void transfer(uint8_t* buf, uint8_t count);
+    inline void transfer(void *buf, size_t count);
 
     // Transaction Functions
     // Function not used here
@@ -208,14 +208,13 @@ extern SPIClass SPI;
 #	endif
 #endif
 
-void SPIClass::transfer(uint8_t *buf, uint8_t count)
+void SPIClass::transfer(void *buf, size_t count)
 {
-    uint8_t buf_in[count];
-    for (uint8_t i = 0; i < count; i++)
+    uint8_t *buffer = (uint8_t *) buf;
+    for (size_t index = 0; index < count; index++)
     {
-        buf_in[i] = transfer(buf[i]);
+        buffer[index] = transfer(buffer[index]);
     }
-    buf = buf_in;
 }
 
 uint16_t SPIClass::transfer16(uint16_t data)
