@@ -245,6 +245,8 @@ uint8_t TwoWire::requestFrom(uint8_t address, uint8_t quantity, uint32_t iaddres
         XMC_I2C_CH_MasterStart(XMC_I2C_config->channel, (txAddress << 1), XMC_I2C_CH_CMD_READ);
     }
 
+    while((XMC_I2C_CH_GetStatusFlag(XMC_I2C_config->channel) & XMC_I2C_CH_STATUS_FLAG_ACK_RECEIVED) == 0U);
+
     for (uint8_t count = 0; count < (quantity - 1); count ++)
     {
         XMC_I2C_CH_MasterReceiveAck(XMC_I2C_config->channel);
