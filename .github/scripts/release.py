@@ -53,7 +53,7 @@ def get_package_sha256(pkg):
     return hashlib.sha256(pkg.encode('UTF-8')).hexdigest()
 
 def get_latest_package_index_json():
-   return requests.get('https://github.com/Infineon/XMC-for-Arduino/releases/latest/download/package_infineon_index.json').json()
+    return requests.get('https://github.com/Infineon/XMC-for-Arduino/releases/latest/download/package_infineon_index.json').json()
 
 def get_platform_data_struct_copy(pkg_index):
     return copy.deepcopy(pkg_index['packages'][0]['platforms'][0])
