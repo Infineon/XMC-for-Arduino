@@ -16,6 +16,7 @@ jobs:
     - uses: actions/setup-python@v4
       with:
         python-version: '3.x'
+    - run: pip install requests
     - name: Build release changelog
       id: build_changelog
       uses: mikepenz/release-changelog-builder-action@v3
