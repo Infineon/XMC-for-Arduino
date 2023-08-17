@@ -17,11 +17,13 @@ jobs:
       with:
         python-version: '3.x'
     - run: pip install requests
+
     - name: Build release changelog
       id: build_changelog
       uses: mikepenz/release-changelog-builder-action@v3
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
     - name: Build release assets
       run: |
         cd .github/scripts
@@ -30,7 +32,7 @@ jobs:
     - name: Upload assets
       uses: softprops/action-gh-release@v1
       with:
-        name: XMC for Arduino ${{  github.ref_name  }}
+        name: XMC-for-Arduino ${{  github.ref_name  }}
         files: |
           pkg_build/*.zip
           pkg_build/package_infineon_index.json
