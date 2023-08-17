@@ -51,7 +51,11 @@ def get_package_size(pkg):
     return os.path.getsize(pkg)
 
 def get_package_sha256(pkg):
-    return hashlib.sha256(pkg.encode('UTF-8')).hexdigest()
+    with open(pkg,"rb") as f:
+        bytes = f.read() 
+        hash = hashlib.sha256(bytes).hexdigest()
+
+    return hash
 
 def get_latest_package_index_json():
     return requests.get('https://github.com/Infineon/XMC-for-Arduino/releases/latest/download/package_infineon_index.json').json()
@@ -65,7 +69,7 @@ def set_new_platform_data_fields(platform_data, pkg_name, version):
     archive_file_name = str(pkg_name) + ".zip"
     platform_data['archiveFileName'] = archive_file_name
     platform_data['url'] = "https://github.com/Infineon/XMC-for-Arduino/releases/download/" + str(version) + "/" + str(archive_file_name)
-    platform_data['checksum'] ="SHA-256:" + str(get_package_sha256(archive_file_name))
+    platform_data['checksum'] ="SHA-256:" + str(get_package_sha256(os.path.join(pkg_assets_build_path, archive_file_name)))
     platform_data['size'] = str(get_package_size(os.path.join(pkg_assets_build_path, archive_file_name)))
 
 def add_new_platform_to_package_index(pkg_index, new_platform):    
