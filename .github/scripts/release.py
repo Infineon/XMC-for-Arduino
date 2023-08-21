@@ -123,7 +123,7 @@ def parser():
 
     # Release parser
     parser_release = subparser.add_parser('build-release', description='Build package release assets')
-    parser_release.add_argument('version', type=str, help='Package release version (semver x.y.z)')
+    parser_release.add_argument('version', type=str, help='Package release version (format: Vx.y.z)')
     parser_release.add_argument('-r','--root-path', type=str, default=xmc_ino_root_path, help='Path to the XMC-for-Arduino root path')
     parser_release.add_argument('-b','--build-path', type=str, default=pkg_assets_build_path, help='Path to build package')
     parser_release.set_defaults(func=parser_build_release_assets_func)
