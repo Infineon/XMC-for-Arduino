@@ -246,10 +246,11 @@ uint8_t TwoWire::requestFrom(uint8_t address, uint8_t quantity, uint32_t iaddres
     }
 
     timeout = WIRE_COMMUNICATION_TIMEOUT;
-
+    // wait for ACK or timeout incase no ACK is received, a time-based wait-state is added since XMC devices run at variable frequencies
     while(((XMC_I2C_CH_GetStatusFlag(XMC_I2C_config->channel) & XMC_I2C_CH_STATUS_FLAG_ACK_RECEIVED) == 0U) || timeout == 0)
     {
-    timeout--;
+        delay(1);
+        timeout--;
     }
 
     for (uint8_t count = 0; count < (quantity - 1); count ++)
