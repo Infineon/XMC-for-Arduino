@@ -35,8 +35,11 @@
 //#define USE_SW_SPI
 
 // Define USE_XMC_RELAX_KIT_SD allows to use the SD Lib to communicate with a SD Card over
-// the on-board SD Card Slot
-//#define USE_XMC_RELAX_KIT_SD
+// the on-board SD Card Slot. This feature is only available on XMC4700 RelaxKits.
+#if defined(XMC4700_Relax_Kit)
+    #define USE_XMC_RELAX_KIT_SD
+#endif
+
 
 #define SPI_MODE0 0x00
 #define SPI_MODE1 0x01
