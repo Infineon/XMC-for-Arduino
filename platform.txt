@@ -5,7 +5,7 @@
 
 # The information about this Arduino compatible environment
 # ---------
-name=XMC Family V3.x
+name=XMC Family
 version=3.0.0
 
 # Build related core definitions
