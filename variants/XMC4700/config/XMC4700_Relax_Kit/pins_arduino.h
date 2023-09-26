@@ -86,10 +86,10 @@ extern uint8_t MOSI;
 extern uint8_t MISO;
 extern uint8_t SCK;
 
-#define PIN_SPI_SS_SD    28
-#define PIN_SPI_MOSI_SD  29
-#define PIN_SPI_MISO_SD  30
-#define PIN_SPI_SCK_SD   31
+#define PIN_SPI_SS_SD    26
+#define PIN_SPI_MOSI_SD  27
+#define PIN_SPI_MISO_SD  28
+#define PIN_SPI_SCK_SD   29
 
 static const uint8_t SS_SD   = PIN_SPI_SS_SD;
 static const uint8_t MOSI_SD = PIN_SPI_MOSI_SD;
