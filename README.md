@@ -52,7 +52,18 @@ If you have already installed '[DAVE™ - Development Platform for XMC™ Microc
 
 ![J-Link](https://raw.githubusercontent.com/infineon/assets/master/Pictures/J-Link_Packages.png)
 
-**Note:** The XMC-for-Arduino BSP installs the **XMC Flasher** tool used to flash the compiled firmware (.hex) into the XMC device. However this tool requires **Java(TM) SE Runtime Environment** to be installed in the host system. Java(TM) SE Runtime Environment version **1.8.0** is known to be compatible with the tool.  
+### Required tools
+
+XMC-for-Arduino requires Python 3.x and the `serial` and `pyserial`. Make sure Python is installed in your machine and available in the system path.
+You can check if it was successfully installed by opening your command line or terminal and typing:
+```
+  python --version
+```
+With [pip](https://pip.pypa.io/en/stable/installation/) available, install the mentioned packages from a terminal:
+
+```
+  pip install serial pyserial
+```
 
 ### Using Arduino IDE
 
