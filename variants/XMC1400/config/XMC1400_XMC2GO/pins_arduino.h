@@ -74,9 +74,10 @@ extern const uint8_t NUM_ANALOG_INPUTS;
 // Generate 490Hz @fCCU=1MHz
 #define PWM4_TIMER_PERIOD (2041U)
 
-// TODO: Verify the PCLK  
+// TODO: Verify the PCLK, XMC_CCU4_SLICE_PRESCALER_64
 #define PCLK 64000000u 
 
+// Define SPI pin
 #define PIN_SPI_SS    3
 #define PIN_SPI_MOSI  1
 #define PIN_SPI_MISO  0
@@ -92,17 +93,22 @@ extern uint8_t SCK;
 /*DX0C(Input) -> P0.6*/
 /*SCLKOUT(ALT6) -> P0.8*/
 /*WA(ALT6) -> P0.9*/
-#define MASTER_CHANNEL  XMC_I2S0_CH1
-#define MASTER_MRST     PORT0, 6
-#define INPUT_SOURCE    USIC0_C1_DX0_P0_6
-#define MASTER_SCLK     PORT0, 8
-#define MASTER_WACLK    PORT0, 9
 
+//TODO: XMC1400 I2S
+
+// #define MASTER_CHANNEL  XMC_I2S0_CH1
+// #define MASTER_MRST     PORT0, 6
+// #define INPUT_SOURCE    USIC0_C1_DX0_P0_6
+// #define MASTER_SCLK     PORT0, 8
+// #define MASTER_WACLK    PORT0, 9
+
+// Define analog pin
 #define A0   0
 #define A1   1
 #define A2   2
 #define A3   3
 
+// Define LED & builtin-led 
 #define LED1        14
 #define LED2        15
 #define LED_BUILTIN LED1
@@ -150,19 +156,21 @@ const uint8_t NUM_INTERRUPT = ( sizeof( mapping_interrupt ) / sizeof( XMC_PIN_IN
    Putting both parts in array means if a PWM4 channel gets reassigned for
    another function later a gap in channel numbers will not mess things up */
 const uint8_t mapping_pin_PWM4[][ 2 ] = {
-                                        { 8, 0 },
-                                        { 1, 1 },
+                                        { 1, 0 },
+                                        { 2, 1 },
                                         { 3, 2 },
-                                        { 9, 3 },
+                                        { 8, 3 },                                        
+                                        { 9, 4 },
                                         { 255, 255 } };
 
 /* Configurations of PWM channels for CCU4 type */
 XMC_PWM4_t mapping_pwm4[] =
     {
+    {CCU40, CCU40_CC41, 1, mapping_port_pin[1], P0_1_AF_CCU40_OUT1, XMC_CCU4_SLICE_PRESCALER_64, PWM4_TIMER_PERIOD, DISABLED},  // PWM disabled  1    P0.1
+    {CCU40, CCU40_CC43, 3, mapping_port_pin[2], P0_3_AF_CCU40_OUT3, XMC_CCU4_SLICE_PRESCALER_64, PWM4_TIMER_PERIOD, DISABLED},  // PWM disabled  2    P0.3
+    {CCU40, CCU40_CC41, 1, mapping_port_pin[3], P0_4_AF_CCU40_OUT1, XMC_CCU4_SLICE_PRESCALER_64, PWM4_TIMER_PERIOD, DISABLED},  // PWM disabled  3    P0.4
     {CCU40, CCU40_CC40, 0, mapping_port_pin[8], P0_5_AF_CCU40_OUT0, XMC_CCU4_SLICE_PRESCALER_64, PWM4_TIMER_PERIOD, DISABLED},  // PWM disabled  8    P0.5
-    {CCU40, CCU40_CC41, 1, mapping_port_pin[1], P0_7_AF_CCU40_OUT1, XMC_CCU4_SLICE_PRESCALER_64, PWM4_TIMER_PERIOD, DISABLED},  // PWM disabled  1    P0.7
-    {CCU40, CCU40_CC42, 2, mapping_port_pin[2], P0_8_AF_CCU40_OUT2, XMC_CCU4_SLICE_PRESCALER_64, PWM4_TIMER_PERIOD, DISABLED},   // PWM disabled  2    P0.8
-    {CCU40, CCU40_CC43, 3, mapping_port_pin[3], P0_9_AF_CCU40_OUT3, XMC_CCU4_SLICE_PRESCALER_64, PWM4_TIMER_PERIOD, DISABLED}   // PWM disabled  3    P0.9
+    {CCU41, CCU41_CC40, 3, mapping_port_pin[9], P1_4_AF_CCU41_OUT0, XMC_CCU4_SLICE_PRESCALER_64, PWM4_TIMER_PERIOD, DISABLED}   // PWM disabled  9    P1.4
     };
 const uint8_t NUM_PWM  = ( sizeof( mapping_pwm4 ) / sizeof( XMC_PWM4_t ) );
 const uint8_t NUM_PWM4  = ( sizeof( mapping_pwm4 ) / sizeof( XMC_PWM4_t ) );
@@ -170,10 +178,10 @@ const uint8_t NUM_PWM4  = ( sizeof( mapping_pwm4 ) / sizeof( XMC_PWM4_t ) );
 /* Analog Pin mappings and configurations */
 XMC_ADC_t mapping_adc[] =
     {
-    {VADC, 1, DISABLED},
-    {VADC, 2, DISABLED},
-    {VADC, 3, DISABLED},
-    {VADC, 4, DISABLED}
+    {VADC, 1, DISABLED}, // P2.8
+    {VADC, 2, DISABLED}, // P2.9
+    {VADC, 3, DISABLED}, // P2.10
+    {VADC, 4, DISABLED}  // P2.11
     };
 const uint8_t NUM_ANALOG_INPUTS = ( sizeof( mapping_adc ) / sizeof( XMC_ADC_t ) );
 
@@ -183,13 +191,13 @@ const uint8_t NUM_ANALOG_INPUTS = ( sizeof( mapping_adc ) / sizeof( XMC_ADC_t ) 
 RingBuffer rx_buffer_0;
 RingBuffer tx_buffer_0;
 
-/* First UART channel pins are swapped between debug and  normal use */
+/* First UART channel pins are swapped between debug and normal use */
 XMC_UART_t XMC_UART_0 =
   {
   .channel              = XMC_UART0_CH0,
-  .rx                   = { .port = (XMC_GPIO_PORT_t*)PORT2_BASE,
+  .rx                   = { .port = (XMC_GPIO_PORT_t*)PORT2_BASE, // RX P2.6
 #ifdef SERIAL_DEBUG
-                            .pin  = (uint8_t)2
+                            .pin  = (uint8_t)0
 #else
                             .pin  = (uint8_t)6
 #endif
@@ -198,9 +206,9 @@ XMC_UART_t XMC_UART_0 =
                             .output_level     = XMC_GPIO_OUTPUT_LEVEL_HIGH,
                             .input_hysteresis = XMC_GPIO_INPUT_HYSTERESIS_STANDARD
                           },
-  .tx                   = { .port = (XMC_GPIO_PORT_t*)PORT2_BASE,
+  .tx                   = { .port = (XMC_GPIO_PORT_t*)PORT2_BASE, // TX P2.0
 #ifdef SERIAL_DEBUG
-                            .pin  = (uint8_t)1
+                            .pin  = (uint8_t)6
 #else
                             .pin  = (uint8_t)0
 #endif
@@ -213,9 +221,9 @@ XMC_UART_t XMC_UART_0 =
   .input_source_dx1     = XMC_INPUT_INVALID,
   .input_source_dx2     = XMC_INPUT_INVALID,
 #ifdef SERIAL_DEBUG
-  .input_source_dx3     = (XMC_USIC_INPUT_t)USIC0_C0_DX3_P2_2,
+  .input_source_dx3     = (XMC_USIC_INPUT_t)USIC0_C0_DX3_P2_0,
 #else
-  .input_source_dx3     = (XMC_USIC_INPUT_t)USIC0_C0_DX3_P2_6,
+  .input_source_dx3     = (XMC_USIC_INPUT_t)USIC0_C0_DX4_P2_6,
 #endif
   .irq_num              = USIC0_0_IRQn,
   .irq_service_request  = 0
