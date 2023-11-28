@@ -135,6 +135,50 @@ XMC1300_Boot_Kit.menu.LIB.DSPNN=ARM DSP / ARM NN Framework
 XMC1300_Boot_Kit.menu.LIB.DSPNN.library.selected=-DARM_LIB_CMSIS_DSP -DARM_LIB_CMSIS_NN
 
 ####################################################
+XMC1400_XMC2GO.name=XMC 1400 XMC2GO
+XMC1400_XMC2GO.upload.tool=xmcflasher
+XMC1400_XMC2GO.upload.speed=115200
+XMC1400_XMC2GO.upload.resetmethod=ck
+XMC1400_XMC2GO.upload.maximum_size=65536
+XMC1400_XMC2GO.upload.wait_for_upload_port=true
+
+XMC1400_XMC2GO.communication=usb
+XMC1400_XMC2GO.protocol=dragon_isp
+XMC1400_XMC2GO.program.protocol=dragon_isp
+XMC1400_XMC2GO.program.tool=xmcflasher
+XMC1400_XMC2GO.program.extra_params=-Pusb
+
+XMC1400_XMC2GO.serial.disableDTR=true
+XMC1400_XMC2GO.serial.disableRTS=true
+
+XMC1400_XMC2GO.build.mcu=cortex-m0
+XMC1400_XMC2GO.build.f_cpu=48000000L
+XMC1400_XMC2GO.build.board=ARM_XMC
+XMC1400_XMC2GO.build.board.version=1402
+XMC1400_XMC2GO.build.board.type=Q040x0064
+XMC1400_XMC2GO.build.board.v=0064
+XMC1400_XMC2GO.build.core=./
+XMC1400_XMC2GO.build.variant=XMC1400
+XMC1400_XMC2GO.build.board_variant=XMC1400_XMC2GO
+XMC1400_XMC2GO.build.flash_size=64K
+XMC1400_XMC2GO.build.flash_ld=linker_script_64k.ld
+XMC1400_XMC2GO.build.extra_flags=-DARM_MATH_CM0 -DXMC1_SERIES
+
+XMC1400_XMC2GO.menu.UART.debug=PC
+XMC1400_XMC2GO.menu.UART.debug.uart.selected=-DSERIAL_HOSTPC
+XMC1400_XMC2GO.menu.UART.onBoard=On Board
+XMC1400_XMC2GO.menu.UART.onBoard.uart.selected=-DSERIAL_ONBOARD
+
+XMC1400_XMC2GO.menu.LIB.NONE=None
+XMC1400_XMC2GO.menu.LIB.NONE.library.selected=
+XMC1400_XMC2GO.menu.LIB.NN=ARM NN Framework
+XMC1400_XMC2GO.menu.LIB.NN.library.selected=-DARM_LIB_CMSIS_NN
+XMC1400_XMC2GO.menu.LIB.DSP=ARM DSP
+XMC1400_XMC2GO.menu.LIB.DSP.library.selected=-DARM_LIB_CMSIS_DSP
+XMC1400_XMC2GO.menu.LIB.DSPNN=ARM DSP / ARM NN Framework
+XMC1400_XMC2GO.menu.LIB.DSPNN.library.selected=-DARM_LIB_CMSIS_DSP -DARM_LIB_CMSIS_NN
+
+####################################################
 XMC1400_Arduino_Kit.name=XMC1400 Kit for Arduino
 XMC1400_Arduino_Kit.upload.tool=xmcflasher
 XMC1400_Arduino_Kit.upload.speed=115200
