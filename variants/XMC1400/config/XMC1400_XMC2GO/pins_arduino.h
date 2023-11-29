@@ -113,6 +113,31 @@ extern uint8_t SCK;
 #define LED2        15
 #define LED_BUILTIN LED1
 
+// TODO: check Interrupt 
+/* Mapping interrupt handlers. Notice that XMC1400 can have interrupt handlers working in 3 modes, the defines below assumes the mode A.
+   For details refer to assembly file and reference manual.
+*/
+#define USIC0_0_IRQHandler IRQ9_Handler // UART
+#define USIC0_0_IRQn IRQ9_IRQn
+
+#define CCU40_0_IRQHandler IRQ21_Handler // interrupt 1
+#define CCU40_0_IRQn IRQ21_IRQn
+
+#define CCU40_1_IRQHandler IRQ22_Handler // interrupt 0
+#define CCU40_1_IRQn IRQ22_IRQn
+
+#define USIC0_4_IRQHandler IRQ13_Handler // I2C
+#define USIC0_4_IRQn IRQ13_IRQn
+
+#define USIC0_5_IRQHandler IRQ14_Handler // I2C
+#define USIC0_5_IRQn IRQ14_IRQn
+
+#define SCU_1_IRQHandler IRQ1_Handler //RTC
+#define SCU_1_IRQn IRQ1_IRQn
+
+#define ERU0_0_IRQHandler IRQ3_Handler // RESET
+#define ERU0_0_IRQn IRQ3_IRQn
+
 #define digitalPinToInterrupt(p)    (((p) == 9) ? 0 : NOT_AN_INTERRUPT)
 
 #ifdef ARDUINO_MAIN
@@ -219,9 +244,9 @@ XMC_UART_t XMC_UART_0 =
   .input_source_dx1     = XMC_INPUT_INVALID,
   .input_source_dx2     = XMC_INPUT_INVALID,
 #ifdef SERIAL_DEBUG
-  .input_source_dx3     = (XMC_USIC_INPUT_t)USIC0_C0_DX3_P2_0,
+  .input_source_dx3     = (XMC_USIC_INPUT_t)USIC0_C0_DX0_P2_0,
 #else
-  .input_source_dx3     = (XMC_USIC_INPUT_t)USIC0_C0_DX4_P2_6,
+  .input_source_dx3     = (XMC_USIC_INPUT_t)USIC0_C0_DX3_P2_6,
 #endif
   .irq_num              = USIC0_0_IRQn,
   .irq_service_request  = 0
