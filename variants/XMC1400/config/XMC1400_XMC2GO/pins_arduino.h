@@ -123,6 +123,8 @@ extern uint8_t SCK;
 #define CCU40_0_IRQHandler IRQ21_Handler // interrupt 0
 #define CCU40_0_IRQn IRQ21_IRQn
 
+#define CCU40_1_IRQHandler IRQ22_Handler // interrupt x, placeholder
+#define CCU40_1_IRQn IRQ22_IRQn
 
 // #define USIC0_4_IRQHandler IRQ13_Handler // I2C
 // #define USIC0_4_IRQn IRQ13_IRQn
