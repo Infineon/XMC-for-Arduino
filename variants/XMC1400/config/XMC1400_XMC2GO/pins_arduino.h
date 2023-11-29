@@ -115,8 +115,6 @@ extern uint8_t SCK;
 
 #define digitalPinToInterrupt(p)    (((p) == 9) ? 0 : NOT_AN_INTERRUPT)
 
-#define ARDUINO_MAIN
-
 #ifdef ARDUINO_MAIN
 // Mapping of digital pins and comments
 const XMC_PORT_PIN_t mapping_port_pin[] =
