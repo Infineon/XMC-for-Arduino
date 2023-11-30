@@ -54,7 +54,7 @@ extern const uint8_t NUM_ANALOG_INPUTS;
 #define NUM_TONE_PINS       4
 #define NUM_TASKS_VARIANT   8
 #define NUM_SPI  			1
-#define NUM_I2C             2
+#define NUM_I2C             1
 
 // Indicate unit has RTC/Alarm
 #define HAS_RTC             1
@@ -82,11 +82,6 @@ extern const uint8_t NUM_ANALOG_INPUTS;
 #define PIN_SPI_MOSI  1
 #define PIN_SPI_MISO  0
 #define PIN_SPI_SCK   2
-
-extern uint8_t SS;
-extern uint8_t MOSI;
-extern uint8_t MISO;
-extern uint8_t SCK;
 
 // XMC_I2S defines
 /*U0C1*/
@@ -126,17 +121,17 @@ extern uint8_t SCK;
 #define CCU40_1_IRQHandler IRQ22_Handler // interrupt x, placeholder
 #define CCU40_1_IRQn IRQ22_IRQn
 
-// #define USIC0_4_IRQHandler IRQ13_Handler // I2C
-// #define USIC0_4_IRQn IRQ13_IRQn
+#define USIC0_4_IRQHandler IRQ13_Handler // I2C
+#define USIC0_4_IRQn IRQ13_IRQn
 
-// #define USIC0_5_IRQHandler IRQ14_Handler // I2C
-// #define USIC0_5_IRQn IRQ14_IRQn
+#define USIC0_5_IRQHandler IRQ14_Handler // I2C
+#define USIC0_5_IRQn IRQ14_IRQn
 
-// #define SCU_1_IRQHandler IRQ1_Handler //RTC
-// #define SCU_1_IRQn IRQ1_IRQn
+#define SCU_1_IRQHandler IRQ1_Handler //RTC
+#define SCU_1_IRQn IRQ1_IRQn
 
-// #define ERU0_0_IRQHandler IRQ3_Handler // RESET
-// #define ERU0_0_IRQn IRQ3_IRQn
+#define ERU0_0_IRQHandler IRQ3_Handler // RESET
+#define ERU0_0_IRQn IRQ3_IRQn
 
 #define digitalPinToInterrupt(p)    (((p) == 9) ? 0 : NOT_AN_INTERRUPT)
 
@@ -295,39 +290,39 @@ XMC_SPI_t XMC_SPI_0 =
 
 
 // TODO: I2S
-// // Two I2C instances possible
-// XMC_I2C_t XMC_I2C_0 =
-// {
-//     .channel          = XMC_I2C0_CH1,
-//     .channel_config   = {
-//         .baudrate = (uint32_t)(100000U),
-//         .address = 0U
-//     },
-//     .sda              = {
-//         .port = (XMC_GPIO_PORT_t*)PORT2_BASE,
-//         .pin  = (uint8_t)10
-//     },
-//     .sda_config       = {
-//         .mode = XMC_GPIO_MODE_OUTPUT_OPEN_DRAIN_ALT7,
-//         .output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH,
-//         .input_hysteresis = XMC_GPIO_INPUT_HYSTERESIS_STANDARD
-//     },
-//     .scl              = {
-//         .port = (XMC_GPIO_PORT_t*)PORT2_BASE,
-//         .pin  = (uint8_t)11
-//     },
-//     .scl_config       = {
-//         .mode = XMC_GPIO_MODE_OUTPUT_OPEN_DRAIN_ALT6,
-//         .output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH,
-//         .input_hysteresis = XMC_GPIO_INPUT_HYSTERESIS_STANDARD
-//     },
-//     .input_source_dx0 = XMC_INPUT_F,
-//     .input_source_dx1 = XMC_INPUT_E,
-//     .slave_receive_irq_num                    = (IRQn_Type) USIC0_4_IRQn,
-//     .slave_receive_irq_service_request        = 4 ,
-//     .protocol_irq_num                   	  = (IRQn_Type) USIC0_5_IRQn,
-//     .protocol_irq_service_request       	  = 5
-// };
+// Two I2C instances possible
+XMC_I2C_t XMC_I2C_0 =
+{
+    .channel          = XMC_I2C0_CH1,
+    .channel_config   = {
+        .baudrate = (uint32_t)(100000U),
+        .address = 0U
+    },
+    .sda              = {
+        .port = (XMC_GPIO_PORT_t*)PORT2_BASE,
+        .pin  = (uint8_t)10
+    },
+    .sda_config       = {
+        .mode = XMC_GPIO_MODE_OUTPUT_OPEN_DRAIN_ALT7,
+        .output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH,
+        .input_hysteresis = XMC_GPIO_INPUT_HYSTERESIS_STANDARD
+    },
+    .scl              = {
+        .port = (XMC_GPIO_PORT_t*)PORT2_BASE,
+        .pin  = (uint8_t)11
+    },
+    .scl_config       = {
+        .mode = XMC_GPIO_MODE_OUTPUT_OPEN_DRAIN_ALT6,
+        .output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH,
+        .input_hysteresis = XMC_GPIO_INPUT_HYSTERESIS_STANDARD
+    },
+    .input_source_dx0 = XMC_INPUT_F,
+    .input_source_dx1 = XMC_INPUT_E,
+    .slave_receive_irq_num                    = (IRQn_Type) USIC0_4_IRQn,
+    .slave_receive_irq_service_request        = 4 ,
+    .protocol_irq_num                   	  = (IRQn_Type) USIC0_5_IRQn,
+    .protocol_irq_service_request       	  = 5
+};
 
 // XMC_I2C_t XMC_I2C_1 =
 // {
@@ -362,7 +357,7 @@ XMC_SPI_t XMC_SPI_0 =
 //     .protocol_irq_service_request       	  = 3
 // };
 
-// // XMC_I2S instance
+// XMC_I2S instance
 // XMC_I2S_t i2s_config = 
 // {
 //     .input_config = {
