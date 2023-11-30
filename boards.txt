@@ -135,7 +135,7 @@ XMC1300_Boot_Kit.menu.LIB.DSPNN=ARM DSP / ARM NN Framework
 XMC1300_Boot_Kit.menu.LIB.DSPNN.library.selected=-DARM_LIB_CMSIS_DSP -DARM_LIB_CMSIS_NN
 
 ####################################################
-XMC1400_XMC2GO.name=XMC 1400 XMC2GO
+XMC1400_XMC2GO.name=XMC1400 XMC2GO
 XMC1400_XMC2GO.upload.tool=xmcflasher
 XMC1400_XMC2GO.upload.speed=115200
 XMC1400_XMC2GO.upload.resetmethod=ck
