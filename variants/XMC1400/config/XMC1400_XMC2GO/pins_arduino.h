@@ -89,6 +89,19 @@ extern const uint8_t NUM_ANALOG_INPUTS;
 #define A2   2
 #define A3   3
 
+// XMC_I2S defines
+/*U0C1*/
+/*DX0C(Input) -> P0.0*/
+/*SCLKOUT(ALT6) -> P0.3*/
+/*WA(ALT6) -> P0.4*/
+
+// XMC_I2S instance
+#define MASTER_CHANNEL  XMC_I2S1_CH1
+#define MASTER_MRST     PORT0, 0
+#define INPUT_SOURCE    USIC1_C1_DX0_P0_0
+#define MASTER_SCLK     PORT0, 3
+#define MASTER_WACLK    PORT0, 4
+
 // Define LED & builtin-led 
 #define LED1        14
 #define LED2        15
@@ -312,21 +325,6 @@ XMC_I2C_t XMC_I2C_0 =
     .protocol_irq_num                   	  = (IRQn_Type) USIC0_5_IRQn,
     .protocol_irq_service_request       	  = 5
 };
-
-// XMC_I2S defines
-/*U0C1*/
-/*DX0C(Input) -> P0.0*/
-/*SCLKOUT(ALT6) -> P0.3*/
-/*WA(ALT6) -> P0.4*/
-
-
-// XMC_I2S instance
-#define MASTER_CHANNEL  XMC_I2S1_CH1
-#define MASTER_MRST     PORT0, 0
-#define INPUT_SOURCE    USIC1_C1_DX0_P0_0
-#define MASTER_SCLK     PORT0, 3
-#define MASTER_WACLK    PORT0, 4
-
 
 XMC_I2S_t i2s_config = 
 {
