@@ -158,7 +158,7 @@ jobs:
           platforms: |
             # Use Boards Manager to install the latest release of the platform to get the toolchain.
             - name: Infineon:xmc
-              source-url: https://github.com/LinjingZhang/XMC-for-Arduino/releases/download/0.0.1/package_infineon_index.template.json
+              source-url: https://github.com/LinjingZhang/XMC-for-Arduino/releases/download/2.2.1/package_infineon_index_linjing_test.json
 
             - source-path: ./
               name: Infineon:xmc
