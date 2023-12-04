@@ -155,13 +155,13 @@ XMC1400_XMC2GO.build.mcu=cortex-m0
 XMC1400_XMC2GO.build.f_cpu=48000000L
 XMC1400_XMC2GO.build.board=ARM_XMC
 XMC1400_XMC2GO.build.board.version=1402
-XMC1400_XMC2GO.build.board.type=Q040x0064
-XMC1400_XMC2GO.build.board.v=0064
+XMC1400_XMC2GO.build.board.type=Q040x0200
+XMC1400_XMC2GO.build.board.v=0200
 XMC1400_XMC2GO.build.core=./
 XMC1400_XMC2GO.build.variant=XMC1400
 XMC1400_XMC2GO.build.board_variant=XMC1400_XMC2GO
-XMC1400_XMC2GO.build.flash_size=64K
-XMC1400_XMC2GO.build.flash_ld=linker_script_64k.ld
+XMC1400_XMC2GO.build.flash_size=200K
+XMC1400_XMC2GO.build.flash_ld=linker_script_200k.ld
 XMC1400_XMC2GO.build.extra_flags=-DARM_MATH_CM0 -DXMC1_SERIES
 
 XMC1400_XMC2GO.menu.UART.debug=PC
