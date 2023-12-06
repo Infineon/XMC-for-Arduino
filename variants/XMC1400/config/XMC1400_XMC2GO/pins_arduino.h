@@ -217,7 +217,7 @@ XMC_UART_t XMC_UART_0 =
   .channel              = XMC_UART0_CH0,
   .rx                   = { .port = (XMC_GPIO_PORT_t*)PORT2_BASE, // RX P2.6
 #ifdef SERIAL_DEBUG
-                            .pin  = (uint8_t)0
+                            .pin  = (uint8_t)2
 #else
                             .pin  = (uint8_t)6
 #endif
@@ -228,7 +228,7 @@ XMC_UART_t XMC_UART_0 =
                           },
   .tx                   = { .port = (XMC_GPIO_PORT_t*)PORT2_BASE, // TX P2.0
 #ifdef SERIAL_DEBUG
-                            .pin  = (uint8_t)6
+                            .pin  = (uint8_t)1
 #else
                             .pin  = (uint8_t)0
 #endif
@@ -241,7 +241,7 @@ XMC_UART_t XMC_UART_0 =
   .input_source_dx1     = XMC_INPUT_INVALID,
   .input_source_dx2     = XMC_INPUT_INVALID,
 #ifdef SERIAL_DEBUG
-  .input_source_dx3     = (XMC_USIC_INPUT_t)USIC0_C0_DX0_P2_0,
+  .input_source_dx3     = (XMC_USIC_INPUT_t)USIC0_C0_DX3_P2_2,
 #else
   .input_source_dx3     = (XMC_USIC_INPUT_t)USIC0_C0_DX3_P2_6,
 #endif
