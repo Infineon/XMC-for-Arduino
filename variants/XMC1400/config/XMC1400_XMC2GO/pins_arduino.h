@@ -196,13 +196,22 @@ const uint8_t NUM_PWM  = ( sizeof( mapping_pwm4 ) / sizeof( XMC_PWM4_t ) );
 const uint8_t NUM_PWM4  = ( sizeof( mapping_pwm4 ) / sizeof( XMC_PWM4_t ) );
 
 /* Analog Pin mappings and configurations */
-XMC_ADC_t mapping_adc[] =
-    {
-    {VADC, 1, DISABLED}, // P2.8
-    {VADC, 2, DISABLED}, // P2.9
-    {VADC, 3, DISABLED}, // P2.10
-    {VADC, 4, DISABLED}  // P2.11
-    };
+// XMC_ADC_t mapping_adc[] =
+//     {
+//     { VADC, 1, DISABLED },   //A0 P2.8
+//     { VADC, 2, DISABLED },  //A1 P2.9
+//     { VADC, 3, DISABLED },   //A2 P2.10  
+//     { VADC, 4, DISABLED },  //A3 P2.11
+//     };
+
+    XMC_ADC_t mapping_adc[] =
+        {
+        { VADC, 1, VADC_G0, 0, 1, DISABLED },   //A0 P2.8
+        { VADC, 2, VADC_G0, 0, 2, DISABLED },  //A1 P2.9
+        { VADC, 3, VADC_G0, 0, 3, DISABLED },   //A2 P2.10  
+        { VADC, 4, VADC_G0, 0, 4, DISABLED },  //A3 P2.11
+        };
+
 const uint8_t NUM_ANALOG_INPUTS = ( sizeof( mapping_adc ) / sizeof( XMC_ADC_t ) );
 
 /*
