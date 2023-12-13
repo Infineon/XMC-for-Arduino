@@ -147,6 +147,9 @@ jobs:
             alarmRtc-sketch-paths: |
               - libraries/RTC/examples/AlarmRTC
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        
       - name: Compile examples
         uses: arduino/compile-sketches@v1
         with:
