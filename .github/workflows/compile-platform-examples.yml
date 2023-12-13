@@ -98,7 +98,7 @@ jobs:
             heapMem: true
             sleep1100: true
             sleep4700 : false
-            stackMem: true
+            stackMem: false
             dma: false
             alarmRtc: false
           - fqbn: Infineon:xmc:XMC1400_Arduino_Kit
@@ -149,7 +149,7 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
-        
+
       - name: Compile examples
         uses: arduino/compile-sketches@v1
         with:
