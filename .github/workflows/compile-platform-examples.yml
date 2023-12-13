@@ -147,9 +147,6 @@ jobs:
             alarmRtc-sketch-paths: |
               - libraries/RTC/examples/AlarmRTC
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
-
       - name: Compile examples
         uses: arduino/compile-sketches@v1
         with:
@@ -178,7 +175,7 @@ jobs:
             ${{ matrix.multiSerial-sketch-paths }}
             ${{ matrix.dma-sketch-paths }}
             ${{ matrix.alarmRtc-sketch-paths }}
-          enable-deltas-report: true
+          enable-deltas-report: false
           sketches-report-path: ${{ env.SKETCHES_REPORTS_PATH }}
 
       - name: Save sketches report as workflow artifact
