@@ -87,12 +87,12 @@ def make_package_index_file(pkg_index):
         pkg_file.write(pkg_index_json_obj)
 
 def build_package_index_json(pkg_name, version, repository):
-    # package_index = get_latest_package_index_json() # get online package index json
+    latest_package_index = get_latest_package_index_json() # get online package index json
     package_index = get_local_package_index_json() # get local package index template
     new_platform_data = get_platform_data_struct_copy(package_index)
     set_new_platform_data_fields(new_platform_data, pkg_name, version, repository)
-    add_new_platform_to_package_index(package_index, new_platform_data)
-    make_package_index_file(package_index)
+    add_new_platform_to_package_index(latest_package_index, new_platform_data)
+    make_package_index_file(latest_package_index)
 
 def build_release_assets(args):
     os.mkdir(pkg_assets_build_path)
