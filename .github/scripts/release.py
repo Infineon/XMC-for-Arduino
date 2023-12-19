@@ -88,18 +88,18 @@ def make_package_index_file(pkg_index):
 
 def build_package_index_json(pkg_name, version, repository):
     latest_package_index = get_latest_package_index_json() # get online package index json
-    package_index = get_local_package_index_json() # get local package index template
+    package_index = get_local_package_index_json() # append local package index template
     new_platform_data = get_platform_data_struct_copy(package_index)
     set_new_platform_data_fields(new_platform_data, pkg_name, version, repository)
     add_new_platform_to_package_index(latest_package_index, new_platform_data)
     make_package_index_file(latest_package_index)
 
-def build_release_assets(args):
+def build_release_assets(version, repository):
     os.mkdir(pkg_assets_build_path)
-    pkg_name = mkdir_package_dir(args.version)
+    pkg_name = mkdir_package_dir(version)
     build_package(pkg_name)
     zip_package(pkg_name)
-    build_package_index_json(pkg_name, args.version, args.repository)
+    build_package_index_json(pkg_name, version, repository)
 
 def parser():
 
@@ -111,7 +111,7 @@ def parser():
         global pkg_build_path
         xmc_ino_root_path = args.root_path
         pkg_build_path = args.build_path
-        build_release_assets(args)
+        build_release_assets(args.version, args.repository)
 
     class ver_action(argparse.Action):
         def __init__(self, option_strings, dest, **kwargs):
