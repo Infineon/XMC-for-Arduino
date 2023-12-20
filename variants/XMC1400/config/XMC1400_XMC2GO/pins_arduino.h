@@ -300,8 +300,7 @@ XMC_SPI_t XMC_SPI_0 =
 };
 
 
-// TODO: I2S
-// Two I2C instances possible
+// TODO: I2C
 XMC_I2C_t XMC_I2C_0 =
 {
     .channel          = XMC_I2C0_CH1,
@@ -335,6 +334,7 @@ XMC_I2C_t XMC_I2C_0 =
     .protocol_irq_service_request       	  = 5
 };
 
+// TODO: I2S
 XMC_I2S_t i2s_config = 
 {
     .input_config = {
