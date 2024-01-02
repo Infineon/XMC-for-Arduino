@@ -182,8 +182,10 @@ XMC_I2S_CH_STATUS_t I2SClass::_init(){
         XMC_USIC_CH_RXFIFO_Configure(MASTER_CHANNEL, 0, XMC_USIC_CH_FIFO_SIZE_2WORDS, 0);
     }
     MASTER_CHANNEL->RBCTR |= USIC_CH_RBCTR_RCIM_Msk;
-
-    XMC_SCU_SetInterruptControl(i2s_config.protocol_irq_num, XMC_SCU_IRQCTRL_USIC1_SR2_IRQ11);
+#if (UC_SERIES == XMC14)
+    // select interrupt source (A,B,C etc) input to NVIC node (only for XMC1400 devices)  
+    XMC_SCU_SetInterruptControl(i2s_config.protocol_irq_num, i2s_config.protocol_irq_source );
+#endif    
     // Sets FIFO interrupt
     XMC_USIC_CH_RXFIFO_SetInterruptNodePointer(MASTER_CHANNEL, XMC_USIC_CH_RXFIFO_INTERRUPT_NODE_POINTER_STANDARD, i2s_config.protocol_irq_service_request);
     XMC_USIC_CH_RXFIFO_SetInterruptNodePointer(MASTER_CHANNEL, XMC_USIC_CH_RXFIFO_INTERRUPT_NODE_POINTER_ALTERNATE, i2s_config.protocol_irq_service_request);
