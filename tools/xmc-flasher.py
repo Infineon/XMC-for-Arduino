@@ -11,7 +11,7 @@ def check_python_version():
     minor = sys.version_info.minor
     
     if major != 3:
-        raise Exception(f"XMC Flasher requires Python3! Installed version is {major}.{minor}")
+        raise Exception(f"XMC Flasher requires Python3! Current version is {major}.{minor}")
 
 def get_jlink_install_path():
     location = winreg.HKEY_CURRENT_USER
@@ -28,7 +28,7 @@ def set_environment():
     if sys.platform == 'linux' or sys.platform == 'linux2':
         jlinkexe = 'JLinkExe'
     elif sys.platform == 'win32' or sys.platform == 'cygwin':
-        jlinkexe = f"{get_jlink_install_path()}\jlink.exe"
+        jlinkexe = rf"{get_jlink_install_path()}\jlink.exe"
     elif sys.platform == 'darwin':
         jlinkexe = 'jlink'
         print('warning: mac os not validated')
