@@ -6,6 +6,13 @@ version = '0.1.0'
 
 jlinkexe = ''
 
+def check_python_version():
+    major = sys.version_info.major
+    minor = sys.version_info.minor
+    
+    if major != 3:
+        raise Exception(f"XMC Flasher requires Python3! Installed version is {major}.{minor}")
+
 def get_jlink_install_path():
     location = winreg.HKEY_CURRENT_USER
     try:
@@ -252,5 +259,6 @@ def parser():
 
 if __name__ == "__main__":
     set_environment()
+    check_python_version()
     parser()
 
