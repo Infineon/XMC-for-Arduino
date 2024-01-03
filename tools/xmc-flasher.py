@@ -112,6 +112,9 @@ def get_mem_contents(addr, bytes, device, port):
             reg_contents = re.findall('[0-9,A-F]+', line)
             break
     
+    if not reg_contents:
+        raise Exception(f"Wrong COM Port selected! {port}\n")
+
     reg_contents.remove(addr) # remove the addr from the list, just keep reg contents
     reg_contents.reverse() # jlink returns LSB first, so reverse it to get MSB on the left side
     reg_contents = ''.join(reg_contents)
