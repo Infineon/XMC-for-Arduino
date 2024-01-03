@@ -1,4 +1,4 @@
-import argparse, serial, subprocess, os, sys, re, json, warnings
+import argparse, subprocess, os, sys, re, warnings, winreg
 from serial.tools.list_ports import comports
 from xmc_data import xmc_master_data
 
@@ -6,12 +6,22 @@ version = '0.1.0'
 
 jlinkexe = ''
 
+def get_jlink_install_path():
+    location = winreg.HKEY_CURRENT_USER
+    try:
+        key = winreg.OpenKeyEx(location,'SOFTWARE\\SEGGER\\J-Link',reserved=0,access=winreg.KEY_READ)
+    except:
+        raise Exception("SEGGER JLink not installed!")
+    value = winreg.QueryValueEx(key,"InstallPath")
+    winreg.CloseKey(key)
+    return value[0]
+
 def set_environment():
     global jlinkexe
     if sys.platform == 'linux' or sys.platform == 'linux2':
         jlinkexe = 'JLinkExe'
     elif sys.platform == 'win32' or sys.platform == 'cygwin':
-        jlinkexe = 'jlink'
+        jlinkexe = f"{get_jlink_install_path()}\jlink.exe"
     elif sys.platform == 'darwin':
         jlinkexe = 'jlink'
         print('warning: mac os not validated')
