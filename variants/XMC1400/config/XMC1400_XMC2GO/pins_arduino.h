@@ -70,12 +70,11 @@ extern const uint8_t NUM_ANALOG_INPUTS;
 #define SERIAL_DEBUG    1
 #endif
 
-// TODO: Verify the CCU frequency 
 // Generate 490Hz @fCCU=1MHz
 #define PWM4_TIMER_PERIOD (2041U)
 
-// TODO: Verify the PCLK, XMC_CCU4_SLICE_PRESCALER_64
-#define PCLK 64000000u 
+// PCLK = 2 * MCLK
+#define PCLK 96000000u 
 
 // Define SPI pin
 #define PIN_SPI_SS    3
@@ -107,7 +106,6 @@ extern const uint8_t NUM_ANALOG_INPUTS;
 #define LED2        15
 #define LED_BUILTIN LED1
 
-// TODO: check Interrupt 
 /* Mapping interrupt handlers. Notice that XMC1400 can have interrupt handlers working in 3 modes, the defines below assumes the mode A.
    For details refer to assembly file and reference manual.
 */
@@ -299,8 +297,6 @@ XMC_SPI_t XMC_SPI_0 =
     }
 };
 
-
-// TODO: I2C
 XMC_I2C_t XMC_I2C_0 =
 {
     .channel          = XMC_I2C0_CH1,
@@ -334,7 +330,6 @@ XMC_I2C_t XMC_I2C_0 =
     .protocol_irq_service_request       	  = 5
 };
 
-// TODO: I2S
 XMC_I2S_t i2s_config = 
 {
     .input_config = {
