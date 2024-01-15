@@ -39,7 +39,7 @@ Test with TLV493 1A6: PASS
 | slave_sender |  | Demonstrates use of the Wire library. Sends data as an I2C/TWI slave device. Refer to the "Wire Master Reader" example for use with this.Then it communicates using I2C protocol between two supported XMC boards. Connect the SDA and SCL pins of one board to the SDA and SCL pin of the other board.
 
 ## I2S Library
-FAIL!! NEED to go deep in I2S library
+It works now, but with example overflow issue 
 
 ## OneWire Library
 
