@@ -92,6 +92,15 @@ jobs:
             multiSerial: true
             dma: true
             alarmRtc: true
+          - fqbn: Infineon:xmc:XMC1400_XMC2GO
+            i2s: true
+            dieTemp: true
+            heapMem: true
+            sleep1100: true
+            sleep4700 : false
+            stackMem: false
+            dma: false
+            alarmRtc: false
           - fqbn: Infineon:xmc:XMC1400_Arduino_Kit
             i2s: false
             dieTemp: true
@@ -149,7 +158,7 @@ jobs:
           platforms: |
             # Use Boards Manager to install the latest release of the platform to get the toolchain.
             - name: Infineon:xmc
-              source-url: https://github.com/Infineon/XMC-for-Arduino/releases/latest/download/package_infineon_index.json
+              source-url: https://github.com/${{ github.repository }}/releases/latest/download/package_infineon_index.json
 
             - source-path: ./
               name: Infineon:xmc
@@ -169,7 +178,7 @@ jobs:
             ${{ matrix.multiSerial-sketch-paths }}
             ${{ matrix.dma-sketch-paths }}
             ${{ matrix.alarmRtc-sketch-paths }}
-          enable-deltas-report: true
+          enable-deltas-report: false
           sketches-report-path: ${{ env.SKETCHES_REPORTS_PATH }}
 
       - name: Save sketches report as workflow artifact

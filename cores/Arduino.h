@@ -242,6 +242,9 @@ extern "C" {
         XMC_GPIO_CONFIG_t wa_config;
         IRQn_Type protocol_irq_num;
         uint32_t protocol_irq_service_request;
+#if (UC_SERIES == XMC14)
+        XMC_SCU_IRQCTRL_t protocol_irq_source;
+#endif
     } XMC_I2S_t;
 
 //****************************************************************************

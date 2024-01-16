@@ -182,14 +182,22 @@ XMC_I2S_CH_STATUS_t I2SClass::_init(){
         XMC_USIC_CH_RXFIFO_Configure(MASTER_CHANNEL, 0, XMC_USIC_CH_FIFO_SIZE_2WORDS, 0);
     }
     MASTER_CHANNEL->RBCTR |= USIC_CH_RBCTR_RCIM_Msk;
+#if (UC_SERIES == XMC14)
+    // select interrupt source (A,B,C etc) input to NVIC node (only for XMC1400 devices)  
+    XMC_SCU_SetInterruptControl(i2s_config.protocol_irq_num, i2s_config.protocol_irq_source );
+#endif    
     // Sets FIFO interrupt
     XMC_USIC_CH_RXFIFO_SetInterruptNodePointer(MASTER_CHANNEL, XMC_USIC_CH_RXFIFO_INTERRUPT_NODE_POINTER_STANDARD, i2s_config.protocol_irq_service_request);
     XMC_USIC_CH_RXFIFO_SetInterruptNodePointer(MASTER_CHANNEL, XMC_USIC_CH_RXFIFO_INTERRUPT_NODE_POINTER_ALTERNATE, i2s_config.protocol_irq_service_request);
+    
+    
     // Set the channel interrupt
     XMC_I2S_CH_SetInterruptNodePointer(MASTER_CHANNEL, i2s_config.protocol_irq_service_request);
 
+    
     XMC_USIC_CH_RXFIFO_EnableEvent(MASTER_CHANNEL, XMC_USIC_CH_RXFIFO_EVENT_CONF_ALTERNATE | XMC_USIC_CH_RXFIFO_EVENT_CONF_STANDARD);
     XMC_I2S_CH_EnableEvent(MASTER_CHANNEL, XMC_I2S_CH_EVENT_STANDARD_RECEIVE | XMC_I2S_CH_EVENT_ALTERNATIVE_RECEIVE);
+    
 
     // Assign real-time sample reading the highest priority
     // NVIC_ClearPendingIRQ((IRQn_Type)i2s_config.protocol_irq_num);
@@ -377,6 +385,11 @@ extern "C"
     }
 #elif defined(XMC1100_XMC2GO) || defined(XMC1100_Boot_Kit)
     void USIC0_2_IRQHandler()
+    {
+        I2S._onSampleReceived();
+    }
+#elif defined(XMC1400_XMC2GO)
+    void USIC1_2_IRQHandler()
     {
         I2S._onSampleReceived();
     }
