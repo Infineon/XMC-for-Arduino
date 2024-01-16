@@ -62,7 +62,7 @@ You can check if it was successfully installed by opening your command line or t
 With [pip](https://pip.pypa.io/en/stable/installation/) available, install the mentioned packages from a terminal:
 
 ```
-  pip install serial pyserial
+  pip install pyserial
 ```
 
 ### Using Arduino IDE
