@@ -118,7 +118,7 @@ Certain obsolete boards (see wiki) and non-functional libraries were removed fro
 
 ## Contributing and Third Party Libraries
 
-To contribute enhancements, fixes and the like see [Contributors](./Contributors.md).
+To contribute enhancements, fixes and the like see [CONTRIBUTINGS](./CONTRIBUTING.md).
 
 Third Party or external library maintainers see [Libraries](./Libraries.md). 
     

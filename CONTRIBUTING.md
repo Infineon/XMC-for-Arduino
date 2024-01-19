@@ -8,7 +8,7 @@ Check the **develop** branch for any Beta releases fixes for any issues you may 
 
 ## Developer notes
 
-General points on repository branches and flow
+### General points on repository branches and flow
 
 1. _master_ branch is intended to be copy of release version
 2. Please make Pull Requests to _develop_ branch for review, inclusion and availability for others
