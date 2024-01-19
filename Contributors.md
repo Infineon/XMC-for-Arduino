@@ -30,3 +30,6 @@ This is a workaround for current local compilation/testing.
 
 Currently github workflow is used for automaticaly build test and release. Workflows are defined by YAML file in the `.github/workflows` directory. 
 To merge your PR, please try to add a git tag in the format `VX.Y.Z` (e.g. V3.3.0) to trigger the release process in your fork and pass the compilation tests.
+
+### WIKI
+Because of the limitations of the github wiki, it is difficult to create PR for changes of wiki. Please refer to the answer under: https://stackoverflow.com/questions/10642928/how-can-i-make-a-pull-request-for-a-wiki-page-on-github and create a ticket for your modifications.
