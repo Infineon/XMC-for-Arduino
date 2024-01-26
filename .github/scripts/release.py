@@ -1,7 +1,7 @@
 
 import argparse, copy, hashlib, json, re, requests, os, shutil
 
-version = '0.1.1'
+version = '0.2.0'
 
 xmc_ino_root_path = os.path.relpath(os.path.join(os.path.join(os.getcwd(), os.pardir), os.pardir))
 build_dir_name = 'pkg_build'
@@ -66,10 +66,11 @@ def get_local_package_index_json():
     return data
 
 def get_platform_data_struct_copy(pkg_index):
-    return copy.deepcopy(pkg_index['packages'][0]['platforms'][0])
+    return copy.deepcopy(pkg_index['packages'][0]['platforms'])
 
-def set_new_platform_data_fields(platform_data, pkg_name, version, repository):
+def set_new_platform_data_fields(platform_data_index, pkg_name, version, repository):
     semver = strip_prefix_from_version(version)
+    platform_data = platform_data_index['packages'][0]['platforms'][0]
     platform_data['version'] = str(semver)
     archive_file_name = str(pkg_name) + ".zip"
     platform_data['archiveFileName'] = archive_file_name
@@ -77,8 +78,8 @@ def set_new_platform_data_fields(platform_data, pkg_name, version, repository):
     platform_data['checksum'] ="SHA-256:" + str(get_package_sha256(os.path.join(pkg_assets_build_path, archive_file_name)))
     platform_data['size'] = str(get_package_size(os.path.join(pkg_assets_build_path, archive_file_name)))
 
-def add_new_platform_to_package_index(pkg_index, new_platform):    
-    pkg_index['packages'][0]['platforms'].insert(0, new_platform)
+def add_platform_to_package_index(pkg_index, platform):    
+    pkg_index['packages'][0]['platforms'].insert(1, platform)
 
 def make_package_index_file(pkg_index):
     pkg_index_json_obj = json.dumps(pkg_index, indent=2)
@@ -87,14 +88,21 @@ def make_package_index_file(pkg_index):
         pkg_file.write(pkg_index_json_obj)
 
 def build_package_index_json(pkg_name, version, repository):
-    latest_package_index = get_latest_package_index_json() # get online package index json
-    package_index = get_local_package_index_json() # append local package index template
-    new_platform_data = get_platform_data_struct_copy(package_index)
-    set_new_platform_data_fields(new_platform_data, pkg_name, version, repository)
-    add_new_platform_to_package_index(latest_package_index, new_platform_data)
-    make_package_index_file(latest_package_index)
+    # get online package index json
+    latest_package_index = get_latest_package_index_json() 
+    # get local package index template
+    local_package_index = get_local_package_index_json() 
+    # set data field in local template for newest package
+    set_new_platform_data_fields(local_package_index, pkg_name, version, repository)
+    # get old package array
+    old_platform_data = get_platform_data_struct_copy(latest_package_index)
+    # append to local package index
+    add_platform_to_package_index(local_package_index, old_platform_data)
+    make_package_index_file(local_package_index)
 
 def build_release_assets(version, repository):
+    if os.path.exists(pkg_assets_build_path):
+        os.system("rm -rf "+pkg_assets_build_path)
     os.mkdir(pkg_assets_build_path)
     pkg_name = mkdir_package_dir(version)
     build_package(pkg_name)
