@@ -1,4 +1,4 @@
-import argparse, serial, subprocess, os, sys, re, json, warnings
+import argparse, subprocess, os, sys, re, warnings, winreg
 from serial.tools.list_ports import comports
 from xmc_data import xmc_master_data
 
@@ -6,12 +6,29 @@ version = '0.1.0'
 
 jlinkexe = ''
 
+def check_python_version():
+    major = sys.version_info.major
+    minor = sys.version_info.minor
+    
+    if major != 3:
+        raise Exception(f"XMC Flasher requires Python3! Current version is {major}.{minor}")
+
+def get_jlink_install_path():
+    location = winreg.HKEY_CURRENT_USER
+    try:
+        key = winreg.OpenKeyEx(location,'SOFTWARE\\SEGGER\\J-Link',reserved=0,access=winreg.KEY_READ)
+    except:
+        raise Exception("SEGGER JLink not installed!")
+    value = winreg.QueryValueEx(key,"InstallPath")
+    winreg.CloseKey(key)
+    return value[0]
+
 def set_environment():
     global jlinkexe
     if sys.platform == 'linux' or sys.platform == 'linux2':
         jlinkexe = 'JLinkExe'
     elif sys.platform == 'win32' or sys.platform == 'cygwin':
-        jlinkexe = 'jlink'
+        jlinkexe = rf"{get_jlink_install_path()}\jlink.exe"
     elif sys.platform == 'darwin':
         jlinkexe = 'jlink'
         print('warning: mac os not validated')
@@ -112,6 +129,9 @@ def get_mem_contents(addr, bytes, device, port):
             reg_contents = re.findall('[0-9,A-F]+', line)
             break
     
+    if not reg_contents:
+        raise Exception(f"Wrong COM Port selected! {port}\n")
+
     reg_contents.remove(addr) # remove the addr from the list, just keep reg contents
     reg_contents.reverse() # jlink returns LSB first, so reverse it to get MSB on the left side
     reg_contents = ''.join(reg_contents)
@@ -239,5 +259,6 @@ def parser():
 
 if __name__ == "__main__":
     set_environment()
+    check_python_version()
     parser()
 
