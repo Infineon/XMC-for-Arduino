@@ -25,14 +25,15 @@
 //****************************************************************************
 
 /*
- * \brief Converts a float into string..
+ * \brief Converts a double into string..
  *
- * \param val The float value to convert
+ * \param val The double value to convert
  * \param width Number of digits before the "."
- * \param precision Number of digits after the "."
- * \param buf Resultant output string
+ * \param prec Number of digits after the "."
+ * \param s Resultant output string
  */
-char* dtostrf(float val, int width, unsigned int precision, char* buf);
+ 
+char* dtostrf (double val, signed int width, unsigned int prec, char *s);
 
 
 #endif /* DTOSTRF_H_ */

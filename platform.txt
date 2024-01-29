@@ -5,8 +5,8 @@
 
 # The information about this Arduino compatible environment
 # ---------
-name=XMC Family V2.x
-version=2.0.0
+name=XMC Family
+version=3.0.0
 
 # Build related core definitions
 # ---------
@@ -126,13 +126,12 @@ recipe.size.regex.data=^(?:\.data|\.VENEER_Code|\.ram_code|\.bss|\.no_init|\Stac
 
 # ARM uploader/programmers tools
 # ----------------
-
-tools.xmcprog.path={runtime.tools.XMCFlasher.path}
-tools.xmcprog.jar_file=XMCFlasher.jar
-tools.xmcprog.erase.params = -e -device "XMC{build.board.version}-{build.board.v}" 
-tools.xmcprog.erase.pattern=java -jar "{path}/{jar_file}" {erase.params}
-tools.xmcprog.upload.protocol=
-tools.xmcprog.upload.params.verbose=
-tools.xmcprog.upload.params.quiet=
-tools.xmcprog.upload.params =-p "{build.path}/{build.project_name}.hex"  -device "XMC{build.board.version}-{build.board.v}" 
-tools.xmcprog.upload.pattern=java -jar "{path}/{jar_file}" {upload.params}
+tools.xmcflasher.path={runtime.platform.path}/tools
+tools.xmcflasher.cmd.path={path}/xmc-flasher.py
+tools.xmcflasher.erase.params=-d XMC{build.board.version}-{build.board.v} -p {serial.port}
+tools.xmcflasher.erase.pattern=python {cmd.path} erase {upload.params}
+tools.xmcflasher.upload.protocol=
+tools.xmcflasher.upload.params.verbose=
+tools.xmcflasher.upload.params.quiet=
+tools.xmcflasher.upload.params=-d XMC{build.board.version}-{build.board.v} -p {serial.port} -f {build.path}/{build.project_name}.hex
+tools.xmcflasher.upload.pattern=python {cmd.path} upload {upload.params}

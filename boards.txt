@@ -4,7 +4,7 @@ menu.LIB=Additional Libraries
 
 ####################################################
 XMC1100_Boot_Kit.name=XMC1100 Boot Kit
-XMC1100_Boot_Kit.upload.tool=xmcprog
+XMC1100_Boot_Kit.upload.tool=xmcflasher
 XMC1100_Boot_Kit.upload.speed=115200
 XMC1100_Boot_Kit.upload.resetmethod=ck
 XMC1100_Boot_Kit.upload.maximum_size=65536
@@ -13,7 +13,7 @@ XMC1100_Boot_Kit.upload.wait_for_upload_port=true
 XMC1100_Boot_Kit.communication=usb
 XMC1100_Boot_Kit.protocol=dragon_isp
 XMC1100_Boot_Kit.program.protocol=dragon_isp
-XMC1100_Boot_Kit.program.tool=xmcprog
+XMC1100_Boot_Kit.program.tool=xmcflasher
 XMC1100_Boot_Kit.program.extra_params=-Pusb
 
 XMC1100_Boot_Kit.serial.disableDTR=true
@@ -48,7 +48,7 @@ XMC1100_Boot_Kit.menu.LIB.DSPNN.library.selected=-DARM_LIB_CMSIS_DSP -DARM_LIB_C
 
 ####################################################
 XMC1100_XMC2GO.name=XMC1100 XMC2Go
-XMC1100_XMC2GO.upload.tool=xmcprog
+XMC1100_XMC2GO.upload.tool=xmcflasher
 XMC1100_XMC2GO.upload.speed=115200
 XMC1100_XMC2GO.upload.resetmethod=ck
 XMC1100_XMC2GO.upload.maximum_size=65536
@@ -57,7 +57,7 @@ XMC1100_XMC2GO.upload.wait_for_upload_port=true
 XMC1100_XMC2GO.communication=usb
 XMC1100_XMC2GO.protocol=dragon_isp
 XMC1100_XMC2GO.program.protocol=dragon_isp
-XMC1100_XMC2GO.program.tool=xmcprog
+XMC1100_XMC2GO.program.tool=xmcflasher
 XMC1100_XMC2GO.program.extra_params=-Pusb
 
 XMC1100_XMC2GO.serial.disableDTR=true
@@ -92,7 +92,7 @@ XMC1100_XMC2GO.menu.LIB.DSPNN.library.selected=-DARM_LIB_CMSIS_DSP -DARM_LIB_CMS
 
 ####################################################
 XMC1300_Boot_Kit.name=XMC1300 Boot Kit
-XMC1300_Boot_Kit.upload.tool=xmcprog
+XMC1300_Boot_Kit.upload.tool=xmcflasher
 XMC1300_Boot_Kit.upload.speed=115200
 XMC1300_Boot_Kit.upload.resetmethod=ck
 XMC1300_Boot_Kit.upload.maximum_size=204800
@@ -101,7 +101,7 @@ XMC1300_Boot_Kit.upload.wait_for_upload_port=true
 XMC1300_Boot_Kit.communication=usb
 XMC1300_Boot_Kit.protocol=dragon_isp
 XMC1300_Boot_Kit.program.protocol=dragon_isp
-XMC1300_Boot_Kit.program.tool=xmcprog
+XMC1300_Boot_Kit.program.tool=xmcflasher
 XMC1300_Boot_Kit.program.extra_params=-Pusb
 
 XMC1300_Boot_Kit.serial.disableDTR=true
@@ -135,8 +135,52 @@ XMC1300_Boot_Kit.menu.LIB.DSPNN=ARM DSP / ARM NN Framework
 XMC1300_Boot_Kit.menu.LIB.DSPNN.library.selected=-DARM_LIB_CMSIS_DSP -DARM_LIB_CMSIS_NN
 
 ####################################################
+XMC1400_XMC2GO.name=XMC1400 XMC2GO
+XMC1400_XMC2GO.upload.tool=xmcflasher
+XMC1400_XMC2GO.upload.speed=115200
+XMC1400_XMC2GO.upload.resetmethod=ck
+XMC1400_XMC2GO.upload.maximum_size=65536
+XMC1400_XMC2GO.upload.wait_for_upload_port=true
+
+XMC1400_XMC2GO.communication=usb
+XMC1400_XMC2GO.protocol=dragon_isp
+XMC1400_XMC2GO.program.protocol=dragon_isp
+XMC1400_XMC2GO.program.tool=xmcflasher
+XMC1400_XMC2GO.program.extra_params=-Pusb
+
+XMC1400_XMC2GO.serial.disableDTR=true
+XMC1400_XMC2GO.serial.disableRTS=true
+
+XMC1400_XMC2GO.build.mcu=cortex-m0
+XMC1400_XMC2GO.build.f_cpu=48000000L
+XMC1400_XMC2GO.build.board=ARM_XMC
+XMC1400_XMC2GO.build.board.version=1402
+XMC1400_XMC2GO.build.board.type=Q040x0200
+XMC1400_XMC2GO.build.board.v=0200
+XMC1400_XMC2GO.build.core=./
+XMC1400_XMC2GO.build.variant=XMC1400
+XMC1400_XMC2GO.build.board_variant=XMC1400_XMC2GO
+XMC1400_XMC2GO.build.flash_size=200K
+XMC1400_XMC2GO.build.flash_ld=linker_script_200k.ld
+XMC1400_XMC2GO.build.extra_flags=-DARM_MATH_CM0 -DXMC1_SERIES
+
+XMC1400_XMC2GO.menu.UART.debug=PC
+XMC1400_XMC2GO.menu.UART.debug.uart.selected=-DSERIAL_HOSTPC
+XMC1400_XMC2GO.menu.UART.onBoard=On Board
+XMC1400_XMC2GO.menu.UART.onBoard.uart.selected=-DSERIAL_ONBOARD
+
+XMC1400_XMC2GO.menu.LIB.NONE=None
+XMC1400_XMC2GO.menu.LIB.NONE.library.selected=
+XMC1400_XMC2GO.menu.LIB.NN=ARM NN Framework
+XMC1400_XMC2GO.menu.LIB.NN.library.selected=-DARM_LIB_CMSIS_NN
+XMC1400_XMC2GO.menu.LIB.DSP=ARM DSP
+XMC1400_XMC2GO.menu.LIB.DSP.library.selected=-DARM_LIB_CMSIS_DSP
+XMC1400_XMC2GO.menu.LIB.DSPNN=ARM DSP / ARM NN Framework
+XMC1400_XMC2GO.menu.LIB.DSPNN.library.selected=-DARM_LIB_CMSIS_DSP -DARM_LIB_CMSIS_NN
+
+####################################################
 XMC1400_Arduino_Kit.name=XMC1400 Kit for Arduino
-XMC1400_Arduino_Kit.upload.tool=xmcprog
+XMC1400_Arduino_Kit.upload.tool=xmcflasher
 XMC1400_Arduino_Kit.upload.speed=115200
 XMC1400_Arduino_Kit.upload.resetmethod=ck
 XMC1400_Arduino_Kit.upload.maximum_size=204800
@@ -145,7 +189,7 @@ XMC1400_Arduino_Kit.upload.wait_for_upload_port=true
 XMC1400_Arduino_Kit.communication=usb
 XMC1400_Arduino_Kit.protocol=dragon_isp
 XMC1400_Arduino_Kit.program.protocol=dragon_isp
-XMC1400_Arduino_Kit.program.tool=xmcprog
+XMC1400_Arduino_Kit.program.tool=xmcflasher
 XMC1400_Arduino_Kit.program.extra_params=-Pusb
 
 XMC1400_Arduino_Kit.serial.disableDTR=true
@@ -180,7 +224,7 @@ XMC1400_Arduino_Kit.menu.LIB.DSPNN.library.selected=-DARM_LIB_CMSIS_DSP -DARM_LI
 
 ####################################################
 XMC4200_Platform2GO.name=XMC4200 Platform 2GO
-XMC4200_Platform2GO.upload.tool=xmcprog
+XMC4200_Platform2GO.upload.tool=xmcflasher
 XMC4200_Platform2GO.upload.speed=115200
 XMC4200_Platform2GO.upload.resetmethod=ck
 XMC4200_Platform2GO.upload.maximum_size=262144
@@ -189,7 +233,7 @@ XMC4200_Platform2GO.upload.wait_for_upload_port=true
 XMC4200_Platform2GO.communication=usb
 XMC4200_Platform2GO.protocol=dragon_isp
 XMC4200_Platform2GO.program.protocol=dragon_isp
-XMC4200_Platform2GO.program.tool=xmcprog
+XMC4200_Platform2GO.program.tool=xmcflasher
 XMC4200_Platform2GO.program.extra_params=-Pusb
 
 XMC4200_Platform2GO.serial.disableDTR=true
@@ -220,7 +264,7 @@ XMC4200_Platform2GO.menu.LIB.DSP.library.selected=-DARM_LIB_CMSIS_DSP
 
 ####################################################
 XMC4400_Platform2GO.name=XMC4400 Platform 2GO
-XMC4400_Platform2GO.upload.tool=xmcprog
+XMC4400_Platform2GO.upload.tool=xmcflasher
 XMC4400_Platform2GO.upload.speed=115200
 XMC4400_Platform2GO.upload.resetmethod=ck
 XMC4400_Platform2GO.upload.maximum_size=512000
@@ -229,7 +273,7 @@ XMC4400_Platform2GO.upload.wait_for_upload_port=true
 XMC4400_Platform2GO.communication=usb
 XMC4400_Platform2GO.protocol=dragon_isp
 XMC4400_Platform2GO.program.protocol=dragon_isp
-XMC4400_Platform2GO.program.tool=xmcprog
+XMC4400_Platform2GO.program.tool=xmcflasher
 XMC4400_Platform2GO.program.extra_params=-Pusb
 
 XMC4400_Platform2GO.serial.disableDTR=true
@@ -265,7 +309,7 @@ XMC4400_Platform2GO.menu.LIB.DSP.library.selected=-DARM_LIB_CMSIS_DSP
 
 ####################################################
 XMC4700_Relax_Kit.name=XMC4700 Relax Kit
-XMC4700_Relax_Kit.upload.tool=xmcprog
+XMC4700_Relax_Kit.upload.tool=xmcflasher
 XMC4700_Relax_Kit.upload.speed=115200
 XMC4700_Relax_Kit.upload.resetmethod=ck
 XMC4700_Relax_Kit.upload.maximum_size=2048000
@@ -274,7 +318,7 @@ XMC4700_Relax_Kit.upload.wait_for_upload_port=true
 XMC4700_Relax_Kit.communication=usb
 XMC4700_Relax_Kit.protocol=dragon_isp
 XMC4700_Relax_Kit.program.protocol=dragon_isp
-XMC4700_Relax_Kit.program.tool=xmcprog
+XMC4700_Relax_Kit.program.tool=xmcflasher
 XMC4700_Relax_Kit.program.extra_params=-Pusb
 
 XMC4700_Relax_Kit.serial.disableDTR=true
