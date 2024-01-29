@@ -1,5 +1,3 @@
-# ACTION SAVE MY LIFE
-
 # Welcome
 Welcome to the XMC-for-Arduino wiki! You'll find information about the boards ([XMC1100 2Go](XMC1100-2Go), [XMC1100 H-Bridge 2Go](XMC1100-H-Bridge-2Go), [XMC1100 Boot Kit](XMC1100-Boot-Kit), [XMC1400 2Go](XMC1400-2Go), [XMC1400 Kit for Arduino](Board/XMC1400-Kit-for-Arduino), [XMC1300 Boot Kit](XMC1300-Boot-Kit), [XMC1300 Sense2GoL](XMC1300-Sense2GoL.md), [XMC4400 Platform2Go](XMC4400-Platform2Go.md),  [XMC4700 Relax Kit](XMC4700-Relax-Kit.md), and [DEMO Radar BB XMC4700](DEMO-Radar-BB-XMC4700.md) as well as additional information. 
 Please have a look on the sidebar to find the related information and visit our site for makers [here](www.infineon.com/4makers) with additional information about other boards.

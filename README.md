@@ -54,7 +54,7 @@ If you have already installed '[DAVE™ - Development Platform for XMC™ Microc
 
 ### Required tools
 
-XMC-for-Arduino requires Python 3.x and the `serial` and `pyserial`. Make sure Python is installed in your machine and available in the system path.
+XMC-for-Arduino requires Python 3.x and  `pyserial`. Make sure Python is installed in your machine and available in the system path.
 You can check if it was successfully installed by opening your command line or terminal and typing:
 ```
   python --version
@@ -62,7 +62,7 @@ You can check if it was successfully installed by opening your command line or t
 With [pip](https://pip.pypa.io/en/stable/installation/) available, install the mentioned packages from a terminal:
 
 ```
-  pip install serial pyserial
+  pip install pyserial
 ```
 
 ### Integration in Arduino IDE
