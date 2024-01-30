@@ -8,6 +8,7 @@
 * Supported Boards
   * [XMC1100 2Go](XMC1100-2Go)
   * [XMC1100 Boot Kit](XMC1100-Boot-Kit)
+  * [XMC1300 Boot Kit](XMC1300-Boot-Kit)
   * [XMC1400 2Go](XMC1400-2Go)
   * [XMC1400 Kit for Arduino](XMC1400-Kit-for-Arduino)
   * [XMC4200 Platform2Go](XMC4200-Platform2Go)
@@ -15,7 +16,6 @@
   * [XMC4700 Relax Kit](XMC4700-Relax-Kit)
 * Legacy board (Supported until 1.7.0)
   * [XMC1100 H-Bridge 2Go](XMC1100-H-Bridge-2Go)
-  * [XMC1300 Boot Kit](XMC1300-Boot-Kit)
   * [XMC1300 Sense2GoL](XMC1300-Sense2GoL)
   * [XMC1400 Boot Kit](XMC1400-Boot-Kit)
   * [DEMO Radar BB XMC4700](DEMO-Radar-BB-XMC4700)

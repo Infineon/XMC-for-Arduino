@@ -44,7 +44,7 @@ Documentation of the Built-in libraries is to be found on [this page](https://gi
 
 ## I2S Library
 
-This library has been tested with the IM69D130 Microphone Shield2Go with both XMC4700 Relax Kit and XMC1100 XMC2Go. Please refer to the [README.md](https://github.com/Infineon/XMC-for-Arduino/blob/master/arm/libraries/I2S/README.md) of the I2S library for pin connections.
+This library has been tested with the IM69D130 Microphone Shield2Go with both XMC4700 Relax Kit and XMC1100 XMC2Go. Please refer to the [README.md](https://github.com/Infineon/XMC-for-Arduino/blob/master/libraries/I2S/README.md) of the I2S library for pin connections.
 
 ### Limitations
 With XMC 2Go (possibly also with other XMC1000 family devices), you might easily overflow the I2S buffer and you should try to reduce the I2S sampling rate if so.
