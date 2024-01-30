@@ -33,4 +33,4 @@ As all newer versions will be using architecture *xmc*.
 
 If your library ALSO supports other boards and architectures, obviously leave those in as well.
 
-Check [XMC-for-Arduino Wiki](https://github.com/Infineon/XMC-for-Arduino/wiki) for any additional information
+Check [XMC-for-Arduino Wiki](https://github.com/Infineon/XMC-for-Arduino/wiki) for any additional information.
