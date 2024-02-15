@@ -50,6 +50,7 @@ extern "C" {
 #include <xmc_spi.h>
 #include <xmc_i2c.h>
 #include <xmc_i2s.h>
+#include <xmc_can.h>
 
 //****************************************************************************
 // @Defines
