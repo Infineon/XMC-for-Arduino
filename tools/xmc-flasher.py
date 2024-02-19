@@ -1,8 +1,8 @@
-import argparse, subprocess, os, sys, re, warnings, winreg
+import argparse, subprocess, os, sys, re, warnings
 from serial.tools.list_ports import comports
 from xmc_data import xmc_master_data
 
-version = '0.1.0'
+version = '0.1.1'
 
 jlinkexe = ''
 
@@ -14,6 +14,7 @@ def check_python_version():
         raise Exception(f"XMC Flasher requires Python3! Current version is {major}.{minor}")
 
 def get_jlink_install_path():
+    import winreg
     location = winreg.HKEY_CURRENT_USER
     try:
         key = winreg.OpenKeyEx(location,'SOFTWARE\\SEGGER\\J-Link',reserved=0,access=winreg.KEY_READ)
