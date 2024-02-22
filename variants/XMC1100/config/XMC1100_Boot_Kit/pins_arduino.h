@@ -135,7 +135,7 @@ extern uint8_t SCK;
 #define LED5        2
 #define LED6        30
 
-#define digitalPinToInterrupt(p)    ((p) == 2 ? 0 : ((p) == 3 ? 1 : NOT_AN_INTERRUPT))
+#define digitalPinToInterrupt(p)    ((p) == 2 ? 0 : ((p) == 3 ? 1 : NOT_AN_INTERRUPT))s
 
 #ifdef ARDUINO_MAIN
 // Mapping of digital pins and comments
@@ -271,6 +271,7 @@ XMC_UART_t XMC_UART_0 =
   };
 
 HardwareSerial Serial( &XMC_UART_0, &rx_buffer_0, &tx_buffer_0 );
+
 
 // SPI instance
 XMC_SPI_t XMC_SPI_0 =

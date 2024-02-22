@@ -1,9 +1,9 @@
 #include "CANController.h"
 
 class CANXMC : public CANControllerClass {
-      CANSAME5x();
-        CANSAME5x(uint8_t tx_pin, uint8_t rx_pin);
-        ~CANSAME5x() final;
+      CANXMC();
+        CANXMC();
+        ~CANXMC() final;
 
         int begin(long baudRate) final;
         void end() final;

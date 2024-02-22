@@ -248,6 +248,16 @@ extern "C" {
 #endif
     } XMC_I2S_t;
 
+    /*
+    * XMC (Arduino) CAN type
+    */
+
+   typedef struct 
+   {   CAN_NODE_TypeDef can_node;
+    /* data */
+   } XMC_ARD_CAN_t;
+   
+
 //****************************************************************************
 // @Imported Global Variables
 //****************************************************************************
