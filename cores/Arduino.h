@@ -248,15 +248,23 @@ extern "C" {
 #endif
     } XMC_I2S_t;
 
+
+#ifdef CAN_xmc
     /*
     * XMC (Arduino) CAN type
     */
 
    typedef struct 
-   {   CAN_NODE_TypeDef can_node;
-    /* data */
+   {   
+    CAN_NODE_TypeDef* can_node;
+    XMC_PORT_PIN_t          rx;
+    XMC_GPIO_CONFIG_t       rx_config;
+    XMC_PORT_PIN_t          tx;
+    XMC_GPIO_CONFIG_t       tx_config;
+    XMC_CAN_NODE_RECEIVE_INPUT_t  node_input;
+    IRQn_Type irq_num;
    } XMC_ARD_CAN_t;
-   
+#endif  
 
 //****************************************************************************
 // @Imported Global Variables
@@ -288,6 +296,9 @@ extern "C" {
     
     extern XMC_I2S_t i2s_config;
 
+#ifdef CAN_xmc
+    extern XMC_ARD_CAN_t XMC_CAN_0;
+#endif
 //****************************************************************************
 // @Prototypes Of Global Functions
 //****************************************************************************

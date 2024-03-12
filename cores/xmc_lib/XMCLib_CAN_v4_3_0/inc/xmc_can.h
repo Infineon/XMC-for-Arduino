@@ -49,7 +49,7 @@
  ********************************************************************************************************************/
 #include "xmc_common.h"
 
-#if defined(CAN)
+#if defined(CAN_xmc)
 
 #include "xmc_scu.h"
 #include "xmc_can_map.h"

@@ -159,7 +159,7 @@ const XMC_PORT_PIN_t mapping_port_pin[] =
         /* 14  */ {XMC_GPIO_PORT0, 7},  // LED 1 output                                     P0.7
         /* 15  */ {XMC_GPIO_PORT0, 6},  // LED 2 output                                     P0.6
         /* 16  */ {XMC_GPIO_PORT2, 1},  // DEBUG_TX                                         P2.1
-        /* 17  */ {XMC_GPIO_PORT2, 2}   // DEBUG_RX                                         P2.2 (INPUT ONLY)
+        /* 17  */ {XMC_GPIO_PORT2, 2},   // DEBUG_RX                                         P2.2 (INPUT ONLY)
 
         /* 18  */ {XMC_GPIO_PORT1, 0},  // CAN_TX                                           P1.0 (connected with CAN Transceiver)
         /* 19  */ {XMC_GPIO_PORT1, 1}   // CAN_RX                                           P1.1 (connected with CAN Transceiver)
@@ -357,12 +357,14 @@ XMC_I2S_t i2s_config =
     .protocol_irq_service_request            = 2,
     .protocol_irq_source                     = XMC_SCU_IRQCTRL_USIC1_SR2_IRQ11 
 };
-
+#ifdef CAN
 // CAN config 
 XMC_CAN_ARD_t can_config =
 {
-    .can_node = CAN_NODE0
+    .can_node = CAN_NODE0,
 };
+#endif
+
 // Serial Interrupt and event handling
 #ifdef __cplusplus
 extern "C" {
