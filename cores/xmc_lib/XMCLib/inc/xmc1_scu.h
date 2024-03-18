@@ -137,7 +137,7 @@
 #define XMC_SCU_INTERRUPT_EVENT_TSE_DONE         SCU_INTERRUPT_SRMSK_TSE_DONE_Msk  /**< Temperature measurement Completion event. */
 #define XMC_SCU_INTERRUPT_EVENT_TSE_HIGH         SCU_INTERRUPT_SRMSK_TSE_HIGH_Msk  /**< Temperature too high event. */
 #define XMC_SCU_INTERRUPT_EVENT_TSE_LOW          SCU_INTERRUPT_SRMSK_TSE_LOW_Msk /**< Temperature too low event. */
-#if defined(CAN)
+#if defined(CAN_xmc)
 #define XMC_SCU_INTERRUPT_EVENT_PEMCAN           (((int64_t)SCU_INTERRUPT_SRMSK1_PEMCI_Msk) << 32U)   /**< MultiCAN SRAM Parity Error Event. */
 #endif
 #if (UC_SERIES == XMC14) || defined(DOXYGEN)
@@ -148,7 +148,7 @@
 /*
  *  These are the flags which may be passed to XMC_SCU_SetBMI().
  */
-#if defined(CAN) || defined(DOXYGEN)
+#if defined(CAN_xmc) || defined(DOXYGEN)
 #define XMC_SCU_BMI_HWCFG_CAN_BSL      (0x0080U) /**< CAN Bootstrap Loader Start-up Mode */
 #define XMC_SCU_BMI_HWCFG_CAN_BSLTO    (0x0090U) /**< CAN Bootstrap Loader Start-up Mode with time-out */
 #define XMC_SCU_BMI_HWCFG_SBSL_CANOPEN (0x00A0U) /**< Secure Bootstrap Loader Start-up Mode over CANopen */
@@ -169,7 +169,7 @@
 #define XMC_SCU_BMI_DAPDIS_CHANNEL_0   (0U << 9) /**< SWD/SPD_0 pin is selected */
 #define XMC_SCU_BMI_DAPDIS_CHANNEL_1   (1U << 9) /**< SWD/SPD_1 pin is selected */
 
-#if defined(CAN) || defined(DOXYGEN)
+#if defined(CAN_xmc) || defined(DOXYGEN)
 #define XMC_SCU_BMI_CANCLK_DCO1        (0U << 11) /**< Synchronous CAN clock via internal oscillator (DCO1) with enabled trimming via external reference is selected */
 #define XMC_SCU_BMI_CANCLK_OSCHP       (1U << 11) /**< Synchronous CAN clock via external oscillator (OSC_HP) is selected */
 #endif
@@ -349,7 +349,7 @@ typedef enum XMC_SCU_PERIPHERAL_CLOCK
 #if defined(POSIF1)
   XMC_SCU_PERIPHERAL_CLOCK_POSIF1 = SCU_CLK_CGATSTAT0_POSIF1_Msk, /**< POSIF0 peripheral clock gate. */
 #endif
-#if defined(CAN)
+#if defined(CAN_xmc)
   XMC_SCU_PERIPHERAL_CLOCK_MCAN = SCU_CLK_CGATSTAT0_MCAN0_Msk, /**< POSIF0 peripheral clock gate. */
 #endif
 } XMC_SCU_PERIPHERAL_CLOCK_t;
@@ -382,60 +382,60 @@ typedef enum XMC_SCU_CCU_TRIGGER
 typedef enum XMC_SCU_IRQCTRL
 {
   XMC_SCU_IRQCTRL_SCU_SR0_IRQ0              = (0U << 8U) | 0U, /**< SCU_SR0 connected to IRQ0 */
-#if defined(CAN)
+#if defined(CAN_xmc)
   XMC_SCU_IRQCTRL_CAN0_SR0_IRQ0             = (0U << 8U) | 1U, /**< CAN0_SR0 connected to IRQ0 */
 #endif
   XMC_SCU_IRQCTRL_CCU40_SR0_IRQ0            = (0U << 8U) | 2U, /**< CCU40_SR0 connected to IRQ0 */
-#if defined(CAN)
+#if defined(CAN_xmc)
   XMC_SCU_IRQCTRL_SCU_SR0_OR_CAN0_SR0_IRQ0  = (0U << 8U) | 3U, /**< SCU_SR0 and CAN_SR0 are both connected to IRQ0*/
 #endif
 
   XMC_SCU_IRQCTRL_SCU_SR1_IRQ1              = (1U << 8U) | 0U, /**< SCU_SR1 connected to IRQ1 */
-#if defined(CAN)
+#if defined(CAN_xmc)
   XMC_SCU_IRQCTRL_CAN0_SR1_IRQ1             = (1U << 8U) | 1U, /**< CAN0_SR1 connected to IRQ1 */
 #endif
 #if defined(CCU80)
   XMC_SCU_IRQCTRL_CCU80_SR0_IRQ1            = (1U << 8U) | 2U, /**< CCU80_SR0 connected to IRQ1 */
 #endif
-#if defined(CAN)
+#if defined(CAN_xmc)
   XMC_SCU_IRQCTRL_SCU_SR1_OR_CAN0_SR1_IRQ1  = (1U << 8U) | 3U, /**< SCU_SR1 and CAN0_SR1 connected to IRQ1 */
 #endif
 
   XMC_SCU_IRQCTRL_SCU_SR2_IRQ2              = (2U << 8U) | 0U, /**< SCU_SR2 connected to IRQ2 */
-#if defined(CAN)
+#if defined(CAN_xmc)
   XMC_SCU_IRQCTRL_CAN0_SR2_IRQ2             = (2U << 8U) | 1U, /**< CAN0_SR2 connected to IRQ2 */
 #endif
 #if defined(CCU80)
   XMC_SCU_IRQCTRL_CCU80_SR1_IRQ2            = (2U << 8U) | 2U, /**< CCU80_SR1 connected to IRQ2 */
 #endif
-#if defined(CAN)
+#if defined(CAN_xmc)
   XMC_SCU_IRQCTRL_SCU_SR2_OR_CAN0_SR2_IRQ2  = (2U << 8U) | 3U, /**< SCU_SR2 and CAN0_SR2 connected to IRQ2 */
 #endif
 
   XMC_SCU_IRQCTRL_ERU0_SR0_IRQ3             = (3U << 8U) | 0U, /**< ERU0_SR0 connected to IRQ3 */
   XMC_SCU_IRQCTRL_ERU1_SR0_IRQ3             = (3U << 8U) | 1U, /**< ERU1_SR0 connected to IRQ3 */
-#if defined(CAN)
+#if defined(CAN_xmc)
   XMC_SCU_IRQCTRL_CAN0_SR0_IRQ3             = (3U << 8U) | 2U, /**< CAN0_SR0 connected to IRQ3 */
 #endif
   XMC_SCU_IRQCTRL_ERU0_SR0_OR_ERU1_SR0_IRQ3 = (3U << 8U) | 3U, /**< ERU0_SR0 and ERU1_SR0 connected to IRQ3 */
 
   XMC_SCU_IRQCTRL_ERU0_SR1_IRQ4             = (4U << 8U) | 0U, /**< ERU0_SR1 connected to IRQ4 */
   XMC_SCU_IRQCTRL_ERU1_SR1_IRQ4             = (4U << 8U) | 1U, /**< ERU1_SR1 connected to IRQ4 */
-#if defined(CAN)
+#if defined(CAN_xmc)
   XMC_SCU_IRQCTRL_CAN0_SR1_IRQ4             = (4U << 8U) | 2U, /**< CAN0_SR1 connected to IRQ4 */
 #endif
   XMC_SCU_IRQCTRL_ERU0_SR1_OR_ERU1_SR1_IRQ4 = (4U << 8U) | 3U, /**< ERU0_SR1 and ERU1_SR1 connected to IRQ4 */
 
   XMC_SCU_IRQCTRL_ERU0_SR2_IRQ5             = (5U << 8U) | 0U, /**< ERU0_SR2 connected to IRQ5 */
   XMC_SCU_IRQCTRL_ERU1_SR2_IRQ5             = (5U << 8U) | 1U, /**< ERU1_SR2 connected to IRQ5 */
-#if defined(CAN)
+#if defined(CAN_xmc)
   XMC_SCU_IRQCTRL_CAN0_SR2_IRQ5             = (5U << 8U) | 2U, /**< CAN0_SR2 connected to IRQ5 */
 #endif
   XMC_SCU_IRQCTRL_ERU0_SR2_OR_ERU1_SR2_IRQ5 = (5U << 8U) | 3U, /**< ERU0_SR2 and ERU1_SR2 connected to IRQ5 */
 
   XMC_SCU_IRQCTRL_ERU0_SR3_IRQ6             = (6U << 8U) | 0U, /**< ERU0_SR3 connected to IRQ6 */
   XMC_SCU_IRQCTRL_ERU1_SR3_IRQ6             = (6U << 8U) | 1U, /**< ERU1_SR3 connected to IRQ6 */
-#if defined(CAN)
+#if defined(CAN_xmc)
   XMC_SCU_IRQCTRL_CAN0_SR3_IRQ6             = (6U << 8U) | 2U, /**< CAN0_SR3 connected to IRQ6 */
 #endif
   XMC_SCU_IRQCTRL_ERU0_SR3_OR_ERU1_SR3_IRQ6 = (6U << 8U) | 3U, /**< ERU0_SR3 and ERU1_SR3 connected to IRQ6 */
@@ -443,7 +443,7 @@ typedef enum XMC_SCU_IRQCTRL
 #if defined(MATH)
   XMC_SCU_IRQCTRL_MATH_SR0_IRQ7                = (7U << 8U) | 0U, /**< MATH_SR0 connected to IRQ7 */
 #endif
-#if defined(CAN)
+#if defined(CAN_xmc)
   XMC_SCU_IRQCTRL_CAN0_SR3_IRQ7                = (7U << 8U) | 1U, /**< CAN0_SR3 connected to IRQ7 */
 #endif
   XMC_SCU_IRQCTRL_CCU40_SR1_IRQ7               = (7U << 8U) | 2U, /**< CCU40_SR1 connected to IRQ7 */
@@ -534,28 +534,28 @@ typedef enum XMC_SCU_IRQCTRL
 
   XMC_SCU_IRQCTRL_VADC0_G0SR0_IRQ17              = (17U << 8U) | 0U, /**< VADC0_G0SR0 connected to IRQ17 */
   XMC_SCU_IRQCTRL_USIC0_SR2_IRQ17                = (17U << 8U) | 1U, /**< USIC0_SR2 connected to IRQ17 */
-#if defined(CAN)
+#if defined(CAN_xmc)
   XMC_SCU_IRQCTRL_CAN0_SR0_IRQ17                 = (17U << 8U) | 2U, /**< CAN0_SR0 connected to IRQ17 */
 #endif
   XMC_SCU_IRQCTRL_VADC0_G0SR0_OR_USIC0_SR2_IRQ17 = (17U << 8U) | 3U, /**< VADC0_G0SR0 and USIC0_SR2 connected to IRQ17 */
 
   XMC_SCU_IRQCTRL_VADC0_G0SR1_IRQ18              = (18U << 8U) | 0U, /**< VADC0_G0SR1 connected to IRQ18 */
   XMC_SCU_IRQCTRL_USIC0_SR3_IRQ18                = (18U << 8U) | 1U, /**< USIC0_SR3 connected to IRQ18 */
-#if defined(CAN)
+#if defined(CAN_xmc)
   XMC_SCU_IRQCTRL_CAN0_SR1_IRQ18                 = (18U << 8U) | 2U, /**< CAN0_SR1 connected to IRQ18 */
 #endif
   XMC_SCU_IRQCTRL_VADC0_G0SR1_OR_USIC0_SR3_IRQ18 = (18U << 8U) | 3U, /**< VADC0_G0SR1 and USIC0_SR3 connected to IRQ18 */
 
   XMC_SCU_IRQCTRL_VADC0_G1SR0_IRQ19              = (19U << 8U) | 0U, /**< VADC0_G1SR0 connected to IRQ19 */
   XMC_SCU_IRQCTRL_USIC0_SR4_IRQ19                = (19U << 8U) | 1U, /**< USIC0_SR4 connected to IRQ19 */
-#if defined(CAN)
+#if defined(CAN_xmc)
   XMC_SCU_IRQCTRL_CAN0_SR2_IRQ19                 = (19U << 8U) | 2U, /**< CAN0_SR2 connected to IRQ19 */
 #endif
   XMC_SCU_IRQCTRL_VADC0_G1SR0_OR_USIC0_SR4_IRQ19 = (19U << 8U) | 3U, /**< VADC0_G1SR0 and USIC0_SR4 connected to IRQ19 */
 
   XMC_SCU_IRQCTRL_VADC0_G1SR1_IRQ20              = (20U << 8U) | 0U, /**< VADC0_G1SR1 connected to IRQ20 */
   XMC_SCU_IRQCTRL_USIC0_SR5_IRQ20                = (20U << 8U) | 1U, /**< USIC0_SR5 connected to IRQ20 */
-#if defined(CAN)
+#if defined(CAN_xmc)
   XMC_SCU_IRQCTRL_CAN0_SR4_IRQ20                 = (20U << 8U) | 2U, /**< CAN0_SR4 connected to IRQ20 */
 #endif
   XMC_SCU_IRQCTRL_VADC0_G1SR1_OR_USIC0_SR5_IRQ20 = (20U << 8U) | 3U, /**< VADC0_G1SR1 and USIC0_SR5 connected to IRQ20 */

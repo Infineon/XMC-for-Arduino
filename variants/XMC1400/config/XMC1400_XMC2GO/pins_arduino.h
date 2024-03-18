@@ -357,7 +357,7 @@ XMC_I2S_t i2s_config =
     .protocol_irq_service_request            = 2,
     .protocol_irq_source                     = XMC_SCU_IRQCTRL_USIC1_SR2_IRQ11 
 };
-#ifdef CAN
+#ifdef CAN_xmc
 // CAN config 
 XMC_CAN_ARD_t can_config =
 {

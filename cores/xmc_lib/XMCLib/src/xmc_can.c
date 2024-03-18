@@ -67,7 +67,7 @@
  *******************************************************************************/
 #include "xmc_can.h"
 
-#if defined(CAN)
+#if defined(CAN_xmc)
 #include "xmc_scu.h"
 
 __STATIC_INLINE uint32_t max(uint32_t a, uint32_t b)
