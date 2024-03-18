@@ -1,6 +1,6 @@
-#include "CANXMC.h"
 #include <Arduino.h>
-#define CAN_FREQUENCY_VALUE ((uint32_t)20000000)
+#include "CANXMC.h"
+
 namespace ifx
 {
   XMC_CAN_MO_t CAN_message_11bits =
@@ -12,13 +12,22 @@ namespace ifx
         .can_mo_type = XMC_CAN_MO_TYPE_RECMSGOBJ,
       };
 
-  bool can_frame_received = false;
+//   XMC_CAN_MO_t CAN_message_11bits = 
+// {
+//     .can_mo_type = XMC_CAN_MO_TYPE_RECMSGOBJ,
+//     .can_id_mode = XMC_CAN_FRAME_TYPE_STANDARD_11BITS,
+//     .can_priority = XMC_CAN_ARBITRATION_MODE_IDE_DIR_BASED_PRIO_2,
+//     .can_identifier = 0xFFU,
+//     .can_id_mask = 0xFFU,
+//     .can_ide_mask = 1U,
+//     .can_mo_ptr = (CAN_MO_TypeDef*)CAN_MO0,
+//     .can_data_length = 8U,
+// };
 
-  #ifdef __cplusplus
-    extern "C"
-    {
-#endif
-    void  CAN0_7_IRQHandler(void)
+   static volatile bool can_frame_received = false;
+
+extern "C"{
+void  CAN0_7_IRQHandler(void)
     {
         /* Receive the message in the CAN_message MO */
         XMC_CAN_MO_Receive(&CAN_message_11bits);
@@ -26,11 +35,8 @@ namespace ifx
         /* Set the frame received flag to true */
         can_frame_received = true;
     };
-#ifdef __cplusplus
-    }
-#endif
+};
 
-    
   CANXMC::CANXMC(XMC_ARD_CAN_t *conf)
   {
     _XMC_CAN_config = conf;
@@ -45,13 +51,14 @@ namespace ifx
     
     XMC_CAN_NODE_NOMINAL_BIT_TIME_CONFIG_t CAN_NODE_bit_time_config =
     {
-        .can_frequency = CAN_FREQUENCY_VALUE,
+        .can_frequency = _XMC_CAN_config->can_frequency,
         .baudrate = (uint32_t)baudrate,
         .sample_point = (uint16_t)(80 * 100),
         .sjw = (uint16_t)1,
     };
+    
      /* Configuration of CAN Node and enable the clock */ 
-    XMC_CAN_InitEx(CAN_xmc, XMC_CAN_CANCLKSRC_FOHP, OSCHP_GetFrequency()); // TODO: Macro CAN
+    XMC_CAN_InitEx(CAN_xmc, XMC_CAN_CANCLKSRC_FPERI, _XMC_CAN_config->can_frequency); 
     if(XMC_CAN_STATUS_SUCCESS == XMC_CAN_NODE_NominalBitTimeConfigureEx(_XMC_CAN_config->can_node, &CAN_NODE_bit_time_config))
     {
       XMC_CAN_NODE_EnableConfigurationChange(_XMC_CAN_config->can_node);
@@ -71,10 +78,11 @@ namespace ifx
      
       XMC_CAN_MO_SetEventNodePointer(&CAN_message_11bits, XMC_CAN_MO_POINTER_EVENT_RECEIVE, 7u);
       XMC_CAN_MO_EnableEvent(&CAN_message_11bits, XMC_CAN_MO_EVENT_RECEIVE);
-      NVIC_EnableIRQ(CAN0_7_IRQn);
       XMC_CAN_NODE_DisableConfigurationChange(_XMC_CAN_config->can_node);
       XMC_CAN_NODE_ResetInitBit(_XMC_CAN_config->can_node);
 
+      /* enable the interrupt for */
+      NVIC_EnableIRQ(CAN0_7_IRQn);
       return 1;
     }
     else
@@ -96,8 +104,14 @@ namespace ifx
 
   int CANXMC::parsePacket()
   {  
-     // CAN_message_11bits.can_data_length;
-     return XMC_GPIO_GetInput(_XMC_CAN_config->rx.port, _XMC_CAN_config->rx.pin);
+    if(can_frame_received) {
+      return CAN_message_11bits.can_data_length;
+    }else{
+      Serial.print(XMC_CAN_MO_Receive(&CAN_message_11bits));
+      return 0;
+    };
+    
+     // return XMC_GPIO_GetInput(_XMC_CAN_config->rx.port, _XMC_CAN_config->rx.pin);
   };
 
   void CANXMC::onReceive(void (*callback)(int)){
@@ -138,8 +152,6 @@ namespace ifx
     XMC_CAN_NODE_SetInitBit(_XMC_CAN_config->can_node);
     return 0;
   };
-
-
 
   CANXMC CAN(&XMC_CAN_0);
 
