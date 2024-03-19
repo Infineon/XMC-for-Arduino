@@ -1,9 +1,10 @@
 # CAN API
 
-## Include Library
+## Include Library and using namespace
 
 ```arduino
-#include <CAN.h>
+#include <CANXMC.h>
+using namespace ifx;
 ```
 
 ## Setup
@@ -23,6 +24,7 @@ Returns `1` on success, `0` on failure.
 
 The RX and TX pins are determined. 
 
+<strike>
 ### End
 
 Stop the library
@@ -82,7 +84,7 @@ CAN.endPacket()
 ```
 
 Returns `1` on success, `0` on failure.
-
+</strike>
 ## Receiving data
 
 ### Parsing packet
@@ -117,6 +119,7 @@ long id = CAN.packetId();
 
 Returns the id (11-bit or 29 bit) of the received packet. Standard packets have an 11-bit id, extended packets have an 29-bit id.
 
+
 ### Packet Extended
 
 ```arduino
@@ -149,7 +152,7 @@ int availableBytes = CAN.available()
 ```
 
 Returns number of bytes available for reading.
-
+<strike>
 ### Peeking
 
 Peek at the next byte in the packet.
@@ -222,6 +225,7 @@ Wake up the CAN contoller if it was previously in sleep mode.
 ```arduino
 CAN.wakeup();
 ```
+</strike>
 
 # Develop notes
 

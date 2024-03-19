@@ -10,7 +10,7 @@ namespace ifx
         .can_mo_ptr = (CAN_MO_TypeDef*)CAN_MO0,
         {0xFFU, XMC_CAN_FRAME_TYPE_STANDARD_11BITS, XMC_CAN_ARBITRATION_MODE_IDE_DIR_BASED_PRIO_2}, // {can_identifier, can_id_mode, can_priority}
         {0xFFU, 1U}, // {can_id_mask, can_ide_mask}
-        .can_data_length = 8U,
+        .can_data_length = 0U,
         .can_mo_type = XMC_CAN_MO_TYPE_RECMSGOBJ,
       };
 
@@ -72,7 +72,7 @@ namespace ifx
       XMC_CAN_NODE_ResetInitBit(_XMC_CAN_config->can_node);
 
      /* enable the interrupt for receive 11bits message*/
-      NVIC_EnableIRQ(CAN0_7_IRQn);  
+      //NVIC_EnableIRQ(CAN0_7_IRQn);  
       return 1;
     }
     else
@@ -94,7 +94,7 @@ namespace ifx
 
   int CANXMC::parsePacket()
   {  
-     if(can_frame_received == true){
+      XMC_CAN_MO_Receive(&CAN_11bit_msg_rx);
       // check CAN frame type
       _rxId = XMC_CAN_MO_GetIdentifier(&CAN_11bit_msg_rx);
 
@@ -114,13 +114,11 @@ namespace ifx
   }
       // set the flag back and wait for next receive 
       can_frame_received = false;
+      XMC_CAN_MO_SetDataLengthCode(&CAN_11bit_msg_rx, 0U); 
       _rxIndex = 0;
 
       // return CAN message data length
       return _rxLength;
-    }else{
-      return 0;
-    };
   };
 
   void CANXMC::onReceive(void (*callback)(int)){
@@ -168,7 +166,7 @@ namespace ifx
   };
 
   void CANXMC::onInterrupt() {
-      if ( can_frame_received == true) {
+      if (can_frame_received == true) {
          CAN.parsePacket();
          CAN._onReceive(CAN.available());
       }
