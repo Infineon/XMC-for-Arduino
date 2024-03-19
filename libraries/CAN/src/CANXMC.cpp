@@ -26,18 +26,6 @@ namespace ifx
     /* Flag for receive interrupt*/
    static volatile bool can_frame_received = false;
 
-/* Interrupt Handler*/
-extern "C"{
-void  CAN0_7_IRQHandler(void)
-    {
-        /* Receive the message in the CAN_message MO */
-        XMC_CAN_MO_Receive(&CAN_11bit_msg_rx);
-
-        /* Set the frame received flag to true */
-        can_frame_received = true;
-    };
-};
-
   CANXMC::CANXMC(XMC_ARD_CAN_t *conf)
   {
     _XMC_CAN_config = conf;
@@ -136,7 +124,12 @@ void  CAN0_7_IRQHandler(void)
   };
 
   void CANXMC::onReceive(void (*callback)(int)){
-    XMC_CAN_NODE_SetInitBit(_XMC_CAN_config->can_node);
+     CANControllerClass::onReceive(callback);
+      if (callback) {
+          NVIC_EnableIRQ(CAN0_7_IRQn); 
+        } else {
+          NVIC_DisableIRQ(CAN0_7_IRQn);
+        }
   };
 
   int CANXMC::filter(int id, int mask)
@@ -174,6 +167,25 @@ void  CAN0_7_IRQHandler(void)
     return 0;
   };
 
+  void CANXMC::onInterrupt() {
+      if ( can_frame_received == true) {
+         CAN.parsePacket();
+         CAN._onReceive(CAN.available());
+      }
+
+  };
+
+
+  /* Interrupt Handler*/
+  extern "C" __attribute__((externally_visible)) void CAN0_7_IRQHandler(){
+        /* Receive the message in the CAN_message MO */
+        XMC_CAN_MO_Receive(&CAN_11bit_msg_rx);
+
+        /* Set the frame received flag to true */
+        can_frame_received = true;
+        CAN.onInterrupt();
+  }
+    
   CANXMC CAN(&XMC_CAN_0);
 
 

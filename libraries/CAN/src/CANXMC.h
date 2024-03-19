@@ -6,8 +6,6 @@
 
 namespace ifx {
 class CANXMC : public CANControllerClass {
-private:
-XMC_ARD_CAN_t* _XMC_CAN_config;
 
 
 public:
@@ -33,8 +31,11 @@ public:
       int loopback() final;
       int sleep() final;
       int wakeup() final;
+      static void onInterrupt(); //TODO: callback works, but ugly
 
-  
+private:
+      XMC_ARD_CAN_t* _XMC_CAN_config;
+      void CAN0_7_IRQHandler(void);  
 };
 
 extern CANXMC CAN;
