@@ -49,7 +49,7 @@ void onReceive(int packetSize) {
 
     // only print packet data for non-RTR packets
     while (CAN.available()) {
-      Serial.print((char)CAN.read());
+      Serial.print(CAN.read());
     }
     Serial.println();
   }
