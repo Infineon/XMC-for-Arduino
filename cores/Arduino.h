@@ -263,6 +263,10 @@ extern "C" {
       XMC_GPIO_CONFIG_t             tx_config;
       XMC_CAN_NODE_RECEIVE_INPUT_t  node_input;
       IRQn_Type                     irq_num;
+      uint32_t                      irq_service_request;
+#if (UC_SERIES == XMC14)
+      XMC_SCU_IRQCTRL_t protocol_irq_source;
+#endif
     } XMC_ARD_CAN_t;
 #endif
 

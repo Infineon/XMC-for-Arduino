@@ -65,14 +65,17 @@ namespace ifx
       XMC_CAN_AllocateMOtoNodeList(CAN_xmc, 1, 0);
      
       /* Receive 11bits*/
-      XMC_CAN_MO_SetEventNodePointer(&CAN_11bit_msg_rx, XMC_CAN_MO_POINTER_EVENT_RECEIVE, 7u);
+#if (UC_SERIES == XMC14)
+    // select interrupt source (A,B,C etc) input to NVIC node (only for XMC1400 devices)  
+      XMC_SCU_SetInterruptControl(_XMC_CAN_config->irq_num, _XMC_CAN_config->irq_source);
+#endif    
+      XMC_CAN_MO_SetEventNodePointer(&CAN_11bit_msg_rx, XMC_CAN_MO_POINTER_EVENT_RECEIVE, _XMC_CAN_config->irq_service_request);
       XMC_CAN_MO_EnableEvent(&CAN_11bit_msg_rx, XMC_CAN_MO_EVENT_RECEIVE);
 
       XMC_CAN_NODE_DisableConfigurationChange(_XMC_CAN_config->can_node);
       XMC_CAN_NODE_ResetInitBit(_XMC_CAN_config->can_node);
 
      /* enable the interrupt for receive 11bits message*/
-      //NVIC_EnableIRQ(CAN0_7_IRQn);  
       return 1;
     }
     else
@@ -124,9 +127,9 @@ namespace ifx
   void CANXMC::onReceive(void (*callback)(int)){
      CANControllerClass::onReceive(callback);
       if (callback) {
-          NVIC_EnableIRQ(CAN0_7_IRQn); 
+          NVIC_EnableIRQ(_XMC_CAN_config->irq_num); 
         } else {
-          NVIC_DisableIRQ(CAN0_7_IRQn);
+          NVIC_DisableIRQ(_XMC_CAN_config->irq_num);
         }
   };
 
@@ -170,25 +173,37 @@ namespace ifx
          CAN.parsePacket();
          CAN._onReceive(CAN.available());
       }
-
   };
 
-
   /* Interrupt Handler*/
-  extern "C" __attribute__((externally_visible)) void CAN0_7_IRQHandler(){
-        /* Receive the message in the CAN_message MO */
-        XMC_CAN_MO_Receive(&CAN_11bit_msg_rx);
+  extern "C" {
+#if defined(XMC4700_Relax_Kit)
+  void CAN0_7_IRQHandler() {
+    /* Receive the message in the CAN_message MO */
+    XMC_CAN_MO_Receive(&CAN_11bit_msg_rx);
 
-        /* Set the frame received flag to true */
-        can_frame_received = true;
-        CAN.onInterrupt();
+    /* Set the frame received flag to true */
+    can_frame_received = true;
+
+    CAN.onInterrupt();
   }
-    
+#elif defined(XMC1400_XMC2GO) {
+  void CAN0_3_IRQHandler() {
+    /* Receive the message in the CAN_message MO */
+    XMC_CAN_MO_Receive(&CAN_11bit_msg_rx);
+
+    /* Set the frame received flag to true */
+    can_frame_received = true;
+
+    CAN.onInterrupt();
+  }
+  }
+#endif
+  } // namespace ifx
+
   CANXMC CAN(&XMC_CAN_0);
 
-
-
-};
+  }; // namespace ifx
     
 
 

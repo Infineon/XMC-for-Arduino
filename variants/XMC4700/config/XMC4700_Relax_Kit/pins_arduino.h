@@ -718,18 +718,17 @@ XMC_ARD_CAN_t XMC_CAN_0 =
           .pin  = (uint8_t)13
     },
  .rx_config = {
-    .mode =  XMC_GPIO_MODE_INPUT_TRISTATE,
+    .mode =  XMC_GPIO_MODE_INPUT_TRISTATE
   },
  .tx = {  .port = (XMC_GPIO_PORT_t*)PORT1_BASE,
           .pin  = (uint8_t)12
     },
  .tx_config = {
-    .mode = (XMC_GPIO_MODE_OUTPUT_PUSH_PULL | XMC_GPIO_MODE_OUTPUT_ALT2),
-    .output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH,
-    .output_strength = XMC_GPIO_OUTPUT_STRENGTH_STRONG_MEDIUM_EDGE,
+    .mode = XMC_GPIO_MODE_OUTPUT_PUSH_PULL_ALT2
  }, 
- .node_input = XMC_CAN_NODE_RECEIVE_INPUT_RXDCC,
- .irq_num =  CAN0_7_IRQn 
+ .node_input = CAN_NODE1_RXD_P1_13,
+ .irq_num =  CAN0_7_IRQn,
+ .irq_service_request = 7u
 };
 #endif
 

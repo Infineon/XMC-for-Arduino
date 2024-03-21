@@ -35,7 +35,6 @@ public:
 
 private:
       XMC_ARD_CAN_t* _XMC_CAN_config;
-      void CAN0_7_IRQHandler(void);  
 };
 
 extern CANXMC CAN;

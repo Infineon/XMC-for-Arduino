@@ -136,6 +136,10 @@ extern const uint8_t NUM_ANALOG_INPUTS;
 #define ERU0_0_IRQHandler IRQ3_Handler // RESET
 #define ERU0_0_IRQn IRQ3_IRQn
 
+#define CAN0_3_IRQHandler IRQ7_Handler // CAN
+#define CAN0_3_IRQn IRQ7_IRQn
+
+
 #define digitalPinToInterrupt(p)    (((p) == 9) ? 0 : NOT_AN_INTERRUPT)
 
 #ifdef ARDUINO_MAIN
@@ -357,13 +361,32 @@ XMC_I2S_t i2s_config =
     .protocol_irq_service_request            = 2,
     .protocol_irq_source                     = XMC_SCU_IRQCTRL_USIC1_SR2_IRQ11 
 };
+
+// XMC CAN instance
 #ifdef CAN_xmc
-// CAN config 
-XMC_CAN_ARD_t can_config =
+XMC_ARD_CAN_t XMC_CAN_0 = 
 {
     .can_node = CAN_NODE0,
+    .can_frequency = (uint32_t)144000000,
+    .rx = { .port = (XMC_GPIO_PORT_t*)PORT1_BASE,
+            .pin  = (uint8_t)1
+        },
+    .rx_config = {
+        .mode =  XMC_GPIO_MODE_INPUT_TRISTATE,
+    },
+    .tx = {  .port = (XMC_GPIO_PORT_t*)PORT1_BASE,
+            .pin  = (uint8_t)0
+    },
+    .tx_config = {
+        .mode =XMC_GPIO_MODE_OUTPUT_PUSH_PULL_ALT9,
+    }, 
+    .node_input = CAN_NODE0_RXD_P1_1,
+    .irq_num =  CAN0_3_IRQn,
+    .irq_service_request            = 3u,
+    .irq_source                     = XMC_SCU_IRQCTRL_CAN0_SR3_IRQ7
 };
 #endif
+
 
 // Serial Interrupt and event handling
 #ifdef __cplusplus
