@@ -375,6 +375,30 @@ XMC_I2C_t XMC_I2C_0 =
     .protocol_irq_service_request       	  = 2
 };
 
+// XMC CAN instance
+#ifdef CAN_xmc
+XMC_ARD_CAN_t XMC_CAN_0 = 
+{
+ .can_node = CAN_NODE0,
+ .can_frequency = (uint32_t)144000000,
+ .rx = {  .port = (XMC_GPIO_PORT_t*)PORT14_BASE,
+          .pin  = (uint8_t)3
+    },
+ .rx_config = {
+    .mode =  XMC_GPIO_MODE_INPUT_TRISTATE
+  },
+ .tx = {  .port = (XMC_GPIO_PORT_t*)PORT2_BASE,
+          .pin  = (uint8_t)0
+    },
+ .tx_config = {
+    .mode = XMC_GPIO_MODE_OUTPUT_PUSH_PULL_ALT1
+ }, 
+ .node_input = CAN_NODE0_RXD_P14_3,
+ .irq_num =  CAN0_7_IRQn,
+ .irq_service_request = 7u
+};
+#endif
+
 // Serial Interrupt and event handling
 #ifdef __cplusplus
 extern "C" {

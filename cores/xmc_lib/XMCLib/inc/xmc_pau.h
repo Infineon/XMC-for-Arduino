@@ -229,7 +229,7 @@ typedef enum XMC_PAU_PERIPHERAL
 #if defined(BCCU0)   
    XMC_PAU_PERIPHERAL_BCCU0               = PAU_PRIVDIS2_PDIS15_Msk | 0x20000000U, /**< BCCU0 Privilege Disable Flag */
 #endif
-#if defined(CAN)   
+#if defined(CAN_xmc)   
 #if defined(CAN_NODE0)   
    XMC_PAU_PERIPHERAL_MCAN_NODE0_AND_GLOBAL = PAU_PRIVDIS2_PDIS21_Msk | 0x20000000U, /**< MCAN NODE0 and Global SFRs Privilege */
 #endif   

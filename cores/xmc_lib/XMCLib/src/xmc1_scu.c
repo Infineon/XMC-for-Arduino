@@ -174,7 +174,7 @@ static XMC_SCU_INTERRUPT_EVENT_t event_masks[SCU_IRQ_NUM] =
 #if defined(USIC1)
    XMC_SCU_INTERRUPT_EVENT_PEUSIC1 |
 #endif
-#if defined(CAN)
+#if defined(CAN_xmc)
    XMC_SCU_INTERRUPT_EVENT_PEMCAN |
 #endif
 #if UC_SERIES == XMC14
@@ -282,7 +282,7 @@ __STATIC_INLINE bool XMC_SCU_INTERRUPT_IsValidEvent(XMC_SCU_INTERRUPT_EVENT_t ev
 #if defined(USIC1)
           (event == XMC_SCU_INTERRUPT_EVENT_PEUSIC1) ||
 #endif
-#if defined(CAN)
+#if defined(CAN_xmc)
           (event == XMC_SCU_INTERRUPT_EVENT_PEMCAN) ||
 #endif
 #if UC_SERIES == XMC14

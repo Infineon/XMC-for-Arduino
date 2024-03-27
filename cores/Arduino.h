@@ -50,6 +50,7 @@ extern "C" {
 #include <xmc_spi.h>
 #include <xmc_i2c.h>
 #include <xmc_i2s.h>
+#include <xmc_can.h>
 
 //****************************************************************************
 // @Defines
@@ -247,9 +248,31 @@ extern "C" {
 #endif
     } XMC_I2S_t;
 
-//****************************************************************************
-// @Imported Global Variables
-//****************************************************************************
+#ifdef CAN_xmc
+    /*
+     * XMC (Arduino) CAN type
+     */
+
+    typedef struct 
+    {
+      CAN_NODE_TypeDef              *can_node;
+      uint32_t                      can_frequency;
+      XMC_PORT_PIN_t                rx;
+      XMC_GPIO_CONFIG_t             rx_config;
+      XMC_PORT_PIN_t                tx;
+      XMC_GPIO_CONFIG_t             tx_config;
+      XMC_CAN_NODE_RECEIVE_INPUT_t  node_input;
+      IRQn_Type                     irq_num;
+      uint32_t                      irq_service_request;
+#if (UC_SERIES == XMC14)
+      XMC_SCU_IRQCTRL_t protocol_irq_source;
+#endif
+    } XMC_ARD_CAN_t;
+#endif
+
+    //****************************************************************************
+    // @Imported Global Variables
+    //****************************************************************************
     extern const XMC_PORT_PIN_t mapping_port_pin[];
     extern const XMC_PIN_INTERRUPT_t mapping_interrupt[];
     extern const uint8_t mapping_pin_PWM4[][ 2 ];
@@ -277,6 +300,9 @@ extern "C" {
     
     extern XMC_I2S_t i2s_config;
 
+#ifdef CAN_xmc
+    extern XMC_ARD_CAN_t XMC_CAN_0;
+#endif
 //****************************************************************************
 // @Prototypes Of Global Functions
 //****************************************************************************

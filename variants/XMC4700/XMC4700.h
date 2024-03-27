@@ -17617,7 +17617,7 @@ typedef struct {                                    /*!< (@ 0x48028F00) PORT15 S
 #define USIC1_CH1                       ((USIC_CH_TypeDef            *) USIC1_CH1_BASE)
 #define USIC2_CH0                       ((USIC_CH_TypeDef            *) USIC2_CH0_BASE)
 #define USIC2_CH1                       ((USIC_CH_TypeDef            *) USIC2_CH1_BASE)
-#define CAN                             ((CAN_GLOBAL_TypeDef                *) CAN_BASE)
+#define CAN_xmc                             ((CAN_GLOBAL_TypeDef                *) CAN_BASE)
 #define CAN_NODE0                       ((CAN_NODE_TypeDef           *) CAN_NODE0_BASE)
 #define CAN_NODE1                       ((CAN_NODE_TypeDef           *) CAN_NODE1_BASE)
 #define CAN_NODE2                       ((CAN_NODE_TypeDef           *) CAN_NODE2_BASE)

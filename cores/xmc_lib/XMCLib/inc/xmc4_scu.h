@@ -346,7 +346,7 @@ typedef enum XMC_SCU_PERIPHERAL_RESET
 #if defined(LEDTS0)
   XMC_SCU_PERIPHERAL_RESET_LEDTS0 = (SCU_RESET_PRSTAT1_LEDTSCU0RS_Msk | 0x10000000UL), /**< LEDTS0 reset. */
 #endif  
-#if defined(CAN)
+#if defined(CAN_xmc)
   XMC_SCU_PERIPHERAL_RESET_MCAN   = (SCU_RESET_PRSTAT1_MCAN0RS_Msk | 0x10000000UL), /**< MCAN reset. */
 #endif  
 #if defined(DAC)  
@@ -448,7 +448,7 @@ typedef enum XMC_SCU_PERIPHERAL_CLOCK
 #if defined(LEDTS0)
   XMC_SCU_PERIPHERAL_CLOCK_LEDTS0 = (SCU_CLK_CGATSTAT1_LEDTSCU0_Msk | 0x10000000UL), /**< LEDTS0 peripheral gating. */
 #endif  
-#if defined(CAN)
+#if defined(CAN_xmc)
   XMC_SCU_PERIPHERAL_CLOCK_MCAN   = (SCU_CLK_CGATSTAT1_MCAN0_Msk | 0x10000000UL),   /**< MCAN peripheral gating. */
 #endif
 #if defined(DAC)  
