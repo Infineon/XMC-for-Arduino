@@ -1,9 +1,6 @@
 #include "CANController.h"
 #include "xmc_can.h"
 
-#ifndef CAN_h
-#define CAN_h
-
 namespace ifx {
 class CANXMC : public CANControllerClass {
 

@@ -1,13 +1,13 @@
 // Copyright (c) Sandeep Mistry. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-#include <CANXMC.h>
+#include <CAN.h>
 using namespace ifx;
 
 void setup() {
   Serial.begin(9600);
   while (!Serial);
-
+  delay(1000);
   Serial.println("CAN Receiver Callback");
 
   // start the CAN bus at 500 kbps
