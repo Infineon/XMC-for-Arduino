@@ -32,19 +32,19 @@ void loop() {
 
   delay(1000);
 
-  // send extended packet: id is 29 bits, packet can contain up to 8 bytes of data
-  Serial.print("Sending extended packet ... ");
+  // // send extended packet: id is 29 bits, packet can contain up to 8 bytes of data
+  // Serial.print("Sending extended packet ... ");
 
-  CAN.beginExtendedPacket(0xabcdef);
-  CAN.write('w');
-  CAN.write('o');
-  CAN.write('r');
-  CAN.write('l');
-  CAN.write('d');
-  CAN.endPacket();
+  // CAN.beginExtendedPacket(0xabcdef);
+  // CAN.write('w');
+  // CAN.write('o');
+  // CAN.write('r');
+  // CAN.write('l');
+  // CAN.write('d');
+  // CAN.endPacket();
 
-  Serial.println("done");
+  // Serial.println("done");
 
-  delay(1000);
+  // delay(1000);
 }
 

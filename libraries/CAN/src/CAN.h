@@ -4,3 +4,5 @@
 #if defined(CAN_xmc)
 #include "CANXMC.h"
 #endif
+
+#endif

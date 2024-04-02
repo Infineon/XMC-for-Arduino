@@ -15,6 +15,7 @@ void setup() {
     Serial.println("Starting CAN failed!");
     while (1);
   }
+  CAN.setDeviceId(0x12);
 }
 
 void loop() {
@@ -48,7 +49,7 @@ void loop() {
 
       // only print packet data for non-RTR packets
       while (CAN.available()) {
-        Serial.print(CAN.read());
+        Serial.print((char)CAN.read());
       }
       Serial.println();
     }

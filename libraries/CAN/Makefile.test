@@ -4,6 +4,8 @@
 ### Example program
 make FQBN=Infineon:xmc:XMC4700_Relax_Kit PORT=COM20 CANReceiver flash monitor
 
+make FQBN=Infineon:xmc:XMC4700_Relax_Kit PORT=COM20 CANReceiverCallback flash monitor
+
 
 
 ### Unit tests

@@ -18,6 +18,7 @@ void setup() {
 
   // register the receive callback
   CAN.onReceive(onReceive);
+  CAN.setDeviceId(0x12);
 }
 
 void loop() {
@@ -49,7 +50,7 @@ void onReceive(int packetSize) {
 
     // only print packet data for non-RTR packets
     while (CAN.available()) {
-      Serial.print(CAN.read());
+      Serial.print((char)CAN.read());
     }
     Serial.println();
   }

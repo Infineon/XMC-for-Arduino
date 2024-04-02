@@ -28,7 +28,9 @@ public:
       int loopback() final;
       int sleep() final;
       int wakeup() final;
+      int setDeviceId(long);
       static void onInterrupt(); //TODO: callback works, but ugly
+
 
 private:
       XMC_ARD_CAN_t* _XMC_CAN_config;
@@ -37,4 +39,3 @@ private:
 extern CANXMC CAN;
 
 };
-#endif /* CAN_h */
