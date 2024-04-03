@@ -17,13 +17,20 @@ Initialize the library with the specified bit rate.
 CAN.begin(bitrate, id);
 ```
  * `bitrate` - bit rate in bits per seconds (bps) (`1000E3`, `500E3`(default), `250E3`, `200E3`, `125E3`, `100E3`, `80E3`, `50E3`, `40E3`, `20E3`, `10E3`, `5E3`)
- * `id` - 11 bits standard id of the device. (default: `0x12`)
 
 Returns `1` on success, `0` on failure.
 
 ### Set pins
 
 The RX and TX pins are determined. 
+
+### Set device id
+
+```arduino
+  CAN.setDeviceId(id);
+```
+ * `id` - 11 bits standard id of the device. (default: `0x12`)
+
 
 ### End
 
