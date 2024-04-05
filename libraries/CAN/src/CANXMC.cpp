@@ -14,7 +14,7 @@ namespace ifx
         .can_mo_type = XMC_CAN_MO_TYPE_RECMSGOBJ,
       };
 
-   XMC_CAN_MO_t CAN_msg_tx = 
+  XMC_CAN_MO_t CAN_msg_tx = 
 {       
     .can_mo_ptr = (CAN_MO_TypeDef*)CAN_MO1,
     {0xFF,  XMC_CAN_FRAME_TYPE_STANDARD_11BITS, XMC_CAN_ARBITRATION_MODE_ORDER_BASED_PRIO_1}, // {can_identifier, can_id_mode, can_priority}
@@ -42,14 +42,14 @@ namespace ifx
   }
   CANXMC::~CANXMC() {}
 
-  int CANXMC::setDeviceId(long id = 0x12) { // TODO: delete in the future!
+  int CANXMC::setIdentifier(long id) { // TODO: delete in the future!
                                             // figure out filtering problem
     XMC_CAN_MO_SetIdentifier(&CAN_msg_rx, id);
     return 0;
   };
 
 
-  int CANXMC::begin(long baudrate = 500e3)
+  int CANXMC::begin(long baudrate /*= 500e3*/)
   {
     /* CAN bit time configuration*/
     XMC_CAN_NODE_NOMINAL_BIT_TIME_CONFIG_t CAN_NODE_bit_time_config =
@@ -132,38 +132,41 @@ namespace ifx
 
   int CANXMC::parsePacket()
   {  
+    while((XMC_CAN_MO_GetStatus(&CAN_msg_rx) & CAN_MO_MOSTAT_NEWDAT_Msk) >> CAN_MO_MOSTAT_NEWDAT_Pos != 1);
       // XMC_CAN_MO_UpdateData(&CAN_msg_rx);
       XMC_CAN_MO_Receive(&CAN_msg_rx);
 
 
-          // check CAN frame type
-          _rxId = XMC_CAN_MO_GetIdentifier(&CAN_msg_rx);
+      // check CAN frame type
+      _rxId = XMC_CAN_MO_GetIdentifier(&CAN_msg_rx);
 
-          if (CAN_msg_rx.can_id_mode == XMC_CAN_FRAME_TYPE_EXTENDED_29BITS){
-            _rxExtended = true;
-          } else {
-            _rxExtended = false;
-          };
-
-          _rxRtr = CAN_msg_rx.can_mo_ptr->MOFCR & (uint32_t)CAN_MO_MOFCR_RMM_Msk;
-          _rxDlc = CAN_msg_rx.can_data_length;
-          if (_rxRtr) {
-            _rxLength = 0;
-          } else {
-          _rxLength = _rxDlc;
-          memcpy(_rxData, CAN_msg_rx.can_data_byte, _rxLength);
-    }
-        // set the flag back and wait for next receive 
-        can_frame_received = false;
-        // XMC_CAN_MO_SetDataLengthCode(&CAN_msg_rx, 0U); 
-        _rxIndex = 0;
-
-      if((uint8_t)((uint32_t)(XMC_CAN_MO_GetStatus(&CAN_msg_rx) & CAN_MO_MOSTAT_NEWDAT_Msk) >> CAN_MO_MOSTAT_NEWDAT_Pos)){
-        // return CAN message data length
-        return _rxLength;
+      if (CAN_msg_rx.can_id_mode == XMC_CAN_FRAME_TYPE_EXTENDED_29BITS){
+        _rxExtended = true;
       } else {
-        return 0;
+        _rxExtended = false;
       };
+
+      _rxRtr = CAN_msg_rx.can_mo_ptr->MOFCR & (uint32_t)CAN_MO_MOFCR_RMM_Msk;
+      _rxDlc = CAN_msg_rx.can_data_length;
+      if (_rxRtr) {
+        _rxLength = 0;
+      } else {
+      _rxLength = _rxDlc;
+      memcpy(_rxData, CAN_msg_rx.can_data_byte, _rxLength);
+  	  }
+    // set the flag back and wait for next receive 
+    can_frame_received = false;
+    // XMC_CAN_MO_SetDataLengthCode(&CAN_msg_rx, 0U); 
+    _rxIndex = 0;
+    
+    return _rxLength;
+
+      // if((XMC_CAN_MO_GetStatus(&CAN_msg_rx) & CAN_MO_MOSTAT_NEWDAT_Msk) >> CAN_MO_MOSTAT_NEWDAT_Pos){
+      //   // return CAN message data length
+      //   return _rxLength;
+      // } else {
+      //   return 0;
+      // };
     
   };
 

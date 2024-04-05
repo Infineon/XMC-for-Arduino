@@ -11,7 +11,7 @@
 
 
 // project cpp includes
-#include "CAN.hpp"
+#include "CAN.h"
 
 
 // test includes

@@ -24,12 +24,12 @@ Returns `1` on success, `0` on failure.
 
 The RX and TX pins are determined. 
 
-### Set device id
+### Set identifier
 
 ```arduino
-  CAN.setDeviceId(id);
+  CAN.setIdentifier(id);
 ```
- * `id` - 11 bits standard id of the device. (default: `0x12`)
+ * `id` - 11 bits standard identifier. Reflecting the contents and priority of the message. (default: `0x12`)
 
 
 ### End

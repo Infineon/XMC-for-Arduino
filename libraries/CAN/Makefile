@@ -36,7 +36,7 @@ test: unity flash
 #test: unity compile
 
 
-EXAMPLES = CANReceiver CANReceiverCallback 
+EXAMPLES = CANReceiver CANReceiverCallback CANSender
 
 
 clean:
@@ -46,8 +46,8 @@ clean:
 arduino: clean
 	mkdir -p build
 # copy library file
-# cp -r libraries/CAN/* build 
-# find src -name '*.[hc]*' -a \( \! -name 'main*' \) -print -exec cp {} build \;
+#	cp -r libraries/CAN/* build 
+# 	find src -name '*.[hc]*' -a \( \! -name 'main*' \) -print -exec cp {} build \;
 
 
 CANReceiver: arduino
@@ -56,6 +56,8 @@ CANReceiver: arduino
 CANReceiverCallback: arduino
 	cp examples/CANReceiverCallback/CANReceiverCallback.ino build/build.ino	
 
+CANSender: arduino
+	cp examples/CANSender/CANSender.ino build/build.ino	
 
 # master1:
 # 	...

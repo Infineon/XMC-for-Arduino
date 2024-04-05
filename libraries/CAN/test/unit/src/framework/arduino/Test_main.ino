@@ -46,7 +46,7 @@ void RunAllTests(void)
 
 //
 void setup() {
-    Serial.begin(115200);
+    Serial.begin(9600);
 
     Serial.print("setup done.\n");
 }

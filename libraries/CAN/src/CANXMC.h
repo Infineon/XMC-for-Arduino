@@ -10,7 +10,7 @@ public:
       CANXMC(XMC_ARD_CAN_t* conf);
       ~CANXMC() final;
 
-      int begin(long baudRate) final;
+      int begin(long baudRate = 500E3) final;
       void end() final;
 
       int endPacket() final;
@@ -28,7 +28,7 @@ public:
       int loopback() final;
       int sleep() final;
       int wakeup() final;
-      int setDeviceId(long);
+      int setIdentifier(long);
       static void onInterrupt(); //TODO: callback works, but ugly
 
 

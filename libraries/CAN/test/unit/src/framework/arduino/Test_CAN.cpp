@@ -7,8 +7,8 @@
 
 
 // variables used in the tests below that have to be accessed in the setup and tear down methods
-static ifx::CAN dut;
-
+// static ifx::CANXMC dut(&XMC_CAN_0);
+// ifx::CAN
 
 // test includes that may require dut
 
@@ -43,19 +43,25 @@ static TEST_TEAR_DOWN(CAN_internal)
 // Functionality not - yet - supported
 TEST_IFX(CAN_internal, checkUnsupportedFunctionality)
 {
-    TEST_ASSERT_FALSE( dut.method_unsupported() );
+    TEST_ASSERT_FALSE( ifx::CAN.filter(0x12, 0xFF) );
+    TEST_ASSERT_FALSE( ifx::CAN.filter(0x121212, 0xFFFFFFFF) );
+    TEST_ASSERT_FALSE( ifx::CAN.observe() );
+    TEST_ASSERT_FALSE( ifx::CAN.loopback() );
+    TEST_ASSERT_FALSE( ifx::CAN.sleep() );
+    TEST_ASSERT_FALSE( ifx::CAN.wakeup() );
 }
 
 
 TEST_IFX(CAN_internal, checkSupportedFunctionality)
 {
-    TEST_ASSERT_TRUE( dut.method_1() );
+    TEST_ASSERT_TRUE( ifx::CAN.begin() );
 }
 
 
-TEST_IFX(CAN_internal, checkWhatever)
-{
-}
+// TEST_IFX(CAN_internal, checkInitTxMessageObject)
+// {
+//     TEST_ASSERT_EQUAL_UINT32(ifx::CAN_msg_tx.can_mo_type, XMC_CAN_MO_TYPE_RECMSGOBJ);
+// }
 
 
 // Bundle all tests to be executed for this test group
@@ -64,7 +70,7 @@ static TEST_GROUP_RUNNER(CAN_internal)
     RUN_TEST_CASE(CAN_internal, checkUnsupportedFunctionality);
     RUN_TEST_CASE(CAN_internal, checkSupportedFunctionality);
 
-    RUN_TEST_CASE(CAN_internal, checkWhatever);
+    // RUN_TEST_CASE(CAN_internal, checkWhatever);
 }
 
 

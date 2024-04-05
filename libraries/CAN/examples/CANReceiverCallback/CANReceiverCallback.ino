@@ -18,7 +18,7 @@ void setup() {
 
   // register the receive callback
   CAN.onReceive(onReceive);
-  CAN.setDeviceId(0x12);
+  CAN.setIdentifier(0x12);
 }
 
 void loop() {

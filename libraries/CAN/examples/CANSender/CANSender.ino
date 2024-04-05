@@ -2,6 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 #include <CAN.h>
+using namespace ifx;
 
 void setup() {
   Serial.begin(9600);
@@ -32,19 +33,16 @@ void loop() {
 
   delay(1000);
 
-  // // send extended packet: id is 29 bits, packet can contain up to 8 bytes of data
-  // Serial.print("Sending extended packet ... ");
+  CAN.beginPacket(0x12);
+  CAN.write('w');
+  CAN.write('o');
+  CAN.write('r');
+  CAN.write('l');
+  CAN.write('d');
+  CAN.endPacket();
 
-  // CAN.beginExtendedPacket(0xabcdef);
-  // CAN.write('w');
-  // CAN.write('o');
-  // CAN.write('r');
-  // CAN.write('l');
-  // CAN.write('d');
-  // CAN.endPacket();
+  Serial.println("done");
 
-  // Serial.println("done");
-
-  // delay(1000);
+  delay(1000);
 }
 
