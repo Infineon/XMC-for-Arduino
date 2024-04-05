@@ -49,8 +49,16 @@ Additionally, please consult the [releases](https://github.com/Infineon/XMC-for-
 ### Prework for SEGGER J-Link
 
 In order to use the Infineon XMC microcontrollers by this repository and program them, you need [SEGGER J-Link](https://www.segger.com/downloads/jlink) installed on your PC. Please follow this link [SEGGER J-Link](https://www.segger.com/downloads/jlink) and install the J-Link Software and Documentation Pack for your respective operating system (OS).
+
+![J-Link](resources/wiki/image/jlink_install.png)
+
 If you have already installed '[DAVE™ - Development Platform for XMC™ Microcontrollers](https://www.infineon.com/cms/de/product/microcontroller/32-bit-industrial-microcontroller-based-on-arm-registered-cortex-registered-m/dave-version-4-free-development-platform-for-code-generation/channel.html?channel=db3a30433580b37101359f8ee6963814)', you might skip this step as you should have the respective drivers on your system.
-![J-Link](https://raw.githubusercontent.com/infineon/assets/master/Pictures/J-Link_Packages.png)
+
+If you are downloading Jlink for the first time, don't forget to check the box: Install USB Driver for J-Link.
+
+![J-Link-driver](resources/wiki/image/J-Link_Installer_options_page.png)
+
+
 
 ### Required tools
 
