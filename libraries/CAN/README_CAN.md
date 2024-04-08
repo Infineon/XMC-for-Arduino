@@ -3,7 +3,7 @@
 ## Include Library and using namespace
 
 ```arduino
-#include <CANXMC.h>
+#include <CAN.h>
 using namespace ifx;
 ```
 
@@ -14,9 +14,9 @@ using namespace ifx;
 Initialize the library with the specified bit rate.
 
 ```arduino
-CAN.begin(bitrate);
+CAN.begin(bitrate, id);
 ```
- * `bitrate` - bit rate in bits per seconds (bps) (default 500E3. `1000E3`, `500E3`, `250E3`, `200E3`, `125E3`, `100E3`, `80E3`, `50E3`, `40E3`, `20E3`, `10E3`, `5E3`)
+ * `bitrate` - bit rate in bits per seconds (bps) (`1000E3`, `500E3`(default), `250E3`, `200E3`, `125E3`, `100E3`, `80E3`, `50E3`, `40E3`, `20E3`, `10E3`, `5E3`)
 
 Returns `1` on success, `0` on failure.
 
@@ -24,7 +24,14 @@ Returns `1` on success, `0` on failure.
 
 The RX and TX pins are determined. 
 
-<strike>
+### Set identifier
+
+```arduino
+  CAN.setIdentifier(id);
+```
+ * `id` - 11 bits standard identifier. Reflecting the contents and priority of the message. (default: `0x12`)
+
+
 ### End
 
 Stop the library
@@ -32,6 +39,7 @@ Stop the library
 ```arduino
 CAN.end()
 ```
+
 
 ## Sending data
 
@@ -43,13 +51,9 @@ Start the sequence of sending a packet.
 CAN.beginPacket(id);
 CAN.beginPacket(id, dlc);
 CAN.beginPacket(id, dlc, rtr);
-
-CAN.beginExtendedPacket(id);
-CAN.beginExtendedPacket(id, dlc);
-CAN.beginExtendedPacket(id, dlc, rtr);
 ```
 
- * `id` - 11-bit id (standard packet) or 29-bit packet id (extended packet)
+ * `id` - 11-bit id (standard packet) <strike> or 29-bit packet id (extended packet)</strike>
  * `dlc` - (optional) value of Data Length Code (DLC) field of packet, default is size of data written in packet
  * `rtr` - (optional) value of Remote Transmission Request (RTR) field of packet (`false` or `true`), defaults to `false`. RTR packets contain no data, the DLC field of the packet represents the requested length.
 
@@ -84,7 +88,7 @@ CAN.endPacket()
 ```
 
 Returns `1` on success, `0` on failure.
-</strike>
+
 ## Receiving data
 
 ### Parsing packet
@@ -152,7 +156,7 @@ int availableBytes = CAN.available()
 ```
 
 Returns number of bytes available for reading.
-<strike>
+
 ### Peeking
 
 Peek at the next byte in the packet.
@@ -175,6 +179,7 @@ Returns the next byte in the packet or `-1` if no bytes are available.
 
 **Note:** Other Arduino [`Stream` API's](https://www.arduino.cc/en/Reference/Stream) can also be used to read data from the packet
 
+<strike>
 ### Filtering
 
 Filter packets that meet the desired criteria.

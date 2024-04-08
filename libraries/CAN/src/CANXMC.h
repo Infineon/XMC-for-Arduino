@@ -1,9 +1,6 @@
 #include "CANController.h"
 #include "xmc_can.h"
 
-#ifndef CAN_h
-#define CAN_h
-
 namespace ifx {
 class CANXMC : public CANControllerClass {
 
@@ -13,7 +10,7 @@ public:
       CANXMC(XMC_ARD_CAN_t* conf);
       ~CANXMC() final;
 
-      int begin(long baudRate) final;
+      int begin(long baudRate = 500E3) final;
       void end() final;
 
       int endPacket() final;
@@ -31,7 +28,9 @@ public:
       int loopback() final;
       int sleep() final;
       int wakeup() final;
+      int setIdentifier(long);
       static void onInterrupt(); //TODO: callback works, but ugly
+
 
 private:
       XMC_ARD_CAN_t* _XMC_CAN_config;
@@ -40,4 +39,3 @@ private:
 extern CANXMC CAN;
 
 };
-#endif /* CAN_h */
