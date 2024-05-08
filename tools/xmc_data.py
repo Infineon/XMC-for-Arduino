@@ -29,7 +29,7 @@ xmc_master_data = {
          "bitposition_LSB":"12"
       }
    },
-   "XMC1300-0200":{
+   "XMC1302-0200":{
       "IDCHIP":{
          "addr":"40010004",
          "size":"4",
