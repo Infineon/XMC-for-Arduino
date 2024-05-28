@@ -1,46 +1,35 @@
-#include <Arduino.h>
 #include "CANXMC.h"
+#include <Arduino.h>
 
-namespace ifx
-{
 
-  /* CAN Message Object definition */
-  XMC_CAN_MO_t CAN_msg_rx =
-      {
-        .can_mo_ptr = (CAN_MO_TypeDef*)CAN_MO0,
-        {0xFF,  XMC_CAN_FRAME_TYPE_STANDARD_11BITS, XMC_CAN_ARBITRATION_MODE_ORDER_BASED_PRIO_1}, // {can_identifier, can_id_mode, can_priority}
-        {0xFFU, 1U}, // {can_id_mask, can_ide_mask}
-        .can_data_length = 0U,
-        .can_mo_type = XMC_CAN_MO_TYPE_RECMSGOBJ,
-      };
+namespace ifx {
 
-  XMC_CAN_MO_t CAN_msg_tx = 
-{       
-    .can_mo_ptr = (CAN_MO_TypeDef*)CAN_MO1,
-    {0xFF,  XMC_CAN_FRAME_TYPE_STANDARD_11BITS, XMC_CAN_ARBITRATION_MODE_ORDER_BASED_PRIO_1}, // {can_identifier, can_id_mode, can_priority}
+/* CAN Receive Message Object definition */
+XMC_CAN_MO_t CAN_msg_rx = {
+    .can_mo_ptr = (CAN_MO_TypeDef *)CAN_MO0,
+    {0xFF, XMC_CAN_FRAME_TYPE_STANDARD_11BITS, // {can_identifier, can_id_mode
+     XMC_CAN_ARBITRATION_MODE_ORDER_BASED_PRIO_1}, // can_priority}
+    {0xFFU, 1U}, // {can_id_mask, can_ide_mask}
+    .can_data_length = 0U,
+    .can_mo_type = XMC_CAN_MO_TYPE_RECMSGOBJ,
+};
+
+/* CAN Transmit Message Object definition */
+XMC_CAN_MO_t CAN_msg_tx = {
+    .can_mo_ptr = (CAN_MO_TypeDef *)CAN_MO1,
+    {0xFF, XMC_CAN_FRAME_TYPE_STANDARD_11BITS, // {can_identifier, can_id_mode
+     XMC_CAN_ARBITRATION_MODE_ORDER_BASED_PRIO_1}, // can_priority}
     {0xFFU, 1U}, // {can_id_mask, can_ide_mask}
     .can_data_length = 1U,
     .can_mo_type = XMC_CAN_MO_TYPE_TRANSMSGOBJ,
-};   
+};
 
-    XMC_CAN_MO_t CAN_29bit_msg_rx =
-      {
-        .can_mo_ptr = (CAN_MO_TypeDef*)CAN_MO1,
-        {0xFFU, XMC_CAN_FRAME_TYPE_EXTENDED_29BITS, XMC_CAN_ARBITRATION_MODE_IDE_DIR_BASED_PRIO_2}, // {can_identifier, can_id_mode, can_priority}
-        {0xFFU, 1U}, // {can_id_mask, can_ide_mask}
-        .can_data_length = 0U,
-        .can_mo_type = XMC_CAN_MO_TYPE_RECMSGOBJ,
-      };
+/* Flag for receive interrupt*/
+static volatile bool can_frame_received = false;
 
-    /* Flag for receive interrupt*/
-   static volatile bool can_frame_received = false;
-
-  CANXMC::CANXMC(XMC_ARD_CAN_t *conf)
-  {
-    _XMC_CAN_config = conf;
-
-  }
-  CANXMC::~CANXMC() {}
+/* construct with configuration of different target */
+CANXMC::CANXMC(XMC_ARD_CAN_t *conf) { _XMC_CAN_config = conf; }
+CANXMC::~CANXMC() {}
 
   int CANXMC::setIdentifier(long id) { // TODO: delete in the future!
                                             // figure out filtering problem
