@@ -48,13 +48,17 @@ Additionally, please consult the [releases](https://github.com/Infineon/XMC-for-
 
 ### Prework for SEGGER J-Link
 
-In order to use the Infineon XMC microcontrollers by this repository and program them, you need [SEGGER J-Link](https://www.segger.com/downloads/jlink) installed on your PC. Please follow this link [SEGGER J-Link](https://www.segger.com/downloads/jlink) and install the J-Link Software and Documentation Pack for your respective operating system (OS).
-If you have already installed '[DAVE™ - Development Platform for XMC™ Microcontrollers](https://www.infineon.com/cms/de/product/microcontroller/32-bit-industrial-microcontroller-based-on-arm-registered-cortex-registered-m/dave-version-4-free-development-platform-for-code-generation/channel.html?channel=db3a30433580b37101359f8ee6963814)', you might skip this step as you should have the respective drivers on your system.
-![J-Link](https://raw.githubusercontent.com/infineon/assets/master/Pictures/J-Link_Packages.png)
+In order to use Infineon's XMC microcontroller boards in Arduino you need [SEGGER J-Link](https://www.segger.com/downloads/jlink) installed on your machine first. Please follow [this link](https://www.segger.com/downloads/jlink) and install the J-Link Software and Documentation Pack for your respective operating system (OS).
+
+![J-Link](resources/wiki/image/jlink_install.png)
+
+If you are downloading J-Link for the first time, make sure to check this box: Install USB Driver for J-Link.
+
+![J-Link-driver](resources/wiki/image/J-Link_Installer_options_page.png)
 
 ### Required tools
 
-XMC-for-Arduino requires Python 3.x and `pyserial`. Make sure Python is installed in your machine and available in the system path.
+XMC-for-Arduino requires Python 3.x and `pyserial`. Make sure Python is installed on your machine and available in the system path.
 
 You can check if it was successfully installed by opening your command line or terminal and typing:
 ```
@@ -67,11 +71,11 @@ With [pip](https://pip.pypa.io/en/stable/installation/) available, install the m
 ```
 
 ### Integration in Arduino IDE
-Please first download the Arduino IDE. This library only tested for Arduino IDE >=1.5, recommended to use Arduino IDE >=2.0.
+Please first download the Arduino IDE. This package is only tested for Arduino IDE >=1.5. We recommended to use Arduino IDE >=2.0.
 
 ![Preferences](resources/wiki/image/preference.png)
 
-Paste the following URL into the 'Additional Boards Manager URLs' input field under **File** > **Preferences** to add Infineon's microcontroller boards to the Arduino IDE.
+Paste the following URL into the 'Additional boards manager URLs' input field under **File** > **Preferences** to add Infineon's XMC microcontroller boards to the Arduino IDE.
 
 https://github.com/Infineon/XMC-for-Arduino/releases/latest/download/package_infineon_index.json
 

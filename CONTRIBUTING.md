@@ -35,18 +35,11 @@ To merge your PR, please try to add a git tag in the format `VX.Y.Z` (e.g. V3.3.
 Because of the limitations of the github wiki, it is difficult to create PR for changes of wiki. Please refer to the answer under: https://stackoverflow.com/questions/10642928/how-can-i-make-a-pull-request-for-a-wiki-page-on-github and create a ticket for your modifications.
 
 ### Debug
-New Arduino IDE(v2.3.1) support debug.
-Add debug_custom.json file in your sketch folder. Find more information in https://docs.arduino.cc/tutorials/mkr-wifi-1010/mkr-jlink-setup.
-Example using XMC1100:
+New Arduino IDE(v2.3.2) support debug. Refer to https://docs.arduino.cc/software/ide-v2/tutorials/ide-v2-debugger for more details.
 
-```
-{
-    "servertype": "jlink",
-    "device": "XMC1100-0064",
-    "interface": "SWD",
-    "serverpath": "C:/Program Files/SEGGER/JLink/JLinkGDBServerCL"
-  }
-```
+No hardware setup is required since the XMC eval board has Jlink on-board debugger, You can jump directly to the:
+https://docs.arduino.cc/software/ide-v2/tutorials/ide-v2-debugger/#getting-to-know-the-debugger
+
 
 If you encounter strange behavior with Arduino IDE, try cleaning up the cache
 
