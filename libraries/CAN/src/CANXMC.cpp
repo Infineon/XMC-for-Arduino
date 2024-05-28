@@ -50,7 +50,12 @@ CANXMC::~CANXMC() {}
     };
     XMC_CAN_Enable(CAN_xmc);
      /* Configuration of CAN Node and enable the clock */ 
-    XMC_CAN_InitEx(CAN_xmc, XMC_CAN_CANCLKSRC_FPERI, _XMC_CAN_config->can_frequency); 
+    #if (UC_FAMILY == XMC4)
+      #define CAN_CLOCK_SOURCE ((XMC_CAN_CANCLKSRC_t)XMC_CAN_CANCLKSRC_FPERI) 
+    #else
+      #define CAN_CLOCK_SOURCE ((XMC_CAN_CANCLKSRC_t)XMC_CAN_CANCLKSRC_MCLK)
+    #endif
+    XMC_CAN_InitEx(CAN_xmc, CAN_CLOCK_SOURCE, _XMC_CAN_config->can_frequency); 
     if(XMC_CAN_STATUS_SUCCESS == XMC_CAN_NODE_NominalBitTimeConfigureEx(_XMC_CAN_config->can_node, &CAN_NODE_bit_time_config))
     {
       XMC_CAN_NODE_EnableConfigurationChange(_XMC_CAN_config->can_node);
@@ -219,13 +224,12 @@ CANXMC::~CANXMC() {}
 
     CAN.onInterrupt();
   }
-#elif defined(XMC1400_XMC2GO) {
+#elif defined(XMC1400_XMC2GO) 
   void CAN0_3_IRQHandler() {
     /* Set the frame received flag to true */
     can_frame_received = true;
 
     CAN.onInterrupt();
-  }
   }
 #endif
   }

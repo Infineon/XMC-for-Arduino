@@ -240,8 +240,9 @@ XMC_UART_t XMC_UART_0 =
 #endif
                           },
   .rx_config            = { .mode = XMC_GPIO_MODE_INPUT_TRISTATE,
-                            .output_level     = XMC_GPIO_OUTPUT_LEVEL_HIGH,
-                            .input_hysteresis = XMC_GPIO_INPUT_HYSTERESIS_STANDARD
+                            .input_hysteresis = XMC_GPIO_INPUT_HYSTERESIS_STANDARD,
+                            .output_level     = XMC_GPIO_OUTPUT_LEVEL_HIGH
+
                           },
   .tx                   = { .port = (XMC_GPIO_PORT_t*)PORT2_BASE, // TX P2.0
 #ifdef SERIAL_DEBUG
@@ -251,8 +252,9 @@ XMC_UART_t XMC_UART_0 =
 #endif
                           },
   .tx_config            = { .mode = (XMC_GPIO_MODE_t) XMC_GPIO_MODE_OUTPUT_PUSH_PULL_ALT6,
-                            .output_level     = XMC_GPIO_OUTPUT_LEVEL_HIGH,
-                            .input_hysteresis = XMC_GPIO_INPUT_HYSTERESIS_STANDARD
+                            .input_hysteresis = XMC_GPIO_INPUT_HYSTERESIS_STANDARD,
+                            .output_level     = XMC_GPIO_OUTPUT_LEVEL_HIGH
+
                           },
   .input_source_dx0     = (XMC_USIC_INPUT_t)USIC0_C0_DX0_DX3INS,
   .input_source_dx1     = XMC_INPUT_INVALID,
@@ -284,8 +286,9 @@ XMC_SPI_t XMC_SPI_0 =
     },
     .mosi_config      = {
         .mode = XMC_GPIO_MODE_OUTPUT_PUSH_PULL_ALT9,
-        .output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH,
-        .input_hysteresis = XMC_GPIO_INPUT_HYSTERESIS_STANDARD
+        .input_hysteresis = XMC_GPIO_INPUT_HYSTERESIS_STANDARD,
+        .output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH
+
     },
     .miso             = {
         .port = (XMC_GPIO_PORT_t*)PORT0_BASE,
@@ -302,8 +305,9 @@ XMC_SPI_t XMC_SPI_0 =
     },
     .sclkout_config   = {
         .mode = XMC_GPIO_MODE_OUTPUT_PUSH_PULL_ALT8,
-        .output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH,
-        .input_hysteresis = XMC_GPIO_INPUT_HYSTERESIS_STANDARD
+        .input_hysteresis = XMC_GPIO_INPUT_HYSTERESIS_STANDARD,
+        .output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH
+
     }
 };
 
@@ -320,8 +324,9 @@ XMC_I2C_t XMC_I2C_0 =
     },
     .sda_config       = {
         .mode = XMC_GPIO_MODE_OUTPUT_OPEN_DRAIN_ALT7,
-        .output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH,
-        .input_hysteresis = XMC_GPIO_INPUT_HYSTERESIS_STANDARD
+        .input_hysteresis = XMC_GPIO_INPUT_HYSTERESIS_STANDARD,
+        .output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH
+
     },
     .scl              = {
         .port = (XMC_GPIO_PORT_t*)PORT2_BASE,
@@ -329,8 +334,9 @@ XMC_I2C_t XMC_I2C_0 =
     },
     .scl_config       = {
         .mode = XMC_GPIO_MODE_OUTPUT_OPEN_DRAIN_ALT6,
-        .output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH,
-        .input_hysteresis = XMC_GPIO_INPUT_HYSTERESIS_STANDARD
+        .input_hysteresis = XMC_GPIO_INPUT_HYSTERESIS_STANDARD,
+        .output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH
+
     },
     .input_source_dx0 = XMC_INPUT_F,
     .input_source_dx1 = XMC_INPUT_E,
@@ -344,18 +350,21 @@ XMC_I2S_t i2s_config =
 {
     .input_config = {
         .mode = XMC_GPIO_MODE_INPUT_TRISTATE, 
-        .output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH,
-        .input_hysteresis = XMC_GPIO_INPUT_HYSTERESIS_STANDARD 
+        .input_hysteresis = XMC_GPIO_INPUT_HYSTERESIS_STANDARD,
+        .output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH
+ 
     },
     .sclk_config = {
         .mode = XMC_GPIO_MODE_OUTPUT_PUSH_PULL_ALT8,
-        .output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH,
-        .input_hysteresis = XMC_GPIO_INPUT_HYSTERESIS_STANDARD
+        .input_hysteresis = XMC_GPIO_INPUT_HYSTERESIS_STANDARD,
+        .output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH
+
     },
     .wa_config = {
         .mode = XMC_GPIO_MODE_OUTPUT_PUSH_PULL_ALT8, 
-        .output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH,
-        .input_hysteresis = XMC_GPIO_INPUT_HYSTERESIS_STANDARD
+        .input_hysteresis = XMC_GPIO_INPUT_HYSTERESIS_STANDARD,
+        .output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH
+
     },
     .protocol_irq_num                        = (IRQn_Type) USIC1_2_IRQn,
     .protocol_irq_service_request            = 2,
@@ -367,7 +376,7 @@ XMC_I2S_t i2s_config =
 XMC_ARD_CAN_t XMC_CAN_0 = 
 {
     .can_node = CAN_NODE0,
-    .can_frequency = (uint32_t)144000000,
+    .can_frequency = (uint32_t)48000000,
     .rx = { .port = (XMC_GPIO_PORT_t*)PORT1_BASE,
             .pin  = (uint8_t)1
         },
