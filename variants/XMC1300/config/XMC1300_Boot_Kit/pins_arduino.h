@@ -255,7 +255,7 @@ XMC_UART_t XMC_UART_0 =
 #endif
                           },
   .tx_config            = { .mode = (XMC_GPIO_MODE_t) XMC_GPIO_MODE_OUTPUT_PUSH_PULL_ALT7,
-                            .input_hysteresis = XMC_GPIO_INPUT_HYSTERESIS_STANDARD;
+                            .input_hysteresis = XMC_GPIO_INPUT_HYSTERESIS_STANDARD,
                             .output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH
                           },
 #ifdef SERIAL_DEBUG
