@@ -27,7 +27,7 @@ jobs:
     - name: Build release assets
       run: |
         cd .github/scripts
-        python release.py build-release ${{ github.repository }} ${{ github.ref_name }} 
+        python release.py build-release ${{ github.ref_name }}
 
     - name: Upload assets
       uses: softprops/action-gh-release@v1
