@@ -1,4 +1,3 @@
-[![Build Status](https://travis-ci.org/Infineon/XMC-for-Arduino.svg?branch=master)](https://travis-ci.org/Infineon/XMC-for-Arduino)
 # Infineon's XMC Microcontroller Boards for Arduino
 
 This repository integrates [Infineon's](https://www.infineon.com/) XMC microcontrollers into the [Arduino IDE](https://www.arduino.cc/en/main/software) and [PlatformIO IDE](https://platformio.org/platformio-ide?utm_source=github&utm_medium=xmc-for-arduino).
@@ -19,9 +18,10 @@ This repository integrates [Infineon's](https://www.infineon.com/) XMC microcont
 
 ## Supported Microcontroller Boards
 
-* [XMC1100 XMC 2Go](https://www.infineon.com/cms/en/product/evaluation-boards/kit_xmc_2go_xmc1100_v1/)
+* [XMC1100 2Go](https://www.infineon.com/cms/en/product/evaluation-boards/kit_xmc_2go_xmc1100_v1/)
 * [XMC1100 Boot Kit](https://www.infineon.com/cms/en/product/evaluation-boards/kit_xmc11_boot_001/)
 * [XMC1300 Boot Kit](https://www.infineon.com/cms/de/product/evaluation-boards/kit_xmc13_boot_001/)
+* [XMC1400 2Go (placeholder)]()
 * [XMC1400 Kit for Arduino](https://www.infineon.com/cms/en/product/evaluation-boards/kit_xmc1400_arduino/)
 * [XMC4200 Platform 2Go](https://www.infineon.com/cms/en/product/evaluation-boards/kit_xmc_plt2go_xmc4200/)
 * [XMC4400 Platform 2Go](https://www.infineon.com/cms/en/product/evaluation-boards/kit_xmc_plt2go_xmc4400//)
@@ -33,9 +33,10 @@ Please visit also the Wiki for additional information, e.g. datasheets, pin out 
 
 [XMC-for-Arduino Wiki](https://github.com/Infineon/XMC-for-Arduino/wiki)
 
-* Page for [XMC1100 XMC 2Go](https://github.com/Infineon/XMC-for-Arduino/wiki/XMC-2Go)
+* Page for [XMC1100 XMC 2Go](https://github.com/Infineon/XMC-for-Arduino/wiki/XMC1100-2Go)
 * Page for [XMC1100 Boot Kit](https://github.com/Infineon/XMC-for-Arduino/wiki/XMC1100-Boot-Kit)
 * Page for [XMC1300 Boot Kit](https://github.com/Infineon/XMC-for-Arduino/wiki/XMC1300-Boot-Kit)
+* Page for [XMC1400 2Go (placeholder)](https://github.com/Infineon/XMC-for-Arduino/wiki/XMC1400-2Go) 
 * Page for [XMC1400 Kit for Arduino](https://github.com/Infineon/XMC-for-Arduino/wiki/XMC1400-Kit-for-Arduino)
 * Page for [XMC4200 Platform 2Go](https://github.com/Infineon/XMC-for-Arduino/wiki/XMC4200-Platform2Go)
 * Page for [XMC4400 Platform 2Go](https://github.com/Infineon/XMC-for-Arduino/wiki/XMC4400-Platform2Go)
@@ -47,14 +48,18 @@ Additionally, please consult the [releases](https://github.com/Infineon/XMC-for-
 
 ### Prework for SEGGER J-Link
 
-In order to use and program the Infineon XMC microcontrollers in the Arduino IDE, [SEGGER J-Link](https://www.segger.com/downloads/jlink) must be installed on your PC. Please follow this link to [SEGGER J-Link](https://www.segger.com/downloads/jlink) and install the J-Link Software and Documentation Pack for your operating system.
-If you have already installed '[DAVE™ - Development Platform for XMC™ Microcontrollers](https://infineoncommunity.com/dave-download_ID645)', you can skip this step as the respective drivers/programs are already installed on your system.
+In order to use Infineon's XMC microcontroller boards in Arduino you need [SEGGER J-Link](https://www.segger.com/downloads/jlink) installed on your machine first. Please follow [this link](https://www.segger.com/downloads/jlink) and install the J-Link Software and Documentation Pack for your respective operating system (OS).
 
-![J-Link](https://raw.githubusercontent.com/infineon/assets/master/Pictures/J-Link_Packages.png)
+![J-Link](resources/wiki/image/jlink_install.png)
+
+If you are downloading J-Link for the first time, make sure to check this box: Install USB Driver for J-Link.
+
+![J-Link-driver](resources/wiki/image/J-Link_Installer_options_page.png)
 
 ### Required tools
 
-XMC-for-Arduino requires Python 3.x and `pyserial`. Make sure Python is installed in your machine and available in the system path.
+XMC-for-Arduino requires Python 3.x and `pyserial`. Make sure Python is installed on your machine and available in the system path.
+
 You can check if it was successfully installed by opening your command line or terminal and typing:
 ```
   python --version
@@ -65,12 +70,12 @@ With [pip](https://pip.pypa.io/en/stable/installation/) available, install the m
   pip install pyserial
 ```
 
-### Using Arduino IDE
+### Integration in Arduino IDE
+Please first download the Arduino IDE. This package is only tested for Arduino IDE >=1.5. We recommended to use Arduino IDE >=2.0.
 
-![Preferences](https://raw.githubusercontent.com/infineon/assets/master/Pictures/Preferences.png)
+![Preferences](resources/wiki/image/preference.png)
 
-Paste the following URL into the 'Additional Boards Manager URLs' input field under **File** > **Preferences** to add Infineon's microcontroller boards to the Arduino IDE.
-
+Paste the following URL into the 'Additional boards manager URLs' input field under **File** > **Preferences** to add Infineon's XMC microcontroller boards to the Arduino IDE.
 
 https://github.com/Infineon/XMC-for-Arduino/releases/latest/download/package_infineon_index.json
 
@@ -80,47 +85,34 @@ Easier to copy (no clickable link):
 https://github.com/Infineon/XMC-for-Arduino/releases/latest/download/package_infineon_index.json
 ```
 
-![Adding a Board JSON](https://raw.githubusercontent.com/infineon/assets/master/Pictures/Preferences_JSON.png)
+![Adding a Board JSON](resources/wiki/image/preference_JSON.png)
 
-To install the boards, please navigate to **Tools** > **Board** > **Boards Manager...** and search for XMC. You will find options to install the board files for the microcontrollers. Click "Install" to add the boards to your Arduino IDE.
+To install the boards, please go now to **Tools** > **Board** > **Boards Manager...** and search for XMC. You will see options to install the board files for the microcontrollers. Click "Install" to add the boards to your Arduino IDE.
 
-![Infineon Board Entry](https://raw.githubusercontent.com/infineon/assets/master/Pictures/Boards_Manager_Entry.png)
+![Infineon Board Entry](resources/wiki/image/Boards_Manager_Entry.png)
 
-**Note:** For information on separation of release packages from version 2.0.0 onwards, see [below](#Separation-of-release-packages-from-version-2.0.0-onwards). 
+In the boards list **Tools** > **Board**, you will now find the supported XMC microcontroller boards. 
 
-In the boards list **Tools** > **Board**, the XMC microcontroller boards are added and can be used from now on.
+![Board List](resources/wiki/image/Boards_Manager_Entry.png)
 
-![Board List](https://raw.githubusercontent.com/infineon/assets/master/Pictures/Board_List.png)
+### Notes
 
-**Important Notes**
-
-* This integration will only work for Arduino IDE >=1.5
-* The XMC1100 Boot Kit has limitations if compared to the official Arduino boards (consult the [XMC-for-Arduino Wiki](https://github.com/Infineon/XMC-for-Arduino/wiki) for more information)
-* Refer also to the LICENSE.md/txt file for further information
-* Arduino 1.8.0 IDE might have problems with the XMC-for-Arduino releases
-* XMC-for-Arduino support for 'arm-linux-gnueabihf' only until version 1.1.
+* **The differences of the boards included in this repository if compared to the Arduino boards**
+* **Refer also to the LICENSE.md/txt file of the repositories for further information**
+* **The Boot Kits have limitations if compared to the official Arduino boards (consult the [XMC-for-Arduino Wiki](https://github.com/Infineon/XMC-for-Arduino/wiki) for more information)**
+* **XMC-for-Arduino support for 'arm-linux-gnueabihf' only until version 1.1.**
 
 
-#### Separation of release packages from version 2.0.0 onwards
+### Release packages from version 3.0.0 onwards
 
-Certain obsolete boards (see wiki) and non-functional libraries were removed from the board support package for the release version 2.0.0, alongwith some other major changes (see release notes). However, in order to support legacy code, these removed boards/libraries are still available as a part of release version 1.7.0. Hence, the release packages have been split as shown in the pictures below.
+Certain obsolete boards (see wiki) and non-functional libraries were removed from the board support package for the release version 2.0.0, alongwith some other major changes (see release notes). After version 3.0.0, the release index will not include library before version 2.0.0.
 
-![Board Manager](https://raw.githubusercontent.com/Infineon/Assets/version-2.x/Pictures/Boards_Manager_Entry_v2.png)
-
-The boards until version 1.7.0 have been clubbed under *XMC Family V1.x*.  
-
-![Board list v1x](https://raw.githubusercontent.com/Infineon/Assets/version-2.x/Pictures/Board_List_v1x.png.jpg)
-
-Any new board or feature integration will only be done in the *XMC Family V2.x*
-
-![Board list v1x](https://raw.githubusercontent.com/Infineon/Assets/version-2.x/Pictures/Board_List_v2x.png.jpg)
-
-
+![Board Manager](resources/wiki/image/Support_v2.png)
 ### Known Issues
 
 * :warning: While using the pins connected to the **LEDs** configured as **INPUT**, there might be some abberation in behavior due to the presence of the series resistor of the LED, as it causes a voltage drop on the pin. In case of such an occurance, it is advised to desolder the series resistor and the LED and thereby using the pin as INPUT.  
 
-### Using PlatformIO IDE
+### Using PlatformIO IDE 
 
 - [What is PlatformIO?](http://docs.platformio.org/en/latest/what-is-platformio.html?utm_source=github&utm_medium=xmc-for-arduino)
 - [PlatformIO IDE](http://platformio.org/platformio-ide?utm_source=github&utm_medium=xmc-for-arduino)
@@ -131,9 +123,9 @@ Any new board or feature integration will only be done in the *XMC Family V2.x*
 
 ## Contributing and Third Party Libraries
 
-To contribute enhancements, fixes and the like see *Contributors.md*. in root folder
+To contribute enhancements, fixes and the like see [CONTRIBUTINGS](./CONTRIBUTING.md).
 
-Third Party or external library maintainers see *Libraries.md*. in root folder
+Third Party or external library maintainers see [Libraries](./Libraries.md). 
     
 Also see [Wiki](https://github.com/Infineon/XMC-for-Arduino/wiki) for any additional information
 

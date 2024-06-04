@@ -8,7 +8,7 @@ Check the **develop** branch for any Beta releases fixes for any issues you may 
 
 ## Developer notes
 
-General points on repository branches and flow
+### General points on repository branches and flow
 
 1. _master_ branch is intended to be copy of release version
 2. Please make Pull Requests to _develop_ branch for review, inclusion and availability for others
@@ -30,3 +30,19 @@ This is a workaround for current local compilation/testing.
 
 Currently github workflow is used for automaticaly build test and release. Workflows are defined by YAML file in the `.github/workflows` directory. 
 To merge your PR, please try to add a git tag in the format `VX.Y.Z` (e.g. V3.3.0) to trigger the release process in your fork and pass the compilation tests.
+
+### WIKI
+Because of the limitations of the github wiki, it is difficult to create PR for changes of wiki. Please refer to the answer under: https://stackoverflow.com/questions/10642928/how-can-i-make-a-pull-request-for-a-wiki-page-on-github and create a ticket for your modifications.
+
+### Debug
+New Arduino IDE(v2.3.2) support debug. Refer to https://docs.arduino.cc/software/ide-v2/tutorials/ide-v2-debugger for more details.
+
+No hardware setup is required since the XMC eval board has Jlink on-board debugger, You can jump directly to the:
+https://docs.arduino.cc/software/ide-v2/tutorials/ide-v2-debugger/#getting-to-know-the-debugger
+
+
+If you encounter strange behavior with Arduino IDE, try cleaning up the cache
+
+windows: `C:\User\"username"\AppData\Roaming\arduino-ide`
+linux: `~/.config/arduino-ide`
+macos: `~/Library/Application Support/arduino-ide/`
