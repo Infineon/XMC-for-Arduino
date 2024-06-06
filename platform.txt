@@ -123,6 +123,9 @@ debug.toolchain.prefix=arm-none-eabi-
 debug.toolchain=gcc
 debug.server=jlink
 debug.server.jlink.script=
+debug.server.jlink.path.windows=C:/Program Files/SEGGER/JLink/JLinkGDBServerCL
+debug.server.jlink.path.linux=/opt/SEGGER/JLink/JLINKGDBServer
+debug.cortex-debug.custom.device=XMC{build.board.version}-{build.board.v}
 debug.executable={build.path}/{build.project_name}.elf
 
 # Supported by Arduino offcially
