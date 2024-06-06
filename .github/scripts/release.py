@@ -1,7 +1,7 @@
 
 import argparse, copy, hashlib, json, re, requests, os, shutil
 
-version = '0.2.0'
+version = '0.2.1'
 
 xmc_ino_root_path = os.path.relpath(os.path.join(os.path.join(os.getcwd(), os.pardir), os.pardir))
 build_dir_name = 'pkg_build'
@@ -79,7 +79,7 @@ def set_new_platform_data_fields(platform_data_index, pkg_name, version, reposit
     platform_data['size'] = str(get_package_size(os.path.join(pkg_assets_build_path, archive_file_name)))
 
 def add_platform_to_package_index(pkg_index, platform):    
-    pkg_index['packages'][0]['platforms'].insert(1, platform)
+    pkg_index['packages'][0]['platforms'].extend(platform)
 
 def make_package_index_file(pkg_index):
     pkg_index_json_obj = json.dumps(pkg_index, indent=2)
