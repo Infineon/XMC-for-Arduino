@@ -29,7 +29,7 @@ public:
       int sleep() final;
       int wakeup() final;
       int setIdentifier(long);
-      static void onInterrupt(); //TODO: callback works, but ugly
+      static void onInterrupt(); 
 
 
 private:

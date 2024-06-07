@@ -1,46 +1,35 @@
-#include <Arduino.h>
 #include "CANXMC.h"
+#include <Arduino.h>
 
-namespace ifx
-{
 
-  /* CAN Message Object definition */
-  XMC_CAN_MO_t CAN_msg_rx =
-      {
-        .can_mo_ptr = (CAN_MO_TypeDef*)CAN_MO0,
-        {0xFF,  XMC_CAN_FRAME_TYPE_STANDARD_11BITS, XMC_CAN_ARBITRATION_MODE_ORDER_BASED_PRIO_1}, // {can_identifier, can_id_mode, can_priority}
-        {0xFFU, 1U}, // {can_id_mask, can_ide_mask}
-        .can_data_length = 0U,
-        .can_mo_type = XMC_CAN_MO_TYPE_RECMSGOBJ,
-      };
+namespace ifx {
 
-  XMC_CAN_MO_t CAN_msg_tx = 
-{       
-    .can_mo_ptr = (CAN_MO_TypeDef*)CAN_MO1,
-    {0xFF,  XMC_CAN_FRAME_TYPE_STANDARD_11BITS, XMC_CAN_ARBITRATION_MODE_ORDER_BASED_PRIO_1}, // {can_identifier, can_id_mode, can_priority}
+/* CAN Receive Message Object definition */
+XMC_CAN_MO_t CAN_msg_rx = {
+    .can_mo_ptr = (CAN_MO_TypeDef *)CAN_MO0,
+    {0xFF, XMC_CAN_FRAME_TYPE_STANDARD_11BITS, // {can_identifier, can_id_mode
+     XMC_CAN_ARBITRATION_MODE_ORDER_BASED_PRIO_1}, // can_priority}
+    {0xFFU, 1U}, // {can_id_mask, can_ide_mask}
+    .can_data_length = 0U,
+    .can_mo_type = XMC_CAN_MO_TYPE_RECMSGOBJ,
+};
+
+/* CAN Transmit Message Object definition */
+XMC_CAN_MO_t CAN_msg_tx = {
+    .can_mo_ptr = (CAN_MO_TypeDef *)CAN_MO1,
+    {0xFF, XMC_CAN_FRAME_TYPE_STANDARD_11BITS, // {can_identifier, can_id_mode
+     XMC_CAN_ARBITRATION_MODE_ORDER_BASED_PRIO_1}, // can_priority}
     {0xFFU, 1U}, // {can_id_mask, can_ide_mask}
     .can_data_length = 1U,
     .can_mo_type = XMC_CAN_MO_TYPE_TRANSMSGOBJ,
-};   
+};
 
-    XMC_CAN_MO_t CAN_29bit_msg_rx =
-      {
-        .can_mo_ptr = (CAN_MO_TypeDef*)CAN_MO1,
-        {0xFFU, XMC_CAN_FRAME_TYPE_EXTENDED_29BITS, XMC_CAN_ARBITRATION_MODE_IDE_DIR_BASED_PRIO_2}, // {can_identifier, can_id_mode, can_priority}
-        {0xFFU, 1U}, // {can_id_mask, can_ide_mask}
-        .can_data_length = 0U,
-        .can_mo_type = XMC_CAN_MO_TYPE_RECMSGOBJ,
-      };
+/* Flag for receive interrupt*/
+static volatile bool can_frame_received = false;
 
-    /* Flag for receive interrupt*/
-   static volatile bool can_frame_received = false;
-
-  CANXMC::CANXMC(XMC_ARD_CAN_t *conf)
-  {
-    _XMC_CAN_config = conf;
-
-  }
-  CANXMC::~CANXMC() {}
+/* construct with configuration of different target */
+CANXMC::CANXMC(XMC_ARD_CAN_t *conf) { _XMC_CAN_config = conf; }
+CANXMC::~CANXMC() {}
 
   int CANXMC::setIdentifier(long id) { // TODO: delete in the future!
                                             // figure out filtering problem
@@ -61,7 +50,12 @@ namespace ifx
     };
     XMC_CAN_Enable(CAN_xmc);
      /* Configuration of CAN Node and enable the clock */ 
-    XMC_CAN_InitEx(CAN_xmc, XMC_CAN_CANCLKSRC_FPERI, _XMC_CAN_config->can_frequency); 
+    #if (UC_FAMILY == XMC4)
+      #define CAN_CLOCK_SOURCE ((XMC_CAN_CANCLKSRC_t)XMC_CAN_CANCLKSRC_FPERI) 
+    #else
+      #define CAN_CLOCK_SOURCE ((XMC_CAN_CANCLKSRC_t)XMC_CAN_CANCLKSRC_MCLK)
+    #endif
+    XMC_CAN_InitEx(CAN_xmc, CAN_CLOCK_SOURCE, _XMC_CAN_config->can_frequency); 
     if(XMC_CAN_STATUS_SUCCESS == XMC_CAN_NODE_NominalBitTimeConfigureEx(_XMC_CAN_config->can_node, &CAN_NODE_bit_time_config))
     {
       XMC_CAN_NODE_EnableConfigurationChange(_XMC_CAN_config->can_node);
@@ -230,13 +224,12 @@ namespace ifx
 
     CAN.onInterrupt();
   }
-#elif defined(XMC1400_XMC2GO) {
+#elif defined(XMC1400_XMC2GO) 
   void CAN0_3_IRQHandler() {
     /* Set the frame received flag to true */
     can_frame_received = true;
 
     CAN.onInterrupt();
-  }
   }
 #endif
   }

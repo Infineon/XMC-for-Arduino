@@ -265,7 +265,7 @@ extern "C" {
       IRQn_Type                     irq_num;
       uint32_t                      irq_service_request;
 #if (UC_SERIES == XMC14)
-      XMC_SCU_IRQCTRL_t protocol_irq_source;
+      XMC_SCU_IRQCTRL_t irq_source;
 #endif
     } XMC_ARD_CAN_t;
 #endif

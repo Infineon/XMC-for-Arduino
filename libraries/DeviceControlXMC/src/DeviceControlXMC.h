@@ -111,7 +111,8 @@ enum sleepMode_t {
 		USIC_OFF = 0x00,
 	};
 	enum ledt_t {
-	#if (defined (LEDTS0) || ( LEDTS1 )|| ( LEDTS2))
+	#if (defined(LEDTS0) || defined(LEDTS1) || defined(LEDTS2))
+
 		LEDT_ON = XMC_SCU_PERIPHERAL_CLOCK_LEDTS0 | XMC_SCU_PERIPHERAL_CLOCK_LEDTS1,
 	#endif
 		LEDT_OFF = 0x00,
