@@ -1,6 +1,15 @@
 {
     "name": "framework-arduinoxmc",
+    "version": "3.1.0",
     "description": "Integration of Infineon's XMC microcontrollers with the Arduino framework",
     "url": "https://www.infineon.com/cms/en/product/microcontroller/32-bit-industrial-microcontroller-based-on-arm-cortex-m/",
-    "version": "2.1.0"
-}
+    "keywords": [
+        "framework",
+        "arduino",
+        "infineon"
+      ],
+      "repository": {
+        "type": "git",
+        "url": "https://github.com/Infineon/XMC-for-Arduino"
+      }
+    }

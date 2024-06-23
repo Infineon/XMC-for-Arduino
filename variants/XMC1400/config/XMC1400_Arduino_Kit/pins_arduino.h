@@ -133,8 +133,8 @@ extern const uint8_t NUM_ANALOG_INPUTS;
 #define ERU0_0_IRQHandler IRQ3_Handler // RESET
 #define ERU0_0_IRQn IRQ3_IRQn
 
-#ifdef ARDUINO_MAIN 
-//index is Arduino pin count 
+#ifdef ARDUINO_MAIN
+//index is Arduino pin count
 // Mapping of digital pins and comments
 const XMC_PORT_PIN_t mapping_port_pin[] =
     {
@@ -167,8 +167,8 @@ const XMC_PORT_PIN_t mapping_port_pin[] =
     /* 26 */    {XMC_GPIO_PORT1 , 5} // LED3 output                               P1.5
     };
 
-   
-const uint8_t GND = ( sizeof( mapping_port_pin ) / sizeof( XMC_PORT_PIN_t ) ); 
+
+const uint8_t GND = ( sizeof( mapping_port_pin ) / sizeof( XMC_PORT_PIN_t ) );
 const uint8_t NUM_DIGITAL = ( sizeof( mapping_port_pin ) / sizeof( XMC_PORT_PIN_t ) );;
 
 const XMC_PIN_INTERRUPT_t mapping_interrupt[] =
@@ -213,13 +213,13 @@ XMC_ADC_t mapping_adc[] =
     {
     { VADC, 0, VADC_G0, 0, 4, DISABLED },   //A0
     { VADC, 1, VADC_G0, 0, 11, DISABLED },  //A1
-    { VADC, 2, VADC_G0, 0, 9, DISABLED },   //A2   
+    { VADC, 2, VADC_G0, 0, 9, DISABLED },   //A2
     { VADC, 3, VADC_G0, 0, 12, DISABLED },  //A3
     { VADC, 6, VADC_G0, 0, 7, DISABLED },   //A4
     { VADC, 5, VADC_G0, 0, 10, DISABLED },  //A5
     // Additional channels added here
     { VADC, 4, VADC_G0, 0, 5, DISABLED },   //AUX 21
-    { VADC, 1, VADC_G1, 1, 1, DISABLED },   //AUX 22  
+    { VADC, 1, VADC_G1, 1, 1, DISABLED },   //AUX 22
     { VADC, 7, VADC_G1, 1, 2, DISABLED },   //AUX 23
     { VADC, 7, VADC_G0, 0, 3, DISABLED }    //AUX 24
 };
@@ -297,7 +297,6 @@ XMC_SPI_t XMC_SPI_0 =
     },
     .miso_config      = {
         .mode = XMC_GPIO_MODE_INPUT_TRISTATE,
-        .input_hysteresis = XMC_GPIO_INPUT_HYSTERESIS_STANDARD
     },
     .input_source     = XMC_INPUT_A,
     .sclkout          = {
