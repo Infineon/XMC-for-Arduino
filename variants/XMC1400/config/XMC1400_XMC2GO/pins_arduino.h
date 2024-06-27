@@ -127,6 +127,7 @@ extern const uint8_t NUM_ANALOG_INPUTS;
 #define USIC0_5_IRQHandler IRQ14_Handler // I2C
 #define USIC0_5_IRQn IRQ14_IRQn
 
+/* I2S interrupt source B */
 #define USIC1_2_IRQHandler IRQ11_Handler // I2S
 #define USIC1_2_IRQn IRQ11_IRQn
 
@@ -136,6 +137,7 @@ extern const uint8_t NUM_ANALOG_INPUTS;
 #define ERU0_0_IRQHandler IRQ3_Handler // RESET
 #define ERU0_0_IRQn IRQ3_IRQn
 
+/* CAN interrupt source B */
 #define CAN0_3_IRQHandler IRQ7_Handler // CAN
 #define CAN0_3_IRQn IRQ7_IRQn
 
@@ -373,29 +375,25 @@ XMC_I2S_t i2s_config =
 
 // XMC CAN instance
 #ifdef CAN_xmc
-XMC_ARD_CAN_t XMC_CAN_0 = 
-{
+XMC_ARD_CAN_t XMC_CAN_0 = {
     .can_node = CAN_NODE0,
+    .can_node_num = 0,
     .can_frequency = (uint32_t)48000000,
-    .rx = { .port = (XMC_GPIO_PORT_t*)PORT1_BASE,
-            .pin  = (uint8_t)1
+    .rx = {.port = (XMC_GPIO_PORT_t *)PORT1_BASE, .pin = (uint8_t)1},
+    .rx_config =
+        {
+            .mode = XMC_GPIO_MODE_INPUT_TRISTATE,
         },
-    .rx_config = {
-        .mode =  XMC_GPIO_MODE_INPUT_TRISTATE,
-    },
-    .tx = {  .port = (XMC_GPIO_PORT_t*)PORT1_BASE,
-            .pin  = (uint8_t)0
-    },
-    .tx_config = {
-        .mode =XMC_GPIO_MODE_OUTPUT_PUSH_PULL_ALT9,
-    }, 
+    .tx = {.port = (XMC_GPIO_PORT_t *)PORT1_BASE, .pin = (uint8_t)0},
+    .tx_config =
+        {
+            .mode = XMC_GPIO_MODE_OUTPUT_PUSH_PULL_ALT9,
+        },
     .node_input = CAN_NODE0_RXD_P1_1,
-    .irq_num =  CAN0_3_IRQn,
-    .irq_service_request            = 3u,
-    .irq_source                     = XMC_SCU_IRQCTRL_CAN0_SR3_IRQ7
-};
+    .irq_num = CAN0_3_IRQn,
+    .irq_service_request = 3,
+    .irq_source = XMC_SCU_IRQCTRL_CAN0_SR3_IRQ7};
 #endif
-
 
 // Serial Interrupt and event handling
 #ifdef __cplusplus

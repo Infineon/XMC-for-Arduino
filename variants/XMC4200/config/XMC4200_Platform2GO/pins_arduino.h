@@ -380,6 +380,7 @@ XMC_I2C_t XMC_I2C_0 =
 XMC_ARD_CAN_t XMC_CAN_0 = 
 {
  .can_node = CAN_NODE0,
+ .can_node_num = 0,
  .can_frequency = (uint32_t)144000000,
  .rx = {  .port = (XMC_GPIO_PORT_t*)PORT14_BASE,
           .pin  = (uint8_t)3

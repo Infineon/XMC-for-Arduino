@@ -8831,7 +8831,7 @@ typedef struct {                                    /*!< (@ 0x40040400) PORT4 St
 #define USIC1_CH0                       ((USIC_CH_TypeDef            *) USIC1_CH0_BASE)
 #define USIC1_CH1                       ((USIC_CH_TypeDef            *) USIC1_CH1_BASE)
 #if defined(UC_DEVICE) && ((UC_DEVICE == XMC1403) || (UC_DEVICE == XMC1404))
-#define CAN                             ((CAN_GLOBAL_TypeDef                *) CAN_BASE)
+#define CAN_xmc                             ((CAN_GLOBAL_TypeDef                *) CAN_BASE)
 #define CAN_NODE0                       ((CAN_NODE_TypeDef           *) CAN_NODE0_BASE)
 #define CAN_NODE1                       ((CAN_NODE_TypeDef           *) CAN_NODE1_BASE)
 #define CAN_MO                          ((CAN_MO_CLUSTER_Type     *) CAN_MO_BASE)
