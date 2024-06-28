@@ -252,10 +252,18 @@ extern "C" {
     /*
      * XMC (Arduino) CAN type
      */
+    
+    typedef enum
+    {
+        XMC_NODE_NUM_0,
+        XMC_NODE_NUM_1
+    }
+    XMC_CAN_NODE_NUM_t;
 
     typedef struct 
     {
       CAN_NODE_TypeDef              *can_node;
+      XMC_CAN_NODE_NUM_t            can_node_num;  
       uint32_t                      can_frequency;
       XMC_PORT_PIN_t                rx;
       XMC_GPIO_CONFIG_t             rx_config;

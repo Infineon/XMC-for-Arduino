@@ -70,9 +70,9 @@ CANXMC::~CANXMC() {}
       XMC_CAN_NODE_SetReceiveInput(_XMC_CAN_config->can_node, _XMC_CAN_config->node_input);
       
       XMC_CAN_MO_Config(&CAN_msg_rx);
-      XMC_CAN_AllocateMOtoNodeList(CAN_xmc, 1, 0);
+      XMC_CAN_AllocateMOtoNodeList(CAN_xmc, _XMC_CAN_config->can_node_num, 0);
       XMC_CAN_MO_Config(&CAN_msg_tx);
-      XMC_CAN_AllocateMOtoNodeList(CAN_xmc, 1, 1);
+      XMC_CAN_AllocateMOtoNodeList(CAN_xmc, _XMC_CAN_config->can_node_num, 1);
     
       /* Message object accepts the reception of both, standard and extended frames */
       XMC_CAN_MO_AcceptStandardAndExtendedID(&CAN_msg_rx);
@@ -119,9 +119,13 @@ CANXMC::~CANXMC() {}
     XMC_CAN_MO_UpdateData(&CAN_msg_tx);
 
     /* Send data in CAN_NODE_LMO_0 */
-    XMC_CAN_MO_Transmit(&CAN_msg_tx);
+    XMC_CAN_STATUS_t send_status = XMC_CAN_MO_Transmit(&CAN_msg_tx);
 
-    return 1;
+    if (send_status == XMC_CAN_STATUS_SUCCESS) {
+      return 1;
+    } else {
+      return 0;
+    }
   };
 
   int CANXMC::parsePacket()
@@ -217,14 +221,16 @@ CANXMC::~CANXMC() {}
 
   /* Interrupt Handler*/
   extern "C" {
-#if defined(XMC4700_Relax_Kit)
+#if(UC_FAMILY == XMC4)
   void CAN0_7_IRQHandler() {
     /* Set the frame received flag to true */
     can_frame_received = true;
 
     CAN.onInterrupt();
   }
-#elif defined(XMC1400_XMC2GO) 
+#endif
+
+#if(UC_SERIES == XMC14)
   void CAN0_3_IRQHandler() {
     /* Set the frame received flag to true */
     can_frame_received = true;
