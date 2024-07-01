@@ -19,7 +19,7 @@ XMC_CAN_MO_t CAN_msg_tx = {
     .can_mo_ptr = (CAN_MO_TypeDef *)CAN_MO1,
     {0xFF, XMC_CAN_FRAME_TYPE_STANDARD_11BITS, // {can_identifier, can_id_mode
      XMC_CAN_ARBITRATION_MODE_ORDER_BASED_PRIO_1}, // can_priority}
-    {0xFFU, 1U}, // {can_id_mask, can_ide_mask}
+    {0x7FFU, 1U}, // {can_id_mask, can_ide_mask}
     .can_data_length = 1U,
     .can_mo_type = XMC_CAN_MO_TYPE_TRANSMSGOBJ,
 };
@@ -52,12 +52,7 @@ CANXMC::~CANXMC() {}
     XMC_CAN_Enable(CAN_xmc);
 
      /* Configuration of CAN Node and enable the clock */ 
-    #if (UC_FAMILY == XMC4)
-      #define CAN_CLOCK_SOURCE ((XMC_CAN_CANCLKSRC_t)XMC_CAN_CANCLKSRC_FPERI) // synchronous clock for XMC4000
-    #else
-      #define CAN_CLOCK_SOURCE ((XMC_CAN_CANCLKSRC_t)XMC_CAN_CANCLKSRC_MCLK) // synchronous clock for XMC1400
-    #endif
-    XMC_CAN_InitEx(CAN_xmc, CAN_CLOCK_SOURCE, _XMC_CAN_config->can_frequency); 
+    XMC_CAN_InitEx(CAN_xmc, _XMC_CAN_config->can_clock , _XMC_CAN_config->can_frequency); 
     if(XMC_CAN_STATUS_SUCCESS == XMC_CAN_NODE_NominalBitTimeConfigureEx(_XMC_CAN_config->can_node, &CAN_NODE_bit_time_config))
     {
       XMC_CAN_NODE_EnableConfigurationChange(_XMC_CAN_config->can_node);
