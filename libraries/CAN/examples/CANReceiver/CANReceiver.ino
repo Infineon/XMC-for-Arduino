@@ -15,7 +15,6 @@ void setup() {
     Serial.println("Starting CAN failed!");
     while (1);
   }
-  CAN.setIdentifier(0x12);
 }
 
 void loop() {

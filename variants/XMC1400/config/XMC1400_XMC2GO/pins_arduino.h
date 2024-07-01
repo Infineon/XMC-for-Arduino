@@ -378,6 +378,7 @@ XMC_I2S_t i2s_config =
 XMC_ARD_CAN_t XMC_CAN_0 = {
     .can_node = CAN_NODE0,
     .can_node_num = 0,
+    .can_clock = XMC_CAN_CANCLKSRC_MCLK,
     .can_frequency = (uint32_t)48000000,
     .rx = {.port = (XMC_GPIO_PORT_t *)PORT1_BASE, .pin = (uint8_t)1},
     .rx_config =

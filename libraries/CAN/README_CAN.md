@@ -24,13 +24,6 @@ Returns `1` on success, `0` on failure.
 
 The RX and TX pins are determined. 
 
-### Set identifier
-
-```arduino
-  CAN.setIdentifier(id);
-```
- * `id` - 11 bits standard identifier. Reflecting the contents and priority of the message. (default: `0x12`)
-
 
 ### End
 
@@ -51,9 +44,13 @@ Start the sequence of sending a packet.
 CAN.beginPacket(id);
 CAN.beginPacket(id, dlc);
 CAN.beginPacket(id, dlc, rtr);
+
+CAN.beginExtendedPacket(id);
+CAN.beginExtendedPacket(id, dlc);
+CAN.beginExtendedPacket(id, dlc, rtr);
 ```
 
- * `id` - 11-bit id (standard packet) <strike> or 29-bit packet id (extended packet)</strike>
+ * `id` - 11-bit id (standard packet) or 29-bit packet id (extended packet)
  * `dlc` - (optional) value of Data Length Code (DLC) field of packet, default is size of data written in packet
  * `rtr` - (optional) value of Remote Transmission Request (RTR) field of packet (`false` or `true`), defaults to `false`. RTR packets contain no data, the DLC field of the packet represents the requested length.
 
@@ -96,8 +93,9 @@ Returns `1` on success, `0` on failure.
 Check if a packet has been received.
 
 ```arduino
-int packetSize = CAN.parsePacket();
+int packetSize = CAN.parsePacket(id);
 ```
+ * `id` - 11-bit id (standard packet) or 29-bit packet id (extended packet)
 
 Returns the packet size in bytes or `0` if no packet was received. For RTR packets the size reflects the DLC field of the packet.
 

@@ -33,7 +33,7 @@ void loop() {
 
   delay(1000);
 
-  CAN.beginPacket(0x12);
+  CAN.beginExtendedPacket(0xFFF);
   CAN.write('w');
   CAN.write('o');
   CAN.write('r');

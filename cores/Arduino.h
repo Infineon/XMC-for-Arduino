@@ -263,7 +263,8 @@ extern "C" {
     typedef struct 
     {
       CAN_NODE_TypeDef              *can_node;
-      XMC_CAN_NODE_NUM_t            can_node_num;  
+      XMC_CAN_NODE_NUM_t            can_node_num;
+      XMC_CAN_CANCLKSRC_t           can_clock;
       uint32_t                      can_frequency;
       XMC_PORT_PIN_t                rx;
       XMC_GPIO_CONFIG_t             rx_config;
