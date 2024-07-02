@@ -432,7 +432,7 @@ XMC_I2C_t XMC_I2C_0 =
 XMC_ARD_CAN_t XMC_CAN_0 = 
 {
  .can_node = CAN_NODE1,
- .can_node_num = 1,
+ .can_node_num = XMC_NODE_NUM_1,
  .can_clock = XMC_CAN_CANCLKSRC_FPERI,
  .can_frequency = (uint32_t)144000000,
  .rx = {  .port = (XMC_GPIO_PORT_t*)PORT1_BASE,
