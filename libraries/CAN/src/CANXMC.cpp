@@ -20,7 +20,7 @@ XMC_CAN_MO_t CAN_msg_tx = {
     {0xFF, XMC_CAN_FRAME_TYPE_STANDARD_11BITS, // {can_identifier, can_id_mode
      XMC_CAN_ARBITRATION_MODE_ORDER_BASED_PRIO_1}, // can_priority}
     {0x7FFU, 1U}, // {can_id_mask, can_ide_mask}
-    .can_data_length = 1U,
+    .can_data_length = 0U,
     .can_mo_type = XMC_CAN_MO_TYPE_TRANSMSGOBJ,
 };
 
@@ -106,31 +106,49 @@ CANXMC::~CANXMC() {}
       return 0;
     }
 
-    /* setup message object */
-    if (_txExtended) {
-      XMC_CAN_MO_SetExtendedID(&CAN_msg_tx);
+    if (_txRtr) {
+      // TODO: LJ: how to receive remote frame? and response... 
+      /* Configure remote frame to be transmitted and data length code */
+      if (_txExtended) {
+        XMC_CAN_MO_SetExtendedID(&CAN_msg_rx);
+      } else {
+        XMC_CAN_MO_SetStandardID(&CAN_msg_rx);
+      }
+      XMC_CAN_MO_SetIdentifier(&CAN_msg_rx, _txId);
+      XMC_CAN_MO_SetDataLengthCode(&CAN_msg_rx, _txLength);
+      XMC_CAN_MO_UpdateData(&CAN_msg_rx);
+
+      /* Send remote frame */
+      XMC_CAN_STATUS_t send_status = XMC_CAN_MO_Transmit(&CAN_msg_rx);
+
+      if (send_status == XMC_CAN_STATUS_SUCCESS) {
+        return 1;
+      } else {
+        return 0;
+      }
+
     } else {
-      XMC_CAN_MO_SetStandardID(&CAN_msg_tx);
-    }
-    XMC_CAN_MO_SetIdentifier(&CAN_msg_tx, _txId);
-    if (!_txRtr) {
+      /* Configure data frame to be transmitted and data length code */
+      if (_txExtended) {
+        XMC_CAN_MO_SetExtendedID(&CAN_msg_tx);
+      } else {
+        XMC_CAN_MO_SetStandardID(&CAN_msg_tx);
+      }
+      XMC_CAN_MO_SetIdentifier(&CAN_msg_tx, _txId);
       memcpy(CAN_msg_tx.can_data_byte, _txData, _txLength);
-    }
-    
-    XMC_CAN_MO_SetDataLengthCode(&CAN_msg_tx, _txLength);
+      XMC_CAN_MO_SetDataLengthCode(&CAN_msg_tx, _txLength);
 
+  
+      XMC_CAN_MO_UpdateData(&CAN_msg_tx);
 
+      /* Send data frame */
+      XMC_CAN_STATUS_t send_status = XMC_CAN_MO_Transmit(&CAN_msg_tx);
 
-    /* Configure data to be transmitted and data length code */
-    XMC_CAN_MO_UpdateData(&CAN_msg_tx);
-
-    /* Send data in CAN_NODE_LMO_0 */
-    XMC_CAN_STATUS_t send_status = XMC_CAN_MO_Transmit(&CAN_msg_tx);
-
-    if (send_status == XMC_CAN_STATUS_SUCCESS) {
-      return 1;
-    } else {
-      return 0;
+      if (send_status == XMC_CAN_STATUS_SUCCESS) {
+        return 1;
+      } else {
+        return 0;
+      }
     }
   };
 
@@ -202,14 +220,63 @@ CANXMC::~CANXMC() {}
 
   int CANXMC::observe()
   {
-    XMC_CAN_NODE_SetInitBit(_XMC_CAN_config->can_node);
+    // TOOD: LJ: no idea what this is
     return 0;
   };
 
   int CANXMC::loopback()
   {
-    XMC_CAN_NODE_SetInitBit(_XMC_CAN_config->can_node);
-    return 0;
+    // TODO: LJ: It is actually only some application level... it is not library...
+    /* reset CAN nodes*/
+    XMC_CAN_Disable(CAN_xmc);
+    /* CAN bit time configuration*/
+    XMC_CAN_NODE_NOMINAL_BIT_TIME_CONFIG_t CAN_NODE_bit_time_config =
+    {
+        .can_frequency = _XMC_CAN_config->can_frequency,
+        .baudrate = (uint32_t)50000, // TODO: LJ: need to be changed 
+        .sample_point = (uint16_t)(80 * 100),
+        .sjw = (uint16_t)1,
+    };
+
+    XMC_CAN_Enable(CAN_xmc);
+     /* Configuration of CAN Node and enable the clock */ 
+    XMC_CAN_InitEx(CAN_xmc, _XMC_CAN_config->can_clock , _XMC_CAN_config->can_frequency); 
+if (XMC_CAN_STATUS_SUCCESS ==    XMC_CAN_NODE_NominalBitTimeConfigureEx( CAN_NODE1, &CAN_NODE_bit_time_config)){
+
+    /* Enable CAN node 1 for Loop-back mode */
+    XMC_CAN_NODE_EnableConfigurationChange(CAN_NODE1);
+    XMC_CAN_NODE_EnableLoopBack(CAN_NODE1);
+    XMC_CAN_NODE_DisableConfigurationChange(CAN_NODE1);
+    XMC_CAN_NODE_ResetInitBit(CAN_NODE1);
+
+    /* Initializes CAN tx Message Object for loopback */
+    XMC_CAN_MO_Config(&CAN_msg_tx);
+    /* Allocate tx Message object to Node 1 */
+    XMC_CAN_AllocateMOtoNodeList(CAN_xmc, 1, 1);
+} else {
+  return 0;
+}
+
+if (XMC_CAN_STATUS_SUCCESS == XMC_CAN_NODE_NominalBitTimeConfigureEx(CAN_NODE0, &CAN_NODE_bit_time_config)){
+   /* Enable CAN node 0 for Loop-back mode */
+    XMC_CAN_NODE_EnableConfigurationChange(CAN_NODE0);
+    XMC_CAN_NODE_EnableLoopBack(CAN_NODE0);
+    XMC_CAN_NODE_DisableConfigurationChange(CAN_NODE0);
+    XMC_CAN_NODE_ResetInitBit(CAN_NODE0);
+
+    /* Initializes CAN rx Message Object for loopback */
+    XMC_CAN_MO_Config(&CAN_msg_rx);
+    /*Allocate rx Message object to Node 0 */
+    XMC_CAN_AllocateMOtoNodeList(CAN_xmc, 0, 0);
+    XMC_CAN_MO_AcceptStandardAndExtendedID(&CAN_msg_rx);
+    /* Enable receive event */
+    XMC_CAN_MO_SetEventNodePointer(&CAN_msg_rx, XMC_CAN_MO_POINTER_EVENT_RECEIVE, _XMC_CAN_config->irq_service_request);
+    XMC_CAN_MO_EnableEvent(&CAN_msg_rx, XMC_CAN_MO_EVENT_RECEIVE);
+
+    return 1;
+    } else {
+      return 0;
+    }
   };
 
   int CANXMC::sleep()
@@ -230,7 +297,7 @@ CANXMC::~CANXMC() {}
       }
   };
 
-  /* Interrupt Handler*/
+  /* Interrupt Handler */
   extern "C" {
 #if(UC_FAMILY == XMC4)
   void CAN0_7_IRQHandler() {
