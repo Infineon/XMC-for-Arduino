@@ -32,7 +32,7 @@ CANXMC::CANXMC(XMC_ARD_CAN_t *conf) { _XMC_CAN_config = conf; }
 CANXMC::~CANXMC() {}
 
   int CANXMC::setIdentifier(long id) { // TODO: delete in the future!
-                                            // figure out filtering problem
+                                            // figure out filtering problem for xmc4700 
     XMC_CAN_MO_SetIdentifier(&CAN_msg_rx, id);
     return 0;
   };
@@ -183,13 +183,20 @@ CANXMC::~CANXMC() {}
 
   int CANXMC::filter(int id, int mask)
   {
-    XMC_CAN_NODE_SetInitBit(_XMC_CAN_config->can_node);
-    return 0;
+    XMC_CAN_MO_SetStandardID(&CAN_msg_rx);
+    XMC_CAN_MO_SetIdentifier(&CAN_msg_rx, id);
+    XMC_CAN_MO_AcceptOnlyMatchingIDE(&CAN_msg_rx);
+    XMC_CAN_MO_SetAcceptanceMask(&CAN_msg_rx, mask);
+
+    return 1;
   };
 
   int CANXMC::filterExtended(long id, long mask)
   {
-    XMC_CAN_NODE_SetInitBit(_XMC_CAN_config->can_node);
+    XMC_CAN_MO_SetExtendedID(&CAN_msg_rx);
+    XMC_CAN_MO_SetIdentifier(&CAN_msg_rx, id);
+    XMC_CAN_MO_AcceptOnlyMatchingIDE(&CAN_msg_rx);
+    XMC_CAN_MO_SetAcceptanceMask(&CAN_msg_rx, mask);
     return 0;
   };
 
