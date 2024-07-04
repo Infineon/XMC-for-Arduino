@@ -205,7 +205,7 @@ if ((packetId & mask) == id) {
 
 Returns `1` on success, `0` on failure.
 
-<strike>
+
 ## Other modes
 
 ### Loopback mode
@@ -216,6 +216,7 @@ Put the CAN controller in loopback mode, any outgoing packets will also be recei
 CAN.loopback();
 ```
 
+<strike>
 ### Sleep mode
 
 Put the CAN contoller in sleep mode.
@@ -232,9 +233,6 @@ CAN.wakeup();
 </strike>
 
 # Develop notes
-
-## XMCLibs Version
-For CAN development, we use v4.3.0 of XMClib. But other source code stay 2.1.16. Need to be fixed and updated in the future!!
 
 ## CAN macro
 Because XMClibs use CAN macro, conflicts with Arduino default CAN class name, so we manually changed XMClib (CAN -> CAN_xmc). Automatic patch might be needed in the future. 
