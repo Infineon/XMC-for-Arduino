@@ -77,7 +77,7 @@ extern const uint8_t NUM_ANALOG_INPUTS;
 #define PWM4_TIMER_PERIOD (2041U)
 
 // PCLK = 2 * MCLK
-#define PCLK 96000000u
+#define PCLK 96000000u 
 
 // Define SPI pin
 #define PIN_SPI_SS    3
@@ -104,7 +104,7 @@ extern const uint8_t NUM_ANALOG_INPUTS;
 #define MASTER_SCLK     PORT0, 3
 #define MASTER_WACLK    PORT0, 4
 
-// Define LED & builtin-led
+// Define LED & builtin-led 
 #define LED1        14
 #define LED2        15
 #define LED_BUILTIN LED1
@@ -180,7 +180,7 @@ const uint8_t mapping_pin_PWM4[][ 2 ] = {
                                         { 1, 0 },
                                         { 2, 1 },
                                         { 3, 2 },
-                                        { 8, 3 },
+                                        { 8, 3 },                                        
                                         { 9, 4 },
                                         { 255, 255 } };
 
@@ -201,7 +201,7 @@ const uint8_t NUM_PWM4  = ( sizeof( mapping_pwm4 ) / sizeof( XMC_PWM4_t ) );
 //     {
 //     { VADC, 1, DISABLED },   //A0 P2.8
 //     { VADC, 2, DISABLED },  //A1 P2.9
-//     { VADC, 3, DISABLED },   //A2 P2.10
+//     { VADC, 3, DISABLED },   //A2 P2.10  
 //     { VADC, 4, DISABLED },  //A3 P2.11
 //     };
 
@@ -209,7 +209,7 @@ const uint8_t NUM_PWM4  = ( sizeof( mapping_pwm4 ) / sizeof( XMC_PWM4_t ) );
         {
         { VADC, 1, VADC_G0, 0, 1, DISABLED },   //A0 P2.8
         { VADC, 2, VADC_G0, 0, 2, DISABLED },  //A1 P2.9
-        { VADC, 3, VADC_G0, 0, 3, DISABLED },   //A2 P2.10
+        { VADC, 3, VADC_G0, 0, 3, DISABLED },   //A2 P2.10  
         { VADC, 4, VADC_G0, 0, 4, DISABLED },  //A3 P2.11
         };
 
@@ -257,7 +257,7 @@ XMC_UART_t XMC_UART_0 =
 #endif
   .irq_num              = USIC0_0_IRQn,
   .irq_service_request  = 0
-  };
+  };  
 
 HardwareSerial Serial( &XMC_UART_0, &rx_buffer_0, &tx_buffer_0 );
 
@@ -286,6 +286,7 @@ XMC_SPI_t XMC_SPI_0 =
     },
     .miso_config      = {
         .mode = XMC_GPIO_MODE_INPUT_TRISTATE,
+        .input_hysteresis = XMC_GPIO_INPUT_HYSTERESIS_STANDARD
     },
     .input_source     = XMC_INPUT_A,
     .sclkout          = {
@@ -332,12 +333,12 @@ XMC_I2C_t XMC_I2C_0 =
     .protocol_irq_service_request       	  = 5
 };
 
-XMC_I2S_t i2s_config =
+XMC_I2S_t i2s_config = 
 {
     .input_config = {
-        .mode = XMC_GPIO_MODE_INPUT_TRISTATE,
+        .mode = XMC_GPIO_MODE_INPUT_TRISTATE, 
         .output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH,
-        .input_hysteresis = XMC_GPIO_INPUT_HYSTERESIS_STANDARD
+        .input_hysteresis = XMC_GPIO_INPUT_HYSTERESIS_STANDARD 
     },
     .sclk_config = {
         .mode = XMC_GPIO_MODE_OUTPUT_PUSH_PULL_ALT8,
@@ -345,13 +346,13 @@ XMC_I2S_t i2s_config =
         .input_hysteresis = XMC_GPIO_INPUT_HYSTERESIS_STANDARD
     },
     .wa_config = {
-        .mode = XMC_GPIO_MODE_OUTPUT_PUSH_PULL_ALT8,
+        .mode = XMC_GPIO_MODE_OUTPUT_PUSH_PULL_ALT8, 
         .output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH,
         .input_hysteresis = XMC_GPIO_INPUT_HYSTERESIS_STANDARD
     },
     .protocol_irq_num                        = (IRQn_Type) USIC1_2_IRQn,
     .protocol_irq_service_request            = 2,
-    .protocol_irq_source                     = XMC_SCU_IRQCTRL_USIC1_SR2_IRQ11
+    .protocol_irq_source                     = XMC_SCU_IRQCTRL_USIC1_SR2_IRQ11 
 };
 
 // Serial Interrupt and event handling

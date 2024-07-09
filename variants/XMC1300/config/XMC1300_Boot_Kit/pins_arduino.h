@@ -296,6 +296,7 @@ XMC_SPI_t XMC_SPI_0 =
     },
     .miso_config      = {
         .mode = XMC_GPIO_MODE_INPUT_TRISTATE,
+        .input_hysteresis = XMC_GPIO_INPUT_HYSTERESIS_STANDARD
     },
     .input_source     = XMC_INPUT_C,
     .sclkout          = {

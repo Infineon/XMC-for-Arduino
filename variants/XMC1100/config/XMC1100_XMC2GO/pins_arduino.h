@@ -214,7 +214,7 @@ XMC_UART_t XMC_UART_0 =
 #endif
   .irq_num              = USIC0_0_IRQn,
   .irq_service_request  = 0
-  };
+  };  
 
 HardwareSerial Serial( &XMC_UART_0, &rx_buffer_0, &tx_buffer_0 );
 
@@ -243,6 +243,7 @@ XMC_SPI_t XMC_SPI_0 =
 	},
 	.miso_config      = {
 		.mode = XMC_GPIO_MODE_INPUT_TRISTATE,
+		.input_hysteresis = XMC_GPIO_INPUT_HYSTERESIS_STANDARD
 	},
 	.input_source     = XMC_INPUT_C,
 	.sclkout          = {
@@ -324,12 +325,12 @@ XMC_I2C_t XMC_I2C_1 =
 };
 
 // XMC_I2S instance
-XMC_I2S_t i2s_config =
+XMC_I2S_t i2s_config = 
 {
     .input_config = {
-        .mode = XMC_GPIO_MODE_INPUT_TRISTATE,
+        .mode = XMC_GPIO_MODE_INPUT_TRISTATE, 
         .output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH,
-        .input_hysteresis = XMC_GPIO_INPUT_HYSTERESIS_STANDARD
+        .input_hysteresis = XMC_GPIO_INPUT_HYSTERESIS_STANDARD 
     },
     .sclk_config = {
         .mode = XMC_GPIO_MODE_OUTPUT_PUSH_PULL_ALT7,
@@ -337,7 +338,7 @@ XMC_I2S_t i2s_config =
         .input_hysteresis = XMC_GPIO_INPUT_HYSTERESIS_STANDARD
     },
     .wa_config = {
-        .mode = XMC_GPIO_MODE_OUTPUT_PUSH_PULL_ALT7,
+        .mode = XMC_GPIO_MODE_OUTPUT_PUSH_PULL_ALT7, 
         .output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH,
         .input_hysteresis = XMC_GPIO_INPUT_HYSTERESIS_STANDARD
     },

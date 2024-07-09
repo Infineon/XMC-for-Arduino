@@ -96,7 +96,7 @@ extern uint8_t SCK;
 #define MASTER_SCLK     PORT0, 8
 #define MASTER_WACLK    PORT0, 9
 
-// Uncomment this to use the second I2S interface,
+// Uncomment this to use the second I2S interface, 
 // uses some of the same pins as SPI!
 // /*U0C0*/
 // /*DX0C(Input) -> P1.0*/
@@ -297,6 +297,7 @@ XMC_SPI_t XMC_SPI_0 =
     },
     .miso_config      = {
         .mode = XMC_GPIO_MODE_INPUT_TRISTATE,
+        .input_hysteresis = XMC_GPIO_INPUT_HYSTERESIS_STANDARD
     },
     .input_source     = XMC_INPUT_C,
     .sclkout          = {
@@ -345,12 +346,12 @@ XMC_I2C_t XMC_I2C_0 =
 };
 
 // XMC_I2S instance
-XMC_I2S_t i2s_config =
+XMC_I2S_t i2s_config = 
 {
     .input_config = {
-        .mode = XMC_GPIO_MODE_INPUT_TRISTATE,
+        .mode = XMC_GPIO_MODE_INPUT_TRISTATE, 
         .output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH,
-        .input_hysteresis = XMC_GPIO_INPUT_HYSTERESIS_STANDARD
+        .input_hysteresis = XMC_GPIO_INPUT_HYSTERESIS_STANDARD 
     },
     .sclk_config = {
         .mode = XMC_GPIO_MODE_OUTPUT_PUSH_PULL_ALT7,
@@ -358,7 +359,7 @@ XMC_I2S_t i2s_config =
         .input_hysteresis = XMC_GPIO_INPUT_HYSTERESIS_STANDARD
     },
     .wa_config = {
-        .mode = XMC_GPIO_MODE_OUTPUT_PUSH_PULL_ALT7,
+        .mode = XMC_GPIO_MODE_OUTPUT_PUSH_PULL_ALT7, 
         .output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH,
         .input_hysteresis = XMC_GPIO_INPUT_HYSTERESIS_STANDARD
     },
