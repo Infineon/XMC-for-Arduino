@@ -4,7 +4,6 @@
 
 ```arduino
 #include <CAN.h>
-using namespace ifx;
 ```
 
 ## Setup

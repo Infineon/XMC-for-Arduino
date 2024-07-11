@@ -1,7 +1,6 @@
 #include "CANXMC.h"
 #include <Arduino.h>
 
-namespace ifx {
 
 /* CAN Receive Message Object definition, can also be used for transmit remote
  * frame*/
@@ -329,5 +328,3 @@ void CAN0_3_IRQHandler() {
 }
 
 CANXMC CAN(&XMC_CAN_0);
-
-}; // namespace ifx
