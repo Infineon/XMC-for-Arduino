@@ -4,38 +4,36 @@
 namespace ifx {
 class CANXMC : public CANControllerClass {
 
-
 public:
-      // CANXMC();   
-      CANXMC(XMC_ARD_CAN_t* conf);
-      ~CANXMC() final;
+  // CANXMC();
+  CANXMC(XMC_ARD_CAN_t *conf);
+  ~CANXMC() final;
 
-      int begin(long baudRate = 500E3) final;
-      void end() final;
+  int begin(long baudRate = 500E3) final;
+  void end() final;
 
-      int endPacket() final;
-      
-      int parsePacket() final;
+  int endPacket() final;
 
-      void onReceive(void (*callback)(int)) final;
+  int parsePacket() final;
 
-      using CANControllerClass::filter;
-      int filter(int id, int mask) final;
-      using CANControllerClass::filterExtended;
-      int filterExtended(long id, long mask) final;
+  void onReceive(void (*callback)(int)) final;
 
-      int observe() final;
-      int loopback() final;
-      int sleep() final;
-      int wakeup() final;
-      int setIdentifier(long);
-      static void onInterrupt(); 
+  using CANControllerClass::filter;
+  int filter(int id, int mask) final;
+  using CANControllerClass::filterExtended;
+  int filterExtended(long id, long mask) final;
 
+  int observe() final;
+  int loopback() final;
+  int sleep() final;
+  int wakeup() final;
+  int setIdentifier(long);
+  static void onInterrupt();
 
 private:
-      XMC_ARD_CAN_t* _XMC_CAN_config;
+  XMC_ARD_CAN_t *_XMC_CAN_config;
 };
 
 extern CANXMC CAN;
 
-};
+}; // namespace ifx
