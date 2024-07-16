@@ -1,7 +1,7 @@
 
 import argparse, copy, hashlib, json, re, requests, os, shutil
 
-version = '0.2.1'
+version = '0.2.0'
 
 xmc_ino_root_path = os.path.relpath(os.path.join(os.path.join(os.getcwd(), os.pardir), os.pardir))
 build_dir_name = 'pkg_build'
