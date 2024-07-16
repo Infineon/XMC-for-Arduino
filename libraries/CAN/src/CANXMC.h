@@ -1,7 +1,6 @@
 #include "CANController.h"
 #include "xmc_can.h"
 
-namespace ifx {
 class CANXMC : public CANControllerClass {
 
 public:
@@ -35,5 +34,3 @@ private:
 };
 
 extern CANXMC CAN;
-
-}; // namespace ifx
