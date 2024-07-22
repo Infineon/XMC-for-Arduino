@@ -36,6 +36,15 @@ int CANXMC::setIdentifier(long id) { // TODO: delete in the future!
   return 0;
 };
 
+
+/**
+ * @brief Initializes the CAN interface with the specified baudrate.
+ *
+ * This function configures the CAN bit time, enables the CAN node, and sets up the necessary pin configurations.
+ *
+ * @param baudrate The desired baudrate for the CAN interface. The default value is 500,000 bps.
+ * @return Returns 1 if the initialization is successful, 0 otherwise.
+ */
 int CANXMC::begin(long baudrate /*= 500e3*/) {
   /* CAN bit time configuration*/
   XMC_CAN_NODE_NOMINAL_BIT_TIME_CONFIG_t CAN_NODE_bit_time_config = {
@@ -103,12 +112,23 @@ int CANXMC::begin(long baudrate /*= 500e3*/) {
   }
 };
 
+/**
+ * @brief Disables the CAN module and ends the CANXMC object.
+ * 
+ * This function disables the CAN module and ends the CANXMC object. It disables the receive event for the CAN message object and disables the CAN module using the XMC_CAN_Disable function.
+ */
 void CANXMC::end() {
   XMC_CAN_MO_DisableEvent(&CAN_msg_rx, XMC_CAN_MO_EVENT_RECEIVE);
   XMC_CAN_Disable(CAN_xmc);
   CANControllerClass::end();
 };
 
+
+/**
+ * Ends the packet transmission on the CAN bus.
+ * 
+ * @return 1 if the packet was successfully transmitted, 0 otherwise.
+ */
 int CANXMC::endPacket() {
   if (!CANControllerClass::endPacket()) {
     return 0;
@@ -189,14 +209,6 @@ int CANXMC::parsePacket() {
   _rxIndex = 0;
 
   return _rxLength;
-
-  // if((XMC_CAN_MO_GetStatus(&CAN_msg_rx) & CAN_MO_MOSTAT_NEWDAT_Msk) >>
-  // CAN_MO_MOSTAT_NEWDAT_Pos){
-  //   // return CAN message data length
-  //   return _rxLength;
-  // } else {
-  //   return 0;
-  // };
 };
 
 void CANXMC::onReceive(void (*callback)(int)) {
@@ -222,7 +234,7 @@ int CANXMC::filterExtended(long id, long mask) {
   XMC_CAN_MO_SetIdentifier(&CAN_msg_rx, id);
   XMC_CAN_MO_AcceptOnlyMatchingIDE(&CAN_msg_rx);
   XMC_CAN_MO_SetAcceptanceMask(&CAN_msg_rx, mask);
-  return 0;
+  return 1;
 };
 
 int CANXMC::observe() {
@@ -290,12 +302,11 @@ int CANXMC::loopback() {
 };
 
 int CANXMC::sleep() {
-  XMC_CAN_NODE_SetInitBit(_XMC_CAN_config->can_node);
+
   return 0;
 };
 
 int CANXMC::wakeup() {
-  XMC_CAN_NODE_SetInitBit(_XMC_CAN_config->can_node);
   return 0;
 };
 

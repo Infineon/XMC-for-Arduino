@@ -4,7 +4,6 @@
 class CANXMC : public CANControllerClass {
 
 public:
-  // CANXMC();
   CANXMC(XMC_ARD_CAN_t *conf);
   ~CANXMC() final;
 
