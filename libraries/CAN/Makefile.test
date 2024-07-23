@@ -1,0 +1,16 @@
+### Build commands
+
+
+### Example program
+make FQBN=Infineon:xmc:XMC4700_Relax_Kit PORT=COM20 CANReceiver flash monitor
+
+make FQBN=Infineon:xmc:XMC4700_Relax_Kit PORT=COM20 CANReceiverCallback flash monitor
+
+make FQBN=Infineon:xmc:XMC4700_Relax_Kit PORT=COM24 CANSender flash monitor
+
+
+
+### Unit tests
+make FQBN=Infineon:xmc:XMC4700_Relax_Kit PORT=COM20 CAN monitor
+
+make FQBN=Infineon:xmc:XMC1100_XMC2GO PORT=COM21 CAN_connected monitor
