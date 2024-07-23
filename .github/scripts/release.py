@@ -102,7 +102,7 @@ def build_package_index_json(pkg_name, version, repository):
 
 def build_release_assets(version, repository):
     if os.path.exists(pkg_assets_build_path):
-        os.system("rm -rf "+pkg_assets_build_path)
+        shutil.rmtree(pkg_assets_build_path)
     os.mkdir(pkg_assets_build_path)
     pkg_name = mkdir_package_dir(version)
     build_package(pkg_name)
