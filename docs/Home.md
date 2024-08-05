@@ -1,5 +1,5 @@
 # Welcome
-Welcome to the XMC-for-Arduino wiki! You'll find information about the boards ([XMC1100 2Go](XMC1100-2Go), [XMC1100 H-Bridge 2Go](XMC1100-H-Bridge-2Go), [XMC1100 Boot Kit](XMC1100-Boot-Kit), [XMC1400 2Go](XMC1400-2Go), [XMC1400 Kit for Arduino](Board/XMC1400-Kit-for-Arduino), [XMC1300 Boot Kit](XMC1300-Boot-Kit), [XMC1300 Sense2GoL](XMC1300-Sense2GoL.md), [XMC4400 Platform2Go](XMC4400-Platform2Go.md),  [XMC4700 Relax Kit](XMC4700-Relax-Kit.md), and [DEMO Radar BB XMC4700](DEMO-Radar-BB-XMC4700.md) as well as additional information. 
+Welcome to the XMC-for-Arduino wiki! You'll find information about the boards ([XMC1100 2Go](XMC1100-2Go), [XMC1100 H-Bridge 2Go](XMC1100-H-Bridge-2Go), [XMC1100 Boot Kit](XMC1100-Boot-Kit), [XMC1400 2Go](XMC1400-2Go), [XMC1400 Kit for Arduino](XMC1400-Kit-for-Arduino), [XMC1300 Boot Kit](XMC1300-Boot-Kit), [XMC1300 Sense2GoL](XMC1300-Sense2GoL.md), [XMC4400 Platform2Go](XMC4400-Platform2Go.md),  [XMC4700 Relax Kit](XMC4700-Relax-Kit.md), and [DEMO Radar BB XMC4700](DEMO-Radar-BB-XMC4700.md) as well as additional information. 
 Please have a look on the sidebar to find the related information and visit our site for makers [here](www.infineon.com/4makers) with additional information about other boards.
 
 Please note that from release **version 2.0.0** onwards, only the following boards are supported:
@@ -7,7 +7,7 @@ Please note that from release **version 2.0.0** onwards, only the following boar
 * [XMC1100 2Go](https://www.infineon.com/cms/en/product/evaluation-boards/kit_xmc_2go_xmc1100_v1/)
 * [XMC1100 Boot Kit](https://www.infineon.com/cms/en/product/evaluation-boards/kit_xmc11_boot_001/)
 * [XMC1300 Boot Kit](https://www.infineon.com/cms/en/product/evaluation-boards/kit_xmc13_boot_001/)
-* [XMC1400 2Go (placeholder)]()
+* [XMC1400 2Go]() <!--tbd-->
 * [XMC1400 Kit for Arduino](https://www.infineon.com/cms/en/product/evaluation-boards/kit_xmc1400_arduino/)
 * [XMC4200 Platform 2Go](https://www.infineon.com/cms/en/product/evaluation-boards/kit_xmc_plt2go_xmc4200/)
 * [XMC4400 Platform 2Go](https://www.infineon.com/cms/en/product/evaluation-boards/kit_xmc_plt2go_xmc4400//)
