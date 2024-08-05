@@ -2,7 +2,7 @@
 #define CAN_H
 
 #if defined(CAN_xmc)
-#include "CANXMC.h"
+    #include "CANXMC.h"
 #endif
 
 #endif

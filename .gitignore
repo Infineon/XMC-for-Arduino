@@ -2,3 +2,4 @@
 .vscode
 pkg_build
 build
+.clang-format

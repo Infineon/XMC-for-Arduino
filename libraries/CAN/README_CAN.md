@@ -1,7 +1,47 @@
 # CAN API
+- [:warning: XMC specification](#warning-xmc-specification)
+  * [Set device id](#set-device-id)
+- [Include Library](#include-library)
+- [Setup](#setup)
+  * [Begin](#begin)
+  * [Set pins](#set-pins)
+  * [End](#end)
+- [Sending data](#sending-data)
+  * [Begin packet](#begin-packet)
+  * [Writing](#writing)
+  * [End packet](#end-packet)
+- [Receiving data](#receiving-data)
+  * [Parsing packet](#parsing-packet)
+  * [Register callback](#register-callback)
+  * [Packet ID](#packet-id)
+  * [Packet Extended](#packet-extended)
+  * [Packet RTR](#packet-rtr)
+  * [Packet DLC](#packet-dlc)
+  * [Available](#available)
+  * [Peeking](#peeking)
+  * [Reading](#reading)
+  * [Filtering](#filtering)
+- [Other modes](#other-modes)
+  * [Loopback mode](#loopback-mode)
+  * [Sleep mode](#sleep-mode)
+  
+## :warning: XMC specification
 
-## Include Library and using namespace
+Due to the different behavior of xmc4 series and xmc1 series, the library and provided examples was tested primarily on **xmc1400 2go**.
 
+The known difference is that the XMC4 is unable to receive CAN messages for all IDs. Therefore, it is necessary to define the device ID using the following function:
+
+### Set device id
+
+```arduino
+  CAN.setDeviceId(id);
+```
+ * `id` - 11 bits standard id of the device. (default: `0xFF`)
+
+
+
+
+## Include Library
 ```arduino
 #include <CAN.h>
 ```
@@ -215,7 +255,6 @@ Put the CAN controller in loopback mode, any outgoing packets will also be recei
 CAN.loopback();
 ```
 
-<strike>
 ### Sleep mode
 
 Put the CAN contoller in sleep mode.
@@ -229,9 +268,3 @@ Wake up the CAN contoller if it was previously in sleep mode.
 ```arduino
 CAN.wakeup();
 ```
-</strike>
-
-# Develop notes
-
-## CAN macro
-Because XMClibs use CAN macro, conflicts with Arduino default CAN class name, so we manually changed XMClib (CAN -> CAN_xmc). Automatic patch might be needed in the future. 

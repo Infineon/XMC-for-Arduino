@@ -37,8 +37,12 @@ def build_package(pkg_name):
         'README.md'
     ]
 
+    ignore_pattern = shutil.ignore_patterns()
+
     for dir in dirs_to_copy:
-        shutil.copytree(os.path.join(xmc_ino_root_path, dir), os.path.join(pkg_build_path, dir))
+        if dir == 'libraries':
+            ignore_pattern = shutil.ignore_patterns('Makefile', 'Makefile.test', 'test')
+        shutil.copytree(os.path.join(xmc_ino_root_path, dir), os.path.join(pkg_build_path, dir), ignore=ignore_pattern)
 
     for file in files_to_copy:
         shutil.copyfile(os.path.join(xmc_ino_root_path, file), os.path.join(pkg_build_path, file))
