@@ -1,4 +1,23 @@
+This is an Arduino library for XMC boards using CAN bus to send and receive data.
+
+Based on [Arduino CAN library](https://www.arduino.cc/reference/en/libraries/can/)/ [Github Repo](https://github.com/sandeepmistry/arduino-CAN)
+
+# Hardware Setup
+
+XMC boards with CAN support (CAN transceiver on board and CAN controller module): XMC4200 Platform2GO, XMC4400 Platform2GO, XMC4700 Relax Kit and XMC1400 XMC2GO.
+
+:warning: There is a 120 ohm terminal resistor on the XMC4200 Platform2GO and XMC1400 XMC2Go boards, not on the XMC4400 Platform2GO and XMC4700 Relax Kit. Please remove or add resistors as needed.
+
+All CAN nodes should be connected using the (twisted) pair cable for the CAN_H and CAN_L
+
+# Software Usage
+
+There are [examples](libraries/CAN/examples). See the API definition below for more details.
+
 # CAN API
+
+Here the API definition is based on:
+
 - [:warning: XMC specification](#warning-xmc-specification)
   * [Set device id](#set-device-id)
 - [Include Library](#include-library)
