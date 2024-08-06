@@ -157,7 +157,7 @@ jobs:
           - board:
               can: true
             can-sketch-paths: |
-              - libraries/CAN
+              - libraries/CAN/examples
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
