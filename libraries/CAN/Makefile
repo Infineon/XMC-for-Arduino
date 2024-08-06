@@ -16,16 +16,6 @@ CAN: TESTS=-DTEST_CAN
 
 CAN_connected CAN: unity flash
 
-
-# master_baudrate: TESTS=-DMASTER_BAUDRATE
-# master_baudrate: PORT=COM18
-
-# slave_baudrate: TESTS=-DSLAVE_BAUDRATE
-# master_baudrate: PORT=COM17
-
-# master_baudrate slave_baudrate: unity flash
-
-
 test_all: TESTS=$(TESTS_CONNECTED) $(TESTS_NOT_CONNECTED)
 test_connected: TESTS=$(TESTS_CONNECTED)
 test: TESTS=$(TESTS_NOT_CONNECTED)
@@ -33,7 +23,6 @@ test: TESTS=$(TESTS_NOT_CONNECTED)
 test_all \
 test_connected \
 test: unity flash
-#test: unity compile
 
 
 EXAMPLES = CANReceiver CANReceiverCallback CANSender
@@ -66,11 +55,13 @@ CANSender: arduino
 # 	...
 
 
-unity: arduino
-	cp -r test/unit/Unity/*.[hc] build
-	cp test/unit/src/framework/arduino/Test_*.[hc]* build
-	cp test/unit/src/framework/arduino/unity_ifx.cpp build
-	cp test/unit/src/framework/arduino/Test_main.ino build/build.ino
+# old unity setup part.
+# TODO: Add unit test
+#unity: arduino
+#	cp -r test/unit/Unity/*.[hc] build
+#	cp test/unit/src/framework/arduino/Test_*.[hc]* build
+#	cp test/unit/src/framework/arduino/unity_ifx.cpp build
+#	cp test/unit/src/framework/arduino/Test_main.ino build/build.ino
 
 
 # For WSL and Windows :
