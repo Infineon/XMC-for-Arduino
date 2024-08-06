@@ -44,6 +44,7 @@ jobs:
             stackMem: true
             dma: false
             alarmRtc: false
+            can: false
           - fqbn: Infineon:xmc:XMC1100_XMC2GO
             i2s: true
             dieTemp: true
@@ -53,6 +54,7 @@ jobs:
             stackMem: true
             dma: false
             alarmRtc: false
+            can: false
           - fqbn: Infineon:xmc:XMC1300_Boot_Kit
             i2s: false
             dieTemp: true
@@ -63,6 +65,7 @@ jobs:
             multiSerial: false
             dma: false
             alarmRtc: false
+            can: false
           - fqbn: Infineon:xmc:XMC4200_Platform2GO
             i2s: false
             dieTemp: false
@@ -73,6 +76,7 @@ jobs:
             multiSerial: false
             dma: false
             alarmRtc: true
+            can: true
           - fqbn: Infineon:xmc:XMC4400_Platform2GO
             i2s: false
             dieTemp: false
@@ -82,6 +86,7 @@ jobs:
             stackMem: true
             dma: false
             alarmRtc: false
+            can: true
           - fqbn: Infineon:xmc:XMC4700_Relax_Kit
             i2s: true
             dieTemp: true
@@ -92,6 +97,7 @@ jobs:
             multiSerial: true
             dma: true
             alarmRtc: true
+            can: true
           - fqbn: Infineon:xmc:XMC1400_XMC2GO
             i2s: true
             dieTemp: true
@@ -101,6 +107,7 @@ jobs:
             stackMem: false
             dma: false
             alarmRtc: false
+            can: true
           - fqbn: Infineon:xmc:XMC1400_Arduino_Kit
             i2s: false
             dieTemp: true
@@ -111,6 +118,7 @@ jobs:
             multiSerial: false
             dma: false
             alarmRtc: false
+            can: false
 
         # Make board type-specific customizations to the matrix jobs
         include:
@@ -146,6 +154,10 @@ jobs:
               alarmRtc: true
             alarmRtc-sketch-paths: |
               - libraries/RTC/examples/AlarmRTC
+          - board:
+              can: true
+            can-sketch-paths: |
+              - libraries/CAN
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -178,6 +190,7 @@ jobs:
             ${{ matrix.multiSerial-sketch-paths }}
             ${{ matrix.dma-sketch-paths }}
             ${{ matrix.alarmRtc-sketch-paths }}
+            ${{ matrix.can-sketch-paths }}
           enable-deltas-report: false
           sketches-report-path: ${{ env.SKETCHES_REPORTS_PATH }}
 
