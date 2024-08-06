@@ -6,7 +6,7 @@ extern char VeneerStart, VeneerEnd, eROData;
 #endif
 extern char __ram_code_start, __ram_code_end, __bss_end, __bss_start;
 extern char Heap_Bank1_Start, Heap_Bank1_End;
-extern char sText, __initial_sp, __stack_start, __data_start, __data_end;
+extern char sText, __initial_sp, __data_start, __data_end;
 
 #define str(x)  Serial.println( #x )
 #define str1(x) str(x)
@@ -16,7 +16,7 @@ uint32_t temp, code_size;
 
 void setup()
 {
-delay( 60 );
+delay( 2000 );
 Serial.begin( 115200, SERIAL_8N1 );
 Serial.println( "PC Services - XMC-for-Arduino useful defines example" );
 Serial.print( "Built on: " );
@@ -90,7 +90,7 @@ code_size += temp;
 Serial.println( temp );
 #endif
 Serial.print( "Stack\t\t" );
-temp = &__initial_sp - &__stack_start;
+temp = &__initial_sp ;
 Serial.println( temp );
 Serial.print( "Data\t\t" );
 temp =  &__data_end - &__data_start;
@@ -132,7 +132,9 @@ Serial.println( NUM_ANALOG_INPUTS );
 Serial.print( "DAC\t\t" );
 Serial.println( NUM_ANALOG_OUTPUTS );
 #endif
-
+#ifdef CAN
+Serial.print( "CAN enabled" );
+#endif
 str2( NUM_LEDS );
 Serial.write( '\t' );
 str1( NUM_LEDS );

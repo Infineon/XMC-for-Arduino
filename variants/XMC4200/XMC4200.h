@@ -13123,7 +13123,7 @@ typedef struct {                                    /*!< (@ 0x48028E00) PORT14 S
 #define USIC0_CH1                       ((USIC_CH_TypeDef            *) USIC0_CH1_BASE)
 #define USIC1_CH0                       ((USIC_CH_TypeDef            *) USIC1_CH0_BASE)
 #define USIC1_CH1                       ((USIC_CH_TypeDef            *) USIC1_CH1_BASE)
-#define CAN                             ((CAN_GLOBAL_TypeDef                *) CAN_BASE)
+#define CAN_xmc                             ((CAN_GLOBAL_TypeDef                *) CAN_BASE)
 #define CAN_NODE0                       ((CAN_NODE_TypeDef           *) CAN_NODE0_BASE)
 #define CAN_NODE1                       ((CAN_NODE_TypeDef           *) CAN_NODE1_BASE)
 #define CAN_MO0                         ((CAN_MO_TypeDef             *) CAN_MO0_BASE)

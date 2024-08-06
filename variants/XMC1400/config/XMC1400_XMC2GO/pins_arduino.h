@@ -127,6 +127,7 @@ extern const uint8_t NUM_ANALOG_INPUTS;
 #define USIC0_5_IRQHandler IRQ14_Handler // I2C
 #define USIC0_5_IRQn IRQ14_IRQn
 
+/* I2S interrupt source B */
 #define USIC1_2_IRQHandler IRQ11_Handler // I2S
 #define USIC1_2_IRQn IRQ11_IRQn
 
@@ -135,6 +136,11 @@ extern const uint8_t NUM_ANALOG_INPUTS;
 
 #define ERU0_0_IRQHandler IRQ3_Handler // RESET
 #define ERU0_0_IRQn IRQ3_IRQn
+
+/* CAN interrupt source B */
+#define CAN0_3_IRQHandler IRQ7_Handler // CAN
+#define CAN0_3_IRQn IRQ7_IRQn
+
 
 #define digitalPinToInterrupt(p)    (((p) == 9) ? 0 : NOT_AN_INTERRUPT)
 
@@ -159,7 +165,10 @@ const XMC_PORT_PIN_t mapping_port_pin[] =
         /* 14  */ {XMC_GPIO_PORT0, 7},  // LED 1 output                                     P0.7
         /* 15  */ {XMC_GPIO_PORT0, 6},  // LED 2 output                                     P0.6
         /* 16  */ {XMC_GPIO_PORT2, 1},  // DEBUG_TX                                         P2.1
-        /* 17  */ {XMC_GPIO_PORT2, 2}   // DEBUG_RX                                         P2.2 (INPUT ONLY)
+        /* 17  */ {XMC_GPIO_PORT2, 2},   // DEBUG_RX                                         P2.2 (INPUT ONLY)
+
+        /* 18  */ {XMC_GPIO_PORT1, 0},  // CAN_TX                                           P1.0 (connected with CAN Transceiver)
+        /* 19  */ {XMC_GPIO_PORT1, 1}   // CAN_RX                                           P1.1 (connected with CAN Transceiver)
 };
 const uint8_t GND = ( sizeof( mapping_port_pin ) / sizeof( XMC_PORT_PIN_t ) );
 const uint8_t NUM_DIGITAL = ( sizeof( mapping_port_pin ) / sizeof( XMC_PORT_PIN_t ) );
@@ -191,7 +200,7 @@ XMC_PWM4_t mapping_pwm4[] =
     {CCU40, CCU40_CC43, 3, mapping_port_pin[2], P0_3_AF_CCU40_OUT3, XMC_CCU4_SLICE_PRESCALER_64, PWM4_TIMER_PERIOD, DISABLED},  // PWM disabled  2    P0.3
     {CCU40, CCU40_CC41, 1, mapping_port_pin[3], P0_4_AF_CCU40_OUT1, XMC_CCU4_SLICE_PRESCALER_64, PWM4_TIMER_PERIOD, DISABLED},  // PWM disabled  3    P0.4
     {CCU40, CCU40_CC40, 0, mapping_port_pin[8], P0_5_AF_CCU40_OUT0, XMC_CCU4_SLICE_PRESCALER_64, PWM4_TIMER_PERIOD, DISABLED},  // PWM disabled  8    P0.5
-    {CCU41, CCU41_CC40, 3, mapping_port_pin[9], P1_4_AF_CCU41_OUT0, XMC_CCU4_SLICE_PRESCALER_64, PWM4_TIMER_PERIOD, DISABLED}   // PWM disabled  9    P1.4
+    {CCU41, CCU41_CC40, 0, mapping_port_pin[9], P1_4_AF_CCU41_OUT0, XMC_CCU4_SLICE_PRESCALER_64, PWM4_TIMER_PERIOD, DISABLED}   // PWM disabled  9    P1.4
     };
 const uint8_t NUM_PWM  = ( sizeof( mapping_pwm4 ) / sizeof( XMC_PWM4_t ) );
 const uint8_t NUM_PWM4  = ( sizeof( mapping_pwm4 ) / sizeof( XMC_PWM4_t ) );
@@ -233,8 +242,9 @@ XMC_UART_t XMC_UART_0 =
 #endif
                           },
   .rx_config            = { .mode = XMC_GPIO_MODE_INPUT_TRISTATE,
-                            .output_level     = XMC_GPIO_OUTPUT_LEVEL_HIGH,
-                            .input_hysteresis = XMC_GPIO_INPUT_HYSTERESIS_STANDARD
+                            .input_hysteresis = XMC_GPIO_INPUT_HYSTERESIS_STANDARD,
+                            .output_level     = XMC_GPIO_OUTPUT_LEVEL_HIGH
+
                           },
   .tx                   = { .port = (XMC_GPIO_PORT_t*)PORT2_BASE, // TX P2.0
 #ifdef SERIAL_DEBUG
@@ -244,8 +254,9 @@ XMC_UART_t XMC_UART_0 =
 #endif
                           },
   .tx_config            = { .mode = (XMC_GPIO_MODE_t) XMC_GPIO_MODE_OUTPUT_PUSH_PULL_ALT6,
-                            .output_level     = XMC_GPIO_OUTPUT_LEVEL_HIGH,
-                            .input_hysteresis = XMC_GPIO_INPUT_HYSTERESIS_STANDARD
+                            .input_hysteresis = XMC_GPIO_INPUT_HYSTERESIS_STANDARD,
+                            .output_level     = XMC_GPIO_OUTPUT_LEVEL_HIGH
+
                           },
   .input_source_dx0     = (XMC_USIC_INPUT_t)USIC0_C0_DX0_DX3INS,
   .input_source_dx1     = XMC_INPUT_INVALID,
@@ -277,8 +288,9 @@ XMC_SPI_t XMC_SPI_0 =
     },
     .mosi_config      = {
         .mode = XMC_GPIO_MODE_OUTPUT_PUSH_PULL_ALT9,
-        .output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH,
-        .input_hysteresis = XMC_GPIO_INPUT_HYSTERESIS_STANDARD
+        .input_hysteresis = XMC_GPIO_INPUT_HYSTERESIS_STANDARD,
+        .output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH
+
     },
     .miso             = {
         .port = (XMC_GPIO_PORT_t*)PORT0_BASE,
@@ -295,8 +307,9 @@ XMC_SPI_t XMC_SPI_0 =
     },
     .sclkout_config   = {
         .mode = XMC_GPIO_MODE_OUTPUT_PUSH_PULL_ALT8,
-        .output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH,
-        .input_hysteresis = XMC_GPIO_INPUT_HYSTERESIS_STANDARD
+        .input_hysteresis = XMC_GPIO_INPUT_HYSTERESIS_STANDARD,
+        .output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH
+
     }
 };
 
@@ -313,8 +326,9 @@ XMC_I2C_t XMC_I2C_0 =
     },
     .sda_config       = {
         .mode = XMC_GPIO_MODE_OUTPUT_OPEN_DRAIN_ALT7,
-        .output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH,
-        .input_hysteresis = XMC_GPIO_INPUT_HYSTERESIS_STANDARD
+        .input_hysteresis = XMC_GPIO_INPUT_HYSTERESIS_STANDARD,
+        .output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH
+
     },
     .scl              = {
         .port = (XMC_GPIO_PORT_t*)PORT2_BASE,
@@ -322,8 +336,9 @@ XMC_I2C_t XMC_I2C_0 =
     },
     .scl_config       = {
         .mode = XMC_GPIO_MODE_OUTPUT_OPEN_DRAIN_ALT6,
-        .output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH,
-        .input_hysteresis = XMC_GPIO_INPUT_HYSTERESIS_STANDARD
+        .input_hysteresis = XMC_GPIO_INPUT_HYSTERESIS_STANDARD,
+        .output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH
+
     },
     .input_source_dx0 = XMC_INPUT_F,
     .input_source_dx1 = XMC_INPUT_E,
@@ -337,23 +352,49 @@ XMC_I2S_t i2s_config =
 {
     .input_config = {
         .mode = XMC_GPIO_MODE_INPUT_TRISTATE, 
-        .output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH,
-        .input_hysteresis = XMC_GPIO_INPUT_HYSTERESIS_STANDARD 
+        .input_hysteresis = XMC_GPIO_INPUT_HYSTERESIS_STANDARD,
+        .output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH
+ 
     },
     .sclk_config = {
         .mode = XMC_GPIO_MODE_OUTPUT_PUSH_PULL_ALT8,
-        .output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH,
-        .input_hysteresis = XMC_GPIO_INPUT_HYSTERESIS_STANDARD
+        .input_hysteresis = XMC_GPIO_INPUT_HYSTERESIS_STANDARD,
+        .output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH
+
     },
     .wa_config = {
         .mode = XMC_GPIO_MODE_OUTPUT_PUSH_PULL_ALT8, 
-        .output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH,
-        .input_hysteresis = XMC_GPIO_INPUT_HYSTERESIS_STANDARD
+        .input_hysteresis = XMC_GPIO_INPUT_HYSTERESIS_STANDARD,
+        .output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH
+
     },
     .protocol_irq_num                        = (IRQn_Type) USIC1_2_IRQn,
     .protocol_irq_service_request            = 2,
     .protocol_irq_source                     = XMC_SCU_IRQCTRL_USIC1_SR2_IRQ11 
 };
+
+// XMC CAN instance
+#ifdef CAN_xmc
+XMC_ARD_CAN_t XMC_CAN_0 = {
+    .can_node = CAN_NODE0,
+    .can_node_num = XMC_NODE_NUM_0,
+    .can_clock = XMC_CAN_CANCLKSRC_MCLK,
+    .can_frequency = (uint32_t)48000000,
+    .rx = {.port = (XMC_GPIO_PORT_t *)PORT1_BASE, .pin = (uint8_t)1},
+    .rx_config =
+        {
+            .mode = XMC_GPIO_MODE_INPUT_TRISTATE,
+        },
+    .tx = {.port = (XMC_GPIO_PORT_t *)PORT1_BASE, .pin = (uint8_t)0},
+    .tx_config =
+        {
+            .mode = XMC_GPIO_MODE_OUTPUT_PUSH_PULL_ALT9,
+        },
+    .node_input = CAN_NODE0_RXD_P1_1,
+    .irq_num = CAN0_3_IRQn,
+    .irq_service_request = 3,
+    .irq_source = XMC_SCU_IRQCTRL_CAN0_SR3_IRQ7};
+#endif
 
 // Serial Interrupt and event handling
 #ifdef __cplusplus

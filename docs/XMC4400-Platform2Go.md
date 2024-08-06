@@ -9,8 +9,7 @@ The pin layout of the XMC4400 Platform 2Go evaluation board (for 5V Shields) for
 
 ![XMC4400 Platform 2Go evaluation board (for 5V Shields) Pin Out for Arduino](https://github.com/Infineon/Assets/blob/version-2.x/Pictures/xmc4400_platform2go_PO_v2.png)
 
-## Important Note
-
+## Connected I2S and Analog pin 
 Please note that **Arduino pin number 15 & 21 (SCL & A5)** and **Arduino pin number 14 & 20 (SDA & A4)** are **connected** with each other on the board itself. 
 Although they are different physical pins of the microcontroller, they are connected with each other on the board to comply with the original Arduino UNO Rev3 pin connections. This influences analog measurements on A4 and A5 if you are using I2C simultaneously.
 Details of the connection can also be found in the schematics in the user manual of the board [here](https://www.infineon.com/dgdl/Infineon-XMC4400_Platform2Go-UserManual-v01_00-EN.pdf?fileId=5546d4626f229553016f8fc159482c94).
@@ -26,6 +25,9 @@ A workaround is to set the I2C pins to output open drain via `pinMode(<pinNumber
 You can also cut the connection to the pins physically by cutting the marked blue routes on the back side of the PCB:
 
 ![XMC4400 Cut Lines Board](https://user-images.githubusercontent.com/26908977/96910232-7332d980-149f-11eb-81ec-2b5c23b01372.png)
+
+## CAN Terminal Resistor
+R2 needs to be removed if the board is neither start nor end node.
 
 # Key Features
 * XMC™4400 (ARM® Cortex™-M4)

@@ -1,7 +1,7 @@
 ## Documentation
 Documentation of the Built-in libraries is to be found on [this page](https://github.com/Infineon/InfineonDoxyGenerator).
 
-## DeviceControlXMC
+## DeviceControl XMC
 
 ### Examples Supported
 
@@ -52,3 +52,10 @@ With XMC 2Go (possibly also with other XMC1000 family devices), you might easily
 ## OneWire Library
 Library for One wire protocol. It could be used to access 1-wire temperature sensors, memory and other chips.
 
+## CAN Library
+This library provides support for the CAN protocol. For further details, please refer to the [README.md](https://github.com/Infineon/XMC-for-Arduino/blob/master/libraries/CAN/README.md) file in the CAN library.
+|Example|Boards|Description|
+|:---|:---:|:---|
+|CANSender|<ul> <li>XMC1400 2GO</li> </ul>| This example demonstrates how to send a CAN message. It supports two different message/frame formats: standard and extended. The CAN standard frame uses an 11-bit identifier, while the CAN extended frame uses a 29-bit identifier.|
+|CANReceiver/CANReceiverCallback |<ul> <li>XMC1400 2GO</li> </ul>| This example demonstrates how to receive a CAN message. There are two methods for receiving messages: the default method runs a loop that continuously polls for new messages, while the callback method registers a callback function that triggers an interrupt when data is received on the CAN bus. In both examples, messages with any ID transmitted on the CAN bus can be received. Additionally, messages can be filtered for specific IDs using the `filter()` function. |
+|CANLoopBack |<ul> <li>XMC1400 2GO</li> </ul> | This example demonstrates the loopback mode of CAN. In this mode, the CAN transmitter is internally connected to its receiver, allowing the message to be sent and received internally without transmission onto the actual CAN bus. |

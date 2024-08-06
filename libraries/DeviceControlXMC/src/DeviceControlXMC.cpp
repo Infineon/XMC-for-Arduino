@@ -239,7 +239,7 @@ void XMCClass::configureSleepMode( sleepMode_t type, usic_t usic,
                                    ledt_t ledt, ccu_t ccu, wdt_t wdt, flash_t flash )
 {
 sleep_config |= usic;
-#if (defined (LEDTS0) || ( LEDTS1 )|| ( LEDTS2))
+#if (defined(LEDTS0) || defined(LEDTS1) || defined(LEDTS2))
 sleep_config |= ledt;
 #else
 XMC_UNUSED_ARG( ledt );
