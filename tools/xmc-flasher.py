@@ -1,10 +1,15 @@
-import argparse, subprocess, os, sys, re, warnings
+import argparse, subprocess, os, sys, re, warnings, tempfile
 from serial.tools.list_ports import comports
 from xmc_data import xmc_master_data
 
 version = '0.1.1'
 
 jlinkexe = ''
+
+# Set temporary file for jlink command file and output file
+cmd_jlink =  os.path.join(tempfile.gettempdir(), 'cmd.jlink')
+console_out = os.path.join(tempfile.gettempdir(), 'console.output')
+
 
 def check_python_version():
     major = sys.version_info.major
@@ -52,7 +57,6 @@ def get_device_serial_number(port):
     return None
 
 def create_jlink_loadbin_command_file(binfile):
-    cmd_jlink = 'cmd.jlink'
     cmd_load_bin = 'loadbin ' + binfile + ' 0x0\n'
     with open(cmd_jlink,'w') as f:
         f.writelines(['r\n', 'h\n', cmd_load_bin, 'r\n', 'g\n', 'exit\n'])
@@ -60,7 +64,6 @@ def create_jlink_loadbin_command_file(binfile):
     return cmd_jlink
 
 def create_jlink_mem_read_command_file(addr, bytes):
-    cmd_jlink = 'cmd.jlink'
     #cmd_log_enable
     cmd_mem_read = 'mem ' + addr +', '+ bytes  + '\n' # todo: store register maps, bytes in file
     with open(cmd_jlink,'w') as f:
@@ -69,7 +72,6 @@ def create_jlink_mem_read_command_file(addr, bytes):
     return cmd_jlink
 
 def create_jlink_erase_command_file():
-    cmd_jlink = 'cmd.jlink'
     with open(cmd_jlink,'w') as f:
         f.writelines(['r\n', 'h\n', 'erase\n', 'exit\n'])
 
@@ -93,7 +95,7 @@ def jlink_commander(device, serial_num, cmd_file, console_output=False):
         jlink_proc = subprocess.Popen(jlink_cmd, stdout=subprocess.PIPE, universal_newlines=True)
         if console_output is True:
             out, err = jlink_proc.communicate()
-            with open('console.output', 'w') as f:
+            with open(console_out, 'w') as f:
                 f.write(out)
         else:
             for line in jlink_proc.stdout:
@@ -103,7 +105,7 @@ def jlink_commander(device, serial_num, cmd_file, console_output=False):
         raise Exception("jlink error")
     
 def process_console_output(string):
-    with open('console.output','r') as f:
+    with open(console_out,'r') as f:
         lines = f.readlines()
         lines[0].split('\n')
        
@@ -118,11 +120,11 @@ def get_mem_contents(addr, bytes, device, port):
     jlink_commander(device, serial_num, jlink_cmd_file, True)
     remove_jlink_command_file(jlink_cmd_file)
     
-    with open('console.output','r') as f:
+    with open(console_out,'r') as f:
         lines = f.readlines()
         lines[0].split('\n')
 
-    remove_console_output_file('console.output')
+    remove_console_output_file(console_out)
 
     reg_contents = ""   
     for line in lines :
