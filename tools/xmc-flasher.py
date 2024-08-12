@@ -2,14 +2,13 @@ import argparse, subprocess, os, sys, re, warnings, tempfile
 from serial.tools.list_ports import comports
 from xmc_data import xmc_master_data
 
-version = '0.1.1'
+version = '0.1.2'
 
 jlinkexe = ''
 
 # Set temporary file for jlink command file and output file
 cmd_jlink =  os.path.join(tempfile.gettempdir(), 'cmd.jlink')
 console_out = os.path.join(tempfile.gettempdir(), 'console.output')
-
 
 def check_python_version():
     major = sys.version_info.major
