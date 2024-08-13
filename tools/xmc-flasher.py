@@ -10,6 +10,10 @@ jlinkexe = ''
 cmd_jlink =  os.path.join(tempfile.gettempdir(), 'cmd.jlink')
 console_out = os.path.join(tempfile.gettempdir(), 'console.output')
 
+# Suppress traceback for Arduino IDE
+# !! comment out if you want to see the traceback for debug/ developement !!
+sys.tracebacklimit = 0
+
 def check_python_version():
     major = sys.version_info.major
     minor = sys.version_info.minor
@@ -50,9 +54,8 @@ def discover_devices():
 def get_device_serial_number(port):
     port_sn_list = discover_devices()
     for device in port_sn_list:
-        if device[0] == port:
-            return device[1]
-    
+        if device[0] == port and device[0] != None:
+                return device[1]
     return None
 
 def create_jlink_loadbin_command_file(binfile):
@@ -112,9 +115,16 @@ def process_console_output(string):
         if string in line and '=' in line:
             print(line)
 
+def check_serial_number(serial_num):
+    if serial_num == None:
+        raise Exception("Device not found! Please check the COM port")
+
 def get_mem_contents(addr, bytes, device, port):
-    
-    serial_num = get_device_serial_number(port)
+    try:
+        serial_num = get_device_serial_number(port)
+        check_serial_number(serial_num)
+    except ValueError as e:
+        print(e)
     jlink_cmd_file = create_jlink_mem_read_command_file(addr, bytes) # todo: comes from proper metafile
     jlink_commander(device, serial_num, jlink_cmd_file, True)
     remove_jlink_command_file(jlink_cmd_file)
@@ -157,7 +167,6 @@ def check_device(device, port):
     #compare with stored master data
     if not device_value_masked == master_data[device]['IDCHIP']['value']:
         raise Exception("Device connected does not match the selected device to flash")
-
 
 
 def check_mem(device, port):
