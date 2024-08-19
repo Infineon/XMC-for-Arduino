@@ -7,7 +7,7 @@ Please note that from release **version 2.0.0** onwards, only the following boar
 * [XMC1100 2Go](https://www.infineon.com/cms/en/product/evaluation-boards/kit_xmc_2go_xmc1100_v1/)
 * [XMC1100 Boot Kit](https://www.infineon.com/cms/en/product/evaluation-boards/kit_xmc11_boot_001/)
 * [XMC1300 Boot Kit](https://www.infineon.com/cms/en/product/evaluation-boards/kit_xmc13_boot_001/)
-* [XMC1400 2Go]() <!--tbd-->
+* [XMC1400 2Go](https://www.infineon.com/cms/en/product/evaluation-boards/kit_xmc14_2go/)
 * [XMC1400 Kit for Arduino](https://www.infineon.com/cms/en/product/evaluation-boards/kit_xmc1400_arduino/)
 * [XMC4200 Platform 2Go](https://www.infineon.com/cms/en/product/evaluation-boards/kit_xmc_plt2go_xmc4200/)
 * [XMC4400 Platform 2Go](https://www.infineon.com/cms/en/product/evaluation-boards/kit_xmc_plt2go_xmc4400//)
