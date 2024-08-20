@@ -10,10 +10,6 @@ jlinkexe = ''
 cmd_jlink =  os.path.join(tempfile.gettempdir(), 'cmd.jlink')
 console_out = os.path.join(tempfile.gettempdir(), 'console.output')
 
-# Suppress traceback for Arduino IDE
-# !! comment out if you want to see the traceback for debug/ developement !!
-sys.tracebacklimit = 0
-
 def check_python_version():
     major = sys.version_info.major
     minor = sys.version_info.minor
@@ -88,6 +84,16 @@ def remove_console_output_file(console_output_file):
         os.remove(console_output_file)        
 
 def jlink_commander(device, serial_num, cmd_file, console_output=False):
+    """
+    Executes J-Link Commander with the specified device, serial number, command file, and console output option.
+    Args:
+        device (str): The device name.
+        serial_num (str): The serial number of the J-Link device.
+        cmd_file (str): The path to the command file.
+        console_output (bool, optional): Specifies whether to enable console output. Defaults to False (print the log rather than store in a file).
+    Raises:
+        Exception: If there is an error with J-Link.
+    """
     jlink_cmd = [jlinkexe, '-autoconnect', '1','-exitonerror', '1', '-nogui', '1', '-device', device, '-selectemubysn', serial_num, '-if', 'swd', '-speed', '4000', '-commandfile', cmd_file]
 
     #if console_output is True:
@@ -117,7 +123,7 @@ def process_console_output(string):
 
 def check_serial_number(serial_num):
     if serial_num == None:
-        raise Exception("Device not found! Please check the COM port")
+        raise Exception("Device not found! Please check the serial port")
 
 def get_mem_contents(addr, bytes, device, port):
     try:
@@ -204,10 +210,20 @@ def check_mem(device, port):
             raise Exception("Memory size of device connected does not match that of the selected device to flash")
 
 
-def upload(device, port, binfile):
+def upload(device, port, binfile, enable_jlink_log):
+    """
+    Uploads a binary file to a device using XMC flasher.
+    Args:
+        device (str): The device name or ID.
+        port (str): The port to connect to the device.
+        binfile (str): The path to the binary file to upload.
+        enable_jlink_log (bool): Whether to enable J-Link logging.
+    Returns:
+        None
+    """
     serial_num = get_device_serial_number(port)
     jlink_cmd_file = create_jlink_loadbin_command_file(binfile)
-    jlink_commander(device, serial_num, jlink_cmd_file)
+    jlink_commander(device, serial_num, jlink_cmd_file, console_output=not enable_jlink_log) 
     remove_jlink_command_file(jlink_cmd_file)
 
 def erase(device, port):
@@ -227,7 +243,21 @@ def parser():
     def parser_upload_func(args):
         check_device(args.device, args.port)
         check_mem(args.device, args.port)
-        upload(args.device, args.port, args.binfile)
+        upload(args.device, args.port, args.binfile, args.verbose)
+        # remove console output file if verbose is not enabled
+        if not args.verbose:
+        # check if upload was successful by parsing the console output
+            with open(console_out, 'r') as f:
+                found_loadbin = False
+                for line in f:
+                    if "J-Link>loadbin" in line:
+                        found_loadbin = True
+                    elif found_loadbin and "O.K." in line:
+                        print("Upload successful")
+                        break
+                else:
+                    print("Upload failed")
+            remove_console_output_file(console_out)
 
     def parser_erase_func(args):
         erase(args.device, args.port)
@@ -252,9 +282,10 @@ def parser():
     required_upload.add_argument('-d','--device', type=str, help='jlink device name', required=True)
     required_upload.add_argument('-p','--port', type=str, help='serial port', required=True)
     required_upload.add_argument('-f','--binfile', type=str, help='binary file to upload', required=True)
+    required_upload.add_argument('--verbose', action='store_true', help='Enable verbose logging')
     parser_upload.set_defaults(func=parser_upload_func)
 
-    # Debug parser
+    # Erase parser
     parser_erase = subparser.add_parser('erase', description='erase command')
     required_erase = parser_erase.add_argument_group('required arguments')
     required_erase.add_argument('-d','--device', type=str, help='jlink device name', required=True)
@@ -264,8 +295,14 @@ def parser():
     # debug_parser. 
     # TBD in future
 
-    # Parser call
+    # Parse arguments
     args = parser.parse_args()
+    # Set traceback limit based on the --verbose argument
+    if args.verbose:
+        sys.tracebacklimit = None  # Enable full traceback
+    else:
+        sys.tracebacklimit = 0  # Disable traceback
+    # Parser call
     args.func(args) 
 
 if __name__ == "__main__":
