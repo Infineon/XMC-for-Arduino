@@ -168,7 +168,7 @@ def check_device(device, port):
     device_value_masked = f'{device_value_masked:x}'
     device_value_masked = device_value_masked.zfill(int(master_data[device]['IDCHIP']['size'])*2)
 
-    print(f"Device is: {device.split('-')[0]}")
+    print(f"Device is: {device.split('-')[0]}.")
    
     #compare with stored master data
     if not device_value_masked == master_data[device]['IDCHIP']['value']:
@@ -186,7 +186,7 @@ def check_mem(device, port):
         flash_size = (device_value-1)*4 #flash size given by (ADDR-1)*4 
         flash_size = str(flash_size).zfill(4)
         
-        print(f"Flash size is: {int(flash_size)}kB")
+        print(f"Flash size is: {int(flash_size)}kB.")
 
         # special case for XMC2GO-32kB variant, bypass check
         if "XMC1100" in device and int(flash_size) == 32:
@@ -253,10 +253,10 @@ def parser():
                     if "J-Link>loadbin" in line:
                         found_loadbin = True
                     elif found_loadbin and "O.K." in line:
-                        print("Upload successful")
+                        print("Upload successful.")
                         break
                 else:
-                    print("Upload failed")
+                    print("Upload failed.")
             remove_console_output_file(console_out)
 
     def parser_erase_func(args):
