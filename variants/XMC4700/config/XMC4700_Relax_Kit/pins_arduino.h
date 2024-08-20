@@ -251,7 +251,10 @@ const XMC_PORT_PIN_t mapping_port_pin[] =
     /* 92  */   {XMC_GPIO_PORT3, 3},   //                              P3.3     X2-8
     /* 93  */   {XMC_GPIO_PORT0, 15},  // PWM40-0 / PWM20              P0.15    X2-6
     /* 94  */   {XMC_GPIO_PORT0, 12},  // PWM40-3 / PWM22              P0.12    X2-4
-    /* 95  */   {XMC_GPIO_PORT3, 12}   // ECAT0.P1_LINK_ACT            P3.12    X2-2
+    /* 95  */   {XMC_GPIO_PORT3, 12},  // ECAT0.P1_LINK_ACT            P3.12    X2-2
+
+    /* 96  */   {XMC_GPIO_PORT1, 12},  // CAN_TX                       
+    /* 97  */   {XMC_GPIO_PORT1, 13}   // CAN_RX                       
     };
 const uint8_t GND = ( sizeof( mapping_port_pin ) / sizeof( XMC_PORT_PIN_t ) );
 const uint8_t NUM_DIGITAL = ( sizeof( mapping_port_pin ) / sizeof( XMC_PORT_PIN_t ) );;
@@ -703,6 +706,33 @@ XMC_I2S_t i2s_config =
     .protocol_irq_num = (IRQn_Type)USIC2_2_IRQn,
     .protocol_irq_service_request = 2
 };
+
+
+// XMC CAN instance
+#ifdef CAN_xmc
+XMC_ARD_CAN_t XMC_CAN_0 = 
+{
+ .can_node = CAN_NODE1,
+ .can_node_num = XMC_NODE_NUM_1,
+ .can_clock = XMC_CAN_CANCLKSRC_FPERI,
+ .can_frequency = (uint32_t)144000000,
+ .rx = {  .port = (XMC_GPIO_PORT_t*)PORT1_BASE,
+          .pin  = (uint8_t)13
+    },
+ .rx_config = {
+    .mode =  XMC_GPIO_MODE_INPUT_TRISTATE
+  },
+ .tx = {  .port = (XMC_GPIO_PORT_t*)PORT1_BASE,
+          .pin  = (uint8_t)12
+    },
+ .tx_config = {
+    .mode = XMC_GPIO_MODE_OUTPUT_PUSH_PULL_ALT2
+ }, 
+ .node_input = CAN_NODE1_RXD_P1_13,
+ .irq_num =  CAN0_7_IRQn,
+ .irq_service_request = 7u
+};
+#endif
 
 // Serial Interrupt and event handling
 #ifdef __cplusplus

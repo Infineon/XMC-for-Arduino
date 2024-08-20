@@ -34,6 +34,14 @@ To merge your PR, please try to add a git tag in the format `VX.Y.Z` (e.g. V3.3.
 ### WIKI
 Because of the limitations of the github wiki, it is difficult to create PR for changes of wiki. Please refer to the answer under: https://stackoverflow.com/questions/10642928/how-can-i-make-a-pull-request-for-a-wiki-page-on-github and create a ticket for your modifications.
 
+### Debugging
+The new Arduino IDE (v2.x) supports debugging. Please refer to https://docs.arduino.cc/software/ide-v2/tutorials/ide-v2-debugger for more details.
+
+No additional hardware setup is required since the XMC evaluation board includes a J-Link on-board debugger. You can proceed directly to:
+https://docs.arduino.cc/software/ide-v2/tutorials/ide-v2-debugger/#getting-to-know-the-debugger
+
+If you encounter any unusual behavior with the Arduino IDE, try clearing the cache.
+
 ## Creating and Maintaining Third Party Libraries
 ### Background
 The Arduino IDE allows for external libraries to be added to support devices and functions

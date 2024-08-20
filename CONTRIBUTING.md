@@ -16,6 +16,22 @@ Check the **develop** branch for any Beta releases fixes for any issues you may 
 4. Other branches are for other tests and not to be treated as anything but work in progress for now
 5. Check [XMC-for-Arduino Wiki](https://github.com/Infineon/XMC-for-Arduino/wiki) for any additional information
 
+### Develop Built-in Library
+<ul>
+  <li>Reference to other libraries in the libraris folder. Typically required files include: </li>
+   <ul>
+      <li>source</li>
+      <li>library.properties</li>
+      <li>keywords.txt</li>
+      <li>README.md</li>
+    </ul>
+  <li>Check out the official arduino libraries and try to keep the API consistent</li>
+  <li>Add Compilation test in github workflow</li>
+  <li>Update documentation ( README, github wiki...)</li>
+</ul>
+
+### Add new XMC Board
+
 ### Local Running using Arduino IDE (**ON WINDOWS**):
 Clone the repository in arduino folder:
 - Open Arduino and install any Infineon XMC library (e.g. 2.2.0)
