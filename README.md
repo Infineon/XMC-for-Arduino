@@ -93,7 +93,7 @@ To install the boards, please go now to **Tools** > **Board** > **Boards Manager
 
 In the boards list **Tools** > **Board**, you will now find the supported XMC microcontroller boards. 
 
-![Board List](resources/wiki/image/Boards_Manager_Entry.png)
+![Board List](resources/wiki/image/Board_List.png)
 
 ### Notes
 
