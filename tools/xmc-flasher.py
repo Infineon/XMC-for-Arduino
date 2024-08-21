@@ -84,16 +84,6 @@ def remove_console_output_file(console_output_file):
         os.remove(console_output_file)        
 
 def jlink_commander(device, serial_num, cmd_file, console_output=False):
-    """
-    Executes J-Link Commander with the specified device, serial number, command file, and console output option.
-    Args:
-        device (str): The device name.
-        serial_num (str): The serial number of the J-Link device.
-        cmd_file (str): The path to the command file.
-        console_output (bool, optional): Specifies whether to enable console output. Defaults to False (print the log rather than store in a file).
-    Raises:
-        Exception: If there is an error with J-Link.
-    """
     jlink_cmd = [jlinkexe, '-autoconnect', '1','-exitonerror', '1', '-nogui', '1', '-device', device, '-selectemubysn', serial_num, '-if', 'swd', '-speed', '4000', '-commandfile', cmd_file]
 
     #if console_output is True:
@@ -211,19 +201,9 @@ def check_mem(device, port):
 
 
 def upload(device, port, binfile, enable_jlink_log):
-    """
-    Uploads a binary file to a device using XMC flasher.
-    Args:
-        device (str): The device name or ID.
-        port (str): The port to connect to the device.
-        binfile (str): The path to the binary file to upload.
-        enable_jlink_log (bool): Whether to enable J-Link logging.
-    Returns:
-        None
-    """
     serial_num = get_device_serial_number(port)
     jlink_cmd_file = create_jlink_loadbin_command_file(binfile)
-    jlink_commander(device, serial_num, jlink_cmd_file, console_output=not enable_jlink_log) 
+    jlink_commander(device, serial_num, jlink_cmd_file, console_output=not enable_jlink_log) # console_output = true will store the log to file instead of printing
     remove_jlink_command_file(jlink_cmd_file)
 
 def erase(device, port):
