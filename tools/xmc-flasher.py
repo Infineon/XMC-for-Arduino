@@ -35,9 +35,7 @@ def set_environment():
     elif sys.platform == 'win32' or sys.platform == 'cygwin':
         jlinkexe = rf"{get_jlink_install_path()}\jlink.exe"
     elif sys.platform == 'darwin':
-        jlinkexe = 'jlink'
-        print('warning: mac os not validated')
-        #raise Exception('mac os not supported?')
+        jlinkexe = 'JLinkExe'
 
 def discover_devices():
     ports = comports()
