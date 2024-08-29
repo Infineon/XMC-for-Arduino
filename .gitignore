@@ -2,5 +2,4 @@
 .vscode
 pkg_build
 build
-.clang-format
 **/__pycache__/
