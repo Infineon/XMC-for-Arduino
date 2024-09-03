@@ -60,7 +60,7 @@ If you are downloading J-Link for the first time, make sure to check this box: I
 
 XMC-for-Arduino requires Python 3.x and `pyserial`. Make sure Python is installed on your machine and available in the system path.
 
-:bulb: Tips for Windows users: While installing python, make sure to check the box that says "Add Python to PATH" before clicking on the install button. This option will automatically set the PATH for you. f you forgot to check the box during installation, you can add Python to PATH manually. 
+:bulb: Tips for Windows users: While installing python, make sure to check the box that says "Add Python to PATH" before clicking on the install button. This option will automatically set the PATH for you. If you forgot to check the box during installation, you can add Python to PATH manually. 
 
 You can check if it was successfully installed by opening your command line or terminal and typing:
 ```
