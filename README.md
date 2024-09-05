@@ -12,19 +12,25 @@ The [XMC microcontroller family](https://www.infineon.com/cms/de/product/microco
         <td><img src="docs/img/XMC1100_Boot-Kit.jpg" width="300"></td>
         <td><img src="docs/img/XMC1400_Arduino_Kit.jpg" width="300"></td>
         <td><img src="docs/img/XMC4200-Platform2go.jpg" width="300"></td>
-        <td><img src="docs/img/XMC4400-Platform2GO-Kit.jpg" width="300"></td>
-        <td><img src="docs/img/XMC4700_Relax_Kit_5VShields.jpg" width="300"></td>
     </tr>
     <tr>
         <td style="test-align : center"><a href="https://www.infineon.com/cms/en/product/evaluation-boards/kit_xmc14_2go/?redirId=282145">KIT_XMC14_2GO</a></td>
         <td style="test-align : center"><a href="https://www.infineon.com/cms/de/product/evaluation-boards/kit_xmc11_boot_001/">KIT_XMC11_BOOT_001</a></td>
         <td style="test-align : center"><a href="https://www.infineon.com/cms/en/product/evaluation-boards/kit_xmc1400_arduino/">KIT_XMC1400_ARDUINO</a></td>
         <td style="test-align: center"><a href="https://www.infineon.com/cms/en/product/evaluation-boards/kit_xmc_plt2go_xmc4200/">KIT_XMC_PLT2GO_XMC4200</a></td>
+    </tr>
+</table>
+
+<table>
+    <tr>
+        <td><img src="docs/img/XMC4400-Platform2GO-Kit.jpg" width="300"></td>
+        <td><img src="docs/img/XMC4700_Relax_Kit_5VShields.jpg" width="300"></td>
+    </tr>
+    <tr>
         <td style="test-align: center"><a href="https://www.infineon.com/cms/en/product/evaluation-boards/kit_xmc_plt2go_xmc4400/">KIT_XMC_PLT2GO_XMC4400</a></td>
         <td style="test-align : center"><a href="https://www.infineon.com/cms/en/product/evaluation-boards/kit_xmc47_relax_5v_ad_v1/?redirId=114289">KIT_XMC47_RELAX_5V_AD_V1</a></td>
     </tr>
 </table>
-
 
 ### Library Installation
 
