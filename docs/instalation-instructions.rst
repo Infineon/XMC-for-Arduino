@@ -36,7 +36,7 @@ With `pip <https://pip.pypa.io/en/stable/installation/>`_` available, install th
   pip install pyserial
  
 Integration in Arduino IDE
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+----------------------------
 Please first download the Arduino IDE. This package is only tested for Arduino IDE 1.5 or higher. 
 We recommended to use Arduino IDE 2.0 or higher.
 
