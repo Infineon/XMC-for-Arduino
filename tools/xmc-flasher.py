@@ -37,16 +37,17 @@ def set_environment():
     elif sys.platform == 'darwin':
         jlinkexe = 'JLinkExe'
 
-def discover_devices():
+def discover_jlink_devices():
     ports = comports()
     port_sn_list = []
     for p in ports:
-        port_sn_list.append((p.device, p.serial_number))
+        if "JLink" in p.description:
+            port_sn_list.append((p.device, p.serial_number))
 
     return port_sn_list
 
 def get_device_serial_number(port):
-    port_sn_list = discover_devices()
+    port_sn_list = discover_jlink_devices()
     for device in port_sn_list:
         if device[0] == port and device[0] != None:
                 return device[1]
@@ -156,6 +157,12 @@ def get_mem_contents(addr, bytes, device, port):
 def read_master_data():
     return xmc_master_data
 
+def find_device_by_value(value):
+    master_data = read_master_data()
+    for device, config in master_data.items():
+        if config["IDCHIP"]["value"] == value:
+            return device
+    return None
 
 def check_device(device, port):
 
@@ -166,10 +173,12 @@ def check_device(device, port):
     device_value_masked = f'{device_value_masked:x}'
     device_value_masked = device_value_masked.zfill(int(master_data[device]['IDCHIP']['size'])*2)
 
-    print(f"Selected Device is: {device.split('-')[0]}.")
-   
+    print(f"Selected Device is: {device}.")
+
+    real_device = find_device_by_value(device_value_masked)
     #compare with stored master data
-    if not device_value_masked == master_data[device]['IDCHIP']['value']:
+    if not real_device == device:
+        print(f"Connected Device is: {real_device}.")
         raise Exception(f"Device connected on port {port} does not match the selected device to flash")
 
 def check_mem(device, port):
@@ -209,7 +218,7 @@ def check_mem(device, port):
 def get_default_port(port):
     serial_num = get_device_serial_number(port)
     if serial_num == None or port == None:
-        port_sn_list = discover_devices()
+        port_sn_list = discover_jlink_devices()
         for port_sn in port_sn_list:
             if port_sn[1] != None:
                 real_port = port_sn[0]
