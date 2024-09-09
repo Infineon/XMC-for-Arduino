@@ -1,4 +1,4 @@
-Instalation Instructions
+Installation Instructions
 ===========================
 
 The following step by step guide will get you started with XMC for Arduino:

@@ -36,7 +36,7 @@ the advanced features and performance of the XMC microcontrollers.
    :caption: CONTENT:
 
    Introduction<self>
-   instalation-instructions
+   installation-instructions
    hw-platforms
    buildin-libraries
    library-details
