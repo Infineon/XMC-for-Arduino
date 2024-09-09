@@ -224,7 +224,7 @@ def get_default_port(port):
             if port_sn[1] != None:
                 real_port = port_sn[0]
                 print(f"Device found on port: {real_port}, not on the selected port: {port}.")
-                print(f"Please select correct port!")
+                print(f"Automatically selecting port {real_port}...")
                 return real_port
     else:
         return port
