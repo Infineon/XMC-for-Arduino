@@ -47,7 +47,7 @@ xmc_master_data = {
       "IDCHIP":{
          "addr":"40010004",
          "size":"4",
-         "value":"00014020",
+         "value":"00014010",
          "mask":"000FFFF0"
       },
       "FLSIZE":{
