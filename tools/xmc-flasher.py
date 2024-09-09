@@ -178,7 +178,8 @@ def check_device(device, port):
     real_device = find_device_by_value(device_value_masked)
     #compare with stored master data
     if not real_device == device:
-        print(f"Connected Device is: {real_device}.")
+        if real_device != None:
+            print(f"Connected Device is: {real_device}.")
         raise Exception(f"Device connected on port {port} does not match the selected device to flash")
 
 def check_mem(device, port):
@@ -293,7 +294,7 @@ def parser():
     parser_upload = subparser.add_parser('upload', description='Upload binary command')
     required_upload = parser_upload.add_argument_group('required arguments')
     required_upload.add_argument('-d','--device', type=str, help='jlink device name', required=True)
-    required_upload.add_argument('-p','--port', type=str, help='serial port')
+    required_upload.add_argument('-p','--port', type=str, nargs='?', const='', help='serial port')
     required_upload.add_argument('-f','--binfile', type=str, help='binary file to upload', required=True)
     required_upload.add_argument('--verbose', action='store_true', help='Enable verbose logging')
     parser_upload.set_defaults(func=parser_upload_func)
