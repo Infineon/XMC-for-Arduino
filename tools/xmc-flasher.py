@@ -37,16 +37,17 @@ def set_environment():
     elif sys.platform == 'darwin':
         jlinkexe = 'JLinkExe'
 
-def discover_devices():
+def discover_jlink_devices():
     ports = comports()
     port_sn_list = []
     for p in ports:
-        port_sn_list.append((p.device, p.serial_number))
+        if "JLink" in p.description:
+            port_sn_list.append((p.device, p.serial_number))
 
     return port_sn_list
 
 def get_device_serial_number(port):
-    port_sn_list = discover_devices()
+    port_sn_list = discover_jlink_devices()
     for device in port_sn_list:
         if device[0] == port and device[0] != None:
                 return device[1]
@@ -81,6 +82,16 @@ def remove_console_output_file(console_output_file):
     if os.path.exists(console_output_file):
         os.remove(console_output_file)        
 
+def remove_backspaces(input_str):
+    result = []
+    for char in input_str:
+        if char == '\b':
+            if result:
+                result.pop()
+        else:
+            result.append(char)
+    return ''.join(result)
+
 def jlink_commander(device, serial_num, cmd_file, console_output=False):
     jlink_cmd = [jlinkexe, '-autoconnect', '1','-exitonerror', '1', '-nogui', '1', '-device', device, '-selectemubysn', serial_num, '-if', 'swd', '-speed', '4000', '-commandfile', cmd_file]
 
@@ -92,10 +103,10 @@ def jlink_commander(device, serial_num, cmd_file, console_output=False):
         if console_output is True:
             out, err = jlink_proc.communicate()
             with open(console_out, 'w') as f:
-                f.write(out)
+                f.write(remove_backspaces(out))
         else:
             for line in jlink_proc.stdout:
-                print(line, end='')
+                print(remove_backspaces(line), end='')
         jlink_proc.wait()
     except:
         raise Exception("jlink error")
@@ -146,6 +157,12 @@ def get_mem_contents(addr, bytes, device, port):
 def read_master_data():
     return xmc_master_data
 
+def find_device_by_value(value):
+    master_data = read_master_data()
+    for device, config in master_data.items():
+        if config["IDCHIP"]["value"] == value:
+            return device
+    return None
 
 def check_device(device, port):
 
@@ -156,12 +173,14 @@ def check_device(device, port):
     device_value_masked = f'{device_value_masked:x}'
     device_value_masked = device_value_masked.zfill(int(master_data[device]['IDCHIP']['size'])*2)
 
-    print(f"Device is: {device.split('-')[0]}.")
-   
-    #compare with stored master data
-    if not device_value_masked == master_data[device]['IDCHIP']['value']:
-        raise Exception("Device connected does not match the selected device to flash")
+    print(f"Selected Device is: {device}.")
 
+    real_device = find_device_by_value(device_value_masked)
+    #compare with stored master data
+    if not real_device == device:
+        if real_device != None:
+            print(f"Connected Device is: {real_device}.")
+        raise Exception(f"Device connected on port {port} does not match the selected device to flash")
 
 def check_mem(device, port):
     
@@ -196,7 +215,20 @@ def check_mem(device, port):
         #compare with stored master data
         if not device_value_masked.upper() == master_data[device]['FLASH0_ID']['value']:
             raise Exception("Memory size of device connected does not match that of the selected device to flash")
-
+        
+def get_default_port(port):
+    serial_num = get_device_serial_number(port)
+    if serial_num == None or port == None:
+        port_sn_list = discover_jlink_devices()
+        for port_sn in port_sn_list:
+            if port_sn[1] != None:
+                real_port = port_sn[0]
+                print(f"Device found on port: {real_port}, not on the selected port: {port}.")
+                print(f"Automatically selecting port {real_port}...")
+                return real_port
+    else:
+        return port
+    
 
 def upload(device, port, binfile, enable_jlink_log):
     serial_num = get_device_serial_number(port)
@@ -236,6 +268,10 @@ def parser():
                 else:
                     print("Upload failed.")
             remove_console_output_file(console_out)
+                                # Log if the port value has changed
+        if args.port != original_port:
+            print(f"Please select port {args.port} for using the Serial Monitor or Plotter.")
+        
 
     def parser_erase_func(args):
         erase(args.device, args.port)
@@ -258,7 +294,7 @@ def parser():
     parser_upload = subparser.add_parser('upload', description='Upload binary command')
     required_upload = parser_upload.add_argument_group('required arguments')
     required_upload.add_argument('-d','--device', type=str, help='jlink device name', required=True)
-    required_upload.add_argument('-p','--port', type=str, help='serial port', required=True)
+    required_upload.add_argument('-p','--port', type=str, nargs='?', const='', help='serial port')
     required_upload.add_argument('-f','--binfile', type=str, help='binary file to upload', required=True)
     required_upload.add_argument('--verbose', action='store_true', help='Enable verbose logging')
     parser_upload.set_defaults(func=parser_upload_func)
@@ -280,6 +316,13 @@ def parser():
         sys.tracebacklimit = None  # Enable full traceback
     else:
         sys.tracebacklimit = 0  # Disable traceback
+
+    # Store the original port value
+    original_port = args.port
+
+    # Select default port if not provided/ or device not found on the selected port
+    args.port = get_default_port(args.port)
+
     # Parser call
     args.func(args) 
 
