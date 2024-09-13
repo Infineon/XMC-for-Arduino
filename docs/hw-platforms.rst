@@ -57,6 +57,8 @@ Pinout Diagram
 .. image:: img/XMC1400_Kit2Go_Pinout.svg
     :width: 600
 
+-----------------------------------------------------------------------
+
 KIT_XMC11_BOOT_001
 ------------------
 
@@ -75,6 +77,9 @@ nor share the same pins/resources. This is different from the original Arduino U
 .. image:: img/XMC1100_BootKit_PO_v2.png
     :width: 700
 
+
+-----------------------------------------------------------------------
+
 KIT_XMC1400_ARDUINO
 -------------------
 .. image:: img/XMC1400_Arduino_Kit.jpg
@@ -92,6 +97,9 @@ Arduino UNO Rev3 implementation. Please look at the pinout diagram above for mor
 
 .. image:: img/XMC1400_KitforArduino.png
     :width: 700
+
+
+-----------------------------------------------------------------------
 
 KIT_XMC_PLT2GO_XMC4200
 ----------------------
@@ -113,6 +121,8 @@ Pinout Diagram
 Please note that Arduino pin number 15 & 21 (SCL & A5) and Arduino pin number 14 & 20 (SDA & A4) are connected with each other 
 on the board itself. If you want to use them check out the subsection :ref:`connected_pins`.
 
+-----------------------------------------------------------------------
+
 KIT_XMC_PLT2GO_XMC4400
 ----------------------
 .. image:: img/XMC4400-Platform2GO-Kit.jpg
@@ -133,6 +143,9 @@ Pinout Diagram
 Please note that Arduino pin number 15 & 21 (SCL & A5) and Arduino pin number 14 & 20 (SDA & A4) are connected with each other 
 on the board itself. If you want to use them check out the subsection :ref:`connected_pins`.
 
+
+-----------------------------------------------------------------------
+
 KIT_XMC47_RELAX_5V_AD_V1
 ------------------------
 .. image:: img/XMC4700_Relax_Kit_5VShields.jpg
@@ -152,7 +165,7 @@ Please note that Arduino pin number 15 & 21 (SCL & A5) and Arduino pin number 14
 on the board itself. If you want to use them check out the subsection :ref:`connected_pins`.
 
 
-
+-----------------------------------------------------------------------
 
 .. _connected_pins:
 
