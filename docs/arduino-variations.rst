@@ -238,7 +238,7 @@ gain factor as per the following table:
       - 12
 
 For more information, please refer to the application note 
-`here<https://www.infineon.com/dgdl/Infineon-VADC-XMC1200_XMC1300-AP32304-AN-v01_10-EN.pdf?fileId=5546d4624e765da5014ed981f63136d6>`.
+`here <https://www.infineon.com/dgdl/Infineon-VADC-XMC1200_XMC1300-AP32304-AN-v01_10-EN.pdf?fileId=5546d4624e765da5014ed981f63136d6>`_.
 
 I2C Analog pins
 ^^^^^^^^^^^^^^^^^
