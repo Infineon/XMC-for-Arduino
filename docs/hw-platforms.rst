@@ -63,6 +63,8 @@ Arduino UNO Rev3 implementation. Please look at the pinout diagram above for mor
 
 -----------------------------------------------------------------------
 
+.. _xmc4200-platform2go:
+
 KIT_XMC_PLT2GO_XMC4200
 -----------------------
 .. image:: img/XMC4200-Platform2go.jpg
@@ -107,6 +109,8 @@ on the board itself. If you want to use them check out the subsection :ref:`conn
 
 
 -----------------------------------------------------------------------
+
+.. _xmc4700-relax:
 
 KIT_XMC47_RELAX_5V_AD_V1
 --------------------------
