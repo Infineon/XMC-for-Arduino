@@ -3,6 +3,43 @@ Supported Boards
 
 The following XMC microcontroller boards are supported by XMC for Arduino:
 
+.. list-table:: Supported Microcontroller Boards
+   :header-rows: 1
+
+   * - Picture
+     - Board Name
+     - Description
+     - Form Factor
+   * - .. image:: img/KIT_XMC14_2GO.png
+     - Various Kit 2Go boards
+     - Various Kit 2Go sensorboards.
+     - Shield2Go
+   * - .. image:: img/KIT_XMC14_2GO.png
+     - `KIT_XMC14_2GO`_
+     - Kit 2Go with XMC1404 and CAN transceiver.
+     - Shield2Go
+   * - .. image:: img/XMC1100_Boot-Kit.jpg
+     - `KIT_XMC11_BOOT_001`_
+     - XMC1100 in Arduino Uno shape.
+     - Arduino Uno
+   * - .. image:: img/XMC1400_Arduino_Kit.jpg
+     - `KIT_XMC1400_ARDUINO`_
+     - XMC1400 in Arduino Uno shape.
+     - Arduino Uno
+   * - .. image:: img/XMC4700_Relax_Kit_5VShields.jpg
+     - `KIT_XMC47_RELAX_5V_AD_V1`_
+     - XMC4700 in Arduino Uno shape with lots of GPIOs.
+     - Arduino Uno
+   * - .. image:: img/XMC4200-Platform2go.jpg
+     - `KIT_XMC_PLT2GO_XMC4200`_
+     - XMC4200 compatible with multiple form-factors.
+     - Arduino Uno, Shield2Go, mikroBUS
+   * - .. image:: img/XMC4400-Platform2GO-Kit.jpg
+     - `KIT_XMC_PLT2GO_XMC4400`_
+     - XMC4400 compatible with multiple form-factors.
+     - Arduino Uno, Shield2Go, mikroBUS
+
+
 KIT_XMC14_2GO
 -------------
 
