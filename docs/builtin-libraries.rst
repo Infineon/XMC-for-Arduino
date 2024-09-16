@@ -1,15 +1,15 @@
-Built in Libraries
-=====================
+Built-in Libraries
+==================
 
 The XMC for Arduino platform provides a comprehensive set of built-in libraries that enable developers to easily access 
-and utilize the XMC microcontrollers' features and peripherals; this section lists these libraries, including their 
+and utilize the XMC microcontrollers' features and peripherals. This section lists these libraries, including their 
 functionality and supported boards.
 
 DeviceControl XMC
-^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^
 
 Examples Supported
--------------------
+------------------
 
 .. list-table:: 
     :header-rows: 1
@@ -99,7 +99,7 @@ Examples Supported
 
 
 RTC Library
-^^^^^^^^^^^^^^
+^^^^^^^^^^^
 
 .. list-table:: 
     :header-rows: 1
@@ -117,7 +117,7 @@ RTC Library
 
 
 SPI Library
-^^^^^^^^^^^^^^
+^^^^^^^^^^^
 
 .. list-table:: 
     :header-rows: 1
@@ -142,7 +142,7 @@ SPI Library
 
 
 Wire Library
-^^^^^^^^^^^^^^
+^^^^^^^^^^^^
 
 .. list-table:: 
     :header-rows: 1
@@ -217,24 +217,24 @@ Wire Library
 
 
 I2S Library
-^^^^^^^^^^^^^^
+^^^^^^^^^^^
 
 This library has been tested with the IM69D130 Microphone Shield2Go with both XMC4700 Relax Kit and XMC1100 XMC2Go. 
 Please refer to the `README.md <https://github.com/Infineon/XMC-for-Arduino/blob/master/libraries/I2S/README.md>`_ of 
 the I2S library for pin connections.
 
 Limitations
-------------
+-----------
 With XMC 2Go (possibly also with other XMC1000 family devices), you might easily overflow the I2S buffer and you should 
 try to reduce the I2S sampling rate if so.
 
 OneWire Library
-^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^
 
 Library for One wire protocol. It could be used to access 1-wire temperature sensors, memory and other chips.
 
 CAN Library
-^^^^^^^^^^^^^^
+^^^^^^^^^^^
 
 This library provides support for the CAN protocol. For further details, please refer to the `README.md <https://github.com/Infineon/XMC-for-Arduino/blob/master/libraries/CAN/README.md>`_ file in the CAN library.
 
@@ -262,7 +262,7 @@ This library provides support for the CAN protocol. For further details, please 
         | when data is received on the CAN bus. In both examples,
         | messages with any ID transmitted on the CAN bus can 
         | be received. Additionally, messages can be filtered for
-        | specific IDs  using the filter() function.
+        | specific IDs  using the ``filter()`` function.
     * - CANLoopBack 
       - XMC1400 2GO 
       - | This example demonstrates the loopback mode of CAN. 

@@ -1,5 +1,5 @@
-Arduino Variations
-====================
+Variations from Arduino Standard
+================================
 
 Functions and Options Differences
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
