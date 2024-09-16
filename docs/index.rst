@@ -41,7 +41,6 @@ advantage of the advanced features and performance offered by XMC microcontrolle
    builtin-libraries
    arduino-variations
 
-
 License
 =======
 

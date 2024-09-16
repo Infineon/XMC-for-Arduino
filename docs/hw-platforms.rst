@@ -11,10 +11,6 @@ The following XMC microcontroller boards are supported by XMC for Arduino:
      - Description
      - Form Factor
    * - .. image:: img/KIT_XMC14_2GO.png
-     - Various Kit 2Go boards
-     - Various Kit 2Go sensorboards.
-     - Shield2Go
-   * - .. image:: img/KIT_XMC14_2GO.png
      - `KIT_XMC14_2GO`_
      - Kit 2Go with XMC1404 and CAN transceiver.
      - Shield2Go
@@ -38,7 +34,6 @@ The following XMC microcontroller boards are supported by XMC for Arduino:
      - `KIT_XMC_PLT2GO_XMC4400`_
      - XMC4400 compatible with multiple form-factors.
      - Arduino Uno, Shield2Go, mikroBUS
-
 
 KIT_XMC14_2GO
 -------------
@@ -166,12 +161,12 @@ Pinout Diagram
     :width: 600
 
 Please note that Arduino pin number 15 & 21 (SCL & A5) and Arduino pin number 14 & 20 (SDA & A4) are connected with each other 
-on the board itself. If you want to use them check out the subsection :ref:`connected-pins`.
+on the board itself. If you want to use them check out the subsection :ref:`connected_pins`.
 
 
 -----------------------------------------------------------------------
 
-.. _connected-pins:
+.. _connected_pins:
 
 Connected I2S and Analog pins
 -----------------------------
@@ -180,9 +175,9 @@ For the KIT_XMC_PLT2GO_XMC4200, KIT_XMC_PLT2GO_XMC4400 and KIT_XMC47_RELAX_5V_AD
 pin number 14 & 20 (SDA & A4) are connected with each other on the board itself. Although they are different physical pins of the microcontroller, 
 they are connected with each other on the board to comply with the original Arduino UNO Rev3 pin connections. This influences analog measurements on 
 A4 and A5 if you are using I2C simultaneously. Details of the connection can also be found in the schematics in the user manual of the board here:
-`KIT_XMC_PLT2GO_XMC4200 User Manual`_, `KIT_XMC_PLT2GO_XMC4400 User Manual`_ and `KIT_XMC47_RELAX_5V_AD_V1 User Manual`_.
+`KIT_XMC_PLT2GO_XMC4200 user manual`_, `KIT_XMC_PLT2GO_XMC4400 user manual`_ and `KIT_XMC47_RELAX_5V_AD_V1 user manual`_.
 
-The User Manual shows on:
+The user manual shows on:
 
 * Page 11 details the 3V3 signals on connectors X1 and X2 (figure 7) including ADC channels
 * Page 12 below Figure 8 details analog input specifications
@@ -210,12 +205,12 @@ For the KIT_XMC47_RELAX_5V_AD_V1 cut the blue routes on the back side of the PCB
     :width: 600
 
 
-.. _`KIT_XMC14_2GO`: https://www.infineon.com/cms/en/product/evaluation-boards/kit_xmc14_2go/?redirId=282145
-.. _`KIT_XMC11_BOOT_001`: https://www.infineon.com/cms/de/product/evaluation-boards/kit_xmc11_boot_001/
-.. _`KIT_XMC1400_ARDUINO`: https://www.infineon.com/cms/en/product/evaluation-boards/kit_xmc1400_arduino/
-.. _`KIT_XMC_PLT2GO_XMC4200`: https://www.infineon.com/cms/en/product/evaluation-boards/kit_xmc_plt2go_xmc4200/
-.. _`KIT_XMC_PLT2GO_XMC4400`: https://www.infineon.com/cms/en/product/evaluation-boards/kit_xmc_plt2go_xmc4400/
-.. _`KIT_XMC47_RELAX_5V_AD_V1`: https://www.infineon.com/cms/en/product/evaluation-boards/kit_xmc47_relax_5v_ad_v1/?redirId=114289
-.. _`KIT_XMC_PLT2GO_XMC4200 User Manual`: https://www.infineon.com/dgdl/Infineon-XMC4200_Platform2Go-UserManual-v01_00-EN.pdf?fileId=5546d4626f229553016f8fca76c12c96
-.. _`KIT_XMC_PLT2GO_XMC4400 User Manual`: https://www.infineon.com/dgdl/Infineon-XMC4400_Platform2Go-UserManual-v01_00-EN.pdf?fileId=5546d4626f229553016f8fc159482c94
-.. _`KIT_XMC47_RELAX_5V_AD_V1 User Manual`: https://www.infineon.com/dgdl/Infineon-Board_User_Manual_XMC4700_XMC4800_Relax_Kit_Series-UM-v01_02-EN.pdf?fileId=5546d46250cc1fdf01513f8e052d07fc
+.. _KIT_XMC14_2GO: https://www.infineon.com/cms/en/product/evaluation-boards/kit_xmc14_2go/?redirId=282145
+.. _KIT_XMC11_BOOT_001: https://www.infineon.com/cms/de/product/evaluation-boards/kit_xmc11_boot_001/
+.. _KIT_XMC1400_ARDUINO: https://www.infineon.com/cms/en/product/evaluation-boards/kit_xmc1400_arduino/
+.. _KIT_XMC_PLT2GO_XMC4200: https://www.infineon.com/cms/en/product/evaluation-boards/kit_xmc_plt2go_xmc4200/
+.. _KIT_XMC_PLT2GO_XMC4400: https://www.infineon.com/cms/en/product/evaluation-boards/kit_xmc_plt2go_xmc4400/
+.. _KIT_XMC47_RELAX_5V_AD_V1: https://www.infineon.com/cms/en/product/evaluation-boards/kit_xmc47_relax_5v_ad_v1/?redirId=114289
+.. _KIT_XMC_PLT2GO_XMC4200 user manual: https://www.infineon.com/dgdl/Infineon-XMC4200_Platform2Go-UserManual-v01_00-EN.pdf?fileId=5546d4626f229553016f8fca76c12c96
+.. _KIT_XMC_PLT2GO_XMC4400 user manual: https://www.infineon.com/dgdl/Infineon-XMC4400_Platform2Go-UserManual-v01_00-EN.pdf?fileId=5546d4626f229553016f8fc159482c94
+.. _KIT_XMC47_RELAX_5V_AD_V1 user manual: https://www.infineon.com/dgdl/Infineon-Board_User_Manual_XMC4700_XMC4800_Relax_Kit_Series-UM-v01_02-EN.pdf?fileId=5546d46250cc1fdf01513f8e052d07fc
