@@ -29,7 +29,7 @@ You can check if it was successfully installed by opening your command line or t
 
   python --version
  
-With `pip <https://pip.pypa.io/en/stable/installation/>`_` available, install the mentioned packages from a terminal:
+With `pip <https://pip.pypa.io/en/stable/installation/>`_ available, install the mentioned packages from a terminal:
 
 .. code-block:: shell
 
