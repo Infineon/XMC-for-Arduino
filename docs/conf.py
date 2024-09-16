@@ -75,35 +75,6 @@ source_suffix = [
 
 suppress_warnings = ['autosectionlabel.*', 'epub.duplicated_toc_entry']
 
-# Setup the exhale extension
-# exhale_args = {
-#     # These arguments are required
-#     "containmentFolder":     "./exhale-auto-docs",
-#     "rootFileName":          "api_list.rst",
-#     "rootFileTitle":         "API List",
-#     "doxygenStripFromPath":  "..",
-#     # Suggested optional arguments
-#     "createTreeView":        True,
-#     # TIP: if using the sphinx-bootstrap-theme, you need
-#     # "treeViewIsBootstrap": True,
-#     "exhaleExecutesDoxygen": True,
-#     # "exhaleUseDoxyfile" : True,
-#     "exhaleDoxygenStdin":    textwrap.dedent('''
-#         INPUT            = ../src
-#         GENERATE_LATEX   = NO
-#         GENERATE_HTML    = YES
-#         GENERATE_XML     = YES
-#         RECURSIVE        = YES
-#         VERBATIM_HEADERS = NO
-#         EXCLUDE          = ./../src/framework/raspberrypi/examples ./../src/framework/raspberrypi/examples_py ./../src/framework/arduino/examples ./../src/framework/arduino/README.md
-#     '''),
-
-#     # Configure what not to show in the API index page
-#     "unabridgedOrphanKinds": {"function", "define", "dir","file", "variable", "namespace"},
-#     "fullToctreeMaxDepth" : 4
-    
-# }
-
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
 
