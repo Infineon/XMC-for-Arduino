@@ -43,9 +43,10 @@ Integration in Arduino IDE
 .. image:: img/preference.png
     :width: 600
 
-Paste the following URL into the *Additional boards manager URLs* input field under *File > Preferences* to add Infineon's XMC microcontroller boards to the Arduino IDE.
+Paste the following URL into the *Additional boards manager URLs* input field under *File > Preferences* to add Infineon's XMC microcontroller boards to the Arduino IDE:
 
-.. code-block:: shell
+::
+
     https://github.com/Infineon/XMC-for-Arduino/releases/latest/download/package_infineon_index.json
 
 .. image:: img/preference_JSON.png
