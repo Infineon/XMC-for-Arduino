@@ -1,16 +1,16 @@
-Variations from Arduino Standard
-================================
+Deviations from Arduino Language Reference
+==========================================
 
 Functions and Options Differences
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Extra modes (if patches applied)
----------------------------------
+--------------------------------
 
 This section covers the differences between standard Arduino and XMC-for-Arduino
 
 GPIO
-+++++
+++++
 
 Extra pinMode types added that most engineers want
 
@@ -24,7 +24,7 @@ Extra functions (than standard Arduino AVR)
 --------------------------------------------
 
 GPIO
-+++++
+++++
 Does what the function names says but must have been configured as output
 
 .. code-block:: 
@@ -35,7 +35,7 @@ Arduino Function Differences
 -------------------------------
 
 Input Mode Pins
-++++++++++++++++
++++++++++++++++
 
 On standard Arduino boards, GPIO is by default either a function 
 like Serial or in INPUT mode.
@@ -45,7 +45,7 @@ to be in INPUT Mode that needs Inputs.
 
 
 Wire/I2C Differences
-+++++++++++++++++++++
+++++++++++++++++++++
 
 The method in Wire class for 'begin' is not the same as AVR Arduino, 
 and has different modes for Master and Slave
@@ -66,7 +66,7 @@ Currently the address is NOT optional for XMC as this currently assumes this
 must be Slave mode configuration and sets the I2C configuration differently.
 
 Tone
-++++++
+++++
 
 Number of Tone pins is determined by pins_arduino.h define NUM_TONE_PINS. 
 This allows for use in other modules and for variations between boards as 
@@ -92,7 +92,7 @@ However this does mean you can have more tone pins, just much lower frequency ra
 
 
 Analog Functions and improvements
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 wiring_analog after V1.2.1
 -----------------------------
@@ -106,7 +106,7 @@ current maximum value possible.
 
 
 Extra functions
-----------------
+---------------
 
 These functions return the analogue resolution as number of bits
 
@@ -127,7 +127,7 @@ The gain factor values can be found :ref:`here <gain_factor>`.
 
 
 Default Values
-----------------
+--------------
 
 Read resolution default is 10 bits (0 to 1023)
 
@@ -135,7 +135,7 @@ Write resolution default is 8 bits (0 to 255)
 
 
 Error and Return Codes by Function
------------------------------------
+----------------------------------
 
 Where possible functions do :command:`NOT` action invalid parameters passed in.
 
@@ -189,7 +189,7 @@ This should enable checks in software for valid operation
 and debugging problem code.
 
 AREF Analogue Reference
-------------------------
+-----------------------
 
 On all boards the Analogue Reference is set to use the internal power supply 
 (however noisy), so the AREF pin is an :command:`OUTPUT` of the AREF in use. 
@@ -214,7 +214,7 @@ the same on these boards.
 
 
 Analog amplifiers at the ADC inputs with adjustible gain
-----------------------------------------------------------
+--------------------------------------------------------
 Each analog input channel can be configured to be amplified by an adjustable 
 gain factor, for XMC1000 series. To configure the gain, the gain value is to 
 be selected in the analogRead_variableGain() function which translates to a 
@@ -241,7 +241,7 @@ For more information, please refer to the application note
 `here <https://www.infineon.com/dgdl/Infineon-VADC-XMC1200_XMC1300-AP32304-AN-v01_10-EN.pdf?fileId=5546d4624e765da5014ed981f63136d6>`_.
 
 I2C Analog pins
-^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^
 
 Arduino Uno R3 format dictates that A4 and A5 are also used 
 for I2C operations, so when I2C is enabled analogue inputs A4 
@@ -284,10 +284,10 @@ function, or other case as described below.
 
 
 Serial selection
-^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^
 
 Serial Output Selection
--------------------------
+-----------------------
 On the XMC boards, two kinds of serial outputs are possible, namely:
 
 * SERIAL DEBUG (via PC)
