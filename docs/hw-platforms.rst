@@ -48,7 +48,7 @@ KIT_XMC11_BOOT_001
 ------------------
 
 * Name in Arduino IDE: ``XMC1100 Boot Kit``
-* `Product Page <https://www.infineon.com/cms/de/product/evaluation-boards/kit_xmc11_boot_001/>`_
+* `Product Page <https://www.infineon.com/cms/de/product/evaluation-boards/kit_xmc11_boot_001/>`__
 
 .. image:: img/KIT_XMC11_BOOT_001.jpg
     :width: 400
@@ -72,7 +72,7 @@ KIT_XMC13_BOOT_001
 ------------------
 
 * Name in Arduino IDE: ``XMC1300 Boot Kit``
-* `Product Page <https://www.infineon.com/cms/de/product/evaluation-boards/kit_xmc13_boot_001/>`_
+* `Product Page <https://www.infineon.com/cms/de/product/evaluation-boards/kit_xmc13_boot_001/>`__
 
 .. image:: img/KIT_XMC13_BOOT_001.jpg
     :width: 400
@@ -87,7 +87,7 @@ KIT_XMC14_2GO
 -------------
 
 * Name in Arduino IDE: ``XMC1400 XMC2GO``
-* `Product Page <https://www.infineon.com/cms/en/product/evaluation-boards/kit_xmc14_2go/>`_
+* `Product Page <https://www.infineon.com/cms/en/product/evaluation-boards/kit_xmc14_2go/>`__
 
 .. image:: img/KIT_XMC14_2GO.png
     :width: 400
@@ -110,7 +110,7 @@ KIT_XMC1400_ARDUINO
 -------------------
 
 * Name in Arduino IDE: ``XMC1400 Kit for Arduino``
-* `Product Page <https://www.infineon.com/cms/en/product/evaluation-boards/kit_xmc1400_arduino/>`_
+* `Product Page <https://www.infineon.com/cms/en/product/evaluation-boards/kit_xmc1400_arduino/>`__
 
 .. image:: img/KIT_XMC1400_ARDUINO.jpg
     :width: 400
@@ -135,7 +135,7 @@ KIT_XMC_PLT2GO_XMC4200
 ----------------------
 
 * Name in Arduino IDE: ``XMC4200 Platform 2GO``
-* `Product Page <https://www.infineon.com/cms/en/product/evaluation-boards/kit_xmc_plt2go_xmc4200/>`_
+* `Product Page <https://www.infineon.com/cms/en/product/evaluation-boards/kit_xmc_plt2go_xmc4200/>`__
 
 .. image:: img/KIT_XMC_PLT2GO_XMC4200.jpg
     :width: 400
@@ -162,7 +162,7 @@ KIT_XMC_PLT2GO_XMC4400
 ----------------------
 
 * Name in Arduino IDE: ``XMC4400 Platform 2GO``
-* `Product Page <https://www.infineon.com/cms/en/product/evaluation-boards/kit_xmc_plt2go_xmc4400/>`_
+* `Product Page <https://www.infineon.com/cms/en/product/evaluation-boards/kit_xmc_plt2go_xmc4400/>`__
 
 .. image:: img/KIT_XMC_PLT2GO_XMC4400.jpg
     :width: 400
@@ -189,7 +189,7 @@ KIT_XMC47_RELAX_5V_AD_V1
 ------------------------
 
 * Name in Arduino IDE: ``XMC4700 Relax Kit``
-* `Product Page <https://www.infineon.com/cms/en/product/evaluation-boards/kit_xmc47_relax_5v_ad_v1/>`_
+* `Product Page <https://www.infineon.com/cms/en/product/evaluation-boards/kit_xmc47_relax_5v_ad_v1/>`__
 
 .. image:: img/KIT_XMC47_RELAX_5V_AD_V1.jpg
     :width: 400
@@ -304,7 +304,7 @@ H-BRIDGE KIT 2GO
 ----------------
 
 * Name in Arduino IDE: ``XMC1100 H-Bridge 2Go``
-* `Product Page <https://www.infineon.com/cms/de/product/evaluation-boards/h-bridge-kit-2go/>`_
+* `Product Page <https://www.infineon.com/cms/de/product/evaluation-boards/h-bridge-kit-2go/>`__
 
 The XMC1100 2Go board consists of a XMC1100 microcontroller with a debugger implemented by a XMC4200 microcontroller.
 
@@ -334,7 +334,7 @@ XMC4700 Radar Baseboard
 -----------------------
 
 * Name in Arduino IDE: ``XMC4700 Radar Baseboard``
-* `Product Page <https://www.infineon.com/cms/en/product/evaluation-boards/demo-sense2gol-pulse/>`_
+* `Product Page <https://www.infineon.com/cms/en/product/evaluation-boards/demo-sense2gol-pulse/>`__
 
 The Sense2GoL Pulse radar system is a demo platform for Infineon's 24GHz BGT24LTR11 radar transceiver.
 The Sense2GoL Pulse consists of two boards – the microcontroller board with the XMC4700 (RADAR BB XMC4700)
