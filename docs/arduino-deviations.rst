@@ -297,7 +297,7 @@ If these two outputs share the same instance of the internal USIC channel,
 only one of the two could be used at a given time. The selection can be made 
 via the Tools menu as shown in the picture below.
 
-.. image:: img/serial_selection.png
+.. image:: img/arduino_ide_serial_selection.png
     :width: 600
 
 This is generally the case for most of the XMC boards. However, for boards 

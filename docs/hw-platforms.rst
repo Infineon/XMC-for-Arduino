@@ -10,11 +10,11 @@ The following XMC microcontroller boards are supported by XMC for Arduino:
      - Board Name
      - MCU
      - Form Factor
-   * - .. image:: img/XMC1100_Boot-Kit.jpg
+   * - .. image:: img/KIT_XMC11_BOOT_001.jpg
      - :ref:`KIT_XMC11_BOOT_001`
      - XMC1100
      - Arduino Uno
-   * - .. image:: img/XMC1100_Boot-Kit.jpg
+   * - .. image:: img/KIT_XMC13_BOOT_001.jpg
      - :ref:`KIT_XMC13_BOOT_001`
      - XMC1302
      - Proprietary
@@ -22,19 +22,19 @@ The following XMC microcontroller boards are supported by XMC for Arduino:
      - :ref:`KIT_XMC14_2GO`
      - XMC1404
      - Shield2Go
-   * - .. image:: img/XMC1400_Arduino_Kit.jpg
+   * - .. image:: img/KIT_XMC1400_ARDUINO.jpg
      - :ref:`KIT_XMC1400_ARDUINO`
      - XMC1402
      - Arduino Uno
-   * - .. image:: img/XMC4200-Platform2go.jpg
+   * - .. image:: img/KIT_XMC_PLT2GO_XMC4200.jpg
      - :ref:`KIT_XMC_PLT2GO_XMC4200`
      - XMC4200
      - Arduino Uno, Shield2Go, mikroBUS
-   * - .. image:: img/XMC4400-Platform2GO-Kit.jpg
+   * - .. image:: img/KIT_XMC_PLT2GO_XMC4400.jpg
      - :ref:`KIT_XMC_PLT2GO_XMC4400`
      - XMC4400
      - Arduino Uno, Shield2Go, mikroBUS
-   * - .. image:: img/XMC4700_Relax_Kit_5VShields.jpg
+   * - .. image:: img/KIT_XMC47_RELAX_5V_AD_V1.jpg
      - :ref:`KIT_XMC47_RELAX_5V_AD_V1`
      - XMC4700
      - Arduino Uno
@@ -50,7 +50,7 @@ KIT_XMC11_BOOT_001
 * Name in Arduino IDE: ``XMC1100 Boot Kit``
 * `Product Page <https://www.infineon.com/cms/de/product/evaluation-boards/kit_xmc11_boot_001/>`_
 
-.. image:: img/XMC1100_Boot-Kit.jpg
+.. image:: img/KIT_XMC11_BOOT_001.jpg
     :width: 400
 
 The XMC1100 Boot Kit board consists of a XMC1100 microcontroller with a debugger implemented by a XMC4200 microcontroller.
@@ -61,7 +61,7 @@ Pinout Diagram
 Please note that Arduino pin number 16 & 22 (SCL & A5) and Arduino pin number 15 & 21 (SDA & A4) are not connected with each other 
 nor share the same pins/resources. This is different from the original Arduino UNO Rev3 implementation.
 
-.. image:: img/XMC1100_BootKit_PO_v2.png
+.. image:: img/KIT_XMC11_BOOT_001_pinout.png
     :width: 700
 
 -----------------------------------------------------------------------
@@ -99,7 +99,7 @@ CAN bus. The software development is supported via ModusToolbox™ and the Ardui
 Pinout Diagram
 ^^^^^^^^^^^^^^
 
-.. image:: img/XMC1400_Kit2Go_Pinout.svg
+.. image:: img/KIT_XMC14_2GO_pinout.svg
     :width: 700
 
 -----------------------------------------------------------------------
@@ -112,7 +112,7 @@ KIT_XMC1400_ARDUINO
 * Name in Arduino IDE: ``XMC1400 Kit for Arduino``
 * `Product Page <https://www.infineon.com/cms/en/product/evaluation-boards/kit_xmc1400_arduino/>`_
 
-.. image:: img/XMC1400_Arduino_Kit.jpg
+.. image:: img/KIT_XMC1400_ARDUINO.jpg
     :width: 400
 
 The XMC1400 Kit for Arduino consists of a XMC1400 microcontroller with a debugger implemented by a XMC4200 microcontroller.
@@ -124,7 +124,7 @@ Please note that pins ``P1.4`` and ``P0.5`` are swapped on the board and are not
 occurs as Arduino pin ``3`` and interrupt 1 ``INT1`` is located at Arduino pin ``25``. This is different from the original 
 Arduino UNO Rev3 implementation. Please look at the pinout diagram for more information.
 
-.. image:: img/XMC1400_KitforArduino.png
+.. image:: img/KIT_XMC1400_ARDUINO_pinout.png
     :width: 700
 
 -----------------------------------------------------------------------
@@ -137,7 +137,7 @@ KIT_XMC_PLT2GO_XMC4200
 * Name in Arduino IDE: ``XMC4200 Platform 2GO``
 * `Product Page <https://www.infineon.com/cms/en/product/evaluation-boards/kit_xmc_plt2go_xmc4200/>`_
 
-.. image:: img/XMC4200-Platform2go.jpg
+.. image:: img/KIT_XMC_PLT2GO_XMC4200.jpg
     :width: 400
 
 The XMC4200 Platform 2Go evaluation board consists of a XMC4200 microcontroller with a debugger implemented by a XMC4200 microcontroller. 
@@ -148,7 +148,7 @@ MikroBUS and Shield2Go form factors.
 
 Pinout Diagram
 ^^^^^^^^^^^^^^
-.. image:: img/xmc4200_platform2go.png
+.. image:: img/KIT_XMC_PLT2GO_XMC4200_pinout.png
     :width: 700
 
 Please note that Arduino pin number ``15`` & ``21`` (``SCL`` & ``A5``) and Arduino pin number ``14`` & ``20`` (``SDA`` & ``A4``) are connected with each other 
@@ -164,7 +164,7 @@ KIT_XMC_PLT2GO_XMC4400
 * Name in Arduino IDE: ``XMC4400 Platform 2GO``
 * `Product Page <https://www.infineon.com/cms/en/product/evaluation-boards/kit_xmc_plt2go_xmc4400/>`_
 
-.. image:: img/XMC4400-Platform2GO-Kit.jpg
+.. image:: img/KIT_XMC_PLT2GO_XMC4400.jpg
     :width: 400
 
 The XMC4400 Platform 2Go evaluation board consists of a XMC4400 microcontroller with a debugger implemented by a XMC4200 microcontroller. 
@@ -175,7 +175,7 @@ MikroBUS and Shield2Go form factors.
 
 Pinout Diagram
 ^^^^^^^^^^^^^^
-.. image:: img/xmc4400_platform2go.png
+.. image:: img/KIT_XMC_PLT2GO_XMC4400_pinout.png
     :width: 700
 
 Please note that Arduino pin number ``15`` & ``21`` (``SCL`` & ``A5``) and Arduino pin number ``14`` & ``20`` (``SDA`` & ``A4``) are connected with each other 
@@ -191,7 +191,7 @@ KIT_XMC47_RELAX_5V_AD_V1
 * Name in Arduino IDE: ``XMC4700 Relax Kit``
 * `Product Page <https://www.infineon.com/cms/en/product/evaluation-boards/kit_xmc47_relax_5v_ad_v1/>`_
 
-.. image:: img/XMC4700_Relax_Kit_5VShields.jpg
+.. image:: img/KIT_XMC47_RELAX_5V_AD_V1.jpg
     :width: 400
 
 The XMC4700 Relax Kit board consists of a XMC4700 microcontroller with a debugger implemented by a XMC4200 microcontroller. 
@@ -201,7 +201,7 @@ The one described here is the 5V version as this one is compatible with Arduino 
 
 Pinout Diagram
 ^^^^^^^^^^^^^^
-.. image:: img/XMC_4700_RelaxKit_5VShields.png
+.. image:: img/KIT_XMC47_RELAX_5V_AD_V1_pinout.png
     :width: 700
 
 Please note that Arduino pin number ``15`` & ``21`` (``SCL`` & ``A5``) and Arduino pin number ``14`` & ``20`` (``SDA`` & ``A4``) are connected with each other 
@@ -234,17 +234,17 @@ You can also cut the physical connection on the board itself.
 
 For ``KIT_XMC_PLT2GO_XMC4200`` remove the resistor ``R104`` and ``R105``:
 
-.. image:: img/xmc4200_platform2go_layout.png
+.. image:: img/kit_xmc_plt2go_xmc4200_remove_resistors.png
     :width: 300
 
 For the ``KIT_XMC_PLT2GO_XMC4400`` by cutting the marked blue routes on the back side of the PCB:
 
-.. image:: img/96910232-7332d980-149f-11eb-81ec-2b5c23b01372.png
+.. image:: img/kit_xmc_plt2go_xmc4400_cut_routes.png
     :width: 300
 
 For the ``KIT_XMC47_RELAX_5V_AD_V1`` cut the blue routes on the back side of the PCB as indicated here:
 
-.. image:: img/96850978-c2edb280-1457-11eb-9636-b4e8c7b0f725.jpg
+.. image:: img/kit_xmc47_relax_cut_routes.jpg
     :width: 300
 
 .. _KIT_XMC_PLT2GO_XMC4200 user manual: https://www.infineon.com/dgdl/Infineon-XMC4200_Platform2Go-UserManual-v01_00-EN.pdf?fileId=5546d4626f229553016f8fca76c12c96
@@ -346,5 +346,3 @@ Pinout Diagram
 
 .. image:: img/XMC4700_Radar_Baseboard_pinout.png
     :width: 700
-
------------------------------------------------------------------------
