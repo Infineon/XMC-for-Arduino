@@ -23,6 +23,12 @@ Required Tools
 ^^^^^^^^^^^^^^
 XMC for Arduino requires *Python 3.x* and *pyserial*. Make sure `Python <https://www.python.org/>`_ is installed on your machine and available in the system path.
 
+.. note::
+    When installing Python on Windows, ensure you check "*Add Python to PATH*" before clicking install.
+    This allows XMC for Arduino to find the Python executable.
+    
+    If you forget this step, you can add Python to PATH manually later.
+
 You can check if it was successfully installed by opening your command line or terminal and typing:
 
 .. code-block:: shell
