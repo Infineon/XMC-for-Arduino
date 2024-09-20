@@ -21,7 +21,7 @@ If you are downloading J-Link for the first time, make sure to check the box **I
 
 Required Tools
 ^^^^^^^^^^^^^^
-XMC for Arduino requires *Python 3.x* and *pyserial*. Make sure `Python <https://www.python.org/>` is installed on your machine and available in the system path.
+XMC for Arduino requires *Python 3.x* and *pyserial*. Make sure `Python <https://www.python.org/>`_ is installed on your machine and available in the system path.
 
 You can check if it was successfully installed by opening your command line or terminal and typing:
 
@@ -38,7 +38,7 @@ With `pip <https://pip.pypa.io/en/stable/installation/>`_ available, install the
 Integration in Arduino IDE
 --------------------------
 .. note::
-    We recommended to use Arduino IDE 2.0 or higher.
+    We recommend to use Arduino IDE 2.0 or newer.
 
 .. image:: img/preference.png
     :width: 600
@@ -58,7 +58,7 @@ Click *Install* to add the boards to your Arduino IDE.
 .. image:: img/Boards_Manager_Entry.png
     :width: 600
 
-In the boards list *Tools > Board*, you will now find the supported XMC microcontroller boards.
+In the board list in *Tools > Board*, you will now find the supported XMC microcontroller boards.
 
 .. image:: img/Board_List.png
     :width: 600
@@ -66,8 +66,7 @@ In the boards list *Tools > Board*, you will now find the supported XMC microcon
 Release Packages from Version 3.0.0 onwards
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Certain obsolete boards and non-functional libraries were removed from the board support package for the 
-release version 2.0.0, alongwith some other major changes (see `release notes<https://github.com/Infineon/XMC-for-Arduino/releases/tag/V2.0.0>`). After version 3.0.0, the release index 
-will not include releases before version 2.0.0.
+release version 2.0.0, alongwith some other major changes (see `release notes <https://github.com/Infineon/XMC-for-Arduino/releases/tag/V2.0.0>`_). Since the release of version 3.0, the release index does not contain versions before 2.0 anymore.
 
 .. image:: img/Support_v2.png
     :width: 600
