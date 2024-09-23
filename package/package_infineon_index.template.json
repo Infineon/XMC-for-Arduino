@@ -3,7 +3,7 @@
         {
             "name": "Infineon",
             "maintainer": "Infineon Technologies AG",
-            "websiteURL": "https://www.infineon.com",
+            "websiteURL": "https://github.com/Infineon/xmc-for-arduino",
             "email": "",
             "help": {
                 "online": "https://xmc-arduino.readthedocs.io/en/latest/index.html"
