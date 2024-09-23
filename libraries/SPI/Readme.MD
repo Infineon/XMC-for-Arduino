@@ -3,4 +3,4 @@
 This library supports the Serial peripheral interaface communication protocol for the XMC.
 
 ## Additional Information
-See also our [Wiki](https://github.com/Infineon/XMC-for-Arduino/wiki/Core-Libraries)
+See also our [documentation](https://xmc-arduino.readthedocs.io/en/latest/builtin-libraries.html).
