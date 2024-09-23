@@ -6,7 +6,7 @@
             "websiteURL": "https://www.infineon.com",
             "email": "",
             "help": {
-                "online": "https://github.com/Infineon/XMC-for-Arduino/wiki"
+                "online": "https://xmc-arduino.readthedocs.io/en/latest/index.html"
             },
             "platforms": [
                 {
@@ -19,7 +19,7 @@
                     "checksum": "",
                     "size": "",
                     "help": {
-                        "online": "https://github.com/Infineon/XMC-for-Arduino/wiki"
+                        "online": "https://xmc-arduino.readthedocs.io/en/latest/index.html"
                     },
                     "boards": [
                         {

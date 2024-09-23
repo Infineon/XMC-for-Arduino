@@ -274,12 +274,12 @@ function, or other case as described below.
     * - XMC4400 Platform 2Go
       - External hard wired pins
       - | For 3V3 boards set I2C pins to tristate or open drain to use
-        | For 5V boards see Wiki board page on track cuts to enable A4 and A5 to work
+        | For 5V boards refer to [this section](https://xmc-arduino.readthedocs.io/en/latest/hw-platforms.html#connected-i2s-and-analog-pins) on track cuts to enable A4 and A5 to work
         | Level shifter on the 5V board could interfere with tristate/open drain setting
     * - XMC4700 Relax Kit (and variants)
       - External hard wired pins
       - | For 3V3 boards set I2C pins to tristate or open drain to use
-        | For 5V boards see Wiki board page on track cuts to enable A4 and A5 to work
+        | For 5V boards see [this section](https://xmc-arduino.readthedocs.io/en/latest/hw-platforms.html#connected-i2s-and-analog-pins) board page on track cuts to enable A4 and A5 to work
         | Level shifter on the 5V board could interfere with tristate/open drain setting
 
 
