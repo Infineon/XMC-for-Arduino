@@ -2,7 +2,7 @@ import argparse, subprocess, os, sys, re, warnings, tempfile
 from serial.tools.list_ports import comports
 from xmc_data import xmc_master_data
 
-version = '0.1.2'
+version = '0.1.3'
 
 jlinkexe = ''
 
@@ -40,8 +40,9 @@ def set_environment():
 def discover_jlink_devices():
     ports = comports()
     port_sn_list = []
+    jlink_pattern = r'[Jj][-\s]?[Ll][Ii][Nn][Kk]'
     for p in ports:
-        if "JLink" in p.description:
+        if re.search(jlink_pattern, p.description):
             port_sn_list.append((p.device, p.serial_number))
 
     return port_sn_list
