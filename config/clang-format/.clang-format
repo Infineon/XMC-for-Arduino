@@ -1,0 +1,26 @@
+---
+# We'll use defaults from the LLVM style, but with 4 columns indentation.
+#BasedOnStyle: GNU
+BasedOnStyle: LLVM
+#BasedOnStyle:  Google
+#BasedOnStyle:  Mozilla
+#BasedOnStyle:  Chromium
+IndentWidth: 4
+---
+Language:        Cpp
+# BasedOnStyle:  Google
+AccessModifierOffset: -4
+Standard:        c++17
+TabWidth:        2
+UseTab:          Never
+ColumnLimit:     100
+AlignAfterOpenBracket: Align
+BinPackParameters: false
+AlignEscapedNewlines: Left
+AlwaysBreakTemplateDeclarations: Yes
+PackConstructorInitializers: Never
+BreakConstructorInitializersBeforeComma: false
+IndentPPDirectives: BeforeHash
+SortIncludes:    Never
+SeparateDefinitionBlocks: Always
+...

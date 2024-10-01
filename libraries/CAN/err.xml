@@ -1,0 +1,418 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<results version="2">
+    <cppcheck version="2.15 dev"/>
+    <errors>
+        <error id="missingIncludeSystem" severity="information" msg="Include file: &lt;Arduino.h&gt; not found. Please note: Cppcheck does not need standard library headers to get proper results." verbose="Include file: &lt;Arduino.h&gt; not found. Please note: Cppcheck does not need standard library headers to get proper results.">
+            <location file="src/CANController.h" line="4" column="0"/>
+        </error>
+        <error id="uninitMemberVar" severity="warning" msg="Member variable &apos;CANControllerClass::_txData&apos; is not initialized in the constructor." verbose="Member variable &apos;CANControllerClass::_txData&apos; is not initialized in the constructor. Member variables of native types, pointers, or references are left uninitialized when the class is instantiated. That may cause bugs or undefined behavior." cwe="398" file0="src/CANController.cpp">
+            <location file="src/CANController.cpp" line="6" column="21"/>
+            <symbol>CANControllerClass::_txData</symbol>
+        </error>
+        <error id="uninitMemberVar" severity="warning" msg="Member variable &apos;CANControllerClass::_rxData&apos; is not initialized in the constructor." verbose="Member variable &apos;CANControllerClass::_rxData&apos; is not initialized in the constructor. Member variables of native types, pointers, or references are left uninitialized when the class is instantiated. That may cause bugs or undefined behavior." cwe="398" file0="src/CANController.cpp">
+            <location file="src/CANController.cpp" line="6" column="21"/>
+            <symbol>CANControllerClass::_rxData</symbol>
+        </error>
+        <error id="misra-c2012-2.7" severity="style" msg="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" verbose="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" file0="src/CANController.cpp">
+            <location file="src/CANController.h" line="11" column="17"/>
+        </error>
+        <error id="misra-c2012-2.7" severity="style" msg="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" verbose="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" file0="src/CANController.cpp">
+            <location file="src/CANController.h" line="38" column="17"/>
+        </error>
+        <error id="misra-c2012-2.7" severity="style" msg="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" verbose="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" file0="src/CANController.cpp">
+            <location file="src/CANController.h" line="42" column="17"/>
+        </error>
+        <error id="misra-c2012-8.2" severity="style" msg="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" verbose="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" file0="src/CANController.cpp">
+            <location file="src/CANController.cpp" line="28" column="31"/>
+        </error>
+        <error id="misra-c2012-8.2" severity="style" msg="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" verbose="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" file0="src/CANController.cpp">
+            <location file="src/CANController.h" line="12" column="21"/>
+        </error>
+        <error id="misra-c2012-8.2" severity="style" msg="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" verbose="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" file0="src/CANController.cpp">
+            <location file="src/CANController.h" line="16" column="26"/>
+        </error>
+        <error id="misra-c2012-8.2" severity="style" msg="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" verbose="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" file0="src/CANController.cpp">
+            <location file="src/CANController.h" line="18" column="28"/>
+        </error>
+        <error id="misra-c2012-8.2" severity="style" msg="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" verbose="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" file0="src/CANController.cpp">
+            <location file="src/CANController.h" line="19" column="18"/>
+        </error>
+        <error id="misra-c2012-8.2" severity="style" msg="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" verbose="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" file0="src/CANController.cpp">
+            <location file="src/CANController.h" line="20" column="24"/>
+        </error>
+        <error id="misra-c2012-8.2" severity="style" msg="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" verbose="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" file0="src/CANController.cpp">
+            <location file="src/CANController.h" line="21" column="19"/>
+        </error>
+        <error id="misra-c2012-8.2" severity="style" msg="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" verbose="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" file0="src/CANController.cpp">
+            <location file="src/CANController.h" line="22" column="18"/>
+        </error>
+        <error id="misra-c2012-8.2" severity="style" msg="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" verbose="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" file0="src/CANController.cpp">
+            <location file="src/CANController.h" line="29" column="26"/>
+        </error>
+        <error id="misra-c2012-8.2" severity="style" msg="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" verbose="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" file0="src/CANController.cpp">
+            <location file="src/CANController.h" line="30" column="21"/>
+        </error>
+        <error id="misra-c2012-8.2" severity="style" msg="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" verbose="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" file0="src/CANController.cpp">
+            <location file="src/CANController.h" line="31" column="21"/>
+        </error>
+        <error id="misra-c2012-8.2" severity="style" msg="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" verbose="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" file0="src/CANController.cpp">
+            <location file="src/CANController.h" line="32" column="23"/>
+        </error>
+        <error id="misra-c2012-8.2" severity="style" msg="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" verbose="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" file0="src/CANController.cpp">
+            <location file="src/CANController.cpp" line="150" column="32"/>
+        </error>
+        <error id="misra-c2012-8.2" severity="style" msg="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" verbose="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" file0="src/CANController.cpp">
+            <location file="src/CANController.cpp" line="152" column="40"/>
+        </error>
+        <error id="misra-c2012-8.2" severity="style" msg="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" verbose="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" file0="src/CANController.cpp">
+            <location file="src/CANController.h" line="44" column="24"/>
+        </error>
+        <error id="misra-c2012-8.2" severity="style" msg="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" verbose="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" file0="src/CANController.cpp">
+            <location file="src/CANController.h" line="45" column="25"/>
+        </error>
+        <error id="misra-c2012-8.2" severity="style" msg="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" verbose="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" file0="src/CANController.cpp">
+            <location file="src/CANController.h" line="46" column="22"/>
+        </error>
+        <error id="misra-c2012-8.2" severity="style" msg="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" verbose="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" file0="src/CANController.cpp">
+            <location file="src/CANController.h" line="47" column="23"/>
+        </error>
+        <error id="misra-c2012-8.2" severity="style" msg="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" verbose="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" file0="src/CANController.cpp">
+            <location file="src/CANController.h" line="50" column="23"/>
+        </error>
+        <error id="misra-c2012-8.2" severity="style" msg="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" verbose="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" file0="src/CANController.cpp">
+            <location file="src/CANController.h" line="51" column="32"/>
+        </error>
+        <error id="misra-c2012-10.3" severity="style" msg="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" verbose="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" file0="src/CANController.cpp">
+            <location file="src/CANController.cpp" line="123" column="15"/>
+        </error>
+        <error id="misra-c2012-10.4" severity="style" msg="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" verbose="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" file0="src/CANController.cpp">
+            <location file="src/CANController.cpp" line="118" column="33"/>
+        </error>
+        <error id="misra-c2012-10.4" severity="style" msg="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" verbose="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" file0="src/CANController.cpp">
+            <location file="src/CANController.cpp" line="119" column="32"/>
+        </error>
+        <error id="misra-c2012-12.1" severity="style" msg="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" verbose="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" file0="src/CANController.cpp">
+            <location file="src/CANController.cpp" line="47" column="16"/>
+        </error>
+        <error id="misra-c2012-12.1" severity="style" msg="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" verbose="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" file0="src/CANController.cpp">
+            <location file="src/CANController.cpp" line="68" column="16"/>
+        </error>
+        <error id="misra-c2012-12.3" severity="style" msg="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" verbose="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" file0="src/CANController.cpp">
+            <location file="src/CANController.cpp" line="20" column="19"/>
+        </error>
+        <error id="misra-c2012-15.5" severity="style" msg="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" verbose="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" file0="src/CANController.cpp">
+            <location file="src/CANController.cpp" line="48" column="9"/>
+        </error>
+        <error id="misra-c2012-15.5" severity="style" msg="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" verbose="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" file0="src/CANController.cpp">
+            <location file="src/CANController.cpp" line="52" column="9"/>
+        </error>
+        <error id="misra-c2012-15.5" severity="style" msg="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" verbose="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" file0="src/CANController.cpp">
+            <location file="src/CANController.cpp" line="69" column="9"/>
+        </error>
+        <error id="misra-c2012-15.5" severity="style" msg="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" verbose="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" file0="src/CANController.cpp">
+            <location file="src/CANController.cpp" line="73" column="9"/>
+        </error>
+        <error id="misra-c2012-15.5" severity="style" msg="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" verbose="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" file0="src/CANController.cpp">
+            <location file="src/CANController.cpp" line="90" column="9"/>
+        </error>
+        <error id="misra-c2012-15.5" severity="style" msg="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" verbose="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" file0="src/CANController.cpp">
+            <location file="src/CANController.cpp" line="115" column="9"/>
+        </error>
+        <error id="misra-c2012-15.5" severity="style" msg="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" verbose="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" file0="src/CANController.cpp">
+            <location file="src/CANController.cpp" line="132" column="9"/>
+        </error>
+        <error id="misra-c2012-15.5" severity="style" msg="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" verbose="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" file0="src/CANController.cpp">
+            <location file="src/CANController.cpp" line="140" column="9"/>
+        </error>
+        <error id="misra-c2012-17.7" severity="style" msg="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" verbose="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" file0="src/CANController.cpp">
+            <location file="src/CANController.cpp" line="62" column="11"/>
+        </error>
+        <error id="misra-c2012-17.7" severity="style" msg="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" verbose="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" file0="src/CANController.cpp">
+            <location file="src/CANController.cpp" line="83" column="11"/>
+        </error>
+        <error id="misra-c2012-17.7" severity="style" msg="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" verbose="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" file0="src/CANController.cpp">
+            <location file="src/CANController.cpp" line="122" column="11"/>
+        </error>
+        <error id="missingInclude" severity="information" msg="Include file: &quot;xmc_can.h&quot; not found." verbose="Include file: &quot;xmc_can.h&quot; not found.">
+            <location file="src/CANXMC.h" line="2" column="0"/>
+        </error>
+        <error id="missingIncludeSystem" severity="information" msg="Include file: &lt;Arduino.h&gt; not found. Please note: Cppcheck does not need standard library headers to get proper results." verbose="Include file: &lt;Arduino.h&gt; not found. Please note: Cppcheck does not need standard library headers to get proper results.">
+            <location file="src/CANXMC.cpp" line="2" column="0"/>
+        </error>
+        <error id="useInitializationList" severity="performance" msg="Variable &apos;CAN_msg_tx&apos; is assigned in constructor body. Consider performing initialization in initialization list." verbose="When an object of a class is created, the constructors of all member variables are called consecutively in the order the variables are declared, even if you don&apos;t explicitly write them to the initialization list. You could avoid assigning &apos;CAN_msg_tx&apos; a value by passing the value to the constructor in the initialization list." cwe="398" file0="src/CANXMC.cpp">
+            <location file="src/CANXMC.cpp" line="13" column="5"/>
+            <symbol>CAN_msg_tx</symbol>
+        </error>
+        <error id="useInitializationList" severity="performance" msg="Variable &apos;CAN_msg_rx&apos; is assigned in constructor body. Consider performing initialization in initialization list." verbose="When an object of a class is created, the constructors of all member variables are called consecutively in the order the variables are declared, even if you don&apos;t explicitly write them to the initialization list. You could avoid assigning &apos;CAN_msg_rx&apos; a value by passing the value to the constructor in the initialization list." cwe="398" file0="src/CANXMC.cpp">
+            <location file="src/CANXMC.cpp" line="24" column="5"/>
+            <symbol>CAN_msg_rx</symbol>
+        </error>
+        <error id="noExplicitConstructor" severity="style" msg="Class &apos;CANXMC&apos; has a constructor with 1 argument that is not explicit." verbose="Class &apos;CANXMC&apos; has a constructor with 1 argument that is not explicit. Such, so called &quot;Converting constructors&quot;, should in general be explicit for type safety reasons as that prevents unintended implicit conversions." cwe="398" file0="src/CANXMC.cpp">
+            <location file="src/CANXMC.h" line="7" column="5"/>
+            <symbol>CANXMC</symbol>
+        </error>
+        <error id="clarifyCondition" severity="style" msg="Boolean result is used in bitwise operation. Clarify expression with parentheses." verbose="Suspicious expression. Boolean result is used in bitwise operation. The operator &apos;!&apos; and the comparison operators have higher precedence than bitwise operators. It is recommended that the expression is clarified with parentheses." cwe="398" file0="src/CANXMC.cpp">
+            <location file="src/CANXMC.cpp" line="362" column="25"/>
+        </error>
+        <error id="clarifyCondition" severity="style" msg="Boolean result is used in bitwise operation. Clarify expression with parentheses." verbose="Suspicious expression. Boolean result is used in bitwise operation. The operator &apos;!&apos; and the comparison operators have higher precedence than bitwise operators. It is recommended that the expression is clarified with parentheses." cwe="398" file0="src/CANXMC.cpp">
+            <location file="src/CANXMC.cpp" line="373" column="25"/>
+        </error>
+        <error id="cstyleCast" severity="style" msg="C-style pointer casting" verbose="C-style pointer casting detected. C++ offers four different kinds of casts as replacements: static_cast, const_cast, dynamic_cast and reinterpret_cast. A C-style cast could evaluate to any of those automatically, thus it is considered safer if the programmer explicitly states which kind of cast is expected." cwe="398" file0="src/CANXMC.cpp">
+            <location file="src/CANXMC.cpp" line="14" column="23"/>
+        </error>
+        <error id="cstyleCast" severity="style" msg="C-style pointer casting" verbose="C-style pointer casting detected. C++ offers four different kinds of casts as replacements: static_cast, const_cast, dynamic_cast and reinterpret_cast. A C-style cast could evaluate to any of those automatically, thus it is considered safer if the programmer explicitly states which kind of cast is expected." cwe="398" file0="src/CANXMC.cpp">
+            <location file="src/CANXMC.cpp" line="25" column="23"/>
+        </error>
+        <error id="misc-implicitlyVirtual" severity="style" msg="Function &apos;CANXMC&apos; overrides base class function but is not marked with &apos;virtual&apos; keyword." verbose="Function &apos;CANXMC&apos; overrides base class function but is not marked with &apos;virtual&apos; keyword." file0="src/CANXMC.cpp">
+            <location file="src/CANXMC.h" line="8" column="6"/>
+        </error>
+        <error id="misc-implicitlyVirtual" severity="style" msg="Function &apos;begin&apos; overrides base class function but is not marked with &apos;virtual&apos; keyword." verbose="Function &apos;begin&apos; overrides base class function but is not marked with &apos;virtual&apos; keyword." file0="src/CANXMC.cpp">
+            <location file="src/CANXMC.h" line="10" column="9"/>
+        </error>
+        <error id="misc-implicitlyVirtual" severity="style" msg="Function &apos;end&apos; overrides base class function but is not marked with &apos;virtual&apos; keyword." verbose="Function &apos;end&apos; overrides base class function but is not marked with &apos;virtual&apos; keyword." file0="src/CANXMC.cpp">
+            <location file="src/CANXMC.h" line="11" column="10"/>
+        </error>
+        <error id="misc-implicitlyVirtual" severity="style" msg="Function &apos;endPacket&apos; overrides base class function but is not marked with &apos;virtual&apos; keyword." verbose="Function &apos;endPacket&apos; overrides base class function but is not marked with &apos;virtual&apos; keyword." file0="src/CANXMC.cpp">
+            <location file="src/CANXMC.h" line="13" column="9"/>
+        </error>
+        <error id="misc-implicitlyVirtual" severity="style" msg="Function &apos;parsePacket&apos; overrides base class function but is not marked with &apos;virtual&apos; keyword." verbose="Function &apos;parsePacket&apos; overrides base class function but is not marked with &apos;virtual&apos; keyword." file0="src/CANXMC.cpp">
+            <location file="src/CANXMC.h" line="15" column="9"/>
+        </error>
+        <error id="misc-implicitlyVirtual" severity="style" msg="Function &apos;onReceive&apos; overrides base class function but is not marked with &apos;virtual&apos; keyword." verbose="Function &apos;onReceive&apos; overrides base class function but is not marked with &apos;virtual&apos; keyword." file0="src/CANXMC.cpp">
+            <location file="src/CANXMC.h" line="17" column="10"/>
+        </error>
+        <error id="misc-implicitlyVirtual" severity="style" msg="Function &apos;filter&apos; overrides base class function but is not marked with &apos;virtual&apos; keyword." verbose="Function &apos;filter&apos; overrides base class function but is not marked with &apos;virtual&apos; keyword." file0="src/CANXMC.cpp">
+            <location file="src/CANXMC.h" line="20" column="9"/>
+        </error>
+        <error id="misc-implicitlyVirtual" severity="style" msg="Function &apos;filterExtended&apos; overrides base class function but is not marked with &apos;virtual&apos; keyword." verbose="Function &apos;filterExtended&apos; overrides base class function but is not marked with &apos;virtual&apos; keyword." file0="src/CANXMC.cpp">
+            <location file="src/CANXMC.h" line="22" column="9"/>
+        </error>
+        <error id="misc-implicitlyVirtual" severity="style" msg="Function &apos;observe&apos; overrides base class function but is not marked with &apos;virtual&apos; keyword." verbose="Function &apos;observe&apos; overrides base class function but is not marked with &apos;virtual&apos; keyword." file0="src/CANXMC.cpp">
+            <location file="src/CANXMC.h" line="24" column="9"/>
+        </error>
+        <error id="misc-implicitlyVirtual" severity="style" msg="Function &apos;loopback&apos; overrides base class function but is not marked with &apos;virtual&apos; keyword." verbose="Function &apos;loopback&apos; overrides base class function but is not marked with &apos;virtual&apos; keyword." file0="src/CANXMC.cpp">
+            <location file="src/CANXMC.h" line="25" column="9"/>
+        </error>
+        <error id="misc-implicitlyVirtual" severity="style" msg="Function &apos;sleep&apos; overrides base class function but is not marked with &apos;virtual&apos; keyword." verbose="Function &apos;sleep&apos; overrides base class function but is not marked with &apos;virtual&apos; keyword." file0="src/CANXMC.cpp">
+            <location file="src/CANXMC.h" line="26" column="9"/>
+        </error>
+        <error id="misc-implicitlyVirtual" severity="style" msg="Function &apos;wakeup&apos; overrides base class function but is not marked with &apos;virtual&apos; keyword." verbose="Function &apos;wakeup&apos; overrides base class function but is not marked with &apos;virtual&apos; keyword." file0="src/CANXMC.cpp">
+            <location file="src/CANXMC.h" line="27" column="9"/>
+        </error>
+        <error id="misra-c2012-3.1" severity="style" msg="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" verbose="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" file0="src/CANXMC.cpp">
+            <location file="src/CANXMC.cpp" line="43" column="1"/>
+        </error>
+        <error id="misra-c2012-8.2" severity="style" msg="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" verbose="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" file0="src/CANXMC.cpp">
+            <location file="src/CANXMC.cpp" line="403" column="23"/>
+        </error>
+        <error id="misra-c2012-8.2" severity="style" msg="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" verbose="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" file0="src/CANXMC.cpp">
+            <location file="src/CANXMC.cpp" line="412" column="23"/>
+        </error>
+        <error id="misra-c2012-8.2" severity="style" msg="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" verbose="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" file0="src/CANXMC.cpp">
+            <location file="src/CANXMC.h" line="8" column="12"/>
+        </error>
+        <error id="misra-c2012-8.2" severity="style" msg="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" verbose="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" file0="src/CANXMC.cpp">
+            <location file="src/CANXMC.h" line="11" column="13"/>
+        </error>
+        <error id="misra-c2012-8.2" severity="style" msg="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" verbose="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" file0="src/CANXMC.cpp">
+            <location file="src/CANXMC.h" line="13" column="18"/>
+        </error>
+        <error id="misra-c2012-8.2" severity="style" msg="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" verbose="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" file0="src/CANXMC.cpp">
+            <location file="src/CANXMC.h" line="15" column="20"/>
+        </error>
+        <error id="misra-c2012-8.2" severity="style" msg="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" verbose="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" file0="src/CANXMC.cpp">
+            <location file="src/CANXMC.h" line="24" column="16"/>
+        </error>
+        <error id="misra-c2012-8.2" severity="style" msg="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" verbose="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" file0="src/CANXMC.cpp">
+            <location file="src/CANXMC.h" line="25" column="17"/>
+        </error>
+        <error id="misra-c2012-8.2" severity="style" msg="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" verbose="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" file0="src/CANXMC.cpp">
+            <location file="src/CANXMC.h" line="26" column="14"/>
+        </error>
+        <error id="misra-c2012-8.2" severity="style" msg="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" verbose="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" file0="src/CANXMC.cpp">
+            <location file="src/CANXMC.h" line="27" column="15"/>
+        </error>
+        <error id="misra-c2012-8.2" severity="style" msg="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" verbose="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" file0="src/CANXMC.cpp">
+            <location file="src/CANXMC.h" line="28" column="23"/>
+        </error>
+        <error id="misra-c2012-8.2" severity="style" msg="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" verbose="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" file0="src/CANXMC.cpp">
+            <location file="src/CANXMC.h" line="29" column="28"/>
+        </error>
+        <error id="misra-c2012-8.2" severity="style" msg="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" verbose="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" file0="src/CANXMC.cpp">
+            <location file="src/CANXMC.h" line="32" column="31"/>
+        </error>
+        <error id="misra-c2012-8.2" severity="style" msg="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" verbose="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" file0="src/CANXMC.cpp">
+            <location file="src/CANXMC.h" line="33" column="31"/>
+        </error>
+        <error id="misra-c2012-10.8" severity="style" msg="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" verbose="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" file0="src/CANXMC.cpp">
+            <location file="src/CANXMC.cpp" line="69" column="25"/>
+        </error>
+        <error id="misra-c2012-10.8" severity="style" msg="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" verbose="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" file0="src/CANXMC.cpp">
+            <location file="src/CANXMC.cpp" line="305" column="25"/>
+        </error>
+        <error id="misra-c2012-12.1" severity="style" msg="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" verbose="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" file0="src/CANXMC.cpp">
+            <location file="src/CANXMC.cpp" line="207" column="41"/>
+        </error>
+        <error id="misra-c2012-12.1" severity="style" msg="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" verbose="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" file0="src/CANXMC.cpp">
+            <location file="src/CANXMC.cpp" line="362" column="25"/>
+        </error>
+        <error id="misra-c2012-12.1" severity="style" msg="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" verbose="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" file0="src/CANXMC.cpp">
+            <location file="src/CANXMC.cpp" line="373" column="25"/>
+        </error>
+        <error id="misra-c2012-13.4" severity="style" msg="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" verbose="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" file0="src/CANXMC.cpp">
+            <location file="src/CANXMC.h" line="10" column="29"/>
+        </error>
+        <error id="misra-c2012-14.4" severity="style" msg="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" verbose="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" file0="src/CANXMC.cpp">
+            <location file="src/CANXMC.cpp" line="246" column="8"/>
+        </error>
+        <error id="misra-c2012-15.5" severity="style" msg="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" verbose="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" file0="src/CANXMC.cpp">
+            <location file="src/CANXMC.cpp" line="116" column="9"/>
+        </error>
+        <error id="misra-c2012-15.5" severity="style" msg="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" verbose="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" file0="src/CANXMC.cpp">
+            <location file="src/CANXMC.cpp" line="118" column="9"/>
+        </error>
+        <error id="misra-c2012-15.5" severity="style" msg="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" verbose="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" file0="src/CANXMC.cpp">
+            <location file="src/CANXMC.cpp" line="142" column="9"/>
+        </error>
+        <error id="misra-c2012-15.5" severity="style" msg="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" verbose="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" file0="src/CANXMC.cpp">
+            <location file="src/CANXMC.cpp" line="162" column="13"/>
+        </error>
+        <error id="misra-c2012-15.5" severity="style" msg="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" verbose="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" file0="src/CANXMC.cpp">
+            <location file="src/CANXMC.cpp" line="164" column="13"/>
+        </error>
+        <error id="misra-c2012-15.5" severity="style" msg="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" verbose="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" file0="src/CANXMC.cpp">
+            <location file="src/CANXMC.cpp" line="184" column="13"/>
+        </error>
+        <error id="misra-c2012-15.5" severity="style" msg="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" verbose="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" file0="src/CANXMC.cpp">
+            <location file="src/CANXMC.cpp" line="186" column="13"/>
+        </error>
+        <error id="misra-c2012-15.5" severity="style" msg="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" verbose="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" file0="src/CANXMC.cpp">
+            <location file="src/CANXMC.cpp" line="326" column="9"/>
+        </error>
+        <error id="misra-c2012-15.5" severity="style" msg="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" verbose="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" file0="src/CANXMC.cpp">
+            <location file="src/CANXMC.cpp" line="347" column="9"/>
+        </error>
+        <error id="misra-c2012-15.5" severity="style" msg="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" verbose="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" file0="src/CANXMC.cpp">
+            <location file="src/CANXMC.cpp" line="349" column="9"/>
+        </error>
+        <error id="misra-c2012-15.6" severity="style" msg="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" verbose="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" file0="src/CANXMC.cpp">
+            <location file="src/CANXMC.cpp" line="206" column="5"/>
+        </error>
+        <error id="misra-c2012-17.3" severity="style" msg="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" verbose="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" file0="src/CANXMC.cpp">
+            <location file="src/CANXMC.cpp" line="77" column="35"/>
+        </error>
+        <error id="misra-c2012-17.3" severity="style" msg="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" verbose="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" file0="src/CANXMC.cpp">
+            <location file="src/CANXMC.cpp" line="313" column="9"/>
+        </error>
+        <error id="misra-c2012-17.3" severity="style" msg="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" verbose="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" file0="src/CANXMC.cpp">
+            <location file="src/CANXMC.cpp" line="330" column="9"/>
+        </error>
+        <error id="misra-config" severity="error" msg="Variable &apos;XMC_CAN_STATUS_SUCCESS&apos; is unknown" verbose="Variable &apos;XMC_CAN_STATUS_SUCCESS&apos; is unknown" file0="src/CANXMC.cpp">
+            <location file="src/CANXMC.cpp" line="77" column="9"/>
+        </error>
+        <error id="misra-config" severity="error" msg="Variable &apos;CANControllerClass&apos; is unknown" verbose="Variable &apos;CANControllerClass&apos; is unknown" file0="src/CANXMC.cpp">
+            <location file="src/CANXMC.cpp" line="141" column="10"/>
+        </error>
+        <error id="misra-config" severity="error" msg="Variable &apos;XMC_CAN_STATUS_SUCCESS&apos; is unknown" verbose="Variable &apos;XMC_CAN_STATUS_SUCCESS&apos; is unknown" file0="src/CANXMC.cpp">
+            <location file="src/CANXMC.cpp" line="161" column="28"/>
+        </error>
+        <error id="misra-config" severity="error" msg="Variable &apos;XMC_CAN_STATUS_SUCCESS&apos; is unknown" verbose="Variable &apos;XMC_CAN_STATUS_SUCCESS&apos; is unknown" file0="src/CANXMC.cpp">
+            <location file="src/CANXMC.cpp" line="183" column="28"/>
+        </error>
+        <error id="misra-config" severity="error" msg="Variable &apos;CAN_MO_MOSTAT_NEWDAT_Msk&apos; is unknown" verbose="Variable &apos;CAN_MO_MOSTAT_NEWDAT_Msk&apos; is unknown" file0="src/CANXMC.cpp">
+            <location file="src/CANXMC.cpp" line="206" column="49"/>
+        </error>
+        <error id="misra-config" severity="error" msg="Variable &apos;CAN_MO_MOSTAT_NEWDAT_Pos&apos; is unknown" verbose="Variable &apos;CAN_MO_MOSTAT_NEWDAT_Pos&apos; is unknown" file0="src/CANXMC.cpp">
+            <location file="src/CANXMC.cpp" line="207" column="16"/>
+        </error>
+        <error id="misra-config" severity="error" msg="Variable &apos;XMC_CAN_FRAME_TYPE_EXTENDED_29BITS&apos; is unknown" verbose="Variable &apos;XMC_CAN_FRAME_TYPE_EXTENDED_29BITS&apos; is unknown" file0="src/CANXMC.cpp">
+            <location file="src/CANXMC.cpp" line="215" column="35"/>
+        </error>
+        <error id="misra-config" severity="error" msg="Variable &apos;XMC_CAN_STATUS_SUCCESS&apos; is unknown" verbose="Variable &apos;XMC_CAN_STATUS_SUCCESS&apos; is unknown" file0="src/CANXMC.cpp">
+            <location file="src/CANXMC.cpp" line="312" column="9"/>
+        </error>
+        <error id="misra-config" severity="error" msg="Variable &apos;CAN_NODE1&apos; is unknown" verbose="Variable &apos;CAN_NODE1&apos; is unknown" file0="src/CANXMC.cpp">
+            <location file="src/CANXMC.cpp" line="313" column="48"/>
+        </error>
+        <error id="misra-config" severity="error" msg="Variable &apos;XMC_CAN_STATUS_SUCCESS&apos; is unknown" verbose="Variable &apos;XMC_CAN_STATUS_SUCCESS&apos; is unknown" file0="src/CANXMC.cpp">
+            <location file="src/CANXMC.cpp" line="329" column="9"/>
+        </error>
+        <error id="misra-config" severity="error" msg="Variable &apos;CAN_NODE0&apos; is unknown" verbose="Variable &apos;CAN_NODE0&apos; is unknown" file0="src/CANXMC.cpp">
+            <location file="src/CANXMC.cpp" line="330" column="48"/>
+        </error>
+        <error id="misra-c2012-17.7" severity="style" msg="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" verbose="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" file0="src/CANXMC.cpp">
+            <location file="src/CANXMC.cpp" line="175" column="15"/>
+        </error>
+        <error id="misra-c2012-17.7" severity="style" msg="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" verbose="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" file0="src/CANXMC.cpp">
+            <location file="src/CANXMC.cpp" line="227" column="15"/>
+        </error>
+        <error id="misra-c2012-17.8" severity="style" msg="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" verbose="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" file0="src/CANXMC.cpp">
+            <location file="src/CANController.h" line="14" column="37"/>
+        </error>
+        <error id="misra-c2012-17.8" severity="style" msg="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" verbose="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" file0="src/CANXMC.cpp">
+            <location file="src/CANController.h" line="15" column="46"/>
+        </error>
+        <error id="misra-c2012-20.9" severity="style" msg="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" verbose="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" file0="src/CANXMC.cpp">
+            <location file="src/CANXMC.cpp" line="104" column="2"/>
+        </error>
+        <error id="misra-c2012-20.9" severity="style" msg="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" verbose="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" file0="src/CANXMC.cpp">
+            <location file="src/CANXMC.cpp" line="402" column="2"/>
+        </error>
+        <error id="misra-c2012-20.9" severity="style" msg="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" verbose="misra violation (use --rule-texts=&lt;file&gt; to get proper output)" file0="src/CANXMC.cpp">
+            <location file="src/CANXMC.cpp" line="411" column="2"/>
+        </error>
+        <error id="unusedFunction" severity="style" msg="The function &apos;beginPacket&apos; is never used." verbose="The function &apos;beginPacket&apos; is never used." cwe="561">
+            <location file="src/CANController.cpp" line="46" column="0"/>
+            <symbol>beginPacket</symbol>
+        </error>
+        <error id="unusedFunction" severity="style" msg="The function &apos;beginExtendedPacket&apos; is never used." verbose="The function &apos;beginExtendedPacket&apos; is never used." cwe="561">
+            <location file="src/CANController.cpp" line="67" column="0"/>
+            <symbol>beginExtendedPacket</symbol>
+        </error>
+        <error id="unusedFunction" severity="style" msg="The function &apos;packetId&apos; is never used." verbose="The function &apos;packetId&apos; is never used." cwe="561">
+            <location file="src/CANController.cpp" line="103" column="0"/>
+            <symbol>packetId</symbol>
+        </error>
+        <error id="unusedFunction" severity="style" msg="The function &apos;packetExtended&apos; is never used." verbose="The function &apos;packetExtended&apos; is never used." cwe="561">
+            <location file="src/CANController.cpp" line="105" column="0"/>
+            <symbol>packetExtended</symbol>
+        </error>
+        <error id="unusedFunction" severity="style" msg="The function &apos;packetRtr&apos; is never used." verbose="The function &apos;packetRtr&apos; is never used." cwe="561">
+            <location file="src/CANController.cpp" line="107" column="0"/>
+            <symbol>packetRtr</symbol>
+        </error>
+        <error id="unusedFunction" severity="style" msg="The function &apos;packetDlc&apos; is never used." verbose="The function &apos;packetDlc&apos; is never used." cwe="561">
+            <location file="src/CANController.cpp" line="109" column="0"/>
+            <symbol>packetDlc</symbol>
+        </error>
+        <error id="unusedFunction" severity="style" msg="The function &apos;getTxMessage&apos; is never used." verbose="The function &apos;getTxMessage&apos; is never used." cwe="561">
+            <location file="src/CANXMC.cpp" line="38" column="0"/>
+            <symbol>getTxMessage</symbol>
+        </error>
+        <error id="unusedFunction" severity="style" msg="The function &apos;getRxMessage&apos; is never used." verbose="The function &apos;getRxMessage&apos; is never used." cwe="561">
+            <location file="src/CANXMC.cpp" line="41" column="0"/>
+            <symbol>getRxMessage</symbol>
+        </error>
+        <error id="unusedFunction" severity="style" msg="The function &apos;begin&apos; is never used." verbose="The function &apos;begin&apos; is never used." cwe="561">
+            <location file="src/CANXMC.cpp" line="61" column="0"/>
+            <symbol>begin</symbol>
+        </error>
+        <error id="unusedFunction" severity="style" msg="The function &apos;observe&apos; is never used." verbose="The function &apos;observe&apos; is never used." cwe="561">
+            <location file="src/CANXMC.cpp" line="284" column="0"/>
+            <symbol>observe</symbol>
+        </error>
+        <error id="unusedFunction" severity="style" msg="The function &apos;loopback&apos; is never used." verbose="The function &apos;loopback&apos; is never used." cwe="561">
+            <location file="src/CANXMC.cpp" line="297" column="0"/>
+            <symbol>loopback</symbol>
+        </error>
+        <error id="unusedFunction" severity="style" msg="The function &apos;sleep&apos; is never used." verbose="The function &apos;sleep&apos; is never used." cwe="561">
+            <location file="src/CANXMC.cpp" line="360" column="0"/>
+            <symbol>sleep</symbol>
+        </error>
+        <error id="unusedFunction" severity="style" msg="The function &apos;wakeup&apos; is never used." verbose="The function &apos;wakeup&apos; is never used." cwe="561">
+            <location file="src/CANXMC.cpp" line="371" column="0"/>
+            <symbol>wakeup</symbol>
+        </error>
+        <error id="checkersReport" severity="information" msg="Active checkers: 178/802" verbose="Active checkers: 178/802"/>
+    </errors>
+</results>
