@@ -45,7 +45,7 @@ CANSender: arduino
 	cp examples/CANSender/CANSender.ino build/build.ino	
 
 CANLoopBack: arduino
-	cp examples/CANSender/CANLoopBack.ino build/build.ino	
+	cp examples/CANLoopBack/CANLoopBack.ino build/build.ino	
 
 
 # install Unity from https://www.throwtheswitch.org/unity or git
@@ -104,6 +104,17 @@ flash: compile upload
 
 
 monitor:
+ifeq ($(PORT),)
+	$(error "Must set variable PORT (Windows port naming convention, ie COM16) in order to be able to flash Arduino sketches !")
+endif
+ifeq ($(FQBN),)
+	$(error "Must set variable FQBN in order to be able to flash Arduino sketches !")
+else
+	arduino-cli.exe monitor -c baudrate=9600 -p $(PORT) --fqbn $(FQBN)
+endif
+
+
+test-monitor:
 ifeq ($(PORT),)
 	$(error "Must set variable PORT (Windows port naming convention, ie COM16) in order to be able to flash Arduino sketches !")
 endif

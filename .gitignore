@@ -3,3 +3,8 @@
 pkg_build
 build
 **/__pycache__/
+
+# Code-check reports
+clang-tidy-report.txt
+scan-build-reports/
+cppcheck_reports/

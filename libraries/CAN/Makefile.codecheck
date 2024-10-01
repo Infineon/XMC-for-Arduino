@@ -1,0 +1,12 @@
+#Run Clang-format for c/c++ code.
+make -f Makefile.codechecks.mk clang-format
+
+#Run Clang-tidy
+make -f Makefile.codechecks.mk clang-tidy-src
+
+make -f Makefile.codechecks.mk clang-tidy-test
+
+#Run cppcheck
+make -f Makefile.codechecks.mk cppcheck
+
+

@@ -1,62 +1,60 @@
 
 WIN_USER ?=
+CONFIG_DIR := ../../config
+CORE_LIB_DIR := ../../cores
 
+
+CLANG_FORMAT_DIR := $(CONFIG_DIR)/clang-format
+CLANG_TIDY_DIR := $(CONFIG_DIR)/clang-tidy
 
 
 #################################### clang-format code formatter
 ### Need to install clang-tidy
-### You may want to copy the config to your working directory to use the common settings.
-### cp config/clang-format/.clang-format .
 
 clang-format:
-	clang-format -i $(shell find src -name CAN\*.[hc]pp\*)
+
+	clang-format -i -style=file:$(CLANG_FORMAT_DIR)/.clang-format $(shell find src -name \*.[hc]\*)
 
 
 
-#################################### clang-tidy static code checker  //TODO: how to implement this for core library?
-### Need to install clang-tidy
+##TODO: add compilation database for builtin libraries!
+#################################### clang-tidy static code checker  
 
-clang-tidy-test: C_CPP_SOURCES = $(shell find test -name \*.[hc]pp\*)
-clang-tidy-src:  C_CPP_SOURCES = $(shell find src -name \*.[hc]pp\*)
+clang-tidy-test: C_CPP_SOURCES = $(shell find test -name \*.[hc]\*)
+clang-tidy-src:  C_CPP_SOURCES = $(shell find src -name \*.[hc]\*)
 
 clang-tidy-test clang-tidy-src : clang-tidy
 
 clang-tidy:
-ifeq ($(WIN_USER),)
-	$(warn "Must set variable WIN_USER in order to include XMCLib files in clang-tidy analysis !")
-	clang-tidy --config-file=../../config/clang-tidy/.clang-tidy -header-filter=. --extra-arg="-Isrc/framework/arduino" --extra-arg="-Itest/unit/src/framework/arduino/corelibs" $(C_CPP_SOURCES) --
-else
 	$(info $(C_CPP_SOURCES))
-	clang-tidy --config-file=../../config/clang-tidy/.clang-tidy -header-filter=. --extra-arg="-Isrc/framework/arduino" --extra-arg="-Itest/unit/src/framework/arduino/corelibs" --extra-arg="-I/mnt/c/Users/$(WIN_USER)/AppData/Local/Arduino15/packages/Infineon/hardware/xmc/3.1.0/cores" $(C_CPP_SOURCES) --
-endif
+	clang-tidy $(C_CPP_SOURCES) --config-file=$(CLANG_TIDY_DIR)/.clang-tidy -header-filter='' -- -Isrc/framework/arduino -Itest/unit/src/framework/arduino/corelibs -I$(CORE_LIB_DIR) > clang-tidy-report.txt	
 
 
 
-#################################### scan-build static code checker
-### Need to install scan-build
+#################################### scan-build static code checker  #TODO: still using foo example
 ### After executing the scan-build target run the command scan-view as printed in the scan-build output last line.
 ### Or use firefox directly.
 scan-build:
 	scan-build -o scan-build-reports make -f Makefile.codechecks.mk foo
-#	firefox scan-build-reports/
+	firefox scan-build-reports/
 
 foo:
-	$(CC) -c -Wextra -Wall -Wfloat-equal -Wconversion -Wredundant-decls -Wswitch-default -Wdouble-promotion -Wpedantic -Wunreachable-code -std=c++20 config/sca/foo.cpp -o foo.o
+	$(CC) -c -Wextra -Wall -Wfloat-equal -Wconversion -Wredundant-decls -Wswitch-default -Wdouble-promotion -Wpedantic -Wunreachable-code -std=c++20 $(CONFIG_DIR)/sca/foo.cpp -o foo.o
 
 
 
-#################################### cppcheck static code checker
+#################################### cppcheck static code checker 
 ### Requirement : install cppcheck from https://github.com/danmar/cppcheck
-cppcheck: C_CPP_SOURCES = ./config/sca
+cppcheck: C_CPP_SOURCES = ./src
 
-CPPCHECK_PATH = ~/cppcheck/cppcheck.danmar
+CPPCHECK_PATH = ~/cppcheck/cppcheck
 
 cppcheck:
-	export RULE_TEXTS=config/cppcheck/misra.txt
-	$(CPPCHECK_PATH)/cppcheck -i build -i doc -i examples -i results -i reports_hml -i src -i test \
-	                                    -I$(C_CPP_SOURCES) \
+	export RULE_TEXTS=$(CONFIG_DIR)/cppcheck/misra.txt
+	$(CPPCHECK_PATH)/build/bin/cppcheck -i build -i examples -i test \
+										-I$(C_CPP_SOURCES) \
 	 	                                --checkers-report=cppcheck.checkers --check-level=exhaustive --xml --enable=all --inconclusive \
-	                                    --addon=config/cppcheck/misra_local.py --addon=misc \
+	                                    --addon=$(CONFIG_DIR)/cppcheck/misra_local.py --addon=misc \
 	                                    --max-configs=100 ./ 2> ./err.xml
 	$(CPPCHECK_PATH)/htmlreport/cppcheck-htmlreport --file=err.xml --title=TLx493D --report-dir=cppcheck_reports --source-dir=.
 	firefox cppcheck_reports/index.html
