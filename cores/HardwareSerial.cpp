@@ -161,14 +161,23 @@ size_t HardwareSerial::write(const uint8_t uc_data) {
          XMC_USIC_CH_TBUF_STATUS_BUSY) ||
         (_tx_buffer->_iTail != _tx_buffer->_iHead))
 #endif
-    {
-        // If busy we buffer
-        int nextWrite = _tx_buffer->_iHead + 1;
-        if (nextWrite >= SERIAL_BUFFER_SIZE)
-            nextWrite = 0;
-        while (_tx_buffer->_iTail == nextWrite)
-            ; // Spin locks if we're about to overwrite the buffer. This continues once the data is
-              // sent
+{
+  // If busy we buffer
+  int nextWrite = _tx_buffer->_iHead + 1;
+  if( nextWrite >= SERIAL_BUFFER_SIZE )
+    nextWrite = 0;
+
+  //This should always be false but in case transmission is completed before buffer, we need to reenable IRQ
+  if( XMC_USIC_CH_GetTransmitBufferStatus( _XMC_UART_config->channel ) != XMC_USIC_CH_TBUF_STATUS_BUSY ) {
+	  XMC_UART_CH_EnableEvent( _XMC_UART_config->channel, XMC_UART_CH_EVENT_TRANSMIT_BUFFER );
+	  XMC_UART_CH_Transmit( _XMC_UART_config->channel, _tx_buffer->_aucBuffer[ _tx_buffer->_iTail ] );
+	  _tx_buffer->_iTail++;
+	  if(_tx_buffer->_iTail >= SERIAL_BUFFER_SIZE)
+		  _tx_buffer->_iTail = _tx_buffer->_iTail - SERIAL_BUFFER_SIZE; // If iTail is larger than Serial Buffer Size calculate the correct index value
+  }
+  
+  while( _tx_buffer->_iTail == nextWrite )
+        ; // Spin locks if we're about to overwrite the buffer. This continues once the data is sent
 
         _tx_buffer->_aucBuffer[_tx_buffer->_iHead] = uc_data;
         _tx_buffer->_iHead = nextWrite;
@@ -201,18 +210,22 @@ void HardwareSerial::IrqHandler(void) {
         XMC_UART_CH_ClearStatusFlag(_XMC_UART_config->channel,
                                     XMC_UART_CH_STATUS_FLAG_TRANSMIT_BUFFER_INDICATION);
 
-        if (_tx_buffer->_iTail != _tx_buffer->_iHead) {
-            XMC_UART_CH_Transmit(_XMC_UART_config->channel,
-                                 _tx_buffer->_aucBuffer[_tx_buffer->_iTail]);
-            _tx_buffer->_iTail++;
-            if (_tx_buffer->_iTail >= SERIAL_BUFFER_SIZE)
-                _tx_buffer->_iTail = 0;
-        } else
-            // Mask off transmit interrupt so we don't get it any more
-            XMC_UART_CH_DisableEvent(_XMC_UART_config->channel, XMC_UART_CH_EVENT_TRANSMIT_BUFFER);
+    if( _tx_buffer->_iTail != _tx_buffer->_iHead )
+        {
+        XMC_UART_CH_Transmit( _XMC_UART_config->channel, 
+                                    _tx_buffer->_aucBuffer[ _tx_buffer->_iTail ] );
+        _tx_buffer->_iTail++;
+        if( _tx_buffer->_iTail >= SERIAL_BUFFER_SIZE )
+          _tx_buffer->_iTail = 0;
+        }
+    else {
+        // Mask off transmit interrupt so we don't get it any more
+        XMC_UART_CH_DisableEvent( _XMC_UART_config->channel, XMC_UART_CH_EVENT_TRANSMIT_BUFFER ); 
+	  }
     }
 }
 
 //****************************************************************************
 //                                 END OF FILE
 //****************************************************************************
+
