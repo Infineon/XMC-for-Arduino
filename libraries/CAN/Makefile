@@ -2,10 +2,12 @@ FQBN  ?=
 PORT  ?=
 TESTS ?=
 UNITY_PATH ?=
+BAUD_RATE ?= 115200
 
 $(info FQBN : $(FQBN))
 $(info PORT : $(PORT))
 $(info UNITY_PATH : $(UNITY_PATH))
+$(info BAUD_RATE : $(BAUD_RATE))
 
 
 TESTS_CONNECTED=-DTEST_CAN_CONNECTED
@@ -110,17 +112,6 @@ endif
 ifeq ($(FQBN),)
 	$(error "Must set variable FQBN in order to be able to flash Arduino sketches !")
 else
-	arduino-cli.exe monitor -c baudrate=9600 -p $(PORT) --fqbn $(FQBN)
-endif
-
-
-test-monitor:
-ifeq ($(PORT),)
-	$(error "Must set variable PORT (Windows port naming convention, ie COM16) in order to be able to flash Arduino sketches !")
-endif
-ifeq ($(FQBN),)
-	$(error "Must set variable FQBN in order to be able to flash Arduino sketches !")
-else
-	arduino-cli.exe monitor -c baudrate=115200 -p $(PORT) --fqbn $(FQBN)
+	arduino-cli.exe monitor -c baudrate=$(BAUD_RATE) -p $(PORT) --fqbn $(FQBN)
 endif
 
