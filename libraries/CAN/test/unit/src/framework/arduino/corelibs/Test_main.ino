@@ -26,6 +26,18 @@ void RunAllTests(void)
 
 #endif
 
+#ifdef TEST_CAN_CONNECTED_NODE1
+
+    RUN_TEST_GROUP(CAN_connected_node1);
+
+#endif
+
+#ifdef TEST_CAN_CONNECTED_NODE2
+
+    RUN_TEST_GROUP(CAN_connected_node2);
+
+#endif
+
 
 }
 

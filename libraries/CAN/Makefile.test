@@ -12,17 +12,21 @@ make FQBN=Infineon:xmc:XMC4700_Relax_Kit PORT=COM24 CANSender flash monitor
 make FQBN=Infineon:xmc:XMC4700_Relax_Kit PORT=COM24 CANLoopBack flash monitor
 
 ## XMC1400_XMC2GO
-make FQBN=Infineon:xmc:XMC1400_XMC2GO PORT=COM41 CANReceiver flash monitor
+make FQBN=Infineon:xmc:XMC1400_XMC2GO BAUD_RATE=9600 PORT=COM41 CANReceiver flash monitor
 
-make FQBN=Infineon:xmc:XMC1400_XMC2GO PORT=COM41 CANReceiverCallback flash monitor
+make FQBN=Infineon:xmc:XMC1400_XMC2GO BAUD_RATE=9600 PORT=COM41 CANReceiverCallback flash monitor
 
-make FQBN=Infineon:xmc:XMC1400_XMC2GO PORT=COM42 CANSender flash monitor
+make FQBN=Infineon:xmc:XMC1400_XMC2GO BAUD_RATE=9600 PORT=COM42 CANSender flash monitor
 
-make FQBN=Infineon:xmc:XMC1400_XMC2GO PORT=COM42 CANLoopBack flash monitor
+make FQBN=Infineon:xmc:XMC1400_XMC2GO BAUD_RATE=9600 PORT=COM42 CANLoopBack flash monitor
 
 
 ### Unit tests
 make FQBN=Infineon:xmc:XMC1400_XMC2GO PORT=COM42 UNITY_PATH=/home/zhanglinjing/repo/Unity CAN test-monitor
+
+make FQBN=Infineon:xmc:XMC1400_XMC2GO PORT=COM42 UNITY_PATH=/home/zhanglinjing/repo/Unity CAN_connected_node2 monitor
+
+make FQBN=Infineon:xmc:XMC1400_XMC2GO PORT=COM41 UNITY_PATH=/home/zhanglinjing/repo/Unity CAN_connected_node1 monitor
 
 make FQBN=Infineon:xmc:XMC1400_XMC2GO PORT=COM42 UNITY_PATH=/home/zhanglinjing/repo/Unity CAN_connected monitor
 

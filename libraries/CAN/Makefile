@@ -15,7 +15,9 @@ TESTS_NOT_CONNECTED=-DTEST_CAN
 		
 CAN: TESTS=-DTEST_CAN
 CAN_connected: TESTS=-DTEST_CAN -DTEST_CAN_CONNECTED
-CAN_connected CAN: unity_corelibs flash
+CAN_connected_node1: TESTS=-DTEST_CAN_CONNECTED_NODE1
+CAN_connected_node2: TESTS=-DTEST_CAN_CONNECTED_NODE2
+CAN_connected CAN CAN_connected_node1 CAN_connected_node2: unity_corelibs flash
 
 test_all: TESTS=$(TESTS_CONNECTED) $(TESTS_NOT_CONNECTED)
 test_connected: TESTS=$(TESTS_CONNECTED)
