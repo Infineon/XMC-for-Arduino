@@ -72,7 +72,7 @@ However, if you are using an XMC4000 board such as a XMC4700 Relax Kit, you shou
 Sometimes, it also makes sense to adjust the data delay, which is the delay between a changing WA/LRCL edge and the start of a sample depending on the microphone of your choice. Please be aware that there are different `I2S.begin()` functions which allow to set the parameters very precisely. Have a look in the I2S.h file for more information.
 
 ## Additional Information
-See also our [Wiki](https://github.com/Infineon/XMC-for-Arduino/wiki/Core-Libraries) and doxygen-generated [documentation page](https://github.com/Infineon/InfineonDoxyGenerator).
+See also our [documentation](https://xmc-arduino.readthedocs.io/en/latest/builtin-libraries.html).
 
 ## Authors
 Manuel Hollfelder 

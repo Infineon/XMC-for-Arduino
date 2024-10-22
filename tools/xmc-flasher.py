@@ -2,7 +2,7 @@ import argparse, subprocess, os, sys, re, warnings, tempfile
 from serial.tools.list_ports import comports
 from xmc_data import xmc_master_data
 
-version = '0.1.2'
+version = '0.1.3'
 
 jlinkexe = ''
 
@@ -40,8 +40,9 @@ def set_environment():
 def discover_jlink_devices():
     ports = comports()
     port_sn_list = []
+    jlink_pattern = r'[Jj][-\s]?[Ll][Ii][Nn][Kk]'
     for p in ports:
-        if "JLink" in p.description:
+        if re.search(jlink_pattern, p.description):
             port_sn_list.append((p.device, p.serial_number))
 
     return port_sn_list
@@ -172,7 +173,7 @@ def check_device(device, port):
     device_value_masked = (int('0x'+device_value,16)) & (int('0x'+master_data[device]['IDCHIP']['mask'],16)) # take only those bits which are needed
     device_value_masked = f'{device_value_masked:x}'
     device_value_masked = device_value_masked.zfill(int(master_data[device]['IDCHIP']['size'])*2)
-
+    
     print(f"Selected Device is: {device}.")
 
     real_device = find_device_by_value(device_value_masked)
@@ -268,7 +269,8 @@ def parser():
                 else:
                     print("Upload failed.")
             remove_console_output_file(console_out)
-                                # Log if the port value has changed
+            
+        # Log if the port value has changed
         if args.port != original_port:
             print(f"Please select port {args.port} for using the Serial Monitor or Plotter.")
         
@@ -316,13 +318,13 @@ def parser():
         sys.tracebacklimit = None  # Enable full traceback
     else:
         sys.tracebacklimit = 0  # Disable traceback
-
+    
     # Store the original port value
     original_port = args.port
 
     # Select default port if not provided/ or device not found on the selected port
     args.port = get_default_port(args.port)
-
+    
     # Parser call
     args.func(args) 
 
@@ -330,4 +332,3 @@ if __name__ == "__main__":
     set_environment()
     check_python_version()
     parser()
-

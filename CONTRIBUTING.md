@@ -1,64 +1,47 @@
-# XMC-for-Arduino
-## Contributing to XMC-for-Arduino Project
-First important point **All Contributions** are welcomed.
+# Contributing to XMC for Arduino
+First important point: **All Contributions** are welcomed :open_hands:.
 
-Please contribute and raise issues via the [github repository](https://github.com/Infineon/XMC-for-Arduino/tree/develop) 
+Please contribute and raise issues via the [github repository](https://github.com/Infineon/XMC-for-Arduino/tree/master)
 
-Check the **develop** branch for any Beta releases fixes for any issues you may find. 
+### Overview for Contributors
 
-## Developer notes
+- Start your contribution by creating a [fork](https://github.com/Infineon/XMC-for-Arduino/fork) of this repository
+- It's recommended to create a separate branch for your contribution in your fork
+- Once your contribution is ready & tested, please create a [Pull Request](https://github.com/Infineon/XMC-for-Arduino/compare) to the master branch
+- Once we merged your changes to the master branch, they are automatically included in the next release
 
-### General points on repository branches and flow
-
-1. _master_ branch is intended to be copy of release version
-2. Please make Pull Requests to _develop_ branch for review, inclusion and availability for others
-3. At next release _develop_ is merged into _master_ for release
-4. Other branches are for other tests and not to be treated as anything but work in progress for now
-5. Check [XMC-for-Arduino Wiki](https://github.com/Infineon/XMC-for-Arduino/wiki) for any additional information
-
-### Develop Built-in Library
-<ul>
-  <li>Reference to other libraries in the libraris folder. Typically required files include: </li>
-   <ul>
-      <li>source</li>
-      <li>library.properties</li>
-      <li>keywords.txt</li>
-      <li>README.md</li>
-    </ul>
-  <li>Check out the official arduino libraries and try to keep the API consistent</li>
-  <li>Add Compilation test in github workflow</li>
-  <li>Update documentation ( README, github wiki...)</li>
-</ul>
-
-### Add new XMC Board
-
-### Local Running using Arduino IDE (**ON WINDOWS**):
-Clone the repository in arduino folder:
-- Open Arduino and install any Infineon XMC library (e.g. 2.2.0)
-- Open the library location in Arduino program folder
-`C:\Users\"USERNAME"\AppData\Local\Arduino15\packages\Infineon\hardware\xmc`
+### Testing in Arduino IDE (on Windows)
+Clone the repository in Arduino folder:
+- Open Arduino and install any version of this project as described [here](https://xmc-arduino.readthedocs.io/en/latest/installation-instructions.html).
+- Open the installation location in your Arduino program folder, e.g.
+`C:\Users\<username>\AppData\Local\Arduino15\packages\Infineon\hardware\xmc`
 - Open git bash, type command:
-`git clone "HTTP_SSH_REPOSITORY" "LIBRARY_VERSION (e.g. 2.2.0)"`
+`git clone <your-xmc-for-arduino-fork> <version>`
 
-This is a workaround for current local compilation/testing.
+This allows quick testing of local changes during development.
 
-### CICD
+[!TIP] 
+If you encounter strange behavior with Arduino IDE during development, try cleaning up the cache:
+* Windows: `C:\User\"username"\AppData\Roaming\arduino-ide`
+* Linux: `~/.config/arduino-ide`
+* macOS: `~/Library/Application Support/arduino-ide/`
 
-Currently github workflow is used for automaticaly build test and release. Workflows are defined by YAML file in the `.github/workflows` directory. 
-To merge your PR, please try to add a git tag in the format `VX.Y.Z` (e.g. V3.3.0) to trigger the release process in your fork and pass the compilation tests.
+### Automated Build Checks
 
-### WIKI
-Because of the limitations of the github wiki, it is difficult to create PR for changes of wiki. Please refer to the answer under: https://stackoverflow.com/questions/10642928/how-can-i-make-a-pull-request-for-a-wiki-page-on-github and create a ticket for your modifications.
+Currently a Github workflow is used for automatic compilation checking and releasing. Workflows are defined [here](https://github.com/Infineon/XMC-for-Arduino/tree/master/.github/workflows).
+Before opening a Pull Request for your contribution, please add a git tag in the format `Vx.y.z` (e.g. V3.3.0) to trigger the release process in your fork and pass the compilation tests.
 
-### Debug
-New Arduino IDE(v2.3.2) support debug. Refer to https://docs.arduino.cc/software/ide-v2/tutorials/ide-v2-debugger for more details.
+### Creating and Maintaining Third Party Libraries
+#### Basics
+The Arduino IDE allows for external libraries to be added to support specific devices and functions which are not part of the core setup. For details on creating libraries see the 
+[Arduino library specifications](https://arduino.github.io/arduino-cli/library-specification/). If you add additional libraries to this project, make sure to [document them](https://xmc-arduino.readthedocs.io/en/latest/builtin-libraries.html) accordingly.
 
-No hardware setup is required since the XMC eval board has Jlink on-board debugger, You can jump directly to the:
-https://docs.arduino.cc/software/ide-v2/tutorials/ide-v2-debugger/#getting-to-know-the-debugger
+#### XMC-for-Arduino Configuration
+To ensure that a library specific to one architecture or board type is only compiled when a supporting board is set up, this specification includes a setting for *architecture* in the *library.properties* file.
 
+When creating or maintaining third party or external libraries for XMC-for-Arduino please use this setting:
+~~~
+architecture=xmc
+~~~
 
-If you encounter strange behavior with Arduino IDE, try cleaning up the cache
-
-windows: `C:\User\"username"\AppData\Roaming\arduino-ide`
-linux: `~/.config/arduino-ide`
-macos: `~/Library/Application Support/arduino-ide/`
+If your library also supports other boards and architectures, add those in as well.
