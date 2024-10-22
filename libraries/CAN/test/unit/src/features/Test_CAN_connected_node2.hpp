@@ -24,13 +24,14 @@ void processReceivedMessagesNode2()
 {
     if (newDataReceivedNode2) {
         // Process the received data
-        for (uint8_t i = 0; i < globalQuantity; ++i) {
+        canDataLength = CAN.packetDlc();
+        for (uint8_t i = 0; i < canDataLength; ++i) {
             node2Data[i] = receivedData[i] + node2Increment;
         }
 
         // Send processed data back to Node1
         CAN.beginPacket(CAN_ID_2);
-        for (uint8_t i = 0; i < globalQuantity; ++i) {
+        for (uint8_t i = 0; i < canDataLength; ++i) {
             CAN.write(node2Data[i]);
         }
         CAN.endPacket();
@@ -39,7 +40,8 @@ void processReceivedMessagesNode2()
         newDataReceivedNode2 = false;
 
 #ifdef TRACE_OUTPUT
-        printArray("Processed Data", node2Data, globalQuantity);
+        printArray("\nReceived Data", receivedData, canDataLength);
+        printArray("Sent Data", node2Data, canDataLength);
 #endif
     }
 }
@@ -57,10 +59,6 @@ static TEST_TEAR_DOWN(CAN_connected_node2Internal)
 TEST_IFX(CAN_connected_node2Internal, checkPingPong) 
 {
   processReceivedMessagesNode2();
-
-#ifdef TRACE_OUTPUT
-    printArray("\nNode2 data", node2Data, globalQuantity);
-#endif
 }
 
 

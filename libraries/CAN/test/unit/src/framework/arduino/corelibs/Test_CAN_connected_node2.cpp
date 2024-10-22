@@ -12,12 +12,17 @@
 #define CAN_ID_2 0x321
 
 // variables
-static uint8_t node2Data[8];
-static uint8_t node2Increment = 1;
-static uint8_t globalQuantity = 8;
+
+const static uint8_t node1Increment = 10;
+const static uint8_t node2Increment = 1;
+const static uint8_t canDataLengthMax = 8;
+
+static uint8_t canDataLength = canDataLengthMax;
+static uint8_t node2Data[canDataLengthMax] = {0};
+static uint8_t receivedData[canDataLengthMax] = {0};
 
 volatile bool newDataReceivedNode2 = false;
-static uint8_t receivedData[8];
+
 
 // test feature includes requiring the above defined variables
 #include "Test_CAN_connected_node2.hpp"
