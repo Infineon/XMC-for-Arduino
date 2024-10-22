@@ -28,8 +28,14 @@ public:
     int setIdentifier(long);
     static void onInterrupt();
 
+    // Getter functions for CAN_msg_rx and CAN_msg_tx
+    XMC_CAN_MO_t *getRxMessage();
+    XMC_CAN_MO_t *getTxMessage();
+
 private:
     XMC_ARD_CAN_t *_XMC_CAN_config;
+    XMC_CAN_MO_t CAN_msg_rx;
+    XMC_CAN_MO_t CAN_msg_tx;
 };
 
 extern CANXMC CAN;

@@ -1,0 +1,4 @@
+{
+    "script": "misra.py",
+    "args": [ "--rule-texts=config/cppcheck/misra.txt" ]
+}

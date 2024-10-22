@@ -2,5 +2,13 @@
 .vscode
 pkg_build
 build
-.clang-format
 **/__pycache__/
+
+# Code-check reports
+clang-tidy-report.txt
+
+scan-build-reports/
+
+cppcheck_reports/
+cppcheck.checkers
+err.xml
