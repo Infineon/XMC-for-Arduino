@@ -53,9 +53,9 @@ cppcheck:
 	export RULE_TEXTS=$(CONFIG_DIR)/cppcheck/misra.txt
 	$(CPPCHECK_PATH)/build/bin/cppcheck -i build -i examples -i test \
 										-I$(C_CPP_SOURCES) \
-	 	                                --checkers-report=cppcheck.checkers --check-level=exhaustive --xml --enable=all --inconclusive \
-	                                    --addon=$(CONFIG_DIR)/cppcheck/misra_local.py --addon=misc \
-	                                    --max-configs=100 ./ 2> ./err.xml
-	$(CPPCHECK_PATH)/htmlreport/cppcheck-htmlreport --file=err.xml --title=TLx493D --report-dir=cppcheck_reports --source-dir=.
-	firefox cppcheck_reports/index.html
+										--check-level=exhaustive --enable=all --inconclusive \
+										--addon=config/cppcheck/misra.json --addon=misc --std=c++20 \
+										--checkers-report=cppcheck.checkers --xml --max-configs=50 2> ./err.xml
+	$(CPPCHECK_PATH)/htmlreport/cppcheck-htmlreport --file=err.xml --title=TestCPPCheck --report-dir=cppcheck-reports --source-dir=.
+	firefox cppcheck-reports/index.html
 
