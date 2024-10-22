@@ -356,23 +356,31 @@ int CANXMC::loopback() {
  * Puts the CAN module into sleep mode.
  * This function disables the CAN module by setting the EDIS bit in the CLC
  * register.
- * @return true if the CAN module is successfully put into sleep mode, false
+ * @return 1 if the CAN module is successfully put into sleep mode, 0
  * otherwise.
  */
 int CANXMC::sleep() {
     CAN_xmc->CLC |= CAN_CLC_EDIS_Msk;
-    return CAN_xmc->CLC & CAN_CLC_EDIS_Msk != 0;
+    if (CAN_xmc->CLC & CAN_CLC_EDIS_Msk) {
+        return 1;
+    } else {
+        return 0;
+    }
 };
 
 /**
  * @brief Wakes up the CAN module.
  * This function is used to wake up the CAN module by clearing the EDIS bit in
  * the CLC register.
- * @return true if the CAN module is successfully woken up, false otherwise.
+ * @return 1 if the CAN module is successfully woken up, 0 otherwise.
  */
 int CANXMC::wakeup() {
     CAN_xmc->CLC &= ~CAN_CLC_EDIS_Msk;
-    return CAN_xmc->CLC & CAN_CLC_EDIS_Msk == 0;
+    if (CAN_xmc->CLC & CAN_CLC_EDIS_Msk == 0) {
+        return 1;
+    } else {
+        return 0;
+    }
 };
 
 /**
