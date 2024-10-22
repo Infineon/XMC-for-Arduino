@@ -361,7 +361,7 @@ int CANXMC::loopback() {
  */
 int CANXMC::sleep() {
     CAN_xmc->CLC |= CAN_CLC_EDIS_Msk;
-    return CAN_xmc->CLC & CAN_CLC_EDIS_Msk != 0 ? 1 : 0
+    return CAN_xmc->CLC & CAN_CLC_EDIS_Msk != 0 ? 1 : 0;
 };
 
 /**
