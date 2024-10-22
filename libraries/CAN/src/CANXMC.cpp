@@ -361,11 +361,7 @@ int CANXMC::loopback() {
  */
 int CANXMC::sleep() {
     CAN_xmc->CLC |= CAN_CLC_EDIS_Msk;
-    if (CAN_xmc->CLC & CAN_CLC_EDIS_Msk) {
-        return 1;
-    } else {
-        return 0;
-    }
+    return CAN_xmc->CLC & CAN_CLC_EDIS_Msk != 0 ? 1 : 0
 };
 
 /**
@@ -376,11 +372,7 @@ int CANXMC::sleep() {
  */
 int CANXMC::wakeup() {
     CAN_xmc->CLC &= ~CAN_CLC_EDIS_Msk;
-    if (CAN_xmc->CLC & CAN_CLC_EDIS_Msk == 0) {
-        return 1;
-    } else {
-        return 0;
-    }
+    return CAN_xmc->CLC & CAN_CLC_EDIS_Msk == 0 ? 1 : 0;
 };
 
 /**
