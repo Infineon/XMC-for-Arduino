@@ -26,32 +26,48 @@ static TEST_SETUP(CAN_connected_node1Internal)
 {
 }
 
-
 // Tear down method called by Unity after every individual test defined for this test group.
 static TEST_TEAR_DOWN(CAN_connected_node1Internal)
 {
 }
 
-static bool node1Send(const void *data, const uint8_t size, bool isChar = false) {
-    CAN.beginPacket(node1_id);
+void testSendReceive() 
+{
 
-    TEST_ASSERT_EQUAL_UINT8(size, CAN.write(static_cast<const uint8_t*>(data), size));
+    CAN.beginPacket(CAN_ID_1);
+    for (uint8_t i = 0; i < globalQuantity; ++i) {
+        CAN.write(node1Data[i]);
+    }
     CAN.endPacket();
-    // TEST_ASSERT_EQUAL_UINT8(0U, CAN.endPacket());
-    return true;
+#ifdef TRACE_OUTPUT
+        printArray("Sent Data", node1Data, globalQuantity);
+#endif
+    while (!newDataReceivedNode1) {
+    }
+
+    if (newDataReceivedNode1) {
+        for (uint8_t i = 0; i < globalQuantity; ++i) {
+            UNITY_TEST_ASSERT_EQUAL_UINT8(node1Data[i] + node1Increment, receivedData[i], __LINE__, "Data mismatch");
+        }
+        newDataReceivedNode1 = false;
+
+#ifdef TRACE_OUTPUT
+        printArray("Sent Data", node1Data, globalQuantity);
+        printArray("Received Data", receivedData, globalQuantity);
+#endif
+    }
 }
 
-// Define tests for supported common functionality. These should return true to indicate this.
-TEST_IFX(CAN_connected_node1Internal, node1Sending)
+
+TEST_IFX(CAN_connected_node1Internal, checkPingPong) 
 {
-    TEST_ASSERT_TRUE(node1Send(node1data, 5));
+    testSendReceive();
 }
 
 
-static TEST_GROUP_RUNNER(CAN_connected_node1Internal)
+static TEST_GROUP_RUNNER(CAN_connected_node1Internal) 
 {
-    RUN_TEST_CASE(CAN_connected_node1Internal, node1Sending);
-
+    RUN_TEST_CASE(CAN_connected_node1Internal, checkPingPong);
 }
 
 

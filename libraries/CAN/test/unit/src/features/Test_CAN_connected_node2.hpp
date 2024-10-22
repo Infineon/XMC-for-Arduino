@@ -20,7 +20,29 @@ void CAN_connected_node2_suiteTearDown(void);
 TEST_GROUP(CAN_connected_node2);
 TEST_GROUP(CAN_connected_node2Internal);
 
+void processReceivedMessagesNode2() 
+{
+    if (newDataReceivedNode2) {
+        // Process the received data
+        for (uint8_t i = 0; i < globalQuantity; ++i) {
+            node2Data[i] = receivedData[i] + node2Increment;
+        }
 
+        // Send processed data back to Node1
+        CAN.beginPacket(CAN_ID_2);
+        for (uint8_t i = 0; i < globalQuantity; ++i) {
+            CAN.write(node2Data[i]);
+        }
+        CAN.endPacket();
+
+        // Clear flag
+        newDataReceivedNode2 = false;
+
+#ifdef TRACE_OUTPUT
+        printArray("Processed Data", node2Data, globalQuantity);
+#endif
+    }
+}
 // Setup method called by Unity before every individual test defined for this test group.
 static TEST_SETUP(CAN_connected_node2Internal)
 {
@@ -30,35 +52,21 @@ static TEST_SETUP(CAN_connected_node2Internal)
 // Tear down method called by Unity after every individual test defined for this test group.
 static TEST_TEAR_DOWN(CAN_connected_node2Internal)
 {
-};
-static bool node2Send(const void *data, const uint8_t size, bool isChar = false) {
-    CAN.beginPacket(node2_id);
-
-    TEST_ASSERT_EQUAL_UINT8(size, CAN.write(static_cast<const uint8_t*>(data), size));
-    CAN.endPacket();
-    // TEST_ASSERT_EQUAL_UINT8(0U, CAN.endPacket());
-    return true;
 }
 
-static bool node2Receive(const void *data, const uint8_t size, bool isChar = false) {
-    CAN.beginPacket(node2_id);
-
-    TEST_ASSERT_EQUAL_UINT8(size, CAN.write(static_cast<const uint8_t*>(data), size));
-    CAN.endPacket();
-    // TEST_ASSERT_EQUAL_UINT8(0U, CAN.endPacket());
-    return true;
-}
-
-// Define tests for supported common functionality. These should return true to indicate this.
-TEST_IFX(CAN_connected_node2Internal, node2Sending)
+TEST_IFX(CAN_connected_node2Internal, checkPingPong) 
 {
-    TEST_ASSERT_TRUE(node2Receive(node2data, 5));
+  processReceivedMessagesNode2();
+
+#ifdef TRACE_OUTPUT
+    printArray("\nNode2 data", node2Data, globalQuantity);
+#endif
 }
 
 
 static TEST_GROUP_RUNNER(CAN_connected_node2Internal)
 {
-    RUN_TEST_CASE(CAN_connected_node2Internal, node2Sending);
+    RUN_TEST_CASE(CAN_connected_node2Internal, checkPingPong);
 
 }
 

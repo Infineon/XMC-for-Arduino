@@ -359,7 +359,7 @@ int CANXMC::loopback() {
  * @return true if the CAN module is successfully put into sleep mode, false
  * otherwise.
  */
-int CANXMC::sleep() {
+bool CANXMC::sleep() {
     CAN_xmc->CLC |= CAN_CLC_EDIS_Msk;
     return CAN_xmc->CLC & CAN_CLC_EDIS_Msk != 0;
 };
@@ -370,7 +370,7 @@ int CANXMC::sleep() {
  * the CLC register.
  * @return true if the CAN module is successfully woken up, false otherwise.
  */
-int CANXMC::wakeup() {
+bool CANXMC::wakeup() {
     CAN_xmc->CLC &= CAN_CLC_EDIS_Msk;
     return CAN_xmc->CLC & CAN_CLC_EDIS_Msk == 0;
 };
