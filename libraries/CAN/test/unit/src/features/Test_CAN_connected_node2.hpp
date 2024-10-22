@@ -24,17 +24,16 @@ void processReceivedMessagesNode2()
 {
     if (newDataReceivedNode2) {
         // Process the received data
-        canDataLength = CAN.packetDlc();
         for (uint8_t i = 0; i < canDataLength; ++i) {
             node2Data[i] = receivedData[i] + node2Increment;
         }
 
         // Send processed data back to Node1
-        CAN.beginPacket(CAN_ID_2);
+        TEST_ASSERT_TRUE(CAN.beginPacket(CAN_ID_2));
         for (uint8_t i = 0; i < canDataLength; ++i) {
-            CAN.write(node2Data[i]);
+            TEST_ASSERT_EQUAL(1, CAN.write(node2Data[i]));
         }
-        CAN.endPacket();
+        TEST_ASSERT_EQUAL(1, CAN.endPacket());
 
         // Clear flag
         newDataReceivedNode2 = false;

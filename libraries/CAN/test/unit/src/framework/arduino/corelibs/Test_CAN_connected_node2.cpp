@@ -31,10 +31,11 @@ extern CANXMC CAN;
 void receiveEventNode2(int packetSize) 
 {
         uint8_t count = 0;
-        while (CAN.available() && count < 8) {
+        while (CAN.available()) {
             receivedData[count++] = CAN.read();
         }
         newDataReceivedNode2 = true;
+        canDataLength = packetSize;
 }
 
 // Method invoked before a test suite is run.
