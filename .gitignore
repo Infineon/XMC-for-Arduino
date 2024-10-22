@@ -6,5 +6,9 @@ build
 
 # Code-check reports
 clang-tidy-report.txt
+
 scan-build-reports/
+
 cppcheck_reports/
+cppcheck.checkers
+err.xml
