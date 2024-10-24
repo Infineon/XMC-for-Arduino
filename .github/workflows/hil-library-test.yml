@@ -105,7 +105,7 @@ jobs:
 
           cd /opt/runner_support/
           echo "repo=$(basename "$GITHUB_REPOSITORY")" >> $GITHUB_ENV
-          echo "project=${{ needs.setup.outputs.project }} >> $GITHUB_ENV
+          echo "project=${{ needs.setup.outputs.project }}" >> $GITHUB_ENV
           echo "libraries=${{ matrix.libraries }}" >> $GITHUB_ENV
           echo "version=$TEST_VERSION" >> $GITHUB_ENV
           echo "hasEXT=$(basename ${{ matrix.libraries }})" >> $GITHUB_ENV
