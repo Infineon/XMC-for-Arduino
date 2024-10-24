@@ -62,16 +62,6 @@ jobs:
           export libraries=$(jq --compact-output --null-input '$ARGS.positional' --args -- "${data[@]}")
           echo libraries="$libraries" >> $GITHUB_OUTPUT
 
-
-      - name: Set and check environment, install repos
-        run: |
-          mkdir -p "$HOME/Arduino/libraries"
-          cd $GITHUB_WORKSPACE/
-          xfp-dev arduino workspace-setup --path $HOME/Arduino/libraries
-          rm -rf ~/.arduino15/packages/Infineon/hardware/xmc/*
-          ln -s $GITHUB_WORKSPACE ~/.arduino15/packages/Infineon/hardware/xmc/$TEST_VERSION
-          echo "TEST_VERSION=$TEST_VERSION"
-
     # Connect the GITHUB_OUTPUT to the variables and the workflow output mechanism
     outputs:
       project: ${{ steps.startup.outputs.project }}
@@ -108,9 +98,24 @@ jobs:
     steps:
       - name: Environment
         run: |
-          cd /opt/runner_support/
+          mkdir -p "$HOME/Arduino/libraries"
+          xfp-dev arduino workspace-setup --path $HOME/Arduino/libraries
+          rm -rf ~/.arduino15/packages/Infineon/hardware/xmc/*
+          ln -s $GITHUB_WORKSPACE ~/.arduino15/packages/Infineon/hardware/xmc/$TEST_VERSION
 
-          REPO="$(basename "$GITHUB_REPOSITORY")"
-          PROJECT=${{ needs.setup.outputs.project }}
-          LIBRARY=${{ matrix.libraries }}
-          echo "TEST_VERSION=$TEST_VERSION"
+          cd /opt/runner_support/
+          echo "repo=$(basename "$GITHUB_REPOSITORY")" >> $GITHUB_ENV
+          echo "project=${{ needs.setup.outputs.project }} >> $GITHUB_ENV
+          echo "libraries=${{ matrix.libraries }}" >> $GITHUB_ENV
+          echo "version=$TEST_VERSION" >> $GITHUB_ENV
+          echo "hasEXT=$(basename ${{ matrix.libraries }})" >> $GITHUB_ENV
+
+          # XMCTEST=$(./py_checkusb.py --has ${{ env.hasEXT }} --onoff on --json)
+
+          echo "Repo                  " $${{ env.repo}}
+          echo "Project name          " $${{ env.project}}
+          echo "Libraries             " $${{ env.libraries}}
+          echo "Version               " $${{ env.version}}
+          echo "Has extension         " $${{ env.hasEXT}}
+          echo "XMCTEST               " $XMCTEST
+
