@@ -115,3 +115,12 @@ jobs:
           echo "Has extension         " $HAS_EXT
           echo "XMC_TEST              " $XMC_TEST
 
+
+      # Build the test code with make and flash it to the board
+      - name: Build
+        run: |
+          cd /opt/runner_support/
+          echo "BUILD"
+
+
+          
