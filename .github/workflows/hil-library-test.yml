@@ -59,6 +59,23 @@ jobs:
           export libraries=$(jq --compact-output --null-input '$ARGS.positional' --args -- "${data[@]}")
           echo libraries="$libraries" >> $GITHUB_OUTPUT
 
+
+      - name: Set and check environment, install repos
+        run: |
+          mkdir -p "$HOME/Arduino/libraries"
+          cd $GITHUB_WORKSPACE/
+          xfp-dev arduino workspace-setup --path $HOME/Arduino/libraries
+          rm -rf ~/.arduino15/packages/Infineon/hardware/xmc/*
+          #ln -s $GITHUB_WORKSPACE ~/.arduino15/packages/Infineon/hardware/xmc/
+          echo GITHUB_WORKSPACE=$GITHUB_WORKSPACE
+          echo GITHUB_REF=$GITHUB_REF
+          echo GITHUB_REPOSITORY=$GITHUB_REPOSITORY
+          echo GITHUB_ACTOR=$GITHUB_ACTOR
+          echo GITHUB_SHA=$GITHUB_SHA
+          echo GITHUB_HEAD_REF=$GITHUB_HEAD_REF
+          echo GITHUB_BASE_REF=$GITHUB_BASE_REF
+          echo GITHUB_EVENT_NAME=$GITHUB_EVENT_NAME
+
     # Connect the GITHUB_OUTPUT to the variables and the workflow output mechanism
     outputs:
       project: ${{ steps.startup.outputs.project }}
