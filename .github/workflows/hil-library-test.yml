@@ -5,6 +5,9 @@ on:
   - push
   - pull_request
 
+env:
+  TEST_VERSION: 1.0.0
+
 # This template runes multiple workflows
 jobs:
 
@@ -66,15 +69,8 @@ jobs:
           cd $GITHUB_WORKSPACE/
           xfp-dev arduino workspace-setup --path $HOME/Arduino/libraries
           rm -rf ~/.arduino15/packages/Infineon/hardware/xmc/*
-          #ln -s $GITHUB_WORKSPACE ~/.arduino15/packages/Infineon/hardware/xmc/
-          echo GITHUB_WORKSPACE=$GITHUB_WORKSPACE
-          echo GITHUB_REF=$GITHUB_REF
-          echo GITHUB_REPOSITORY=$GITHUB_REPOSITORY
-          echo GITHUB_ACTOR=$GITHUB_ACTOR
-          echo GITHUB_SHA=$GITHUB_SHA
-          echo GITHUB_HEAD_REF=$GITHUB_HEAD_REF
-          echo GITHUB_BASE_REF=$GITHUB_BASE_REF
-          echo GITHUB_EVENT_NAME=$GITHUB_EVENT_NAME
+          ln -s $GITHUB_WORKSPACE ~/.arduino15/packages/Infineon/hardware/xmc/$TEST_VERSION
+          echo "TEST_VERSION=$TEST_VERSION"
 
     # Connect the GITHUB_OUTPUT to the variables and the workflow output mechanism
     outputs:
@@ -117,3 +113,4 @@ jobs:
           REPO="$(basename "$GITHUB_REPOSITORY")"
           PROJECT=${{ needs.setup.outputs.project }}
           LIBRARY=${{ matrix.libraries }}
+          echo "TEST_VERSION=$TEST_VERSION"
