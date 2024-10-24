@@ -1,0 +1,102 @@
+name: Hil library test
+
+# on which event should we start push, pull request or schedule dispatches
+on:
+  - push
+  - pull_request
+
+# This template runes multiple workflows
+jobs:
+
+
+  #############################################################################
+  # This action sets common variables for the flow and
+  # identifies the examples to compile
+  setup:
+
+    # we run this on self hosted runner, use labels to be more specific
+    # add specific names if there are some, otherwise self-hosted, X64, Linux are the default ones
+    runs-on:
+      - self-hosted
+      - X64
+      - Linux
+
+    steps:
+      # checkout the latest github action code
+      - name: Checkout actions
+        uses: actions/checkout@v4
+
+      # checkout the latest arduino-cli compiler
+      - name: Setup Arduino CLI
+        uses: arduino/setup-arduino-cli@master
+
+      # Update the arduino code. Attention this does not setup XMC packages as this are set inside the self hosted runner
+      # the arduino board support packages can be updated automatically
+      # the XMC board support package is only linked inside the self hosted runner, which allows
+      # to use none official and beta versions
+      # arduino-cli core install "infineon:xmc"
+      - name: Install/Update Arduino Platform
+        run: |
+          arduino-cli core update-index
+          arduino-cli core install "arduino:avr"
+
+      # Fetch variables and move them to the GITHUB_OUTPUT and fetch HIL information
+      - id: startup
+        run: |
+          # set the project name
+          export $(xfp-dev arduino workspace-setup project-name)
+          echo "project=$PROJECTNAME" >> $GITHUB_OUTPUT
+
+          # find libraries with makefile
+          declare -a data
+          cd $GITHUB_WORKSPACE
+          for x in libraries/*;
+          do
+            if [ -f $x/Makefile ]; then
+              data+=($x);
+            fi;
+          done;
+          export libraries=$(jq --compact-output --null-input '$ARGS.positional' --args -- "${data[@]}")
+          echo libraries="$libraries" >> $GITHUB_OUTPUT
+
+    # Connect the GITHUB_OUTPUT to the variables and the workflow output mechanism
+    outputs:
+      project: ${{ steps.startup.outputs.project }}
+      libraries: ${{ steps.startup.outputs.libraries }}
+
+
+  #############################################################################
+  # This step allows HIL (Hardware in the loop), therefore
+  # is searches for the given board/sensor combination and tries to find the actual port
+  # on the self hosted runner. (see documentation for the board2port finder)
+  flash:
+
+    # We need a successful build before we can run the deploy
+    needs: [setup]
+    
+    # we run this on self hosted runner, use labels to be more specific
+    # add specific names if there are some, otherwise self-hosted, X64, Linux are the default ones
+    runs-on:
+      - self-hosted
+      - X64
+      - Linux
+
+    # do not stop if a single job fails
+    continue-on-error: true
+
+    strategy:
+
+      # the code to flash
+      matrix:
+        # the serials of the hardware boards
+        libraries: ${{ fromJson(needs.setup.outputs.libraries) }}
+
+    # These are the steps which should run for each combination of fqbn and example code
+    steps:
+      - name: Environment
+        run: |
+          cd /opt/runner_support/
+
+          REPO="$(basename "$GITHUB_REPOSITORY")"
+          PROJECT=${{ needs.setup.outputs.project }}
+          LIBRARY=${{ matrix.libraries }}
