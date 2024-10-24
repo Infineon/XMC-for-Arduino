@@ -104,18 +104,24 @@ jobs:
           ln -s $GITHUB_WORKSPACE ~/.arduino15/packages/Infineon/hardware/xmc/$TEST_VERSION
 
           cd /opt/runner_support/
-          echo "repo=$(basename "$GITHUB_REPOSITORY")" >> $GITHUB_ENV
-          echo "project=${{ needs.setup.outputs.project }}" >> $GITHUB_ENV
-          echo "libraries=${{ matrix.libraries }}" >> $GITHUB_ENV
+
+          REPO="$(basename "$GITHUB_REPOSITORY")"
+          PROJECT=${{ needs.setup.outputs.project }}
+          LIBRARIES=${{ matrix.libraries }}
+          HAS_EXT=$(basename ${{ matrix.libraries }})
+
+          echo "repo=$REPO" >> $GITHUB_ENV
+          echo "project=$PROJECT" >> $GITHUB_ENV
+          echo "libraries=$LIBRARIES" >> $GITHUB_ENV
           echo "version=$TEST_VERSION" >> $GITHUB_ENV
-          echo "hasEXT=$(basename ${{ matrix.libraries }})" >> $GITHUB_ENV
+          echo "has=$HAS_EXT" >> $GITHUB_ENV
 
-          # XMCTEST=$(./py_checkusb.py --has ${{ env.hasEXT }} --onoff on --json)
+          # XMC_TEST=$(./py_checkusb.py --has ${HAS_EXT} --onoff on --json)
 
-          echo "Repo                  " ${{ env.repo}}
-          echo "Project name          " ${{ env.project}}
-          echo "Libraries             " ${{ env.libraries}}
-          echo "Version               " ${{ env.version}}
-          echo "Has extension         " ${{ env.hasEXT}}
-          echo "XMCTEST               " $XMCTEST
+          echo "Repo                  " $REPO
+          echo "Project name          " $PROJECT
+          echo "Libraries             " $LIBRARIES
+          echo "Version               " ${version}
+          echo "Has extension         " $HAS_EXT
+          echo "XMC_TEST              " $XMC_TEST
 
