@@ -112,10 +112,10 @@ jobs:
 
           # XMCTEST=$(./py_checkusb.py --has ${{ env.hasEXT }} --onoff on --json)
 
-          echo "Repo                  " $${{ env.repo}}
-          echo "Project name          " $${{ env.project}}
-          echo "Libraries             " $${{ env.libraries}}
-          echo "Version               " $${{ env.version}}
-          echo "Has extension         " $${{ env.hasEXT}}
+          echo "Repo                  " ${{ env.repo}}
+          echo "Project name          " ${{ env.project}}
+          echo "Libraries             " ${{ env.libraries}}
+          echo "Version               " ${{ env.version}}
+          echo "Has extension         " ${{ env.hasEXT}}
           echo "XMCTEST               " $XMCTEST
 
