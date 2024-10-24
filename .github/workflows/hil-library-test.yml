@@ -46,10 +46,6 @@ jobs:
       # Fetch variables and move them to the GITHUB_OUTPUT and fetch HIL information
       - id: startup
         run: |
-          # set the project name
-          export $(xfp-dev arduino workspace-setup project-name)
-          echo "project=$PROJECTNAME" >> $GITHUB_OUTPUT
-
           # find libraries with makefile
           declare -a data
           cd $GITHUB_WORKSPACE
@@ -64,7 +60,6 @@ jobs:
 
     # Connect the GITHUB_OUTPUT to the variables and the workflow output mechanism
     outputs:
-      project: ${{ steps.startup.outputs.project }}
       libraries: ${{ steps.startup.outputs.libraries }}
 
 
@@ -98,20 +93,16 @@ jobs:
     steps:
       - name: Environment
         run: |
-          mkdir -p "$HOME/Arduino/libraries"
-          xfp-dev arduino workspace-setup --path $HOME/Arduino/libraries
+          cd $HOME
           rm -rf ~/.arduino15/packages/Infineon/hardware/xmc/*
           ln -s $GITHUB_WORKSPACE ~/.arduino15/packages/Infineon/hardware/xmc/$TEST_VERSION
-
           cd /opt/runner_support/
 
           REPO="$(basename "$GITHUB_REPOSITORY")"
-          PROJECT=${{ needs.setup.outputs.project }}
           LIBRARIES=${{ matrix.libraries }}
           HAS_EXT=$(basename ${{ matrix.libraries }})
 
           echo "repo=$REPO" >> $GITHUB_ENV
-          echo "project=$PROJECT" >> $GITHUB_ENV
           echo "libraries=$LIBRARIES" >> $GITHUB_ENV
           echo "version=$TEST_VERSION" >> $GITHUB_ENV
           echo "has=$HAS_EXT" >> $GITHUB_ENV
@@ -119,9 +110,8 @@ jobs:
           # XMC_TEST=$(./py_checkusb.py --has ${HAS_EXT} --onoff on --json)
 
           echo "Repo                  " $REPO
-          echo "Project name          " $PROJECT
           echo "Libraries             " $LIBRARIES
-          echo "Version               " ${version}
+          echo "Version               " ${TEST_VERSION}
           echo "Has extension         " $HAS_EXT
           echo "XMC_TEST              " $XMC_TEST
 
