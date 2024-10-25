@@ -186,14 +186,13 @@ if(( XMC_USIC_CH_GetTransmitBufferStatus( _XMC_UART_config->channel ) == XMC_USI
   if( nextWrite >= SERIAL_BUFFER_SIZE )
     nextWrite = 0;
 
-  //This should always be false but in case transmission is completed before head is advanced at the end of this function we might get stuck in an infinte loop at the spinlook stage
+  //This should always be false but in case transmission is completed before buffer, we need to reenable IRQ
   if( XMC_USIC_CH_GetTransmitBufferStatus( _XMC_UART_config->channel ) != XMC_USIC_CH_TBUF_STATUS_BUSY ) {
-	  //Reenable IRQ and send Data
 	  XMC_UART_CH_EnableEvent( _XMC_UART_config->channel, XMC_UART_CH_EVENT_TRANSMIT_BUFFER );
 	  XMC_UART_CH_Transmit( _XMC_UART_config->channel, _tx_buffer->_aucBuffer[ _tx_buffer->_iTail ] );
 	  _tx_buffer->_iTail++;
 	  if(_tx_buffer->_iTail >= SERIAL_BUFFER_SIZE)
-		  _tx_buffer->_iTail = _tx_buffer->_iTail - SERIAL_BUFFER_SIZE; //This should be interchangeable with iTail = 0 but I like this style more as it provides a correct value if iTail is larger than Serial Buffer Size (which should never be the case)
+		  _tx_buffer->_iTail = _tx_buffer->_iTail - SERIAL_BUFFER_SIZE; // If iTail is larger than Serial Buffer Size calculate the correct index value
   }
   
   while( _tx_buffer->_iTail == nextWrite )
