@@ -19,13 +19,6 @@ void RunAllTests(void)
 #endif
 
 
-// CAN with connections
-#ifdef TEST_CAN_CONNECTED
-
-    RUN_TEST_GROUP(CAN_connected);
-
-#endif
-
 #ifdef TEST_CAN_CONNECTED_NODE1
 
     RUN_TEST_GROUP(CAN_connected_node1);
