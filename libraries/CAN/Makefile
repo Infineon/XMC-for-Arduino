@@ -59,7 +59,7 @@ ifeq ($(UNITY_PATH),)
 else
 	find $(UNITY_PATH) -name '*.[hc]' \( -path '*extras*' -a -path '*src*' -or -path '*src*' -a \! -path '*example*' \) -exec \cp {} build \;
 	find test/unit -name '*.[hc]*' -a \! -path '*mtb*' -a \! -path '*applibs*' -exec \cp {} build \;
-	cp test/unit/src/framework/arduino/corelibs/Test_main.ino build/build.ino
+	cp test/unit/src/corelibs/Test_main.ino build/build.ino
 endif
 
 
