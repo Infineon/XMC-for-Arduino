@@ -50,12 +50,11 @@ cppcheck: C_CPP_SOURCES = ./src
 CPPCHECK_PATH = ~/cppcheck/cppcheck
 
 cppcheck:
-	export RULE_TEXTS=$(CONFIG_DIR)/cppcheck/misra.txt
-	$(CPPCHECK_PATH)/build/bin/cppcheck -i build -i examples -i test \
-										-I$(C_CPP_SOURCES) \
-										--check-level=exhaustive --enable=all --inconclusive \
-										--addon=config/cppcheck/misra.json --addon=misc --std=c++20 \
-										--checkers-report=cppcheck.checkers --xml --max-configs=50 2> ./err.xml
+	$(CPPCHECK_PATH)/cppcheck -I $(C_CPP_SOURCES) \
+	                          -i build -i doc -i examples -i results -i reports_hml -i src -i test $(C_CPP_SOURCES) \
+	                          --check-level=exhaustive --enable=all --inconclusive \
+	                          --addon=config/cppcheck/misra.json --addon=misc --std=c++20 \
+	                          --checkers-report=cppcheck.checkers --xml --max-configs=50 2> ./err.xml
 	$(CPPCHECK_PATH)/htmlreport/cppcheck-htmlreport --file=err.xml --title=TestCPPCheck --report-dir=cppcheck-reports --source-dir=.
 	firefox cppcheck-reports/index.html
 

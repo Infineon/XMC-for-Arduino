@@ -1,20 +1,57 @@
 // std includes
 
 // test includes
-#include "Test_includes.hpp"
+#include "Test_common_includes.h"
 
 // project includes
 
 
-void CAN_connected_node2_suiteSetup(void);
-void CAN_connected_node2_suiteTearDown(void);
+// defines
+#define TRACE_OUTPUT
+#define CAN_ID_1 0x123
+#define CAN_ID_2 0x321
+
+// variables
+
+const static uint8_t node1Increment = 10;
+const static uint8_t node2Increment = 1;
+const static uint8_t canDataLengthMax = 8;
+
+static uint8_t canDataLength = canDataLengthMax;
+static uint8_t node2Data[canDataLengthMax] = {0};
+static uint8_t receivedData[canDataLengthMax] = {0};
+
+volatile bool newDataReceivedNode2 = false;
 
 
-// variables used in the tests below that have to be accessed in the setup and tear down methods
+// test feature includes requiring the above defined variables
+
+extern CANXMC CAN;
+
+void receiveEventNode2(int packetSize) 
+{
+        uint8_t count = 0;
+        while (CAN.available()) {
+            receivedData[count++] = CAN.read();
+        }
+        newDataReceivedNode2 = true;
+        canDataLength = packetSize;
+}
+
+// Method invoked before a test suite is run.
+void CAN_connected_node2_suiteSetup() 
+{
+    CAN.begin();
+    CAN.filter(CAN_ID_1, 0x7FF); // Set filter to receive messages with CAN_ID_1
+    CAN.onReceive(receiveEventNode2);
+}
 
 
-// test includes that may require dut
-
+// Method invoked after a test suite is run.
+void CAN_connected_node2_suiteTearDown() 
+{
+    CAN.end();
+}
 
 // define test group name
 TEST_GROUP(CAN_connected_node2);
@@ -77,3 +114,5 @@ TEST_GROUP_RUNNER(CAN_connected_node2)
  
     CAN_connected_node2_suiteTearDown();
 }
+
+

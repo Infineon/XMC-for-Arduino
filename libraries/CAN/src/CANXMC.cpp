@@ -5,34 +5,33 @@
 static volatile bool can_frame_received = false;
 
 /* construct with configuration of different target */
-CANXMC::CANXMC(XMC_ARD_CAN_t *conf) : _XMC_CAN_config(conf) {
+CANXMC::CANXMC(XMC_ARD_CAN_t *conf)
+    : _XMC_CAN_config(conf) {
     memset(&CAN_msg_rx, 0, sizeof(CAN_msg_rx));
     memset(&CAN_msg_tx, 0, sizeof(CAN_msg_tx));
 
-        /* CAN Transmit Message Object definition */
+    /* CAN Transmit Message Object definition */
 
     CAN_msg_tx.can_mo_ptr = (CAN_MO_TypeDef *)CAN_MO1;
     CAN_msg_tx.can_identifier = 0xFFFU;
-    CAN_msg_tx.can_id_mode = XMC_CAN_FRAME_TYPE_STANDARD_11BITS;  // Extended ID mode
-    CAN_msg_tx.can_priority = XMC_CAN_ARBITRATION_MODE_ORDER_BASED_PRIO_1;  // Priority level 1
-    CAN_msg_tx.can_id_mask = 0x00000000U;  // Identifier mask
-    CAN_msg_tx.can_ide_mask = 0U;  // Identifier extension mask
-    CAN_msg_tx.can_data_length = 0U;  // Data length of 0
-    CAN_msg_tx.can_mo_type = XMC_CAN_MO_TYPE_TRANSMSGOBJ;  // Message Object type
-
+    CAN_msg_tx.can_id_mode = XMC_CAN_FRAME_TYPE_STANDARD_11BITS;           // Extended ID mode
+    CAN_msg_tx.can_priority = XMC_CAN_ARBITRATION_MODE_ORDER_BASED_PRIO_1; // Priority level 1
+    CAN_msg_tx.can_id_mask = 0x00000000U;                                  // Identifier mask
+    CAN_msg_tx.can_ide_mask = 0U;                         // Identifier extension mask
+    CAN_msg_tx.can_data_length = 0U;                      // Data length of 0
+    CAN_msg_tx.can_mo_type = XMC_CAN_MO_TYPE_TRANSMSGOBJ; // Message Object type
 
     /* CAN Receive Message Object definition, can also be used for transmit remote
      * frame*/
     CAN_msg_rx.can_mo_ptr = (CAN_MO_TypeDef *)CAN_MO0;
     CAN_msg_rx.can_identifier = 0xFFFU;
-    CAN_msg_rx.can_id_mode = XMC_CAN_FRAME_TYPE_STANDARD_11BITS;           
-    CAN_msg_rx.can_priority =  XMC_CAN_ARBITRATION_MODE_ORDER_BASED_PRIO_1;
-    CAN_msg_rx.can_id_mask = 0x00000000U;  
-    CAN_msg_rx.can_ide_mask = 0U;             
+    CAN_msg_rx.can_id_mode = XMC_CAN_FRAME_TYPE_STANDARD_11BITS;
+    CAN_msg_rx.can_priority = XMC_CAN_ARBITRATION_MODE_ORDER_BASED_PRIO_1;
+    CAN_msg_rx.can_id_mask = 0x00000000U;
+    CAN_msg_rx.can_ide_mask = 0U;
     CAN_msg_rx.can_data_length = 0U;
     CAN_msg_rx.can_mo_type = XMC_CAN_MO_TYPE_RECMSGOBJ;
 }
-
 
 CANXMC::~CANXMC() { end(); }
 

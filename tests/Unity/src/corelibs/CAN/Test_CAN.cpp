@@ -1,14 +1,27 @@
 // std includes
 
 // test includes
-#include "Test_includes.hpp"
+#include "Test_common_includes.h"
 
 // project includes
 
 
-void CAN_suiteSetUp(void);
-void CAN_suiteTearDown(void);
+// defines
+#define TRACE_OUTPUT
 
+
+// variables
+
+
+
+// Method invoked by Unity before a test suite is run
+void CAN_suiteSetUp() {
+}
+
+
+// Method invoked by Unity after a test suite is run 
+void CAN_suiteTearDown() {
+}
 
 // variables used in the tests below that have to be accessed in the setup and tear down methods
 extern CANXMC CAN;
