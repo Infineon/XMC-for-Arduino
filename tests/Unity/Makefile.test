@@ -30,7 +30,7 @@ make FQBN=Infineon:xmc:XMC1400_XMC2GO PORT=COM42 UNITY_PATH=/home/zhanglinjing/r
 make FQBN=Infineon:xmc:XMC1400_XMC2GO PORT=COM41 UNITY_PATH=/home/zhanglinjing/repo/Unity CAN_connected_node1 monitor
 
 # 1 board
-make FQBN=Infineon:xmc:XMC1400_XMC2GO PORT=COM42 UNITY_PATH=/home/zhanglinjing/repo/Unity CAN test-monitor
+make FQBN=Infineon:xmc:XMC1400_XMC2GO PORT=COM42 UNITY_PATH=/home/zhanglinjing/repo/Unity CAN monitor
 
 make FQBN=Infineon:xmc:XMC1400_XMC2GO PORT=COM42 UNITY_PATH=/home/zhanglinjing/repo/Unity CAN_connected monitor
 

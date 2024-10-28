@@ -17,7 +17,7 @@ CAN: TESTS=-DTEST_CAN
 CAN_connected: TESTS=-DTEST_CAN -DTEST_CAN_CONNECTED
 CAN_connected_node1: TESTS=-DTEST_CAN_CONNECTED_NODE1
 CAN_connected_node2: TESTS=-DTEST_CAN_CONNECTED_NODE2
-CAN_connected CAN CAN_connected_node1 CAN_connected_node2: unity_corelibs flash
+CAN_connected CAN CAN_connected_node1 CAN_connected_node2: unity_corelibs_can flash
 
 test_all: TESTS=$(TESTS_CONNECTED) $(TESTS_NOT_CONNECTED)
 test_connected: TESTS=$(TESTS_CONNECTED)
@@ -58,8 +58,19 @@ ifeq ($(UNITY_PATH),)
 	$(error "Must set variable UNITY_PATH in order to be able to compile Arduino unit tests !")
 else
 	find $(UNITY_PATH) -name '*.[hc]' \( -path '*extras*' -a -path '*src*' -or -path '*src*' -a \! -path '*example*' \) -exec \cp {} build \;
-	find test/unit -name '*.[hc]*' -a \! -path '*mtb*' -a \! -path '*applibs*' -exec \cp {} build \;
-	cp test/unit/src/corelibs/Test_main.ino build/build.ino
+	find src -name '*.[hc]*' -a \! -path '*mtb*' -a \! -path '*applibs*' -exec \cp {} build \;
+	cp src/corelibs/Test_main.ino build/build.ino
+endif
+
+unity_corelibs_can: arduino
+ifeq ($(UNITY_PATH),)
+	$(error "Must set variable UNITY_PATH in order to be able to compile Arduino unit tests !")
+else
+	find $(UNITY_PATH) -name '*.[hc]' \( -path '*extras*' -a -path '*src*' -or -path '*src*' -a \! -path '*example*' \) -exec \cp {} build \;
+	find src/corelibs/CAN -name '*.[hc]*' -exec \cp {} build \;
+	find src/utils -name '*.[hc]*' -exec \cp {} build \;
+	find src -maxdepth 1 -name '*.[hc]*' -exec \cp {} build \;
+	cp src/Test_main.ino build/build.ino
 endif
 
 

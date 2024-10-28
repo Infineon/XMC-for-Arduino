@@ -1,5 +1,5 @@
 // test includes
-#include "Test_includes.hpp"
+#include "Test_common_includes.h"
 
 
 /***
@@ -11,26 +11,51 @@ void RunAllTests(void)
 {
 
 
-// CAN
+
+// CAN standalone
 #ifdef TEST_CAN
 
     RUN_TEST_GROUP(CAN);
 
 #endif
 
-
+// CAN with 2 boards connections
 #ifdef TEST_CAN_CONNECTED_NODE1
 
     RUN_TEST_GROUP(CAN_connected_node1);
 
 #endif
 
+// CAN with 2 boards connections
 #ifdef TEST_CAN_CONNECTED_NODE2
 
     RUN_TEST_GROUP(CAN_connected_node2);
 
 #endif
 
+
+// IIC with connections
+#ifdef TEST_IIC_PINGPONG_CONNECTED
+
+    RUN_TEST_GROUP(IIC_pingPong_connected);
+
+#endif
+
+
+// IIC with connections
+#ifdef TEST_IIC_PINGPONG_2BOARDS_MASTER_CONNECTED
+
+    RUN_TEST_GROUP(IIC_pingPong2BoardsMaster_connected);
+
+#endif
+
+
+// IIC with connections
+#ifdef TEST_IIC_PINGPONG_2BOARDS_SLAVE_CONNECTED
+
+    RUN_TEST_GROUP(IIC_pingPong2BoardsSlave_connected);
+
+#endif
 
 }
 
