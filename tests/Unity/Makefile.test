@@ -1,5 +1,5 @@
 ### Build commands
-
+### ! Please note that you need to change the port and path of Unity as appropriate !
 
 ### Example program
 
@@ -25,12 +25,15 @@ make FQBN=Infineon:xmc:XMC1400_XMC2GO BAUD_RATE=9600 PORT=COM42 CANLoopBack flas
 ### Unit tests
 
 # 2 boards
-make FQBN=Infineon:xmc:XMC1400_XMC2GO PORT=COM42 UNITY_PATH=/home/zhanglinjing/repo/Unity CAN_connected_node2 monitor
 
-make FQBN=Infineon:xmc:XMC1400_XMC2GO PORT=COM41 UNITY_PATH=/home/zhanglinjing/repo/Unity CAN_connected_node1 monitor
+
+make FQBN=Infineon:xmc:XMC1400_XMC2GO PORT=COM42 UNITY_PATH=/home/Unity CAN_connected_node2 monitor
+
+make FQBN=Infineon:xmc:XMC1400_XMC2GO PORT=COM41 UNITY_PATH=/home/zhanglinjing/repo/Unity CAN_connected_node2 monitor
+
+make FQBN=Infineon:xmc:XMC4700_Relax_Kit PORT=COM28 UNITY_PATH=/home/zhanglinjing/repo/Unity CAN_connected_node1 monitor
+
 
 # 1 board
-make FQBN=Infineon:xmc:XMC1400_XMC2GO PORT=COM42 UNITY_PATH=/home/zhanglinjing/repo/Unity CAN monitor
-
-make FQBN=Infineon:xmc:XMC1400_XMC2GO PORT=COM42 UNITY_PATH=/home/zhanglinjing/repo/Unity CAN_connected monitor
+make FQBN=Infineon:xmc:XMC1400_XMC2GO PORT=COM42 UNITY_PATH=/home/Unity CAN monitor
 
