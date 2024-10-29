@@ -124,7 +124,7 @@ jobs:
             echo "No library information found"
             exit 0
           fi
-          readarray -t DEVICES < <(echo $lib | jq ".\"${{ env.library }}\" | keys[]" -r --compact-output --null-input)
+          readarray -t DEVICES < <(echo $lib | jq ".\"${{ env.library }}\" | keys[]" -r --compact-output)
 
           echo "Devices: ${DEVICES[@]}"
           echo "Library: ${lib}"
