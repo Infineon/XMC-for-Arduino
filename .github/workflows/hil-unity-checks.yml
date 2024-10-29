@@ -72,7 +72,7 @@ jobs:
           hil=$(./py_checkusb.py --readyaml $GITHUB_WORKSPACE/tests/Unity/hil-unity-checklist.yaml --json)
           echo "hil=${hil}" >> $GITHUB_OUTPUT
 
-          readarray -t libraries <<< $(echo $hil | jq -r '.|keys[]')
+          libraries=$(echo $hil | jq -r '.|keys[]')
           echo libraries="$libraries" >> $GITHUB_OUTPUT
           echo "libraries=${libraries[@]}"
 
