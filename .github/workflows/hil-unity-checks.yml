@@ -169,26 +169,26 @@ jobs:
 
 
 
-  #############################################################################
-  # Switch off the HIL after all tests are done
-  post:
+  # #############################################################################
+  # # Switch off the HIL after all tests are done
+  # post:
 
-    # we run this no matter if before fails
-    if: always()
-    # wait on first setup run before starting main function
-    needs: [setup, flash]
+  #   # we run this no matter if before fails
+  #   if: always()
+  #   # wait on first setup run before starting main function
+  #   needs: [setup, flash]
 
-    # we run this on self hosted runner, use labels to be more specific
-    # add specific names if there are some, otherwise self-hosted, X64, Linux are the default ones
-    runs-on:
-      - self-hosted
-      - X64
-      - Linux
+  #   # we run this on self hosted runner, use labels to be more specific
+  #   # add specific names if there are some, otherwise self-hosted, X64, Linux are the default ones
+  #   runs-on:
+  #     - self-hosted
+  #     - X64
+  #     - Linux
 
-    steps:
-      - name: Switch off HIL
-        run: |
-          cd /opt/runner_support/
-          REPO="$(basename "$GITHUB_REPOSITORY")"
-          ./py_checkusb.py --switch repo --namelist $REPO --onoff off
+  #   steps:
+  #     - name: Switch off HIL
+  #       run: |
+  #         cd /opt/runner_support/
+  #         REPO="$(basename "$GITHUB_REPOSITORY")"
+  #         ./py_checkusb.py --switch repo --namelist $REPO --onoff off
 
