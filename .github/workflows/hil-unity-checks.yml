@@ -122,6 +122,9 @@ jobs:
           lib=$(./py_checkusb.py --type ${{ env.library }} --json)
           readarray -t DEVICES < <(echo $lib | jq ".\"${{ env.library }}\" | keys[]" -r --compact-output)
 
+          $echo $lib 
+          $echo $DEVICES
+
           # loop over all fqbn in the library
           cd ~/.arduino15/packages/Infineon/hardware/xmc/$TEST_VERSION/libraries/${{ env.library }}                                       # change this
           for DEVICE in "${DEVICES[@]}"; do
