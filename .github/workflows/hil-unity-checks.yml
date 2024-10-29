@@ -46,23 +46,6 @@ jobs:
       # Fetch variables and move them to the GITHUB_OUTPUT and fetch HIL information
       - id: startup
         run: |
-          # find libraries with makefile
-          # declare -a data
-          # cd $GITHUB_WORKSPACE
-          # for x in libraries/*;
-          # do
-          #   if [ -f $x/Makefile ]; then
-          #     data+=($x);
-          #   fi;
-          # done;
-          data+=("A")
-          data+=("B")
-
-          
-          export lib=$(jq --compact-output --null-input '$ARGS.positional' --args -- "${data[@]}")
-          echo "lib=${lib}"
-
-
           # switch on the HIL
           cd /opt/runner_support/
           REPO="$(basename "$GITHUB_REPOSITORY")"
@@ -72,9 +55,11 @@ jobs:
           hil=$(./py_checkusb.py --readyaml $GITHUB_WORKSPACE/tests/Unity/hil-unity-checklist.yaml --json)
           echo "hil=${hil}" >> $GITHUB_OUTPUT
 
-          libraries=$(echo $hil | jq -r '.|keys[]')
-          echo libraries="$libraries" >> $GITHUB_OUTPUT
-          echo "libraries=${libraries[@]}"
+          readarray -t data < <(echo $hil | jq -r '.|keys[]')
+          export lib=$(jq --compact-output --null-input '$ARGS.positional' --args -- "${data[@]}")
+          echo "lib=${lib}"
+        
+          echo libraries="$lib" >> $GITHUB_OUTPUT
 
 
     # Connect the GITHUB_OUTPUT to the variables and the workflow output mechanism
