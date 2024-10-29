@@ -120,7 +120,7 @@ jobs:
 
           hil=${{ toJson(needs.setup.outputs.hil) }}
           lib=$(./py_checkusb.py --type ${{ env.library }} --json)
-          readarray -t DEVICES < <(echo $lib | jq ".\"${{ env.library }}\" | keys[]" -r --compact-output)
+          readarray -t DEVICES < <(echo $lib | jq ".\"${{ env.library }}\" | keys[]" -r --compact-output --null-input)
 
           if [[ -z $hil ]]; then
             echo "No HIL information found"
@@ -130,7 +130,7 @@ jobs:
             echo "No library information found"
             exit 1
           fi
-          
+
 
           echo "HIL: $hil"
           echo "LIB: $lib"
