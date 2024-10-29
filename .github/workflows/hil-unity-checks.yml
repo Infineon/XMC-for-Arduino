@@ -126,14 +126,10 @@ jobs:
           fi
           readarray -t DEVICES < <(echo $lib | jq ".\"${{ env.library }}\" | keys[]" -r --compact-output)
 
-          echo "Devices: ${DEVICES[@]}"
-          echo "Library: ${lib}"
-          echo "HIL: ${hil}"
-
           # loop over all fqbn in the library
           cd $GITHUB_WORKSPACE/tests/Unity/
           for DEVICE in "${DEVICES[@]}"; do
-            FQBN==`tr '.' ':' <<<"${DEVICE}"`
+            FQBN=`tr '.' ':' <<<"${DEVICE}"`
 
             # loop over all serials and fetch the ports
             readarray -t SERIALS < <(echo $lib | jq ".\"${{ env.library }}\".\"${DEVICE}\" | keys[]" -r --compact-output)
