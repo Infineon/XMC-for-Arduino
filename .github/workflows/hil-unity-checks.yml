@@ -63,9 +63,15 @@ jobs:
           REPO="$(basename "$GITHUB_REPOSITORY")"
           ./py_checkusb.py --switch repo --namelist $REPO --onoff on
 
-          # set the xfp
-          hil=$(./py_checkusb.py --readyaml $GITHUB_WORKSPACE/.github/hil-tests.yaml --json)
+          # set the hil-unity-checks
+          hil=$(./py_checkusb.py --readyaml $GITHUB_WORKSPACE/tests/Unity/hil-unity-checklist.yaml --json)
           echo "hil=${hil}" >> $GITHUB_OUTPUT
+
+          readarray -t lib <<< $(echo $hil | jq -r '.keys[]')
+
+          echo "hil=${hil}"
+          echo "libraries=${libraries}"
+          echo "lib=${lib}"
 
 
     # Connect the GITHUB_OUTPUT to the variables and the workflow output mechanism
@@ -74,92 +80,92 @@ jobs:
       hil: ${{ steps.startup.outputs.hil }}
 
 
-  #############################################################################
-  # This step allows HIL (Hardware in the loop), therefore
-  # is searches for the given board/sensor combination and tries to find the actual port
-  # on the self hosted runner. (see documentation for the board2port finder)
-  flash:
+  # #############################################################################
+  # # This step allows HIL (Hardware in the loop), therefore
+  # # is searches for the given board/sensor combination and tries to find the actual port
+  # # on the self hosted runner. (see documentation for the board2port finder)
+  # flash:
 
-    # We need a successful build before we can run the deploy
-    needs: [setup]
+  #   # We need a successful build before we can run the deploy
+  #   needs: [setup]
     
-    # we run this on self hosted runner, use labels to be more specific
-    # add specific names if there are some, otherwise self-hosted, X64, Linux are the default ones
-    runs-on:
-      - self-hosted
-      - X64
-      - Linux
+  #   # we run this on self hosted runner, use labels to be more specific
+  #   # add specific names if there are some, otherwise self-hosted, X64, Linux are the default ones
+  #   runs-on:
+  #     - self-hosted
+  #     - X64
+  #     - Linux
 
-    # do not stop if a single job fails
-    continue-on-error: true
+  #   # do not stop if a single job fails
+  #   continue-on-error: true
 
-    strategy:
+  #   strategy:
 
-      # the code to flash
-      matrix:
-        # the serials of the hardware boards
-        libraries: ${{ fromJson(needs.setup.outputs.libraries) }}
+  #     # the code to flash
+  #     matrix:
+  #       # the serials of the hardware boards
+  #       libraries: ${{ fromJson(needs.setup.outputs.libraries) }}
 
-    # These are the steps which should run for each combination of fqbn and example code
-    steps:
-      - name: Environment
-        run: |
-          cd $HOME
-          rm -rf ~/.arduino15/packages/Infineon/hardware/xmc/*
-          ln -s $GITHUB_WORKSPACE ~/.arduino15/packages/Infineon/hardware/xmc/$TEST_VERSION
+  #   # These are the steps which should run for each combination of fqbn and example code
+  #   steps:
+  #     - name: Environment
+  #       run: |
+  #         cd $HOME
+  #         rm -rf ~/.arduino15/packages/Infineon/hardware/xmc/*
+  #         ln -s $GITHUB_WORKSPACE ~/.arduino15/packages/Infineon/hardware/xmc/$TEST_VERSION
 
-          REPO="$(basename "$GITHUB_REPOSITORY")"
-          LIBRARY="$(basename ${{ matrix.libraries }} )"
+  #         REPO="$(basename "$GITHUB_REPOSITORY")"
+  #         LIBRARY="$(basename ${{ matrix.libraries }} )"
 
-          echo "repo=$REPO" >> $GITHUB_ENV
-          echo "library=$LIBRARY" >> $GITHUB_ENV
-          echo "version=$TEST_VERSION" >> $GITHUB_ENV
+  #         echo "repo=$REPO" >> $GITHUB_ENV
+  #         echo "library=$LIBRARY" >> $GITHUB_ENV
+  #         echo "version=$TEST_VERSION" >> $GITHUB_ENV
 
-          echo "Repo                  " $REPO
-          echo "Libraries             " $LIBRARY
-          echo "Version               " ${TEST_VERSION}
-
-
-      # Build the test code with make and flash it to the board
-      - name: Build
-        run: |
-          cd /opt/runner_support/
-
-          hil=${{ toJson(needs.setup.outputs.hil) }}
-          lib=$(./py_checkusb.py --type ${{ env.library }} --json)
-          readarray -t DEVICES < <(echo $lib | jq ".\"${{ env.library }}\" | keys[]" -r --compact-output)
-
-          echo "HIL: $hil"
-
-          # loop over all fqbn in the library
-          cd ~/.arduino15/packages/Infineon/hardware/xmc/$TEST_VERSION/libraries/${{ env.library }}                                       # change this
-          for DEVICE in "${DEVICES[@]}"; do
-            FQBN==`tr '.' ':' <<<"${DEVICE}"`
-
-            # loop over all serials and fetch the ports
-            readarray -t SERIALS < <(echo $lib | jq ".\"${{ env.library }}\".\"${DEVICE}\" | keys[]" -r --compact-output)
-            PORTS=()
-            for SERIAL in "${SERIALS[@]}"; do
-              PORTS+=$(/opt/runner_support/find_usb.sh $SERIAL)
-            done
-
-            # loop over all tests
-            readarray -t TESTS < <(echo $hil | jq ".\"${{ env.library }}\".\"${DEVICE}\" | keys[]" -r --compact-output) 
-            for ((tidx=0; tidx<${#TESTS[@]}; tidx++)); do
-              readarray -t MAKES < <(echo $hil | jq ".\"${{ env.library }}\".\"${DEVICE}\".\"${TESTS[$tidx]}\"[]" -r --compact-output)
-
-              # loop over all makes in the test for sender receiver tests
-              for ((midx=0; midx<${#MAKES[@]}; midx++)); do
-                #make FQBN=${FQBN} PORT=${PORTS[$tidx]} UNITY_PATH=/opt/runner_support/Unity ${MAKES[$midx]}
-                echo "MAKE: ${MAKES[$midx]}"
-              done
+  #         echo "Repo                  " $REPO
+  #         echo "Libraries             " $LIBRARY
+  #         echo "Version               " ${TEST_VERSION}
 
 
+  #     # Build the test code with make and flash it to the board
+  #     - name: Build
+  #       run: |
+  #         cd /opt/runner_support/
+
+  #         hil=${{ toJson(needs.setup.outputs.hil) }}
+  #         lib=$(./py_checkusb.py --type ${{ env.library }} --json)
+  #         readarray -t DEVICES < <(echo $lib | jq ".\"${{ env.library }}\" | keys[]" -r --compact-output)
+
+  #         echo "HIL: $hil"
+
+  #         # loop over all fqbn in the library
+  #         cd ~/.arduino15/packages/Infineon/hardware/xmc/$TEST_VERSION/libraries/${{ env.library }}                                       # change this
+  #         for DEVICE in "${DEVICES[@]}"; do
+  #           FQBN==`tr '.' ':' <<<"${DEVICE}"`
+
+  #           # loop over all serials and fetch the ports
+  #           readarray -t SERIALS < <(echo $lib | jq ".\"${{ env.library }}\".\"${DEVICE}\" | keys[]" -r --compact-output)
+  #           PORTS=()
+  #           for SERIAL in "${SERIALS[@]}"; do
+  #             PORTS+=$(/opt/runner_support/find_usb.sh $SERIAL)
+  #           done
+
+  #           # loop over all tests
+  #           readarray -t TESTS < <(echo $hil | jq ".\"${{ env.library }}\".\"${DEVICE}\" | keys[]" -r --compact-output) 
+  #           for ((tidx=0; tidx<${#TESTS[@]}; tidx++)); do
+  #             readarray -t MAKES < <(echo $hil | jq ".\"${{ env.library }}\".\"${DEVICE}\".\"${TESTS[$tidx]}\"[]" -r --compact-output)
+
+  #             # loop over all makes in the test for sender receiver tests
+  #             for ((midx=0; midx<${#MAKES[@]}; midx++)); do
+  #               #make FQBN=${FQBN} PORT=${PORTS[$tidx]} UNITY_PATH=/opt/runner_support/Unity ${MAKES[$midx]}
+  #               echo "MAKE: ${MAKES[$midx]}"
+  #             done
 
 
 
-            done
-          done
+
+
+  #           done
+  #         done
 
 
 
