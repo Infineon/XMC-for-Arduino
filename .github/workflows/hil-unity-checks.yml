@@ -55,7 +55,13 @@ jobs:
           #     data+=($x);
           #   fi;
           # done;
-          # export libraries=$(jq --compact-output --null-input '$ARGS.positional' --args -- "${data[@]}")
+          data+="A"
+          data+="B"
+
+          
+          export lib=$(jq --compact-output --null-input '$ARGS.positional' --args -- "${data[@]}")
+          echo "lib=${lib}"
+
 
           # switch on the HIL
           cd /opt/runner_support/
@@ -68,6 +74,8 @@ jobs:
 
           readarray -t libraries <<< $(echo $hil | jq -r '.|keys[]')
           echo libraries="$libraries" >> $GITHUB_OUTPUT
+          echo "libraries=${libraries[@]}"
+          
 
     # Connect the GITHUB_OUTPUT to the variables and the workflow output mechanism
     outputs:
