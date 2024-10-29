@@ -1,4 +1,4 @@
-name: Hil library test
+name: Hil unity library checks
 
 # on which event should we start push, pull request or schedule dispatches
 on:
@@ -67,10 +67,9 @@ jobs:
           hil=$(./py_checkusb.py --readyaml $GITHUB_WORKSPACE/tests/Unity/hil-unity-checklist.yaml --json)
           echo "hil=${hil}" >> $GITHUB_OUTPUT
 
-          readarray -t lib <<< $(echo $hil | jq -r '.[] |keys[]')
+          readarray -t lib <<< $(echo $hil | jq -r '.[]')
 
           echo "hil=${hil}"
-          echo "libraries=${libraries}"
           echo "lib=${lib}"
 
 
