@@ -141,26 +141,20 @@ sample code bearing this copyright. */
 #include "OneWire.h"
 #include "util/OneWireConf.h"
 
+OneWire::OneWire(uint8_t pin,
+                 const onewire::Timing_t *timing /*= &(onewire::timingStd)*/,
+                 uint8_t forceSW /*= 0*/) {
+    if ((forceSW == 0) && PIN_HAS_ONEWIRE_HW(pin)) {
+        mImplementation =
+            new onewire::OneWireHW(&(onewire::mappingHW[PIN_TO_ONEWIRE_HW(pin)]), timing);
+    } else {
+        mImplementation = new onewire::OneWireSW(pin, timing);
+    }
 
-OneWire::OneWire( uint8_t pin, const onewire::Timing_t *timing /*= &(onewire::timingStd)*/, uint8_t forceSW /*= 0*/)
-{
-	if((forceSW == 0) && PIN_HAS_ONEWIRE_HW(pin))
-	{
-		mImplementation = new onewire::OneWireHW(&(onewire::mappingHW[PIN_TO_ONEWIRE_HW(pin)]), timing);
-	}
-	else
-	{
-		mImplementation = new onewire::OneWireSW(pin, timing);
-	}
-	
-	mImplementation->begin();
+    mImplementation->begin();
 }
 
-OneWire::~OneWire()
-{
-	delete mImplementation;
-}
-
+OneWire::~OneWire() { delete mImplementation; }
 
 // Perform the onewire reset function.  We will wait up to 250uS for
 // the bus to come high, if it doesn't then it is broken or shorted
@@ -168,28 +162,19 @@ OneWire::~OneWire()
 //
 // Returns 1 if a device asserted a presence pulse, 0 otherwise.
 //
-uint8_t OneWire::reset(void)
-{
-	mImplementation->reset();
-}
+uint8_t OneWire::reset(void) { mImplementation->reset(); }
 
 //
 // Write a bit. Port and bit is used to cut lookup time and provide
 // more certain timing.
 //
-void OneWire::write_bit(uint8_t v)
-{
-	mImplementation->write_bit(v);
-}
+void OneWire::write_bit(uint8_t v) { mImplementation->write_bit(v); }
 
 //
 // Read a bit. Port and bit is used to cut lookup time and provide
 // more certain timing.
 //
-uint8_t OneWire::read_bit(void)
-{
-	return mImplementation->read_bit();
-}
+uint8_t OneWire::read_bit(void) { return mImplementation->read_bit(); }
 
 //
 // Write a byte. The writing code uses the active drivers to raise the
@@ -198,64 +183,41 @@ uint8_t OneWire::read_bit(void)
 // go tri-state at the end of the write to avoid heating in a short or
 // other mishap.
 //
-void OneWire::write(uint8_t v, uint8_t power /* = 0 */) {
-	mImplementation->write(v, power);
-}
+void OneWire::write(uint8_t v, uint8_t power /* = 0 */) { mImplementation->write(v, power); }
 
 void OneWire::write_bytes(const uint8_t *buf, uint16_t count, bool power /* = 0 */) {
-	mImplementation->write_bytes(buf, count, power);
+    mImplementation->write_bytes(buf, count, power);
 }
 
 //
 // Read a byte
 //
-uint8_t OneWire::read() {
-	return mImplementation->read();
-}
+uint8_t OneWire::read() { return mImplementation->read(); }
 
-void OneWire::read_bytes(uint8_t *buf, uint16_t count) {
-	mImplementation->read_bytes(buf, count);
-}
+void OneWire::read_bytes(uint8_t *buf, uint16_t count) { mImplementation->read_bytes(buf, count); }
 
 //
 // Do a ROM select
 //
-void OneWire::select(const uint8_t rom[8])
-{
-	mImplementation->select(rom);
-}
+void OneWire::select(const uint8_t rom[8]) { mImplementation->select(rom); }
 
 //
 // Do a ROM skip
 //
-void OneWire::skip()
-{
-	mImplementation->skip();
-}
+void OneWire::skip() { mImplementation->skip(); }
 
-void OneWire::depower()
-{
-	mImplementation->depower();
-}
-
+void OneWire::depower() { mImplementation->depower(); }
 
 #if ONEWIRE_SEARCH
 // You need to use this function to start a search again from the beginning.
 // You do not need to do it for the first search, though you could.
 //
-void OneWire::reset_search()
-{
-	mImplementation->reset_search();
-}
+void OneWire::reset_search() { mImplementation->reset_search(); }
 
 // Setup the search to find the device type 'family_code' on the next call
 // to search(*newAddr) if it is present.
 //
-void OneWire::target_search(uint8_t family_code)
-{
-	mImplementation->target_search(family_code);
-}
-
+void OneWire::target_search(uint8_t family_code) { mImplementation->target_search(family_code); }
 
 // Perform a search. If this function returns a '1' then it has
 // enumerated the next device and you may retrieve the ROM from the
@@ -272,9 +234,8 @@ void OneWire::target_search(uint8_t family_code)
 // Return TRUE  : device found, ROM number in ROM_NO buffer
 //        FALSE : device not found, end of search
 //
-uint8_t OneWire::search(uint8_t *newAddr, bool search_mode /* = true */)
-{
-	mImplementation->search(newAddr, search_mode);
+uint8_t OneWire::search(uint8_t *newAddr, bool search_mode /* = true */) {
+    mImplementation->search(newAddr, search_mode);
 }
 #endif
 
@@ -282,22 +243,21 @@ uint8_t OneWire::search(uint8_t *newAddr, bool search_mode /* = true */)
 // The 1-Wire CRC scheme is described in Maxim Application Note 27:
 // "Understanding and Using Cyclic Redundancy Checks with Maxim iButton Products"
 //
-uint8_t OneWire::crc8(const uint8_t *addr, uint8_t len)
-{
-	return onewire::OneWireImpl::crc8(addr, len);
+uint8_t OneWire::crc8(const uint8_t *addr, uint8_t len) {
+    return onewire::OneWireImpl::crc8(addr, len);
 }
 
-
-#if ONEWIRE_CRC16
-bool OneWire::check_crc16(const uint8_t* input, uint16_t len, const uint8_t* inverted_crc, uint16_t crc)
-{
-	return onewire::OneWireImpl::check_crc16(input, len, inverted_crc, crc);
+    #if ONEWIRE_CRC16
+bool OneWire::check_crc16(const uint8_t *input,
+                          uint16_t len,
+                          const uint8_t *inverted_crc,
+                          uint16_t crc) {
+    return onewire::OneWireImpl::check_crc16(input, len, inverted_crc, crc);
 }
 
-uint16_t OneWire::crc16(const uint8_t* input, uint16_t len, uint16_t crc)
-{
-	return onewire::OneWireImpl::crc16(input, len, crc);
+uint16_t OneWire::crc16(const uint8_t *input, uint16_t len, uint16_t crc) {
+    return onewire::OneWireImpl::crc16(input, len, crc);
 }
-#endif
+    #endif
 
 #endif

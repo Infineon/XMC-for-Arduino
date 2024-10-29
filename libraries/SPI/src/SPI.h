@@ -15,7 +15,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Copyright (c) 2018 Infineon Technologies AG
  * This library has been modified for the XMC microcontroller series.
  */
@@ -32,14 +32,13 @@
 // @Defines
 //****************************************************************************
 // Define USE_SW_SPI to use the software SPI(not verified)
-//#define USE_SW_SPI
+// #define USE_SW_SPI
 
 // Define USE_XMC_RELAX_KIT_SD allows to use the SD Lib to communicate with a SD Card over
 // the on-board SD Card Slot. This feature is only available on XMC4700 RelaxKits.
 #if defined(XMC4700_Relax_Kit)
     #define USE_XMC_RELAX_KIT_SD
 #endif
-
 
 #define SPI_MODE0 0x00
 #define SPI_MODE1 0x01
@@ -53,48 +52,44 @@
 
 #define ARDUINO_SPI_CLOCK 16000000U
 
-#define SPI_CLOCK_DIV2   2
-#define SPI_CLOCK_DIV4   4
-#define SPI_CLOCK_DIV8   8
-#define SPI_CLOCK_DIV16  16
-#define SPI_CLOCK_DIV32  32
-#define SPI_CLOCK_DIV64  64
+#define SPI_CLOCK_DIV2 2
+#define SPI_CLOCK_DIV4 4
+#define SPI_CLOCK_DIV8 8
+#define SPI_CLOCK_DIV16 16
+#define SPI_CLOCK_DIV32 32
+#define SPI_CLOCK_DIV64 64
 #define SPI_CLOCK_DIV128 128
 
-
 #if defined(USE_SW_SPI)
-#include "SW_SPI.h"
+    #include "SW_SPI.h"
 #endif
 
-//#define pin_cs 	10
+// #define pin_cs 	10
 //
-//#if defined(XMC1100_XMC2GO) || defined(XMC1100_H_BRIDGE2GO)
-//#define pin_cs  3
+// #if defined(XMC1100_XMC2GO) || defined(XMC1100_H_BRIDGE2GO)
+// #define pin_cs  3
 
-//#elif defined(XMC4400_Platform2GO)
-///#define pin_cs_slot_1  95
-//#define pin_cs_slot_2  96
+// #elif defined(XMC4400_Platform2GO)
+/// #define pin_cs_slot_1  95
+// #define pin_cs_slot_2  96
 
-//#endif
+// #endif
 
 //****************************************************************************
 // @Class Definitions
 //****************************************************************************
-class SPISettings
-{
+class SPISettings {
 public:
-    SPISettings(uint32_t cF, uint8_t bO, uint8_t dM)
-    {
-        clockFreq   = cF;
-        bitOrder    = bO;
-        dataMode    = dM;
+    SPISettings(uint32_t cF, uint8_t bO, uint8_t dM) {
+        clockFreq = cF;
+        bitOrder = bO;
+        dataMode = dM;
     }
 
-    SPISettings()
-    {
-        clockFreq   = 4000000;
-        bitOrder    = MSBFIRST;
-        dataMode    = SPI_MODE0;
+    SPISettings() {
+        clockFreq = 4000000;
+        bitOrder = MSBFIRST;
+        dataMode = SPI_MODE0;
     }
 
     uint32_t clockFreq;
@@ -102,27 +97,20 @@ public:
     uint8_t dataMode;
 };
 
-class SPIClass
-{
+class SPIClass {
 public:
-
 // Constructors for HW SPI
 #if !defined(USE_SW_SPI)
-    SPIClass()
-    {
+    SPIClass() {
         // default SPI
         XMC_SPI_config = &XMC_SPI_default;
     }
 
-    SPIClass(XMC_SPI_t* conf)
-    {
-        XMC_SPI_config = conf;
-    }
+    SPIClass(XMC_SPI_t *conf) { XMC_SPI_config = conf; }
 
 // Constructors for SW SPI
 #else
-    SPIClass()
-    {
+    SPIClass() {
         // default SPI
         spi_settings = SPISettings();
 
@@ -131,8 +119,7 @@ public:
         clk_pin = SCK;
     }
 
-    SPIClass(SPISettings settings)
-    {
+    SPIClass(SPISettings settings) {
         spi_settings = settings;
 
         mosi_pin = MOSI;
@@ -140,9 +127,7 @@ public:
         clk_pin = SCK;
     }
 
-
-    SPIClass(SPISettings settings, uint8_t mosi, uint8_t miso, uint8_t sck)
-    {
+    SPIClass(SPISettings settings, uint8_t mosi, uint8_t miso, uint8_t sck) {
         spi_settings = settings;
 
         mosi_pin = mosi;
@@ -157,7 +142,7 @@ public:
 
     // Transaction Functions
     // Function not used here
-    //void usingInterrupt(int interruptNumber);
+    // void usingInterrupt(int interruptNumber);
     void beginTransaction(SPISettings settings);
     void endTransaction(void);
 
@@ -165,8 +150,8 @@ public:
     void attachInterrupt();
     void detachInterrupt();
 
-    static void usingInterrupt(uint8_t interruptNumber){};
-    static void notUsingInterrupt(uint8_t interruptNumber){};
+    static void usingInterrupt(uint8_t interruptNumber) {};
+    static void notUsingInterrupt(uint8_t interruptNumber) {};
 
     void begin();
     void end();
@@ -180,7 +165,7 @@ private:
 // Config for HW SPI
 #if !defined(USE_SW_SPI)
 
-    XMC_SPI_t* XMC_SPI_config;
+    XMC_SPI_t *XMC_SPI_config;
 
 // Config for SW SPI
 #else
@@ -199,29 +184,26 @@ private:
 
 extern SPIClass SPI;
 #if (NUM_SPI > 1)
-	extern SPIClass SPI1;
-#	if (NUM_SPI > 2)
-		extern SPIClass SPI2;
-#		if (NUM_SPI > 3)
-			extern SPIClass SPI3;
-#			if (NUM_SPI > 4)
-				extern SPIClass SPI4;
-#			endif
-#		endif
-#	endif
+extern SPIClass SPI1;
+    #if (NUM_SPI > 2)
+extern SPIClass SPI2;
+        #if (NUM_SPI > 3)
+extern SPIClass SPI3;
+            #if (NUM_SPI > 4)
+extern SPIClass SPI4;
+            #endif
+        #endif
+    #endif
 #endif
 
-void SPIClass::transfer(void *buf, size_t count)
-{
-    uint8_t *buffer = (uint8_t *) buf;
-    for (size_t index = 0; index < count; index++)
-    {
+void SPIClass::transfer(void *buf, size_t count) {
+    uint8_t *buffer = (uint8_t *)buf;
+    for (size_t index = 0; index < count; index++) {
         buffer[index] = transfer(buffer[index]);
     }
 }
 
-uint16_t SPIClass::transfer16(uint16_t data)
-{
+uint16_t SPIClass::transfer16(uint16_t data) {
     uint8_t data_out_msb = (uint8_t)((data >> 8) & 0xFF);
     uint8_t data_out_lsb = (uint8_t)(data & 0xFF);
 

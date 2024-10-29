@@ -50,15 +50,16 @@
 #ifdef __cplusplus
 extern "C" {
 
-__WEAK void timer_cb( );
+__WEAK void timer_cb();
 /**
  * Timer initialization
  *
  * @param divider The CCUx timer base frequency is fCPU. The user can use a divider to slow down it.
- *                divider alowed values: 0(2^0), 1(2^1), 2(2^2), 3(2^3), 4(2^4), 5(2^5), ..., 15(2^15)
+ *                divider alowed values: 0(2^0), 1(2^1), 2(2^2), 3(2^3), 4(2^4), 5(2^5), ...,
+ * 15(2^15)
  *
  */
-void TIMER_Init( uint32_t divider );
+void TIMER_Init(uint32_t divider);
 
 /**
  * Timer start
@@ -67,22 +68,22 @@ void TIMER_Init( uint32_t divider );
  *
  * The user can handle the event implementing timer_cb() function
  */
-void TIMER_Start( uint32_t ticks );
+void TIMER_Start(uint32_t ticks);
 
 /**
  * Timer stop
  */
-void TIMER_Stop( void );
+void TIMER_Stop(void);
 
 /**
  * Timer clear
  */
-void TIMER_Clear( void );
+void TIMER_Clear(void);
 
 /**
  * Timer get timer
  */
-uint32_t TIMER_GetTime( void );
+uint32_t TIMER_GetTime(void);
 }
 #endif
 

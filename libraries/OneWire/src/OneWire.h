@@ -7,14 +7,15 @@
 #include "util/OneWireSW.h"
 #include "util/OneWireHW.h"
 
-class OneWire
-{
-  private:
+class OneWire {
+private:
     onewire::OneWireImpl *mImplementation;
 
-  public:
-    OneWire( uint8_t pin, const onewire::Timing_t *timing = &(onewire::timingStd), uint8_t forceSW = 0);
-	~OneWire();
+public:
+    OneWire(uint8_t pin,
+            const onewire::Timing_t *timing = &(onewire::timingStd),
+            uint8_t forceSW = 0);
+    ~OneWire();
     // Perform a 1-Wire reset cycle. Returns 1 if a device responds
     // with a presence pulse.  Returns 0 if there is no device or the
     // bus is shorted or otherwise held low for more than 250uS
@@ -74,12 +75,13 @@ class OneWire
     // Compute a Dallas Semiconductor 8 bit CRC, these are used in the
     // ROM and scratchpad registers.
     static uint8_t crc8(const uint8_t *addr, uint8_t len);
-  #if ONEWIRE_CRC16
+    #if ONEWIRE_CRC16
     // Compute the 1-Wire CRC16 and compare it against the received CRC.
-    static bool check_crc16(const uint8_t* input, uint16_t len, const uint8_t* inverted_crc, uint16_t crc = 0);
-    // Compute a Dallas Semiconductor 16 bit CRC. 
-    static uint16_t crc16(const uint8_t* input, uint16_t len, uint16_t crc = 0);
-  #endif
+    static bool
+    check_crc16(const uint8_t *input, uint16_t len, const uint8_t *inverted_crc, uint16_t crc = 0);
+    // Compute a Dallas Semiconductor 16 bit CRC.
+    static uint16_t crc16(const uint8_t *input, uint16_t len, uint16_t crc = 0);
+    #endif
 #endif
 };
 #endif

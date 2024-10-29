@@ -13,12 +13,12 @@
 
 // you can exclude onewire_search by defining that to 0
 #ifndef ONEWIRE_SEARCH
-#define ONEWIRE_SEARCH 1
+    #define ONEWIRE_SEARCH 1
 #endif
 
 // You can exclude CRC checks altogether by defining this to 0
 #ifndef ONEWIRE_CRC
-#define ONEWIRE_CRC 1
+    #define ONEWIRE_CRC 1
 #endif
 
 // Select the table-lookup method of computing the 8-bit CRC
@@ -27,20 +27,20 @@
 // old versions of OneWire).  If you disable this, a slower
 // but very compact algorithm is used.
 #ifndef ONEWIRE_CRC8_TABLE
-#define ONEWIRE_CRC8_TABLE 1
+    #define ONEWIRE_CRC8_TABLE 1
 #endif
 
 // You can allow 16-bit CRC checks by defining this to 1
 // (Note that ONEWIRE_CRC must also be 1.)
 #ifndef ONEWIRE_CRC16
-#define ONEWIRE_CRC16 1
+    #define ONEWIRE_CRC16 1
 #endif
 
 #ifndef FALSE
-#define FALSE 0
+    #define FALSE 0
 #endif
 #ifndef TRUE
-#define TRUE  1
+    #define TRUE 1
 #endif
 
-#endif	/*ONEWIRE_SETTINGS_H*/
+#endif /*ONEWIRE_SETTINGS_H*/

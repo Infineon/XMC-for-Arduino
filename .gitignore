@@ -1,10 +1,15 @@
 .history
 .vscode
+
+# build folder
 pkg_build
 build
-**/__pycache__/
 
-# Code-check reports
+# python
+**/__pycache__/
+venv/
+
+# code-check reports
 clang-tidy-report.txt
 
 scan-build-reports/
