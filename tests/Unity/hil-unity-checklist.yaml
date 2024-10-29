@@ -1,0 +1,14 @@
+CAN:
+  Infineon.xmc.XMC1400_XMC2GO:
+    1:
+    - "CAN_connected_node1"
+    - "CAN_connected_node2"
+    2:
+    - CAN
+
+  Infineon.xmc.XMC4700_Relax_Kit:
+    1:
+    - "CAN_connected_node1"
+    - "CAN_connected_node2"
+    2:
+    - CAN

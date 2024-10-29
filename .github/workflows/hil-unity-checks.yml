@@ -1,0 +1,188 @@
+name: Hil library test
+
+# on which event should we start push, pull request or schedule dispatches
+on:
+  - push
+  - pull_request
+
+env:
+  TEST_VERSION: 1.0.0
+
+# This template runes multiple workflows
+jobs:
+
+
+  #############################################################################
+  # This action sets common variables for the flow and
+  # identifies the examples to compile
+  setup:
+
+    # we run this on self hosted runner, use labels to be more specific
+    # add specific names if there are some, otherwise self-hosted, X64, Linux are the default ones
+    runs-on:
+      - self-hosted
+      - X64
+      - Linux
+
+    steps:
+      # checkout the latest github action code
+      - name: Checkout actions
+        uses: actions/checkout@v4
+
+      # checkout the latest arduino-cli compiler
+      - name: Setup Arduino CLI
+        uses: arduino/setup-arduino-cli@master
+
+      # Update the arduino code. Attention this does not setup XMC packages as this are set inside the self hosted runner
+      # the arduino board support packages can be updated automatically
+      # the XMC board support package is only linked inside the self hosted runner, which allows
+      # to use none official and beta versions
+      # arduino-cli core install "infineon:xmc"
+      - name: Install/Update Arduino Platform
+        run: |
+          arduino-cli core update-index
+          arduino-cli core install "arduino:avr"
+
+      # Fetch variables and move them to the GITHUB_OUTPUT and fetch HIL information
+      - id: startup
+        run: |
+          # find libraries with makefile
+          declare -a data
+          cd $GITHUB_WORKSPACE
+          for x in libraries/*;
+          do
+            if [ -f $x/Makefile ]; then
+              data+=($x);
+            fi;
+          done;
+          export libraries=$(jq --compact-output --null-input '$ARGS.positional' --args -- "${data[@]}")
+          echo libraries="$libraries" >> $GITHUB_OUTPUT
+
+          # switch on the HIL
+          cd /opt/runner_support/
+          REPO="$(basename "$GITHUB_REPOSITORY")"
+          ./py_checkusb.py --switch repo --namelist $REPO --onoff on
+
+          # set the xfp
+          hil=$(./py_checkusb.py --readyaml $GITHUB_WORKSPACE/.github/hil-tests.yaml --json)
+          echo "hil=${hil}" >> $GITHUB_OUTPUT
+
+
+    # Connect the GITHUB_OUTPUT to the variables and the workflow output mechanism
+    outputs:
+      libraries: ${{ steps.startup.outputs.libraries }}
+      hil: ${{ steps.startup.outputs.hil }}
+
+
+  #############################################################################
+  # This step allows HIL (Hardware in the loop), therefore
+  # is searches for the given board/sensor combination and tries to find the actual port
+  # on the self hosted runner. (see documentation for the board2port finder)
+  flash:
+
+    # We need a successful build before we can run the deploy
+    needs: [setup]
+    
+    # we run this on self hosted runner, use labels to be more specific
+    # add specific names if there are some, otherwise self-hosted, X64, Linux are the default ones
+    runs-on:
+      - self-hosted
+      - X64
+      - Linux
+
+    # do not stop if a single job fails
+    continue-on-error: true
+
+    strategy:
+
+      # the code to flash
+      matrix:
+        # the serials of the hardware boards
+        libraries: ${{ fromJson(needs.setup.outputs.libraries) }}
+
+    # These are the steps which should run for each combination of fqbn and example code
+    steps:
+      - name: Environment
+        run: |
+          cd $HOME
+          rm -rf ~/.arduino15/packages/Infineon/hardware/xmc/*
+          ln -s $GITHUB_WORKSPACE ~/.arduino15/packages/Infineon/hardware/xmc/$TEST_VERSION
+
+          REPO="$(basename "$GITHUB_REPOSITORY")"
+          LIBRARY="$(basename ${{ matrix.libraries }} )"
+
+          echo "repo=$REPO" >> $GITHUB_ENV
+          echo "library=$LIBRARY" >> $GITHUB_ENV
+          echo "version=$TEST_VERSION" >> $GITHUB_ENV
+
+          echo "Repo                  " $REPO
+          echo "Libraries             " $LIBRARY
+          echo "Version               " ${TEST_VERSION}
+
+
+      # Build the test code with make and flash it to the board
+      - name: Build
+        run: |
+          cd /opt/runner_support/
+
+          hil=${{ toJson(needs.setup.outputs.hil) }}
+          lib=$(./py_checkusb.py --type ${{ env.library }} --json)
+          readarray -t DEVICES < <(echo $lib | jq ".\"${{ env.library }}\" | keys[]" -r --compact-output)
+
+          echo "HIL: $hil"
+
+          # loop over all fqbn in the library
+          cd ~/.arduino15/packages/Infineon/hardware/xmc/$TEST_VERSION/libraries/${{ env.library }}                                       # change this
+          for DEVICE in "${DEVICES[@]}"; do
+            FQBN==`tr '.' ':' <<<"${DEVICE}"`
+
+            # loop over all serials and fetch the ports
+            readarray -t SERIALS < <(echo $lib | jq ".\"${{ env.library }}\".\"${DEVICE}\" | keys[]" -r --compact-output)
+            PORTS=()
+            for SERIAL in "${SERIALS[@]}"; do
+              PORTS+=$(/opt/runner_support/find_usb.sh $SERIAL)
+            done
+
+            # loop over all tests
+            readarray -t TESTS < <(echo $hil | jq ".\"${{ env.library }}\".\"${DEVICE}\" | keys[]" -r --compact-output) 
+            for ((tidx=0; tidx<${#TESTS[@]}; tidx++)); do
+              readarray -t MAKES < <(echo $hil | jq ".\"${{ env.library }}\".\"${DEVICE}\".\"${TESTS[$tidx]}\"[]" -r --compact-output)
+
+              # loop over all makes in the test for sender receiver tests
+              for ((midx=0; midx<${#MAKES[@]}; midx++)); do
+                #make FQBN=${FQBN} PORT=${PORTS[$tidx]} UNITY_PATH=/opt/runner_support/Unity ${MAKES[$midx]}
+                echo "MAKE: ${MAKES[$midx]}"
+              done
+
+
+
+
+
+            done
+          done
+
+
+
+  #############################################################################
+  # Switch off the HIL after all tests are done
+  post:
+
+    # we run this no matter if before fails
+    if: always()
+    # wait on first setup run before starting main function
+    needs: [setup, flash]
+
+    # we run this on self hosted runner, use labels to be more specific
+    # add specific names if there are some, otherwise self-hosted, X64, Linux are the default ones
+    runs-on:
+      - self-hosted
+      - X64
+      - Linux
+
+    steps:
+      - name: Switch off HIL
+        run: |
+          cd /opt/runner_support/
+          REPO="$(basename "$GITHUB_REPOSITORY")"
+          ./py_checkusb.py --switch repo --namelist $REPO --onoff off
+
