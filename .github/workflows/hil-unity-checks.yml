@@ -123,6 +123,9 @@ jobs:
           readarray -t DEVICES < <(echo $lib | jq ".\"${{ env.library }}\" | keys[]" -r --compact-output)
 
           echo "HIL: $hil"
+          echo "LIB: $lib"
+          
+
 
           # loop over all fqbn in the library
           cd ~/.arduino15/packages/Infineon/hardware/xmc/$TEST_VERSION/libraries/${{ env.library }}                                       # change this
