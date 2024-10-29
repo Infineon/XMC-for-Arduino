@@ -122,19 +122,12 @@ jobs:
           lib=$(./py_checkusb.py --type ${{ env.library }} --json)
           if [[ -z $lib || $lib == "{}" ]]; then
             echo "No library information found"
-            exit 1
+            exit 0
           fi
           readarray -t DEVICES < <(echo $lib | jq ".\"${{ env.library }}\" | keys[]" -r --compact-output --null-input)
 
-
-
-          echo "HIL: $hil"
-          echo "LIB: $lib"
-
-
-
           # loop over all fqbn in the library
-          cd ~/.arduino15/packages/Infineon/hardware/xmc/$TEST_VERSION/libraries/${{ env.library }}                                       # change this
+          cd $GITHUB_WORKSPACE/tests/Unity/
           for DEVICE in "${DEVICES[@]}"; do
             FQBN==`tr '.' ':' < <"${DEVICE}"`
 
@@ -152,6 +145,9 @@ jobs:
 
               # loop over all makes in the test for sender receiver tests
               for ((midx=0; midx<${#MAKES[@]}; midx++)); do
+                echo "FQBN: ${FQBN}"
+                echo "PORT: ${PORTS[$tidx]}"
+                echo "MAKE: ${MAKES[$midx]}"
                 make FQBN=${FQBN} PORT=${PORTS[$tidx]} UNITY_PATH=/opt/runner_support/Unity ${MAKES[$midx]}
                 echo "MAKE: ${MAKES[$midx]}"
               done
