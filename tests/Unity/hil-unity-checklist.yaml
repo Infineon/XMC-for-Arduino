@@ -12,3 +12,16 @@ CAN:
     - "CAN_connected_node2"
     2:
     - CAN
+
+Wire:
+  Infineon.xmc.XMC1100_XMC2GO:
+    1:
+    - "I2C"
+    2:
+    - "I2C"
+
+  Infineon.xmc.XMC4700_Relax_Kit:
+    1:
+    - "I2C"
+    2:
+    - "I2C" 
