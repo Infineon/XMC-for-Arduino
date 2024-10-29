@@ -1,5 +1,6 @@
 /**
- * LED.cpp - Library for Arduino to control the RTC (Real Time Clock) of the XMC microcontroller series.
+ * LED.cpp - Library for Arduino to control the RTC (Real Time Clock) of the XMC microcontroller
+ * series.
  *
  * On board LEDs on the XMC boards do not always operate the same way
  * This library encapsulates LED functions for on board LEDs to work the same
@@ -20,7 +21,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
-*/
+ */
 
 /*!	\file LED.cpp
  *	\brief This file has to be included in projects that use Infineon's XMC on board LEDs
@@ -41,56 +42,40 @@
 //****************************************************************************
 
 // Nothing to initialise
-void LED::begin( )
-{
-}
+void LED::begin() {}
 
 // Nothing to release
-void LED::end( )
-{
-}
-
+void LED::end() {}
 
 /* Configure pin for output for specified pin */
-void LED::Add( int pin )
-{
-pinMode( pin, OUTPUT );
-}
-
+void LED::Add(int pin) { pinMode(pin, OUTPUT); }
 
 /* Set LED On for specified pin */
-void LED::On( int pin )
-{
-if( pin == LED_BUILTIN )
+void LED::On(int pin) {
+    if (pin == LED_BUILTIN)
 #ifdef XMC_LED_BUILTIN_REVERSED
-  digitalWrite( pin, false );
+        digitalWrite(pin, false);
 #else
-  digitalWrite( pin, true );
+        digitalWrite(pin, true);
 #endif
-else
-  digitalWrite( pin, XMC_LED_ON );
+    else
+        digitalWrite(pin, XMC_LED_ON);
 }
-
 
 /* Set LED Off for specified pin */
-void LED::Off( int pin )
-{
-if( pin == LED_BUILTIN )
+void LED::Off(int pin) {
+    if (pin == LED_BUILTIN)
 #ifdef XMC_LED_BUILTIN_REVERSED
-  digitalWrite( pin, true );
+        digitalWrite(pin, true);
 #else
-  digitalWrite( pin, false );
+        digitalWrite(pin, false);
 #endif
-else
-  digitalWrite( pin, !XMC_LED_ON );
+    else
+        digitalWrite(pin, !XMC_LED_ON);
 }
-
 
 /* Toggle LED state for specified pin */
-void LED::Toggle( int pin )
-{
-digitalToggle( pin );
-}
+void LED::Toggle(int pin) { digitalToggle(pin); }
 
 /******************************************
   End of file LED.cpp

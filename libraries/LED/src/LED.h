@@ -24,7 +24,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
-*/
+ */
 
 /*!	\file LED.h
  *	\brief This file has to be included in projects that use Infineon's XMC on board LEDs
@@ -36,16 +36,16 @@
 //****************************************************************************
 // @Board Check
 //****************************************************************************
-#if !defined( XMC1 ) || !defined( XMC4 )
-#error Only XMC microcontrollers are supported by this library
+#if !defined(XMC1) || !defined(XMC4)
+    #error Only XMC microcontrollers are supported by this library
 #endif
 
 #if !defined XMC_LED_ON
-#error This board NOT supported by this library (Check pins_arduino.h)
+    #error This board NOT supported by this library (Check pins_arduino.h)
 #endif
 
-#if not defined( NUM_LEDS ) || ( NUM_LEDS < 1 )
-#error Current selected board does NOT support on board LEDs
+#if not defined(NUM_LEDS) || (NUM_LEDS < 1)
+    #error Current selected board does NOT support on board LEDs
 #endif
 
 //****************************************************************************
@@ -59,22 +59,18 @@
 //****************************************************************************
 // @Class Definitions
 //****************************************************************************
-class LED
-{
+class LED {
 public:
-
     // Constructors and initialisers that do nothing
-    LED( )
-        {
-        }
+    LED() {}
 
-    void begin( );
-    void end( );
+    void begin();
+    void end();
 
     // Useful methods
-    void Add( int );        // Configure digital output
-    void On( int );         // Set LED ON
-    void Off( int );        // Set LED OFF
-    void Toggle( int );     // Toggle state of LED
+    void Add(int);    // Configure digital output
+    void On(int);     // Set LED ON
+    void Off(int);    // Set LED OFF
+    void Toggle(int); // Toggle state of LED
 };
 #endif /* _LED_H_INCLUDED */
