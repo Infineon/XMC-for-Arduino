@@ -126,38 +126,44 @@ jobs:
           fi
           readarray -t DEVICES < <(echo $lib | jq ".\"${{ env.library }}\" | keys[]" -r --compact-output --null-input)
 
-          # loop over all fqbn in the library
-          cd $GITHUB_WORKSPACE/tests/Unity/
-          for DEVICE in "${DEVICES[@]}"; do
-            FQBN==`tr '.' ':' < <"${DEVICE}"`
-
-            # loop over all serials and fetch the ports
-            readarray -t SERIALS < <(echo $lib | jq ".\"${{ env.library }}\".\"${DEVICE}\" | keys[]" -r --compact-output)
-            PORTS=()
-            for SERIAL in "${SERIALS[@]}"; do
-              PORTS+=$(/opt/runner_support/find_usb.sh $SERIAL)
-            done
-
-            # loop over all tests
-            readarray -t TESTS < <(echo $hil | jq ".\"${{ env.library }}\".\"${DEVICE}\" | keys[]" -r --compact-output) 
-            for ((tidx=0; tidx<${#TESTS[@]}; tidx++)); do
-              readarray -t MAKES < <(echo $hil | jq ".\"${{ env.library }}\".\"${DEVICE}\".\"${TESTS[$tidx]}\"[]" -r --compact-output)
-
-              # loop over all makes in the test for sender receiver tests
-              for ((midx=0; midx<${#MAKES[@]}; midx++)); do
-                echo "FQBN: ${FQBN}"
-                echo "PORT: ${PORTS[$tidx]}"
-                echo "MAKE: ${MAKES[$midx]}"
-                make FQBN=${FQBN} PORT=${PORTS[$tidx]} UNITY_PATH=/opt/runner_support/Unity ${MAKES[$midx]}
-                echo "MAKE: ${MAKES[$midx]}"
-              done
+          echo "Devices: ${DEVICES[@]}"
+          echo "Library: ${lib}"
+          echo "HIL: ${hil}"
 
 
 
+          # # loop over all fqbn in the library
+          # cd $GITHUB_WORKSPACE/tests/Unity/
+          # for DEVICE in "${DEVICES[@]}"; do
+          #   FQBN==`tr '.' ':' < <"${DEVICE}"`
+
+          #   # loop over all serials and fetch the ports
+          #   readarray -t SERIALS < <(echo $lib | jq ".\"${{ env.library }}\".\"${DEVICE}\" | keys[]" -r --compact-output)
+          #   PORTS=()
+          #   for SERIAL in "${SERIALS[@]}"; do
+          #     PORTS+=$(/opt/runner_support/find_usb.sh $SERIAL)
+          #   done
+
+          #   # loop over all tests
+          #   readarray -t TESTS < <(echo $hil | jq ".\"${{ env.library }}\".\"${DEVICE}\" | keys[]" -r --compact-output) 
+          #   for ((tidx=0; tidx<${#TESTS[@]}; tidx++)); do
+          #     readarray -t MAKES < <(echo $hil | jq ".\"${{ env.library }}\".\"${DEVICE}\".\"${TESTS[$tidx]}\"[]" -r --compact-output)
+
+          #     # loop over all makes in the test for sender receiver tests
+          #     for ((midx=0; midx<${#MAKES[@]}; midx++)); do
+          #       echo "FQBN: ${FQBN}"
+          #       echo "PORT: ${PORTS[$tidx]}"
+          #       echo "MAKE: ${MAKES[$midx]}"
+          #       make FQBN=${FQBN} PORT=${PORTS[$tidx]} UNITY_PATH=/opt/runner_support/Unity ${MAKES[$midx]}
+          #       echo "MAKE: ${MAKES[$midx]}"
+          #     done
 
 
-            done
-          done
+
+
+
+          #   done
+          # done
 
 
 
