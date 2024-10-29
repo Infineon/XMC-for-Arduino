@@ -5,7 +5,6 @@
 
 // project includes
 
-
 // defines
 #define TRACE_OUTPUT
 #define CAN_ID_1 0x123
@@ -23,42 +22,34 @@ static uint8_t receivedData[canDataLengthMax] = {0};
 
 volatile bool newDataReceivedNode2 = false;
 
-
 // test feature includes requiring the above defined variables
 
 extern CANXMC CAN;
 
-void receiveEventNode2(int packetSize) 
-{
-        uint8_t count = 0;
-        while (CAN.available()) {
-            receivedData[count++] = CAN.read();
-        }
-        newDataReceivedNode2 = true;
-        canDataLength = packetSize;
+void receiveEventNode2(int packetSize) {
+    uint8_t count = 0;
+    while (CAN.available()) {
+        receivedData[count++] = CAN.read();
+    }
+    newDataReceivedNode2 = true;
+    canDataLength = packetSize;
 }
 
 // Method invoked before a test suite is run.
-void CAN_connected_node2_suiteSetup() 
-{
+void CAN_connected_node2_suiteSetup() {
     CAN.begin();
     CAN.filter(CAN_ID_1, 0x7FF); // Set filter to receive messages with CAN_ID_1
     CAN.onReceive(receiveEventNode2);
 }
 
-
 // Method invoked after a test suite is run.
-void CAN_connected_node2_suiteTearDown() 
-{
-    CAN.end();
-}
+void CAN_connected_node2_suiteTearDown() { CAN.end(); }
 
 // define test group name
 TEST_GROUP(CAN_connected_node2);
 TEST_GROUP(CAN_connected_node2Internal);
 
-void processReceivedMessagesNode2() 
-{
+void processReceivedMessagesNode2() {
     if (newDataReceivedNode2) {
         // Process the received data
         for (uint8_t i = 0; i < canDataLength; ++i) {
@@ -81,38 +72,24 @@ void processReceivedMessagesNode2()
 #endif
     }
 }
-// Setup method called by Unity before every individual test defined for this test group.
-static TEST_SETUP(CAN_connected_node2Internal)
-{
-}
 
+// Setup method called by Unity before every individual test defined for this test group.
+static TEST_SETUP(CAN_connected_node2Internal) {}
 
 // Tear down method called by Unity after every individual test defined for this test group.
-static TEST_TEAR_DOWN(CAN_connected_node2Internal)
-{
-}
+static TEST_TEAR_DOWN(CAN_connected_node2Internal) {}
 
-TEST_IFX(CAN_connected_node2Internal, checkPingPong) 
-{
-  processReceivedMessagesNode2();
-}
+TEST_IFX(CAN_connected_node2Internal, checkPingPong) { processReceivedMessagesNode2(); }
 
-
-static TEST_GROUP_RUNNER(CAN_connected_node2Internal)
-{
+static TEST_GROUP_RUNNER(CAN_connected_node2Internal) {
     RUN_TEST_CASE(CAN_connected_node2Internal, checkPingPong);
-
 }
-
 
 // Bundle all tests to be executed for this test group
-TEST_GROUP_RUNNER(CAN_connected_node2)
-{
+TEST_GROUP_RUNNER(CAN_connected_node2) {
     CAN_connected_node2_suiteSetup();
 
     RUN_TEST_GROUP(CAN_connected_node2Internal);
- 
+
     CAN_connected_node2_suiteTearDown();
 }
-
-
