@@ -55,10 +55,9 @@ jobs:
           hil=$(./py_checkusb.py --readyaml $GITHUB_WORKSPACE/tests/Unity/hil-unity-checklist.yaml --json)
           echo "hil=${hil}" >> $GITHUB_OUTPUT
 
+          # fetch unity libraries
           readarray -t data < <(echo $hil | jq -r '.|keys[]')
           export lib=$(jq --compact-output --null-input '$ARGS.positional' --args -- "${data[@]}")
-          echo "lib=${lib}"
-        
           echo libraries="$lib" >> $GITHUB_OUTPUT
 
 
@@ -114,46 +113,44 @@ jobs:
           echo "Version               " ${TEST_VERSION}
 
 
-      # # Build the test code with make and flash it to the board
-      # - name: Build
-      #   run: |
-      #     cd /opt/runner_support/
+      # Build the test code with make and flash it to the board
+      - name: Build
+        run: |
+          cd /opt/runner_support/
 
-      #     hil=${{ toJson(needs.setup.outputs.hil) }}
-      #     lib=$(./py_checkusb.py --type ${{ env.library }} --json)
-      #     readarray -t DEVICES < <(echo $lib | jq ".\"${{ env.library }}\" | keys[]" -r --compact-output)
+          hil=${{ toJson(needs.setup.outputs.hil) }}
+          lib=$(./py_checkusb.py --type ${{ env.library }} --json)
+          readarray -t DEVICES < <(echo $lib | jq ".\"${{ env.library }}\" | keys[]" -r --compact-output)
 
-      #     echo "HIL: $hil"
+          # loop over all fqbn in the library
+          cd ~/.arduino15/packages/Infineon/hardware/xmc/$TEST_VERSION/libraries/${{ env.library }}                                       # change this
+          for DEVICE in "${DEVICES[@]}"; do
+            FQBN==`tr '.' ':' <<<"${DEVICE}"`
 
-      #     # loop over all fqbn in the library
-      #     cd ~/.arduino15/packages/Infineon/hardware/xmc/$TEST_VERSION/libraries/${{ env.library }}                                       # change this
-      #     for DEVICE in "${DEVICES[@]}"; do
-      #       FQBN==`tr '.' ':' <<<"${DEVICE}"`
+            # loop over all serials and fetch the ports
+            readarray -t SERIALS < <(echo $lib | jq ".\"${{ env.library }}\".\"${DEVICE}\" | keys[]" -r --compact-output)
+            PORTS=()
+            for SERIAL in "${SERIALS[@]}"; do
+              PORTS+=$(/opt/runner_support/find_usb.sh $SERIAL)
+            done
 
-      #       # loop over all serials and fetch the ports
-      #       readarray -t SERIALS < <(echo $lib | jq ".\"${{ env.library }}\".\"${DEVICE}\" | keys[]" -r --compact-output)
-      #       PORTS=()
-      #       for SERIAL in "${SERIALS[@]}"; do
-      #         PORTS+=$(/opt/runner_support/find_usb.sh $SERIAL)
-      #       done
+            # loop over all tests
+            readarray -t TESTS < <(echo $hil | jq ".\"${{ env.library }}\".\"${DEVICE}\" | keys[]" -r --compact-output) 
+            for ((tidx=0; tidx<${#TESTS[@]}; tidx++)); do
+              readarray -t MAKES < <(echo $hil | jq ".\"${{ env.library }}\".\"${DEVICE}\".\"${TESTS[$tidx]}\"[]" -r --compact-output)
 
-      #       # loop over all tests
-      #       readarray -t TESTS < <(echo $hil | jq ".\"${{ env.library }}\".\"${DEVICE}\" | keys[]" -r --compact-output) 
-      #       for ((tidx=0; tidx<${#TESTS[@]}; tidx++)); do
-      #         readarray -t MAKES < <(echo $hil | jq ".\"${{ env.library }}\".\"${DEVICE}\".\"${TESTS[$tidx]}\"[]" -r --compact-output)
-
-      #         # loop over all makes in the test for sender receiver tests
-      #         for ((midx=0; midx<${#MAKES[@]}; midx++)); do
-      #           #make FQBN=${FQBN} PORT=${PORTS[$tidx]} UNITY_PATH=/opt/runner_support/Unity ${MAKES[$midx]}
-      #           echo "MAKE: ${MAKES[$midx]}"
-      #         done
+              # loop over all makes in the test for sender receiver tests
+              for ((midx=0; midx<${#MAKES[@]}; midx++)); do
+                #make FQBN=${FQBN} PORT=${PORTS[$tidx]} UNITY_PATH=/opt/runner_support/Unity ${MAKES[$midx]}
+                echo "MAKE: ${MAKES[$midx]}"
+              done
 
 
 
 
 
-      #       done
-      #     done
+            done
+          done
 
 
 
