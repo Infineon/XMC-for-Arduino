@@ -102,6 +102,7 @@ jobs:
           rm -rf ~/.arduino15/packages/Infineon/hardware/xmc/*
           ln -s $GITHUB_WORKSPACE ~/.arduino15/packages/Infineon/hardware/xmc/$TEST_VERSION
 
+          hil=${{ toJson(needs.setup.outputs.hil) }}
           REPO="$(basename "$GITHUB_REPOSITORY")"
           DEVICE="$(basename ${{ matrix.device }} )"
 
@@ -113,13 +114,17 @@ jobs:
           echo "Device                " $DEVICE
           echo "Version               " ${TEST_VERSION}
 
+          echo "hil=${hil}"
 
-  #     # Build the test code with make and flash it to the board
-  #     - name: Build
-  #       run: |
-  #         cd /opt/runner_support/
+      # Build the test code with make and flash it to the board
+      - name: Build
+        run: |
+          cd /opt/runner_support/
 
-  #         hil=${{ toJson(needs.setup.outputs.hil) }}
+          
+
+
+
   #         lib=$(./py_checkusb.py --type ${{ env.library }} --json)
   #         if [[ -z $lib || $lib == "{}" ]]; then
   #           echo "No library information found"
