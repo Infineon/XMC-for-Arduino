@@ -127,16 +127,17 @@ jobs:
           for EXAMPLE in "${EXAMPLES[@]}"; do
             echo "Example: ${EXAMPLE}"
             cd /opt/runner_support/
-            serials=$(./py_checkusb.py --type ${example} --json)
-            if [[ -z $serials || $serials == "{}" ]]; then
+            SERIALS=$(echo $(./py_checkusb.py --repo ${EXAMPLE} --list serial --json) | jq ".\"${EXAMPLE}\"" --compact-output )
+
+            if [[ -z $SERIALS || $SERIALS == "{}" ]]; then
               echo "No library information found"
               exit 0
             fi
-            echo "Serials: ${serials[@]}"
+            echo "SERIALS: ${SERIALS[@]}"
 
-            for serial in "${serials[@]}"; do
-              echo "Serial: ${serial}"
-              PORT=$(/opt/runner_support/find_usb.sh $serial)
+            for SERIAL in "${SERIALS[@]}"; do
+              echo "Serial: ${SERIAL}"
+              PORT=$(/opt/runner_support/find_usb.sh $SERIAL)
               echo "Port: ${PORT}"
               #make FQBN=${FQBN} PORT=${PORT} UNITY_PATH=/opt/runner_support/Unity ${EXAMPLE}
             done
