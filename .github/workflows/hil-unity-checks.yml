@@ -147,10 +147,9 @@ jobs:
             for EXAMPLE in "${EXAMPLES[@]}"; do
               echo "Run for EXAMPLE: ${EXAMPLE} under LIB: ${LIB}"
 
+              # loop over all tests for one example
               readarray -t TESTS < <(echo $lib | jq ".\"${LIB}\".\"${EXAMPLE}\"" -r --compact-output)
-              echo "Tests: ${TESTS[@]}"
-
-              for idx in "${!TESTS[@]}"; do
+              for ((idx=0; idx<${#TESTS[@]}; idx++)); do
                 echo "Run for TEST: ${TESTS[$idx]} under EXAMPLE: ${EXAMPLE} under LIB: ${LIB}"
                 
                 
