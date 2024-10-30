@@ -127,7 +127,7 @@ jobs:
           for EXAMPLE in "${EXAMPLES[@]}"; do
             echo "Run for Example: ${EXAMPLE}"
             cd /opt/runner_support/
-            readarray -r SERIALS < <(echo $(./py_checkusb.py --type ${EXAMPLE} --list serial --json) | jq ".\"${EXAMPLE}\"[]" -r)
+            readarray -t SERIALS < <(echo $(./py_checkusb.py --type ${EXAMPLE} --list serial --json) | jq ".\"${EXAMPLE}\"[]" -r)
 
 
             #readarray -r PORTS < <(./py_checkusb.py --type ${EXAMPLE} --list port --json | jq ".\"${EXAMPLE}\"[]" -r)
