@@ -105,16 +105,17 @@ jobs:
           hil=${{ toJson(needs.setup.outputs.hil) }}
           REPO="$(basename "$GITHUB_REPOSITORY")"
           DEVICE="$(basename ${{ matrix.device }} )"
+          LIBRARY=$(echo $hil | jq ".\"${REPO}\".\"${DEVICE}\"" -r --compact-output)
 
           echo "repo=$REPO" >> $GITHUB_ENV
           echo "device=$DEVICE" >> $GITHUB_ENV
           echo "version=$TEST_VERSION" >> $GITHUB_ENV
+          echo "library=$LIBRARY" >> $GITHUB_ENV
 
           echo "Repo                  " $REPO
           echo "Device                " $DEVICE
+          echo "Library               " $LIBRARY
           echo "Version               " ${TEST_VERSION}
-
-          echo "hil=${hil}"
 
       # Build the test code with make and flash it to the board
       - name: Build
