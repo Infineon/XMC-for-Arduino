@@ -92,7 +92,7 @@ jobs:
       # the code to flash
       matrix:
         # the serials of the hardware boards
-        device: ${{ fromJson(needs.setup.outputs.devices }}
+        device: ${{ fromJson(needs.setup.outputs.devices) }}
 
     # These are the steps which should run for each combination of fqbn and example code
     steps:
