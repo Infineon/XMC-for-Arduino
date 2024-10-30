@@ -156,13 +156,15 @@ jobs:
               echo "Run for EXAMPLE: ${EXAMPLE} under LIB: ${LIB}"
 
               # loop over all tests for one example
-              readarray -t TESTS < <(echo $lib | jq ".\"${LIB}\".\"${EXAMPLE}\"" -r --compact-output)
-              for idx in "${!TESTS[@]}"; do
+              readarray -t TESTS < <(echo $lib | jq ".\"${LIB}\".\"${EXAMPLE}\"[]" -r --compact-output)
+              echo ${TESTS[@]}
+              for ((idx=0; idx<${#TESTS[@]}; ++idx)); do
                 echo ${TESTS[@]}
                 echo $TESTS[idx]
                 echo $TESTS[$idx]
                 echo $TESTS[0]
                 echo "$idx: ${TESTS[idx]}"
+                echo "$idx: ${TESTS[$idx]}"
 
               # echo "Run on index $idx for TEST: ${TESTS[idx]} under EXAMPLE: ${EXAMPLE} and LIB: ${LIB}"
                 
