@@ -120,7 +120,9 @@ jobs:
       # Build the test code with make and flash it to the board
       - name: Build
         run: |
-          echo  ${{ env.library }}
+          echo ${{ env.library }}
+          echo ${{ env.library }} | jq ".\"CAN\"" -r --compact-output
+          echo "Test"
           echo ${{ env.library }} | jq ".|keys[]" -r --compact-output
 
           # readarray -t EXAMPLES < <(echo ${{ env.library }} | jq ".|keys[]" -r --compact-output)
