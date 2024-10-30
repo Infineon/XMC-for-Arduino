@@ -122,14 +122,15 @@ jobs:
         run: |
           lib=${{ toJson(env.library) }}
           readarray -t EXAMPLES < <(echo ${lib} | jq ".|keys[]" -r --compact-output)
-          echo "Examples: ${EXAMPLES[@]}"
 
+          # loop over all examples in the library
           for EXAMPLE in "${EXAMPLES[@]}"; do
-            echo "Example: ${EXAMPLE}"
+            echo "Run for Example: ${EXAMPLE}"
             cd /opt/runner_support/
-            SERIALS=$(echo $(./py_checkusb.py --type ${EXAMPLE} --list serial --json) | jq ".\"${EXAMPLE}\"" --compact-output )
+            readarray -r SERIALS < <(./py_checkusb.py --type ${EXAMPLE} --list serial --json | jq ".\"${EXAMPLE}[]\"" -r --compact-output )
 
-            if [[ -z $SERIALS || $SERIALS == "{}" ]]; then
+            # check if we have a serial number or stop here
+            if [[ -z $SERIALS ]]; then
               echo "No library information found"
               exit 0
             fi
