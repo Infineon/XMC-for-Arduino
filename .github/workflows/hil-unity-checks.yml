@@ -148,7 +148,7 @@ jobs:
             # loop over all serials and fetch the ports
             declare -a PORTS
             for SERIAL in "${SERIALS[@]}"; do
-              PORTS+=$(/opt/runner_support/find_usb.sh $SERIAL)
+              PORTS+=($(/opt/runner_support/find_usb.sh $SERIAL))
               echo ${PORTS[@]}
             done
 
