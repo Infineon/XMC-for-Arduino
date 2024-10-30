@@ -127,7 +127,7 @@ jobs:
           for EXAMPLE in "${EXAMPLES[@]}"; do
             echo "Run for Example: ${EXAMPLE}"
             cd /opt/runner_support/
-            readarray -r SERIALS < <(./py_checkusb.py --type ${EXAMPLE} --list serial --json | jq ".\"${EXAMPLE}[]\"" -r --compact-output )
+            readarray -r SERIALS < <(./py_checkusb.py --type ${EXAMPLE} --list serial --json | jq ".\"${EXAMPLE}\"[]" -r)
 
             # check if we have a serial number or stop here
             if [[ -z $SERIALS ]]; then
@@ -136,10 +136,11 @@ jobs:
             fi
             echo "SERIALS: ${SERIALS[@]}"
 
+            # loop over all serials and fetch the ports
             for SERIAL in "${SERIALS[@]}"; do
               echo "Serial: ${SERIAL}"
-              PORT=$(/opt/runner_support/find_usb.sh $SERIAL)
-              echo "Port: ${PORT}"
+              PORT+=$(/opt/runner_support/find_usb.sh $SERIAL)
+              echo "Port: ${PORT[@]}"
               #make FQBN=${FQBN} PORT=${PORT} UNITY_PATH=/opt/runner_support/Unity ${EXAMPLE}
             done
 
