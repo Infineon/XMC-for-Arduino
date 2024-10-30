@@ -106,6 +106,7 @@ jobs:
           REPO="$(basename "$GITHUB_REPOSITORY")"
           DEVICE="$(basename ${{ matrix.device }} )"
           LIBRARY=$(echo $hil | jq ".\"${DEVICE}\"" -r --compact-output)
+          FQBN=`tr '.' ':' <<<"${DEVICE}"`
 
           echo "repo=$REPO" >> $GITHUB_ENV
           echo "device=$DEVICE" >> $GITHUB_ENV
@@ -115,6 +116,7 @@ jobs:
           echo "Repo                  " $REPO
           echo "Device                " $DEVICE
           echo "Library               " $LIBRARY
+          echo "FQBN                  " $FQBN
           echo "Version               " ${TEST_VERSION}
 
       # Build the test code with make and flash it to the board
@@ -142,14 +144,22 @@ jobs:
 
             # loop over all examples for one library
             readarray -t EXAMPLES < <(echo $lib | jq ".\"${LIB}\"|keys[]" -r --compact-output)
-            echo "Examples: ${EXAMPLES[@]}"
-
             for EXAMPLE in "${EXAMPLES[@]}"; do
               echo "Run for EXAMPLE: ${EXAMPLE} under LIB: ${LIB}"
-              cd $GITHUB_WORKSPACE/tests/Unity/
+              readarray -t TESTS < <(echo $lib | jq ".\"${LIB}\".\"${EXAMPLE}\"|keys[]" -r --compact-output)
+              echo "Tests: ${TESTS[@]}"
 
+              for idx in "${!TESTS[@]}"; do
+                echo "Run for TEST: ${TESTS[$idx]} under EXAMPLE: ${EXAMPLE} under LIB: ${LIB}"
+                cd $GITHUB_WORKSPACE/tests/Unity/
+                echo "FQBN=$FQBN
+                echo "PORT=${PORT[$idx]}"
+                echo "TEST=${TESTS[$idx]}"
+                echo "make FQBN=${LIB} PORT=${PORT} UNITY_PATH=/opt/runner_support/Unity ${EXAMPLE}"
+                #make FQBN=${LIB} PORT=${PORT} UNITY_PATH=/opt/runner_support/Unity ${EXAMPLE}
 
-              #make FQBN=${LIB} PORT=${PORT} UNITY_PATH=/opt/runner_support/Unity ${EXAMPLE}
+              done
+
             done
             
           done
