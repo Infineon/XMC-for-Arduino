@@ -146,17 +146,24 @@ jobs:
             readarray -t EXAMPLES < <(echo $lib | jq ".\"${LIB}\"|keys[]" -r --compact-output)
             for EXAMPLE in "${EXAMPLES[@]}"; do
               echo "Run for EXAMPLE: ${EXAMPLE} under LIB: ${LIB}"
-              readarray -t TESTS < <(echo $lib | jq ".\"${LIB}\".\"${EXAMPLE}\"|keys[]" -r --compact-output)
+              readarray -t TESTS < <(echo $lib | jq ".\"${LIB}\".\"${EXAMPLE}\"|[]" -r --compact-output)
               echo "Tests: ${TESTS[@]}"
 
               for idx in "${!TESTS[@]}"; do
                 echo "Run for TEST: ${TESTS[$idx]} under EXAMPLE: ${EXAMPLE} under LIB: ${LIB}"
+                
+                
                 cd $GITHUB_WORKSPACE/tests/Unity/
-                echo "FQBN=$FQBN"
+                echo "FQBN=${{ env.fqbn }}"
                 echo "PORT=${PORT[$idx]}"
                 echo "TEST=${TESTS[$idx]}"
-                echo "make FQBN=${LIB} PORT=${PORT} UNITY_PATH=/opt/runner_support/Unity ${EXAMPLE}"
-                #make FQBN=${LIB} PORT=${PORT} UNITY_PATH=/opt/runner_support/Unity ${EXAMPLE}
+                
+                
+                
+                echo "make FQBN=${{ env.fqbn }} PORT=${PORT[$idx]} UNITY_PATH=/opt/runner_support/Unity ${EXAMPLE}"
+                
+                
+                #make FQBN=${{ env.fqbn }} PORT=${PORT[$idx]} UNITY_PATH=/opt/runner_support/Unity ${EXAMPLE}
 
               done
 
