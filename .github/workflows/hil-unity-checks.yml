@@ -121,25 +121,30 @@ jobs:
       - name: Build
         run: |
           lib=${{ toJson(env.library) }}
-          readarray -t EXAMPLES < <(echo ${{ env.library }} | jq ".|keys[]" -r --compact-output)
+          readarray -t EXAMPLES < <(echo ${lib} | jq ".|keys[]" -r --compact-output)
           echo "Examples: ${EXAMPLES[@]}"
 
           for EXAMPLE in "${EXAMPLES[@]}"; do
             echo "Example: ${EXAMPLE}"
             cd /opt/runner_support/
             serials=$(./py_checkusb.py --type ${example} --json)
-
+            if [[ -z $serials || $serials == "{}" ]]; then
+              echo "No library information found"
+              exit 0
+            fi
             echo "Serials: ${serials[@]}"
 
+            for serial in "${serials[@]}"; do
+              echo "Serial: ${serial}"
+              PORT=$(/opt/runner_support/find_usb.sh $serial)
+              echo "Port: ${PORT}"
+              #make FQBN=${FQBN} PORT=${PORT} UNITY_PATH=/opt/runner_support/Unity ${EXAMPLE}
+            done
 
           done
 
 
   #         lib=$(./py_checkusb.py --type ${{ env.library }} --json)
-  #         if [[ -z $lib || $lib == "{}" ]]; then
-  #           echo "No library information found"
-  #           exit 0
-  #         fi
   #         readarray -t DEVICES < <(echo $lib | jq ".\"${{ env.library }}\" | keys[]" -r --compact-output)
 
   #         # loop over all fqbn in the library
