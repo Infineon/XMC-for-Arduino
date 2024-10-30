@@ -58,9 +58,7 @@ jobs:
           # fetch unity libraries
           readarray -t data < <(echo $hil | jq -r '.|keys[]')
           export dev=$(jq --compact-output --null-input '$ARGS.positional' --args -- "${data[@]}")
-          echo devices="$dev" >> $GITHUB_OUTPUT
-
-          echo "hil=${hil}"
+          echo "devices=${dev}" >> $GITHUB_OUTPUT
           echo "devices=${dev}"
 
 
