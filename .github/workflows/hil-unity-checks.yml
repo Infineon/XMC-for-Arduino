@@ -152,7 +152,7 @@ jobs:
               for idx in "${!TESTS[@]}"; do
                 echo "Run for TEST: ${TESTS[$idx]} under EXAMPLE: ${EXAMPLE} under LIB: ${LIB}"
                 cd $GITHUB_WORKSPACE/tests/Unity/
-                echo "FQBN=$FQBN
+                echo "FQBN=$FQBN"
                 echo "PORT=${PORT[$idx]}"
                 echo "TEST=${TESTS[$idx]}"
                 echo "make FQBN=${LIB} PORT=${PORT} UNITY_PATH=/opt/runner_support/Unity ${EXAMPLE}"
