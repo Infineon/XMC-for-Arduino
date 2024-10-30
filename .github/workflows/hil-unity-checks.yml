@@ -159,7 +159,9 @@ jobs:
               readarray -t TESTS < <(echo $lib | jq ".\"${LIB}\".\"${EXAMPLE}\"" -r --compact-output)
               for idx in "${!TESTS[@]}"; do
                 echo ${TESTS[@]}
-                echo TESTS[idx]
+                echo $TESTS[idx]
+                echo $TESTS[$idx]
+                echo $TESTS[0]
                 echo "$idx: ${TESTS[idx]}"
 
               # echo "Run on index $idx for TEST: ${TESTS[idx]} under EXAMPLE: ${EXAMPLE} and LIB: ${LIB}"
