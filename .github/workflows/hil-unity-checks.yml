@@ -146,7 +146,8 @@ jobs:
             readarray -t EXAMPLES < <(echo $lib | jq ".\"${LIB}\"|keys[]" -r --compact-output)
             for EXAMPLE in "${EXAMPLES[@]}"; do
               echo "Run for EXAMPLE: ${EXAMPLE} under LIB: ${LIB}"
-              readarray -t TESTS < <(echo $lib | jq ".\"${LIB}\".\"${EXAMPLE}\"|[]" -r --compact-output)
+
+              readarray -t TESTS < <(echo $lib | jq ".\"${LIB}\".\"${EXAMPLE}\"" -r --compact-output)
               echo "Tests: ${TESTS[@]}"
 
               for idx in "${!TESTS[@]}"; do
