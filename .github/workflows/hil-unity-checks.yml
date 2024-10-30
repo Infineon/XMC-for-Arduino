@@ -112,6 +112,7 @@ jobs:
           echo "device=$DEVICE" >> $GITHUB_ENV
           echo "version=$TEST_VERSION" >> $GITHUB_ENV
           echo "library=$LIBRARY" >> $GITHUB_ENV
+          echo "fqbn=$FQBN" >> $GITHUB_ENV
 
           echo "Repo                  " $REPO
           echo "Device                " $DEVICE
@@ -160,10 +161,8 @@ jobs:
                 
                 
                 
-                echo "make FQBN=${{ env.fqbn }} PORT=${PORT[$idx]} UNITY_PATH=/opt/runner_support/Unity ${EXAMPLE}"
-                
-                
-                #make FQBN=${{ env.fqbn }} PORT=${PORT[$idx]} UNITY_PATH=/opt/runner_support/Unity ${EXAMPLE}
+                echo "make FQBN=${{ env.fqbn }} PORT=${PORT[$idx]} UNITY_PATH=/opt/runner_support/Unity ${TESTS[$idx]}"
+                #make FQBN=${{ env.fqbn }} PORT=${PORT[$idx]} UNITY_PATH=/opt/runner_support/Unity ${TESTS[$idx]}
 
               done
 
