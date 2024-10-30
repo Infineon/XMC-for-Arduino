@@ -146,8 +146,10 @@ jobs:
             fi
 
             # loop over all serials and fetch the ports
+            declare -a PORTS
             for SERIAL in "${SERIALS[@]}"; do
               PORTS+=$(/opt/runner_support/find_usb.sh $SERIAL)
+              echo ${PORTS[@]}
             done
 
             # loop over all examples for one library
@@ -160,16 +162,18 @@ jobs:
               echo ${TESTS[@]}
               echo ${PORTS[@]}
               for ((idx=0; idx<${#TESTS[@]}; ++idx)); do
+                cd $GITHUB_WORKSPACE/tests/Unity/
+                echo "Run on index $idx for TEST: ${TESTS[idx]} under EXAMPLE: ${EXAMPLE} and LIB: ${LIB}"
                 echo "$idx: ${TESTS[idx]}"
-                echo "$idx: ${TESTS[$idx]}"
+
+
+
+                #echo "$idx: ${TESTS[$idx]}"
                 echo "PORT= ${PORTS[idx]}"
 
-              # echo "Run on index $idx for TEST: ${TESTS[idx]} under EXAMPLE: ${EXAMPLE} and LIB: ${LIB}"
                 
                 
-                # cd $GITHUB_WORKSPACE/tests/Unity/
                 # echo "FQBN=${{ env.fqbn }}"
-                # echo "TEST=${TESTS[idx]}"
                 
                 
                 
