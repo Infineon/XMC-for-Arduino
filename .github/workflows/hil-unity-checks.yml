@@ -121,26 +121,18 @@ jobs:
       - name: Build
         run: |
           lib=${{ toJson(env.library) }}
+          readarray -t EXAMPLES < <(echo ${{ env.library }} | jq ".|keys[]" -r --compact-output)
+          echo "Examples: ${EXAMPLES[@]}"
 
-        
-          echo ${{ env.library }}
-          echo $lib
-          echo ${lib} | jq ".\"CAN\"" -r --compact-output
-          echo "Test"
-          echo ${lib} | jq ".|keys[]" -r --compact-output
+          for EXAMPLE in "${EXAMPLES[@]}"; do
+            echo "Example: ${EXAMPLE}"
+            cd /opt/runner_support/
+            serials=$(./py_checkusb.py --type ${example} --json)
 
-          # readarray -t EXAMPLES < <(echo ${{ env.library }} | jq ".|keys[]" -r --compact-output)
-          # echo "Examples: ${EXAMPLES[@]}"
-
-          # for EXAMPLE in "${EXAMPLES[@]}"; do
-          #   echo "Example: ${EXAMPLE}"
-          #   cd /opt/runner_support/
-          #   serials=$(./py_checkusb.py --type ${example} --json)
+            echo "Serials: ${serials[@]}"
 
 
-
-
-          # done
+          done
 
 
   #         lib=$(./py_checkusb.py --type ${{ env.library }} --json)
