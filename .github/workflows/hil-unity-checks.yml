@@ -151,18 +151,18 @@ jobs:
               # loop over all tests for one example
               readarray -t TESTS < <(echo $lib | jq ".\"${LIB}\".\"${EXAMPLE}\"" -r --compact-output)
               for ((idx=0; idx<${#TESTS[@]}; idx++)); do
-                echo "Run on index $idx for TEST: ${TESTS[$idx]} under EXAMPLE: ${EXAMPLE} under LIB: ${LIB}"
+                echo "Run on index $idx for TEST: ${TESTS[idx]} under EXAMPLE: ${EXAMPLE} and LIB: ${LIB}"
                 
                 
                 cd $GITHUB_WORKSPACE/tests/Unity/
                 echo "FQBN=${{ env.fqbn }}"
-                echo "PORT=${PORT[$idx]}"
-                echo "TEST=${TESTS[$idx]}"
+                echo "PORT=${PORT[idx]}"
+                echo "TEST=${TESTS[idx]}"
                 
                 
                 
-                echo "make FQBN=${{ env.fqbn }} PORT=${PORT[$idx]} UNITY_PATH=/opt/runner_support/Unity ${TESTS[$idx]}"
-                #make FQBN=${{ env.fqbn }} PORT=${PORT[$idx]} UNITY_PATH=/opt/runner_support/Unity ${TESTS[$idx]}
+                echo "make FQBN=${{ env.fqbn }} PORT=${PORT[idx]} UNITY_PATH=/opt/runner_support/Unity ${TESTS[idx]}"
+                #make FQBN=${{ env.fqbn }} PORT=${PORT[idx]} UNITY_PATH=/opt/runner_support/Unity ${TESTS[idx]}
 
               done
 
