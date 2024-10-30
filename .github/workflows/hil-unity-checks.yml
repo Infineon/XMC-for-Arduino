@@ -130,6 +130,9 @@ jobs:
 
       - name: Build
         run: |
+          export TMPDIR=$HOME/tmp
+          mkdir -p $TMPDIR
+
           lib=${{ toJson(env.library) }}
           readarray -t LIBS < <(echo ${lib} | jq ".|keys[]" -r --compact-output)
 
