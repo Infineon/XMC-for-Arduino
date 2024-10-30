@@ -122,9 +122,9 @@ jobs:
         run: |
           echo  ${{ env.library }}
           echo ${{ env.library }} | jq ".|keys[]" -r --compact-output
-          
-          readarray -t EXAMPLES < <(echo ${{ env.library }} | jq ".|keys[]" -r --compact-output)
-          echo "Examples: ${EXAMPLES[@]}"
+
+          # readarray -t EXAMPLES < <(echo ${{ env.library }} | jq ".|keys[]" -r --compact-output)
+          # echo "Examples: ${EXAMPLES[@]}"
 
           # for EXAMPLE in "${EXAMPLES[@]}"; do
           #   echo "Example: ${EXAMPLE}"
