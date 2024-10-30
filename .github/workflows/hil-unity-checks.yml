@@ -67,7 +67,7 @@ jobs:
     # Connect the GITHUB_OUTPUT to the variables and the workflow output mechanism
     outputs:
       hil: ${{ steps.startup.outputs.hil }}
-      device: ${{ steps.startup.outputs.devices }}
+      devices: ${{ steps.startup.outputs.devices }}
 
 
   #############################################################################
