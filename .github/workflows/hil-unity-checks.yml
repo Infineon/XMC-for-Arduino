@@ -120,11 +120,20 @@ jobs:
       # Build the test code with make and flash it to the board
       - name: Build
         run: |
-          cd /opt/runner_support/
 
-          readarray -t EXAMPLES < <(echo ${{ env.library }} | jq ".[] | keys[]" -r --compact-output)
-
+          readarray -t EXAMPLES < <(echo ${{ env.library }} | jq "keys[]" -r --compact-output)
           echo "Examples: ${EXAMPLES[@]}"
+
+          for EXAMPLE in "${EXAMPLES[@]}"; do
+            echo "Example: ${EXAMPLE}"
+            cd /opt/runner_support/
+            serials=$(./py_checkusb.py --type ${example} --json)
+
+
+
+
+          done
+
 
   #         lib=$(./py_checkusb.py --type ${{ env.library }} --json)
   #         if [[ -z $lib || $lib == "{}" ]]; then
