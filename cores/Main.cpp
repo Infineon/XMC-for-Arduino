@@ -29,30 +29,26 @@
 // work around to use new operator
 extern "C" void *_sbrk(int incr);
 void dummy_sbrk_caller() __attribute__((__used__));
-void dummy_sbrk_caller()
-{
-  _sbrk(0);
-} 
 
-int main(void)
-{
-/*
- *  Initialization Time first to get closer to startup time accuracy
- */
-wiring_time_init();
-wiring_analog_init();
-// Initialize the reset pin for the XMC1100 Boot Kit series and XMC1400 Kit for Arduino as they are based on Arduino form-factor
-// Hence, a dedicated reset pin is required. 
+void dummy_sbrk_caller() { _sbrk(0); }
+
+int main(void) {
+    /*
+     *  Initialization Time first to get closer to startup time accuracy
+     */
+    wiring_time_init();
+    wiring_analog_init();
+// Initialize the reset pin for the XMC1100 Boot Kit series and XMC1400 Kit for Arduino as they are
+// based on Arduino form-factor Hence, a dedicated reset pin is required.
 #ifdef HAS_GPIO_RESET
-  reset_init();
+    reset_init();
 #endif
 
-// Arduino's main() function just calls setup() and loop()....
-setup();
-while (1)
-    {
-    loop();
-    serialEventRun();
+    // Arduino's main() function just calls setup() and loop()....
+    setup();
+    while (1) {
+        loop();
+        serialEventRun();
     }
 }
 

@@ -30,113 +30,298 @@ extern "C" {
 // @Defines
 //****************************************************************************
 /**< SysTick interval in microseconds */
-#define SYSTIMER_TICK_PERIOD_US  (1000U)
+#define SYSTIMER_TICK_PERIOD_US (1000U)
 /**< value for Systick counts per ms **/
-#define SYSTICK_MS  ( F_CPU / SYSTIMER_TICK_PERIOD_US )
+#define SYSTICK_MS (F_CPU / SYSTIMER_TICK_PERIOD_US)
 /**< value for Systick counts per us **/
-#define SYSTICK_US  ( SYSTICK_MS / SYSTIMER_TICK_PERIOD_US )
+#define SYSTICK_US (SYSTICK_MS / SYSTIMER_TICK_PERIOD_US)
 
 #if ((UC_FAMILY == XMC4) && (F_CPU == 144000000U))
-// 142 NOPS
-#define NOPS_FOR_USEC() { asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
-                        asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
-                        asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
-						asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
-                        asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
-                        asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
-						asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
-						asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
-						asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
-						asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
-						asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
-						asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
-						asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
-						asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
-						asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
-						asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
-						asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
-						asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
-						asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
-						asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
-						asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
-						asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
-						asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
-						asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
-						asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
-						asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
-						asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
-						asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
-						asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
-						asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
-						asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
-						asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
-						asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
-						asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
-						asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
-						asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
-						asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
-						asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
-						asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
-						asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
-						asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
-						asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
-						asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
-						asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
-						asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
-						asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
-						asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
-                        asm volatile("nop");}
+    // 142 NOPS
+    #define NOPS_FOR_USEC()      \
+        {                        \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+        }
 
 #elif ((UC_FAMILY == XMC4) && (F_CPU == 80000000U))
-// 80 NOPS
-#define NOPS_FOR_USEC() { asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
-                        asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
-                        asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
-						asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
-                        asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
-                        asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
-						asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
-						asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
-						asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
-						asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
-						asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
-						asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
-						asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
-						asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
-						asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
-						asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
-						asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
-						asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
-						asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
-						asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
-						asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
-						asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
-						asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
-						asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
-						asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
-						asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
-						asm volatile("nop"); asm volatile("nop");}
-						
+    // 80 NOPS
+    #define NOPS_FOR_USEC()      \
+        {                        \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+        }
+
 #elif ((UC_FAMILY == XMC1) && (F_CPU == 32000000U))
-// 16 NOPS
-#define NOPS_FOR_USEC() { asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
-						asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
-						asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
-						asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
-						asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
-                        asm volatile("nop"); }
+    // 16 NOPS
+    #define NOPS_FOR_USEC()      \
+        {                        \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+        }
 #elif ((UC_FAMILY == XMC1) && (F_CPU == 48000000U))
-// 24 NOPS
-#define NOPS_FOR_USEC() { asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
-						asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
-						asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
-						asm volatile("nop"); asm volatile("nop"); asm volatile("nop");\
-						asm volatile("nop"); asm volatile("nop");asm volatile("nop");\
-						asm volatile("nop"); asm volatile("nop");asm volatile("nop");\
-						asm volatile("nop"); asm volatile("nop");asm volatile("nop");\
-						asm volatile("nop"); asm volatile("nop");asm volatile("nop"); } 		
+    // 24 NOPS
+    #define NOPS_FOR_USEC()      \
+        {                        \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+            asm volatile("nop"); \
+        }
 #else
-#error wiring_time: NOPS_FOR_USEC not defined
+    #error wiring_time: NOPS_FOR_USEC not defined
 #endif
 
 //****************************************************************************
@@ -144,13 +329,13 @@ extern "C" {
 //****************************************************************************
 /* Structures  for task details next run, status etc.. */
 struct TaskList {
-                uint32_t    next;       // next execution time in ms
-                uint32_t    interval;   // interval between schedule starts in ms
-                int16_t     param;      // User defined parameter
-                int16_t     status;     // current task status 0 stopped,
-                                        // -ve stopped with error,
-                                        // > 0 user status (and active)
-                };
+    uint32_t next;     // next execution time in ms
+    uint32_t interval; // interval between schedule starts in ms
+    int16_t param;     // User defined parameter
+    int16_t status;    // current task status 0 stopped,
+                       // -ve stopped with error,
+                       // > 0 user status (and active)
+};
 
 /* SysTick counter */
 extern volatile uint32_t g_systick_count;
@@ -161,42 +346,40 @@ extern volatile uint32_t g_systick_count;
 /*
  * \brief Initialize the time module.
  */
-extern void wiring_time_init( void );
+extern void wiring_time_init(void);
 
 /*
- * \brief Returns the number of milliseconds since the Arduino board began running the current program.
+ * \brief Returns the number of milliseconds since the Arduino board began running the current
+ * program.
  *
  * This number will overflow (go back to zero), after approximately 50 days.
  *
  * \return Number of milliseconds since the program started (uint32_t)
  */
-static inline uint32_t  millis( ) __attribute__(( always_inline ));
-static inline uint32_t  millis( )
-{
-return ( g_systick_count );
-}
+static inline uint32_t millis() __attribute__((always_inline));
 
+static inline uint32_t millis() { return (g_systick_count); }
 
 /*
- * \brief Returns the number of microseconds since the Arduino board began running the current program.
+ * \brief Returns the number of microseconds since the Arduino board began running the current
+ program.
  *
- * This number will overflow (go back to zero), after approximately 70 minutes. 
+ * This number will overflow (go back to zero), after approximately 70 minutes.
  * On XMC boards the returned value has resolution of 1 microsecond as it is
- * calculated from a hardware timer running counting clock cycles to produce 
+ * calculated from a hardware timer running counting clock cycles to produce
  * 1 millisecond interval interrupts.
  *
  * \note There are 1,000 microseconds in a millisecond and 1,000,000 microseconds in a second.
 
-   get micro seconds since power up 
-   Read milli seconds (in microseconds) and convert Systick counter to microseconds to add to it 
+   get micro seconds since power up
+   Read milli seconds (in microseconds) and convert Systick counter to microseconds to add to it
    remember SysTick->VAL counts DOWN to zero */
-static inline uint32_t  micros( ) __attribute__(( always_inline ));
-static inline uint32_t  micros( )
-{
-return ( ( ( SYSTICK_MS - SysTick->VAL ) / SYSTICK_US )
-            + ( g_systick_count * SYSTIMER_TICK_PERIOD_US ) );
-}
+static inline uint32_t micros() __attribute__((always_inline));
 
+static inline uint32_t micros() {
+    return (((SYSTICK_MS - SysTick->VAL) / SYSTICK_US) +
+            (g_systick_count * SYSTIMER_TICK_PERIOD_US));
+}
 
 /*
  * \brief Pauses the program for the amount of time (in milliseconds) specified as parameter.
@@ -204,35 +387,34 @@ return ( ( ( SYSTICK_MS - SysTick->VAL ) / SYSTICK_US )
  *
  * \param dwMs the number of milliseconds to pause (uint32_t)
  */
-extern void delay( uint32_t dwMs );
+extern void delay(uint32_t dwMs);
 
 /*
  * \brief Pauses the program for the amount of time (in microseconds) specified as parameter.
  *
  * \param dwUs the number of microseconds to pause (uint32_t)
  */
-static inline void delayMicroseconds( uint32_t ) __attribute__(( always_inline ));
-static inline void delayMicroseconds( uint32_t usec )
-{
-if( usec == 0 )
-  return;
-else
-  do  
-    NOPS_FOR_USEC( )  // NOP loop to generate delay
-  while( --usec );
+static inline void delayMicroseconds(uint32_t) __attribute__((always_inline));
+
+static inline void delayMicroseconds(uint32_t usec) {
+    if (usec == 0)
+        return;
+    else
+        do
+            NOPS_FOR_USEC() // NOP loop to generate delay
+        while (--usec);
 }
 
-
-extern int setInterval( int, uint32_t );
-extern uint32_t getInterval( int );
-extern int setParam( int, int16_t );
-extern int16_t getParam( int );
-extern uint32_t getTime( int );
-extern int16_t getStatus( int );
-extern int addTask( int(*  )( int, int16_t ) );
-extern int deleteTask( int(*  )( int, int16_t ) );
-extern int startTask( int );
-extern int findID( int(*  )( int, int16_t ) );
+extern int setInterval(int, uint32_t);
+extern uint32_t getInterval(int);
+extern int setParam(int, int16_t);
+extern int16_t getParam(int);
+extern uint32_t getTime(int);
+extern int16_t getStatus(int);
+extern int addTask(int (*)(int, int16_t));
+extern int deleteTask(int (*)(int, int16_t));
+extern int startTask(int);
+extern int findID(int (*)(int, int16_t));
 
 #ifdef __cplusplus
 }

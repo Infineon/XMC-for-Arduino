@@ -33,10 +33,10 @@ extern "C" {
 
 #else
 
-    extern char* itoa( int value, char* string, int radix ) ;
-    extern char* ltoa( long value, char* string, int radix ) ;
-    extern char* utoa( unsigned int value, char* string, int radix ) ;
-    extern char* ultoa( unsigned long value, char* string, int radix ) ;
+extern char *itoa(int value, char *string, int radix);
+extern char *ltoa(long value, char *string, int radix);
+extern char *utoa(unsigned int value, char *string, int radix);
+extern char *ultoa(unsigned long value, char *string, int radix);
 #endif /* 0 */
 
 #ifdef __cplusplus
@@ -44,4 +44,3 @@ extern "C" {
 #endif // __cplusplus
 
 #endif // _ITOA_
-

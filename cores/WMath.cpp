@@ -30,28 +30,22 @@ extern "C" {
 // @Local Functions
 //****************************************************************************
 
-void randomSeed(uint32_t dwSeed)
-{
-    if (dwSeed != 0)
-    {
-        srand(dwSeed) ;
+void randomSeed(uint32_t dwSeed) {
+    if (dwSeed != 0) {
+        srand(dwSeed);
     }
 }
 
-long random(long howbig)
-{
-    if ( howbig == 0 )
-    {
-        return 0 ;
+long random(long howbig) {
+    if (howbig == 0) {
+        return 0;
     }
 
     return rand() % howbig;
 }
 
-long random(long howsmall, long howbig)
-{
-    if (howsmall >= howbig)
-    {
+long random(long howsmall, long howbig) {
+    if (howsmall >= howbig) {
         return howsmall;
     }
 
@@ -60,16 +54,9 @@ long random(long howsmall, long howbig)
     return random(diff) + howsmall;
 }
 
-extern uint16_t makeWord( uint16_t w )
-{
-  return w ;
-}
+extern uint16_t makeWord(uint16_t w) { return w; }
 
-uint16_t makeWord(uint8_t h, uint8_t l)
-{
-    return (h << 8) | l ;
-}
-
+uint16_t makeWord(uint8_t h, uint8_t l) { return (h << 8) | l; }
 
 //****************************************************************************
 //                                 END OF FILE

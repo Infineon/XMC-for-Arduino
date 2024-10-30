@@ -45,10 +45,10 @@
 //****************************************************************************
 // @Defines
 //****************************************************************************
-#define ADC_CONVERSION_GROUP            0
-#define ADC_MIN_RESOLUTION              8
-#define ADC_MAX_READ_RESOLUTION         12
-#define ANALOG_MAX_WRITE_RESOLUTION     16
+#define ADC_CONVERSION_GROUP 0
+#define ADC_MIN_RESOLUTION 8
+#define ADC_MAX_READ_RESOLUTION 12
+#define ANALOG_MAX_WRITE_RESOLUTION 16
 
 //****************************************************************************
 // @Global Variables
@@ -58,64 +58,61 @@ static uint8_t _writeResolution = 8;
 uint16_t _readMaximum = 1023;
 uint16_t _writeMaximum = 255;
 
+void wiring_analog_init(void) {
+    /* Initialization data of VADC Global resources */
+    XMC_VADC_GLOBAL_CONFIG_t vadc_global_config;
+    memset(&vadc_global_config, 0, sizeof(XMC_VADC_GLOBAL_CONFIG_t));
+    vadc_global_config.class0.conversion_mode_standard = XMC_VADC_CONVMODE_12BIT;
+    vadc_global_config.class1.conversion_mode_standard = XMC_VADC_CONVMODE_12BIT;
 
-void wiring_analog_init( void )
-{
-/* Initialization data of VADC Global resources */
-XMC_VADC_GLOBAL_CONFIG_t vadc_global_config;
-memset( &vadc_global_config, 0, sizeof( XMC_VADC_GLOBAL_CONFIG_t ) );
-vadc_global_config.class0.conversion_mode_standard = XMC_VADC_CONVMODE_12BIT;
-vadc_global_config.class1.conversion_mode_standard = XMC_VADC_CONVMODE_12BIT;
+    XMC_VADC_BACKGROUND_CONFIG_t vadc_background_config = {0};
 
-XMC_VADC_BACKGROUND_CONFIG_t vadc_background_config = { 0 };
+    /* Provide clock to VADC and initialize the VADC global registers. */
+    XMC_VADC_GLOBAL_Init(VADC, &vadc_global_config);
 
-/* Provide clock to VADC and initialize the VADC global registers. */
-XMC_VADC_GLOBAL_Init( VADC, &vadc_global_config );
+#if (XMC_VADC_GROUP_AVAILABLE == 1U)
+    // ADC grouping
+    XMC_VADC_GROUP_CONFIG_t vadc_group_config;
+    memset(&vadc_group_config, 0, sizeof(XMC_VADC_GROUP_CONFIG_t));
+    vadc_group_config.class0.conversion_mode_standard = XMC_VADC_CONVMODE_12BIT;
+    vadc_group_config.class1.conversion_mode_standard = XMC_VADC_CONVMODE_12BIT;
 
-#if(XMC_VADC_GROUP_AVAILABLE == 1U)
-// ADC grouping
-XMC_VADC_GROUP_CONFIG_t vadc_group_config;
-memset( &vadc_group_config, 0, sizeof( XMC_VADC_GROUP_CONFIG_t ) );
-vadc_group_config.class0.conversion_mode_standard = XMC_VADC_CONVMODE_12BIT;
-vadc_group_config.class1.conversion_mode_standard = XMC_VADC_CONVMODE_12BIT;
+    /* Initialize Group */
+    XMC_VADC_GROUP_Init(VADC_G0, &vadc_group_config);
+    XMC_VADC_GROUP_Init(VADC_G1, &vadc_group_config);
 
-/* Initialize Group */
-XMC_VADC_GROUP_Init( VADC_G0, &vadc_group_config );
-XMC_VADC_GROUP_Init( VADC_G1, &vadc_group_config );
+    /* Switch on the converter of the Group*/
+    XMC_VADC_GROUP_SetPowerMode(VADC_G0, XMC_VADC_GROUP_POWERMODE_NORMAL);
+    XMC_VADC_GROUP_SetPowerMode(VADC_G1, XMC_VADC_GROUP_POWERMODE_NORMAL);
 
-/* Switch on the converter of the Group*/
-XMC_VADC_GROUP_SetPowerMode( VADC_G0, XMC_VADC_GROUP_POWERMODE_NORMAL );
-XMC_VADC_GROUP_SetPowerMode( VADC_G1, XMC_VADC_GROUP_POWERMODE_NORMAL );
+    #if (XMC_VADC_MAXIMUM_NUM_GROUPS > 2)
+    /* Initialize Group */
+    XMC_VADC_GROUP_Init(VADC_G2, &vadc_group_config);
+    XMC_VADC_GROUP_Init(VADC_G3, &vadc_group_config);
 
-#if(XMC_VADC_MAXIMUM_NUM_GROUPS > 2)
-/* Initialize Group */
-XMC_VADC_GROUP_Init( VADC_G2, &vadc_group_config );
-XMC_VADC_GROUP_Init( VADC_G3, &vadc_group_config );
-
-/* Switch on the converter of the Group*/
-XMC_VADC_GROUP_SetPowerMode( VADC_G2, XMC_VADC_GROUP_POWERMODE_NORMAL );
-XMC_VADC_GROUP_SetPowerMode( VADC_G3, XMC_VADC_GROUP_POWERMODE_NORMAL );
-#endif
+    /* Switch on the converter of the Group*/
+    XMC_VADC_GROUP_SetPowerMode(VADC_G2, XMC_VADC_GROUP_POWERMODE_NORMAL);
+    XMC_VADC_GROUP_SetPowerMode(VADC_G3, XMC_VADC_GROUP_POWERMODE_NORMAL);
+    #endif
 
 #endif
-/* Calibrate the VADC. Make sure you do this after all used VADC groups
-   are set to normal operation mode. */
-XMC_VADC_GLOBAL_StartupCalibration( VADC );
+    /* Calibrate the VADC. Make sure you do this after all used VADC groups
+       are set to normal operation mode. */
+    XMC_VADC_GLOBAL_StartupCalibration(VADC);
 
-/* Initialize the background source hardware. The gating mode is set to
-   ignore to pass external triggers unconditionally.*/
-XMC_VADC_GLOBAL_BackgroundInit( VADC, &vadc_background_config );
+    /* Initialize the background source hardware. The gating mode is set to
+       ignore to pass external triggers unconditionally.*/
+    XMC_VADC_GLOBAL_BackgroundInit(VADC, &vadc_background_config);
 
-/* PC Mar-2019
-   Dummy read of ALL analogue inputs to ensure ALL analogue channels are
-   started in background scanning mode, otherwise first readings at least
-   will always be zero on reading an analogue input. */
-for( uint8_t chan = 0; chan < NUM_ANALOG_INPUTS; chan++ )
-   analogRead( chan );
+    /* PC Mar-2019
+       Dummy read of ALL analogue inputs to ensure ALL analogue channels are
+       started in background scanning mode, otherwise first readings at least
+       will always be zero on reading an analogue input. */
+    for (uint8_t chan = 0; chan < NUM_ANALOG_INPUTS; chan++)
+        analogRead(chan);
 
-//Additional Initialization of DAC starting here
+    // Additional Initialization of DAC starting here
 }
-
 
 /* Set the resolution of analogRead return values in number of bits.
     Default is 10 bits (range from 0 to 1023)
@@ -126,16 +123,14 @@ PC Sept-2019 Change flow to trap invalid input first and leave at old setting if
 
     Add set maximum value for resolution
 */
-uint8_t analogReadResolution( uint8_t res )
-{
-if( res > ADC_MAX_READ_RESOLUTION || res < ADC_MIN_RESOLUTION )
-  return 255;
+uint8_t analogReadResolution(uint8_t res) {
+    if (res > ADC_MAX_READ_RESOLUTION || res < ADC_MIN_RESOLUTION)
+        return 255;
 
-_readResolution = res;
-_readMaximum = (uint16_t)( ( (uint32_t)1U << res ) - 1 );
-return res;
+    _readResolution = res;
+    _readMaximum = (uint16_t)(((uint32_t)1U << res) - 1);
+    return res;
 }
-
 
 /* Set the resolution of analogWrite parameters in number of bits.
 
@@ -147,73 +142,65 @@ PC Sept-2019 Change flow to trap invalid input first and leave at old setting if
 
     Add set maximum value for resolution
   */
-uint8_t analogWriteResolution( uint8_t res )
-{
-if( res > ANALOG_MAX_WRITE_RESOLUTION || res < ADC_MIN_RESOLUTION )
-  return 255;
+uint8_t analogWriteResolution(uint8_t res) {
+    if (res > ANALOG_MAX_WRITE_RESOLUTION || res < ADC_MIN_RESOLUTION)
+        return 255;
 
-_writeResolution = res;
-_writeMaximum = (uint16_t)( ( (uint32_t)1U << res ) - 1 );
-return res;
+    _writeResolution = res;
+    _writeMaximum = (uint16_t)(((uint32_t)1U << res) - 1);
+    return res;
 }
-
 
 // This appears to be a dummy function and variable not used elsewhere
 uint8_t analog_reference = DEFAULT;
 
-void analogReference( uint8_t ulMode )
-{
-analog_reference = ulMode;
-}
-
+void analogReference(uint8_t ulMode) { analog_reference = ulMode; }
 
 /* analogRead takes parameter of ADC channel number
         return 0xFFFFFFFF for invalid channel */
-uint32_t analogRead( uint8_t channel )
-{
-uint32_t value;
+uint32_t analogRead(uint8_t channel) {
+    uint32_t value;
 
-value = 0xFFFFFFFF;
-if( channel < NUM_ANALOG_INPUTS )
-  {
-  XMC_ADC_t *adc = &mapping_adc[ channel ];
+    value = 0xFFFFFFFF;
+    if (channel < NUM_ANALOG_INPUTS) {
+        XMC_ADC_t *adc = &mapping_adc[channel];
 
-#if(XMC_VADC_GROUP_AVAILABLE == 1U)
-  // ADC grouping
-  if( !(adc->enabled) )
-    {
-    XMC_VADC_CHANNEL_CONFIG_t  vadc_gobal_channel_config;
-    memset( &vadc_gobal_channel_config, 0, sizeof( XMC_VADC_CHANNEL_CONFIG_t ) );
-    vadc_gobal_channel_config.input_class       = XMC_VADC_CHANNEL_CONV_GROUP_CLASS1;
-    vadc_gobal_channel_config.result_reg_number = adc->result_reg_num;
-    vadc_gobal_channel_config.alias_channel     = XMC_VADC_CHANNEL_ALIAS_DISABLED;
+#if (XMC_VADC_GROUP_AVAILABLE == 1U)
+        // ADC grouping
+        if (!(adc->enabled)) {
+            XMC_VADC_CHANNEL_CONFIG_t vadc_gobal_channel_config;
+            memset(&vadc_gobal_channel_config, 0, sizeof(XMC_VADC_CHANNEL_CONFIG_t));
+            vadc_gobal_channel_config.input_class = XMC_VADC_CHANNEL_CONV_GROUP_CLASS1;
+            vadc_gobal_channel_config.result_reg_number = adc->result_reg_num;
+            vadc_gobal_channel_config.alias_channel = XMC_VADC_CHANNEL_ALIAS_DISABLED;
 
-    XMC_VADC_RESULT_CONFIG_t vadc_gobal_result_config = { .g_rcr = 0 };
-    /* Configure a channel belonging to the aforesaid conversion kernel */
-    XMC_VADC_GROUP_ChannelInit( adc->group, adc->channel_num, &vadc_gobal_channel_config );
-    /* Configure a result resource belonging to the aforesaid conversion kernel */
-    XMC_VADC_GROUP_ResultInit( adc->group, adc->result_reg_num, &vadc_gobal_result_config );
-    /* Add channel into the Background Request Source Channel Select Register */
-    XMC_VADC_GLOBAL_BackgroundAddChannelToSequence( VADC, (uint32_t)adc->group_num,
-                                                          (uint32_t)adc->channel_num );
-    }
-  /* Start conversion manually using load event trigger*/
-  XMC_VADC_GLOBAL_BackgroundTriggerConversion( VADC );
-  value = XMC_VADC_GROUP_GetResult( adc->group, adc->result_reg_num );
+            XMC_VADC_RESULT_CONFIG_t vadc_gobal_result_config = {.g_rcr = 0};
+            /* Configure a channel belonging to the aforesaid conversion kernel */
+            XMC_VADC_GROUP_ChannelInit(adc->group, adc->channel_num, &vadc_gobal_channel_config);
+            /* Configure a result resource belonging to the aforesaid conversion kernel */
+            XMC_VADC_GROUP_ResultInit(adc->group, adc->result_reg_num, &vadc_gobal_result_config);
+            /* Add channel into the Background Request Source Channel Select Register */
+            XMC_VADC_GLOBAL_BackgroundAddChannelToSequence(VADC, (uint32_t)adc->group_num,
+                                                           (uint32_t)adc->channel_num);
+        }
+        /* Start conversion manually using load event trigger*/
+        XMC_VADC_GLOBAL_BackgroundTriggerConversion(VADC);
+        value = XMC_VADC_GROUP_GetResult(adc->group, adc->result_reg_num);
 #else
-  // XMC1100 no ADC grouping
-  if( !(adc->enabled) )
-    /* Add a channel to the background source. */
-    VADC->BRSSEL[ ADC_CONVERSION_GROUP ] = (uint32_t)( 1U << adc->channel_num );
-  // Generates conversion request
-  XMC_VADC_GLOBAL_BackgroundTriggerConversion( VADC );
+        // XMC1100 no ADC grouping
+        if (!(adc->enabled))
+            /* Add a channel to the background source. */
+            VADC->BRSSEL[ADC_CONVERSION_GROUP] = (uint32_t)(1U << adc->channel_num);
+        // Generates conversion request
+        XMC_VADC_GLOBAL_BackgroundTriggerConversion(VADC);
 
-  // Wait until conversion is ready
-  while( ( ( value = XMC_VADC_GLOBAL_GetDetailedResult( VADC ) ) & VADC_GLOBRES_VF_Msk) == 0u );
+        // Wait until conversion is ready
+        while (((value = XMC_VADC_GLOBAL_GetDetailedResult(VADC)) & VADC_GLOBRES_VF_Msk) == 0u)
+            ;
 #endif
-  value = ( ( value & VADC_GLOBRES_RESULT_Msk) >> ( ADC_MAX_READ_RESOLUTION - _readResolution ) );
-  }
-return value;
+        value = ((value & VADC_GLOBRES_RESULT_Msk) >> (ADC_MAX_READ_RESOLUTION - _readResolution));
+    }
+    return value;
 }
 
 /* analogRead_variableGain takes parameter of ADC channel number and gain value
@@ -224,62 +211,61 @@ return value;
          1             3
          2             6
          3             12
-    Also, refer to macros in wiring_analog.h          
-*/ 
+    Also, refer to macros in wiring_analog.h
+*/
 
-uint32_t analogRead_variableGain( uint8_t channel, uint8_t gain_value )
-{
-#if(XMC_VADC_SHS_AVAILABLE == 1U)
-uint32_t value;
+uint32_t analogRead_variableGain(uint8_t channel, uint8_t gain_value) {
+#if (XMC_VADC_SHS_AVAILABLE == 1U)
+    uint32_t value;
 
-value = 0xFFFFFFFF;
-if( channel < NUM_ANALOG_INPUTS )
-  {
-  XMC_ADC_t *adc = &mapping_adc[ channel ];
+    value = 0xFFFFFFFF;
+    if (channel < NUM_ANALOG_INPUTS) {
+        XMC_ADC_t *adc = &mapping_adc[channel];
 
-#if(XMC_VADC_GROUP_AVAILABLE == 1U)
-  // ADC grouping
-  if( !(adc->enabled) )
-    {
-    XMC_VADC_CHANNEL_CONFIG_t  vadc_gobal_channel_config;
-    memset( &vadc_gobal_channel_config, 0, sizeof( XMC_VADC_CHANNEL_CONFIG_t ) );
-    vadc_gobal_channel_config.input_class       = XMC_VADC_CHANNEL_CONV_GROUP_CLASS1;
-    vadc_gobal_channel_config.result_reg_number = adc->result_reg_num;
-    vadc_gobal_channel_config.alias_channel     = XMC_VADC_CHANNEL_ALIAS_DISABLED;
+    #if (XMC_VADC_GROUP_AVAILABLE == 1U)
+        // ADC grouping
+        if (!(adc->enabled)) {
+            XMC_VADC_CHANNEL_CONFIG_t vadc_gobal_channel_config;
+            memset(&vadc_gobal_channel_config, 0, sizeof(XMC_VADC_CHANNEL_CONFIG_t));
+            vadc_gobal_channel_config.input_class = XMC_VADC_CHANNEL_CONV_GROUP_CLASS1;
+            vadc_gobal_channel_config.result_reg_number = adc->result_reg_num;
+            vadc_gobal_channel_config.alias_channel = XMC_VADC_CHANNEL_ALIAS_DISABLED;
 
-    XMC_VADC_RESULT_CONFIG_t vadc_gobal_result_config = { .g_rcr = 0 };
-    /* Configure a channel belonging to the aforesaid conversion kernel */
-    XMC_VADC_GROUP_ChannelInit( adc->group, adc->channel_num, &vadc_gobal_channel_config );
-    /* Configure a result resource belonging to the aforesaid conversion kernel */
-    XMC_VADC_GROUP_ResultInit( adc->group, adc->result_reg_num, &vadc_gobal_result_config );
-    /* Add channel into the Background Request Source Channel Select Register */
-    XMC_VADC_GLOBAL_BackgroundAddChannelToSequence( VADC, (uint32_t)adc->group_num,
-                                                          (uint32_t)adc->channel_num );                                                         
-    /* Set the gain factor of the Sample and hold module*/
-    XMC_VADC_GLOBAL_SHS_SetGainFactor( SHS0, gain_value, (uint32_t)adc->group_num, (uint32_t)adc->channel_num );                                                          
+            XMC_VADC_RESULT_CONFIG_t vadc_gobal_result_config = {.g_rcr = 0};
+            /* Configure a channel belonging to the aforesaid conversion kernel */
+            XMC_VADC_GROUP_ChannelInit(adc->group, adc->channel_num, &vadc_gobal_channel_config);
+            /* Configure a result resource belonging to the aforesaid conversion kernel */
+            XMC_VADC_GROUP_ResultInit(adc->group, adc->result_reg_num, &vadc_gobal_result_config);
+            /* Add channel into the Background Request Source Channel Select Register */
+            XMC_VADC_GLOBAL_BackgroundAddChannelToSequence(VADC, (uint32_t)adc->group_num,
+                                                           (uint32_t)adc->channel_num);
+            /* Set the gain factor of the Sample and hold module*/
+            XMC_VADC_GLOBAL_SHS_SetGainFactor(SHS0, gain_value, (uint32_t)adc->group_num,
+                                              (uint32_t)adc->channel_num);
+        }
+        /* Start conversion manually using load event trigger*/
+        XMC_VADC_GLOBAL_BackgroundTriggerConversion(VADC);
+        value = XMC_VADC_GROUP_GetResult(adc->group, adc->result_reg_num);
+    #else
+        // XMC1100 no ADC grouping
+        if (!(adc->enabled))
+            /* Add a channel to the background source. */
+            VADC->BRSSEL[ADC_CONVERSION_GROUP] = (uint32_t)(1U << adc->channel_num);
+        /* Set the gain factor of the Sample and hold module */
+        XMC_VADC_GLOBAL_SHS_SetGainFactor(SHS0, gain_value, XMC_VADC_GROUP_INDEX_0,
+                                          (uint32_t)adc->channel_num);
+        // Generates conversion request
+        XMC_VADC_GLOBAL_BackgroundTriggerConversion(VADC);
+
+        // Wait until conversion is ready
+        while (((value = XMC_VADC_GLOBAL_GetDetailedResult(VADC)) & VADC_GLOBRES_VF_Msk) == 0u)
+            ;
+    #endif
+        value = ((value & VADC_GLOBRES_RESULT_Msk) >> (ADC_MAX_READ_RESOLUTION - _readResolution));
+        return value;
     }
-  /* Start conversion manually using load event trigger*/
-  XMC_VADC_GLOBAL_BackgroundTriggerConversion( VADC );
-  value = XMC_VADC_GROUP_GetResult( adc->group, adc->result_reg_num );
-#else
-  // XMC1100 no ADC grouping
-  if( !(adc->enabled) )
-    /* Add a channel to the background source. */
-    VADC->BRSSEL[ ADC_CONVERSION_GROUP ] = (uint32_t)( 1U << adc->channel_num );
-  /* Set the gain factor of the Sample and hold module */
-  XMC_VADC_GLOBAL_SHS_SetGainFactor( SHS0, gain_value, XMC_VADC_GROUP_INDEX_0, (uint32_t)adc->channel_num );
-  // Generates conversion request
-  XMC_VADC_GLOBAL_BackgroundTriggerConversion( VADC );
-
-  // Wait until conversion is ready
-  while( ( ( value = XMC_VADC_GLOBAL_GetDetailedResult( VADC ) ) & VADC_GLOBRES_VF_Msk) == 0u );
-#endif
-  value = ( ( value & VADC_GLOBRES_RESULT_Msk) >> ( ADC_MAX_READ_RESOLUTION - _readResolution ) );
-return value;
-  }
 #endif
 }
-
 
 /* Helper function for analogWrite and setAnalogWriteFrequency to scan
    mapping tables to determine for a given pin which PWM4, PWM8 or DAC
@@ -288,22 +274,19 @@ return value;
    reading first column as 255 denotes end of table
    See pins_arduino.h for table layout
 */
-int16_t scan_map_table( const uint8_t table[][ 2 ], uint8_t pin )
-{
-int16_t i;
+int16_t scan_map_table(const uint8_t table[][2], uint8_t pin) {
+    int16_t i;
 
-i = 0;
-while( table[ i ][ 0 ] != 255 )
-    {
-    if( table[ i ][ 0 ] == pin )
-      break;
-    i++;
+    i = 0;
+    while (table[i][0] != 255) {
+        if (table[i][0] == pin)
+            break;
+        i++;
     }
-if( table[ i ][ 0 ] != 255 )
-  return table[ i ][ 1 ];
-return -1;
+    if (table[i][0] != 255)
+        return table[i][1];
+    return -1;
 }
-
 
 /* Writes an analogue value to a DAC or PWM wave to a pin.
     DAC is straight write to DAC (if present on that pin)
@@ -322,95 +305,86 @@ return -1;
                -1 = invalid value
                -2 = wrong pin
 */
-int16_t analogWrite( uint8_t pin, uint16_t value )
-{
-uint32_t compare_reg = 0;
-int16_t resource;
+int16_t analogWrite(uint8_t pin, uint16_t value) {
+    uint32_t compare_reg = 0;
+    int16_t resource;
 
-if( value > _writeMaximum )
-  return -1;
+    if (value > _writeMaximum)
+        return -1;
 
-if( ( resource = scan_map_table( mapping_pin_PWM4, pin ) ) >= 0 )
-  {
-  XMC_PWM4_t *pwm4 = &mapping_pwm4[ resource ];
+    if ((resource = scan_map_table(mapping_pin_PWM4, pin)) >= 0) {
+        XMC_PWM4_t *pwm4 = &mapping_pwm4[resource];
 
-  if( !(pwm4->enabled) )
-    {
-    // Slice not yet initialized
-    XMC_CCU4_SLICE_COMPARE_CONFIG_t pwm_config;
-    memset( &pwm_config, 0, sizeof( XMC_CCU4_SLICE_COMPARE_CONFIG_t ) );
-    pwm_config.passive_level = XMC_CCU4_SLICE_OUTPUT_PASSIVE_LEVEL_HIGH;
-    pwm_config.prescaler_initval = pwm4->prescaler;
+        if (!(pwm4->enabled)) {
+            // Slice not yet initialized
+            XMC_CCU4_SLICE_COMPARE_CONFIG_t pwm_config;
+            memset(&pwm_config, 0, sizeof(XMC_CCU4_SLICE_COMPARE_CONFIG_t));
+            pwm_config.passive_level = XMC_CCU4_SLICE_OUTPUT_PASSIVE_LEVEL_HIGH;
+            pwm_config.prescaler_initval = pwm4->prescaler;
 
-    XMC_CCU4_Init( pwm4->ccu, XMC_CCU4_SLICE_MCMS_ACTION_TRANSFER_PR_CR );
-    XMC_CCU4_SLICE_CompareInit( pwm4->slice, &pwm_config );
-    XMC_CCU4_EnableClock( pwm4->ccu, pwm4->slice_num );
-    XMC_CCU4_SLICE_SetTimerPeriodMatch( pwm4->slice, pwm4->period_timer_val );
+            XMC_CCU4_Init(pwm4->ccu, XMC_CCU4_SLICE_MCMS_ACTION_TRANSFER_PR_CR);
+            XMC_CCU4_SLICE_CompareInit(pwm4->slice, &pwm_config);
+            XMC_CCU4_EnableClock(pwm4->ccu, pwm4->slice_num);
+            XMC_CCU4_SLICE_SetTimerPeriodMatch(pwm4->slice, pwm4->period_timer_val);
 
-    pwm4->enabled = ENABLED;
+            pwm4->enabled = ENABLED;
+        }
+
+        if (value != 0)
+            compare_reg = ((value + 1) * (pwm4->period_timer_val + 1)) >> _writeResolution;
+
+        XMC_CCU4_SLICE_SetTimerCompareMatch(pwm4->slice, compare_reg);
+        XMC_CCU4_EnableShadowTransfer(pwm4->ccu, (CCU4_GCSS_S0SE_Msk << (4 * pwm4->slice_num)));
+        XMC_GPIO_SetMode(pwm4->port_pin.port, pwm4->port_pin.pin,
+                         (XMC_GPIO_MODE_OUTPUT_PUSH_PULL | pwm4->port_mode));
+        XMC_CCU4_SLICE_StartTimer(pwm4->slice);
     }
-
-  if( value != 0 )
-    compare_reg  = ( ( value + 1 ) * ( pwm4->period_timer_val + 1 ) ) >> _writeResolution;
-
-  XMC_CCU4_SLICE_SetTimerCompareMatch( pwm4->slice, compare_reg );
-  XMC_CCU4_EnableShadowTransfer( pwm4->ccu, ( CCU4_GCSS_S0SE_Msk << ( 4 * pwm4->slice_num ) ) );
-  XMC_GPIO_SetMode( pwm4->port_pin.port, pwm4->port_pin.pin,
-                                  ( XMC_GPIO_MODE_OUTPUT_PUSH_PULL | pwm4->port_mode ) );
-  XMC_CCU4_SLICE_StartTimer( pwm4->slice );
-  }
 #if defined(CCU8V2) || defined(CCU8V1)
-else
-  if( ( resource = scan_map_table( mapping_pin_PWM8, pin ) ) >= 0 )
-    {
-    XMC_PWM8_t *pwm8 = &mapping_pwm8[ resource ];
+    else if ((resource = scan_map_table(mapping_pin_PWM8, pin)) >= 0) {
+        XMC_PWM8_t *pwm8 = &mapping_pwm8[resource];
 
-    if( !(pwm8->enabled) )
-      {
-      // Slice not yet initialized
-      XMC_CCU8_SLICE_COMPARE_CONFIG_t pwm_config;
-      memset( &pwm_config, 0, sizeof( XMC_CCU8_SLICE_COMPARE_CONFIG_t ) );
-      pwm_config.passive_level_out0 = XMC_CCU8_SLICE_OUTPUT_PASSIVE_LEVEL_HIGH;
-      pwm_config.passive_level_out1 = XMC_CCU8_SLICE_OUTPUT_PASSIVE_LEVEL_HIGH;
-      pwm_config.passive_level_out2 = XMC_CCU8_SLICE_OUTPUT_PASSIVE_LEVEL_HIGH;
-      pwm_config.passive_level_out3 = XMC_CCU8_SLICE_OUTPUT_PASSIVE_LEVEL_HIGH;
-      pwm_config.prescaler_initval = pwm8->prescaler;
+        if (!(pwm8->enabled)) {
+            // Slice not yet initialized
+            XMC_CCU8_SLICE_COMPARE_CONFIG_t pwm_config;
+            memset(&pwm_config, 0, sizeof(XMC_CCU8_SLICE_COMPARE_CONFIG_t));
+            pwm_config.passive_level_out0 = XMC_CCU8_SLICE_OUTPUT_PASSIVE_LEVEL_HIGH;
+            pwm_config.passive_level_out1 = XMC_CCU8_SLICE_OUTPUT_PASSIVE_LEVEL_HIGH;
+            pwm_config.passive_level_out2 = XMC_CCU8_SLICE_OUTPUT_PASSIVE_LEVEL_HIGH;
+            pwm_config.passive_level_out3 = XMC_CCU8_SLICE_OUTPUT_PASSIVE_LEVEL_HIGH;
+            pwm_config.prescaler_initval = pwm8->prescaler;
 
-      XMC_CCU8_Init( pwm8->ccu, XMC_CCU8_SLICE_MCMS_ACTION_TRANSFER_PR_CR );
-      XMC_CCU8_SLICE_CompareInit( pwm8->slice, &pwm_config );
-      XMC_CCU8_EnableClock( pwm8->ccu, pwm8->slice_num );
-      XMC_CCU8_SLICE_SetTimerPeriodMatch( pwm8->slice, pwm8->period_timer_val );
-      pwm8->enabled = ENABLED;
-      }
+            XMC_CCU8_Init(pwm8->ccu, XMC_CCU8_SLICE_MCMS_ACTION_TRANSFER_PR_CR);
+            XMC_CCU8_SLICE_CompareInit(pwm8->slice, &pwm_config);
+            XMC_CCU8_EnableClock(pwm8->ccu, pwm8->slice_num);
+            XMC_CCU8_SLICE_SetTimerPeriodMatch(pwm8->slice, pwm8->period_timer_val);
+            pwm8->enabled = ENABLED;
+        }
 
-    if( value != 0 )
-      compare_reg  = ( ( value + 1 ) * ( pwm8->period_timer_val + 1 ) ) >> _writeResolution;
+        if (value != 0)
+            compare_reg = ((value + 1) * (pwm8->period_timer_val + 1)) >> _writeResolution;
 
-    XMC_CCU8_SLICE_SetTimerCompareMatch( pwm8->slice, pwm8->slice_channel, compare_reg );
-    XMC_CCU8_EnableShadowTransfer( pwm8->ccu, CCU8_GCSS_S0SE_Msk << ( 4 * pwm8->slice_num ) );
-    XMC_GPIO_SetMode( pwm8->port_pin.port, pwm8->port_pin.pin,
-                                XMC_GPIO_MODE_OUTPUT_PUSH_PULL | pwm8->port_mode );
-    XMC_CCU8_SLICE_StartTimer( pwm8->slice );
+        XMC_CCU8_SLICE_SetTimerCompareMatch(pwm8->slice, pwm8->slice_channel, compare_reg);
+        XMC_CCU8_EnableShadowTransfer(pwm8->ccu, CCU8_GCSS_S0SE_Msk << (4 * pwm8->slice_num));
+        XMC_GPIO_SetMode(pwm8->port_pin.port, pwm8->port_pin.pin,
+                         XMC_GPIO_MODE_OUTPUT_PUSH_PULL | pwm8->port_mode);
+        XMC_CCU8_SLICE_StartTimer(pwm8->slice);
     }
 #endif
 #ifdef DAC
-else
-  if( ( resource = scan_map_table( mapping_pin_DAC, pin ) ) >= 0 )
-    {
-    XMC_ARD_DAC_t *dac = &( mapping_dac[ resource ] );
-    XMC_DAC_Enable( dac->group );
-    XMC_DAC_CH_EnableOutput( dac->group, dac->channel );
-    XMC_DAC_CH_StartSingleValueMode(dac->group, dac->channel );
-    uint16_t dacValue = map(value, 0, ( 0b10 << _writeResolution ) - 1, 0,
-                                ( 0b10 << dac->resolution ) - 1 );
-    XMC_DAC_CH_Write( dac->group, dac->channel, dacValue );
+    else if ((resource = scan_map_table(mapping_pin_DAC, pin)) >= 0) {
+        XMC_ARD_DAC_t *dac = &(mapping_dac[resource]);
+        XMC_DAC_Enable(dac->group);
+        XMC_DAC_CH_EnableOutput(dac->group, dac->channel);
+        XMC_DAC_CH_StartSingleValueMode(dac->group, dac->channel);
+        uint16_t dacValue =
+            map(value, 0, (0b10 << _writeResolution) - 1, 0, (0b10 << dac->resolution) - 1);
+        XMC_DAC_CH_Write(dac->group, dac->channel, dacValue);
     }
 #endif
-  else
-    return -2;
-return 0;
+    else
+        return -2;
+    return 0;
 }
-
 
 /* Sets the frequency for analogWrite PWM.
 
@@ -421,63 +395,53 @@ return 0;
            -1 invalid frequency
             0 Success
 */
-int16_t setAnalogWriteFrequency( uint8_t pin, uint32_t frequency )
-{
-int16_t ret = -1;
-uint16_t prescaler = 0U;
-int16_t resource;
-uint16_t period;
+int16_t setAnalogWriteFrequency(uint8_t pin, uint32_t frequency) {
+    int16_t ret = -1;
+    uint16_t prescaler = 0U;
+    int16_t resource;
+    uint16_t period;
 
-if( frequency < PCLK )
-  {
-  do
-    {
-    if( frequency > ( PCLK / ( ( 1U << prescaler ) * 65536U ) ) )
-      break;
-    prescaler++;
-    }
-  while( prescaler < 15 );      // Prescaler must never be > 15
+    if (frequency < PCLK) {
+        do {
+            if (frequency > (PCLK / ((1U << prescaler) * 65536U)))
+                break;
+            prescaler++;
+        } while (prescaler < 15); // Prescaler must never be > 15
 
-  // Calculate 16 bit timer end value
-  period = ( PCLK / ( ( 1U << prescaler )  * frequency ) ) - 1;
+        // Calculate 16 bit timer end value
+        period = (PCLK / ((1U << prescaler) * frequency)) - 1;
 
-  if( ( resource = scan_map_table( mapping_pin_PWM4, pin ) ) >= 0 )
-    {
-    XMC_PWM4_t *pwm4 = &mapping_pwm4[ resource ];
+        if ((resource = scan_map_table(mapping_pin_PWM4, pin)) >= 0) {
+            XMC_PWM4_t *pwm4 = &mapping_pwm4[resource];
 
-    pwm4->prescaler = prescaler;
-    pwm4->period_timer_val = period;
-    if( pwm4->enabled == ENABLED )
-      {
-      // Disable pwm output
-      pwm4->enabled = DISABLED;
-      XMC_CCU4_SLICE_StartTimer( pwm4->slice );
-      }
-    ret = 0;
-    }
-#if defined (CCU8V2) || defined (CCU8V1)
-  else
-    if ( ( resource = scan_map_table( mapping_pin_PWM8, pin ) ) >= 0 )
-      {
-      XMC_PWM8_t *pwm8 = &mapping_pwm8[ resource ];
-
-      pwm8->prescaler = prescaler;
-      pwm8->period_timer_val = period;
-      if( pwm8->enabled == ENABLED )
-        {
-        // Disable pwm output
-        pwm8->enabled = DISABLED;
-        XMC_CCU8_SLICE_StartTimer( pwm8->slice );
+            pwm4->prescaler = prescaler;
+            pwm4->period_timer_val = period;
+            if (pwm4->enabled == ENABLED) {
+                // Disable pwm output
+                pwm4->enabled = DISABLED;
+                XMC_CCU4_SLICE_StartTimer(pwm4->slice);
+            }
+            ret = 0;
         }
-      ret = 0;
-      }
-#endif
-  if( ret == -1 )           // Catch pin not found
-    ret = -2;
-  }
-return ret;
-}
+#if defined(CCU8V2) || defined(CCU8V1)
+        else if ((resource = scan_map_table(mapping_pin_PWM8, pin)) >= 0) {
+            XMC_PWM8_t *pwm8 = &mapping_pwm8[resource];
 
+            pwm8->prescaler = prescaler;
+            pwm8->period_timer_val = period;
+            if (pwm8->enabled == ENABLED) {
+                // Disable pwm output
+                pwm8->enabled = DISABLED;
+                XMC_CCU8_SLICE_StartTimer(pwm8->slice);
+            }
+            ret = 0;
+        }
+#endif
+        if (ret == -1) // Catch pin not found
+            ret = -2;
+    }
+    return ret;
+}
 
 /* PC Sept-2019
     Add helper functions to get Read and Write resolution as bits or maximum value
@@ -485,39 +449,24 @@ return ret;
 /* Get the current resolution of analogRead in number of bits.
     Return Current resolution in bits (8 to 12)
  */
-uint8_t getAnalogReadBits( )
-{
-return _readResolution;
-}
-
+uint8_t getAnalogReadBits() { return _readResolution; }
 
 /* Get the current resolution of analogWrite in number of bits.
     Return Current resolution in bits (8 to 16)
  */
-uint8_t getAnalogWriteBits( )
-{
-return _writeResolution;
-}
-
+uint8_t getAnalogWriteBits() { return _writeResolution; }
 
 /* Get the maximum value for current resolution for analogRead.
     Default is 1023
     Maximum is 4095
  */
-uint16_t getAnalogReadMaximum( )
-{
-return _readMaximum;
-}
-
+uint16_t getAnalogReadMaximum() { return _readMaximum; }
 
 /* Get the maximum value for current resolution for analogWrite.
     Default is 255
     Maximum is 65535
  */
-uint16_t getAnalogWriteMaximum(  )
-{
-return _writeMaximum;
-}
+uint16_t getAnalogWriteMaximum() { return _writeMaximum; }
 
 //****************************************************************************
 //                                 END OF FILE

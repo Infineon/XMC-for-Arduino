@@ -16,17 +16,15 @@
   Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-
 #ifndef Printable_h
 #define Printable_h
 
 #ifdef __cplusplus
 
-//****************************************************************************
-// @Project Includes
-//****************************************************************************
-#include <stdlib.h>
-
+    //****************************************************************************
+    // @Project Includes
+    //****************************************************************************
+    #include <stdlib.h>
 
 //****************************************************************************
 // @Class Definitions
@@ -38,13 +36,11 @@ class Print;
     for users to print out instances of this class by passing them into the usual
     Print::print and Print::println methods.
 */
-class Printable
-{
+class Printable {
 public:
-    virtual size_t printTo(Print& p) const = 0;
+    virtual size_t printTo(Print &p) const = 0;
 };
 
-#endif  // __cplusplus
+#endif // __cplusplus
 
 #endif
-
