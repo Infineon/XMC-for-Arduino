@@ -121,6 +121,12 @@ jobs:
           echo "Version               " ${TEST_VERSION}
 
       # Build the test code with make and flash it to the board
+      # runs via nested loops:
+      # - first loop over the libraries mentioned for a device in the yaml file
+      # - selects the serial ids and ports for all devices connected with this device and library
+      # - second loop over the examples mentioned  below the selected device for a library in the yaml file
+      # 
+
       - name: Build
         run: |
           lib=${{ toJson(env.library) }}
@@ -150,7 +156,7 @@ jobs:
 
               # loop over all tests for one example
               readarray -t TESTS < <(echo $lib | jq ".\"${LIB}\".\"${EXAMPLE}\"" -r --compact-output)
-              for ((idx=0; idx<${#TESTS[@]}; idx++)); do
+              for idx in "${!TESTS[@]}"; do
                 echo "Run on index $idx for TEST: ${TESTS[idx]} under EXAMPLE: ${EXAMPLE} and LIB: ${LIB}"
                 
                 
