@@ -126,15 +126,15 @@ findID      Get ID of first task from task address
 // @Project Includes
 //****************************************************************************
 #include "Arduino.h"
-extern int  tone_irq_action( int, int16_t );
+extern int tone_irq_action(int, int16_t);
 
 //****************************************************************************
 // @Macros
 //****************************************************************************
 // number of tasks = number of tones plus delay task plus any others added later
-#define _MAX_TASKS   NUM_TASKS_VARIANT
+#define _MAX_TASKS NUM_TASKS_VARIANT
 
-#define SYSTIMER_PRIORITY  (4U)
+#define SYSTIMER_PRIORITY (4U)
 /* Millisecond to Microsecond ratio */
 #define TIMER_1mSec 1000
 
@@ -155,16 +155,16 @@ extern int  tone_irq_action( int, int16_t );
     This way last is always delay and first 'n' are always Tone pins i.e. 0 - n
     last is _MAX_TASKS - 1
 */
-int (* tasks[_MAX_TASKS])( int, int16_t );
+int (*tasks[_MAX_TASKS])(int, int16_t);
 
 /* Structure for task details next run, status etc.. */
-struct TaskList taskTable[ _MAX_TASKS ];
+struct TaskList taskTable[_MAX_TASKS];
 
-unsigned long old_ms = 0;   // last execution time
-int running = _MAX_TASKS;   // Current task ID being checked or run
-                            // Initialise to avoid fast CPU EXTREME edge case of
-                            // requesting task (mainly first Tone task) BEFORE the
-                            // FIRST SysTick interrupt (1 ms) after power up.
+unsigned long old_ms = 0; // last execution time
+int running = _MAX_TASKS; // Current task ID being checked or run
+                          // Initialise to avoid fast CPU EXTREME edge case of
+                          // requesting task (mainly first Tone task) BEFORE the
+                          // FIRST SysTick interrupt (1 ms) after power up.
 
 /* SysTick counter */
 volatile uint32_t g_systick_count = 0U;
@@ -175,45 +175,40 @@ volatile __IO bool g_timer_entered_handler = FALSE;
 // Delay ms function flag for time expired in Systick Event Handler
 volatile __IO bool delay_timer_expired = FALSE;
 
-
 //****************************************************************************
 // @Prototypes Of Local Functions
 //****************************************************************************
 /* Handler function  called from SysTick event handler for task scheduling */
-int XMC_SYSTIMER_lTimerHandler( void );
+int XMC_SYSTIMER_lTimerHandler(void);
 
 /* SysTick handler which is the main interrupt service routine to service the
  * tasks configured */
-void SysTick_Handler( void );
-
+void SysTick_Handler(void);
 
 //****************************************************************************
 // @Local Functions
 //****************************************************************************
-void wiring_time_init( void )
-{
-/* Initialise micro/milli second counter as early as possible
-   Initialize SysTick timer for 1 ms (1 kHz) interval */
-SysTick_Config( (uint32_t)SYSTICK_MS );
+void wiring_time_init(void) {
+    /* Initialise micro/milli second counter as early as possible
+       Initialize SysTick timer for 1 ms (1 kHz) interval */
+    SysTick_Config((uint32_t)SYSTICK_MS);
 
-// Initialise task control to all off
-memset( taskTable, 0, sizeof( taskTable ) );
+    // Initialise task control to all off
+    memset(taskTable, 0, sizeof(taskTable));
 
-for( int i = 0; i < _MAX_TASKS; i++ )
-   {
-   taskTable[ i ].param = i;        // Preset user parameter to task number
-   // Fill with call back function addresses
-   if( i < NUM_TONE_PINS )
-     tasks[ i ] = tone_irq_action;   // Tone callbacks
-   else
-     tasks[ i ] = NULL;     // Special case delay() ms callback
-   }
+    for (int i = 0; i < _MAX_TASKS; i++) {
+        taskTable[i].param = i; // Preset user parameter to task number
+        // Fill with call back function addresses
+        if (i < NUM_TONE_PINS)
+            tasks[i] = tone_irq_action; // Tone callbacks
+        else
+            tasks[i] = NULL; // Special case delay() ms callback
+    }
 
-/* setting of First SW Timer period is always and sub-priority value for XMC4000 devices */
-/* setting of priority value for XMC1000 devices */
-NVIC_SetPriority( SysTick_IRQn, SYSTIMER_PRIORITY );
+    /* setting of First SW Timer period is always and sub-priority value for XMC4000 devices */
+    /* setting of priority value for XMC1000 devices */
+    NVIC_SetPriority(SysTick_IRQn, SYSTIMER_PRIORITY);
 }
-
 
 /* delay - milliseconds
  * This function uses SysTick Exception for controlling the timer list. Call back function
@@ -224,18 +219,16 @@ NVIC_SetPriority( SysTick_IRQn, SYSTIMER_PRIORITY );
  * Special cases for callback action processing
  *      callback is NULL boolean delay_timer_expired is set to true
  */
-void delay( uint32_t dwMs )
-{
-setInterval( _MAX_TASKS - 1, dwMs );
-//Timer is always in list as last
-startTask( _MAX_TASKS - 1 );
-// Wait until timer expires
-do
-  yield( );
-while( !delay_timer_expired );
-delay_timer_expired = FALSE;
+void delay(uint32_t dwMs) {
+    setInterval(_MAX_TASKS - 1, dwMs);
+    // Timer is always in list as last
+    startTask(_MAX_TASKS - 1);
+    // Wait until timer expires
+    do
+        yield();
+    while (!delay_timer_expired);
+    delay_timer_expired = FALSE;
 }
-
 
 /* Handler function called from SysTick event handler.
         - Task scheduling loop
@@ -255,58 +248,48 @@ delay_timer_expired = FALSE;
    Returns  int  0  Processed no tasks to run
                 > 0 Number of tasks executed
  */
-int XMC_SYSTIMER_TaskLoop( void )
-{
-int done;
-unsigned int overdue;
-unsigned long ms;
+int XMC_SYSTIMER_TaskLoop(void) {
+    int done;
+    unsigned int overdue;
+    unsigned long ms;
 
-// Task loop lock
-g_timer_entered_handler = TRUE;
+    // Task loop lock
+    g_timer_entered_handler = TRUE;
 
-// get current time and overdue
-ms = g_systick_count;
-// Unsigned maths first ensures correct even at wraparound
-overdue = (unsigned int)( ms - old_ms );
-// save current execution time
-old_ms = ms;
-done = 0;
-for( running = 0; running < _MAX_TASKS; running++ )
-   {
-   if( taskTable[ running ].status > 0 )    // task enabled
-     { // check if time to run as in correct interval or overdue
-     if( ms - taskTable[ running ].next <= overdue )
-       {
-       if( tasks[ running ] == NULL )
-         {
-         delay_timer_expired = TRUE;        // Special case of NULL callback function
-         taskTable[ running ].status = 0;   // One shot event so stop task
-         }
-       else
-         if( ( taskTable[ running ].status =
-                ( ( *tasks[ running ])( running, taskTable[ running ].param ) ) ) > 0 )
-           taskTable[ running ].next = ms + taskTable[ running ].interval;
-       done++;
-       }
-     }
-   }
-return done;
+    // get current time and overdue
+    ms = g_systick_count;
+    // Unsigned maths first ensures correct even at wraparound
+    overdue = (unsigned int)(ms - old_ms);
+    // save current execution time
+    old_ms = ms;
+    done = 0;
+    for (running = 0; running < _MAX_TASKS; running++) {
+        if (taskTable[running].status > 0) // task enabled
+        {                                  // check if time to run as in correct interval or overdue
+            if (ms - taskTable[running].next <= overdue) {
+                if (tasks[running] == NULL) {
+                    delay_timer_expired = TRUE;    // Special case of NULL callback function
+                    taskTable[running].status = 0; // One shot event so stop task
+                } else if ((taskTable[running].status =
+                                ((*tasks[running])(running, taskTable[running].param))) > 0)
+                    taskTable[running].next = ms + taskTable[running].interval;
+                done++;
+            }
+        }
+    }
+    return done;
 }
-
 
 /* SysTick Event Handler. */
-void SysTick_Handler( void )
-{
-g_systick_count++;          // Another ms has occurred
+void SysTick_Handler(void) {
+    g_systick_count++; // Another ms has occurred
 
-// do not call handler, when still running
-if( g_timer_entered_handler == FALSE )
-  {
-  XMC_SYSTIMER_TaskLoop();
-  g_timer_entered_handler = FALSE;
-  }
+    // do not call handler, when still running
+    if (g_timer_entered_handler == FALSE) {
+        XMC_SYSTIMER_TaskLoop();
+        g_timer_entered_handler = FALSE;
+    }
 }
-
 
 /* checkID - Common ID check for valid and not running
 
@@ -316,15 +299,13 @@ if( g_timer_entered_handler == FALSE )
                  0  current task running
                  1  Valid
 */
-int CheckID( int ID )
-{
-if( ID < 0 || ID >= _MAX_TASKS )
-  return -1;
-if( ID == running )
-  return 0;
-return 1;
+int CheckID(int ID) {
+    if (ID < 0 || ID >= _MAX_TASKS)
+        return -1;
+    if (ID == running)
+        return 0;
+    return 1;
 }
-
 
 /* setInterval - set the interval time in ms for a task
 
@@ -339,19 +320,17 @@ return 1;
                  0  task is running
                 > 0 task interval and execution time set
 */
-int setInterval( int ID, uint32_t interval )
-{
-int i;
+int setInterval(int ID, uint32_t interval) {
+    int i;
 
-if( ( i = CheckID( ID ) ) < 0 )
-  return i;
-taskTable[ ID ].interval = interval;
-if( i != 0 )
-  {
-  taskTable[ ID ].next = millis( ) + interval + 1;
-  return 1;
-  }
-return 0;
+    if ((i = CheckID(ID)) < 0)
+        return i;
+    taskTable[ID].interval = interval;
+    if (i != 0) {
+        taskTable[ID].next = millis() + interval + 1;
+        return 1;
+    }
+    return 0;
 }
 
 /* getInterval - get the interval time in ms for a task
@@ -361,11 +340,7 @@ return 0;
 
     Return int  Current interval time
 */
-uint32_t getInterval( int ID )
-{
-return taskTable[ ID ].interval;
-}
-
+uint32_t getInterval(int ID) { return taskTable[ID].interval; }
 
 /* setParam - set the param value for a task callback function
 
@@ -375,14 +350,12 @@ return taskTable[ ID ].interval;
    Return int   -1 invalid ID
                 >=0 task param value set
 */
-int setParam( int ID, int16_t param )
-{
-if( ( CheckID( ID ) ) < 0 )
-  return -1;
-taskTable[ ID ].param = param;
-return 0;
+int setParam(int ID, int16_t param) {
+    if ((CheckID(ID)) < 0)
+        return -1;
+    taskTable[ID].param = param;
+    return 0;
 }
-
 
 /* getParam - get the param value for a task callback function
 
@@ -391,13 +364,11 @@ return 0;
     Return int  -1 invalid ID or valid param
                 All other values assume the param value
     */
-int16_t getParam( int ID )
-{
-if( ( CheckID( ID ) ) < 0 )
-  return -1;
-return taskTable[ ID ].param;
+int16_t getParam(int ID) {
+    if ((CheckID(ID)) < 0)
+        return -1;
+    return taskTable[ID].param;
 }
-
 
 /* getTime - get next execution time in ms of a task
 
@@ -411,13 +382,11 @@ return taskTable[ ID ].param;
                 0 could be execution time or error of invalid ID
                 1 could be execution time or error of NO interval
 */
-unsigned long getTime( int ID )
-{
-if( ( CheckID( ID ) ) < 0 )
-  return 0;
-return taskTable[ ID ].next;
+unsigned long getTime(int ID) {
+    if ((CheckID(ID)) < 0)
+        return 0;
+    return taskTable[ID].next;
 }
-
 
 /* getStatus - get task status even if running task
 
@@ -426,12 +395,11 @@ return taskTable[ ID ].next;
     Return int  -1  invalid ID
                any other value Status (including other user errors -ve)
 */
-int16_t getStatus( int ID )
-{
-// Check valid ID
-if( ( CheckID( ID ) ) < 0 )
-  return -1;
-return taskTable[ ID ].status;
+int16_t getStatus(int ID) {
+    // Check valid ID
+    if ((CheckID(ID)) < 0)
+        return -1;
+    return taskTable[ID].status;
 }
 
 /* addTask - Add a task to the task list
@@ -441,21 +409,18 @@ return taskTable[ ID ].status;
     Return int  -1 No free task available
                  >=0 Number of added task
 */
-int addTask( int(* ptr)( int, int16_t ) )
-{
-  noInterrupts( );
-  for( int i = NUM_TONE_PINS; i < _MAX_TASKS - 1; i++ )
-    {
-    // Fill with call back function address
-    if( tasks[ i ] == NULL )
-      {
-        taskTable[ i ].status = 0;
-        tasks[ i ] = ptr;   // Register callback
-        interrupts( );
-        return i;
-      }
+int addTask(int (*ptr)(int, int16_t)) {
+    noInterrupts();
+    for (int i = NUM_TONE_PINS; i < _MAX_TASKS - 1; i++) {
+        // Fill with call back function address
+        if (tasks[i] == NULL) {
+            taskTable[i].status = 0;
+            tasks[i] = ptr; // Register callback
+            interrupts();
+            return i;
+        }
     }
-    interrupts( );
+    interrupts();
     return -1;
 }
 
@@ -467,19 +432,17 @@ int addTask( int(* ptr)( int, int16_t ) )
                 -1 Invalid task address
                  >=0 Number of deleted task
 */
-int deleteTask( int(* ptr)( int, int16_t ) )
-{
-  noInterrupts( );
-  int ID = findID( ptr );
+int deleteTask(int (*ptr)(int, int16_t)) {
+    noInterrupts();
+    int ID = findID(ptr);
 
-  if( ID >= 0 )
-  {
-    taskTable[ ID ].status = 0;
-    tasks[ ID ] = NULL;
-    setInterval(ID, 0);
-  }
-  interrupts( );
-  return ID;
+    if (ID >= 0) {
+        taskTable[ID].status = 0;
+        tasks[ID] = NULL;
+        setInterval(ID, 0);
+    }
+    interrupts();
+    return ID;
 }
 
 /* startTask - Start a task if not running and has interval set
@@ -497,21 +460,19 @@ int deleteTask( int(* ptr)( int, int16_t ) )
                  0  current task running
                 > 0 Valid set to run after interval time
 */
-int startTask( int ID )
-{
-// Check valid ID, not running and interval
-if( ( CheckID( ID ) ) <= 0 )
-  return -1;
-if( taskTable[ ID ].interval == 0 )
-  return -2;
-if( taskTable[ ID ].status  > 0 )
-  return -3;
-// Start task
-taskTable[ ID ].next = old_ms + taskTable[ ID ].interval;
-taskTable[ ID ].status = 1;
-return 1;
+int startTask(int ID) {
+    // Check valid ID, not running and interval
+    if ((CheckID(ID)) <= 0)
+        return -1;
+    if (taskTable[ID].interval == 0)
+        return -2;
+    if (taskTable[ID].status > 0)
+        return -3;
+    // Start task
+    taskTable[ID].next = old_ms + taskTable[ID].interval;
+    taskTable[ID].status = 1;
+    return 1;
 }
-
 
 /* findID - Find ID for FIRST task with matching function address in Task table
 
@@ -524,18 +485,17 @@ return 1;
                 -1 Invalid task address
                 >= 0 Valid and stopped
 */
-int findID( int(*  ptr)( int, int16_t ) )
-{
-int i;
+int findID(int (*ptr)(int, int16_t)) {
+    int i;
 
-if( ptr == NULL )
-  return -1;
-for( i = 0; i < _MAX_TASKS; i++ )
-   if( tasks[ i ] == ptr )
-     break;
-if( i == _MAX_TASKS )
-  return -2;
-return i;
+    if (ptr == NULL)
+        return -1;
+    for (i = 0; i < _MAX_TASKS; i++)
+        if (tasks[i] == ptr)
+            break;
+    if (i == _MAX_TASKS)
+        return -2;
+    return i;
 }
 
 //****************************************************************************

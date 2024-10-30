@@ -4,4 +4,5 @@ repos:
     hooks:
       - id: clang-format
         args: ["-style=file:config/clang-format/.clang-format"]
-        files: ^(libraries|tests|variants)/.*\.(c|cpp|h|hpp)$
+        exclude: ^cores/(avr|usblib|xmc_lib)/
+        files: \.(c|cpp|h|hpp)$

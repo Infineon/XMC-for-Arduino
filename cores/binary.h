@@ -533,4 +533,4 @@
 #define B11111110 254
 #define B11111111 255
 
-#endif  /* Binary_h */
+#endif /* Binary_h */

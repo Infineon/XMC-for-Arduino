@@ -24,13 +24,12 @@
 //****************************************************************************
 // @External Prototypes
 //****************************************************************************
-extern void tone( uint8_t, unsigned int, unsigned long = 0 );
+extern void tone(uint8_t, unsigned int, unsigned long = 0);
 #ifdef __cplusplus
-extern "C"
-{
+extern "C" {
 #endif
-extern void noTone( uint8_t );
-extern int  tone_irq_action( int, int16_t );
+extern void noTone(uint8_t);
+extern int tone_irq_action(int, int16_t);
 #ifdef __cplusplus
 }
 #endif
