@@ -70,50 +70,50 @@ jobs:
       device: ${{ steps.startup.outputs.devices }}
 
 
-  # #############################################################################
-  # # This step allows HIL (Hardware in the loop), therefore
-  # # is searches for the given board/sensor combination and tries to find the actual port
-  # # on the self hosted runner. (see documentation for the board2port finder)
-  # flash:
+  #############################################################################
+  # This step allows HIL (Hardware in the loop), therefore
+  # is searches for the given board/sensor combination and tries to find the actual port
+  # on the self hosted runner. (see documentation for the board2port finder)
+  flash:
 
-  #   # We need a successful build before we can run the deploy
-  #   needs: [setup]
+    # We need a successful build before we can run the deploy
+    needs: [setup]
     
-  #   # we run this on self hosted runner, use labels to be more specific
-  #   # add specific names if there are some, otherwise self-hosted, X64, Linux are the default ones
-  #   runs-on:
-  #     - self-hosted
-  #     - X64
-  #     - Linux
+    # we run this on self hosted runner, use labels to be more specific
+    # add specific names if there are some, otherwise self-hosted, X64, Linux are the default ones
+    runs-on:
+      - self-hosted
+      - X64
+      - Linux
 
-  #   # do not stop if a single job fails
-  #   continue-on-error: true
+    # do not stop if a single job fails
+    continue-on-error: true
 
-  #   strategy:
+    strategy:
 
-  #     # the code to flash
-  #     matrix:
-  #       # the serials of the hardware boards
-  #       libraries: ${{ fromJson(needs.setup.outputs.libraries) }}
+      # the code to flash
+      matrix:
+        # the serials of the hardware boards
+        device: ${{ fromJson(needs.setup.outputs.devices }}
 
-  #   # These are the steps which should run for each combination of fqbn and example code
-  #   steps:
-  #     - name: Environment
-  #       run: |
-  #         cd $HOME
-  #         rm -rf ~/.arduino15/packages/Infineon/hardware/xmc/*
-  #         ln -s $GITHUB_WORKSPACE ~/.arduino15/packages/Infineon/hardware/xmc/$TEST_VERSION
+    # These are the steps which should run for each combination of fqbn and example code
+    steps:
+      - name: Environment
+        run: |
+          cd $HOME
+          rm -rf ~/.arduino15/packages/Infineon/hardware/xmc/*
+          ln -s $GITHUB_WORKSPACE ~/.arduino15/packages/Infineon/hardware/xmc/$TEST_VERSION
 
-  #         REPO="$(basename "$GITHUB_REPOSITORY")"
-  #         LIBRARY="$(basename ${{ matrix.libraries }} )"
+          REPO="$(basename "$GITHUB_REPOSITORY")"
+          DEVICE="$(basename ${{ matrix.device }} )"
 
-  #         echo "repo=$REPO" >> $GITHUB_ENV
-  #         echo "library=$LIBRARY" >> $GITHUB_ENV
-  #         echo "version=$TEST_VERSION" >> $GITHUB_ENV
+          echo "repo=$REPO" >> $GITHUB_ENV
+          echo "device=$DEVICE" >> $GITHUB_ENV
+          echo "version=$TEST_VERSION" >> $GITHUB_ENV
 
-  #         echo "Repo                  " $REPO
-  #         echo "Libraries             " $LIBRARY
-  #         echo "Version               " ${TEST_VERSION}
+          echo "Repo                  " $REPO
+          echo "Device                " $DEVICE
+          echo "Version               " ${TEST_VERSION}
 
 
   #     # Build the test code with make and flash it to the board
@@ -167,8 +167,7 @@ jobs:
     # we run this no matter if before fails
     if: always()
     # wait on first setup run before starting main function
-    # needs: [setup, flash]
-    needs: [setup]
+    needs: [setup, flash]
 
     # we run this on self hosted runner, use labels to be more specific
     # add specific names if there are some, otherwise self-hosted, X64, Linux are the default ones
