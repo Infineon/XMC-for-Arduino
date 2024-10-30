@@ -105,7 +105,7 @@ jobs:
           hil=${{ toJson(needs.setup.outputs.hil) }}
           REPO="$(basename "$GITHUB_REPOSITORY")"
           DEVICE="$(basename ${{ matrix.device }} )"
-          LIBRARY=$(echo $hil | jq ".\"${REPO}\".\"${DEVICE}\"" -r --compact-output)
+          LIBRARY=$(echo $hil | jq ".\"${DEVICE}\"" -r --compact-output)
 
           echo "repo=$REPO" >> $GITHUB_ENV
           echo "device=$DEVICE" >> $GITHUB_ENV
