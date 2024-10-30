@@ -120,8 +120,9 @@ jobs:
       # Build the test code with make and flash it to the board
       - name: Build
         run: |
+          echo  ${{ env.library }}
 
-          readarray -t EXAMPLES < <(echo ${{ env.library }} | jq "keys[]" -r --compact-output)
+          readarray -t EXAMPLES < <(echo ${{ env.library }} | jq ".|keys[]" -r --compact-output)
           echo "Examples: ${EXAMPLES[@]}"
 
           for EXAMPLE in "${EXAMPLES[@]}"; do
