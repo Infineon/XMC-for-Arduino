@@ -127,7 +127,7 @@ jobs:
           for EXAMPLE in "${EXAMPLES[@]}"; do
             echo "Example: ${EXAMPLE}"
             cd /opt/runner_support/
-            SERIALS=$(echo $(./py_checkusb.py --repo ${EXAMPLE} --list serial --json) | jq ".\"${EXAMPLE}\"" --compact-output )
+            SERIALS=$(echo $(./py_checkusb.py --type ${EXAMPLE} --list serial --json) | jq ".\"${EXAMPLE}\"" --compact-output )
 
             if [[ -z $SERIALS || $SERIALS == "{}" ]]; then
               echo "No library information found"
