@@ -122,9 +122,9 @@ jobs:
         run: |
           cd /opt/runner_support/
 
+          readarray -t EXAMPLES < <(echo ${{ env.library }} | jq ".[] | keys[]" -r --compact-output))
           
-
-
+          echo "Examples: ${EXAMPLES[@]}"
 
   #         lib=$(./py_checkusb.py --type ${{ env.library }} --json)
   #         if [[ -z $lib || $lib == "{}" ]]; then
