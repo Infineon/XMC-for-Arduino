@@ -14,7 +14,7 @@ jobs:
 
   #############################################################################
   # This action sets common variables for the flow and
-  # identifies the examples to compile
+  # identifies the libs to compile
   setup:
 
     # we run this on self hosted runner, use labels to be more specific
@@ -94,7 +94,7 @@ jobs:
         # the serials of the hardware boards
         device: ${{ fromJson(needs.setup.outputs.devices) }}
 
-    # These are the steps which should run for each combination of fqbn and example code
+    # These are the steps which should run for each combination of fqbn and lib code
     steps:
       - name: Environment
         run: |
@@ -121,31 +121,36 @@ jobs:
       - name: Build
         run: |
           lib=${{ toJson(env.library) }}
-          readarray -t EXAMPLES < <(echo ${lib} | jq ".|keys[]" -r --compact-output)
+          readarray -t LIBS < <(echo ${lib} | jq ".|keys[]" -r --compact-output)
 
-          # loop over all examples in the library
-          for EXAMPLE in "${EXAMPLES[@]}"; do
-            echo "Run for Example: ${EXAMPLE}"
+          # loop over all libs in the unity test yaml
+          for LIB in "${LIBS[@]}"; do
+            echo "Run for LIB: ${LIB}"
             cd /opt/runner_support/
-            readarray -t SERIALS < <(echo $(./py_checkusb.py --type ${EXAMPLE} --list serial --json) | jq ".\"${EXAMPLE}\"[]" -r)
+            readarray -t SERIALS < <(echo $(./py_checkusb.py --type ${LIB} --json) | jq ".\"${LIB}\".\"${{ env.device }}\"|keys[]" -r)
 
-
-            #readarray -r PORTS < <(./py_checkusb.py --type ${EXAMPLE} --list port --json | jq ".\"${EXAMPLE}\"[]" -r)
-
-            # check if we have a serial number or stop here
+            # check if we have one or more serial numbers for this lib or stop here
             if [[ -z $SERIALS ]]; then
-              echo "No library information found"
+              echo "No serial or library information found"
               exit 0
             fi
 
             # loop over all serials and fetch the ports
             for SERIAL in "${SERIALS[@]}"; do
-              echo "Serial: ${SERIAL}"
               PORT+=$(/opt/runner_support/find_usb.sh $SERIAL)
-              echo "Port: ${PORT[@]}"
             done
 
+            # loop over all examples for one library
+            readarray -t EXAMPLES < <(echo $lib | jq ".\"${LIB}\"|keys[]" -r --compact-output)
+            echo "Examples: ${EXAMPLES[@]}"
 
+            for EXAMPLE in "${EXAMPLES[@]}"; do
+              echo "Run for EXAMPLE: ${EXAMPLE} under LIB: ${LIB}"
+              cd $GITHUB_WORKSPACE/tests/Unity/
+
+
+              #make FQBN=${LIB} PORT=${PORT} UNITY_PATH=/opt/runner_support/Unity ${EXAMPLE}
+            done
             
           done
 
