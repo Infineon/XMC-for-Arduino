@@ -96,6 +96,11 @@ jobs:
 
     # These are the steps which should run for each combination of fqbn and lib code
     steps:
+      # checkout the latest github action code
+      - name: Checkout actions
+        uses: actions/checkout@v4
+
+      # setup environment
       - name: Environment
         run: |
           cd $HOME
@@ -138,7 +143,9 @@ jobs:
 
           # loop over all libs in the unity test yaml
           for LIB in "${LIBS[@]}"; do
+            echo "=============================================================================================================="
             echo "Run for LIB: ${LIB}"
+            echo "=============================================================================================================="
             cd /opt/runner_support/
             readarray -t SERIALS < <(echo $(./py_checkusb.py --type ${LIB} --json) | jq ".\"${LIB}\".\"${{ env.device }}\"|keys[]" -r)
 
@@ -157,7 +164,9 @@ jobs:
             # loop over all examples for one library
             readarray -t EXAMPLES < <(echo $lib | jq ".\"${LIB}\"|keys[]" -r --compact-output)
             for EXAMPLE in "${EXAMPLES[@]}"; do
+              echo "=============================================================================================================="
               echo "Run for EXAMPLE: ${EXAMPLE} under LIB: ${LIB}"
+              echo "=============================================================================================================="
 
               # loop over all tests for one example
               readarray -t TESTS < <(echo $lib | jq ".\"${LIB}\".\"${EXAMPLE}\"[]" -r --compact-output)
@@ -165,59 +174,24 @@ jobs:
                 cd $GITHUB_WORKSPACE/tests/Unity/
                 echo "=============================================================================================================="
                 echo "Run on index $idx for TEST: ${TESTS[idx]} under EXAMPLE: ${EXAMPLE} and LIB: ${LIB}"
-                echo "$idx: ${TESTS[idx]}"
-                echo "PORT= ${PORTS[idx]}"
-                echo "FQBN=${{ env.fqbn }}"
-                echo "=============================================================================================================="
                 make FQBN=${{ env.fqbn }} PORT=${PORTS[idx]} UNITY_PATH=/opt/runner_support/Unity_github ${TESTS[idx]}
+                echo "=============================================================================================================="
               done
 
 
               #
               for ((idx=0; idx<${#TESTS[@]}; ++idx)); do
+                echo "=============================================================================================================="
                 cd $GITHUB_WORKSPACE/tests/Unity/
                 timeout 1m /opt/runner_support/py_console.py \
                           --port ${PORTS[idx]} \
                           --report .build/report.json
+                echo "=============================================================================================================="
               done
 
-              
+
             done
           done
-
-
-  #         lib=$(./py_checkusb.py --type ${{ env.library }} --json)
-  #         readarray -t DEVICES < <(echo $lib | jq ".\"${{ env.library }}\" | keys[]" -r --compact-output)
-
-  #         # loop over all fqbn in the library
-  #         cd $GITHUB_WORKSPACE/tests/Unity/
-  #         for DEVICE in "${DEVICES[@]}"; do
-  #           FQBN=`tr '.' ':' <<<"${DEVICE}"`
-
-  #           # loop over all serials and fetch the ports
-  #           readarray -t SERIALS < <(echo $lib | jq ".\"${{ env.library }}\".\"${DEVICE}\" | keys[]" -r --compact-output)
-  #           PORTS=()
-  #           for SERIAL in "${SERIALS[@]}"; do
-  #             PORTS+=$(/opt/runner_support/find_usb.sh $SERIAL)
-  #           done
-
-  #           # loop over all tests
-  #           readarray -t TESTS < <(echo $hil | jq ".\"${{ env.library }}\".\"${DEVICE}\" | keys[]" -r --compact-output) 
-  #           for ((tidx=0; tidx<${#TESTS[@]}; tidx++)); do
-  #             readarray -t MAKES < <(echo $hil | jq ".\"${{ env.library }}\".\"${DEVICE}\".\"${TESTS[$tidx]}\"[]" -r --compact-output)
-
-  #             # loop over all makes in the test for sender receiver tests
-  #             for ((midx=0; midx<${#MAKES[@]}; midx++)); do
-  #               make FQBN=${FQBN} PORT=${PORTS[$tidx]} UNITY_PATH=/opt/runner_support/Unity ${MAKES[$midx]}
-  #             done
-
-
-
-
-
-  #           done
-  #         done
-
 
 
   #############################################################################
