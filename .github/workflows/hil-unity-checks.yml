@@ -187,7 +187,7 @@ jobs:
                         /opt/runner_support/py_console.py \
                           --port ${PORTS[idx]} \
                           --baud 115200 \
-                          --report $GITHUB_WORKSPACE/tests/Unity/artefact/${LIB}/${EXAMPLE}/${TESTS[idx]}/${{ env.device }}/report.json
+                          --report ~/artefact/${LIB}/${EXAMPLE}/${TESTS[idx]}/${{ env.device }}/report.json
                 
                 echo "=============================================================================================================="
               done # end of TEST loop monitor
