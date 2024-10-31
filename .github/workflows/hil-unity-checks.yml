@@ -137,6 +137,7 @@ jobs:
         run: |
           export TMPDIR=$HOME/tmp
           mkdir -p $TMPDIR
+          rm -rf $GITHUB_WORKSPACE/tests/Unity/artefact
           mkdir -p $GITHUB_WORKSPACE/tests/Unity/artefact
 
           lib=${{ toJson(env.library) }}
@@ -174,8 +175,8 @@ jobs:
                 echo "Run on index $idx for TEST: ${TESTS[idx]} under EXAMPLE: ${EXAMPLE} and LIB: ${LIB}"
                 echo "=============================================================================================================="
                 make FQBN=${{ env.fqbn }} PORT=${PORTS[idx]} UNITY_PATH=/opt/runner_support/Unity_github ${TESTS[idx]}
-                ls -la ./build/
-                mv ./build/build/ ./artefact/${LIB}/${EXAMPLE}/${TESTS[idx]}/.
+                mkdir -p ./artefact/${LIB}/${EXAMPLE}/${TESTS[idx]}/
+                mv ./build/build/* ./artefact/${LIB}/${EXAMPLE}/${TESTS[idx]}/.
                 echo "=============================================================================================================="
               done
 
