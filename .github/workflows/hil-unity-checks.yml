@@ -61,8 +61,6 @@ jobs:
           echo "devices=${dev}" >> $GITHUB_OUTPUT
           echo "devices=${dev}"
 
-          echo $GITHUB_WORKSPACE
-
     # Connect the GITHUB_OUTPUT to the variables and the workflow output mechanism
     outputs:
       hil: ${{ steps.startup.outputs.hil }}
@@ -138,8 +136,8 @@ jobs:
         run: |
           export TMPDIR=$HOME/tmp
           mkdir -p $TMPDIR
-          rm -rf $GITHUB_WORKSPACE/tests/Unity/artefact
-          mkdir -p $GITHUB_WORKSPACE/tests/Unity/artefact
+          rm -rf $HOME/artefact
+          mkdir -p $HOME/artefact
 
           lib=${{ toJson(env.library) }}
           readarray -t LIBS < <(echo ${lib} | jq ".|keys[]" -r --compact-output)
@@ -176,8 +174,8 @@ jobs:
                 echo "Run on index $idx for TEST: ${TESTS[idx]} under EXAMPLE: ${EXAMPLE} and LIB: ${LIB}"
                 echo "=============================================================================================================="
                 make FQBN=${{ env.fqbn }} PORT=${PORTS[idx]} UNITY_PATH=/opt/runner_support/Unity_github ${TESTS[idx]}
-                mkdir -p ./artefact/${LIB}/${EXAMPLE}/${TESTS[idx]}/
-                mv ./build/build/* ./artefact/${LIB}/${EXAMPLE}/${TESTS[idx]}/.
+                mkdir -p ~/artefact/${LIB}/${EXAMPLE}/${TESTS[idx]}/
+                mv ./build/build/* ~/artefact/${LIB}/${EXAMPLE}/${TESTS[idx]}/.
                 echo "=============================================================================================================="
               done # end of TEST loop flash
 
@@ -202,7 +200,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: ${{ env.device }}
-          path: $GITHUB_WORKSPACE/tests/Unity/artefact/*
+          path: ~/artefact/*
           if-no-files-found: ignore
 
 
