@@ -167,7 +167,7 @@ jobs:
               echo "Run for EXAMPLE: ${EXAMPLE} under LIB: ${LIB}"
               echo "=============================================================================================================="
 
-              # loop over all tests for one example
+              # loop over all tests for one example and compile7flash the devices
               readarray -t TESTS < <(echo $lib | jq ".\"${LIB}\".\"${EXAMPLE}\"[]" -r --compact-output)
               for ((idx=0; idx<${#TESTS[@]}; ++idx)); do
                 cd $GITHUB_WORKSPACE/tests/Unity/
@@ -178,10 +178,9 @@ jobs:
                 mkdir -p ./artefact/${LIB}/${EXAMPLE}/${TESTS[idx]}/
                 mv ./build/build/* ./artefact/${LIB}/${EXAMPLE}/${TESTS[idx]}/.
                 echo "=============================================================================================================="
-              done
+              done # end of TEST loop flash
 
-
-              #
+              # loop over all tests for one example and monitor the serial output
               for ((idx=0; idx<${#TESTS[@]}; ++idx)); do
                 echo "=============================================================================================================="
                 cd 
@@ -190,14 +189,21 @@ jobs:
                         /opt/runner_support/py_console.py \
                           --port ${PORTS[idx]} \
                           --baud 115200 \
-                          --report $GITHUB_WORKSPACE/tests/Unity/./artefact/${LIB}/${EXAMPLE}/${TESTS[idx]}/${{ env.device }}/report.json
+                          --report $GITHUB_WORKSPACE/tests/Unity/artefact/${LIB}/${EXAMPLE}/${TESTS[idx]}/${{ env.device }}/report.json
                 
                 echo "=============================================================================================================="
-              done
+              done # end of TEST loop monitor
 
+            done # end of EXAMPLE loop
+          done # end of LIB loop
 
-            done
-          done
+      # Upload the compiled HEX files to the GitHub server
+      - name: Artefact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ env.device }}
+          path: $GITHUB_WORKSPACE/tests/Unity/artefact/*
+          if-no-files-found: ignore
 
 
   #############################################################################
