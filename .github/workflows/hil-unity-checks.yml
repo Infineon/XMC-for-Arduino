@@ -61,6 +61,7 @@ jobs:
           echo "devices=${dev}" >> $GITHUB_OUTPUT
           echo "devices=${dev}"
 
+          echo $GITHUB_WORKSPACE
 
     # Connect the GITHUB_OUTPUT to the variables and the workflow output mechanism
     outputs:
@@ -183,7 +184,6 @@ jobs:
               # loop over all tests for one example and monitor the serial output
               for ((idx=0; idx<${#TESTS[@]}; ++idx)); do
                 echo "=============================================================================================================="
-                cd 
                 echo "Monitor on index $idx for TEST: ${TESTS[idx]} under EXAMPLE: ${EXAMPLE} and LIB: ${LIB}"
                 timeout 1m \
                         /opt/runner_support/py_console.py \
