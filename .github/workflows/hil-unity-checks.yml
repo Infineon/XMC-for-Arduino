@@ -182,11 +182,12 @@ jobs:
                 echo "=============================================================================================================="
                 cd 
                 echo "Monitor on index $idx for TEST: ${TESTS[idx]} under EXAMPLE: ${EXAMPLE} and LIB: ${LIB}"
-                timeout --preserve-status 1m \
+                nohup timeout --preserve-status 1m \
                         /opt/runner_support/py_console.py \
                           --port ${PORTS[idx]} \
                           --baud 115200 \
                           --report $GITHUB_WORKSPACE/tests/Unity/build/build/${{ env.device }}/report.json
+                
                 echo "=============================================================================================================="
               done
 
