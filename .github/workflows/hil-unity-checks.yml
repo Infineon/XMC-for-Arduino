@@ -182,7 +182,7 @@ jobs:
                 echo "=============================================================================================================="
                 cd 
                 echo "Monitor on index $idx for TEST: ${TESTS[idx]} under EXAMPLE: ${EXAMPLE} and LIB: ${LIB}"
-                timeout -s 1 1m \
+                timeout 1m \
                         /opt/runner_support/py_console.py \
                           --port ${PORTS[idx]} \
                           --baud 115200 \
