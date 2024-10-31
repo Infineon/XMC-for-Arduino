@@ -163,13 +163,25 @@ jobs:
               readarray -t TESTS < <(echo $lib | jq ".\"${LIB}\".\"${EXAMPLE}\"[]" -r --compact-output)
               for ((idx=0; idx<${#TESTS[@]}; ++idx)); do
                 cd $GITHUB_WORKSPACE/tests/Unity/
+                echo "=============================================================================================================="
                 echo "Run on index $idx for TEST: ${TESTS[idx]} under EXAMPLE: ${EXAMPLE} and LIB: ${LIB}"
                 echo "$idx: ${TESTS[idx]}"
                 echo "PORT= ${PORTS[idx]}"
                 echo "FQBN=${{ env.fqbn }}"
+                echo "=============================================================================================================="
                 make FQBN=${{ env.fqbn }} PORT=${PORTS[idx]} UNITY_PATH=/opt/runner_support/Unity_github ${TESTS[idx]}
               done
 
+
+              #
+              for ((idx=0; idx<${#TESTS[@]}; ++idx)); do
+                cd $GITHUB_WORKSPACE/tests/Unity/
+                timeout 1m /opt/runner_support/py_console.py \
+                          --port ${PORTS[idx]} \
+                          --report .build/report.json
+              done
+
+              
             done
           done
 
