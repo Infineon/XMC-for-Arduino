@@ -143,9 +143,6 @@ jobs:
 
           # loop over all libs in the unity test yaml
           for LIB in "${LIBS[@]}"; do
-            echo "=============================================================================================================="
-            echo "Run for LIB: ${LIB}"
-            echo "=============================================================================================================="
             cd /opt/runner_support/
             readarray -t SERIALS < <(echo $(./py_checkusb.py --type ${LIB} --json) | jq ".\"${LIB}\".\"${{ env.device }}\"|keys[]" -r)
 
@@ -174,6 +171,7 @@ jobs:
                 cd $GITHUB_WORKSPACE/tests/Unity/
                 echo "=============================================================================================================="
                 echo "Run on index $idx for TEST: ${TESTS[idx]} under EXAMPLE: ${EXAMPLE} and LIB: ${LIB}"
+                echo "=============================================================================================================="
                 make FQBN=${{ env.fqbn }} PORT=${PORTS[idx]} UNITY_PATH=/opt/runner_support/Unity_github ${TESTS[idx]}
                 echo "=============================================================================================================="
               done
@@ -182,10 +180,12 @@ jobs:
               #
               for ((idx=0; idx<${#TESTS[@]}; ++idx)); do
                 echo "=============================================================================================================="
-                cd $GITHUB_WORKSPACE/tests/Unity/
+                cd 
+                echo "Monitor on index $idx for TEST: ${TESTS[idx]} under EXAMPLE: ${EXAMPLE} and LIB: ${LIB}"
                 timeout 1m /opt/runner_support/py_console.py \
                           --port ${PORTS[idx]} \
-                          --report .build/report.json
+                          --baud 115200 \
+                          --report $GITHUB_WORKSPACE/tests/Unity/build/build/${{ env.device }}/report.json
                 echo "=============================================================================================================="
               done
 
