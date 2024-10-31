@@ -137,6 +137,7 @@ jobs:
         run: |
           export TMPDIR=$HOME/tmp
           mkdir -p $TMPDIR
+          mkdir -p $GITHUB_WORKSPACE/tests/Unity/artefact
 
           lib=${{ toJson(env.library) }}
           readarray -t LIBS < <(echo ${lib} | jq ".|keys[]" -r --compact-output)
@@ -173,6 +174,8 @@ jobs:
                 echo "Run on index $idx for TEST: ${TESTS[idx]} under EXAMPLE: ${EXAMPLE} and LIB: ${LIB}"
                 echo "=============================================================================================================="
                 make FQBN=${{ env.fqbn }} PORT=${PORTS[idx]} UNITY_PATH=/opt/runner_support/Unity_github ${TESTS[idx]}
+                ls -la ./build/
+                mv ./build/build/ ./artefact/${LIB}/${EXAMPLE}/${TESTS[idx]}/.
                 echo "=============================================================================================================="
               done
 
@@ -186,7 +189,7 @@ jobs:
                         /opt/runner_support/py_console.py \
                           --port ${PORTS[idx]} \
                           --baud 115200 \
-                          --report $GITHUB_WORKSPACE/tests/Unity/build/build/${{ env.device }}/report.json
+                          --report $GITHUB_WORKSPACE/tests/Unity/./artefact/${LIB}/${EXAMPLE}/${TESTS[idx]}/${{ env.device }}/report.json
                 
                 echo "=============================================================================================================="
               done
