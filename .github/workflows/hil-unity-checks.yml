@@ -167,7 +167,7 @@ jobs:
                 echo "$idx: ${TESTS[idx]}"
                 echo "PORT= ${PORTS[idx]}"
                 echo "FQBN=${{ env.fqbn }}"
-                make FQBN=${{ env.fqbn }} PORT=${PORTS[idx]} UNITY_PATH=/opt/runner_support/Unity ${TESTS[idx]}
+                make FQBN=${{ env.fqbn }} PORT=${PORTS[idx]} UNITY_PATH=/opt/runner_support/Unity_github ${TESTS[idx]}
               done
 
             done
