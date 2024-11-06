@@ -12,7 +12,7 @@ $(info BAUD_RATE : $(BAUD_RATE))
 
 TESTS_CONNECTED=-DTEST_CAN_CONNECTED
 TESTS_NOT_CONNECTED=-DTEST_CAN
-		
+
 CAN: TESTS=-DTEST_CAN
 CAN_connected: TESTS=-DTEST_CAN -DTEST_CAN_CONNECTED
 CAN_connected_node1: TESTS=-DTEST_CAN_CONNECTED_NODE1
@@ -40,16 +40,16 @@ arduino: clean
 #	find src -name '*.[hc]*' -a \( \! -name '*mtb*' \) -print -exec cp {} build \;
 .PHONY: CANReceiver CANReceiverCallback CANSender CANLoopBack
 CANReceiver: arduino
-	cp examples/CANReceiver/CANReceiver.ino build/build.ino 
+	cp examples/CANReceiver/CANReceiver.ino build/build.ino
 
 CANReceiverCallback: arduino
-	cp examples/CANReceiverCallback/CANReceiverCallback.ino build/build.ino	
+	cp examples/CANReceiverCallback/CANReceiverCallback.ino build/build.ino
 
 CANSender: arduino
-	cp examples/CANSender/CANSender.ino build/build.ino	
+	cp examples/CANSender/CANSender.ino build/build.ino
 
 CANLoopBack: arduino
-	cp examples/CANLoopBack/CANLoopBack.ino build/build.ino	
+	cp examples/CANLoopBack/CANLoopBack.ino build/build.ino
 
 
 # install Unity from https://www.throwtheswitch.org/unity or git
@@ -82,8 +82,15 @@ ifeq ($(FQBN),)
 	$(error "Must set variable FQBN in order to be able to compile Arduino sketches !")
 else
 # CAUTION : only use '=' when assigning values to vars, not '+='
-	arduino-cli.exe compile --clean --log --warnings all --fqbn $(FQBN) --build-property "compiler.c.extra_flags=\"-DUNITY_INCLUDE_CONFIG_H=1\"" \
-                                    		             --build-property compiler.cpp.extra_flags="$(TESTS)"  build
+	arduino-cli.exe compile \
+						--clean \
+						--log \
+						--warnings all \
+						--fqbn $(FQBN) \
+						--build-property "compiler.c.extra_flags=\"-DUNITY_INCLUDE_CONFIG_H=1\"" \
+						--build-property compiler.cpp.extra_flags="$(TESTS)" \
+						--export-binaries \
+					build
 endif
 
 
@@ -93,13 +100,18 @@ ifeq ($(FQBN),)
 else
 # compiler.c.extra_flags : switch to -std=c23 whenever XMCLib is conforming; currently neither c99 nor c11 work !
 # CAUTION : only use '=' when assigning values to vars, not '+='
-	arduino-cli.exe compile --clean --log --warnings all --fqbn $(FQBN) \
-							--build-property compiler.c.extra_flags="\"-DUNITY_INCLUDE_CONFIG_H=1\" -DNDEBUG -flto -fno-fat-lto-objects -Wextra -Wall -Wfloat-equal -Wconversion -Wredundant-decls -Wswitch-default -Wdouble-promotion -Wpedantic -Wunreachable-code -fanalyzer -std=c20 " \
-							--build-property compiler.cpp.extra_flags="$(TESTS) -DNDEBUG -flto -fno-fat-lto-objects -Wextra -Wall -Wfloat-equal -Wconversion -Wredundant-decls -Wswitch-default -Wdouble-promotion -Wpedantic -Wunreachable-code -fanalyzer -std=c++20 " \
-							--build-property compiler.ar.cmd=arm-none-eabi-gcc-ar \
-							--build-property compiler.libraries.ldflags=-lstdc++ \
-							--build-property compiler.arm.cmsis.path="-isystem{compiler.xmclib_include.path}/XMCLib/inc -isystem{compiler.dsp_include.path} -isystem{compiler.nn_include.path} -isystem{compiler.cmsis_include.path} -isystem{compiler.xmclib_include.path}/LIBS -isystem{build.variant.path} -isystem{build.variant.config_path}" \
-							--build-property compiler.usb.path="-isystem{runtime.platform.path}/cores/usblib -isystem{runtime.platform.path}/cores/usblib/Common -isystem{runtime.platform.path}/cores/usblib/Class -isystem{runtime.platform.path}/cores/usblib/Class/Common -isystem{runtime.platform.path}/cores/usblib/Class/Device -isystem{runtime.platform.path}/cores/usblib/Core -isystem{runtime.platform.path}/cores/usblib/Core/XMC4000" \
+	arduino-cli.exe compile \
+						--clean \
+						--log \
+						--warnings all \
+						--fqbn $(FQBN) \
+						--build-property compiler.c.extra_flags="\"-DUNITY_INCLUDE_CONFIG_H=1\" -DNDEBUG -flto -fno-fat-lto-objects -Wextra -Wall -Wfloat-equal -Wconversion -Wredundant-decls -Wswitch-default -Wdouble-promotion -Wpedantic -Wunreachable-code -fanalyzer -std=c20 " \
+						--build-property compiler.cpp.extra_flags="$(TESTS) -DNDEBUG -flto -fno-fat-lto-objects -Wextra -Wall -Wfloat-equal -Wconversion -Wredundant-decls -Wswitch-default -Wdouble-promotion -Wpedantic -Wunreachable-code -fanalyzer -std=c++20 " \
+						--build-property compiler.ar.cmd=arm-none-eabi-gcc-ar \
+						--build-property compiler.libraries.ldflags=-lstdc++ \
+						--build-property compiler.arm.cmsis.path="-isystem{compiler.xmclib_include.path}/XMCLib/inc -isystem{compiler.dsp_include.path} -isystem{compiler.nn_include.path} -isystem{compiler.cmsis_include.path} -isystem{compiler.xmclib_include.path}/LIBS -isystem{build.variant.path} -isystem{build.variant.config_path}" \
+						--build-property compiler.usb.path="-isystem{runtime.platform.path}/cores/usblib -isystem{runtime.platform.path}/cores/usblib/Common -isystem{runtime.platform.path}/cores/usblib/Class -isystem{runtime.platform.path}/cores/usblib/Class/Common -isystem{runtime.platform.path}/cores/usblib/Class/Device -isystem{runtime.platform.path}/cores/usblib/Core -isystem{runtime.platform.path}/cores/usblib/Core/XMC4000" \
+						--export-binaries \
 					build
 endif
 
@@ -111,7 +123,11 @@ endif
 ifeq ($(FQBN),)
 	$(error "Must set variable FQBN in order to be able to flash Arduino sketches !")
 else
-	arduino-cli.exe upload -p $(PORT) --fqbn $(FQBN) --verbose build
+	arduino-cli.exe upload \
+						-p $(PORT) \
+						--fqbn $(FQBN) \
+						--verbose \
+					build
 endif
 
 
@@ -125,6 +141,9 @@ endif
 ifeq ($(FQBN),)
 	$(error "Must set variable FQBN in order to be able to flash Arduino sketches !")
 else
-	arduino-cli.exe monitor -c baudrate=$(BAUD_RATE) -p $(PORT) --fqbn $(FQBN)
+	arduino-cli.exe monitor \
+						-c baudrate=$(BAUD_RATE) \
+						-p $(PORT) \
+						--fqbn $(FQBN)
 endif
 
