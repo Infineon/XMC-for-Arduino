@@ -3,7 +3,6 @@ name: Hil unity library checks
 # on which event should we start push, pull request or schedule dispatches
 on:
   - push
-  - pull_request
 
 env:
   TEST_VERSION: 1.0.0
