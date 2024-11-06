@@ -52,7 +52,7 @@ jobs:
           ./py_checkusb.py --switch repo --namelist $REPO --onoff on
 
           # set the hil-unity-checks
-          hil=$(./py_checkusb.py --readyaml $GITHUB_WORKSPACE/tests/Unity/hil-unity-checklist.yaml --json)
+          hil=$(./py_checkusb.py --readyaml $GITHUB_WORKSPACE/tests/unity/hil-unity-checklist.yaml --json)
           echo "hil=${hil}" >> $GITHUB_OUTPUT
 
           # fetch unity libraries
@@ -169,7 +169,7 @@ jobs:
               # loop over all tests for one example and compile7flash the devices
               readarray -t TESTS < <(echo $lib | jq ".\"${LIB}\".\"${EXAMPLE}\"[]" -r --compact-output)
               for ((idx=0; idx<${#TESTS[@]}; ++idx)); do
-                cd $GITHUB_WORKSPACE/tests/Unity/
+                cd $GITHUB_WORKSPACE/tests/unity/
                 echo "=============================================================================================================="
                 echo "Run on index $idx for TEST: ${TESTS[idx]} under EXAMPLE: ${EXAMPLE} and LIB: ${LIB}"
                 echo "=============================================================================================================="
