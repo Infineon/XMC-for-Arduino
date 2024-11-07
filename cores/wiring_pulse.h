@@ -27,20 +27,19 @@ extern "C" {
 // @External Prototypes
 //****************************************************************************
 
-    /*
-     * \brief Measures the length (in microseconds) of a pulse on the pin; state is HIGH
-     * or LOW, the type of pulse to measure.  Works on pulses from 2-3 microseconds
-     * to 3 minutes in length, but must be called at least a few dozen microseconds
-     * before the start of the pulse.
-     */
-    uint32_t pulseIn(uint32_t pin, uint32_t state, uint32_t timeout);
+/*
+ * \brief Measures the length (in microseconds) of a pulse on the pin; state is HIGH
+ * or LOW, the type of pulse to measure.  Works on pulses from 2-3 microseconds
+ * to 3 minutes in length, but must be called at least a few dozen microseconds
+ * before the start of the pulse.
+ */
+uint32_t pulseIn(uint32_t pin, uint32_t state, uint32_t timeout);
 
 #ifdef __cplusplus
 // Provides a version of pulseIn with a default argument (C++ only)
-    uint32_t pulseIn(uint32_t pin, uint32_t state, uint32_t timeout = 1000000L);
+uint32_t pulseIn(uint32_t pin, uint32_t state, uint32_t timeout = 1000000L);
 
 } // extern "C"
 #endif
-
 
 #endif /* _WIRING_PULSE_ */

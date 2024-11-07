@@ -24,17 +24,16 @@
 //****************************************************************************
 #ifdef __cplusplus
 
-//****************************************************************************
-// @Project Includes
-//****************************************************************************
-#include "RingBuffer.h"
-#include "Stream.h"
+    //****************************************************************************
+    // @Project Includes
+    //****************************************************************************
+    #include "RingBuffer.h"
+    #include "Stream.h"
 
 //****************************************************************************
 // @Typedefs
 //****************************************************************************
-typedef enum XMC_UART_MODE
-{
+typedef enum XMC_UART_MODE {
     SERIAL_5N1 = 0x15 | XMC_USIC_CH_PARITY_MODE_NONE,
     SERIAL_6N1 = 0x16 | XMC_USIC_CH_PARITY_MODE_NONE,
     SERIAL_7N1 = 0x17 | XMC_USIC_CH_PARITY_MODE_NONE,
@@ -64,15 +63,14 @@ typedef enum XMC_UART_MODE
 //****************************************************************************
 // @Class Definitions
 //****************************************************************************
-class HardwareSerial: public Stream
-{
+class HardwareSerial : public Stream {
 public:
-    XMC_UART_t* _XMC_UART_config;
-	
-    HardwareSerial(XMC_UART_t* xmc_uart_config, RingBuffer* rx_buffer, RingBuffer* tx_buffer);
-	
-    void begin( uint32_t speed);
-    void begin( uint32_t speed, XMC_UART_MODE_t config);
+    XMC_UART_t *_XMC_UART_config;
+
+    HardwareSerial(XMC_UART_t *xmc_uart_config, RingBuffer *rx_buffer, RingBuffer *tx_buffer);
+
+    void begin(uint32_t speed);
+    void begin(uint32_t speed, XMC_UART_MODE_t config);
     void end(void);
     int available(void);
     int availableForWrite(void);
@@ -80,33 +78,23 @@ public:
     void flush(void);
     int read(void);
 
-    //virtual size_t readBytes(char *buffer, size_t length) ; // read chars from stream into buffer
-    //virtual size_t readBytes(uint8_t *buffer, size_t length) ;
+    // virtual size_t readBytes(char *buffer, size_t length) ; // read chars from stream into buffer
+    // virtual size_t readBytes(uint8_t *buffer, size_t length) ;
 
     size_t write(const uint8_t);
-    //virtual size_t write(const uint8_t *buffer, size_t size) ;
-    inline size_t write(unsigned long n)
-    {
-        return write((uint8_t)n);
-    }
-    inline size_t write(long n)
-    {
-        return write((uint8_t)n);
-    }
-    inline size_t write(unsigned int n)
-    {
-        return write((uint8_t)n);
-    }
-    inline size_t write(int n)
-    {
-        return write((uint8_t)n);
-    }
+
+    // virtual size_t write(const uint8_t *buffer, size_t size) ;
+    inline size_t write(unsigned long n) { return write((uint8_t)n); }
+
+    inline size_t write(long n) { return write((uint8_t)n); }
+
+    inline size_t write(unsigned int n) { return write((uint8_t)n); }
+
+    inline size_t write(int n) { return write((uint8_t)n); }
 
     using Print::write; // pull in write(str) and write(buf, size) from Print
-    operator bool()
-    {
-        return true;
-    }
+
+    operator bool() { return true; }
 
     void setInterruptPriority(uint32_t priority);
     uint32_t getInterruptPriority();
@@ -114,9 +102,9 @@ public:
     void IrqHandler(void);
 
 private:
-    RingBuffer* _rx_buffer;
-    RingBuffer* _tx_buffer;
+    RingBuffer *_rx_buffer;
+    RingBuffer *_tx_buffer;
 };
-#endif  /* cplusplus */
+#endif /* cplusplus */
 
 #endif /* HardwareSerial_h */

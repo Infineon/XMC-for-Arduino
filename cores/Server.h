@@ -27,10 +27,9 @@
 //****************************************************************************
 // @Class Definitions
 //****************************************************************************
-class Server : public Print
-{
+class Server : public Print {
 public:
     virtual void begin() = 0;
 };
 
-#endif  /* server_h */
+#endif /* server_h */

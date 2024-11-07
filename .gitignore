@@ -1,6 +1,19 @@
 .history
 .vscode
+
+# build folder
 pkg_build
 build
-.clang-format
+
+# python
 **/__pycache__/
+venv/
+
+# code-check reports
+clang-tidy-report.txt
+
+scan-build-reports/
+
+cppcheck_reports/
+cppcheck.checkers
+err.xml

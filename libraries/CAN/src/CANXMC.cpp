@@ -1,55 +1,72 @@
 #include "CANXMC.h"
 #include <Arduino.h>
 
-/* CAN Receive Message Object definition, can also be used for transmit remote
- * frame*/
-XMC_CAN_MO_t CAN_msg_rx = {
-    .can_mo_ptr = (CAN_MO_TypeDef *)CAN_MO0,
-    {0xFF, XMC_CAN_FRAME_TYPE_STANDARD_11BITS,     // {can_identifier, can_id_mode
-     XMC_CAN_ARBITRATION_MODE_ORDER_BASED_PRIO_1}, // can_priority}
-    {0x000, 1U},                                   // {can_id_mask, can_ide_mask}
-    .can_data_length = 0U,
-    .can_mo_type = XMC_CAN_MO_TYPE_RECMSGOBJ,
-};
-
-/* CAN Transmit Message Object definition */
-XMC_CAN_MO_t CAN_msg_tx = {
-    .can_mo_ptr = (CAN_MO_TypeDef *)CAN_MO1,
-    {0xFF, XMC_CAN_FRAME_TYPE_STANDARD_11BITS,     // {can_identifier, can_id_mode
-     XMC_CAN_ARBITRATION_MODE_ORDER_BASED_PRIO_1}, // can_priority}
-    {0x7FFU, 1U},                                  // {can_id_mask, can_ide_mask}
-    .can_data_length = 0U,
-    .can_mo_type = XMC_CAN_MO_TYPE_TRANSMSGOBJ,
-};
-
 /* Flag for receive interrupt*/
 static volatile bool can_frame_received = false;
 
 /* construct with configuration of different target */
-CANXMC::CANXMC(XMC_ARD_CAN_t *conf) { _XMC_CAN_config = conf; }
+CANXMC::CANXMC(XMC_ARD_CAN_t *conf)
+    : _XMC_CAN_config(conf) {
+    memset(&CAN_msg_rx, 0, sizeof(CAN_msg_rx));
+    memset(&CAN_msg_tx, 0, sizeof(CAN_msg_tx));
 
-CANXMC::~CANXMC() {}
+    /* CAN Transmit Message Object definition */
 
+    CAN_msg_tx.can_mo_ptr = (CAN_MO_TypeDef *)CAN_MO1;
+    CAN_msg_tx.can_identifier = 0xFFFU;
+    CAN_msg_tx.can_id_mode = XMC_CAN_FRAME_TYPE_STANDARD_11BITS;           // Extended ID mode
+    CAN_msg_tx.can_priority = XMC_CAN_ARBITRATION_MODE_ORDER_BASED_PRIO_1; // Priority level 1
+    CAN_msg_tx.can_id_mask = 0x00000000U;                                  // Identifier mask
+    CAN_msg_tx.can_ide_mask = 0U;                         // Identifier extension mask
+    CAN_msg_tx.can_data_length = 0U;                      // Data length of 0
+    CAN_msg_tx.can_mo_type = XMC_CAN_MO_TYPE_TRANSMSGOBJ; // Message Object type
+
+    /* CAN Receive Message Object definition, can also be used for transmit remote
+     * frame*/
+    CAN_msg_rx.can_mo_ptr = (CAN_MO_TypeDef *)CAN_MO0;
+    CAN_msg_rx.can_identifier = 0xFFFU;
+    CAN_msg_rx.can_id_mode = XMC_CAN_FRAME_TYPE_STANDARD_11BITS;
+    CAN_msg_rx.can_priority = XMC_CAN_ARBITRATION_MODE_ORDER_BASED_PRIO_1;
+    CAN_msg_rx.can_id_mask = 0x00000000U;
+    CAN_msg_rx.can_ide_mask = 0U;
+    CAN_msg_rx.can_data_length = 0U;
+    CAN_msg_rx.can_mo_type = XMC_CAN_MO_TYPE_RECMSGOBJ;
+}
+
+CANXMC::~CANXMC() { end(); }
+
+/* Getter function for CAN_msg_tx */
+XMC_CAN_MO_t *CANXMC::getTxMessage() { return &CAN_msg_tx; }
+
+/* Getter function for CAN_msg_rx */
+XMC_CAN_MO_t *CANXMC::getRxMessage() { return &CAN_msg_rx; }
+
+/*
 int CANXMC::setIdentifier(long id) { // TODO: delete in the future!
                                      // figure out filtering problem for xmc4700
     XMC_CAN_MO_SetIdentifier(&CAN_msg_rx, id);
     return 0;
 };
+*/
 
 /**
  * @brief Initializes the CAN interface with the specified baudrate.
  *
- * This function configures the CAN bit time, enables the CAN node, and sets up the necessary pin
- * configurations.
+ * This function configures the CAN bit time, enables the CAN node, and sets up
+ * the necessary pin configurations.
  *
- * @param baudrate The desired baudrate for the CAN interface. The default value is 500,000 bps.
+ * @param baudRate The desired baudrate for the CAN interface. The default value
+ * is 500,000 bps.
  * @return Returns 1 if the initialization is successful, 0 otherwise.
  */
-int CANXMC::begin(long baudrate /*= 500e3*/) {
+int CANXMC::begin(long baudRate /*= 500e3*/) {
+    /* reset CAN nodes*/
+    XMC_CAN_Disable(CAN_xmc);
+
     /* CAN bit time configuration*/
     XMC_CAN_NODE_NOMINAL_BIT_TIME_CONFIG_t CAN_NODE_bit_time_config = {
         .can_frequency = _XMC_CAN_config->can_frequency,
-        .baudrate = (uint32_t)baudrate,
+        .baudrate = (uint32_t)baudRate,
         .sample_point = (uint16_t)(80 * 100),
         .sjw = (uint16_t)1,
     };
@@ -106,8 +123,9 @@ int CANXMC::begin(long baudrate /*= 500e3*/) {
 /**
  * @brief Disables the CAN module and ends the CANXMC object.
  *
- * This function disables the CAN module and ends the CANXMC object. It disables the receive event
- * for the CAN message object and disables the CAN module using the XMC_CAN_Disable function.
+ * This function disables the CAN module and ends the CANXMC object. It disables
+ * the receive event for the CAN message object and disables the CAN module
+ * using the XMC_CAN_Disable function.
  */
 void CANXMC::end() {
     XMC_CAN_MO_DisableEvent(&CAN_msg_rx, XMC_CAN_MO_EVENT_RECEIVE);
@@ -174,14 +192,14 @@ int CANXMC::endPacket() {
 /**
  * @brief Parses a CAN packet received by the XMC_CAN module.
  *
- * This function waits until a new CAN packet is available in the receive buffer,
- * then retrieves the packet information such as the identifier, frame type, remote
- * transmission request (RTR), data length code (DLC), and data payload. If the packet
- * is an extended frame, the `_rxExtended` flag is set to true. If the packet is an RTR
- * frame, the `_rxRtr` flag is set to true and the `_rxLength` is set to 0. Otherwise,
- * the `_rxLength` is set to the DLC and the data payload is copied to the `_rxData`
- * buffer. Finally, the function resets the receive flag and returns the length of the
- * received packet.
+ * This function waits until a new CAN packet is available in the receive
+ * buffer, then retrieves the packet information such as the identifier, frame
+ * type, remote transmission request (RTR), data length code (DLC), and data
+ * payload. If the packet is an extended frame, the `_rxExtended` flag is set to
+ * true. If the packet is an RTR frame, the `_rxRtr` flag is set to true and the
+ * `_rxLength` is set to 0. Otherwise, the `_rxLength` is set to the DLC and the
+ * data payload is copied to the `_rxData` buffer. Finally, the function resets
+ * the receive flag and returns the length of the received packet.
  *
  * @return The length of the received packet.
  */
@@ -220,9 +238,9 @@ int CANXMC::parsePacket() {
 /**
  * Sets the callback function to be called when a CAN message is received.
  *
- * @param callback A pointer to the function to be called when a CAN message is received.
- *                 The function should take an integer parameter.
- *                 Pass nullptr to disable the callback.
+ * @param callback A pointer to the function to be called when a CAN message is
+ * received. The function should take an integer parameter. Pass nullptr to
+ * disable the callback.
  */
 void CANXMC::onReceive(void (*callback)(int)) {
     CANControllerClass::onReceive(callback);
@@ -269,9 +287,15 @@ int CANXMC::observe() {
     return 0;
 };
 
+/**
+ * Puts the CAN module into loopback mode.
+ * This function puts the CAN module into loopback mode by enabling the loopback
+ * mode for both CAN nodes. It also initializes the CAN message objects for
+ * loopback mode.
+ * @return true if the CAN module is successfully put into loopback mode, false
+ * otherwise.
+ */
 int CANXMC::loopback() {
-    // TODO: LJ: It is actually only some application level... it is not
-    // library...
 
     /* reset CAN nodes*/
     XMC_CAN_Disable(CAN_xmc);
@@ -327,31 +351,34 @@ int CANXMC::loopback() {
     }
 };
 
-
 /**
  * Puts the CAN module into sleep mode.
- * This function disables the CAN module by setting the EDIS bit in the CLC register.
- * @return true if the CAN module is successfully put into sleep mode, false otherwise.
+ * This function disables the CAN module by setting the EDIS bit in the CLC
+ * register.
+ * @return 1 if the CAN module is successfully put into sleep mode, 0
+ * otherwise.
  */
-int CANXMC::sleep() { 
-    CAN_xmc -> CLC |= CAN_CLC_EDIS_Msk;
-    return CAN_xmc -> CLC & CAN_CLC_EDIS_Msk != 0; 
+int CANXMC::sleep() {
+    CAN_xmc->CLC |= CAN_CLC_EDIS_Msk;
+    return CAN_xmc->CLC & CAN_CLC_EDIS_Msk != 0 ? 1 : 0;
 };
 
 /**
  * @brief Wakes up the CAN module.
- * This function is used to wake up the CAN module by clearing the EDIS bit in the CLC register.
- * @return true if the CAN module is successfully woken up, false otherwise.
+ * This function is used to wake up the CAN module by clearing the EDIS bit in
+ * the CLC register.
+ * @return 1 if the CAN module is successfully woken up, 0 otherwise.
  */
-int CANXMC::wakeup() { 
-    CAN_xmc -> CLC &= CAN_CLC_EDIS_Msk;
-    return CAN_xmc -> CLC & CAN_CLC_EDIS_Msk == 0; 
+int CANXMC::wakeup() {
+    CAN_xmc->CLC &= ~CAN_CLC_EDIS_Msk;
+    return CAN_xmc->CLC & CAN_CLC_EDIS_Msk == 0 ? 1 : 0;
 };
 
 /**
- * @brief This function is called when an interrupt is triggered for the CANXMC module.
- *        It checks if a CAN frame has been received and if so, it parses the packet and
- *        calls the _onReceive() function with the number of available frames.
+ * @brief This function is called when an interrupt is triggered for the CANXMC
+ * module. It checks if a CAN frame has been received and if so, it parses the
+ * packet and calls the _onReceive() function with the number of available
+ * frames.
  */
 void CANXMC::onInterrupt() {
     if (can_frame_received == true) {
@@ -362,13 +389,15 @@ void CANXMC::onInterrupt() {
 
 /* Interrupt Handler */
 /**
- * @brief Interrupt handler for CAN0_7_IRQHandler (XMC4 series) or CAN0_3_IRQHandler (XMC1 series).
+ * @brief Interrupt handler for CAN0_7_IRQHandler (XMC4 series) or
+ * CAN0_3_IRQHandler (XMC1 series).
  *
- * This function is called when a CAN frame is received. It sets the can_frame_received flag to true
- * and calls the onInterrupt() function of the CAN object.
+ * This function is called when a CAN frame is received. It sets the
+ * can_frame_received flag to true and calls the onInterrupt() function of the
+ * CAN object.
  *
- * @note This function is intended to be used as an interrupt handler and should not be called
- * directly.
+ * @note This function is intended to be used as an interrupt handler and should
+ * not be called directly.
  */
 extern "C" {
 #if (UC_FAMILY == XMC4)

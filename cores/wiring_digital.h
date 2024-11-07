@@ -31,49 +31,51 @@ extern "C" {
 //****************************************************************************
 
 /*
-* \brief Configures the specified pin to behave either as an input or an output. See the description of digital pins for details.
-*
-* \param pin The number of the pin whose mode you wish to set
-* \param mode Either INPUT, INPUT_PULLUP, INPUT_PULLDOWN or OUTPUT
-*/
+ * \brief Configures the specified pin to behave either as an input or an output. See the
+ * description of digital pins for details.
+ *
+ * \param pin The number of the pin whose mode you wish to set
+ * \param mode Either INPUT, INPUT_PULLUP, INPUT_PULLDOWN or OUTPUT
+ */
 void pinMode(uint8_t pin, uint8_t mode);
 
 /*
-* \brief Reads the value from a specified digital pin, either HIGH or LOW.
-*
-* \param pin The number of the digital pin you want to read (int)
-*
-* \return HIGH or LOW
-*/
+ * \brief Reads the value from a specified digital pin, either HIGH or LOW.
+ *
+ * \param pin The number of the digital pin you want to read (int)
+ *
+ * \return HIGH or LOW
+ */
 extern uint8_t digitalRead(uint8_t pin);
 
 /*
-* \brief Write a HIGH or a LOW value to a digital pin.
-*
-* If the pin has been configured as an OUTPUT with pinMode(), its voltage will be set to the
-* corresponding value: 5V (or 3.3V on 3.3V boards) for HIGH, 0V (ground) for LOW.
-*
-* If the pin is configured as an INPUT, writing a HIGH value with digitalWrite() will enable an internal
-* 20K pullup resistor (see the tutorial on digital pins). Writing LOW will disable the pullup. The pullup
-* resistor is enough to light an LED dimly, so if LEDs appear to work, but very dimly, this is a likely
-* cause. The remedy is to set the pin to an output with the pinMode() function.
-*
-* \note Digital pin PIN_LED is harder to use as a digital input than the other digital pins because it has an LED
-* and resistor attached to it that's soldered to the board on most boards. If you enable its internal 20k pull-up
-* resistor, it will hang at around 1.7 V instead of the expected 5V because the onboard LED and series resistor
-* pull the voltage level down, meaning it always returns LOW. If you must use pin PIN_LED as a digital input, use an
-* external pull down resistor.
-*
-* \param pin the pin number
-* \param value HIGH or LOW
-*/
+ * \brief Write a HIGH or a LOW value to a digital pin.
+ *
+ * If the pin has been configured as an OUTPUT with pinMode(), its voltage will be set to the
+ * corresponding value: 5V (or 3.3V on 3.3V boards) for HIGH, 0V (ground) for LOW.
+ *
+ * If the pin is configured as an INPUT, writing a HIGH value with digitalWrite() will enable an
+ * internal 20K pullup resistor (see the tutorial on digital pins). Writing LOW will disable the
+ * pullup. The pullup resistor is enough to light an LED dimly, so if LEDs appear to work, but very
+ * dimly, this is a likely cause. The remedy is to set the pin to an output with the pinMode()
+ * function.
+ *
+ * \note Digital pin PIN_LED is harder to use as a digital input than the other digital pins because
+ * it has an LED and resistor attached to it that's soldered to the board on most boards. If you
+ * enable its internal 20k pull-up resistor, it will hang at around 1.7 V instead of the expected 5V
+ * because the onboard LED and series resistor pull the voltage level down, meaning it always
+ * returns LOW. If you must use pin PIN_LED as a digital input, use an external pull down resistor.
+ *
+ * \param pin the pin number
+ * \param value HIGH or LOW
+ */
 extern void digitalWrite(uint8_t pin, uint8_t value);
 
 /*
-* \brief Toggles output signal of a digital pin.
-*
-* \param pin The number of the pin who you want to toggle
-*/
+ * \brief Toggles output signal of a digital pin.
+ *
+ * \param pin The number of the pin who you want to toggle
+ */
 extern void digitalToggle(uint8_t pin);
 
 #ifdef __cplusplus

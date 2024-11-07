@@ -17,10 +17,10 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  *
  * Modified 2012 by Todd Krein (todd@krein.org) to implement repeated starts
- * 
+ *
  * Copyright (c) 2018 Infineon Technologies AG
  * This library has been modified for the XMC microcontroller series.
-*/
+ */
 
 #ifndef TwoWire_h
 #define TwoWire_h
@@ -42,10 +42,9 @@
 //****************************************************************************
 // @Class Definitions
 //****************************************************************************
-class TwoWire : public Stream
-{
+class TwoWire : public Stream {
 private:
-    XMC_I2C_t* XMC_I2C_config;
+    XMC_I2C_t *XMC_I2C_config;
 
     bool isMaster;
     bool inRepStart;
@@ -64,14 +63,15 @@ private:
 
     uint8_t pre_rxBuffer[BUFFER_LENGTH];
     uint8_t pre_rxBufferCount;
-	
+
     void (*user_onRequest)(void);
     void (*user_onReceive)(int);
     void OnRequestService(void);
-    void OnReceiveService(uint8_t*, uint8_t);
+    void OnReceiveService(uint8_t *, uint8_t);
+
 public:
-	bool volatile hasError;
-	TwoWire(XMC_I2C_t *conf);
+    bool volatile hasError;
+    TwoWire(XMC_I2C_t *conf);
     void begin();
     void begin(uint8_t);
     void begin(int);
@@ -87,48 +87,39 @@ public:
     uint8_t requestFrom(int, int);
     uint8_t requestFrom(int, int, int);
     virtual size_t write(uint8_t);
-    virtual size_t write(const uint8_t*, size_t);
+    virtual size_t write(const uint8_t *, size_t);
     virtual int available(void);
     virtual int read(void);
     virtual int peek(void);
     virtual void flush(void);
-    void onReceive( void (*)(int) );
-    void onRequest( void (*)(void) );
+    void onReceive(void (*)(int));
+    void onRequest(void (*)(void));
     void ReceiveHandler(void);
     void ProtocolHandler(void);
 
-    inline size_t write(unsigned long n)
-    {
-        return write((uint8_t)n);
-    }
-    inline size_t write(long n)
-    {
-        return write((uint8_t)n);
-    }
-    inline size_t write(unsigned int n)
-    {
-        return write((uint8_t)n);
-    }
-    inline size_t write(int n)
-    {
-        return write((uint8_t)n);
-    }
+    inline size_t write(unsigned long n) { return write((uint8_t)n); }
+
+    inline size_t write(long n) { return write((uint8_t)n); }
+
+    inline size_t write(unsigned int n) { return write((uint8_t)n); }
+
+    inline size_t write(int n) { return write((uint8_t)n); }
+
     using Print::write;
 };
 
 extern TwoWire Wire;
 #if (NUM_I2C > 1)
-	extern TwoWire Wire1;
-#	if (NUM_I2C > 2)
-		extern TwoWire Wire2;
-#		if (NUM_I2C > 3)
-			extern TwoWire Wire3;
-#			if (NUM_I2C > 4)
-				extern TwoWire Wire4;
-#			endif
-#		endif
-#	endif
+extern TwoWire Wire1;
+    #if (NUM_I2C > 2)
+extern TwoWire Wire2;
+        #if (NUM_I2C > 3)
+extern TwoWire Wire3;
+            #if (NUM_I2C > 4)
+extern TwoWire Wire4;
+            #endif
+        #endif
+    #endif
 #endif
 
 #endif /* TwoWire_h */
-

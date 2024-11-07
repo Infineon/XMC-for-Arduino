@@ -24,24 +24,22 @@
 //****************************************************************************
 // @External Prototypes
 //****************************************************************************
-extern "C" void __cxa_pure_virtual(void) __attribute__ ((__noreturn__));
-extern "C" void __cxa_deleted_virtual(void) __attribute__ ((__noreturn__));
+extern "C" void __cxa_pure_virtual(void) __attribute__((__noreturn__));
+extern "C" void __cxa_deleted_virtual(void) __attribute__((__noreturn__));
 
 //****************************************************************************
 // @Local Functions
 //****************************************************************************
-void __cxa_pure_virtual(void)
-{
+void __cxa_pure_virtual(void) {
     // We might want to write some diagnostics to uart in this case
-    //std::terminate();
+    // std::terminate();
     while (1)
         ;
 }
 
-void __cxa_deleted_virtual(void)
-{
+void __cxa_deleted_virtual(void) {
     // We might want to write some diagnostics to uart in this case
-    //std::terminate();
+    // std::terminate();
     while (1)
         ;
 }
@@ -49,7 +47,3 @@ void __cxa_deleted_virtual(void)
 //****************************************************************************
 //                                 END OF FILE
 //****************************************************************************
-
-
-
-

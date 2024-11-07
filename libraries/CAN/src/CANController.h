@@ -56,9 +56,9 @@ protected:
     bool _packetBegun;
     long _txId;
     bool _txExtended;
-    bool _txRtr;
-    int _txDlc;
-    int _txLength;
+    bool _txRtr;   // if it Remote Transmission Request
+    int _txDlc;    // DLC: Data Length Code specifies number of bytes in the data field
+    int _txLength; // index of txData
     uint8_t _txData[8];
 
     long _rxId;
