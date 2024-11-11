@@ -1,0 +1,3 @@
+[submodule "tests/unity"]
+	path = tests/unity
+	url = https://github.com/LinjingZhang/Infineon_arduino_core_unity_test.git
