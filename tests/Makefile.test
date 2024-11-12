@@ -24,13 +24,19 @@ make FQBN=Infineon:xmc:XMC1400_XMC2GO BAUD_RATE=9600 PORT=COM42 CANLoopBack flas
 
 ### Unit tests
 
+##CAN
+
+# 1 board, no wire
+make FQBN=Infineon:xmc:XMC1400_XMC2GO PORT=COM42 UNITY_PATH=\Unity CAN monitor
 # 2 boards
+make FQBN=Infineon:xmc:XMC1400_XMC2GO PORT=COM42 UNITY_PATH=\Unity CAN_connected_node2 monitor
+make FQBN=Infineon:xmc:XMC1400_XMC2GO PORT=COM41 UNITY_PATH=\Unity CAN_connected_node1 monitor
 
 
-make FQBN=Infineon:xmc:XMC1400_XMC2GO PORT=COM42 UNITY_PATH=/home/Unity CAN_connected_node2 monitor
+## IIC
 
-make FQBN=Infineon:xmc:XMC1400_XMC2GO PORT=COM41 UNITY_PATH=/home/Unity CAN_connected_node1 monitor
-
-# 1 board
-make FQBN=Infineon:xmc:XMC1400_XMC2GO PORT=COM42 UNITY_PATH=/home/Unity CAN monitor
-
+# 1 board "talking to itself", wire needed
+make FQBN=Infineon:xmc:XMC4700_Relax_Kit PORT=COM85 UNITY_PATH=\Unity IIC_pingPong_2BoardsSlave_connected monitor
+# 2 boards
+make FQBN=Infineon:xmc:XMC4700_Relax_Kit PORT=COM28 UNITY_PATH=\Unity IIC_pingPong_2BoardsMaster_connected monitor
+make FQBN=Infineon:xmc:XMC4700_Relax_Kit PORT=COM28 UNITY_PATH=\Unity IIC_pingPong_connected monitor
