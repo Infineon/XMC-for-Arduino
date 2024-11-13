@@ -8,9 +8,10 @@ Infineon.xmc.XMC4700_Relax_Kit:
 
   Wire:
     1:
-      - "I2C"
+      - "IIC_pingPong_2BoardsSlave_connected"
+      - "IIC_pingPong_2BoardsMaster_connected"
     2:
-      - "I2C"
+      - "IIC_pingPong_connected"
 
 
 Infineon.xmc.XMC1400_XMC2GO:
@@ -24,6 +25,7 @@ Infineon.xmc.XMC1400_XMC2GO:
 Infineon.xmc.XMC1100_XMC2GO:
   Wire:
     1:
-      - "I2C"
+      - "IIC_pingPong_2BoardsSlave_connected"
+      - "IIC_pingPong_2BoardsMaster_connected"
     2:
-      - "I2C"
+      - "IIC_pingPong_connected"
