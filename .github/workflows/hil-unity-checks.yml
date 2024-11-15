@@ -31,6 +31,7 @@ jobs:
       - name: Checkout actions
         uses: actions/checkout@v4
         with:
+          repository: Infineon/arduino-core-tests
           token: ${{ secrets.UNITY_TOKEN }}
           submodules: recursive
 
