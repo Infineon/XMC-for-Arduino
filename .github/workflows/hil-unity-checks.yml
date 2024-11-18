@@ -25,7 +25,6 @@ jobs:
       - self-hosted
       - X64
       - Linux
-      - EPE
 
     steps:
       # checkout the latest github action code
