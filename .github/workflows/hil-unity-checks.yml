@@ -178,7 +178,7 @@ jobs:
                 echo "=============================================================================================================="
                 echo "Run on index $idx for TEST: ${TESTS[idx]} under EXAMPLE: ${EXAMPLE} and LIB: ${LIB}"
                 echo "=============================================================================================================="
-                make FQBN=${{ env.fqbn }} PORT=${PORTS[idx]} UNITY_PATH=/opt/runner_support/Unity_github ${TESTS[idx]}
+                make FQBN=${{ env.fqbn }} PORT=${PORTS[idx]} UNITY_PATH=/opt/Unity ${TESTS[idx]}
                 mkdir -p ~/artefact/${LIB}/${EXAMPLE}/${TESTS[idx]}/
                 mv ./build/build/* ~/artefact/${LIB}/${EXAMPLE}/${TESTS[idx]}/.
                 echo "=============================================================================================================="
