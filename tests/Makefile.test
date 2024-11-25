@@ -37,8 +37,8 @@ make FQBN=Infineon:xmc:XMC1400_XMC2GO PORT=COM41 UNITY_PATH=\Unity test_can_conn
 ## IIC
 
 # 1 board "talking to itself", wire needed
-make FQBN=Infineon:xmc:XMC4700_Relax_Kit PORT=COM28 UNITY_PATH=\Unity wire_connected1_pingpong monitor
+make FQBN=Infineon:xmc:XMC4700_Relax_Kit PORT=COM28 UNITY_PATH=\Unity test_wire_connected1_pingpong monitor
 
 # 2 boards
-make FQBN=Infineon:xmc:XMC4700_Relax_Kit PORT=COM85 UNITY_PATH=\Unity wire_connected2_masterpingpong monitor
-make FQBN=Infineon:xmc:XMC4700_Relax_Kit PORT=COM28 UNITY_PATH=\Unity wire_connected2_slavepingpong monitor
+make FQBN=Infineon:xmc:XMC4700_Relax_Kit PORT=COM85 UNITY_PATH=\Unity test_wire_connected2_masterpingpong monitor
+make FQBN=Infineon:xmc:XMC4700_Relax_Kit PORT=COM28 UNITY_PATH=\Unity test_wire_connected2_slavepingpong monitor
