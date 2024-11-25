@@ -19,45 +19,13 @@ In WSL, you can create a symbolic link pointing to your windows project folder:
 ## (legacy) Manual tests
 located in `tests/manual`. The application level `.ino` files for testing purposes. 
 
-## Example and Unity tests
+## Unity tests
 
 Currently, we are using Unity as the testing framework. You can find more information about Unity at [Unity](https://www.throwtheswitch.org/unity).
+Please refer to `unity\README.md` for more details.
 
-### Pre-conditions
-
-- **Arduino CLI**  
-    Download `arduino-cli.exe` for Windows from [here](https://downloads.arduino.cc/arduino-cli/arduino-cli_latest_Windows_64bit.zip) or refer to the [official installation guide](https://arduino.github.io/arduino-cli/1.0/installation/#download).
-
-- **Unity**  
-    Install Unity from [Throw The Switch](https://www.throwtheswitch.org/unity) or clone the repository from GitHub.
-
-### Folder stucture
-```
-│   Makefile
-│   Makefile.test
-│
-└───src
-    │   Test_common_includes.h
-    │   Test_main.ino
-    │   unity_config.h
-    │   unity_ifx.h
-    │
-    ├───corelibs
-    │   ├───CAN
-    │   │
-    │   ├───Wire
-    │   │
-    │   └───...
-    │
-    └───utils
-            unity_ifx.cpp
-            Utilities.cpp
-            Utilities.hpp
-```
-
-### Running test
 To run the tests, use the commands example in `Makefile.test`. 
-For more details or to add new tests, please refer to the `Makefile`.
 
 # Code checks (WIP)
 Refer to libraries\CAN\Makefile.codecheck
+Regarding formatting, we currently use [pre-commit](https://pre-commit.com/) to automatically run clang-formatting to format all c/c++ code.
