@@ -8,10 +8,10 @@ Infineon.xmc.XMC4700_Relax_Kit:
 
   Wire:
     1:
-      - "wire_connected2_slavepingpong"
-      - "wire_connected2_masterpingpong"
+      - "test_wire_connected2_slavepingpong"
+      - "test_wire_connected2_masterpingpong"
     2:
-      - "wire_connected1_pingpong"
+      - "test_wire_connected1_pingpong"
 
 
 Infineon.xmc.XMC1400_XMC2GO:
@@ -24,16 +24,16 @@ Infineon.xmc.XMC1400_XMC2GO:
 
   Wire:
     1:
-      - "wire_connected2_slavepingpong"
-      - "wire_connected2_masterpingpong"
+      - "test_wire_connected2_slavepingpong"
+      - "test_wire_connected2_masterpingpong"
     2:
-      - "wire_connected1_pingpong"
+      - "test_wire_connected1_pingpong"
 
 
 Infineon.xmc.XMC1100_XMC2GO:
   Wire:
     1:
-      - "wire_connected2_slavepingpong"
-      - "wire_connected2_masterpingpong"
+      - "test_wire_connected2_slavepingpong"
+      - "test_wire_connected2_masterpingpong"
     2:
-      - "wire_connected1_pingpong"
+      - "test_wire_connected1_pingpong"
