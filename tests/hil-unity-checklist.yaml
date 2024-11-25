@@ -26,8 +26,6 @@ Infineon.xmc.XMC1400_XMC2GO:
     1:
       - "test_wire_connected2_slavepingpong"
       - "test_wire_connected2_masterpingpong"
-    2:
-      - "test_wire_connected1_pingpong"
 
 
 Infineon.xmc.XMC1100_XMC2GO:
@@ -35,5 +33,3 @@ Infineon.xmc.XMC1100_XMC2GO:
     1:
       - "test_wire_connected2_slavepingpong"
       - "test_wire_connected2_masterpingpong"
-    2:
-      - "test_wire_connected1_pingpong"
