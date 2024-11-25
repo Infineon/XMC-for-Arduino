@@ -103,6 +103,9 @@ jobs:
       # checkout the latest github action code
       - name: Checkout actions
         uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.UNITY_TOKEN }}
+          submodules: recursive
 
       # setup environment
       - name: Environment
