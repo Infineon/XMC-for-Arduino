@@ -41,7 +41,7 @@
  * V1.2                  : Restored compatibility with old project files
  * V1.3    Jan 2014, PKB : Encapsulating everything in this file for use only with GCC
  * V1.4 11 Dec 2015, JFT : Fix heap overflow
- * V1.5 09 Mar 2016, JFT : Add dso_handle to support destructors call at exit 
+ * V1.5 09 Mar 2016, JFT : Add dso_handle to support destructors call at exit
  * V1.6 20 Apr 2017, JFT : Foward declaration of __sbrk to fix link time optimization (-flto) compilation errors
  * @endcond
  */

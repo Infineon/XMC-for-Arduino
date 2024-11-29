@@ -4,7 +4,7 @@ The current one is V4.3.0. The macro of XMCLib version is also defined in ```cor
 
 ## CAN macro
 
-Because XMClibs use CAN macro, conflicts with Arduino default CAN class name, so we manually changed XMClib (CAN -> CAN_xmc). 
+Because XMClibs use CAN macro, conflicts with Arduino default CAN class name, so we manually changed XMClib (CAN -> CAN_xmc).
 changed files:
 
 .h header files:

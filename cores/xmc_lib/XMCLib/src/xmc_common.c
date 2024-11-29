@@ -81,4 +81,3 @@ void XMC_DelayUs(uint16_t microseconds)
 {
     XMC_DelayCycles(microseconds * XMC_DIV_ROUNDUP(SystemCoreClock, 1000000UL)); /* microseconds * SystemCoreClock in MHz units */
 }
-

@@ -13,30 +13,30 @@
  *                    XMC1100-Q040F0064
  *
  * Copyright (c) 2015-2016, Infineon Technologies AG
- * All rights reserved.                        
- *                                             
- * Redistribution and use in source and binary forms, with or without modification,are permitted provided that the 
- * following conditions are met:   
- *                                                                              
- * Redistributions of source code must retain the above copyright notice, this list of conditions and the following 
- * disclaimer.                        
- * 
- * Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following 
- * disclaimer in the documentation and/or other materials provided with the distribution.                       
- * 
- * Neither the name of the copyright holders nor the names of its contributors may be used to endorse or promote 
- * products derived from this software without specific prior written permission.                                           
- *                                                                              
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, 
- * INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE  
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE  FOR ANY DIRECT, INDIRECT, INCIDENTAL, 
- * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR  
- * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, 
- * WHETHER IN CONTRACT, STRICT LIABILITY,OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE 
- * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.                                                  
- *                                                                              
- * To improve the quality of the software, users are encouraged to share modifications, enhancements or bug fixes with 
- * Infineon Technologies AG dave@infineon.com).                                                          
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without modification,are permitted provided that the
+ * following conditions are met:
+ *
+ * Redistributions of source code must retain the above copyright notice, this list of conditions and the following
+ * disclaimer.
+ *
+ * Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following
+ * disclaimer in the documentation and/or other materials provided with the distribution.
+ *
+ * Neither the name of the copyright holders nor the names of its contributors may be used to endorse or promote
+ * products derived from this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES,
+ * INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE  FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+ * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+ * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+ * WHETHER IN CONTRACT, STRICT LIABILITY,OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ *
+ * To improve the quality of the software, users are encouraged to share modifications, enhancements or bug fixes with
+ * Infineon Technologies AG dave@infineon.com).
  *********************************************************************************************************************
  *
  * Change History
@@ -45,19 +45,19 @@
  * 2015-07-07:
  *     - Product splitting
  *     - Copyright notice update
- *      
+ *
  * 2015-11-24:
  *     - Compatibility with GCC 4.9 2015q2
- * 
+ *
  * 2016-03-15:
- *     - Add assertion to check that region SRAM_combined does not overflowed no_init section 
+ *     - Add assertion to check that region SRAM_combined does not overflowed no_init section
  *
  * 2018-03-08:
  *     - Change default XMC1xxx stack size
  *     - Move Stack to top of RAM below no_init for more standard and safer location
  *     - Could mean startup_XMC1xxx.S could be shortened
  *
- * @endcond 
+ * @endcond
  *
  */
 
@@ -78,7 +78,7 @@ SECTIONS
 {
     /* TEXT section */
 
-    .text : 
+    .text :
     {
       sText = .;
       KEEP(*(.reset));
@@ -104,7 +104,7 @@ SECTIONS
 
       *(.rodata .rodata.*)
       *(.gnu.linkonce.r*)
-      . = ALIGN(4); 
+      . = ALIGN(4);
     } > FLASH
 
     .eh_frame_hdr : ALIGN (4)
@@ -155,12 +155,12 @@ SECTIONS
     {
       . = ALIGN(4); /* section size must be multiple of 4. See startup_XMC_xxxx.S file */
       __data_start = .;
-      *(vtable)        
+      *(vtable)
       * (.data);
       * (.data*);
       *(*.data);
       *(.gnu.linkonce.d*)
-      
+
       . = ALIGN(4);
       /* preinit data */
       PROVIDE_HIDDEN (__preinit_array_start = .);
@@ -192,13 +192,13 @@ SECTIONS
         . = ALIGN(4); /* section size must be multiple of 4. See startup_XMC_xxxx.S file */
         __ram_code_start = .;
         /* functions with __attribute__ ((section (".ram_code")))*/
-        *(.ram_code)   
+        *(.ram_code)
         . = ALIGN(4); /* section size must be multiple of 4. See startup_XMC_xxxx.S file */
         __ram_code_end = .;
     } > SRAM
     __ram_code_load = LOADADDR (.ram_code);
     __ram_code_size = __ram_code_end - __ram_code_start;
-    
+
     /* BSS section */
     .bss (NOLOAD) :
     {
@@ -213,7 +213,7 @@ SECTIONS
         Heap_Bank1_Start = .;
     } > SRAM
     __bss_size = __bss_end - __bss_start;
-    
+
     _stack_begin = ORIGIN(SRAM) + LENGTH(SRAM) - stack_size - (2 * no_init_size);
 
     /* Dummy section for stack  */
@@ -221,7 +221,7 @@ SECTIONS
     {
         . = ORIGIN(SRAM) + LENGTH(SRAM) - stack_size - (2 * no_init_size);
         Heap_Bank1_End = .;
-        end = Heap_Bank1_End; 
+        end = Heap_Bank1_End;
         __stack_start = .;
          . = . + stack_size;
         __stack_end = .;
@@ -235,11 +235,11 @@ SECTIONS
     ASSERT(Heap_Bank1_Start <= Heap_Bank1_End, "bss section SRAM overflowed stack section")
 
     /* .no_init section contains SystemCoreClock. See system_XMC_xxxx.c file */
-    .no_init ORIGIN(SRAM) + LENGTH(SRAM) - no_init_size (NOLOAD) : 
+    .no_init ORIGIN(SRAM) + LENGTH(SRAM) - no_init_size (NOLOAD) :
     {
         * (.no_init);
     } > SRAM
-    
+
 
     /DISCARD/ :
     {

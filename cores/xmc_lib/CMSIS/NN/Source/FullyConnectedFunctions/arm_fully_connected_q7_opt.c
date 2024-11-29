@@ -106,7 +106,7 @@
    *  | a17 | a27 | a37 | a47 |
    *
    *  For the left-over rows, we do 1x1 computation, so the data remains
-   *  as its original order. 
+   *  as its original order.
    *
    *  So the stored weight matrix looks like this:
    *
@@ -133,9 +133,9 @@ arm_fully_connected_q7_opt(const q7_t * pV,
                            const uint16_t dim_vec,
                            const uint16_t num_of_rows,
                            const uint16_t bias_shift,
-                           const uint16_t out_shift, 
-                           const q7_t * bias, 
-                           q7_t * pOut, 
+                           const uint16_t out_shift,
+                           const q7_t * bias,
+                           q7_t * pOut,
                            q15_t * vec_buffer)
 {
 

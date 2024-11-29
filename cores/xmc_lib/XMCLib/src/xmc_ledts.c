@@ -366,4 +366,3 @@ void XMC_LEDTS_SetOscillationWindow(XMC_LEDTS_t *const ledts, XMC_LEDTS_NUMBER_T
 }
 
 #endif /* LEDTS0 */
-

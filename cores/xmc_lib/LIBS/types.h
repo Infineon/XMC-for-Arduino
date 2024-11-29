@@ -49,7 +49,7 @@
 #ifndef TYPES_CONFIG_H_
 #define TYPES_CONFIG_H_
 
- 
+
 #include "stdint.h"
 #include "stddef.h"
 
@@ -103,4 +103,3 @@ typedef unsigned char bool;
 #endif
 
 #endif /* TYPES_CONFIG_H_ */
-

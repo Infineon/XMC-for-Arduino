@@ -47,7 +47,7 @@
    * @details
    *
    * This function does the matrix multiplication with weight matrix
-   * and 2 columns from im2col. 
+   * and 2 columns from im2col.
    */
 
 q7_t     *arm_nn_mat_mult_kernel_q7_q15(const q7_t * pA,
@@ -55,8 +55,8 @@ q7_t     *arm_nn_mat_mult_kernel_q7_q15(const q7_t * pA,
                                         const uint16_t ch_im_out,
                                         const uint16_t numCol_A,
                                         const uint16_t bias_shift,
-                                        const uint16_t out_shift, 
-                                        const q7_t * bias, 
+                                        const uint16_t out_shift,
+                                        const q7_t * bias,
                                         q7_t * pOut)
 {
 #if defined (ARM_MATH_DSP)

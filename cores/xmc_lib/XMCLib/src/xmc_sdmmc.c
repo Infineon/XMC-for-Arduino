@@ -330,4 +330,3 @@ void XMC_SDMMC_SetDataTransferMode(XMC_SDMMC_t *const sdmmc, XMC_SDMMC_TRANSFER_
 /**
  * @}
  */
-

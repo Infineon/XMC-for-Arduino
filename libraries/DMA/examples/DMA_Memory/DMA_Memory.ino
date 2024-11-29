@@ -26,7 +26,7 @@ void loop()
     Serial.print(source_data[i]);
   Serial.println();
   delay(1000);
-  
+
   dma_module.beginDMA(DMA0);
   dma_module.configDMA_M2M(DMA0,0,(uint32_t)&source_data[0],(uint32_t)&destination_data[0],DATA_LENGTH,TRANSFER_WIDTH_32,BURST_LENGTH_8,true);
   dma_module.attachDMAInterrupt(DMA0, 0, dma_interrupt, BLOCK_TRANSFER_COMPLETE);
@@ -51,5 +51,3 @@ void dma_interrupt(void) {
     Serial.print(destination_data[i]);
   Serial.println();
 }
-
-

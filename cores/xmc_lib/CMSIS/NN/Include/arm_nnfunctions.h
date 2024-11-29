@@ -36,7 +36,7 @@
    * ------------
    *
    * This user manual describes the CMSIS NN software library,
-   * a collection of efficient neural network kernels developed to maximize the 
+   * a collection of efficient neural network kernels developed to maximize the
    * performance and minimize the memory footprint of neural networks on Cortex-M processor cores.
    *
    * The library is divided into a number of functions each covering a specific category:
@@ -49,8 +49,8 @@
    *
    * The library has separate functions for operating on different weight and activation data
    * types including 8-bit integers (q7_t) and 16-bit integers (q15_t). The descrition of the
-   * kernels are included in the function description. The implementation details are also 
-   * described in this paper [1]. 
+   * kernels are included in the function description. The implementation details are also
+   * described in this paper [1].
    *
    * Block Diagram
    * --------
@@ -88,7 +88,7 @@
 
 /**
  * @defgroup groupNN Neural Network Functions
- * These functions perform basic operations for neural network layers. 
+ * These functions perform basic operations for neural network layers.
  */
 
 #ifndef _ARM_NNFUNCTIONS_H
@@ -113,12 +113,12 @@ extern    "C"
  *
  * The convolution is implemented in 2 steps: im2col and GEMM
  *
- * im2col is a process of converting each patch of image data into 
+ * im2col is a process of converting each patch of image data into
  * a column. After im2col, the convolution is computed as matrix-matrix
  * multiplication.
- * 
+ *
  * To reduce the memory footprint, the im2col is performed partially.
- * Each iteration, only a few column (i.e., patches) are generated and 
+ * Each iteration, only a few column (i.e., patches) are generated and
  * computed with GEMM kernels similar to CMSIS-DSP arm_mat_mult functions.
  *
  */
@@ -138,9 +138,9 @@ extern    "C"
    * @param[in]       out_shift   amount of right-shift for output
    * @param[in,out]   Im_out      pointer to output tensor
    * @param[in]       dim_im_out  output tensor dimension
-   * @param[in,out]   bufferA     pointer to buffer space for input 
+   * @param[in,out]   bufferA     pointer to buffer space for input
    * @param[in,out]   bufferB     pointer to buffer space for output
-   * @return     The function returns <code>ARM_MATH_SUCCESS</code> 
+   * @return     The function returns <code>ARM_MATH_SUCCESS</code>
    *
    */
 
@@ -155,9 +155,9 @@ extern    "C"
                                          const q7_t * bias,
                                          const uint16_t bias_shift,
                                          const uint16_t out_shift,
-                                         q7_t * Im_out, 
-                                         const uint16_t dim_im_out, 
-                                         q15_t * bufferA, 
+                                         q7_t * Im_out,
+                                         const uint16_t dim_im_out,
+                                         q15_t * bufferA,
                                          q7_t * bufferB);
 
   /**
@@ -175,9 +175,9 @@ extern    "C"
    * @param[in]       out_shift   amount of right-shift for output
    * @param[in,out]   Im_out      pointer to output tensor
    * @param[in]       dim_im_out  output tensor dimension
-   * @param[in,out]   bufferA     pointer to buffer space for input 
+   * @param[in,out]   bufferA     pointer to buffer space for input
    * @param[in,out]   bufferB     pointer to buffer space for output
-   * @return     The function returns <code>ARM_MATH_SUCCESS</code> 
+   * @return     The function returns <code>ARM_MATH_SUCCESS</code>
    *
    */
 
@@ -192,9 +192,9 @@ extern    "C"
                                           const q15_t * bias,
                                           const uint16_t bias_shift,
                                           const uint16_t out_shift,
-                                          q15_t * Im_out, 
-                                          const uint16_t dim_im_out, 
-                                          q15_t * bufferA, 
+                                          q15_t * Im_out,
+                                          const uint16_t dim_im_out,
+                                          q15_t * bufferA,
                                           q7_t * bufferB);
 
   /**
@@ -212,7 +212,7 @@ extern    "C"
    * @param[in]       out_shift   amount of right-shift for output
    * @param[in,out]   Im_out      pointer to output tensor
    * @param[in]       dim_im_out  output tensor dimension
-   * @param[in,out]   bufferA     pointer to buffer space for input 
+   * @param[in,out]   bufferA     pointer to buffer space for input
    * @param[in,out]   bufferB     pointer to buffer space for output
    * @return     The function returns either
    * <code>ARM_MATH_SIZE_MISMATCH</code> or <code>ARM_MATH_SUCCESS</code> based on the outcome of size checking.
@@ -234,9 +234,9 @@ extern    "C"
                                         const q7_t * bias,
                                         const uint16_t bias_shift,
                                         const uint16_t out_shift,
-                                        q7_t * Im_out, 
-                                        const uint16_t dim_im_out, 
-                                        q15_t * bufferA, 
+                                        q7_t * Im_out,
+                                        const uint16_t dim_im_out,
+                                        q15_t * bufferA,
                                         q7_t * bufferB);
 
   /**
@@ -259,7 +259,7 @@ extern    "C"
    * @param[in,out]   Im_out       pointer to output tensor
    * @param[in]       dim_im_out_x output tensor dimension x
    * @param[in]       dim_im_out_y output tensor dimension y
-   * @param[in,out]   bufferA      pointer to buffer space for input 
+   * @param[in,out]   bufferA      pointer to buffer space for input
    * @param[in,out]   bufferB      pointer to buffer space for output
    * @return     The function returns either
    * <code>ARM_MATH_SIZE_MISMATCH</code> or <code>ARM_MATH_SUCCESS</code> based on the outcome of size checking.
@@ -311,7 +311,7 @@ extern    "C"
    * @param[in,out]   Im_out       pointer to output tensor
    * @param[in]       dim_im_out_x output tensor dimension x
    * @param[in]       dim_im_out_y output tensor dimension y
-   * @param[in,out]   bufferA      pointer to buffer space for input 
+   * @param[in,out]   bufferA      pointer to buffer space for input
    * @param[in,out]   bufferB      pointer to buffer space for output
    * @return     The function returns either
    * <code>ARM_MATH_SIZE_MISMATCH</code> or <code>ARM_MATH_SUCCESS</code> based on the outcome of size checking.
@@ -361,7 +361,7 @@ extern    "C"
    * @param[in]       out_shift   amount of right-shift for output
    * @param[in,out]   Im_out      pointer to output tensor
    * @param[in]       dim_im_out  output tensor dimension
-   * @param[in,out]   bufferA     pointer to buffer space for input 
+   * @param[in,out]   bufferA     pointer to buffer space for input
    * @param[in,out]   bufferB     pointer to buffer space for output
    * @return     The function returns either
    * <code>ARM_MATH_SIZE_MISMATCH</code> or <code>ARM_MATH_SUCCESS</code> based on the outcome of size checking.
@@ -382,9 +382,9 @@ extern    "C"
                                        const q7_t * bias,
                                        const uint16_t bias_shift,
                                        const uint16_t out_shift,
-                                       q7_t * Im_out, 
-                                       const uint16_t dim_im_out, 
-                                       q15_t * bufferA, 
+                                       q7_t * Im_out,
+                                       const uint16_t dim_im_out,
+                                       q15_t * bufferA,
                                        q7_t * bufferB);
 
   /**
@@ -402,7 +402,7 @@ extern    "C"
    * @param[in]       out_shift   amount of right-shift for output
    * @param[in,out]   Im_out      pointer to output tensor
    * @param[in]       dim_im_out  output tensor dimension
-   * @param[in,out]   bufferA     pointer to buffer space for input 
+   * @param[in,out]   bufferA     pointer to buffer space for input
    * @param[in,out]   bufferB     pointer to buffer space for output
    * @return     The function returns either
    * <code>ARM_MATH_SIZE_MISMATCH</code> or <code>ARM_MATH_SUCCESS</code> based on the outcome of size checking.
@@ -424,9 +424,9 @@ extern    "C"
                                          const q15_t * bias,
                                          const uint16_t bias_shift,
                                          const uint16_t out_shift,
-                                         q15_t * Im_out, 
-                                         const uint16_t dim_im_out, 
-                                         q15_t * bufferA, 
+                                         q15_t * Im_out,
+                                         const uint16_t dim_im_out,
+                                         q15_t * bufferA,
                                          q7_t * bufferB);
 
   /**
@@ -444,7 +444,7 @@ extern    "C"
    * @param[in]       out_shift   amount of right-shift for output
    * @param[in,out]   Im_out      pointer to output tensor
    * @param[in]       dim_im_out  output tensor dimension
-   * @param[in,out]   bufferA     pointer to buffer space for input 
+   * @param[in,out]   bufferA     pointer to buffer space for input
    * @param[in,out]   bufferB     pointer to buffer space for output
    * @return     The function returns either
    * <code>ARM_MATH_SIZE_MISMATCH</code> or <code>ARM_MATH_SUCCESS</code> based on the outcome of size checking.
@@ -467,8 +467,8 @@ extern    "C"
                                                    const uint16_t bias_shift,
                                                    const uint16_t out_shift,
                                                    q7_t * Im_out,
-                                                   const uint16_t dim_im_out, 
-                                                   q15_t * bufferA, 
+                                                   const uint16_t dim_im_out,
+                                                   q15_t * bufferA,
                                                    q7_t * bufferB);
 
   /**
@@ -491,7 +491,7 @@ extern    "C"
    * @param[in,out]   Im_out        pointer to output tensor
    * @param[in]       dim_im_out_x  output tensor dimension x
    * @param[in]       dim_im_out_y  output tensor dimension y
-   * @param[in,out]   bufferA       pointer to buffer space for input 
+   * @param[in,out]   bufferA       pointer to buffer space for input
    * @param[in,out]   bufferB       pointer to buffer space for output
    * @return     The function returns either
    * <code>ARM_MATH_SIZE_MISMATCH</code> or <code>ARM_MATH_SUCCESS</code> based on the outcome of size checking.
@@ -535,7 +535,7 @@ extern    "C"
  *
  * Here we have two types of kernel functions. The basic function
  * implements the function using regular GEMV approach. The opt functions
- * operates with weights in interleaved formats. 
+ * operates with weights in interleaved formats.
  *
  */
 
@@ -559,9 +559,9 @@ extern    "C"
                                       const uint16_t dim_vec,
                                       const uint16_t num_of_rows,
                                       const uint16_t bias_shift,
-                                      const uint16_t out_shift, 
-                                      const q7_t * bias, 
-                                      q7_t * pOut, 
+                                      const uint16_t out_shift,
+                                      const q7_t * bias,
+                                      q7_t * pOut,
                                       q15_t * vec_buffer);
 
   /**
@@ -584,9 +584,9 @@ extern    "C"
                                           const uint16_t dim_vec,
                                           const uint16_t num_of_rows,
                                           const uint16_t bias_shift,
-                                          const uint16_t out_shift, 
-                                          const q7_t * bias, 
-                                          q7_t * pOut, 
+                                          const uint16_t out_shift,
+                                          const q7_t * bias,
+                                          q7_t * pOut,
                                           q15_t * vec_buffer);
 
   /**
@@ -609,9 +609,9 @@ extern    "C"
                                        const uint16_t dim_vec,
                                        const uint16_t num_of_rows,
                                        const uint16_t bias_shift,
-                                       const uint16_t out_shift, 
-                                       const q15_t * bias, 
-                                       q15_t * pOut, 
+                                       const uint16_t out_shift,
+                                       const q15_t * bias,
+                                       q15_t * pOut,
                                        q15_t * vec_buffer);
 
   /**
@@ -635,8 +635,8 @@ extern    "C"
                                            const uint16_t num_of_rows,
                                            const uint16_t bias_shift,
                                            const uint16_t out_shift,
-                                           const q15_t * bias, 
-                                           q15_t * pOut, 
+                                           const q15_t * bias,
+                                           q15_t * pOut,
                                            q15_t * vec_buffer);
 
   /**
@@ -660,8 +660,8 @@ extern    "C"
                                                   const uint16_t num_of_rows,
                                                   const uint16_t bias_shift,
                                                   const uint16_t out_shift,
-                                                  const q7_t * bias, 
-                                                  q15_t * pOut, 
+                                                  const q7_t * bias,
+                                                  q15_t * pOut,
                                                   q15_t * vec_buffer);
 
   /**
@@ -685,16 +685,16 @@ extern    "C"
                                                       const uint16_t num_of_rows,
                                                       const uint16_t bias_shift,
                                                       const uint16_t out_shift,
-                                                      const q7_t * bias, 
-                                                      q15_t * pOut, 
+                                                      const q7_t * bias,
+                                                      q15_t * pOut,
                                                       q15_t * vec_buffer);
 
 /**
  * @brief Matrix-Multiplication Kernels for Convolution
  *
- * These functions are used within convolution layer functions for 
+ * These functions are used within convolution layer functions for
  * matrix multiplication.
- * 
+ *
  * The implementation is similar to CMSIS-DSP arm_mat_mult functions
  * with one Q7 and one Q15 operands. The Q15 operand is the im2col
  * output which is always with 2 columns.
@@ -719,8 +719,8 @@ extern    "C"
                                             const uint16_t ch_im_out,
                                             const uint16_t numCol_A,
                                             const uint16_t bias_shift,
-                                            const uint16_t out_shift, 
-                                            const q7_t * bias, 
+                                            const uint16_t out_shift,
+                                            const q7_t * bias,
                                             q7_t * pOut);
 
   /**
@@ -741,8 +741,8 @@ extern    "C"
                                                       const uint16_t ch_im_out,
                                                       const uint16_t numCol_A,
                                                       const uint16_t bias_shift,
-                                                      const uint16_t out_shift, 
-                                                      const q7_t * bias, 
+                                                      const uint16_t out_shift,
+                                                      const q7_t * bias,
                                                       q7_t * pOut);
 
 #ifdef __cplusplus
@@ -795,7 +795,7 @@ extern    "C"
    * @return none.
    */
 
-    void      arm_nn_activations_direct_q7(q7_t * data, uint16_t size, uint16_t int_width, 
+    void      arm_nn_activations_direct_q7(q7_t * data, uint16_t size, uint16_t int_width,
                                            arm_nn_activation_type type);
 
   /**
@@ -837,9 +837,9 @@ extern    "C"
                                  const uint16_t ch_im_in,
                                  const uint16_t dim_kernel,
                                  const uint16_t padding,
-                                 const uint16_t stride, 
-                                 const uint16_t dim_im_out, 
-                                 q7_t * bufferA, 
+                                 const uint16_t stride,
+                                 const uint16_t dim_im_out,
+                                 q7_t * bufferA,
                                  q7_t * Im_out);
 
   /**
@@ -862,9 +862,9 @@ extern    "C"
                                  const uint16_t ch_im_in,
                                  const uint16_t dim_kernel,
                                  const uint16_t padding,
-                                 const uint16_t stride, 
-                                 const uint16_t dim_im_out, 
-                                 q7_t * bufferA, 
+                                 const uint16_t stride,
+                                 const uint16_t dim_im_out,
+                                 q7_t * bufferA,
                                  q7_t * Im_out);
 
 /**

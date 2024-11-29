@@ -74,7 +74,7 @@ jobs:
 
     # We need a successful build before we can run the deploy
     needs: [setup]
-    
+
     # we run this on self hosted runner, use labels to be more specific
     # add specific names if there are some, otherwise self-hosted, X64, Linux are the default ones
     runs-on:
@@ -187,7 +187,7 @@ jobs:
                           --port ${PORTS[idx]} \
                           --baud 115200 \
                           --report ~/artefact/${LIB}/${EXAMPLE}/${TESTS[idx]}/${{ env.device }}/report.json
-                
+
                 echo "=============================================================================================================="
               done # end of TEST loop monitor
 
@@ -225,4 +225,3 @@ jobs:
           cd /opt/runner_support/
           REPO="$(basename "$GITHUB_REPOSITORY")"
           ./py_checkusb.py --switch repo --namelist $REPO --onoff off
-

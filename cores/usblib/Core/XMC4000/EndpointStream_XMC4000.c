@@ -89,7 +89,7 @@ uint8_t Endpoint_Write_Stream_LE (const void *const Buffer, uint16_t Length, uin
 
 		}
 	}
-	
+
 	if((Length == 0) && (prev_length == ep->MaxPacketSize))
 	{
 	   zlp_flag = true;

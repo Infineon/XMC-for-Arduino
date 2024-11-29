@@ -1,6 +1,6 @@
 # The I2S library for XMC
 
-The IIS protocol is a synchronous serial communication protocol mainly for audio and infotainment applications. This library allows the microcontroller to work as 
+The IIS protocol is a synchronous serial communication protocol mainly for audio and infotainment applications. This library allows the microcontroller to work as
 the master device and read audio input from another device such as a microphone.
 
 Be aware that only reading is possible for the time being - no I2S output is supported.
@@ -49,7 +49,7 @@ Overall, the following SPI - I2S pin matching is in place:
 ## Implementation
 This library uses interrupts to read data from a microphone or, more general, an I2S source. Internally, the microcontroller uses an FIFO to receive the data and once the FIFO is full, the microcontroller generates an interrupt. During the interrupt, the FIFO is emptied and the values are assigned to the single microphone(s), depending on whether  based on the sampling information.
 
-Please see the example `sampleValues` how to read raw values from from the IM69D130 microphone. 
+Please see the example `sampleValues` how to read raw values from from the IM69D130 microphone.
 
 To use stereo channels, you should need to activate both microphones as shown in the example `sampleValues` by calling the respective `  I2S.enableMicrophoneLow()` or `  I2S.enableMicrophoneHigh()` functions. Please note that the buffer will contain values from both microphones one after another and they need to be separated manually.
 In this case, using `I2S.peek()` wouldn't make much sense since the reading has no indication about the currently sampled value. However, by assigning a custom callback function via `I2S.onReceive()` which stores information about the channel once could easily get additional information which is shown in the example `sampleValuesWithCallback`.
@@ -75,5 +75,5 @@ Sometimes, it also makes sense to adjust the data delay, which is the delay betw
 See also our [documentation](https://xmc-arduino.readthedocs.io/en/latest/builtin-libraries.html).
 
 ## Authors
-Manuel Hollfelder 
+Manuel Hollfelder
 Yuxi Sun

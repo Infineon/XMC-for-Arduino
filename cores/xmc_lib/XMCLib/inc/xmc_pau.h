@@ -377,4 +377,3 @@ __STATIC_INLINE uint32_t XMC_PAU_GetRAMSize(void)
 #endif /* defined(PAU) */
 
 #endif /* XMC_PAU_H */
-

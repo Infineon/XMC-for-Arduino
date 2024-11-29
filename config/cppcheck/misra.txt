@@ -644,4 +644,3 @@ A generic selection that is expanded from a macro should evaluate its argument o
 
 Rule 23.8 Required
 A default association shall appear as either the first or the last association of a generic selection
-

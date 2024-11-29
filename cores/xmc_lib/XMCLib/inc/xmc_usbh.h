@@ -409,5 +409,3 @@ void XMC_USBH_TurnOffResumeBit(void);
  */
 #endif /* ((UC_SERIES == XMC45) || (UC_SERIES == XMC44) || (UC_SERIES == XMC43) || (UC_SERIES == XMC47) || (UC_SERIES == XMC48) || DOXYGEN) */
 #endif /* XMC_USBH_H */
-
-

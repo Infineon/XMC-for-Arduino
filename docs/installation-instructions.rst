@@ -8,7 +8,7 @@ Prework for SEGGER J-Link
 
 In order to use Infineon's XMC microcontroller boards in Arduino you need
 `SEGGER J-Link <https://www.segger.com/downloads/jlink>`_ installed on your machine first. Please follow
-`this link <https://www.segger.com/downloads/jlink>`_ 
+`this link <https://www.segger.com/downloads/jlink>`_
 and install the *J-Link Software and Documentation Pack* for your respective operating system.
 
 .. image:: img/jlink_downloads.png
@@ -26,7 +26,7 @@ XMC for Arduino requires *Python 3.x* and *pyserial*. Make sure `Python <https:/
 .. note::
     When installing Python on Windows, ensure you check "*Add Python to PATH*" before clicking install.
     This allows XMC for Arduino to find the Python executable.
-    
+
     If you forget this step, you can add Python to PATH manually later.
 
 You can check if it was successfully installed by opening your command line or terminal and typing:
@@ -34,13 +34,13 @@ You can check if it was successfully installed by opening your command line or t
 .. code-block:: shell
 
   python --version
- 
+
 With `pip <https://pip.pypa.io/en/stable/installation/>`_ available, install the mentioned packages from a terminal:
 
 .. code-block:: shell
 
   pip install pyserial
- 
+
 Integration in Arduino IDE
 --------------------------
 .. note::
@@ -58,7 +58,7 @@ Paste the following URL into the *Additional boards manager URLs* input field un
 .. image:: img/arduino_ide_preferences_menu.png
     :width: 600
 
-To install the boards, navigate to *Tools > Board > Boards Manager...* and search for *XMC*. You will see options to install the board files for the microcontrollers. 
+To install the boards, navigate to *Tools > Board > Boards Manager...* and search for *XMC*. You will see options to install the board files for the microcontrollers.
 Click *Install* to add the boards to your Arduino IDE.
 
 .. image:: img/arduino_ide_board_manager_entry.png
@@ -71,9 +71,8 @@ In the board list in *Tools > Board*, you will now find the supported XMC microc
 
 Release Packages from Version 3.0.0 onwards
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-Certain obsolete boards and non-functional libraries were removed from the board support package for the 
+Certain obsolete boards and non-functional libraries were removed from the board support package for the
 release version 2.0.0, alongwith some other major changes (see `release notes <https://github.com/Infineon/XMC-for-Arduino/releases/tag/V2.0.0>`_). Since the release of version 3.0, the release index does not contain versions before 2.0 anymore.
 
 .. image:: img/arduino_ide_release_index.png
     :width: 600
-

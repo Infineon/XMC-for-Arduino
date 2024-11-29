@@ -94,33 +94,33 @@
                                          SCU_PLL_PLLSTAT_PLLSP_Msk)  /**< Used to verify the OSC frequency is
                                                                           usable or not.*/
 
-#define XMC_SCU_ORC_ADC_START_GROUP    (0UL)    /**< The ADC group whose channel input is compared by Out of Range  
+#define XMC_SCU_ORC_ADC_START_GROUP    (0UL)    /**< The ADC group whose channel input is compared by Out of Range
                                                      Comparator (ORC) to serves the purpose of overvoltage monitoring
-                                                     for analog input pins of the chip and ORC start measurements from 
+                                                     for analog input pins of the chip and ORC start measurements from
                                                      this group number. */
-#define XMC_SCU_ORC_ADC_END_GROUP      (1UL)    /**< The ADC group whose channel input is compared by Out of Range  
+#define XMC_SCU_ORC_ADC_END_GROUP      (1UL)    /**< The ADC group whose channel input is compared by Out of Range
                                                      Comparator (ORC) to serves the purpose of overvoltage monitoring
-                                                     for analog input pins of the chip and ORC end measurements at 
+                                                     for analog input pins of the chip and ORC end measurements at
                                                      this group number. */
-#define XMC_SCU_ORC_START_ADC_CHANNEL  (6UL)    /**< The ADC channel whose channel input is compared by Out of Range  
+#define XMC_SCU_ORC_START_ADC_CHANNEL  (6UL)    /**< The ADC channel whose channel input is compared by Out of Range
                                                      Comparator (ORC) to serves the purpose of overvoltage monitoring
-                                                     for analog input pins of the chip and ORC start measurements from 
+                                                     for analog input pins of the chip and ORC start measurements from
                                                      this channel number. */
-#define XMC_SCU_ORC_END_ADC_CHANNEL    (7UL)    /**< The ADC channel whose channel input is compared by Out of Range  
+#define XMC_SCU_ORC_END_ADC_CHANNEL    (7UL)    /**< The ADC channel whose channel input is compared by Out of Range
                                                      Comparator (ORC) to serves the purpose of overvoltage monitoring
-                                                     for analog input pins of the chip and ORC ends measurements at 
+                                                     for analog input pins of the chip and ORC ends measurements at
                                                      this channel number. */
 
 #define XMC_SCU_CHECK_GRPNUM(GROUP_NUM)   (((GROUP_NUM) == XMC_SCU_ORC_ADC_START_GROUP) || \
                                         ((GROUP_NUM) == XMC_SCU_ORC_ADC_END_GROUP) ) /**< Used to verify whether
-                                                                                      provided ADC group number lies 
-                                                                                      within specified ADC start and 
+                                                                                      provided ADC group number lies
+                                                                                      within specified ADC start and
                                                                                       end group number or not. */
 
 #define XMC_SCU_CHECK_CHNUM(CH_NUM)       (((CH_NUM) == XMC_SCU_ORC_START_ADC_CHANNEL) || \
                                         ((CH_NUM) == XMC_SCU_ORC_END_ADC_CHANNEL) )  /**< Used to verify whether
-                                                                                      provided ADC channel number lies 
-                                                                                      within specified ADC start and 
+                                                                                      provided ADC channel number lies
+                                                                                      within specified ADC start and
                                                                                       end channel number or not. */
 
 #define XMC_SCU_INTERRUPT_EVENT_MAX            (32U)      /**< Maximum supported SCU events. */

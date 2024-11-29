@@ -37,7 +37,7 @@
 
 #define  __INCLUDE_FROM_MS_DRIVER
 #define  __INCLUDE_FROM_MASSSTORAGE_DEVICE_C
-#define  INTERRUPT_CONTROL_ENDPOINT 
+#define  INTERRUPT_CONTROL_ENDPOINT
 #include <MassStorageClassDevice.h>
 
 void MS_Device_ProcessControlRequest(USB_ClassInfo_MS_Device_t* const MSInterfaceInfo)

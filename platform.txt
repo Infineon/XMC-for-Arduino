@@ -48,8 +48,8 @@ compiler.nn_include.path={compiler.xmclib_include.path}/CMSIS/NN/Include
 compiler.dsp_include.path={compiler.xmclib_include.path}/CMSIS/DSP/Include
 
 compiler.arm.cmsis.path=  "-I{compiler.xmclib_include.path}/XMCLib/inc"  "-I{compiler.dsp_include.path}" "-I{compiler.nn_include.path}" "-I{compiler.cmsis_include.path}"  "-I{compiler.xmclib_include.path}/LIBS"  "-I{build.variant.path}"  "-I{build.variant.config_path}"
-compiler.avr_support.path=  "-I{build.core.path}/avr" 
-compiler.usb.path = "-I{runtime.platform.path}/cores/usblib" "-I{runtime.platform.path}/cores/usblib/Common" "-I{runtime.platform.path}/cores/usblib/Class" "-I{runtime.platform.path}/cores/usblib/Class/Common" "-I{runtime.platform.path}/cores/usblib/Class/Device" "-I{runtime.platform.path}/cores/usblib/Core" "-I{runtime.platform.path}/cores/usblib/Core/XMC4000" 
+compiler.avr_support.path=  "-I{build.core.path}/avr"
+compiler.usb.path = "-I{runtime.platform.path}/cores/usblib" "-I{runtime.platform.path}/cores/usblib/Common" "-I{runtime.platform.path}/cores/usblib/Class" "-I{runtime.platform.path}/cores/usblib/Class/Common" "-I{runtime.platform.path}/cores/usblib/Class/Device" "-I{runtime.platform.path}/cores/usblib/Core" "-I{runtime.platform.path}/cores/usblib/Core/XMC4000"
 
 # USB Flags
 build.usb_flags=-DUSB_VID={build.vid} -DUSB_PID={build.pid} -DUSBCON '-DUSB_MANUFACTURER={build.usb_manufacturer}' '-DUSB_PRODUCT={build.usb_product}'
@@ -97,7 +97,7 @@ recipe.S.o.pattern="{compiler.path}{compiler.S.cmd}" {compiler.S.flags} -DXMC{bu
 # ----------------
 
 ## Combine gc-sections, archives, and objects
-recipe.c.combine.pattern="{compiler.path}{compiler.c.elf.cmd}" -mthumb --specs=nosys.specs --specs=nano.specs -mcpu={build.mcu} {compiler.c.elf.flags} "-T{build.flash_ld_path}" "-Wl,-Map,{build.path}/{build.project_name}.map" {compiler.c.elf.extra_flags} -o "{build.path}/{build.project_name}.elf" "-L{build.path}" -Wl,--cref -Wl,--check-sections -Wl,--gc-sections -Wl,--entry=Reset_Handler -Wl,--unresolved-symbols=report-all -Wl,--warn-common -Wl,--warn-section-align {object_files} "{build.path}/{archive_file}" {compiler.libraries.ldflags} -lm 
+recipe.c.combine.pattern="{compiler.path}{compiler.c.elf.cmd}" -mthumb --specs=nosys.specs --specs=nano.specs -mcpu={build.mcu} {compiler.c.elf.flags} "-T{build.flash_ld_path}" "-Wl,-Map,{build.path}/{build.project_name}.map" {compiler.c.elf.extra_flags} -o "{build.path}/{build.project_name}.elf" "-L{build.path}" -Wl,--cref -Wl,--check-sections -Wl,--gc-sections -Wl,--entry=Reset_Handler -Wl,--unresolved-symbols=report-all -Wl,--warn-common -Wl,--warn-section-align {object_files} "{build.path}/{archive_file}" {compiler.libraries.ldflags} -lm
 
 ## Create archives
 # ----------------

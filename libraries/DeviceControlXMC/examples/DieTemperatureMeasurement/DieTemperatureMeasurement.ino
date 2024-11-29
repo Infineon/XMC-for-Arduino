@@ -2,9 +2,9 @@
   Simple die temperature measurement for XMC devices
   Demonstrates the measure temperature of die using sensor.
   05 July 2017
-  
+
   Amended July 2020 to allow negative die temperature
-  
+
   Amended February 2020 in line with PR for XMC_BOARD tidy up
 
   Amended April 2018 Paul Carpenter, PC Services

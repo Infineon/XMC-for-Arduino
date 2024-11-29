@@ -23,7 +23,7 @@ This repository comprises several licenses dependent on the sources of the files
   * Original developed by Arduino (see information in files for more information)
   * Modified by Infineon Technologies AG to integrate XMC into Arduino IDE
   * See files and information in the respective directory for more information
-  
+
 ### XMC
 * Directory: /xmc_lib/CMSIS
   * License: ARM#1
@@ -37,7 +37,7 @@ This repository comprises several licenses dependent on the sources of the files
 * Directory (not each including subdirectory /config/): /variants/
   * License: IFX#2
   * See files and information in the respective directory for more information
-  
+
 ### Variants
 * Directory: /variants/config/
   * License: GNU LESSER GENERAL PUBLIC LICENSE Version 2.1, February 1999
@@ -55,7 +55,7 @@ Version 2.1, February 1999
 
     Copyright (C) 1991, 1999 Free Software Foundation, Inc.
     51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
-    
+
     Everyone is permitted to copy and distribute verbatim copies
     of this license document, but changing it is not allowed.
 
@@ -591,7 +591,7 @@ SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSE
 WHETHER IN CONTRACT, STRICT LIABILITY,OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-To improve the quality of the software, users are encouraged to share modifications, enhancements or bug fixes with 
+To improve the quality of the software, users are encouraged to share modifications, enhancements or bug fixes with
 Infineon Technologies AG dave@infineon.com).
 
 ## License: ARM#1

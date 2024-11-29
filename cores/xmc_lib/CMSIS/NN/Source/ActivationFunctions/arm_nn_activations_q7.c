@@ -52,12 +52,12 @@
    * @return none.
    *
    * @details
-   * 
+   *
    * This is the direct table look-up approach.
    *
    * Assume here the integer part of the fixed-point is <= 3.
    * More than 3 just not making much sense, makes no difference with
-   * saturation followed by any of these activation functions. 
+   * saturation followed by any of these activation functions.
    */
 
 void arm_nn_activations_direct_q7(q7_t * data, uint16_t size, uint16_t int_width, arm_nn_activation_type type)

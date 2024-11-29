@@ -1,11 +1,11 @@
 #include <I2S.h>
 
 /*
- * This example reads audio data from Infineon's IM69D130 Microphone Shield2Go 
+ * This example reads audio data from Infineon's IM69D130 Microphone Shield2Go
  * and prints it on the serial monitor.
- * 
+ *
  * Open the serial monitor with baudrate of 1000000 to see the results.
- * 
+ *
  * Note: if 2 channels are used, the values returned from I2S.read() will be from both channels and thus look noisy
  * In this case, both values need to be separated.
  */

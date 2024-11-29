@@ -199,4 +199,3 @@ __STATIC_INLINE bool XMC_FLASH_IsBusy(void)
 
 
 #endif
-

@@ -350,5 +350,3 @@ void XMC_DSD_CH_GetResult_TS_Time(XMC_DSD_CH_t *const channel, int16_t *dsd_Resu
 
 
 #endif /*DSD*/
-
-

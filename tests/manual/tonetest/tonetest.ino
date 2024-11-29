@@ -33,7 +33,7 @@
 // External variables for stats printing
 extern uint8_t tone_pins[ NUM_TONE_PINS ];
 extern volatile long timer_toggle_count[ NUM_TONE_PINS ];
-extern int (* tasks[])( int, int ); 
+extern int (* tasks[])( int, int );
 extern struct TaskList taskTable[  ];
 
 void printstats( )

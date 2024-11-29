@@ -55,5 +55,3 @@ void onReceive(int packetSize) {
 
   Serial.println();
 }
-
-

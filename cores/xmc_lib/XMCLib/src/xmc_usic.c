@@ -212,7 +212,7 @@ XMC_USIC_CH_STATUS_t XMC_USIC_CH_SetBaudrateEx(XMC_USIC_CH_t *const channel, int
   return status;
 }
 
-void XMC_USIC_CH_SetBaudrateDivider(XMC_USIC_CH_t *const channel, 
+void XMC_USIC_CH_SetBaudrateDivider(XMC_USIC_CH_t *const channel,
                                     XMC_USIC_CH_BRG_CLOCK_SOURCE_t clksel,
                                     bool pppen,
                                     uint32_t pdiv,

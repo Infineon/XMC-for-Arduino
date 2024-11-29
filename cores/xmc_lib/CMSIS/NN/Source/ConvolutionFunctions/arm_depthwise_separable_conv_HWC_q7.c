@@ -92,9 +92,9 @@ arm_status arm_depthwise_separable_conv_HWC_q7(const q7_t * Im_in,
                                                const q7_t * bias,
                                                const uint16_t bias_shift,
                                                const uint16_t out_shift,
-                                               q7_t * Im_out, 
-                                               const uint16_t dim_im_out, 
-                                               q15_t * bufferA, 
+                                               q7_t * Im_out,
+                                               const uint16_t dim_im_out,
+                                               q15_t * bufferA,
                                                q7_t * bufferB)
 {
 

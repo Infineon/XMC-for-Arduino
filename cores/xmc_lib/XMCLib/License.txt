@@ -1,7 +1,7 @@
 License Terms and Copyright Information
 =======================================
-  
-Copyright (c) 2015-2023, Infineon Technologies AG All rights reserved.                        
+
+Copyright (c) 2015-2023, Infineon Technologies AG All rights reserved.
 
 Boost Software License - Version 1.0 - August 17th, 2003
 
@@ -27,5 +27,5 @@ FOR ANY DAMAGES OR OTHER LIABILITY, WHETHER IN CONTRACT, TORT OR OTHERWISE,
 ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 
-To improve the quality of the software, users are encouraged to share modifications, 
+To improve the quality of the software, users are encouraged to share modifications,
 enhancements or bug fixes with Infineon Technologies AG at XMCSupport@infineon.com.

@@ -18,7 +18,7 @@ clang-format:
 
 
 ##TODO: add compilation database for builtin libraries!
-#################################### clang-tidy static code checker  
+#################################### clang-tidy static code checker
 
 clang-tidy-test: C_CPP_SOURCES = $(shell find test -name \*.[hc]\*)
 clang-tidy-src:  C_CPP_SOURCES = $(shell find src -name \*.[hc]\*)
@@ -27,7 +27,7 @@ clang-tidy-test clang-tidy-src : clang-tidy
 
 clang-tidy:
 	$(info $(C_CPP_SOURCES))
-	clang-tidy $(C_CPP_SOURCES) --config-file=$(CLANG_TIDY_DIR)/.clang-tidy -header-filter='' -- -Isrc/framework/arduino -Itest/unit/src/framework/arduino/corelibs -I$(CORE_LIB_DIR) > clang-tidy-report.txt	
+	clang-tidy $(C_CPP_SOURCES) --config-file=$(CLANG_TIDY_DIR)/.clang-tidy -header-filter='' -- -Isrc/framework/arduino -Itest/unit/src/framework/arduino/corelibs -I$(CORE_LIB_DIR) > clang-tidy-report.txt
 
 
 
@@ -43,7 +43,7 @@ foo:
 
 
 
-#################################### cppcheck static code checker 
+#################################### cppcheck static code checker
 ### Requirement : install cppcheck from https://github.com/danmar/cppcheck
 cppcheck: C_CPP_SOURCES = ./src
 
@@ -57,4 +57,3 @@ cppcheck:
 	                          --checkers-report=cppcheck.checkers --xml --max-configs=50 2> ./err.xml
 	$(CPPCHECK_PATH)/htmlreport/cppcheck-htmlreport --file=err.xml --title=TestCPPCheck --report-dir=cppcheck-reports --source-dir=.
 	firefox cppcheck-reports/index.html
-

@@ -1,4 +1,4 @@
-/* PWM test (Duty) 
+/* PWM test (Duty)
  Controlling TWO PWM positions using Fixed values
  Copyright (c) 2020 Paul Carpenter - PC Services.  All right reserved.
 
@@ -49,7 +49,7 @@ val = 0;
 if( setAnalogWriteFrequency( PWM_A_PIN, REFRESH_FREQUENCY ) < 0  )
   val++;
 else
-  if( setAnalogWriteFrequency( PWM_B_PIN, REFRESH_FREQUENCY ) < 0 ) 
+  if( setAnalogWriteFrequency( PWM_B_PIN, REFRESH_FREQUENCY ) < 0 )
     val++;
 
 if( val )           // Invalid pin trap for non-PWM pin

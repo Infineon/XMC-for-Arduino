@@ -53,7 +53,7 @@
    *
    *  Here, instead of typical natural logarithm e based softmax, we use
    *  2-based softmax here, i.e.,:
-   * 
+   *
    *  y_i = 2^(x_i) / sum(2^x_j)
    *
    *  The relative output will be different here.
@@ -81,7 +81,7 @@ void arm_softmax_q7(const q7_t * vec_in, const uint16_t dim_vec, q7_t * p_out)
         }
     }
 
-    /* we ignore really small values  
+    /* we ignore really small values
      * anyway, they will be 0 after shrinking
      * to q7_t
      */

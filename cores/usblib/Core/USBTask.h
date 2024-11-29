@@ -42,7 +42,7 @@
 
 #ifndef __USBTASK_H__
 #define __USBTASK_H__
-#if defined(USB0) 
+#if defined(USB0)
 	/* Includes: */
 		#include <../Common/Common.h>
 		#include <USBMode.h>

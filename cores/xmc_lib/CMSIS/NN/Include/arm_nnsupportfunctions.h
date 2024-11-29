@@ -74,11 +74,11 @@ typedef enum
  */
 
 /**
- * @brief Converts the elements of the Q7 vector to Q15 vector without left-shift 
- * @param[in]       *pSrc points to the Q7 input vector    
- * @param[out]      *pDst points to the Q15 output vector   
- * @param[in]       blockSize length of the input vector    
- * @return none.    
+ * @brief Converts the elements of the Q7 vector to Q15 vector without left-shift
+ * @param[in]       *pSrc points to the Q7 input vector
+ * @param[out]      *pDst points to the Q15 output vector
+ * @param[in]       blockSize length of the input vector
+ * @return none.
  *
  */
 
@@ -86,10 +86,10 @@ void      arm_q7_to_q15_no_shift(const q7_t * pSrc, q15_t * pDst, uint32_t block
 
 /**
  * @brief  Converts the elements of the Q7 vector to reordered Q15 vector without left-shift
- * @param[in]       *pSrc points to the Q7 input vector    
- * @param[out]      *pDst points to the Q15 output vector   
- * @param[in]       blockSize length of the input vector    
- * @return none.    
+ * @param[in]       *pSrc points to the Q7 input vector
+ * @param[out]      *pDst points to the Q15 output vector
+ * @param[in]       blockSize length of the input vector
+ * @return none.
  *
  */
 

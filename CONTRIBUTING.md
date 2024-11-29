@@ -20,7 +20,7 @@ Clone the repository in Arduino folder:
 
 This allows quick testing of local changes during development.
 
-[!TIP] 
+[!TIP]
 If you encounter strange behavior with Arduino IDE during development, try cleaning up the cache:
 * Windows: `C:\User\"username"\AppData\Roaming\arduino-ide`
 * Linux: `~/.config/arduino-ide`
@@ -33,7 +33,7 @@ Before opening a Pull Request for your contribution, please add a git tag in the
 
 ### Creating and Maintaining Third Party Libraries
 #### Basics
-The Arduino IDE allows for external libraries to be added to support specific devices and functions which are not part of the core setup. For details on creating libraries see the 
+The Arduino IDE allows for external libraries to be added to support specific devices and functions which are not part of the core setup. For details on creating libraries see the
 [Arduino library specifications](https://arduino.github.io/arduino-cli/library-specification/). If you add additional libraries to this project, make sure to [document them](https://xmc-arduino.readthedocs.io/en/latest/builtin-libraries.html) accordingly.
 
 #### XMC-for-Arduino Configuration

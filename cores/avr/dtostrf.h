@@ -32,7 +32,7 @@
  * \param prec Number of digits after the "."
  * \param s Resultant output string
  */
- 
+
 char* dtostrf (double val, signed int width, unsigned int prec, char *s);
 
 

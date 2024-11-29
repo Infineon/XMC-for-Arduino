@@ -17,20 +17,20 @@ import subprocess, os, sys
 import textwrap
 
 # Check if we're running on Read the Docs' servers
-read_the_docs_build = os.environ.get('READTHEDOCS', None) == 'True'
+read_the_docs_build = os.environ.get("READTHEDOCS", None) == "True"
 
 # -- Project information -----------------------------------------------------
 
-project = 'XMC for Arduino'
-copyright = '2024 Infineon Technologies AG'
-author = 'Infineon Technologies AG'
+project = "XMC for Arduino"
+copyright = "2024 Infineon Technologies AG"
+author = "Infineon Technologies AG"
 
 # -- General configuration ---------------------------------------------------
 
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
-#...
+# ...
 
 # At top on conf.py (with other import statements)
 # import recommonmark
@@ -60,7 +60,6 @@ extensions = [
     # 'sphinx.ext.inheritance_diagram',
     # 'breathe',
     # 'exhale'
-    
 ]
 
 autosectionlabel_prefix_document = True
@@ -69,48 +68,46 @@ autosectionlabel_prefix_document = True
 # }
 
 source_suffix = [
-    '.rst',
+    ".rst",
     # '.md'
 ]
 
-suppress_warnings = ['autosectionlabel.*', 'epub.duplicated_toc_entry']
+suppress_warnings = ["autosectionlabel.*", "epub.duplicated_toc_entry"]
 
 # Add any paths that contain templates here, relative to this directory.
-templates_path = ['_templates']
+templates_path = ["_templates"]
 
 # Tell sphinx what the primary language being documented is.
-primary_domain = 'cpp'
+primary_domain = "cpp"
 
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
 # This pattern also affects html_static_path and html_extra_path.
-exclude_patterns = ['_build', 'build', 'Thumbs.db', '.DS_Store']
+exclude_patterns = ["_build", "build", "Thumbs.db", ".DS_Store"]
 
-highlight_language = 'c++'
+highlight_language = "c++"
 
 # -- Options for HTML output -------------------------------------------------
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
 
-html_theme = 'sphinx_rtd_theme'
+html_theme = "sphinx_rtd_theme"
 # html_theme_options = {
 # 	"head_font_family" : "Source Sans Pro",
 # 	"font_family" : "Source Sans Pro",
 # 	"body_text_align" : "justify",
 # }
 
-html_logo = 'img/ifx_logo_white_green_s.png'
+html_logo = "img/ifx_logo_white_green_s.png"
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
-html_static_path = ['_templates']
+html_static_path = ["_templates"]
 
 # -- Breathe configuration -------------------------------------------------
 
-breathe_projects = {
-	"XMC for Arduino": "build/xml/"
-}
+breathe_projects = {"XMC for Arduino": "build/xml/"}
 breathe_default_project = "XMC for Arduino"
-breathe_default_members = ('members', 'undoc-members')
+breathe_default_members = ("members", "undoc-members")

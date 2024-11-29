@@ -770,4 +770,3 @@ void XMC_FLASH_Reset(void);
 #endif
 
 #endif
-

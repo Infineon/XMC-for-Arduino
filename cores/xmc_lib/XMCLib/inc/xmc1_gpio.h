@@ -290,4 +290,3 @@ void XMC_GPIO_SetInputHysteresis(XMC_GPIO_PORT_t *const port,
 #endif /* UC_FAMILY == XMC1 */
 
 #endif /* XMC1_GPIO_H */
-

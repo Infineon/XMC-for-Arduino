@@ -15,7 +15,7 @@
 void setup() {
   Serial.begin(115200);
   pinMode(LED2, OUTPUT);
-  digitalWrite(LED2, LOW); 
+  digitalWrite(LED2, LOW);
   delay(500);
   Wire.begin(8);                // join i2c bus with address #8
   Wire.onReceive(receiveEvent); // register event
@@ -27,14 +27,14 @@ void loop() {
 
 // function that executes whenever data is received from master
 // this function is registered as an event, see setup()
-void receiveEvent(int howMany) { 
+void receiveEvent(int howMany) {
   uint8_t x = Wire.read();    // receive byte
   if(x % 2 == 0)
   {
-    digitalWrite(LED2, LOW); 
+    digitalWrite(LED2, LOW);
   }
-  else 
+  else
   {
-    digitalWrite(LED2, HIGH); 
+    digitalWrite(LED2, HIGH);
   }
 }

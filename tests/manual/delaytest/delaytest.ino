@@ -33,7 +33,7 @@ if( ++i >= MAX_MICROS )
   i = MIN_MICROS;
   delay( 5000 );
   }
-else  
-  // pause between outputs   
+else
+  // pause between outputs
   delay( 5 );
 }

@@ -7,30 +7,30 @@
  * @cond
  *********************************************************************************************************************
  * Copyright (c) 2012-2016, Infineon Technologies AG
- * All rights reserved.                        
- *                                             
- * Redistribution and use in source and binary forms, with or without modification,are permitted provided that the 
- * following conditions are met:   
- *                                                                              
- * Redistributions of source code must retain the above copyright notice, this list of conditions and the following 
- * disclaimer.                        
- * 
- * Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following 
- * disclaimer in the documentation and/or other materials provided with the distribution.                       
- * 
- * Neither the name of the copyright holders nor the names of its contributors may be used to endorse or promote 
- * products derived from this software without specific prior written permission.                                           
- *                                                                              
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, 
- * INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE  
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE  FOR ANY DIRECT, INDIRECT, INCIDENTAL, 
- * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR  
- * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, 
- * WHETHER IN CONTRACT, STRICT LIABILITY,OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE 
- * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.                                                  
- *                                                                              
- * To improve the quality of the software, users are encouraged to share modifications, enhancements or bug fixes with 
- * Infineon Technologies AG dave@infineon.com).                                                          
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without modification,are permitted provided that the
+ * following conditions are met:
+ *
+ * Redistributions of source code must retain the above copyright notice, this list of conditions and the following
+ * disclaimer.
+ *
+ * Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following
+ * disclaimer in the documentation and/or other materials provided with the distribution.
+ *
+ * Neither the name of the copyright holders nor the names of its contributors may be used to endorse or promote
+ * products derived from this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES,
+ * INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE  FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+ * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+ * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+ * WHETHER IN CONTRACT, STRICT LIABILITY,OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ *
+ * To improve the quality of the software, users are encouraged to share modifications, enhancements or bug fixes with
+ * Infineon Technologies AG dave@infineon.com).
  *********************************************************************************************************************
  *
  **************************** Change history ********************************
@@ -38,20 +38,20 @@
  * V0.2,Oct, 12, 2012 PKB: C++ support
  * V0.3,Jan, 26, 2013 PKB: Workaround for prefetch bug
  * V0.4,Jul, 29, 2013 PKB: AAPCS violation in V0.3 fixed
- * V0.5,Feb, 05, 2014 PKB: Removed redundant alignment code from copy+clear funcs   
+ * V0.5,Feb, 05, 2014 PKB: Removed redundant alignment code from copy+clear funcs
  * V0.6,May, 05, 2014 JFT: Added ram_code section
  * V0.7,Nov, 25, 2014 JFT: CPU workaround disabled. Single default handler.
  *                         Removed DAVE3 dependency
  * V0.8,Jan, 05, 2016 JFT: Fix .reset section attributes
- * V0.9,March,04,2016 JFT: Fix weak definition of Veneers. 
- *                         Only relevant for AA, which needs ENABLE_PMU_CM_001_WORKAROUND 
+ * V0.9,March,04,2016 JFT: Fix weak definition of Veneers.
+ *                         Only relevant for AA, which needs ENABLE_PMU_CM_001_WORKAROUND
  * V1.0,June ,01,2016 JFT: Rename ENABLE_CPU_CM_001_WORKAROUND to ENABLE_PMU_CM_001_WORKAROUND
  *                         Action required: If using AA step, use ENABLE_PMU_CM_001_WORKAROUND instead of ENABLE_CPU_CM_001_WORKAROUND
- * @endcond 
+ * @endcond
  */
 
 /* ===========START : MACRO DEFINITION MACRO DEFINITION ================== */
- 
+
 .macro Entry Handler
 #if defined(ENABLE_PMU_CM_001_WORKAROUND)
     .long \Handler\()_Veneer
@@ -60,11 +60,11 @@
 #endif
 .endm
 
-.macro Insert_ExceptionHandler Handler_Func 
+.macro Insert_ExceptionHandler Handler_Func
     .weak \Handler_Func
     .thumb_set \Handler_Func, Default_Handler
 
-#if defined(ENABLE_PMU_CM_001_WORKAROUND)  
+#if defined(ENABLE_PMU_CM_001_WORKAROUND)
     .weak \Handler_Func\()_Veneer
     .type \Handler_Func\()_Veneer, %function
 \Handler_Func\()_Veneer:
@@ -73,7 +73,7 @@
     blx  r0
     pop  {r0, pc}
     .size \Handler_Func\()_Veneer, . - \Handler_Func\()_Veneer
-#endif 
+#endif
 .endm
 
 /* =============END : MACRO DEFINITION MACRO DEFINITION ================== */
@@ -83,7 +83,7 @@
     .syntax unified
 
     .section .reset, "a", %progbits
-    
+
 	.align 2
     .globl  __Vectors
     .type   __Vectors, %object
@@ -111,7 +111,7 @@ __Vectors:
     Entry   ERU0_0_IRQHandler           /* Handler name for SR ERU0_0    */
     Entry   ERU0_1_IRQHandler           /* Handler name for SR ERU0_1    */
     Entry   ERU0_2_IRQHandler           /* Handler name for SR ERU0_2    */
-    Entry   ERU0_3_IRQHandler           /* Handler name for SR ERU0_3    */ 
+    Entry   ERU0_3_IRQHandler           /* Handler name for SR ERU0_3    */
     Entry   ERU1_0_IRQHandler           /* Handler name for SR ERU1_0    */
     Entry   ERU1_1_IRQHandler           /* Handler name for SR ERU1_1    */
     Entry   ERU1_2_IRQHandler           /* Handler name for SR ERU1_2    */
@@ -239,7 +239,7 @@ Reset_Handler:
     ldr  r0, =SystemInit
     blx  r0
 #endif
-    
+
 /* Initialize data
  *
  *  Between symbol address __copy_table_start__ and __copy_table_end__,
@@ -272,14 +272,14 @@ Reset_Handler:
 
 .L_loop0_done:
 
-/* Zero initialized data 
+/* Zero initialized data
  *  Between symbol address __zero_table_start__ and __zero_table_end__,
  *  there are array of tuples specifying:
  *    offset 0: Start of a BSS section
  *    offset 4: Size of this BSS section. Must be multiply of 4
  *
  *  Define __SKIP_BSS_CLEAR to disable zeroing uninitialzed data in startup.
- */    
+ */
 #ifndef __SKIP_BSS_CLEAR
 	ldr	r3, =__zero_table_start__
 	ldr	r4, =__zero_table_end__
@@ -299,9 +299,9 @@ Reset_Handler:
 
 	adds	r3, #8
 	b	.L_loop2
-.L_loop2_done:    
+.L_loop2_done:
 #endif /* __SKIP_BSS_CLEAR */
-   
+
 #ifndef __SKIP_LIBC_INIT_ARRAY
     ldr  r0, =__libc_init_array
     blx  r0
@@ -321,7 +321,7 @@ __zero_table_start__:
     .long USB_RAM_start, USB_RAM_size
     .long ETH_RAM_start, ETH_RAM_size
 __zero_table_end__:
-    
+
 	.pool
     .size   Reset_Handler,.-Reset_Handler
 
@@ -446,7 +446,7 @@ Default_Handler:
      Insert_ExceptionHandler GPDMA0_0_IRQHandler
      Insert_ExceptionHandler USB0_0_IRQHandler
      Insert_ExceptionHandler ETH0_0_IRQHandler
-     
+
 /* ============= END OF INTERRUPT HANDLER DEFINITION ====================== */
 
     .end

@@ -36,7 +36,7 @@
  * @brief tables for various activation functions
  *
  * This file include the declaration of common tables.
- * Most of them are used for activation functions 
+ * Most of them are used for activation functions
  *
  * Assumption:
  * Unified table: input is 3.x format, i.e, range of [-8, 8)
@@ -44,19 +44,19 @@
  * tanh(8) = 0.9999997749296758
  * The accuracy here should be good enough
  *
- * 2-stage HL table: 
+ * 2-stage HL table:
  *
  * The entire input range is divided into two parts:
  *
- * Low range table: 0x000x xxxx or 0x111x xxxx 
+ * Low range table: 0x000x xxxx or 0x111x xxxx
  * table entry will be the binary number excluding the first
  * two digits, i.e., 0x0x xxxx or 0x1x xxxx
- * 
+ *
  *
  *
  * High range table 0x0010 0000 -- 0x0111 1111
  *                  0x1000 0000 -- 0x1101 1111
- * 
+ *
  * For positive numbers, table entry will be
  * 0x0010 0000 -- 0x0111 1111 minus 0x0010 0000
  * i.e., 0x0000 0000 - 0x0101 11111

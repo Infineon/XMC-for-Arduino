@@ -76,7 +76,7 @@
 		 *  target to be configured in USB Device mode when defined.
 		 */
 		#define USB_CAN_BE_DEVICE
-        
+
 		/** Indicates that the target microcontroller and compilation settings allow for the
 		 *  target to be configured in USB Host mode when defined.
 		 */

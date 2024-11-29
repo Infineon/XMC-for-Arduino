@@ -8,5 +8,3 @@ make -f Makefile.codechecks.mk clang-tidy-test
 
 #Run cppcheck
 make -f Makefile.codechecks.mk cppcheck
-
-

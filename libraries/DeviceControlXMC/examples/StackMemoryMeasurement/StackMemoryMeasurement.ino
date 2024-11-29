@@ -105,5 +105,3 @@ void loop()
 {
   // do absolutely nothing
 }
-
-

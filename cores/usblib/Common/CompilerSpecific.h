@@ -94,7 +94,7 @@
 				#define GCC_FORCE_POINTER_ACCESS(StructPtr)
 				#define GCC_MEMORY_BARRIER()
 				#define GCC_IS_COMPILE_CONST(x)               0
-				#define MEMCPY(dst,src,len)     memcpy(dst,src,len)				
+				#define MEMCPY(dst,src,len)     memcpy(dst,src,len)
 			#endif
 
 #endif

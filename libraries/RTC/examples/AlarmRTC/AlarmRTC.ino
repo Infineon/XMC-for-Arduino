@@ -3,15 +3,15 @@
    Demonstrates how to set an RTC alarm for the XMC4700 Relax Kit V1
  */
 
- /*  
-  Board Check 
-  This library can currently only be used with the XMC4700 Relax Kit 
-  If you modify the library to work with other XMC versions, remove the following lines 
-*/ 
+ /*
+  Board Check
+  This library can currently only be used with the XMC4700 Relax Kit
+  If you modify the library to work with other XMC versions, remove the following lines
+*/
 #if (UC_FAMILY != XMC4)
-#error This XMC board is not supported, only XMC4700 Relax Kit is supported 
-#endif 
-// End of Board Check 
+#error This XMC board is not supported, only XMC4700 Relax Kit is supported
+#endif
+// End of Board Check
 
 #include <RTC.h>
 
@@ -39,7 +39,7 @@ void setup()
 
    rtc.setAlarmTime(16, 0, 10);
    rtc.enableAlarm(rtc.ALARM);
-   
+
    rtc.attachInterrupt(alarmMatch);
 }
 

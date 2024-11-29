@@ -54,8 +54,8 @@ q7_t     *arm_nn_mat_mult_kernel_q7_q15_reordered(const q7_t * pA,
                                                   const uint16_t ch_im_out,
                                                   const uint16_t numCol_A,
                                                   const uint16_t bias_shift,
-                                                  const uint16_t out_shift, 
-                                                  const q7_t * bias, 
+                                                  const uint16_t out_shift,
+                                                  const q7_t * bias,
                                                   q7_t * pOut)
 {
 

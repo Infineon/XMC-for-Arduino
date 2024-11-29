@@ -55,7 +55,7 @@
 /**
  * @addtogroup COMMON
  * @brief Common APIs to all peripherals for XMC microcontroller family
- 
+
  * The Common driver contains a set of different system functions. These functions
  * can be called in the application routine.
  * @{

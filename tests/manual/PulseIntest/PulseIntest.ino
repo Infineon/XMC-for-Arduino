@@ -5,7 +5,7 @@
  *   -  Oscilloscope to check timings being measured in software
  *   -  Serial port at 115,200 baud
  *   -  Default pin 4 for the TTL input
- *   
+ *
  *   Operation
  *     Configures inputs
  *     Loops
@@ -18,8 +18,8 @@
  *          Number of valid and timeout readings
  *
  *  Due to asynchronous nature of waveform generator to software the important
- *  factors to watch on statistics are how many timeouts occur and the average 
- *  reading. In tests using a 100 Hz to 10 kHz frequency average readings were 
+ *  factors to watch on statistics are how many timeouts occur and the average
+ *  reading. In tests using a 100 Hz to 10 kHz frequency average readings were
  *  noted as being within +/- 1 microsecond from 10 to 50 micros second pulses.
  */
 #include <Arduino.h>
@@ -46,7 +46,7 @@ Serial.println( "PC Services - PulseIn accuracy test" );
 
 void loop()
 {
-// Reset statistics    
+// Reset statistics
 min = 100000;
 avg = 0;
 timeouts = 0;

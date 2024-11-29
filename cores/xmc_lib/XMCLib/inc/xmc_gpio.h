@@ -461,4 +461,3 @@ __STATIC_INLINE void XMC_GPIO_DisableDigitalInput(XMC_GPIO_PORT_t *const port, c
  */
 
 #endif /* XMC_GPIO_H */
-

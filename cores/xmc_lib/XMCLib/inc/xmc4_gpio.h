@@ -328,4 +328,3 @@ void XMC_GPIO_SetOutputStrength(XMC_GPIO_PORT_t *const port, const uint8_t pin, 
 #endif /* UC_FAMILY == XMC4 */
 
 #endif /* XMC4_GPIO_H */
-

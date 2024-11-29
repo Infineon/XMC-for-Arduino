@@ -708,8 +708,8 @@
 				#define MAX_ALLOC 256
 				#else
 				#define MAX_ALLOC
-				#endif			
-				
+				#endif
+
 				#if (!defined(__DOXYGEN__))
 				wchar_t  UnicodeString[MAX_ALLOC];
 				#else

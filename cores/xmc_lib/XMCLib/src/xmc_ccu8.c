@@ -1199,7 +1199,7 @@ void XMC_CCU8_SLICE_SetInterruptNode(XMC_CCU8_SLICE_t *const slice,
       mask = ((uint32_t) CCU8_CC8_SRS_E2SR_Msk);
       pos  = CCU8_CC8_SRS_E2SR_Pos;
       break;
-	  
+
 	default:
 	  mask = 0;
 	  pos = 0;

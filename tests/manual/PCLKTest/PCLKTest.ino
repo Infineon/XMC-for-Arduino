@@ -53,7 +53,7 @@ str1( XMC_BOARD );
 // dummy read to ensure first value which may be erroneous is ignored
 temperature = devCtrl.getTemperature();
 
-// Setup the PWM pins 
+// Setup the PWM pins
 analogWriteResolution( RESOLUTION );
 if( setAnalogWriteFrequency( PWM_A_PIN, REFRESH_FREQUENCY ) < 0  )
   {                 // Invalid pin trap for non-PWM pin

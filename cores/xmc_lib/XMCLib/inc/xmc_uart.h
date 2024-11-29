@@ -489,7 +489,7 @@ void XMC_UART_CH_DisableEvent(XMC_USIC_CH_t *const channel, const uint32_t event
  * For all the protocol events enlisted in the enumeration XMC_UART_CH_EVENT_t, one common
  * interrupt gets generated. The service request connects the interrupt node to the UART
  * protocol events.
- * 
+ *
  * \par<b>Note:</b><br>
  * NVIC node should be separately enabled to generate the interrupt.
  *
@@ -517,7 +517,7 @@ __STATIC_INLINE void XMC_UART_CH_SetInterruptNodePointer(XMC_USIC_CH_t *const ch
  * Sets the interrupt node for USIC channel events. \n\n
  * For an event to generate interrupt, node pointer should be configured with service request(SR0, SR1..SR5).
  * The NVIC node gets linked to the interrupt event by doing so.<br>
- * 
+ *
  * \par<b>Note:</b><br>
  * NVIC node should be separately enabled to generate the interrupt.
  *
@@ -839,7 +839,7 @@ __STATIC_INLINE void XMC_UART_CH_SetInputSamplingFreq(XMC_USIC_CH_t *const chann
  * Enable data transmission.\n\n
  * Use this function in combination with XMC_UART_CH_DisableDataTransmission() to fill the FIFO and send the FIFO content without gaps in the transmission.
  * FIFO is filled using XMC_USIC_CH_TXFIFO_PutData().
- * 
+ *
  * \par<b>Note:</b><br>
  * If you need more control over the start of transmission use XMC_USIC_CH_SetStartTransmisionMode()
  *

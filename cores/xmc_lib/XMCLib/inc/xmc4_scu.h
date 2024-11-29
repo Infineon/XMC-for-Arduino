@@ -3620,4 +3620,3 @@ __STATIC_INLINE void XMC_SCU_CLOCK_SetSleepConfig(int32_t config)
 #endif /* UC_FAMILY == XMC4 */
 
 #endif /* XMC4_SCU_H */
-

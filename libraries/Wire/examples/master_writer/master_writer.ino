@@ -14,13 +14,13 @@
 
 void setup() {
   pinMode(LED2, OUTPUT);
-  digitalWrite(LED2, LOW); 
-  
+  digitalWrite(LED2, LOW);
+
   Wire.begin(); // join i2c bus (address optional for master)
 }
 
 byte x = 1;
- 
+
 void loop() {
   delay(1000);
   Wire.beginTransmission(8); // transmit to device #8
@@ -30,11 +30,11 @@ void loop() {
 
   if(x % 2 == 0)
   {
-    digitalWrite(LED2, LOW); 
+    digitalWrite(LED2, LOW);
   }
-  else 
+  else
   {
-    digitalWrite(LED2, HIGH); 
+    digitalWrite(LED2, HIGH);
   }
 
   x++;

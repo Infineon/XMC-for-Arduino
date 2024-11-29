@@ -49,7 +49,7 @@
  * MACROS
  ********************************************************************************************************************/
 
-#define XMC_FLASH_PROTECTION_CONFIGURATION_WORDS (8UL) /* Used to upadte the assembly buffer during protection 
+#define XMC_FLASH_PROTECTION_CONFIGURATION_WORDS (8UL) /* Used to upadte the assembly buffer during protection
                                                           configuration */
 #define XMC_FLASH_BMI_STRING_WORDS (10UL) /* Used to upadte the assembly buffer during BMI String
                                                           configuration */

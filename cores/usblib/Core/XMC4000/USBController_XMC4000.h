@@ -49,10 +49,10 @@
 
 #ifndef __USBCONTROLLER_XMC4000_H__
 #define __USBCONTROLLER_XMC4000_H__
-#if defined(USB0)       
+#if defined(USB0)
     /* Includes: */
     #include <xmc_usbd.h>
-    
+
 		#include <../../Common/Common.h>
 		#include <../USBMode.h>
 		#include <../Events.h>
@@ -74,11 +74,11 @@
             #define NO_COPY_DRIVER 0
 
             #define NUM_INTERFACES 1
-        
-		/* Macros: */        
+
+		/* Macros: */
 			#if (!defined(MAX_ENDPOINT_INDEX) && !defined(CONTROL_ONLY_DEVICE)) || defined(__DOXYGEN__)
 				/** Total number of endpoints (including the default control endpoint at address 0) which may
-				 *  be used in the device. 
+				 *  be used in the device.
 				 */
 				#define ENDPOINT_TOTAL_ENDPOINTS            7
 			#else
@@ -92,7 +92,7 @@
             /**
              * \brief State machine of Endpoint 0
              */
-            typedef enum EP0_State 
+            typedef enum EP0_State
             {
                 DISCONNECT, /**< Device is disconnected */
                 IDLE, /**< Endpoint 0 is in IDLE state */
@@ -109,7 +109,7 @@
 						#elif defined (__TASKING__)
 							#pragma warning 586
 						#endif
-						
+
             /**
              * \brief USBD Endpoint
              *
@@ -118,7 +118,7 @@
              * - manage the data buffer
              *
              */
-            typedef struct USBD_Endpoint 
+            typedef struct USBD_Endpoint
             {
                 /**
                  * \name Endpoint Parameters
@@ -171,8 +171,8 @@
              * Type define for an USB Device. This structure contains the all data of the device for the USB Device Core Driver.
              * Especially the data of the endpoints are stored inside.
              */
-            typedef struct USBD_Device 
-            {            
+            typedef struct USBD_Device
+            {
                 XMC_USBD_DRIVER_t *Driver; /**< USB device controller driver structure */
                 USBD_Endpoint_t Endpoints[ENDPOINT_TOTAL_ENDPOINTS]; /**< Endpoint structures describing each endpoint of the device */
 
@@ -194,7 +194,7 @@
 						#elif defined (__TASKING__)
 							#pragma warning restore
 						#endif
-        
+
     	/* Global Variables: */
             extern USB_Device_t device;
 
@@ -233,7 +233,7 @@
              * \note To start working you need to call \ref USBD_Connect to connect to the host.
              */
             int USBD_Initialize(XMC_USBD_t *usb_init);
-        
+
 
 	/* Private Interface - For use in library only: */
 	#if !defined(__DOXYGEN__)
@@ -250,7 +250,7 @@
          * Handles endpoint events send by the device controller driver. See \ref USBD_SignalEndpointEvent_Handler
          */
          void USBD_SignalEndpointEvent_Handler (uint8_t ep_addr, XMC_USBD_EP_EVENT_t ep_event);
-         
+
         /**
          * \brief Is the enumeration done?
          *
@@ -267,7 +267,7 @@
          * \param[in] Length Buffer size
          */
         void USBD_SetEndpointBuffer(uint8_t Address,uint8_t *Buffer,uint16_t Length);
-         
+
 	#endif
 
     	/* Includes: */
@@ -282,7 +282,7 @@
 		#if defined(__cplusplus)
 			}
 		#endif
-#endif  
+#endif
 #endif
 
 /** @} */

@@ -126,7 +126,7 @@ arm_convolve_HWC_q7_RGB(const q7_t * Im_in,
                         pBuffer += 3;
                     } else
                     {
-                        /* 
+                        /*
                          * Equivalent to:
                          *  arm_q7_to_q15_no_shift( (q7_t*)Im_in+(i_ker_y*dim_im_in+i_ker_x)*3, pBuffer, 3);
                          */
@@ -156,14 +156,14 @@ arm_convolve_HWC_q7_RGB(const q7_t * Im_in,
                         *__SIMD32(pBuffer) = __PKHBT(bottom.word, top.word, 0);
 #else
                         /*
-                         *  big-endian,    | 1st  | 2nd  | 3rd  | omit | 
+                         *  big-endian,    | 1st  | 2nd  | 3rd  | omit |
                          *                MSB                         LSB
                          *  top | 2nd | omit |; bottom | 1st | 3rd |
-                         * 
+                         *
                          *  version 1, need to swap 2nd and 3rd weight
                          * *__SIMD32(pBuffer) = bottom.word;
                          * *(pBuffer+2) = top.half_words[1];
-                         * 
+                         *
                          *  version 2, no weight shuffling required
                          */
                         *pBuffer++ = bottom.half_words[0];

@@ -7,45 +7,45 @@
  * @cond
  *********************************************************************************************************************
  * Copyright (c) 2012-2016, Infineon Technologies AG
- * All rights reserved.                        
- *                                             
- * Redistribution and use in source and binary forms, with or without modification,are permitted provided that the 
- * following conditions are met:   
- *                                                                              
- * Redistributions of source code must retain the above copyright notice, this list of conditions and the following 
- * disclaimer.                        
- * 
- * Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following 
- * disclaimer in the documentation and/or other materials provided with the distribution.                       
- * 
- * Neither the name of the copyright holders nor the names of its contributors may be used to endorse or promote 
- * products derived from this software without specific prior written permission.                                           
- *                                                                              
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, 
- * INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE  
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE  FOR ANY DIRECT, INDIRECT, INCIDENTAL, 
- * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR  
- * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, 
- * WHETHER IN CONTRACT, STRICT LIABILITY,OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE 
- * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.                                                  
- *                                                                              
- * To improve the quality of the software, users are encouraged to share modifications, enhancements or bug fixes with 
- * Infineon Technologies AG dave@infineon.com).                                                          
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without modification,are permitted provided that the
+ * following conditions are met:
+ *
+ * Redistributions of source code must retain the above copyright notice, this list of conditions and the following
+ * disclaimer.
+ *
+ * Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following
+ * disclaimer in the documentation and/or other materials provided with the distribution.
+ *
+ * Neither the name of the copyright holders nor the names of its contributors may be used to endorse or promote
+ * products derived from this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES,
+ * INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE  FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+ * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+ * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+ * WHETHER IN CONTRACT, STRICT LIABILITY,OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ *
+ * To improve the quality of the software, users are encouraged to share modifications, enhancements or bug fixes with
+ * Infineon Technologies AG dave@infineon.com).
  *********************************************************************************************************************
  *
  **************************** Change history ********************************
- * V1.0, Oct, 02, 2012 PKB:Startup file for XMC1  
- * V1.1, Oct, 19, 2012 PKB:ERU and MATH interrupt handlers  
- * V1.2, Nov, 02, 2012 PKB:Renamed AllowPLLInitByStartup to AllowClkInitByStartup  
- * V1.3, Dec, 11, 2012 PKB:Attributes of .XmcVeneerCode section changed  
- * V1.4, Dec, 13, 2012 PKB:Removed unwanted interrupts/veneers  
- * V1.5, Jan, 26, 2013 PKB:Corrected the SSW related entries  
- * V1.6, Feb, 13, 2013 PKB:Relative path to Device_Data.h  
+ * V1.0, Oct, 02, 2012 PKB:Startup file for XMC1
+ * V1.1, Oct, 19, 2012 PKB:ERU and MATH interrupt handlers
+ * V1.2, Nov, 02, 2012 PKB:Renamed AllowPLLInitByStartup to AllowClkInitByStartup
+ * V1.3, Dec, 11, 2012 PKB:Attributes of .XmcVeneerCode section changed
+ * V1.4, Dec, 13, 2012 PKB:Removed unwanted interrupts/veneers
+ * V1.5, Jan, 26, 2013 PKB:Corrected the SSW related entries
+ * V1.6, Feb, 13, 2013 PKB:Relative path to Device_Data.h
  * V1.7, Feb, 19, 2013 PKB:Included XMC1100_SCU.inc
  * V1.8, Jan, 24, 2014 PKB:Removed AllowClkInitStartup and DAVE Extended init
  * V1.9, Feb, 05, 2014 PKB:Removed redundant alignment code from copy+clear funcs
  * V1.10, Feb, 14, 2014 PKB:Added software_init_hook and hardware_init_hook
- * V1.11, May, 06, 2014 JFT:__COPY_FLASH2RAM to initialize ram 
+ * V1.11, May, 06, 2014 JFT:__COPY_FLASH2RAM to initialize ram
  *                          Added ram_code section initialization
  * V1.12, Sep, 29, 2014 JFT:One single default handler
  *                          Device_Data.h not included, user may use CLKVAL1_SSW
@@ -56,7 +56,7 @@
  * V1.14, Sep, 03,2015 JFT:SSW default clocking changed, MCLK=8MHz and PCLK=16MHz avoid problems with BMI tool timeout
  * V1.15, Jan, 05,2016 JFT:Fix .reset section attributes
  *
- * @endcond 
+ * @endcond
  */
 
 /*****************************************************************************
@@ -86,7 +86,7 @@
  *                    <5=> Reserved
  *                    <6=> Reserved
  *                    <7=> Reserved
- *    <i> Deafult: 32.768kHz standby clock 
+ *    <i> Deafult: 32.768kHz standby clock
  *    <o0.31>      do not move CLK_VAL1 to SCU_CLKCR[0..19]
  *  </h>
  *****************************************************************************/
@@ -116,26 +116,26 @@
 .endm
 
 /* A couple of macros to ease definition of the various handlers */
-.macro Insert_ExceptionHandler Handler_Func 
+.macro Insert_ExceptionHandler Handler_Func
     .weak \Handler_Func
     .thumb_set \Handler_Func, Default_handler
-.endm    
+.endm
 
 /* ================== START OF VECTOR TABLE DEFINITION ====================== */
 /* Vector Table - This is indirectly branched to through the veneers */
-    .syntax unified   
+    .syntax unified
     .cpu cortex-m0
 
     .section .reset, "a", %progbits
-    
+
  	.align 2
-    
+
     .globl  __Vectors
     .type   __Vectors, %object
 __Vectors:
     .long   __initial_sp                /* Top of Stack                 */
     .long   Reset_Handler               /* Reset Handler                */
-/* 
+/*
  * All entries below are redundant for M0, but are retained because they can
  * in the future be directly ported to M0 Plus devices.
  */
@@ -195,14 +195,14 @@ __Vectors:
 
 /* ================== START OF VECTOR ROUTINES ============================= */
 
-    .thumb 
+    .thumb
 	.align 1
- 
+
 /* Reset Handler */
-    .thumb_func 
+    .thumb_func
     .globl  Reset_Handler
     .type   Reset_Handler, %function
-Reset_Handler: 
+Reset_Handler:
 /* Initialize interrupt veneer */
 	ldr	r1, =eROData
 	ldr	r2, =VeneerStart
@@ -211,7 +211,7 @@ Reset_Handler:
 
     ldr  r0, =SystemInit
     blx  r0
-	
+
 /* Initialize data */
 	ldr	r1, =DataLoadAddr
 	ldr	r2, =__data_start
@@ -284,7 +284,7 @@ __copy_data:
 /* ========== START OF EXCEPTION HANDLER DEFINITION ======================== */
 
 	.align 1
-    
+
     .thumb_func
     .weak Default_handler
     .type Default_handler, %function
@@ -326,14 +326,14 @@ Default_handler:
     Insert_ExceptionHandler USIC0_4_IRQHandler
     Insert_ExceptionHandler USIC0_5_IRQHandler
     Insert_ExceptionHandler BCCU0_0_IRQHandler
-   
+
 /* ======================================================================== */
 
 /* ==================VENEERS VENEERS VENEERS VENEERS VENEERS=============== */
     .section ".XmcVeneerCode","ax",%progbits
-    
+
     .align 1
-    
+
     .globl HardFault_Veneer
 HardFault_Veneer:
     LDR R0, =HardFault_Handler
@@ -358,17 +358,17 @@ PendSV_Veneer:
     LDR R0, =PendSV_Handler
     MOV PC,R0
 /* ======================================================================== */
-    .globl SysTick_Veneer 
+    .globl SysTick_Veneer
 SysTick_Veneer:
     LDR R0, =SysTick_Handler
     MOV PC,R0
 /* ======================================================================== */
-    .globl SCU_0_Veneer 
+    .globl SCU_0_Veneer
 SCU_0_Veneer:
     LDR R0, =SCU_0_IRQHandler
     MOV PC,R0
 /* ======================================================================== */
-    .globl SCU_1_Veneer 
+    .globl SCU_1_Veneer
 SCU_1_Veneer:
     LDR R0, =SCU_1_IRQHandler
     MOV PC,R0
@@ -378,27 +378,27 @@ SCU_2_Veneer:
     LDR R0, =SCU_2_IRQHandler
     MOV PC,R0
 /* ======================================================================== */
-    .globl SCU_3_Veneer 
+    .globl SCU_3_Veneer
 SCU_3_Veneer:
     LDR R0, =ERU0_0_IRQHandler
     MOV PC,R0
 /* ======================================================================== */
-    .globl SCU_4_Veneer 
+    .globl SCU_4_Veneer
 SCU_4_Veneer:
     LDR R0, =ERU0_1_IRQHandler
     MOV PC,R0
 /* ======================================================================== */
-    .globl SCU_5_Veneer 
+    .globl SCU_5_Veneer
 SCU_5_Veneer:
     LDR R0, =ERU0_2_IRQHandler
     MOV PC,R0
 /* ======================================================================== */
-    .globl SCU_6_Veneer 
+    .globl SCU_6_Veneer
 SCU_6_Veneer:
     LDR R0, =ERU0_3_IRQHandler
     MOV PC,R0
 /* ======================================================================== */
-    .globl MATH_Veneer 
+    .globl MATH_Veneer
 MATH_Veneer:
     LDR R0, =MATH0_0_IRQHandler
     MOV PC,R0
@@ -434,7 +434,7 @@ USIC0_5_Veneer:
     LDR R0, =USIC0_5_IRQHandler
     MOV PC,R0
 /* ======================================================================== */
-    .globl VADC0_C0_0_Veneer 
+    .globl VADC0_C0_0_Veneer
 VADC0_C0_0_Veneer:
     LDR R0, =VADC0_C0_0_IRQHandler
     MOV PC,R0

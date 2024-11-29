@@ -1,18 +1,18 @@
 #include <I2S.h>
 
 /*
- * This example reads audio data from Infineon's IM69D130 Microphone Shield2Go 
+ * This example reads audio data from Infineon's IM69D130 Microphone Shield2Go
  * and prints it on the serial monitor - additionally, it uses a custom callback
  * to show how to distinguish between the peeked values for LOW and HIGH word select.
- * 
+ *
  * Open the serial monitor with baudrate of 1000000 to see the results.
- * 
+ *
  * Note: as 2 channels are used, the values returned from I2S.read() will be from both channels and thus look noisy
  * In this case, both values need to be separated.
  */
 
 volatile int32_t lastValueLow = 0;
-volatile int32_t lastValueHigh = 0; 
+volatile int32_t lastValueHigh = 0;
 
 void customCallback(){
   if(I2S.getSampleInformation() == NO_MICROPHONE) return;

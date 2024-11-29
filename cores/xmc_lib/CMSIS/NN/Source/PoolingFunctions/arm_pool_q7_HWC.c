@@ -38,7 +38,7 @@
 /**
  * @brief A few utility functions used by pooling functions
  *
- * 
+ *
  */
 
 static void buffer_scale_back_q15_to_q7(q15_t * buffer, q7_t * target, uint16_t length, uint16_t scale)

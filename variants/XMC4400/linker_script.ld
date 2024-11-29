@@ -9,30 +9,30 @@
  *                    XMC4400-F64x512
  *
  * Copyright (c) 2015-2017, Infineon Technologies AG
- * All rights reserved.                        
- *                                             
- * Redistribution and use in source and binary forms, with or without modification,are permitted provided that the 
- * following conditions are met:   
- *                                                                              
- * Redistributions of source code must retain the above copyright notice, this list of conditions and the following 
- * disclaimer.                        
- * 
- * Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following 
- * disclaimer in the documentation and/or other materials provided with the distribution.                       
- * 
- * Neither the name of the copyright holders nor the names of its contributors may be used to endorse or promote 
- * products derived from this software without specific prior written permission.                                           
- *                                                                              
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, 
- * INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE  
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE  FOR ANY DIRECT, INDIRECT, INCIDENTAL, 
- * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR  
- * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, 
- * WHETHER IN CONTRACT, STRICT LIABILITY,OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE 
- * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.                                                  
- *                                                                              
- * To improve the quality of the software, users are encouraged to share modifications, enhancements or bug fixes with 
- * Infineon Technologies AG dave@infineon.com).                                                          
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without modification,are permitted provided that the
+ * following conditions are met:
+ *
+ * Redistributions of source code must retain the above copyright notice, this list of conditions and the following
+ * disclaimer.
+ *
+ * Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following
+ * disclaimer in the documentation and/or other materials provided with the distribution.
+ *
+ * Neither the name of the copyright holders nor the names of its contributors may be used to endorse or promote
+ * products derived from this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES,
+ * INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE  FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+ * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+ * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+ * WHETHER IN CONTRACT, STRICT LIABILITY,OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ *
+ * To improve the quality of the software, users are encouraged to share modifications, enhancements or bug fixes with
+ * Infineon Technologies AG dave@infineon.com).
  *********************************************************************************************************************
  *
  * Change History
@@ -41,21 +41,21 @@
  * 2015-07-07:
  *     - Product splitting
  *     - Copyright notice update
- *      
+ *
  * 2015-11-24:
  *     - Compatibility with GCC 4.9 2015q2
  *
  * 2016-03-08:
  *     - Fix size of BSS and DATA sections to be multiple of 4
- *     - Add assertion to check that region SRAM_combined does not overflowed no_init section  
- *   
+ *     - Add assertion to check that region SRAM_combined does not overflowed no_init section
+ *
  * 2017-04-07:
  *     - Added new symbols __text_size and eText
- * 
- * 2017-04-20:
- *     - Change vtable location to flash area to save ram             
  *
- * @endcond 
+ * 2017-04-20:
+ *     - Change vtable location to flash area to save ram
+ *
+ * @endcond
  *
  */
 
@@ -106,17 +106,17 @@ SECTIONS
 
         *(.rodata .rodata.*)
         *(.gnu.linkonce.r*)
-        
+
         *(vtable)
-                
-        . = ALIGN(4);        
+
+        . = ALIGN(4);
     } > FLASH_1_cached AT > FLASH_1_uncached
 
     .eh_frame_hdr : ALIGN (4)
     {
       KEEP (*(.eh_frame_hdr))
     } > FLASH_1_cached AT > FLASH_1_uncached
-  
+
     .eh_frame : ALIGN (4)
     {
       KEEP (*(.eh_frame))
@@ -136,9 +136,9 @@ SECTIONS
     } > FLASH_1_cached AT > FLASH_1_uncached
     __exidx_end = .;
     . = ALIGN(4);
-    
+
     /* DSRAM layout (Lowest to highest)*/
-    Stack (NOLOAD) : 
+    Stack (NOLOAD) :
     {
         __stack_start = .;
         . = . + stack_size;
@@ -167,7 +167,7 @@ SECTIONS
         * (.data*);
         *(*.data);
         *(.gnu.linkonce.d*)
-      
+
         . = ALIGN(4);
         /* preinit data */
         PROVIDE_HIDDEN (__preinit_array_start = .);
@@ -193,12 +193,12 @@ SECTIONS
     } > SRAM_combined AT > FLASH_1_uncached
     __data_load = LOADADDR (.data);
     __data_size = __data_end - __data_start;
-        
+
     __text_size = (__exidx_end - sText) + __data_size + __ram_code_size;
     eText = sText + __text_size;
-        
+
     /* BSS section */
-    .bss (NOLOAD) : 
+    .bss (NOLOAD) :
     {
         . = ALIGN(4); /* section size must be multiply of 4. See startup.S file */
         __bss_start = .;
@@ -211,7 +211,7 @@ SECTIONS
     } > SRAM_combined
     __bss_size = __bss_end - __bss_start;
 
-    /* Shift location counter, so that ETH_RAM and USB_RAM are located above DSRAM_1_system */    
+    /* Shift location counter, so that ETH_RAM and USB_RAM are located above DSRAM_1_system */
     __shift_loc =  (__bss_end >= ORIGIN(DSRAM_1_system)) ? 0 : (ORIGIN(DSRAM_1_system) - __bss_end);
 
     USB_RAM  (__bss_end + __shift_loc) (NOLOAD) :
@@ -237,7 +237,7 @@ SECTIONS
     ETH_RAM_size = ETH_RAM_end - ETH_RAM_start;
 
     /* .no_init section contains chipid, SystemCoreClock and trimming data. See system.c file */
-    .no_init ORIGIN(SRAM_combined) + LENGTH(SRAM_combined) - no_init_size (NOLOAD) : 
+    .no_init ORIGIN(SRAM_combined) + LENGTH(SRAM_combined) - no_init_size (NOLOAD) :
     {
         Heap_Bank1_End = .;
         * (.no_init);

@@ -3192,5 +3192,3 @@ __STATIC_INLINE XMC_CCU8_SLICE_STATUS_BIT_t XMC_CCU8_GetSliceStatusBit(XMC_CCU8_
 #endif /* defined(CCU80) */
 
 #endif /* XMC_CCU8_H */
-
-

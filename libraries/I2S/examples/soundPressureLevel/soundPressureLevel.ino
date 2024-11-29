@@ -1,9 +1,9 @@
 #include <I2S.h>
 
 /*
- * This example reads audio data from Infineon's IM69D130 Microphone Shield2Go 
+ * This example reads audio data from Infineon's IM69D130 Microphone Shield2Go
  * and processes it to provide feedback based on the sound pressure level.
- * 
+ *
  * Open the serial plotter with baudrate of 1000000 and make noise to see the results.
  *
  * It is based on an example published by Sandeep Mistry (https://github.com/sandeepmistry)

@@ -2300,6 +2300,3 @@ __STATIC_INLINE uint32_t XMC_CAN_MO_GetNextMessageObjectIdx(XMC_CAN_MO_t *can_mo
 #endif /* defined(CAN) */
 
 #endif /* XMC_CAN_H */
-
-
-

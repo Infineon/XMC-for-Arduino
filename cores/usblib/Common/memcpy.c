@@ -14,7 +14,7 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
-#if defined(USB0) 
+#if defined(USB0)
 #include <stdio.h>
 
 #if defined(__GNUC__)

@@ -84,7 +84,7 @@
 		#endif
 
 	/* Public Interface - May be used in end-application: */
-            
+
 	/** Enum for the possible error return codes of the \ref Endpoint_WaitUntilReady() function.
 	 *
 	 *  \ingroup Group_EndpointRW

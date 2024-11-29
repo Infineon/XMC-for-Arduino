@@ -114,7 +114,7 @@
 
 	/* Architecture Includes: */
         #include <XMC4000/Endpoint_XMC4000.h>
-        
+
 	/* Disable C linkage for C++ Compilers: */
 		#if defined(__cplusplus)
 			}

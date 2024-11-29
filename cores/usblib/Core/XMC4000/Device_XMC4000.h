@@ -116,7 +116,7 @@
 			 *
 			 *  \return Current USB frame number from the USB controller.
 			 */
-    
+
             static inline uint16_t USB_Device_GetFrameNumber(void) ATTR_ALWAYS_INLINE;
             static inline uint16_t USB_Device_GetFrameNumber(void) {
                 return device.Driver->GetFrameNumber();
@@ -126,7 +126,7 @@
 		#if defined(__cplusplus)
 			}
 		#endif
-            
+
 #endif /* __USBDEVICE_XMC4000_H__ */
 #endif
 /** @} */

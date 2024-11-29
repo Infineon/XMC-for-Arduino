@@ -35,7 +35,7 @@
 ; modifications, enhancements or bug fixes with Infineon Technologies AG
 ; at XMCSupport@infineon.com.
 ;-------------------------------------------------------------------------------
-; @endcond 
+; @endcond
 
     AREA |.text|,CODE,ALIGN=3
     THUMB

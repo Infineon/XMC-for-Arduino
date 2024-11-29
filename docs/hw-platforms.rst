@@ -58,7 +58,7 @@ The board shares the same power supply and board shape as other shields for Ardu
 
 Pinout Diagram
 ^^^^^^^^^^^^^^
-Please note that Arduino pin number 16 & 22 (SCL & A5) and Arduino pin number 15 & 21 (SDA & A4) are not connected with each other 
+Please note that Arduino pin number 16 & 22 (SCL & A5) and Arduino pin number 15 & 21 (SDA & A4) are not connected with each other
 nor share the same pins/resources. This is different from the original Arduino UNO Rev3 implementation.
 
 .. image:: img/KIT_XMC11_BOOT_001_pinout.png
@@ -92,8 +92,8 @@ KIT_XMC14_2GO
 .. image:: img/KIT_XMC14_2GO.png
     :width: 400
 
-The XMC1400 Kit 2Go provides an easy way to evaluate almost all capabilities of the XMC1400 microcontroller. 
-The kit is powered via USB, interfaces to other Infineon sensor boards and provides multiple interfaces including a 
+The XMC1400 Kit 2Go provides an easy way to evaluate almost all capabilities of the XMC1400 microcontroller.
+The kit is powered via USB, interfaces to other Infineon sensor boards and provides multiple interfaces including a
 CAN bus. The software development is supported via ModusToolbox™ and the Arduino IDE.
 
 Pinout Diagram
@@ -120,8 +120,8 @@ The board shares the same power supply and board shape as other shields for Ardu
 
 Pinout Diagram
 ^^^^^^^^^^^^^^
-Please note that pins ``P1.4`` and ``P0.5`` are swapped on the board and are not consistent with the silkscreen. As a result, interrupt 0 ``INT0`` 
-occurs as Arduino pin ``3`` and interrupt 1 ``INT1`` is located at Arduino pin ``25``. This is different from the original 
+Please note that pins ``P1.4`` and ``P0.5`` are swapped on the board and are not consistent with the silkscreen. As a result, interrupt 0 ``INT0``
+occurs as Arduino pin ``3`` and interrupt 1 ``INT1`` is located at Arduino pin ``25``. This is different from the original
 Arduino UNO Rev3 implementation. Please look at the pinout diagram for more information.
 
 .. image:: img/KIT_XMC1400_ARDUINO_pinout.png
@@ -140,10 +140,10 @@ KIT_XMC_PLT2GO_XMC4200
 .. image:: img/KIT_XMC_PLT2GO_XMC4200.jpg
     :width: 400
 
-The XMC4200 Platform 2Go evaluation board consists of a XMC4200 microcontroller with a debugger implemented by a XMC4200 microcontroller. 
-Please note that there exist versions with 5V and 3.3V. Please be careful which version you have and use with your respective shields. 
+The XMC4200 Platform 2Go evaluation board consists of a XMC4200 microcontroller with a debugger implemented by a XMC4200 microcontroller.
+Please note that there exist versions with 5V and 3.3V. Please be careful which version you have and use with your respective shields.
 The one described here is the 5V version as this one is compatible with Arduino shields designed for 5V systems.
-This kit is equipped with an ARM® Cortex®-M4 based XMC4200 microcontroller with on-board debugger, Ethernet, CAN and footprints for Arduino, 
+This kit is equipped with an ARM® Cortex®-M4 based XMC4200 microcontroller with on-board debugger, Ethernet, CAN and footprints for Arduino,
 MikroBUS and Shield2Go form factors.
 
 Pinout Diagram
@@ -151,7 +151,7 @@ Pinout Diagram
 .. image:: img/KIT_XMC_PLT2GO_XMC4200_pinout.png
     :width: 700
 
-Please note that Arduino pin number ``15`` & ``21`` (``SCL`` & ``A5``) and Arduino pin number ``14`` & ``20`` (``SDA`` & ``A4``) are connected with each other 
+Please note that Arduino pin number ``15`` & ``21`` (``SCL`` & ``A5``) and Arduino pin number ``14`` & ``20`` (``SDA`` & ``A4``) are connected with each other
 on the board itself. If you want to use them check out the subsection :ref:`connected_pins`.
 
 -----------------------------------------------------------------------
@@ -167,10 +167,10 @@ KIT_XMC_PLT2GO_XMC4400
 .. image:: img/KIT_XMC_PLT2GO_XMC4400.jpg
     :width: 400
 
-The XMC4400 Platform 2Go evaluation board consists of a XMC4400 microcontroller with a debugger implemented by a XMC4200 microcontroller. 
-Please note that there exist versions with 5V and 3.3V. Please be careful which version you have and use with your respective shields. 
-The one described here is the 5V version as this one is compatible with Arduino shields designed for 5V systems. 
-This kit is equipped with an ARM® Cortex®-M4 based XMC4400 microcontroller with on-board debugger, Ethernet, CAN and footprints for Arduino, 
+The XMC4400 Platform 2Go evaluation board consists of a XMC4400 microcontroller with a debugger implemented by a XMC4200 microcontroller.
+Please note that there exist versions with 5V and 3.3V. Please be careful which version you have and use with your respective shields.
+The one described here is the 5V version as this one is compatible with Arduino shields designed for 5V systems.
+This kit is equipped with an ARM® Cortex®-M4 based XMC4400 microcontroller with on-board debugger, Ethernet, CAN and footprints for Arduino,
 MikroBUS and Shield2Go form factors.
 
 Pinout Diagram
@@ -178,7 +178,7 @@ Pinout Diagram
 .. image:: img/KIT_XMC_PLT2GO_XMC4400_pinout.png
     :width: 700
 
-Please note that Arduino pin number ``15`` & ``21`` (``SCL`` & ``A5``) and Arduino pin number ``14`` & ``20`` (``SDA`` & ``A4``) are connected with each other 
+Please note that Arduino pin number ``15`` & ``21`` (``SCL`` & ``A5``) and Arduino pin number ``14`` & ``20`` (``SDA`` & ``A4``) are connected with each other
 on the board itself. If you want to use them check out the subsection :ref:`connected_pins`.
 
 -----------------------------------------------------------------------
@@ -194,17 +194,17 @@ KIT_XMC47_RELAX_5V_AD_V1
 .. image:: img/KIT_XMC47_RELAX_5V_AD_V1.jpg
     :width: 400
 
-The XMC4700 Relax Kit board consists of a XMC4700 microcontroller with a debugger implemented by a XMC4200 microcontroller. 
-Please note that there exist versions with 5V and 3.3V. 
+The XMC4700 Relax Kit board consists of a XMC4700 microcontroller with a debugger implemented by a XMC4200 microcontroller.
+Please note that there exist versions with 5V and 3.3V.
 Please be careful which version you have and use with your respective shields.
-The one described here is the 5V version as this one is compatible with Arduino shields designed for 5V systems. 
+The one described here is the 5V version as this one is compatible with Arduino shields designed for 5V systems.
 
 Pinout Diagram
 ^^^^^^^^^^^^^^
 .. image:: img/KIT_XMC47_RELAX_5V_AD_V1_pinout.png
     :width: 700
 
-Please note that Arduino pin number ``15`` & ``21`` (``SCL`` & ``A5``) and Arduino pin number ``14`` & ``20`` (``SDA`` & ``A4``) are connected with each other 
+Please note that Arduino pin number ``15`` & ``21`` (``SCL`` & ``A5``) and Arduino pin number ``14`` & ``20`` (``SDA`` & ``A4``) are connected with each other
 on the board itself. If you want to use them check out the subsection :ref:`connected_pins`.
 
 -----------------------------------------------------------------------
@@ -214,9 +214,9 @@ on the board itself. If you want to use them check out the subsection :ref:`conn
 Connected I2S and Analog pins
 -----------------------------
 
-For the ``KIT_XMC_PLT2GO_XMC4200``, ``KIT_XMC_PLT2GO_XMC4400`` and ``KIT_XMC47_RELAX_5V_AD_V1`` the Arduino pin number ``15`` & ``21`` (``SCL`` & ``A5``) and Arduino 
-pin number ``14`` & ``20`` (``SDA`` & ``A4``) are connected with each other on the board itself. Although they are different physical pins of the microcontroller, 
-they are connected with each other on the board to comply with the original Arduino UNO Rev3 pin connections. This influences analog measurements on 
+For the ``KIT_XMC_PLT2GO_XMC4200``, ``KIT_XMC_PLT2GO_XMC4400`` and ``KIT_XMC47_RELAX_5V_AD_V1`` the Arduino pin number ``15`` & ``21`` (``SCL`` & ``A5``) and Arduino
+pin number ``14`` & ``20`` (``SDA`` & ``A4``) are connected with each other on the board itself. Although they are different physical pins of the microcontroller,
+they are connected with each other on the board to comply with the original Arduino UNO Rev3 pin connections. This influences analog measurements on
 ``A4`` and ``A5`` if you are using I2C simultaneously. Details of the connection can also be found in the schematics in the user manual of the board here:
 `KIT_XMC_PLT2GO_XMC4200 user manual`_, `KIT_XMC_PLT2GO_XMC4400 user manual`_ and `KIT_XMC47_RELAX_5V_AD_V1 user manual`_.
 
@@ -225,9 +225,9 @@ The user manual shows on:
 * Page 11 details the 3.3V signals on connectors ``X1`` and ``X2`` (figure 7) including ADC channels
 * Page 12 below figure 8 details analog input specifications
 
-A workaround is to set the I2C pins to output open drain via ``pinMode(<pinNumber>, OUTPUT_OPENDRAIN);`` and writing a ``HIGH`` afterwards via ``digitalWrite(<pinNumber>, HIGH);`` 
-to turn it off if you want to use the analog pins (but then I2C cannot be used anymore). Tri-state via ``pinMode(<pinNumber>, XMC_GPIO_MODE_INPUT_TRISTATE);`` is also possible, 
-but the open drain method is preferable. These functions are using the pin mode definitions from the XMC Peripheral Library defined 
+A workaround is to set the I2C pins to output open drain via ``pinMode(<pinNumber>, OUTPUT_OPENDRAIN);`` and writing a ``HIGH`` afterwards via ``digitalWrite(<pinNumber>, HIGH);``
+to turn it off if you want to use the analog pins (but then I2C cannot be used anymore). Tri-state via ``pinMode(<pinNumber>, XMC_GPIO_MODE_INPUT_TRISTATE);`` is also possible,
+but the open drain method is preferable. These functions are using the pin mode definitions from the XMC Peripheral Library defined
 `here <https://github.com/Infineon/XMC-for-Arduino/blob/0dcbd5822cb59d12a7bdae776d307fae9c607ed7/cores/xmc_lib/XMCLib/inc/xmc4_gpio.h#L206>`_.
 
 You can also cut the physical connection on the board itself.

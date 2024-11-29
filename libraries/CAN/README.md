@@ -43,7 +43,7 @@ Here the API definition is based on:
 - [Other modes](#other-modes)
   * [Loopback mode](#loopback-mode)
   * [Sleep mode](#sleep-mode)
-  
+
 ## :warning: XMC specification
 
 Due to the different behavior of xmc4 series and xmc1 series, the library and provided examples was tested primarily on **xmc1400 2go**.
@@ -80,7 +80,7 @@ Returns `1` on success, `0` on failure.
 
 ### Set pins
 
-The RX and TX pins are determined. 
+The RX and TX pins are determined.
 
 
 ### End
