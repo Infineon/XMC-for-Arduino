@@ -1,27 +1,6 @@
 ### Build commands
 ### ! Please note that you need to change the port and path of Unity as appropriate !
 
-### Example program
-
-## XMC4700_Relax_Kit
-make FQBN=Infineon:xmc:XMC4700_Relax_Kit PORT=COM20 CANReceiver flash monitor # CAN Receive has some problem for XMC4700. 
-
-make FQBN=Infineon:xmc:XMC4700_Relax_Kit PORT=COM20 CANReceiverCallback flash monitor # CAN Receive has some problem for XMC4700. 
-
-make FQBN=Infineon:xmc:XMC4700_Relax_Kit PORT=COM24 CANSender flash monitor 
-
-make FQBN=Infineon:xmc:XMC4700_Relax_Kit PORT=COM24 CANLoopBack flash monitor
-
-## XMC1400_XMC2GO
-make FQBN=Infineon:xmc:XMC1400_XMC2GO BAUD_RATE=9600 PORT=COM41 CANReceiver flash monitor
-
-make FQBN=Infineon:xmc:XMC1400_XMC2GO BAUD_RATE=9600 PORT=COM41 CANReceiverCallback flash monitor
-
-make FQBN=Infineon:xmc:XMC1400_XMC2GO BAUD_RATE=9600 PORT=COM42 CANSender flash monitor
-
-make FQBN=Infineon:xmc:XMC1400_XMC2GO BAUD_RATE=9600 PORT=COM42 CANLoopBack flash monitor
-
-
 ### Unit tests
 
 ##CAN
@@ -40,5 +19,5 @@ make FQBN=Infineon:xmc:XMC1400_XMC2GO PORT=COM41 UNITY_PATH=\Unity test_can_conn
 make FQBN=Infineon:xmc:XMC4700_Relax_Kit PORT=COM28 UNITY_PATH=\Unity test_wire_connected1_pingpong monitor
 
 # 2 boards
-make FQBN=Infineon:xmc:XMC4700_Relax_Kit PORT=COM85 UNITY_PATH=\Unity test_wire_connected2_masterpingpong monitor
-make FQBN=Infineon:xmc:XMC4700_Relax_Kit PORT=COM28 UNITY_PATH=\Unity test_wire_connected2_slavepingpong monitor
+make FQBN=Infineon:xmc:XMC4700_Relax_Kit PORT=COM85 test_wire_connected2_masterpingpong monitor
+make FQBN=Infineon:xmc:XMC4700_Relax_Kit PORT=COM28 UNITY_
