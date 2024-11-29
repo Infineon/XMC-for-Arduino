@@ -6,15 +6,3 @@ repos:
         args: ["-style=file:config/clang-format/.clang-format"]
         exclude: ^cores/(avr|usblib|xmc_lib)/
         files: \.(c|cpp|h|hpp)$
-
-  - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v2.3.0
-    hooks:
-      - id: check-yaml
-      - id: end-of-file-fixer
-      - id: trailing-whitespace
-
-  - repo: https://github.com/psf/black
-    rev: 22.10.0
-    hooks:
-      - id: black
