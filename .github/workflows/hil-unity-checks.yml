@@ -177,7 +177,7 @@ jobs:
               # loop over all tests for one example and compile7flash the devices
               readarray -t TESTS < <(echo $lib | jq ".\"${LIB}\".\"${EXAMPLE}\"[]" -r --compact-output)
               for ((idx=0; idx<${#TESTS[@]}; ++idx)); do
-                cd $GITHUB_WORKSPACE/tests/unity/
+                cd $GITHUB_WORKSPACE/tests/arduino-core-tests/
                 echo "=============================================================================================================="
                 echo "Run on index $idx for TEST: ${TESTS[idx]} under EXAMPLE: ${EXAMPLE} and LIB: ${LIB} on port: ${PORTS[idx]}"
                 echo "=============================================================================================================="
