@@ -47,8 +47,9 @@ architecture=xmc
 If your library also supports other boards and architectures, add those in as well.
 
 ## Validation test
-To test the XMC4arduino, we used unity to test some of the features of the arduino core/builtin library. 
-Tests are located in tests\unity and included as submodule in this project. Run  `git submodule update --init --recursive` to update them.  If you are nor familiar with submodules, check out: https://git-scm.com/book/en/v2/Git-Tools-Submodules 
+To test the XMC4arduino, we used unity to test some of the features of the arduino core & builtin library. 
+
+Tests are located in tests/arduino-core-tests and included as submodule in this project. Run  `git submodule update --init --recursive` to update them.  If you are nor familiar with submodules, check out: https://git-scm.com/book/en/v2/Git-Tools-Submodules 
 
 ## Code checks (WIP)
 Refer to libraries\CAN\Makefile.codecheck
