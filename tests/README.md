@@ -26,6 +26,3 @@ Please refer to `unity\README.md` for more details.
 
 To run the tests, use the commands example in `Makefile.test`. 
 
-# Code checks (WIP)
-Refer to libraries\CAN\Makefile.codecheck
-Regarding formatting, we currently use [pre-commit](https://pre-commit.com/) to automatically run clang-formatting to format all c/c++ code.
