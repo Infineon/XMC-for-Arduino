@@ -1,5 +1,7 @@
+# vscode
 .history
 .vscode
+.editorconfig
 
 # build folder
 pkg_build

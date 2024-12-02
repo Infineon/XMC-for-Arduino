@@ -176,14 +176,18 @@ size_t HardwareSerial::write(const uint8_t uc_data) {
                                  _tx_buffer->_aucBuffer[_tx_buffer->_iTail]);
             _tx_buffer->_iTail++;
             if (_tx_buffer->_iTail >= SERIAL_BUFFER_SIZE)
-                _tx_buffer->_iTail = _tx_buffer->_iTail -
-                                     SERIAL_BUFFER_SIZE; // If iTail is larger than Serial Buffer
-                                                         // Size calculate the correct index value
+                _tx_buffer->_iTail %= SERIAL_BUFFER_SIZE; // If iTail is larger than Serial Buffer
+                                                          // Size calculate the correct index value
         }
 
-        while (_tx_buffer->_iTail == nextWrite)
-            ; // Spin locks if we're about to overwrite the buffer. This continues once the data is
-              // sent
+        unsigned long startTime = millis();
+        while (_tx_buffer->_iTail == nextWrite) {
+            if (millis() - startTime > 1000) {
+                return 0; // Spin locks if we're about to overwrite the buffer. This continues once
+                          // the data is
+                          // sent
+            }
+        }
 
         _tx_buffer->_aucBuffer[_tx_buffer->_iHead] = uc_data;
         _tx_buffer->_iHead = nextWrite;
@@ -221,7 +225,8 @@ void HardwareSerial::IrqHandler(void) {
                                  _tx_buffer->_aucBuffer[_tx_buffer->_iTail]);
             _tx_buffer->_iTail++;
             if (_tx_buffer->_iTail >= SERIAL_BUFFER_SIZE)
-                _tx_buffer->_iTail = 0;
+                _tx_buffer->_iTail %= SERIAL_BUFFER_SIZE; // If iTail is larger than Serial Buffer
+                                                          // Size calculate the correct index value
         } else {
             // Mask off transmit interrupt so we don't get it any more
             XMC_UART_CH_DisableEvent(_XMC_UART_config->channel, XMC_UART_CH_EVENT_TRANSMIT_BUFFER);

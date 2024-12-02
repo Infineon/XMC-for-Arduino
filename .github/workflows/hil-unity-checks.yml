@@ -7,6 +7,9 @@ on:
 env:
   TEST_VERSION: 1.0.0
 
+permissions:
+  contents: write
+
 # This template runes multiple workflows
 jobs:
 
@@ -27,6 +30,9 @@ jobs:
       # checkout the latest github action code
       - name: Checkout actions
         uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.UNITY_TOKEN }}
+          submodules: recursive
 
       # checkout the latest arduino-cli compiler
       - name: Setup Arduino CLI
@@ -51,7 +57,7 @@ jobs:
           ./py_checkusb.py --switch repo --namelist $REPO --onoff on
 
           # set the hil-unity-checks
-          hil=$(./py_checkusb.py --readyaml $GITHUB_WORKSPACE/tests/unity/hil-unity-checklist.yaml --json)
+          hil=$(./py_checkusb.py --readyaml $GITHUB_WORKSPACE/tests/hil-unity-checklist.yaml --json)
           echo "hil=${hil}" >> $GITHUB_OUTPUT
 
           # fetch unity libraries
@@ -97,6 +103,9 @@ jobs:
       # checkout the latest github action code
       - name: Checkout actions
         uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.UNITY_TOKEN }}
+          submodules: recursive
 
       # setup environment
       - name: Environment
@@ -168,11 +177,11 @@ jobs:
               # loop over all tests for one example and compile7flash the devices
               readarray -t TESTS < <(echo $lib | jq ".\"${LIB}\".\"${EXAMPLE}\"[]" -r --compact-output)
               for ((idx=0; idx<${#TESTS[@]}; ++idx)); do
-                cd $GITHUB_WORKSPACE/tests/unity/
+                cd $GITHUB_WORKSPACE/tests/arduino-core-tests/
                 echo "=============================================================================================================="
-                echo "Run on index $idx for TEST: ${TESTS[idx]} under EXAMPLE: ${EXAMPLE} and LIB: ${LIB}"
+                echo "Run on index $idx for TEST: ${TESTS[idx]} under EXAMPLE: ${EXAMPLE} and LIB: ${LIB} on port: ${PORTS[idx]}"
                 echo "=============================================================================================================="
-                make FQBN=${{ env.fqbn }} PORT=${PORTS[idx]} UNITY_PATH=/opt/runner_support/Unity_github ${TESTS[idx]}
+                make FQBN=${{ env.fqbn }} PORT=${PORTS[idx]} UNITY_PATH=/opt/Unity ${TESTS[idx]}
                 mkdir -p ~/artefact/${LIB}/${EXAMPLE}/${TESTS[idx]}/
                 mv ./build/build/* ~/artefact/${LIB}/${EXAMPLE}/${TESTS[idx]}/.
                 echo "=============================================================================================================="
