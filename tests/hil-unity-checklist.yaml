@@ -12,6 +12,11 @@ Infineon.xmc.XMC4700_Relax_Kit:
       - "test_wire_connected2_masterpingpong"
     2:
       - "test_wire_connected1_pingpong"
+  
+  Serial:
+    1:
+      - "test_uart_connected2_tx"
+      - "test_uart_connected2_rx"
 
 
 Infineon.xmc.XMC1400_XMC2GO:

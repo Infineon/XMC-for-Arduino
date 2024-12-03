@@ -20,4 +20,10 @@ make FQBN=Infineon:xmc:XMC4700_Relax_Kit PORT=COM28 UNITY_PATH=\Unity test_wire_
 
 # 2 boards
 make FQBN=Infineon:xmc:XMC4700_Relax_Kit PORT=COM85 test_wire_connected2_masterpingpong monitor
-make FQBN=Infineon:xmc:XMC4700_Relax_Kit PORT=COM28 UNITY_
+make FQBN=Infineon:xmc:XMC4700_Relax_Kit PORT=COM28 test_wire_connected2_slavepingpong monitor
+
+## UART
+
+# 2 boards
+make FQBN=Infineon:xmc:XMC4700_Relax_Kit PORT=COM71 test_uart_connected2_tx monitor
+make FQBN=Infineon:xmc:XMC4700_Relax_Kit PORT=COM28 test_uart_connected2_rx monitor
