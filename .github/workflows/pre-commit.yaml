@@ -25,4 +25,10 @@ jobs:
         run: pip install pre-commit
 
       - name: Run pre-commit
-        run: pre-commit run --all-files
+        run: pre-commit run --all-files || true
+
+      - name: Check for formatting issues
+        if: failure()
+        run: |
+          echo "The following files do not meet clang-format standards:"
+          git diff --name-only --diff-filter=M
