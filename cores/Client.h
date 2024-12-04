@@ -46,7 +46,9 @@ public:
     virtual operator bool() = 0;
 
 protected:
-    uint8_t *rawIPAddress(IPAddress &addr) { return addr.raw_address(); };
+    uint8_t *rawIPAddress(IPAddress &addr) { 
+      return addr.raw_address(); 
+      };
 };
 
 #endif /* client_h */
