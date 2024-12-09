@@ -53,4 +53,17 @@ Tests are located in tests/arduino-core-tests and included as submodule in this 
 
 ## Code checks (WIP)
 Refer to libraries\CAN\Makefile.codecheck
-* Regarding formatting, we currently use [pre-commit](https://pre-commit.com/) to automatically run clang-formatting to format all c/c++ code. Please install this python package, and follow the quick start (the pre-commit configuration file is already there). You should be able to format your code automatically on git commit!
+* Regarding formatting, we currently use [pre-commit](https://pre-commit.com/) to automatically run clang-formatting to format all c/c++ code. Please install this python package, and follow the quick start (the pre-commit configuration file is already there). You should be able to format your code automatically on git commit. 
+### Setting Up Pre-commit
+1. Install pre-commit
+    ```bash
+    pip install pre-commit
+    ```
+2. Install the pre-commit hooks:
+     ```bash
+     pre-commit install
+    ```
+3. (optional) Run the hooks on all files:
+     ```bash
+    pre-commit run --all-files
+    ```
