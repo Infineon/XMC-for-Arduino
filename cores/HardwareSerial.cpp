@@ -172,12 +172,6 @@ size_t HardwareSerial::write(const uint8_t uc_data) {
         if (XMC_USIC_CH_GetTransmitBufferStatus(_XMC_UART_config->channel) !=
             XMC_USIC_CH_TBUF_STATUS_BUSY) {
             XMC_UART_CH_EnableEvent(_XMC_UART_config->channel, XMC_UART_CH_EVENT_TRANSMIT_BUFFER);
-            XMC_UART_CH_Transmit(_XMC_UART_config->channel,
-                                 _tx_buffer->_aucBuffer[_tx_buffer->_iTail]);
-            _tx_buffer->_iTail++;
-            if (_tx_buffer->_iTail >= SERIAL_BUFFER_SIZE)
-                _tx_buffer->_iTail %= SERIAL_BUFFER_SIZE; // If iTail is larger than Serial Buffer
-                                                          // Size calculate the correct index value
         }
 
         unsigned long startTime = millis();
