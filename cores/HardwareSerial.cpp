@@ -32,7 +32,7 @@ HardwareSerial::HardwareSerial(XMC_UART_t *xmc_uart_config,
                                RingBuffer *tx_buffer) {
     _XMC_UART_config = xmc_uart_config;
     _rx_buffer = rx_buffer;
-    _tx_buffer = tx_buffer;
+    _tx_buffer = tx_buffer; // TODO: replaced by TBUF (hardware register), can be actually removed
 }
 
 // Public Methods //////////////////////////////////////////////////////////////
@@ -119,10 +119,12 @@ int HardwareSerial::available(void) {
 }
 
 int HardwareSerial::availableForWrite(void) {
-    int tail = _tx_buffer->_iTail; // Snapshot index affected by irq
-    if (_tx_buffer->_iHead >= tail)
-        return SERIAL_BUFFER_SIZE - 1 - _tx_buffer->_iHead + tail;
-    return tail - _tx_buffer->_iHead - 1;
+    int available = XMC_USIC_CH_GetTransmitBufferStatus(_XMC_UART_config->channel);
+    if (avaliable == XMC_USIC_CH_TBUF_STATUS_IDLE) {
+        return 0;
+    } else {
+        return 1;
+    } // TODO: should return bytes avaliable to write! need to enable txFIFO in the future
 }
 
 int HardwareSerial::peek(void) {
@@ -144,53 +146,19 @@ int HardwareSerial::read(void) {
 }
 
 void HardwareSerial::flush(void) {
-    while (_tx_buffer->_iHead != _tx_buffer->_iTail)
-        ; // wait for transmit data to be sent
-
     while (XMC_USIC_CH_GetTransmitBufferStatus(_XMC_UART_config->channel) ==
            XMC_USIC_CH_TBUF_STATUS_BUSY)
         ;
 }
 
 size_t HardwareSerial::write(const uint8_t uc_data) {
-// Is the hardware currently busy?
-#if defined(SERIAL_USE_U1C1)
-    if (_tx_buffer->_iTail != _tx_buffer->_iHead)
-#else
-    if ((XMC_USIC_CH_GetTransmitBufferStatus(_XMC_UART_config->channel) ==
-         XMC_USIC_CH_TBUF_STATUS_BUSY) ||
-        (_tx_buffer->_iTail != _tx_buffer->_iHead))
-#endif
-    {
-        // If busy we buffer
-        int nextWrite = _tx_buffer->_iHead + 1;
-        if (nextWrite >= SERIAL_BUFFER_SIZE)
-            nextWrite = 0;
+    // Is the hardware currently busy?
 
-        // This should always be false but in case transmission is completed before buffer, we need
-        // to reenable IRQ
-        if (XMC_USIC_CH_GetTransmitBufferStatus(_XMC_UART_config->channel) !=
-            XMC_USIC_CH_TBUF_STATUS_BUSY) {
-            XMC_UART_CH_EnableEvent(_XMC_UART_config->channel, XMC_UART_CH_EVENT_TRANSMIT_BUFFER);
-        }
+    // Make sure TX interrupt is enabled
+    XMC_UART_CH_EnableEvent(_XMC_UART_config->channel, XMC_UART_CH_EVENT_TRANSMIT_BUFFER);
+    // Bypass buffering and send character directly
+    XMC_UART_CH_Transmit(_XMC_UART_config->channel, uc_data);
 
-        unsigned long startTime = millis();
-        while (_tx_buffer->_iTail == nextWrite) {
-            if (millis() - startTime > 1000) {
-                return 0; // Spin locks if we're about to overwrite the buffer. This continues once
-                          // the data is
-                          // sent
-            }
-        }
-
-        _tx_buffer->_aucBuffer[_tx_buffer->_iHead] = uc_data;
-        _tx_buffer->_iHead = nextWrite;
-    } else {
-        // Make sure TX interrupt is enabled
-        XMC_UART_CH_EnableEvent(_XMC_UART_config->channel, XMC_UART_CH_EVENT_TRANSMIT_BUFFER);
-        // Bypass buffering and send character directly
-        XMC_UART_CH_Transmit(_XMC_UART_config->channel, uc_data);
-    }
     return 1;
 }
 
@@ -214,17 +182,8 @@ void HardwareSerial::IrqHandler(void) {
         XMC_UART_CH_ClearStatusFlag(_XMC_UART_config->channel,
                                     XMC_UART_CH_STATUS_FLAG_TRANSMIT_BUFFER_INDICATION);
 
-        if (_tx_buffer->_iTail != _tx_buffer->_iHead) {
-            XMC_UART_CH_Transmit(_XMC_UART_config->channel,
-                                 _tx_buffer->_aucBuffer[_tx_buffer->_iTail]);
-            _tx_buffer->_iTail++;
-            if (_tx_buffer->_iTail >= SERIAL_BUFFER_SIZE)
-                _tx_buffer->_iTail %= SERIAL_BUFFER_SIZE; // If iTail is larger than Serial Buffer
-                                                          // Size calculate the correct index value
-        } else {
-            // Mask off transmit interrupt so we don't get it any more
-            XMC_UART_CH_DisableEvent(_XMC_UART_config->channel, XMC_UART_CH_EVENT_TRANSMIT_BUFFER);
-        }
+        // Mask off transmit interrupt so we don't get it any more
+        XMC_UART_CH_DisableEvent(_XMC_UART_config->channel, XMC_UART_CH_EVENT_TRANSMIT_BUFFER);
     }
 }
 
