@@ -11,7 +11,8 @@ build
 **/__pycache__/
 venv/
 
-# code-check reports
+# code-check standards and reports
+misra.txt
 clang-tidy-report.txt
 
 scan-build-reports/
