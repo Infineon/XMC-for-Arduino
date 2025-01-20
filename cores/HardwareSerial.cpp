@@ -120,7 +120,7 @@ int HardwareSerial::available(void) {
 
 int HardwareSerial::availableForWrite(void) {
     int available = XMC_USIC_CH_GetTransmitBufferStatus(_XMC_UART_config->channel);
-    if (avaliable == XMC_USIC_CH_TBUF_STATUS_IDLE) {
+    if (available == XMC_USIC_CH_TBUF_STATUS_IDLE) {
         return 0;
     } else {
         return 1;
