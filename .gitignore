@@ -28,4 +28,4 @@ docs/source/_build
 _build/
 
 # Arduino core api symlinked
-cores/psoc/api
+cores/xmc/api
