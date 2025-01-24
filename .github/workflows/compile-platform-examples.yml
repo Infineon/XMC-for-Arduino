@@ -161,6 +161,10 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+      
+      - name: Set Environment
+        run: |
+          bash tools/dev-setup.sh
 
       - name: Compile examples
         uses: arduino/compile-sketches@v1.1.1
