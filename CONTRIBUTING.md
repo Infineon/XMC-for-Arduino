@@ -10,15 +10,12 @@ Please contribute and raise issues via the [github repository](https://github.co
 - Once your contribution is ready & tested, please create a [Pull Request](https://github.com/Infineon/XMC-for-Arduino/compare) to the master branch
 - Once we merged your changes to the master branch, they are automatically included in the next release
 
-## Install the BSP under development (on Windows)
-Clone the repository in Arduino folder:
-- Open Arduino and install any version of this project as described [here](https://xmc-arduino.readthedocs.io/en/latest/installation-instructions.html).
-- Open the installation location in your Arduino program folder, e.g.
-`C:\Users\<username>\AppData\Local\Arduino15\packages\Infineon\hardware\xmc`
-- Open git bash, type command:
-`git clone <your-xmc-for-arduino-fork> <version>`
-
+## Development (Linux/ WSL)
+1. Create an `<SKETCHBOOK>/hardware/arduino-git` folder. Where `<SKETCHBOOK>` is the location of your Arduino sketchbook. You can run:`mkdir -p $sketchbook/hardware/arduino-git`
+1. Change directories: `cd <SKETCHBOOK>/hardware/arduino-git`
+1. Clone this repo: `git clone https://github.com/Infineon/XMC-for-Arduino.git xmc`
 This allows quick testing of local changes during development.
+1. From the root directory of the core, run the setup script : `bash tools/dev-setup.sh`
 
 [!TIP] 
 If you encounter strange behavior with Arduino IDE during development, try cleaning up the cache:
