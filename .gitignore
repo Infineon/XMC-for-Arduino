@@ -25,5 +25,7 @@ err.xml
 # Ignore docs build (Sphinx)
 docs/build
 docs/source/_build
-__pycache__/
 _build/
+
+# Arduino core api symlinked
+cores/xmc/api
