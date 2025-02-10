@@ -86,15 +86,15 @@ extern uint8_t MOSI;
 extern uint8_t MISO;
 extern uint8_t SCK;
 
-#define PIN_SPI_SS_SD 26
-#define PIN_SPI_MOSI_SD 27
-#define PIN_SPI_MISO_SD 28
-#define PIN_SPI_SCK_SD 29
+#define SDCARD_SS_PIN 26
+#define SDCARD_MOSI_PIN 27
+#define SDCARD_MISO_PIN 28
+#define SDCARD_SCK_PIN 29
 
-static const uint8_t SS_SD = PIN_SPI_SS_SD;
-static const uint8_t MOSI_SD = PIN_SPI_MOSI_SD;
-static const uint8_t MISO_SD = PIN_SPI_MISO_SD;
-static const uint8_t SCK_SD = PIN_SPI_SCK_SD;
+static const uint8_t SS_SD = SDCARD_SS_PIN;
+static const uint8_t MOSI_SD = SDCARD_MOSI_PIN;
+static const uint8_t MISO_SD = SDCARD_MISO_PIN;
+static const uint8_t SCK_SD = SDCARD_SCK_PIN;
 
 // XMC_I2S defines
 /*U2C0*/
