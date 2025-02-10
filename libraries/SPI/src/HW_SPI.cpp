@@ -29,10 +29,8 @@
 
     // swap SPI_default and SPI_for_xmc_SD if desired by user
     #if defined(USE_XMC_RELAX_KIT_SD) && defined(XMC_SPI_for_xmc_SD)
-SPIClass SPI(&XMC_SPI_for_xmc_SD);
-        #if (NUM_SPI > 1)
-SPIClass SPI1(&XMC_SPI_default);
-        #endif
+SPIClass SPI(&XMC_SPI_default);
+SPIClass SPI1(&XMC_SPI_for_xmc_SD);
     #else // normal behaviour
 SPIClass SPI(&XMC_SPI_default);
         #if (NUM_SPI > 1)

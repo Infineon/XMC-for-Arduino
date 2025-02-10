@@ -62,7 +62,8 @@ extern const uint8_t NUM_ANALOG_OUTPUTS;
 #define NUM_I2C 2
 
 // to use SPI_for_xmc_SD if desired by user
-#define XMC_SPI_for_xmc_SD XMC_SPI_1
+#define XMC_SPI_for_xmc_SD XMC_SPI_1 
+#define SDCARD_SPI SPI1 
 
 // Indicate unit has RTC/Alarm
 #define HAS_RTC 1
