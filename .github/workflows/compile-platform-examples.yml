@@ -194,9 +194,14 @@ jobs:
           enable-deltas-report: false
           sketches-report-path: ${{ env.SKETCHES_REPORTS_PATH }}
 
+      - name: Modify the environment variable
+        run: |
+          BOARD_NAME=$(echo ${{ matrix.board.fqbn }} | sed 's/:/-/g')
+          echo "BOARD_NAME=$BOARD_NAME" >> $GITHUB_ENV
+
       - name: Save sketches report as workflow artifact
         uses: actions/upload-artifact@v4
         with:
           if-no-files-found: error
+          name: ${{ env.SKETCHES_REPORTS_PATH }}-${{ env.BOARD_NAME }}
           path: ${{ env.SKETCHES_REPORTS_PATH }}
-          name: ${{ env.SKETCHES_REPORTS_PATH }}
