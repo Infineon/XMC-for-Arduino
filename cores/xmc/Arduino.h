@@ -15,16 +15,30 @@
   You should have received a copy of the GNU Lesser General Public
   License along with this library; if not, write to the Free Software
   Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
-*/
 
-#ifndef Arduino_h
-#define Arduino_h
+  Copyright (c) 2018 Infineon Technologies AG
+  This file has been modified for the XMC microcontroller series.
+*/
+#ifndef _ARDUINO_H_
+#define _ARDUINO_H_
 
 #include "api/ArduinoAPI.h"
+#include "api/deprecated-avr-comp/avr/pgmspace.h"
+#include "api/deprecated-avr-comp/avr/dtostrf.h"
 
 #ifdef __cplusplus
-extern "C"{
+extern "C" {
 #endif
+
+//****************************************************************************
+// @Std Includes
+//****************************************************************************
+#include <stdlib.h>
+#include <stdio.h>
+#include <stdbool.h>
+#include <string.h>
+#include <types.h>
+#include <math.h>
 
 //****************************************************************************
 // @XMC Lib Includes
@@ -41,7 +55,6 @@ extern "C"{
 #include <xmc_i2c.h>
 #include <xmc_i2s.h>
 #include <xmc_can.h>
-
 
 //****************************************************************************
 // @Defines
@@ -307,24 +320,30 @@ extern void loop(void);
 //****************************************************************************
 // @Arduino Core Includes
 //****************************************************************************
-#include "api/Common.h"
-#include "api/itoa.h"
-#include "api/deprecated-avr-comp/avr/dtostrf.h"
+/*
+#include "wiring_digital.h"
+#include "wiring_analog.h"
+#include "wiring_shift.h"
+#include "wiring_time.h"
+#include "wiring_pulse.h"
 
-
+#include "WInterrupts.h"
+*/
 //****************************************************************************
 // @Infineon Core Includes
 //****************************************************************************
-#include "reset.h"
+
+// #include "reset.h"
 
 #ifdef __cplusplus
 } // extern "C"
-    #include "Tone.h"
-    #include "WMath.h"
+//    #include "Tone.h"
+//    #include "WMath.h"
 #endif // __cplusplus
 
-#include "api/Print.h"
-#include "api/HardwareSerial.h"
+//#include "Print.h"
+//#include "HardwareSerial.h"
+
 
 //****************************************************************************
 // @Board Variant Includes

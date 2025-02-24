@@ -16,6 +16,8 @@
   Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
+
+
 //****************************************************************************
 // @Defines
 //****************************************************************************
@@ -26,18 +28,19 @@
 //****************************************************************************
 #include "Arduino.h"
 
-// work around to use new operator
-extern "C" void *_sbrk(int incr);
-void dummy_sbrk_caller() __attribute__((__used__));
+// Weak empty variant initialization function.
+// May be redefined by variant files.
+void initVariant() __attribute__((weak));
+void initVariant() { }
 
-void dummy_sbrk_caller() { _sbrk(0); }
 
 int main(void) {
     /*
      *  Initialization Time first to get closer to startup time accuracy
      */
-    wiring_time_init();
-    wiring_analog_init();
+    // wiring_time_init();
+    // wiring_analog_init();
+
 // Initialize the reset pin for the XMC1100 Boot Kit series and XMC1400 Kit for Arduino as they are
 // based on Arduino form-factor Hence, a dedicated reset pin is required.
 #ifdef HAS_GPIO_RESET
@@ -48,7 +51,7 @@ int main(void) {
     setup();
     while (1) {
         loop();
-          //serialEventRun();
+        // serialEventRun();
     }
 }
 
