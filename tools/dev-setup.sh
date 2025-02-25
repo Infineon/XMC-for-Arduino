@@ -5,8 +5,7 @@ cd $(dirname $0)
 echo ${PWD}
 
 function git_submodule_setup {
-    git submodule init
-    git submodule update
+    git submodule update --init --recursive
 }
 
 function core_api_setup {
@@ -22,7 +21,7 @@ function core_api_setup {
         mkdir -p "$cores_xmc_dir"
         echo "Directory created: $cores_xmc_dir"
     fi
-    ln -sf ${core_api_submodule_dir}/api ${cores_xmc_dir}
+    ln -s ${core_api_submodule_dir}/api ${cores_xmc_dir}
 }
 
 
