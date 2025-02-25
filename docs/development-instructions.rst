@@ -75,12 +75,22 @@ This allows quick testing of local changes during development, and keep released
 
 |:bell:| 
 If you encounter strange behavior with Arduino IDE during development, try cleaning up the IDE cache:
-* Windows: 
-   :: 
-      C:\User\"username"\AppData\Roaming\arduino-ide
-* Linux: 
-   ::
-      ~/.config/arduino-ide
-* macOS: 
-   ::
-      ~/Library/Application Support/arduino-ide/
+
+   .. tabs::
+
+      .. group-tab:: Windows
+
+         ::
+            
+            C:\\User\\"username"\\AppData\\Roaming\\arduino-ide
+
+      .. group-tab:: Linux
+
+         ::
+
+            ~/.config/arduino-ide
+
+      .. group-tab::  macOS 
+         ::
+         
+            ~/Library/Application Support/arduino-ide/
