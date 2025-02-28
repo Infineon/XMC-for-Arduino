@@ -14,10 +14,10 @@ ulimit -n 1024
 
 function ci_commit_formatting_run {
     git remote add upstream https://github.com/Infineon/XMC-for-Arduino.git
-    git fetch --depth=100 upstream main
+    git fetch --depth=100 upstream master
     # If the common ancestor commit hasn't been found, fetch more.
-    git merge-base upstream/main HEAD || git fetch upstream main
-    # For a PR, upstream/main..HEAD ends with a merge commit into main, exclude that one.
-    python tools/verifygitlog.py -v upstream/main..HEAD --no-merges
+    git merge-base upstream/master HEAD || git fetch upstream master
+    # For a PR, upstream/master..HEAD ends with a merge commit into master, exclude that one.
+    python tools/verifygitlog.py -v upstream/master..HEAD --no-merges
 }
 
