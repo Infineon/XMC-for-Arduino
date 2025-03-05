@@ -6,3 +6,11 @@ repos:
         args: ["-style=file:config/clang-format/.clang-format"]
         exclude: ^cores/(avr|usblib|xmc_lib)/
         files: \.(c|cpp|h|hpp)$
+  - repo: local
+    hooks:    
+      - id: verifygitlog
+        name: git commit message format checker
+        entry: python3 tools/verifygitlog.py --check-file --ignore-rebase
+        language: python
+        verbose: true
+        stages: [commit-msg]
