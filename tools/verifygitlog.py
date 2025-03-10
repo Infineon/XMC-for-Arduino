@@ -133,7 +133,7 @@ def run(args):
     if err.has_errors or err.has_warnings:
         if suggestions:
             print(
-                "See https://github.com/Infineon/XMC-for-Arduino/blob/4.0.0-pre-release/CODECONVENTIONS.md"
+                "See https://github.com/Infineon/XMC-for-Arduino/blob/master/CODE_CONVENTIONS.md"
             )
     else:
         print("ok")
