@@ -37,6 +37,7 @@ advantage of the advanced features and performance offered by XMC microcontrolle
 
    Introduction<self>
    installation-instructions
+   development-instructions
    hw-platforms
    builtin-libraries
    arduino-deviations
