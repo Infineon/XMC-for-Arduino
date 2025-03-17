@@ -1,7 +1,7 @@
 {
     "packages": [
         {
-            "name": "Infineon",
+            "name": "infineon",
             "maintainer": "Infineon Technologies AG",
             "websiteURL": "https://github.com/Infineon/xmc-for-arduino",
             "email": "",
