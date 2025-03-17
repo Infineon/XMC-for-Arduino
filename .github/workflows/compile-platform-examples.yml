@@ -35,7 +35,7 @@ jobs:
 
       matrix:
         board:
-          - fqbn: Infineon:xmc:XMC1100_Boot_Kit
+          - fqbn: infineon:xmc:XMC1100_Boot_Kit
             i2s: true
             dieTemp: true
             heapMem: true
@@ -45,7 +45,7 @@ jobs:
             dma: false
             alarmRtc: false
             can: false
-          - fqbn: Infineon:xmc:XMC1100_XMC2GO
+          - fqbn: infineon:xmc:XMC1100_XMC2GO
             i2s: true
             dieTemp: true
             heapMem: true
@@ -55,7 +55,7 @@ jobs:
             dma: false
             alarmRtc: false
             can: false
-          - fqbn: Infineon:xmc:XMC1300_Boot_Kit
+          - fqbn: infineon:xmc:XMC1300_Boot_Kit
             i2s: false
             dieTemp: true
             heapMem: true
@@ -66,7 +66,7 @@ jobs:
             dma: false
             alarmRtc: false
             can: false
-          - fqbn: Infineon:xmc:XMC4200_Platform2GO
+          - fqbn: infineon:xmc:XMC4200_Platform2GO
             i2s: false
             dieTemp: false
             heapMem: false
@@ -77,7 +77,7 @@ jobs:
             dma: false
             alarmRtc: true
             can: true
-          - fqbn: Infineon:xmc:XMC4400_Platform2GO
+          - fqbn: infineon:xmc:XMC4400_Platform2GO
             i2s: false
             dieTemp: false
             heapMem: false
@@ -87,7 +87,7 @@ jobs:
             dma: false
             alarmRtc: false
             can: true
-          - fqbn: Infineon:xmc:XMC4700_Relax_Kit
+          - fqbn: infineon:xmc:XMC4700_Relax_Kit
             i2s: true
             dieTemp: true
             heapMem: true
@@ -98,7 +98,7 @@ jobs:
             dma: true
             alarmRtc: true
             can: true
-          - fqbn: Infineon:xmc:XMC1400_XMC2GO
+          - fqbn: infineon:xmc:XMC1400_XMC2GO
             i2s: true
             dieTemp: true
             heapMem: true
@@ -108,7 +108,7 @@ jobs:
             dma: false
             alarmRtc: false
             can: true
-          - fqbn: Infineon:xmc:XMC1400_Arduino_Kit
+          - fqbn: infineon:xmc:XMC1400_Arduino_Kit
             i2s: false
             dieTemp: true
             heapMem: true
@@ -173,11 +173,11 @@ jobs:
           fqbn: ${{ matrix.board.fqbn }}
           platforms: |
             # Use Boards Manager to install the latest release of the platform to get the toolchain.
-            - name: Infineon:xmc
+            - name: infineon:xmc
               source-url: https://github.com/${{ github.repository }}/releases/latest/download/package_infineon_index.json
 
             - source-path: ./
-              name: Infineon:xmc
+              name: infineon:xmc
           sketch-paths: |
             # Compile these sketches for all boards
             - libraries/LED
