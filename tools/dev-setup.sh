@@ -35,5 +35,5 @@ if [ $# -gt 0 ]; then
     fi
 else
     git_submodule_setup
-    core_api_setup
+    # core_api_setup disable for XMC4Arduino 3.x 
 fi
