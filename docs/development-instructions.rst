@@ -3,12 +3,11 @@ Development Instructions
 
 ..
    TODOS:
-   - Contribution guidelines (move here from Contributing.md)
    - Code conventions
-   - ....
    - Tools installation:
-      - pre-commit hook?
-      - spellchecker
+      - test
+      - doc
+      - code check
       - ... 
 
 .. _env_dev_setup:
@@ -91,19 +90,52 @@ If you encounter strange behavior with Arduino IDE during development, try clean
          
             ~/Library/Application Support/arduino-ide/
 
+Code Check and Tests
+----------------------
+
+Pre-commit Hooks
+^^^^^^^^^^^^^^^^^^
+For the C/C++ code format and commit message format, we add git hooks to check it automatically.
+
+For ease of use, we currently use `pre-commit <https://pre-commit.com/>`_ to automatically run clang-formatting to format all C/C++ code.
+Please install this Python package, and follow the quick start (the pre-commit configuration file is already there). You should be able to format your code automatically on git commit.
+
+We also have workflow to for auto-checking, so please refer to code convention before committing your code.
+
+Code Check
+^^^^^^^^^^^^
+.. warning::
+
+   Code Checks are still a work in progress in this project.
+
+If you are developing a new built-in library, please refer to ``libraries\CAN\Makefile.codecheck`` using cppcheck for static code analysis to ensure code quality.
 
 Automated Build Checks
------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^
+Currently a GitHub Action workflow is used for automatic compilation checking.
+Workflows are defined `here <https://github.com/Infineon/XMC-for-Arduino/blob/master/.github/workflows/compile-platform-examples.yml>`_.
 
-Currently a GitHub Action workflow is used for automatic compilation checking and releasing. Workflows are defined [here](https://github.com/Infineon/XMC-for-Arduino/tree/master/.github/workflows).
-Before opening a Pull Request for your contribution, please add a git tag in the format `Vx.y.z` (e.g. V3.3.0) to trigger the release process in your fork and pass the compilation tests.
+Validation Test
+^^^^^^^^^^^^^^^^
+To validate the XMC-for-Arduino, we utilize Unity for testing various features of the Arduino core and built-in libraries.
+
+Tests are located in ``tests/arduino-core-tests`` and included as submodule in this project. Run  ``git submodule update --init --recursive`` to update them.  
+
+If you need to run these tests locally, you'll also need to download `GNU Make <https://www.gnu.org/software/make/#download>`_ .
+
+Release
+---------
+Add a git tag in the format `Vx.y.z` (e.g. V3.3.0) to trigger the release process.
+
 
 Creating and Maintaining Third Party Libraries
 ------------------------------------------------
 Basics
 ^^^^^^^^
 The Arduino IDE allows for external libraries to be added to support specific devices and functions which are not part of the core setup. For details on creating libraries see the 
-[Arduino library specification](https://arduino.github.io/arduino-cli/library-specification/). If you add additional libraries to this project, make sure to [document them](https://xmc-arduino.readthedocs.io/en/latest/builtin-libraries.html) accordingly.
+`Arduino library specification <https://arduino.github.io/arduino-cli/library-specification/>`_.
+
+If you add additional libraries to this project, make sure to `document them <https://xmc-arduino.readthedocs.io/en/latest/builtin-libraries.html>`_ accordingly.
 
 XMC-for-Arduino Configuration
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -116,20 +148,3 @@ When creating or maintaining third party or external libraries for XMC-for-Ardui
       architecture=xmc
 
 If your library also supports other boards and architectures, add those in as well.
-
-Validation Test
-----------------
-To validate the XMC-for-Arduino, we utilize Unity for testing various features of the Arduino core and built-in libraries.
-
-Tests are located in ``tests/arduino-core-tests`` and included as submodule in this project. Run  ``git submodule update --init --recursive`` to update them.  
-
-Code Checks
-----------------
-.. warning::
-
-   Code Checks are still a work in progress in this project.
-
-Refer to ``libraries\CAN\Makefile.codecheck``. 
-
-Regarding formatting, we currently use `pre-commit <https://pre-commit.com/>`_ to automatically run clang-formatting to format all C/C++ code.
-Please install this Python package, and follow the quick start (the pre-commit configuration file is already there). You should be able to format your code automatically on git commit!
