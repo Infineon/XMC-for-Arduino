@@ -1,7 +1,7 @@
 {
     "packages": [
         {
-            "name": "Infineon",
+            "name": "infineon",
             "maintainer": "Infineon Technologies AG",
             "websiteURL": "https://github.com/Infineon/xmc-for-arduino",
             "email": "",
@@ -49,7 +49,7 @@
                     ],
                     "toolsDependencies": [
                         {
-                            "packager": "Infineon",
+                            "packager": "infineon",
                             "name": "arm-none-eabi-gcc",
                             "version": "10.3-2021.10"
                         }

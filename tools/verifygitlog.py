@@ -68,19 +68,11 @@ def diagnose_subject_line(subject_line, subject_line_format, err):
 def verify(sha, err):
     verbose("verify", sha)
     err.prefix = "commit " + sha + ": "
-
-    # Author and committer email.
-    for line in git_log("%ae%n%ce", sha, "-n1"):
-        very_verbose("email", line)
-        if "noreply" in line:
-            err.error("Unwanted email address: " + line)
-
+    
     # Message body.
     raw_body = list(git_log("%B", sha, "-n1"))
-    verify_message_body(raw_body, err)
-
-
-def verify_message_body(raw_body, err):
+    
+    # Empty Message.
     if not raw_body:
         err.error("Message is empty")
         return
@@ -91,6 +83,19 @@ def verify_message_body(raw_body, err):
         if subject_line.startswith(prefix):
             verbose("Skipping ignored commit message")
             return
+    
+    # Author and committer email.
+    for line in git_log("%ae%n%ce", sha, "-n1"):
+        very_verbose("email", line)
+        if "noreply" in line:
+            err.error("Unwanted email address: " + line)
+
+
+    verify_message_body(raw_body, err)
+
+
+def verify_message_body(raw_body, err):    
+    subject_line = raw_body[0]
     very_verbose("subject_line", subject_line)
     subject_line_format = r"^[^!]+: [A-Z]+.+ .+\.$"
     if not re.match(subject_line_format, subject_line):
