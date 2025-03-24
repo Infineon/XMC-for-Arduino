@@ -17,41 +17,10 @@
 */
 
 //****************************************************************************
-// @Defines
+// @External Prototypes
 //****************************************************************************
-#define ARDUINO_MAIN
-
-//****************************************************************************
-// @Project Includes
-//****************************************************************************
-#include "Arduino.h"
-
-// Weak empty variant initialization function.
-// May be redefined by variant files.
-void initVariant() __attribute__((weak));
-
-void initVariant() {}
-
-int main(void) {
-    /*
-     *  Initialization Time first to get closer to startup time accuracy
-     */
-    wiring_time_init();
-    // wiring_analog_init();
-
-// Initialize the reset pin for the XMC1100 Boot Kit series and XMC1400 Kit for Arduino as they are
-// based on Arduino form-factor Hence, a dedicated reset pin is required.
-#ifdef HAS_GPIO_RESET
-    reset_init();
-#endif
-
-    // Arduino's main() function just calls setup() and loop()....
-    setup();
-    while (1) {
-        loop();
-        // serialEventRun();
-    }
-}
+void yield(void) __attribute__((weak));
+void yield(void) {};
 
 //****************************************************************************
 //                                 END OF FILE

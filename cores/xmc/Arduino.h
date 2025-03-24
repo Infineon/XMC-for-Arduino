@@ -70,6 +70,9 @@ extern "C" {
 // used by XMC_I2S
 #define BUFFER_SIZE 512
 
+#define interrupts() __enable_irq()
+#define noInterrupts() __disable_irq()
+
 //****************************************************************************
 // @Typedefs
 //****************************************************************************
@@ -320,11 +323,11 @@ extern void loop(void);
 //****************************************************************************
 // @Arduino Core Includes
 //****************************************************************************
+#include "wiring_time.h"
+// #include "wiring_digital.h"
 /*
-#include "wiring_digital.h"
 #include "wiring_analog.h"
 #include "wiring_shift.h"
-#include "wiring_time.h"
 #include "wiring_pulse.h"
 
 #include "WInterrupts.h"
@@ -337,13 +340,12 @@ extern void loop(void);
 
 #ifdef __cplusplus
 } // extern "C"
-//    #include "Tone.h"
-//    #include "WMath.h"
+// #include "Tone.h"
+//     #include "WMath.h"
 #endif // __cplusplus
 
-//#include "Print.h"
-//#include "HardwareSerial.h"
-
+// #include "Print.h"
+// #include "HardwareSerial.h"
 
 //****************************************************************************
 // @Board Variant Includes

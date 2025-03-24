@@ -6,7 +6,7 @@
 # The information about this Arduino compatible environment
 # ---------
 name=XMC Family
-version=3.0.0
+version=4.0.0
 
 # Build related core definitions
 # ---------
@@ -42,8 +42,7 @@ compiler.warning_flags=-w
 compiler.define=-DARDUINO=
 
 # Compiler include paths for include files
-compiler.core_xmc.path = {runtime.platform.path}/cores/xmc
-compiler.xmclib_include.path={runtime.platform.path}/cores/xmc_lib
+compiler.xmclib_include.path={runtime.platform.path}/cores/xmc/xmc_lib
 compiler.cmsis_include.path={compiler.xmclib_include.path}/CMSIS/Include
 compiler.nn_include.path={compiler.xmclib_include.path}/CMSIS/NN/Include
 compiler.dsp_include.path={compiler.xmclib_include.path}/CMSIS/DSP/Include
