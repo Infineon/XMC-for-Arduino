@@ -18,6 +18,6 @@ function ci_commit_formatting_run {
     # If the common ancestor commit hasn't been found, fetch more.
     git merge-base upstream/master HEAD || git fetch upstream master
     # For a PR, upstream/master..HEAD ends with a merge commit into master, exclude that one.
-    python tools/verifygitlog.py -v upstream/master..HEAD --no-merges
+    python tools/verifygitlog.py --ignore-rebase -v upstream/master..HEAD --no-merges
 }
 
