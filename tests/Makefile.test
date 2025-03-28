@@ -20,7 +20,7 @@ make FQBN=Infineon:xmc:XMC4700_Relax_Kit PORT=COM28 UNITY_PATH=\Unity test_wire_
 # 2 boards
 make FQBN=arduino-git:xmc:XMC4700_Relax_Kit PORT=/dev/ttyACM0 test_wire_connected2_masterpingpong monitor
 make FQBN=arduino-git:xmc:XMC4700_Relax_Kit PORT=/dev/ttyACM1 test_wire_connected2_slavepingpong monitor
-############branch1
+
 ## UART
 
 # 2 boards
