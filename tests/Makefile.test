@@ -9,9 +9,8 @@
 make FQBN=Infineon:xmc:XMC1400_XMC2GO PORT=COM42 UNITY_PATH=\Unity test_can_single monitor
 
 # 2 boards
-make FQBN=Infineon:xmc:XMC1400_XMC2GO PORT=COM42 UNITY_PATH=\Unity test_can_connected2_node2 monitor
-make FQBN=Infineon:xmc:XMC1400_XMC2GO PORT=COM41 UNITY_PATH=\Unity test_can_connected2_node1 monitor
-
+make FQBN=arduino-git:xmc:XMC1400_XMC2GO PORT=COM42 UNITY_PATH=\Unity test_can_connected2_node2 monitor
+make FQBN=arduino-git:xmc:XMC1400_XMC2GO PORT=COM41 UNITY_PATH=\Unity test_can_connected2_node1 monitor
 
 ## IIC
 
@@ -19,11 +18,17 @@ make FQBN=Infineon:xmc:XMC1400_XMC2GO PORT=COM41 UNITY_PATH=\Unity test_can_conn
 make FQBN=Infineon:xmc:XMC4700_Relax_Kit PORT=COM28 UNITY_PATH=\Unity test_wire_connected1_pingpong monitor
 
 # 2 boards
-make FQBN=Infineon:xmc:XMC4700_Relax_Kit PORT=COM85 test_wire_connected2_masterpingpong monitor
-make FQBN=Infineon:xmc:XMC4700_Relax_Kit PORT=COM28 test_wire_connected2_slavepingpong monitor
+make FQBN=arduino-git:xmc:XMC4700_Relax_Kit PORT=/dev/ttyACM0 test_wire_connected2_masterpingpong monitor
+make FQBN=arduino-git:xmc:XMC4700_Relax_Kit PORT=/dev/ttyACM1 test_wire_connected2_slavepingpong monitor
 
 ## UART
 
 # 2 boards
-make FQBN=Infineon:xmc:XMC4700_Relax_Kit PORT=COM71 test_uart_connected2_tx monitor
-make FQBN=Infineon:xmc:XMC4700_Relax_Kit PORT=COM28 test_uart_connected2_rx monitor
+make FQBN=arduino-git:xmc:XMC4700_Relax_Kit PORT=/dev/ttyACM0 test_uart_connected2_tx monitor
+make FQBN=arduino-git:xmc:XMC4700_Relax_Kit PORT=/dev/ttyACM1 test_uart_connected2_rx monitor
+
+DigitalIO
+
+# 1 boards
+
+make FQBN=arduino-git:xmc:XMC4700_Relax_Kit PORT=/dev/ttyACM1 UNITY_PATH=\Unity test_digitalio_single monitor
