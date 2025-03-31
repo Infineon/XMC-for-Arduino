@@ -32,3 +32,12 @@ DigitalIO
 # 1 boards
 
 make FQBN=arduino-git:xmc:XMC4700_Relax_Kit PORT=/dev/ttyACM1 UNITY_PATH=\Unity test_digitalio_single monitor
+
+## SPI
+
+# 2 boards
+make FQBN=arduino-git:xmc:XMC4700_Relax_Kit PORT=/dev/ttyACM0 test_spi_connected2_master monitor
+make FQBN=arduino-git:xmc:XMC4700_Relax_Kit PORT=/dev/ttyACM1 test_spi_connected2_slave monitor
+
+# 1 board, loopback
+make FQBN=arduino-git:xmc:XMC4700_Relax_Kit PORT=/dev/ttyACM0 test_spi_connected1_loopback monitor
