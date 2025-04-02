@@ -50,7 +50,7 @@ compiler.dsp_include.path={compiler.xmclib_include.path}/CMSIS/DSP/Include
 compiler.arduino_core.path={runtime.platform.path}/cores/arduino/api
 compiler.arduino_core_dep.path={compiler.arduino_core.path}/deprecated
 compiler.arduino_core_dep_avr.path={compiler.arduino_core.path}/deprecated-avr-comp/avr
-compiler.arduino_core_api.path= "-I{compiler.arduino_core_dep_avr.path}" "-I{compiler.arduino_core_dep.path}"  "-I{compiler.arduino_core.path}" 
+compiler.arduino_core_api.path= "-I{compiler.arduino_core_dep_avr.path}" "-I{compiler.arduino_core_dep.path}" 
 
 compiler.arm.cmsis.path=  "-I{compiler.xmclib_include.path}/XMCLib/inc"  "-I{compiler.dsp_include.path}" "-I{compiler.nn_include.path}" "-I{compiler.cmsis_include.path}"  "-I{compiler.xmclib_include.path}/LIBS"  "-I{build.variant.path}"  "-I{build.variant.config_path}"
 compiler.avr_support.path=  "-I{build.core.path}/avr" 
