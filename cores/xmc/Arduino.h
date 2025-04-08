@@ -324,6 +324,7 @@ extern void loop(void);
 // @Arduino Core Includes
 //****************************************************************************
 #include "wiring_time.h"
+#include "wiring_digital.h"
 // #include "wiring_digital.h"
 /*
 #include "wiring_analog.h"
