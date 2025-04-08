@@ -49,7 +49,6 @@ void pinMode(pin_size_t pin, PinMode pinMode);
  */
 extern PinStatus digitalRead(pin_size_t pin);
 
-
 /*
  * \brief Write a HIGH or a LOW value to a digital pin.
  *
