@@ -255,9 +255,9 @@ const XMC_PORT_PIN_t mapping_port_pin[] = {
     /* 96  */ {XMC_GPIO_PORT1, 12}, // CAN_TX
     /* 97  */ {XMC_GPIO_PORT1, 13}  // CAN_RX
 };
-// const uint8_t GND = (sizeof(mapping_port_pin) / sizeof(XMC_PORT_PIN_t));
-// const uint8_t NUM_DIGITAL = (sizeof(mapping_port_pin) / sizeof(XMC_PORT_PIN_t));
-// ;
+const uint8_t GND = (sizeof(mapping_port_pin) / sizeof(XMC_PORT_PIN_t));
+const uint8_t NUM_DIGITAL = (sizeof(mapping_port_pin) / sizeof(XMC_PORT_PIN_t));
+;
 
 // const XMC_PIN_INTERRUPT_t mapping_interrupt[] = {
 //     /* 0 */ {CCU40, CCU40_CC43, 3, 0, CCU40_IN3_P1_0},
@@ -286,15 +286,19 @@ const XMC_PORT_PIN_t mapping_port_pin[] = {
 // XMC_PWM4_t mapping_pwm4[] = {
 //     {CCU40, CCU40_CC42, 2, mapping_port_pin[3], P1_1_AF_CCU40_OUT2, XMC_CCU4_SLICE_PRESCALER_64,
 //      PWM4_TIMER_PERIOD, DISABLED}, // PWM disabled  3   P1.1
-//     {CCU41, CCU41_CC40, 0, mapping_port_pin[10], P3_10_AF_CCU41_OUT0, XMC_CCU4_SLICE_PRESCALER_64,
+//     {CCU41, CCU41_CC40, 0, mapping_port_pin[10], P3_10_AF_CCU41_OUT0,
+//     XMC_CCU4_SLICE_PRESCALER_64,
 //      PWM4_TIMER_PERIOD, DISABLED}, // PWM disabled  10  P3.10
 //     {CCU41, CCU41_CC42, 2, mapping_port_pin[11], P3_8_AF_CCU41_OUT2, XMC_CCU4_SLICE_PRESCALER_64,
 //      PWM4_TIMER_PERIOD, DISABLED}, // PWM disabled  11  P3.8
-//     {CCU40, CCU40_CC40, 0, mapping_port_pin[93], P0_15_AF_CCU40_OUT0, XMC_CCU4_SLICE_PRESCALER_64,
+//     {CCU40, CCU40_CC40, 0, mapping_port_pin[93], P0_15_AF_CCU40_OUT0,
+//     XMC_CCU4_SLICE_PRESCALER_64,
 //      PWM4_TIMER_PERIOD, DISABLED}, // PWM disabled  93  P0.15
-//     {CCU40, CCU40_CC41, 1, mapping_port_pin[70], P0_14_AF_CCU40_OUT1, XMC_CCU4_SLICE_PRESCALER_64,
+//     {CCU40, CCU40_CC41, 1, mapping_port_pin[70], P0_14_AF_CCU40_OUT1,
+//     XMC_CCU4_SLICE_PRESCALER_64,
 //      PWM4_TIMER_PERIOD, DISABLED}, // PWM disabled  70  P0.14
-//     {CCU40, CCU40_CC43, 3, mapping_port_pin[94], P0_12_AF_CCU40_OUT3, XMC_CCU4_SLICE_PRESCALER_64,
+//     {CCU40, CCU40_CC43, 3, mapping_port_pin[94], P0_12_AF_CCU40_OUT3,
+//     XMC_CCU4_SLICE_PRESCALER_64,
 //      PWM4_TIMER_PERIOD, DISABLED}, // PWM disabled  94  P0.12
 //     {CCU42, CCU42_CC40, 0, mapping_port_pin[61], P3_0_AF_CCU42_OUT0, XMC_CCU4_SLICE_PRESCALER_64,
 //      PWM4_TIMER_PERIOD, DISABLED}, // PWM disabled  61  P3.0
@@ -375,17 +379,19 @@ const XMC_PORT_PIN_t mapping_port_pin[] = {
 //     #endif
 
 // // Result reg numbers are now equal to channel numbers
-// XMC_ADC_t mapping_adc[] = {{VADC, 0, VADC_G0, 0, 0, DISABLED}, {VADC, 1, VADC_G0, 0, 1, DISABLED},
-//                            {VADC, 2, VADC_G1, 1, 2, DISABLED}, {VADC, 3, VADC_G1, 1, 3, DISABLED},
-//                            {VADC, 0, VADC_G2, 2, 0, DISABLED}, {VADC, 1, VADC_G2, 2, 1, DISABLED},
-//                            {VADC, 6, VADC_G2, 2, 6, DISABLED}, {VADC, 5, VADC_G2, 2, 5, DISABLED},
-//                            {VADC, 3, VADC_G2, 2, 3, DISABLED}, {VADC, 7, VADC_G1, 1, 7, DISABLED},
-//                            {VADC, 5, VADC_G1, 1, 5, DISABLED}, {VADC, 7, VADC_G0, 0, 7, DISABLED},
-//                            {VADC, 7, VADC_G3, 3, 7, DISABLED}, {VADC, 1, VADC_G1, 1, 1, DISABLED},
-//                            {VADC, 0, VADC_G1, 1, 0, DISABLED}, {VADC, 6, VADC_G3, 3, 6, DISABLED},
-//                            {VADC, 6, VADC_G0, 0, 6, DISABLED}, {VADC, 4, VADC_G1, 1, 4, DISABLED},
-//                            {VADC, 6, VADC_G1, 1, 6, DISABLED}, {VADC, 2, VADC_G2, 2, 2, DISABLED},
-//                            {VADC, 4, VADC_G2, 2, 4, DISABLED}, {VADC, 7, VADC_G2, 2, 7, DISABLED}};
+// XMC_ADC_t mapping_adc[] = {{VADC, 0, VADC_G0, 0, 0, DISABLED}, {VADC, 1, VADC_G0, 0, 1,
+// DISABLED},
+//                            {VADC, 2, VADC_G1, 1, 2, DISABLED}, {VADC, 3, VADC_G1, 1, 3,
+//                            DISABLED}, {VADC, 0, VADC_G2, 2, 0, DISABLED}, {VADC, 1, VADC_G2, 2,
+//                            1, DISABLED}, {VADC, 6, VADC_G2, 2, 6, DISABLED}, {VADC, 5, VADC_G2,
+//                            2, 5, DISABLED}, {VADC, 3, VADC_G2, 2, 3, DISABLED}, {VADC, 7,
+//                            VADC_G1, 1, 7, DISABLED}, {VADC, 5, VADC_G1, 1, 5, DISABLED}, {VADC,
+//                            7, VADC_G0, 0, 7, DISABLED}, {VADC, 7, VADC_G3, 3, 7, DISABLED},
+//                            {VADC, 1, VADC_G1, 1, 1, DISABLED}, {VADC, 0, VADC_G1, 1, 0,
+//                            DISABLED}, {VADC, 6, VADC_G3, 3, 6, DISABLED}, {VADC, 6, VADC_G0, 0,
+//                            6, DISABLED}, {VADC, 4, VADC_G1, 1, 4, DISABLED}, {VADC, 6, VADC_G1,
+//                            1, 6, DISABLED}, {VADC, 2, VADC_G2, 2, 2, DISABLED}, {VADC, 4,
+//                            VADC_G2, 2, 4, DISABLED}, {VADC, 7, VADC_G2, 2, 7, DISABLED}};
 // const uint8_t NUM_ANALOG_INPUTS = (sizeof(mapping_adc) / sizeof(XMC_ADC_t));
 
 // /*
