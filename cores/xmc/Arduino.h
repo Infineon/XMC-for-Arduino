@@ -27,6 +27,8 @@
 #include "api/deprecated-avr-comp/avr/dtostrf.h"
 
 #ifdef __cplusplus
+using namespace arduino;
+
 extern "C" {
 #endif
 
@@ -324,7 +326,6 @@ extern void loop(void);
 // @Arduino Core Includes
 //****************************************************************************
 #include "wiring_time.h"
-#include "wiring_digital.h"
 // #include "wiring_digital.h"
 /*
 #include "wiring_analog.h"
