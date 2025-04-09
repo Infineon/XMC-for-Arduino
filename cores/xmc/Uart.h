@@ -87,13 +87,10 @@ typedef enum XMC_UART_MODE {
 //****************************************************************************
 // @Class Definitionsw
 //****************************************************************************
-class Uart : public arduino::HardwareSerial {
+class Uart : public HardwareSerial {
 public:
     XMC_UART_t *_XMC_UART_config;
-
-    Uart(XMC_UART_t *xmc_uart_config,
-         arduino::RingBuffer *rx_buffer,
-         arduino::RingBuffer *tx_buffer);
+    q Uart(XMC_UART_t *xmc_uart_config, RingBuffer *rx_buffer, RingBuffer *tx_buffer);
 
     void begin(unsigned long);
     void begin(unsigned long baudrate, uint16_t config) override;
@@ -129,7 +126,7 @@ public:
     void IrqHandler(void);
 
 private:
-    arduino::RingBuffer *_rx_buffer;
+    RingBuffer *_rx_buffer;
     arduino::RingBuffer *_tx_buffer;
 };
 
