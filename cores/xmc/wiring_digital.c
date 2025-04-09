@@ -70,7 +70,7 @@ uint8_t digitalRead(uint8_t pin){
                : (XMC_GPIO_GetInput(mapping_port_pin[pin].port, mapping_port_pin[pin].pin));
 }
 
-void digitalWrite(uint8_t pin, uint8_t status) {
+void digitalWrite(uint8_t pin, uint8_t status){
     XMC_GPIO_SetOutputLevel(mapping_port_pin[pin].port, mapping_port_pin[pin].pin,
                             (status == LOW) ? XMC_GPIO_OUTPUT_LEVEL_LOW
                                             : XMC_GPIO_OUTPUT_LEVEL_HIGH);
