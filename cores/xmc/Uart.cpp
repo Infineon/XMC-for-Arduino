@@ -28,9 +28,7 @@
 
 // Constructors ////////////////////////////////////////////////////////////////
 
-Uart::Uart(XMC_UART_t *xmc_uart_config,
-           arduino::RingBuffer *rx_buffer,
-           arduino::RingBuffer *tx_buffer) {
+Uart::Uart(XMC_UART_t *xmc_uart_config, RingBuffer *rx_buffer, RingBuffer *tx_buffer) {
     _XMC_UART_config = xmc_uart_config;
     _rx_buffer = rx_buffer;
     _tx_buffer = tx_buffer;

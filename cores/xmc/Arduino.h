@@ -28,7 +28,6 @@
 
 #ifdef __cplusplus
 using namespace arduino;
-
 extern "C" {
 #endif
 
