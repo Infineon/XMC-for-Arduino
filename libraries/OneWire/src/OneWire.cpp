@@ -162,7 +162,7 @@ OneWire::~OneWire() { delete mImplementation; }
 //
 // Returns 1 if a device asserted a presence pulse, 0 otherwise.
 //
-uint8_t OneWire::reset(void) { mImplementation->reset(); }
+uint8_t OneWire::reset(void) { return mImplementation->reset(); }
 
 //
 // Write a bit. Port and bit is used to cut lookup time and provide
@@ -235,7 +235,7 @@ void OneWire::target_search(uint8_t family_code) { mImplementation->target_searc
 //        FALSE : device not found, end of search
 //
 uint8_t OneWire::search(uint8_t *newAddr, bool search_mode /* = true */) {
-    mImplementation->search(newAddr, search_mode);
+    return mImplementation->search(newAddr, search_mode);
 }
 #endif
 
