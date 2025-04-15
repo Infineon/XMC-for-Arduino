@@ -6,6 +6,7 @@
  * purposes on the specific board. These pins are configured as output and
  * input pins for various test scenarios.
  *
+ * Used Board: XMC4700
  */
 #ifndef TEST_CONFIG_H
 #define TEST_CONFIG_H
