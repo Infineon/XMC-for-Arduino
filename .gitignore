@@ -27,8 +27,3 @@ docs/build
 docs/source/_build
 __pycache__/
 _build/
-
-echo "libraries/SPI/src/SPI.cpp" >> .gitignore
-echo "set_all_pins_input.ino" >> .gitignore
-echo "src/" >> .gitignore
-echo "tests/minimal_test.ino" >> .gitignore
