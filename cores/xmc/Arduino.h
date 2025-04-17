@@ -28,7 +28,6 @@
 
 #ifdef __cplusplus
 using namespace arduino;
-
 extern "C" {
 #endif
 
@@ -342,12 +341,12 @@ extern void loop(void);
 
 #ifdef __cplusplus
 } // extern "C"
-// #include "Tone.h"
-//     #include "WMath.h"
+    // #include "Tone.h"
+    // #include "WMath.h"
+    #include "Uart.h"
 #endif // __cplusplus
 
 // #include "Print.h"
-// #include "HardwareSerial.h"
 
 //****************************************************************************
 // @Board Variant Includes
