@@ -49,11 +49,7 @@ int main(void) {
     setup();
     while (1) {
         loop();
-        if (arduino::serialEventRun) {
-            arduino::serialEventRun();
-        } else {
-            ::serialEventRun();
-        }
+        ::serialEventRun();
     }
 }
 
