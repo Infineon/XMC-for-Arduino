@@ -401,9 +401,7 @@ const uint8_t NUM_DIGITAL = (sizeof(mapping_port_pin) / sizeof(XMC_PORT_PIN_t));
  * Serial 1  is on-board port
  */
 arduino::RingBuffer rx_buffer_0;
-arduino::RingBuffer tx_buffer_0;
 arduino::RingBuffer rx_buffer_1;
-arduino::RingBuffer tx_buffer_1;
 
 XMC_UART_t XMC_UART_0 = {
     .channel = XMC_UART0_CH0,
@@ -440,9 +438,9 @@ XMC_UART_t XMC_UART_1 = {
     .irq_service_request = 0};
 
 // Debug port
-Uart Serial(&XMC_UART_0, &rx_buffer_0, &tx_buffer_0);
+Uart Serial(&XMC_UART_0, &rx_buffer_0);
 // On-board port
-Uart Serial1(&XMC_UART_1, &rx_buffer_1, &tx_buffer_1);
+Uart Serial1(&XMC_UART_1, &rx_buffer_1);
 
     // // Three SPI instances possible
     // XMC_SPI_t XMC_SPI_0 = {
