@@ -90,7 +90,7 @@ typedef enum XMC_UART_MODE {
 class Uart : public HardwareSerial {
 public:
     XMC_UART_t *_XMC_UART_config;
-    Uart(XMC_UART_t *xmc_uart_config, RingBuffer *rx_buffer, RingBuffer *tx_buffer);
+    Uart(XMC_UART_t *xmc_uart_config, RingBuffer *rx_buffer);
 
     void begin(unsigned long);
     void begin(unsigned long baudrate, uint16_t config) override;
@@ -127,7 +127,6 @@ public:
 
 private:
     RingBuffer *_rx_buffer;
-    arduino::RingBuffer *_tx_buffer;
 };
 
 extern Uart Serial;
