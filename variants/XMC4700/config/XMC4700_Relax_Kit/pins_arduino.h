@@ -146,7 +146,7 @@ static const uint8_t SCK_SD = SDCARD_SCK_PIN;
 #define BUTTON1 24
 #define BUTTON2 25
 
-#define digitalPinToInterrupt(p) ((p) == 2 ? 0 : ((p) == 3 ? 1 : NOT_AN_INTERRUPT))
+#define digitalPinToInterrupt(p) ((p) == 2 ? 0 : ((p) == 3 ? 1 : -1))
 
 #ifdef ARDUINO_MAIN
 // Mapping of digital pins and comments
@@ -259,10 +259,10 @@ const uint8_t GND = (sizeof(mapping_port_pin) / sizeof(XMC_PORT_PIN_t));
 const uint8_t NUM_DIGITAL = (sizeof(mapping_port_pin) / sizeof(XMC_PORT_PIN_t));
 ;
 
-// const XMC_PIN_INTERRUPT_t mapping_interrupt[] = {
-//     /* 0 */ {CCU40, CCU40_CC43, 3, 0, CCU40_IN3_P1_0},
-//     /* 1 */ {CCU40, CCU40_CC42, 2, 1, CCU40_IN2_P1_1}};
-// const uint8_t NUM_INTERRUPT = (sizeof(mapping_interrupt) / sizeof(XMC_PIN_INTERRUPT_t));
+const XMC_PIN_INTERRUPT_t mapping_interrupt[] = {
+    /* 0 */ {CCU40, CCU40_CC43, 3, 0, CCU40_IN3_P1_0},
+    /* 1 */ {CCU40, CCU40_CC42, 2, 1, CCU40_IN2_P1_1}};
+const uint8_t NUM_INTERRUPT = (sizeof(mapping_interrupt) / sizeof(XMC_PIN_INTERRUPT_t));
 
 // /* Mapping of Arduino Pins to PWM4 channels as pin and index in PWM4 channel
 //    mapping array XMC_PWM4_t mapping_pwm4[]
