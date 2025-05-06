@@ -125,39 +125,39 @@ jobs:
           - board:
               i2s: true
             i2s-sketch-paths: |
-              #- libraries/I2S
+              - libraries/I2S
           - board:
               dieTemp: true
             dieTemp-sketch-paths: |
-              #- libraries/DeviceControlXMC/examples/DieTemperatureMeasurement
+              - libraries/DeviceControlXMC/examples/DieTemperatureMeasurement
           - board:
               heapMem: true
             heapMem-sketch-paths: |
-             # - libraries/DeviceControlXMC/examples/HeapMemoryMeasurement
+              - libraries/DeviceControlXMC/examples/HeapMemoryMeasurement
           - board:
               sleep1100: true
             sleep1100-sketch-paths: |
-             # - libraries/DeviceControlXMC/examples/SleepModeXMC1100
+              - libraries/DeviceControlXMC/examples/SleepModeXMC1100
           - board:
               sleep4700: true
             sleep4700-sketch-paths: |
-            #  - libraries/DeviceControlXMC/examples/SleepModeXMC4700
+              - libraries/DeviceControlXMC/examples/SleepModeXMC4700
           - board:
               stackMem: true
             stackMem-sketch-paths: |
-            #  - libraries/DeviceControlXMC/examples/StackMemoryMeasurement
+              - libraries/DeviceControlXMC/examples/StackMemoryMeasurement
           - board:
               dma: true
             dma-sketch-paths: |
-            #  - libraries/DMA
+              - libraries/DMA
           - board:
               alarmRtc: true
             alarmRtc-sketch-paths: |
-            #  - libraries/RTC/examples/AlarmRTC
+              - libraries/RTC/examples/AlarmRTC
           - board:
               can: true
             can-sketch-paths: |
-            #  - libraries/CAN/examples
+              - libraries/CAN/examples
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
