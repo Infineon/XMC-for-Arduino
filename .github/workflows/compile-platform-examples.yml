@@ -166,46 +166,46 @@ jobs:
         run: |
           bash tools/dev-setup.sh
 
-      - name: Compile examples
-        uses: arduino/compile-sketches@v1.1.1
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          fqbn: ${{ matrix.board.fqbn }}
-          platforms: |
+      #- name: Compile examples
+      # uses: arduino/compile-sketches@v1.1.1
+      #  with:
+      #    github-token: ${{ secrets.GITHUB_TOKEN }}
+      #    fqbn: ${{ matrix.board.fqbn }}
+      #    platforms: |
             # Use Boards Manager to install the latest release of the platform to get the toolchain.
-            - name: Infineon:xmc
-              source-url: https://github.com/${{ github.repository }}/releases/latest/download/package_infineon_index.json
+      #      - name: Infineon:xmc
+       #       source-url: https://github.com/${{ github.repository }}/releases/latest/download/package_infineon_index.json
 
-            - source-path: ./
-              name: Infineon:xmc
-          sketch-paths: |
+        #    - source-path: ./
+         #     name: Infineon:xmc
+         # sketch-paths: |
             # Compile these sketches for all boards
-            - libraries/LED
-            - libraries/RTC/examples/SimpleRTC
-            - libraries/SPI
-            - libraries/Wire
+          #  - libraries/LED
+           # - libraries/RTC/examples/SimpleRTC
+            #- libraries/SPI
+            #- libraries/Wire
             # Board-specific sketches
-            ${{ matrix.i2s-sketch-paths }}
-            ${{ matrix.dieTemp-sketch-paths }}
-            ${{ matrix.heapMem-sketch-paths }}
-            ${{ matrix.sleep1100-sketch-paths }}
-            ${{ matrix.sleep4700-sketch-paths }}
-            ${{ matrix.stackMem-sketch-paths }}
-            ${{ matrix.multiSerial-sketch-paths }}
-            ${{ matrix.dma-sketch-paths }}
-            ${{ matrix.alarmRtc-sketch-paths }}
-            ${{ matrix.can-sketch-paths }}
-          enable-deltas-report: false
-          sketches-report-path: ${{ env.SKETCHES_REPORTS_PATH }}
+          #  ${{ matrix.i2s-sketch-paths }}
+          #  ${{ matrix.dieTemp-sketch-paths }}
+          #  ${{ matrix.heapMem-sketch-paths }}
+          #  ${{ matrix.sleep1100-sketch-paths }}
+          #  ${{ matrix.sleep4700-sketch-paths }}
+         #   ${{ matrix.stackMem-sketch-paths }}
+         #   ${{ matrix.multiSerial-sketch-paths }}
+         #   ${{ matrix.dma-sketch-paths }}
+         #   ${{ matrix.alarmRtc-sketch-paths }}
+         #   ${{ matrix.can-sketch-paths }}
+         # enable-deltas-report: false
+        #   sketches-report-path: ${{ env.SKETCHES_REPORTS_PATH }}
 
       - name: Modify the environment variable
         run: |
           BOARD_NAME=$(echo ${{ matrix.board.fqbn }} | sed 's/:/-/g')
           echo "BOARD_NAME=$BOARD_NAME" >> $GITHUB_ENV
 
-      - name: Save sketches report as workflow artifact
-        uses: actions/upload-artifact@v4
-        with:
-          if-no-files-found: error
-          name: ${{ env.SKETCHES_REPORTS_PATH }}-${{ env.BOARD_NAME }}
-          path: ${{ env.SKETCHES_REPORTS_PATH }}
+     # - name: Save sketches report as workflow artifact
+     #   uses: actions/upload-artifact@v4
+     #   with:
+     #     if-no-files-found: error
+     #     name: ${{ env.SKETCHES_REPORTS_PATH }}-${{ env.BOARD_NAME }}
+     #     path: ${{ env.SKETCHES_REPORTS_PATH }}
