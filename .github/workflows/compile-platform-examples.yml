@@ -182,6 +182,8 @@ jobs:
             # Compile these sketches for all boards
           #  - libraries/LED
            # - libraries/RTC/examples/SimpleRTC
+            #- libraries/LED
+            #- libraries/RTC/examples/SimpleRTC
             #- libraries/SPI
             #- libraries/Wire
           #  - libraries/LED
