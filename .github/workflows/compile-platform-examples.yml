@@ -184,6 +184,12 @@ jobs:
            # - libraries/RTC/examples/SimpleRTC
             #- libraries/SPI
             #- libraries/Wire
+          #  - libraries/LED
+           # - libraries/RTC/examples/SimpleRTC
+            #- libraries/LED
+            #- libraries/RTC/examples/SimpleRTC
+            #- libraries/SPI
+            #- libraries/Wire
             # Board-specific sketches
           #  ${{ matrix.i2s-sketch-paths }}
           #  ${{ matrix.dieTemp-sketch-paths }}
