@@ -1,0 +1,18 @@
+package-name: xmc-for-arduino
+include:
+  - cores
+  - libraries
+  - tools
+  - variants
+  - boards.txt
+  - keywords.txt
+  - LICENSE.md
+  - package.json
+  - platform.txt
+  - programmers.txt
+  - README.md
+index-name: package_infineon_index
+server: 
+  type: github
+  owner: Infineon
+  repo: XMC-for-Arduino
