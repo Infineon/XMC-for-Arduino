@@ -4,3 +4,6 @@
 [submodule "cores/arduino-core-api"]
 	path = extras/arduino-core-api
 	url = https://github.com/arduino/ArduinoCore-API.git
+[submodule "extras/arduino-examples"]
+	path = extras/arduino-examples
+	url = https://github.com/arduino/arduino-examples.git
