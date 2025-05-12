@@ -6,6 +6,4 @@ on:
 jobs:
   compile-examples:
     uses: Infineon/arduino-devops/.github/workflows/compile-examples.yml@latest
-    with:
-      os-list: 'ubuntu-latest, windows-latest'
     secrets: inherit
