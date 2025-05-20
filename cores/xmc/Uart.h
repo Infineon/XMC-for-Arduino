@@ -94,7 +94,10 @@ public:
     void IrqHandler(void);
 
 private:
-    RingBuffer _rx_buffer;
+    static constexpr size_t BUF_LENGTH = 512;
+    RingBufferN<BUF_LENGTH> _rx_buffer;
+    bool serial_ready = false;
 };
+
 extern Uart Serial;
 extern Uart Serial1;
