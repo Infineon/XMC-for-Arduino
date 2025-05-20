@@ -235,23 +235,6 @@ XMC_ADC_t mapping_adc[] = {
 };
 const uint8_t NUM_ANALOG_INPUTS = (sizeof(mapping_adc) / sizeof(XMC_ADC_t));
 
-/*
- * UART objects
- *
- */
-
-// Since both the UART interfaces are present on different USIC instances,
-// both can be enabled independently.
-
-// Serial is PC-DEBUG interface
-// Serial1  is ONBOARD interface
-
-RingBuffer rx_buffer_0;
-RingBuffer tx_buffer_0;
-
-RingBuffer rx_buffer_1;
-RingBuffer tx_buffer_1;
-
 XMC_UART_t XMC_UART_0 = {
     .channel = XMC_UART0_CH0,
     .rx = {.port = (XMC_GPIO_PORT_t *)PORT1_BASE, .pin = (uint8_t)4},
@@ -287,9 +270,9 @@ XMC_UART_t XMC_UART_1 = {
     .irq_service_request = 0};
 
 // Object instantiated of the HardwareSerial class for UART PC (debug) interface
-HardwareSerial Serial(&XMC_UART_0, &rx_buffer_0, &tx_buffer_0);
+HardwareSerial Serial(&XMC_UART_0);
 // Object instantiated of the HardwareSerial class for UART ONBOARD interface
-HardwareSerial Serial1(&XMC_UART_1, &rx_buffer_1, &tx_buffer_1);
+HardwareSerial Serial1(&XMC_UART_1);
 
 // SPI instance
 XMC_SPI_t XMC_SPI_0 = {
