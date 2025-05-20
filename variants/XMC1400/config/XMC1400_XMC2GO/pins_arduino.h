@@ -217,12 +217,6 @@ XMC_ADC_t mapping_adc[] = {
 
 const uint8_t NUM_ANALOG_INPUTS = (sizeof(mapping_adc) / sizeof(XMC_ADC_t));
 
-/*
- * UART objects
- */
-RingBuffer rx_buffer_0;
-RingBuffer tx_buffer_0;
-
 /* First UART channel pins are swapped between debug and normal use */
 XMC_UART_t XMC_UART_0 = {.channel = XMC_UART0_CH0,
                          .rx = {.port = (XMC_GPIO_PORT_t *)PORT2_BASE, // RX P2.6
@@ -260,7 +254,7 @@ XMC_UART_t XMC_UART_0 = {.channel = XMC_UART0_CH0,
                          .irq_num = USIC0_0_IRQn,
                          .irq_service_request = 0};
 
-HardwareSerial Serial(&XMC_UART_0, &rx_buffer_0, &tx_buffer_0);
+HardwareSerial Serial(&XMC_UART_0);
 
 // SPI instance
 XMC_SPI_t XMC_SPI_0 = {

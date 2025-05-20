@@ -394,15 +394,6 @@ const uint8_t NUM_INTERRUPT = (sizeof(mapping_interrupt) / sizeof(XMC_PIN_INTERR
 //                            VADC_G2, 2, 4, DISABLED}, {VADC, 7, VADC_G2, 2, 7, DISABLED}};
 // const uint8_t NUM_ANALOG_INPUTS = (sizeof(mapping_adc) / sizeof(XMC_ADC_t));
 
-/*
- * UART objects
- *
- * Serial 0 is Debug port
- * Serial 1  is on-board port
- */
-arduino::RingBuffer rx_buffer_0;
-arduino::RingBuffer rx_buffer_1;
-
 XMC_UART_t XMC_UART_0 = {
     .channel = XMC_UART0_CH0,
     .rx = {.port = (XMC_GPIO_PORT_t *)PORT1_BASE, .pin = (uint8_t)4},
@@ -437,10 +428,11 @@ XMC_UART_t XMC_UART_1 = {
     .irq_num = USIC1_0_IRQn,
     .irq_service_request = 0};
 
+
 // Debug port
-Uart Serial(&XMC_UART_0, &rx_buffer_0);
-// On-board port
-Uart Serial1(&XMC_UART_1, &rx_buffer_1);
+Uart Serial(&XMC_UART_0);
+// On-Board port
+Uart Serial1(&XMC_UART_1);
 
     // // Three SPI instances possible
     // XMC_SPI_t XMC_SPI_0 = {

@@ -313,15 +313,6 @@ XMC_ADC_t mapping_adc[] = {
 };
 const uint8_t NUM_ANALOG_INPUTS = (sizeof(mapping_adc) / sizeof(XMC_ADC_t));
 
-/*
- * UART objects
- *
- * See many XMC1x00 pins_arduino.h for proper way to handle HOSTPC
- * NUM_SERIAL defines number of PHYSICAL ports NOT configurations
- */
-RingBuffer rx_buffer_0;
-RingBuffer tx_buffer_0;
-
 XMC_UART_t XMC_UART_0 = {
     .channel = XMC_UART1_CH0,
     .rx =
@@ -364,7 +355,7 @@ XMC_UART_t XMC_UART_0 = {
     .irq_service_request = 0};
 
 // Single Hardware Serial object for both UART interfaces
-HardwareSerial Serial(&XMC_UART_0, &rx_buffer_0, &tx_buffer_0);
+HardwareSerial Serial(&XMC_UART_0);
 
 // SPI instance
 XMC_SPI_t XMC_SPI_0 = {
