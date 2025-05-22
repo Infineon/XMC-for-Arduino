@@ -25,5 +25,9 @@ make FQBN=Infineon:xmc:XMC4700_Relax_Kit PORT=COM28 test_wire_connected2_slavepi
 ## UART
 
 # 2 boards
-make FQBN=Infineon:xmc:XMC4700_Relax_Kit PORT=COM71 test_uart_connected2_tx monitor
-make FQBN=Infineon:xmc:XMC4700_Relax_Kit PORT=COM28 test_uart_connected2_rx monitor
+make FQBN=arduino-git:xmc:XMC4700_Relax_Kit PORT=/dev/ttyACM0 test_uart_connected2_tx monitor
+make FQBN=arduino-git:xmc:XMC4700_Relax_Kit PORT=/dev/ttyACM1 test_uart_connected2_rx monitor
+
+## AnalogIO
+
+make FQBN=arduino-git:xmc:XMC4700_Relax_Kit PORT=/dev/ttyACM0 test_analogio_adc monitor
