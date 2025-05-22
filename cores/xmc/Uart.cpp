@@ -4,9 +4,8 @@
 
 // Constructors ////////////////////////////////////////////////////////////////
 
-Uart::Uart(XMC_UART_t *xmc_uart_config){
-    _XMC_UART_config = xmc_uart_config;
-}
+Uart::Uart(XMC_UART_t *xmc_uart_config) { _XMC_UART_config = xmc_uart_config; }
+
 // Public Methods //////////////////////////////////////////////////////////////
 
 void Uart::begin(unsigned long baud) { begin(baud, SERIAL_8N1); }
@@ -68,6 +67,7 @@ void Uart::begin(unsigned long baud, XMC_UART_MODE_t config) {
 
     XMC_GPIO_Init(_XMC_UART_config->rx.port, _XMC_UART_config->rx.pin,
                   &(_XMC_UART_config->rx_config));
+    serial_ready = true;
 }
 
 void Uart::end(void) {
@@ -77,6 +77,7 @@ void Uart::end(void) {
     NVIC_DisableIRQ(_XMC_UART_config->irq_num);
     // Clear any received data after stopping interrupts
     _rx_buffer.clear();
+    serial_ready = false;
 }
 
 void Uart::setInterruptPriority(uint32_t priority) {
@@ -107,6 +108,20 @@ size_t Uart::write(const uint8_t uc_data) {
     XMC_UART_CH_Transmit(_XMC_UART_config->channel, uc_data);
     return 1;
 }
+
+size_t Uart::write(const uint8_t *buffer, size_t size) {
+    // Check if the length is valid
+    if ((size == 0) || (buffer == nullptr)) {
+        return 0;
+    }
+    // For sending, write immediately
+    for (size_t i = 0; i < size; i++) {
+        XMC_UART_CH_Transmit(_XMC_UART_config->channel, buffer[i]);
+    }
+    return size;
+}
+
+Uart::operator bool() { return serial_ready; }
 
 void Uart::IrqHandler(void) {
     // Receive data Interrupt handler
