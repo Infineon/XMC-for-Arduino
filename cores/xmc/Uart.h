@@ -84,9 +84,10 @@ public:
     void flush(void);
 
     size_t write(const uint8_t);
+    size_t write(const uint8_t *buffer, size_t size);
     using Print::write; // pull in write(str) and write(buf, size) from Print
 
-    operator bool() { return true; }
+    operator bool();
 
     void setInterruptPriority(uint32_t priority);
     uint32_t getInterruptPriority();
