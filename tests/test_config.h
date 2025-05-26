@@ -13,7 +13,7 @@
 #include <stdint.h>
 
 // Test Pin Definitions
-#define TEST_DIGITALIO_OUTPUT 2 // IO_4
-#define TEST_DIGITALIO_INPUT 3  // IO_3
-#define TEST_PIN_SYNC_IO 4      // IO_1
-#endif                          // TEST_CONFIG_H
+#define TEST_PIN_DIGITAL_IO_OUTPUT 2 // IO_4
+#define TEST_PIN_DIGITAL_IO_INPUT 3  // IO_3
+#define TEST_PIN_SYNC_IO 4           // IO_1
+#endif                               // TEST_CONFIG_H
