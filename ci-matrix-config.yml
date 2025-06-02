@@ -4,6 +4,18 @@
 
 sketch:
   - extras/arduino-examples/examples/01.Basics/BareMinimum/BareMinimum.ino
+  - extras/arduino-examples/examples/01.Basics/Blink/Blink.ino
+  - extras/arduino-examples/examples/01.Basics/DigitalReadSerial/DigitalReadSerial.ino
+  - extras/arduino-examples/examples/02.Digital/BlinkWithoutDelay/BlinkWithoutDelay.ino
+  - extras/arduino-examples/examples/02.Digital/Button/Button.ino
+  - extras/arduino-examples/examples/02.Digital/Debounce/Debounce.ino
+  - extras/arduino-examples/examples/02.Digital/DigitalInputPullup/DigitalInputPullup.ino
+  - extras/arduino-examples/examples/02.Digital/StateChangeDetection/StateChangeDetection.ino
+  - extras/arduino-examples/examples/04.Communication/ASCIITable/ASCIITable.ino
+  - extras/arduino-examples/examples/04.Communication/MultiSerial/MultiSerial.ino
+  - extras/arduino-examples/examples/04.Communication/PhysicalPixel/PhysicalPixel.ino
+  - extras/arduino-examples/examples/04.Communication/SerialEvent/SerialEvent.ino
+  - extras/arduino-examples/examples/05.Control/ForLoopIteration/ForLoopIteration.ino
 
 fqbn:
   - Infineon:xmc:XMC4700_Relax_Kit
