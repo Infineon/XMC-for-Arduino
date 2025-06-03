@@ -2,10 +2,24 @@ name: Release
 
 on:
   push:
-    
+    tags: 
+      - '[0-9]+.[0-9]+.[0-9]+**'
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Release version'
+        required: true
+        default: ''
+        type: choice
+        options:
+          - patch
+          - minor
+          - major
+
 jobs:
   arduino-devops:
     uses: Infineon/arduino-devops/.github/workflows/release.yml@latest
     with:
-      release-title: XMC-for-Arduino
+      setup-script: bash ./tools/dev-setup.sh
+      version: ${{ inputs.version }}
     secrets: inherit
