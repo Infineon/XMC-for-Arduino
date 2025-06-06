@@ -37,7 +37,6 @@ int main(void) {
      *  Initialization Time first to get closer to startup time accuracy
      */
     wiring_time_init();
-    // wiring_analog_init();
 
 // Initialize the reset pin for the XMC1100 Boot Kit series and XMC1400 Kit for Arduino as they are
 // based on Arduino form-factor Hence, a dedicated reset pin is required.
