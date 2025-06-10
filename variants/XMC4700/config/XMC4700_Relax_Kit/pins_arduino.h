@@ -60,6 +60,8 @@ extern const uint8_t NUM_ANALOG_OUTPUTS;
 #define NUM_TASKS_VARIANT 32
 #define NUM_SPI 3
 #define NUM_I2C 2
+#define ENABLED 1
+#define DISABLED 0
 // to use SPI_for_xmc_SD if desired by user
 #define XMC_SPI_for_xmc_SD XMC_SPI_1
 #define SDCARD_SPI SPI1
