@@ -326,6 +326,19 @@ extern void setup(void);
  */
 extern void loop(void);
 
+/*
+ * \brief Set the resolution of analogRead return values. Default is 10 bits (range from 0 to 1023).
+ *
+ * \param res
+ */
+extern void analogReadResolution(int res);
+
+/*
+ * \brief Set the resolution of analogWrite parameters. Default is 8 bits (range from 0 to 255).
+ *
+ * \param res
+ */
+extern void analogWriteResolution(int res);
 //****************************************************************************
 // @Arduino Core Includes
 //****************************************************************************
