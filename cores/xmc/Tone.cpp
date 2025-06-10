@@ -1,5 +1,5 @@
 #include "Arduino.h"
-#define CCU8V2
+#define CCU8V2 // for CCU8 PWM pins configure
 
 class Tone {
 public:
@@ -17,7 +17,7 @@ public:
             XMC_GPIO_SetMode(pwm4->port_pin.port, pwm4->port_pin.pin,
                              XMC_GPIO_MODE_OUTPUT_PUSH_PULL | pwm4->port_mode);
             XMC_CCU4_SLICE_StartTimer(pwm4->slice);
-
+            // count pulses for stop the timer once reached required pulses
             if (duration > 0) {
                 uint32_t required_pulses = frequency * duration / 1000;
                 for (uint32_t i = 0; i < required_pulses; i++) {
