@@ -14,7 +14,7 @@
 //****************************************************************************
 // @Global Variables
 //****************************************************************************
-static XMC_VADC_CHANNEL_REF_t analog_reference = XMC_VADC_CHANNEL_REF_INTREF;
+static XMC_VADC_CHANNEL_REF_t analog_reference = XMC_DEFAULT;
 static uint8_t _readResolution = 10;
 static uint8_t _writeResolution = 8;
 uint16_t _readMaximum = 1023;
@@ -42,7 +42,7 @@ int16_t scan_map_table(const uint8_t table[][2], uint8_t pin) {
 */
 void analogReference(uint8_t mode) {
     switch (mode) {
-    case DEFAULT:
+    case XMC_DEFAULT:
         analog_reference = XMC_VADC_CHANNEL_REF_INTREF;
         break;
     default:
@@ -81,7 +81,7 @@ void analogWrite(pin_size_t pinNumber, int value) {
             XMC_CCU4_SLICE_CompareInit(pwm4->slice, &pwm_config);
             XMC_CCU4_EnableClock(pwm4->ccu, pwm4->slice_num);
             XMC_CCU4_SLICE_SetTimerPeriodMatch(pwm4->slice, pwm4->period_timer_val);
-            pwm4->enabled = ENABLED;
+            pwm4->enabled = true;
         }
         if (value != 0)
             compare_reg = ((value + 1) * (pwm4->period_timer_val + 1)) >> _writeResolution;
@@ -110,7 +110,7 @@ void analogWrite(pin_size_t pinNumber, int value) {
             XMC_CCU8_SLICE_CompareInit(pwm8->slice, &pwm_config);
             XMC_CCU8_EnableClock(pwm8->ccu, pwm8->slice_num);
             XMC_CCU8_SLICE_SetTimerPeriodMatch(pwm8->slice, pwm8->period_timer_val);
-            pwm8->enabled = ENABLED;
+            pwm8->enabled = true;
         }
         if (value != 0)
             compare_reg = ((value + 1) * (pwm8->period_timer_val + 1)) >> _writeResolution;
