@@ -185,17 +185,17 @@ const uint8_t mapping_pin_PWM4[][2] = {{3, 0},  {4, 1},  {6, 2},    {9, 3},
 /* Configurations of PWM channels for CCU4 type */
 XMC_PWM4_t mapping_pwm4[] = {
     {CCU40, CCU40_CC41, 1, mapping_port_pin[3], P1_1_AF_CCU40_OUT1, XMC_CCU4_SLICE_PRESCALER_64,
-     PWM4_TIMER_PERIOD, DISABLED}, // PWM disabled  4
+     PWM4_TIMER_PERIOD, false}, // PWM disabled  4
     {CCU40, CCU40_CC40, 0, mapping_port_pin[4], P1_0_AF_CCU40_OUT0, XMC_CCU4_SLICE_PRESCALER_64,
-     PWM4_TIMER_PERIOD, DISABLED}, // PWM disabled  4
+     PWM4_TIMER_PERIOD, false}, // PWM disabled  4
     {CCU41, CCU41_CC40, 0, mapping_port_pin[6], P0_6_AF_CCU41_OUT0, XMC_CCU4_SLICE_PRESCALER_64,
-     PWM4_TIMER_PERIOD, DISABLED}, // PWM disabled  4
+     PWM4_TIMER_PERIOD, false}, // PWM disabled  4
     {CCU40, CCU40_CC41, 1, mapping_port_pin[9], P0_7_AF_CCU40_OUT1, XMC_CCU4_SLICE_PRESCALER_64,
-     PWM4_TIMER_PERIOD, DISABLED}, // PWM disabled  4
+     PWM4_TIMER_PERIOD, false}, // PWM disabled  4
     {CCU40, CCU40_CC41, 1, mapping_port_pin[10], P0_4_AF_CCU40_OUT1, XMC_CCU4_SLICE_PRESCALER_64,
-     PWM4_TIMER_PERIOD, DISABLED}, // PWM disabled  4
+     PWM4_TIMER_PERIOD, false}, // PWM disabled  4
     {CCU40, CCU40_CC41, 1, mapping_port_pin[11], P0_1_AF_CCU40_OUT1, XMC_CCU4_SLICE_PRESCALER_64,
-     PWM4_TIMER_PERIOD, DISABLED} // PWM disabled  4
+     PWM4_TIMER_PERIOD, false} // PWM disabled  4
 };
 
 const uint8_t NUM_PWM4 = (sizeof(mapping_pwm4) / sizeof(XMC_PWM4_t));
@@ -204,17 +204,17 @@ const uint8_t NUM_PWM = (sizeof(mapping_pwm4) / sizeof(XMC_PWM4_t));
 /* Analog Pin mappings and configurations */
 // ADC grouping for XMC 1400 series.
 XMC_ADC_t mapping_adc[] = {
-    {VADC, 0, VADC_G0, 0, 4, DISABLED},  // A0
-    {VADC, 1, VADC_G0, 0, 11, DISABLED}, // A1
-    {VADC, 2, VADC_G0, 0, 9, DISABLED},  // A2
-    {VADC, 3, VADC_G0, 0, 12, DISABLED}, // A3
-    {VADC, 6, VADC_G0, 0, 7, DISABLED},  // A4
-    {VADC, 5, VADC_G0, 0, 10, DISABLED}, // A5
+    {VADC, 0, VADC_G0, 0, 4, false},  // A0
+    {VADC, 1, VADC_G0, 0, 11, false}, // A1
+    {VADC, 2, VADC_G0, 0, 9, false},  // A2
+    {VADC, 3, VADC_G0, 0, 12, false}, // A3
+    {VADC, 6, VADC_G0, 0, 7, false},  // A4
+    {VADC, 5, VADC_G0, 0, 10, false}, // A5
     // Additional channels added here
-    {VADC, 4, VADC_G0, 0, 5, DISABLED}, // AUX 21
-    {VADC, 1, VADC_G1, 1, 1, DISABLED}, // AUX 22
-    {VADC, 7, VADC_G1, 1, 2, DISABLED}, // AUX 23
-    {VADC, 7, VADC_G0, 0, 3, DISABLED}  // AUX 24
+    {VADC, 4, VADC_G0, 0, 5, false}, // AUX 21
+    {VADC, 1, VADC_G1, 1, 1, false}, // AUX 22
+    {VADC, 7, VADC_G1, 1, 2, false}, // AUX 23
+    {VADC, 7, VADC_G0, 0, 3, false}  // AUX 24
 };
 
 const uint8_t NUM_ANALOG_INPUTS = (sizeof(mapping_adc) / sizeof(XMC_ADC_t));

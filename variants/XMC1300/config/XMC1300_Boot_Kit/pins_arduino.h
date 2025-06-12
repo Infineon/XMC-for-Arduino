@@ -180,9 +180,9 @@ const uint8_t mapping_pin_PWM4[][2] = {{31, 0}, {26, 1}, {255, 255}};
 /* Configurations of PWM channels for CCU4 type */
 XMC_PWM4_t mapping_pwm4[] = {
     {CCU40, CCU40_CC41, 1, mapping_port_pin[31], P0_4_AF_CCU40_OUT1, XMC_CCU4_SLICE_PRESCALER_64,
-     PWM4_TIMER_PERIOD, DISABLED}, // PWM disabled  31  P0.4
+     PWM4_TIMER_PERIOD, false}, // PWM disabled  31  P0.4
     {CCU40, CCU40_CC42, 2, mapping_port_pin[26], P0_2_AF_CCU40_OUT2, XMC_CCU4_SLICE_PRESCALER_64,
-     PWM4_TIMER_PERIOD, DISABLED} // PWM disabled  26  P0.2
+     PWM4_TIMER_PERIOD, false} // PWM disabled  26  P0.2
 };
 const uint8_t NUM_PWM4 = (sizeof(mapping_pwm4) / sizeof(XMC_PWM4_t));
 
@@ -193,29 +193,29 @@ const uint8_t mapping_pin_PWM8[][2] = {{32, 0}, {33, 1}, {255, 255}};
 XMC_PWM8_t mapping_pwm8[] = {
     {CCU80, CCU80_CC81, 1, XMC_CCU8_SLICE_COMPARE_CHANNEL_2, mapping_port_pin[32],
      P0_5_AF_CCU80_OUT12, XMC_CCU8_SLICE_PRESCALER_64, PWM8_TIMER_PERIOD,
-     DISABLED}, // PWM disabled  32   P0.5
+     false}, // PWM disabled  32   P0.5
     {CCU80, CCU80_CC80, 0, XMC_CCU8_SLICE_COMPARE_CHANNEL_2, mapping_port_pin[33],
      P0_3_AF_CCU80_OUT03, XMC_CCU8_SLICE_PRESCALER_64, PWM8_TIMER_PERIOD,
-     DISABLED} // PWM disabled  33   P0.3
+     false} // PWM disabled  33   P0.3
 };
 const uint8_t NUM_PWM8 = (sizeof(mapping_pwm8) / sizeof(XMC_PWM8_t));
 const uint8_t NUM_PWM =
     (sizeof(mapping_pwm4) / sizeof(XMC_PWM4_t)) + (sizeof(mapping_pwm8) / sizeof(XMC_PWM8_t));
 
 /* Analog Pin mappings and configurations */
-XMC_ADC_t mapping_adc[] = {{VADC, 6, VADC_G1, 1, 4, DISABLED},
-                           {VADC, 7, VADC_G1, 1, 11, DISABLED},
-                           {VADC, 0, VADC_G0, 0, 9, DISABLED},
-                           {VADC, 1, VADC_G1, 1, 12, DISABLED},
-                           {VADC, 1, VADC_G0, 0, 10, DISABLED},
-                           {VADC, 2, VADC_G0, 0, 7, DISABLED},
+XMC_ADC_t mapping_adc[] = {{VADC, 6, VADC_G1, 1, 4, false},
+                           {VADC, 7, VADC_G1, 1, 11, false},
+                           {VADC, 0, VADC_G0, 0, 9, false},
+                           {VADC, 1, VADC_G1, 1, 12, false},
+                           {VADC, 1, VADC_G0, 0, 10, false},
+                           {VADC, 2, VADC_G0, 0, 7, false},
                            // Additional channels added here
-                           {VADC, 3, VADC_G0, 0, 5, DISABLED},
-                           {VADC, 4, VADC_G0, 0, 1, DISABLED},
-                           {VADC, 5, VADC_G1, 1, 2, DISABLED},
-                           {VADC, 7, VADC_G0, 0, 3, DISABLED},
-                           {VADC, 6, VADC_G0, 0, 6, DISABLED},
-                           {VADC, 5, VADC_G0, 0, 8, DISABLED}};
+                           {VADC, 3, VADC_G0, 0, 5, false},
+                           {VADC, 4, VADC_G0, 0, 1, false},
+                           {VADC, 5, VADC_G1, 1, 2, false},
+                           {VADC, 7, VADC_G0, 0, 3, false},
+                           {VADC, 6, VADC_G0, 0, 6, false},
+                           {VADC, 5, VADC_G0, 0, 8, false}};
 const uint8_t NUM_ANALOG_INPUTS = (sizeof(mapping_adc) / sizeof(XMC_ADC_t));
 
 /* First UART channel pins are swapped between debug and  normal use */
