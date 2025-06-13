@@ -6,11 +6,18 @@ sketch:
   - extras/arduino-examples/examples/01.Basics/BareMinimum/BareMinimum.ino
   - extras/arduino-examples/examples/01.Basics/Blink/Blink.ino
   - extras/arduino-examples/examples/01.Basics/DigitalReadSerial/DigitalReadSerial.ino
+  - extras/arduino-examples/examples/01.Basics/AnalogReadSerial/AnalogReadSerial.ino
+  - extras/arduino-examples/examples/01.Basics/Fade/Fade.ino
   - extras/arduino-examples/examples/02.Digital/BlinkWithoutDelay/BlinkWithoutDelay.ino
   - extras/arduino-examples/examples/02.Digital/Button/Button.ino
   - extras/arduino-examples/examples/02.Digital/Debounce/Debounce.ino
   - extras/arduino-examples/examples/02.Digital/DigitalInputPullup/DigitalInputPullup.ino
   - extras/arduino-examples/examples/02.Digital/StateChangeDetection/StateChangeDetection.ino
+  - extras/arduino-examples/examples/03.Analog/AnalogInOutSerial/AnalogInOutSerial.ino
+  - extras/arduino-examples/examples/03.Analog/AnalogInput/AnalogInput.ino 
+  - extras/arduino-examples/examples/03.Analog/Calibration/Calibration.ino
+  - extras/arduino-examples/examples/03.Analog/Fading/Fading.ino
+  - extras/arduino-examples/examples/03.Analog/Smoothing/Smoothing.ino
   - extras/arduino-examples/examples/04.Communication/ASCIITable/ASCIITable.ino
   - extras/arduino-examples/examples/04.Communication/MultiSerial/MultiSerial.ino
   - extras/arduino-examples/examples/04.Communication/PhysicalPixel/PhysicalPixel.ino
