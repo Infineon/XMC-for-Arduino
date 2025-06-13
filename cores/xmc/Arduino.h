@@ -73,6 +73,8 @@ extern "C" {
 
 #define interrupts() __enable_irq()
 #define noInterrupts() __disable_irq()
+#define ENABLED 1
+#define DISABLED 0
 
 #define DEFAULT XMC_VADC_CHANNEL_REF_INTREF /*< Default ADC reference voltage type */
 
