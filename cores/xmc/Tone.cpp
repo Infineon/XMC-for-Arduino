@@ -1,5 +1,5 @@
 #include "Arduino.h"
-#define CCU8V2 // for CCU8 PWM pins configure
+
 XMC_PWM4_t *pwm4;
 
 class Tone {
@@ -16,7 +16,7 @@ public:
             XMC_PWM4_t *pwm4 = &mapping_pwm4[pin_index];
             configureTone(pin, frequency);
             XMC_GPIO_SetMode(pwm4->port_pin.port, pwm4->port_pin.pin,
-                             XMC_GPIO_MODE_OUTPUT_PUSH_PULL | pwm4->port_mode);
+                             (XMC_GPIO_MODE_t)(XMC_GPIO_MODE_OUTPUT_PUSH_PULL | pwm4->port_mode));
             XMC_CCU4_SLICE_StartTimer(pwm4->slice);
             // count pulses for stop the timer once reached required pulses
             // if (duration > 0) {
@@ -46,7 +46,7 @@ public:
             XMC_PWM8_t *pwm8 = &mapping_pwm8[pin_index];
             configureTone(pin, frequency);
             XMC_GPIO_SetMode(pwm8->port_pin.port, pwm8->port_pin.pin,
-                             XMC_GPIO_MODE_OUTPUT_PUSH_PULL | pwm8->port_mode);
+                             (XMC_GPIO_MODE_t)(XMC_GPIO_MODE_OUTPUT_PUSH_PULL | pwm8->port_mode));
             XMC_CCU8_SLICE_StartTimer(pwm8->slice);
             // calculate pulses
             // if (duration > 0) {
@@ -77,9 +77,10 @@ public:
     void stop(pin_size_t pin) {
         int pin_index;
         if ((pin_index = scanMapTable(mapping_pin_PWM4, pin)) >= 0) {
-            XMC_PWM4_t *pwm4 = &mapping_pwm4[pin_index];
-            XMC_CCU4_SLICE_StopTimer(pwm4->slice);             // stop the timer
-            XMC_CCU4_DisableClock(pwm4->ccu, pwm4->slice_num); // Disable the clock
+            XMC_PWM4_t *_XMC_pwm4_config = &mapping_pwm4[pin_index];
+            XMC_CCU4_SLICE_StopTimer(_XMC_pwm4_config->slice); // stop the timer
+            XMC_CCU4_DisableClock(_XMC_pwm4_config->ccu,
+                                  _XMC_pwm4_config->slice_num); // Disable the clock
         }
 #if defined(CCU8V2) || defined(CCU8V1)
         else if ((pin_index = scanMapTable(mapping_pin_PWM8, pin)) >= 0) {
@@ -153,27 +154,26 @@ private:
     }
 
     void configureTimerInterrupt(unsigned long duration_ms) {
-
         XMC_CCU4_SLICE_COMPARE_CONFIG_t timer_config;
         memset(&timer_config, 0, sizeof(timer_config));
         timer_config.prescaler_initval = XMC_CCU4_SLICE_PRESCALER_64;
         timer_config.passive_level = XMC_CCU4_SLICE_OUTPUT_PASSIVE_LEVEL_LOW;
 
-        XMC_CCU4_SLICE_CompareInit(CCU40_CC40, &timer_config);
+        XMC_CCU4_SLICE_CompareInit(CCU40_CC42, &timer_config);
 
         // Calculate period for the timer based on the duration
         uint32_t timer_ticks = (PCLK / 64) * duration_ms / 1000;
-        XMC_CCU4_SLICE_SetTimerPeriodMatch(CCU40_CC40, timer_ticks);
+        XMC_CCU4_SLICE_SetTimerPeriodMatch(CCU40_CC42, timer_ticks);
 
-        XMC_CCU4_SLICE_EnableEvent(CCU40_CC40, XMC_CCU4_SLICE_IRQ_ID_PERIOD_MATCH);
-        XMC_CCU4_SLICE_SetInterruptNode(CCU40_CC40, XMC_CCU4_SLICE_IRQ_ID_PERIOD_MATCH,
+        XMC_CCU4_SLICE_EnableEvent(CCU40_CC42, XMC_CCU4_SLICE_IRQ_ID_PERIOD_MATCH);
+        XMC_CCU4_SLICE_SetInterruptNode(CCU40_CC42, XMC_CCU4_SLICE_IRQ_ID_PERIOD_MATCH,
                                         XMC_CCU4_SLICE_SR_ID_0);
 
         // Enable the NVIC interrupt
-        NVIC_EnableIRQ(CCU40_0_IRQn);
+        NVIC_EnableIRQ(CCU40_2_IRQn);
 
         // Start the timer
-        XMC_CCU4_SLICE_StartTimer(CCU40_CC40);
+        XMC_CCU4_SLICE_StartTimer(CCU40_CC42);
     }
 };
 
@@ -186,11 +186,13 @@ void tone(pin_size_t pin, unsigned int frequency, unsigned long duration) {
 }
 
 void noTone(pin_size_t pin) { inst_Tone.stop(pin); }
-
-void CCU40_0_IRQHandler(void) {
-
-    XMC_CCU4_SLICE_StopTimer(pwm4->slice);
-
-    XMC_CCU4_SLICE_StopTimer(CCU40_CC40);
-    XMC_CCU4_SLICE_ClearEvent(CCU40_CC40, XMC_CCU4_SLICE_IRQ_ID_PERIOD_MATCH);
+#ifdef __cplusplus
+extern "C" {
+#endif
+void CCU40_2_IRQHandler(void) {
+    XMC_CCU4_SLICE_StopTimer(CCU40_CC42);
+    XMC_CCU4_SLICE_ClearEvent(CCU40_CC42, XMC_CCU4_SLICE_IRQ_ID_PERIOD_MATCH);
 }
+#ifdef __cplusplus
+}
+#endif
