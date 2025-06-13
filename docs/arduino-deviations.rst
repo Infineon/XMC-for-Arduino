@@ -91,102 +91,21 @@ generate tones and at least one timer can interfere with other functions.
 However this does mean you can have more tone pins, just much lower frequency range.
 
 
-Analog Functions and improvements
+Analog Functions 
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-wiring_analog after V1.2.1
------------------------------
-Analog functions like analogRead and analogWrite etc. have changed after 
-V1.2.1 to have extra safety measures to ensure invalid settings cannot be 
-done and report errors.
-
-Additionally extra getter functions have been added so other libraries can 
-access the resolution of read and write functions as number of bits and 
-current maximum value possible.
-
-
-Extra functions
----------------
-
-These functions return the analogue resolution as number of bits
-
-* uint8_t getAnalogReadBits( ) - range 8 to 12
-* uint8_t getAnalogWriteBits( ) - range 8 to 16
-
-These functions return the analogue resolution as its maximum value
-
-* uint16_t getAnalogReadMaximum( ) - range 255 to 4095
-* uint16_t getAnalogWriteMaximum( ) - range 255 to 65535
-
-This function enables the analog amplifiers at the ADC inputs with 
-adjustible gain (for XMC1000 series)
-
-* uint32_t analogRead_variableGain( uint8_t channel, uint8_t gain_value )     
-
-The gain factor values can be found :ref:`here <gain_factor>`.
-
-
-Default Values
+Resolution
 --------------
 
-Read resolution default is 10 bits (0 to 1023)
+Read resolution default is **10 bits (0 to 1023)**
+You can set the read resolution to 8, 9, 10, 11 or 12 bits using the
+:command:`analogReadResolution( bits )` function, where bits is the number of bits
+you want to set the resolution to.
 
-Write resolution default is 8 bits (0 to 255)
+Write resolution default is **8 bits (0 to 255)**
+You can set the write resolution to 8, 9, 10, 11, 12, 13, 14, 15 or 16 bits using the
+:command:`analogWriteResolution( bits )` function, where bits is the number of bits
+you want to set the resolution to.
 
-
-Error and Return Codes by Function
-----------------------------------
-
-Where possible functions do :command:`NOT` action invalid parameters passed in.
-
-Functions return error codes or valid values so be sure which error 
-code you are looking for as some functions can return 0 as a valid 
-value (e.g. analogRead) so an out of range value is returned instead.
-
-.. list-table:: 
-    :header-rows: 1
-
-    * - Function
-      - Valid Return
-      - Errors
-    * - analogReadResolution	
-      - | 8 to 12
-        | as passed in	
-      - 255
-    * - getAnalogReadBits	
-      - 8 to 12
-      -	none
-    * - getanalogReadMaximum	
-      - 255 to 4095
-      -	none
-    * - analogWriteResolution
-      - | 8 to 16
-        | as passed in	
-      - 255
-    * - getAnalogWriteBits	
-      - 8 to 16	
-      - none
-    * - getanalogWriteMaximum	
-      - 255 to 65535	
-      - none
-    * - analogRead	
-      - 0 to Maximum for Resolution	
-      - | 0xFFFFFFFF usually 
-        | invalid channel
-    * - analogWrite	
-      - 0 success	
-      - | -1 = invalid value
-        | -2 = wrong pin
-    * - setAnalogWriteFrequency
-      - 0 success	
-      - | -1 = invalid frequency
-        | -2 = wrong pin
-    * - analogReference	
-      - none	
-      - NULL function see below
-
-This should enable checks in software for valid operation 
-and debugging problem code.
 
 AREF Analogue Reference
 -----------------------
@@ -195,50 +114,41 @@ On all boards the Analogue Reference is set to use the internal power supply
 (however noisy), so the AREF pin is an :command:`OUTPUT` of the AREF in use. 
 Do :command:`NOT` connect any external voltage source to this pin, or use 
 shields that change this voltage.
+This pin :command:`CANNOT` be reassigned as GPIO (pinMode has no effect).
 
-:command:`CAUTION` any shorts on this pin especially to 0V (GND) will bring 
+|:warning:| :command:`CAUTION` any shorts on this pin especially to 0V (GND) will bring 
 down the supply 
 of the chip.
 
-The pin voltage is the current supply voltage to AREF for analogue conversions.
-
-This pin :command:`CANNOT` be reassigned as GPIO (pinMode has no effect).
-
 :command:`analogReference( )`
 
-This function has NO operation and will not match any call on parameters 
-passed in with other libraries or examples that use this call.
-
-Any shields and examples that try to change this, will :command:`NOT` function 
+This function has only one defalut mode **DEFAULT** = 3.3V and will not match any call on parameters 
+passed in with other libraries or examples that use this call. Any shields and examples that try to 
+change this, will :command:`NOT` function 
 the same on these boards.
 
+DAC Analog Output
+-----------------------
+:command:`analogWrite( )`
 
-Analog amplifiers at the ADC inputs with adjustible gain
---------------------------------------------------------
-Each analog input channel can be configured to be amplified by an adjustable 
-gain factor, for XMC1000 series. To configure the gain, the gain value is to 
-be selected in the analogRead_variableGain() function which translates to a 
-gain factor as per the following table:
+This API usually Writes an analog value (PWM wave) to a pin. Some XMC4 boards have true analog output 
+capabilities on the DAC enabled pins. 
+
+The DAC output voltage range for the XMC4000 series is limited to a **minimum** of **0.3V** and a **maximum** of **2.5V**.
 
 
-.. _gain_factor:
+  .. note::
 
-.. list-table:: 
-    :header-rows: 1
+    The following example formula can be used to convert the target voltage to a digital control value (dec_target) 
+    suitable for the 12-bit DAC input range:
 
-    * - Gain value
-      - Gain factor
-    * - 0
-      - 1
-    * - 1
-      - 3
-    * - 2 
-      - 6
-    * - 3 
-      - 12
+    .. math::
 
-For more information, please refer to the application note 
-`here <https://www.infineon.com/dgdl/Infineon-VADC-XMC1200_XMC1300-AP32304-AN-v01_10-EN.pdf?fileId=5546d4624e765da5014ed981f63136d6>`_.
+      dec\_target = \frac{(V_{target} - 0.3V)}{2.5V} \times 4095
+
+    In this formula, 0.3V is the minimum voltage, 2.5V is the maximum voltage, and 4095 is the maximum value for a 12-bit DAC. 
+
+
 
 I2C Analog pins
 ^^^^^^^^^^^^^^^
