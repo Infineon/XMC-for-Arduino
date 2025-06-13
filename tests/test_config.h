@@ -21,7 +21,7 @@
 #define TEST_PIN_ANALOG_IO_VREF A2    // Pin connected to Vdd
 #define TEST_PIN_ANALOG_IO_DIVIDER A1 // Pin connected to voltage divider
 #define TEST_PIN_ANALOG_IO_GND A0     // Pin connected to Ground
-#define TEST_ADC_RESOLUTION 1023      // ADC resolution
+#define ADC_RESOLUTION 1023           // ADC resolution
 
 #define TEST_PIN_ANALOG_IO_DAC 53
 #define TEST_PIN_ANALOG_IO_DAC_INPUT A3
