@@ -1,8 +1,9 @@
 //****************************************************************************
-// @Project Includes
+// @File: wiring_analog.cpp
+// @Brief: Analog and PWM/DAC API implementation for XMC Arduino core
 //****************************************************************************
 #include "Arduino.h"
-#include <string.h>
+
 //****************************************************************************
 // @Defines
 //****************************************************************************
@@ -14,18 +15,19 @@
 //****************************************************************************
 // @Global Variables
 //****************************************************************************
-static XMC_VADC_CHANNEL_REF_t analog_reference = XMC_DEFAULT;
+static XMC_VADC_CHANNEL_REF_t analog_reference = DEFAULT;
 static uint8_t _readResolution = 10;
 static uint8_t _writeResolution = 8;
 uint16_t _readMaximum = 1023;
 uint16_t _writeMaximum = 255;
-
 static bool vadc_inited = false;
 
+//****************************************************************************
+// @Function: scan_map_table
+// @Brief: Lookup table for pin to resource mapping
+//****************************************************************************
 int16_t scan_map_table(const uint8_t table[][2], uint8_t pin) {
-    int16_t i;
-
-    i = 0;
+    int16_t i = 0;
     while (table[i][0] != 255) {
         if (table[i][0] == pin)
             break;
@@ -36,13 +38,13 @@ int16_t scan_map_table(const uint8_t table[][2], uint8_t pin) {
     return -1;
 }
 
-/* Sets the ADC reference voltage type. For the current XMC board, only the default (internal
-   reference, Varef = Vdda) is available. Other reference modes are not supported and will be
-   ignored. This function is provided for API compatibility and future extension.
-*/
+//****************************************************************************
+// @Function: analogReference
+// @Brief: Sets the ADC reference voltage type. Only default (Varef = Vdda) is available.
+//****************************************************************************
 void analogReference(uint8_t mode) {
     switch (mode) {
-    case XMC_DEFAULT:
+    case DEFAULT:
         analog_reference = XMC_VADC_CHANNEL_REF_INTREF;
         break;
     default:
@@ -51,17 +53,25 @@ void analogReference(uint8_t mode) {
     }
 }
 
+//****************************************************************************
+// @Function: analogWriteResolution
+// @Brief: Sets the resolution for analogWrite (PWM/DAC)
+//****************************************************************************
 void analogWriteResolution(int res) {
     if (res > ANALOG_MAX_WRITE_RESOLUTION) {
-        _writeResolution = ANALOG_MAX_WRITE_RESOLUTION; // Limit to maximum resolution
+        _writeResolution = ANALOG_MAX_WRITE_RESOLUTION;
     } else if (res < ADC_MIN_RESOLUTION) {
-        _writeResolution = ADC_MIN_RESOLUTION; // Limit to minimum resolution
+        _writeResolution = ADC_MIN_RESOLUTION;
     } else {
         _writeResolution = res;
     }
     _writeMaximum = (uint16_t)(((uint32_t)1U << _writeResolution) - 1);
 }
 
+//****************************************************************************
+// @Function: analogWrite
+// @Brief: Outputs PWM or DAC value to the specified pin
+//****************************************************************************
 void analogWrite(pin_size_t pinNumber, int value) {
     uint32_t compare_reg = 0;
     int16_t resource;
@@ -139,6 +149,10 @@ void analogWrite(pin_size_t pinNumber, int value) {
     return;
 }
 
+//****************************************************************************
+// @Function: wiring_analog_init
+// @Brief: Initializes VADC and related analog resources (runs only once)
+//****************************************************************************
 void wiring_analog_init(void) {
     if (vadc_inited)
         return;
@@ -188,8 +202,7 @@ void wiring_analog_init(void) {
        ignore to pass external triggers unconditionally.*/
     XMC_VADC_GLOBAL_BackgroundInit(VADC, &vadc_background_config);
 
-    /* PC Mar-2019
-       Dummy read of ALL analogue inputs to ensure ALL analogue channels are
+    /* Dummy read of ALL analogue inputs to ensure ALL analogue channels are
        started in background scanning mode, otherwise first readings at least
        will always be zero on reading an analogue input. */
     for (uint8_t chan = 0; chan < NUM_ANALOG_INPUTS; chan++)
@@ -198,19 +211,25 @@ void wiring_analog_init(void) {
     // Additional Initialization of DAC starting here
 }
 
+//****************************************************************************
+// @Function: analogReadResolution
+// @Brief: Sets the resolution for analogRead (ADC)
+//****************************************************************************
 void analogReadResolution(int res) {
     if (res > ADC_MAX_READ_RESOLUTION) {
-        _readResolution = ADC_MAX_READ_RESOLUTION; // Limit to maximum resolution
+        _readResolution = ADC_MAX_READ_RESOLUTION;
     } else if (res < ADC_MIN_RESOLUTION) {
-        _readResolution = ADC_MIN_RESOLUTION; // Limit to minimum resolution
+        _readResolution = ADC_MIN_RESOLUTION;
     } else {
         _readResolution = res;
     }
     _readMaximum = (uint16_t)(((uint32_t)1U << _readResolution) - 1);
 }
 
-/* analogRead takes parameter of ADC channel number
-        return 0xFFFFFFFF for invalid channel */
+//****************************************************************************
+// @Function: analogRead
+// @Brief: Reads the analog value from the specified pin
+//****************************************************************************
 int analogRead(pin_size_t pinNumber) {
 
     wiring_analog_init();
