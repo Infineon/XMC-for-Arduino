@@ -18,27 +18,12 @@ public:
             XMC_GPIO_SetMode(pwm4->port_pin.port, pwm4->port_pin.pin,
                              (XMC_GPIO_MODE_t)(XMC_GPIO_MODE_OUTPUT_PUSH_PULL | pwm4->port_mode));
             XMC_CCU4_SLICE_StartTimer(pwm4->slice);
-            // count pulses for stop the timer once reached required pulses
-            // if (duration > 0) {
-            //     uint32_t required_pulses = frequency * duration / 1000;
-            //     for (uint32_t i = 0; i < required_pulses; i++) {
-            //         while (
-            //             !XMC_CCU4_SLICE_GetEvent(pwm4->slice,
-            //             XMC_CCU4_SLICE_IRQ_ID_PERIOD_MATCH)) {
-            //         }
-            //         XMC_CCU4_SLICE_ClearEvent(pwm4->slice, XMC_CCU4_SLICE_IRQ_ID_PERIOD_MATCH);
-            //     }
-            //     XMC_CCU4_SLICE_StopTimer(pwm4->slice);
-            // }
-            //    if(duration >0) {
-            //     unsigned long start_time = millis();
-            //     while(millis() - start_time < duration) {
-            //         delay(1);
-            //     }
-            //     XMC_CCU4_SLICE_StopTimer(pwm4->slice);
-            // }
-            if (duration > 0) {
-                configureTimerInterrupt(duration);
+               if(duration >0) {
+                unsigned long start_time = millis();
+                while(millis() - start_time < duration) {
+                    delay(1);
+                }
+                XMC_CCU4_SLICE_StopTimer(pwm4->slice);
             }
         }
 #if defined(CCU8V2) || defined(CCU8V1)
@@ -49,26 +34,12 @@ public:
                              (XMC_GPIO_MODE_t)(XMC_GPIO_MODE_OUTPUT_PUSH_PULL | pwm8->port_mode));
             XMC_CCU8_SLICE_StartTimer(pwm8->slice);
             // calculate pulses
-            // if (duration > 0) {
-            //     uint32_t required_pulses = frequency * duration / 1000;
-            //     for (uint32_t i = 0; i < required_pulses; i++) {
-            //         while (
-            //             !XMC_CCU8_SLICE_GetEvent(pwm8->slice,
-            //             XMC_CCU8_SLICE_IRQ_ID_PERIOD_MATCH)) {
-            //         }
-            //         XMC_CCU8_SLICE_ClearEvent(pwm8->slice, XMC_CCU8_SLICE_IRQ_ID_PERIOD_MATCH);
-            //     }
-            //     XMC_CCU8_SLICE_StopTimer(pwm8->slice);
-            // }
-            // if(duration >0) {
-            //     unsigned long start_time = millis();
-            //     while(millis() - start_time < duration) {
-            //         delay(1);
-            //     }
-            //     XMC_CCU8_SLICE_StopTimer(pwm8->slice);
-            // }
-            if (duration > 0) {
-                configureTimerInterrupt(duration);
+            if(duration >0) {
+                unsigned long start_time = millis();
+                while(millis() - start_time < duration) {
+                    delay(1);
+                }
+                XMC_CCU8_SLICE_StopTimer(pwm8->slice);
             }
         }
 #endif
@@ -152,29 +123,6 @@ private:
         }
         return -1;
     }
-
-    void configureTimerInterrupt(unsigned long duration_ms) {
-        XMC_CCU4_SLICE_COMPARE_CONFIG_t timer_config;
-        memset(&timer_config, 0, sizeof(timer_config));
-        timer_config.prescaler_initval = XMC_CCU4_SLICE_PRESCALER_64;
-        timer_config.passive_level = XMC_CCU4_SLICE_OUTPUT_PASSIVE_LEVEL_LOW;
-
-        XMC_CCU4_SLICE_CompareInit(CCU40_CC42, &timer_config);
-
-        // Calculate period for the timer based on the duration
-        uint32_t timer_ticks = (PCLK / 64) * duration_ms / 1000;
-        XMC_CCU4_SLICE_SetTimerPeriodMatch(CCU40_CC42, timer_ticks);
-
-        XMC_CCU4_SLICE_EnableEvent(CCU40_CC42, XMC_CCU4_SLICE_IRQ_ID_PERIOD_MATCH);
-        XMC_CCU4_SLICE_SetInterruptNode(CCU40_CC42, XMC_CCU4_SLICE_IRQ_ID_PERIOD_MATCH,
-                                        XMC_CCU4_SLICE_SR_ID_0);
-
-        // Enable the NVIC interrupt
-        NVIC_EnableIRQ(CCU40_2_IRQn);
-
-        // Start the timer
-        XMC_CCU4_SLICE_StartTimer(CCU40_CC42);
-    }
 };
 
 static Tone inst_Tone;
@@ -186,13 +134,4 @@ void tone(pin_size_t pin, unsigned int frequency, unsigned long duration) {
 }
 
 void noTone(pin_size_t pin) { inst_Tone.stop(pin); }
-#ifdef __cplusplus
-extern "C" {
-#endif
-void CCU40_2_IRQHandler(void) {
-    XMC_CCU4_SLICE_StopTimer(CCU40_CC42);
-    XMC_CCU4_SLICE_ClearEvent(CCU40_CC42, XMC_CCU4_SLICE_IRQ_ID_PERIOD_MATCH);
-}
-#ifdef __cplusplus
-}
-#endif
+
