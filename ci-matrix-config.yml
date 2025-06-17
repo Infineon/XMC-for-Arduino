@@ -13,6 +13,10 @@ sketch:
   - extras/arduino-examples/examples/02.Digital/Debounce/Debounce.ino
   - extras/arduino-examples/examples/02.Digital/DigitalInputPullup/DigitalInputPullup.ino
   - extras/arduino-examples/examples/02.Digital/StateChangeDetection/StateChangeDetection.ino
+  - extras/arduino-examples/examples/02.Digital/toneKeyboard/toneKeyboard.ino
+  - extras/arduino-examples/examples/02.Digital/toneMelody/toneMelody.ino
+  - extras/arduino-examples/examples/02.Digital/toneMultiple/toneMultiple.ino
+  - extras/arduino-examples/examples/02.Digital/tonePitchFollower/tonePitchFollower.ino
   - extras/arduino-examples/examples/03.Analog/AnalogInOutSerial/AnalogInOutSerial.ino
   - extras/arduino-examples/examples/03.Analog/AnalogInput/AnalogInput.ino 
   - extras/arduino-examples/examples/03.Analog/Calibration/Calibration.ino
