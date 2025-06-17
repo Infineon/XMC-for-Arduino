@@ -3,9 +3,10 @@ static XMC_CCU4_SLICE_t *active_pwm4_slice = nullptr; // Active CCU4 slice
 static XMC_CCU8_SLICE_t *active_pwm8_slice = nullptr; // Active CCU8 slice
 static XMC_CCU4_MODULE_t *active_pwm4_ccu = nullptr; // Active CCU4 module
 static XMC_CCU8_MODULE_t *active_pwm8_ccu = nullptr; // Active CCU8 module
-uint8_t slice_number;
+volatile uint8_t slice_number_ccu4;
+volatile uint8_t slice_number_ccu8;
 
-static volatile bool timer_interrupt_ccu4 =  false;
+
 
 #ifdef __cplusplus
 extern "C" {
@@ -13,20 +14,19 @@ extern "C" {
 void CCU43_0_IRQHandler(void) {
 if(active_pwm4_slice != nullptr && active_pwm4_ccu != nullptr) {
     XMC_CCU4_SLICE_StopTimer(active_pwm4_slice);
-    XMC_CCU4_DisableClock(active_pwm4_ccu, slice_number); // Disable the clock
+    XMC_CCU4_DisableClock(active_pwm4_ccu, slice_number_ccu4); // Disable the clock
 
     active_pwm4_slice = nullptr; // Clear the active CCU4 slice
     active_pwm4_ccu = nullptr; // Clear the active CCU4 module
 }
 if(active_pwm8_slice != nullptr && active_pwm8_ccu != nullptr) {
     XMC_CCU8_SLICE_StopTimer(active_pwm8_slice);
-    XMC_CCU8_DisableClock(active_pwm8_ccu, slice_number);
+    XMC_CCU8_DisableClock(active_pwm8_ccu, slice_number_ccu8);
     active_pwm8_slice = nullptr; // Clear the active CCU8 slice
     active_pwm8_ccu = nullptr; // Clear the active CCU8 module
 }
-XMC_CCU4_SLICE_StopTimer(CCU43_CC40);
+    XMC_CCU4_SLICE_StopTimer(CCU43_CC40);
     XMC_CCU4_SLICE_ClearEvent(CCU43_CC40, XMC_CCU4_SLICE_IRQ_ID_PERIOD_MATCH);
-    timer_interrupt_ccu4 = true;
 
 }
 
@@ -48,7 +48,7 @@ public:
             XMC_PWM4_t *pwm4 = &mapping_pwm4[pin_index];
             active_pwm4_slice = pwm4->slice; // Store the active CCU4 slice
             active_pwm4_ccu = pwm4->ccu; // Store the active CCU4 module
-            slice_number = pwm4->slice_num; // Store the slice number
+            slice_number_ccu4 = pwm4->slice_num; // Store the slice number
             configureTone(pin, frequency);
             XMC_GPIO_SetMode(pwm4->port_pin.port, pwm4->port_pin.pin,
                              (XMC_GPIO_MODE_t)(XMC_GPIO_MODE_OUTPUT_PUSH_PULL | pwm4->port_mode));
@@ -62,6 +62,7 @@ public:
             XMC_PWM8_t *pwm8 = &mapping_pwm8[pin_index];
             active_pwm8_slice = pwm8->slice; // Store the active CCU8 slice
             active_pwm8_ccu = pwm8->ccu; // Store the active CCU8 module
+            slice_number_ccu8 = pwm8->slice_num;
             configureTone(pin, frequency);
             XMC_GPIO_SetMode(pwm8->port_pin.port, pwm8->port_pin.pin,
                              (XMC_GPIO_MODE_t)(XMC_GPIO_MODE_OUTPUT_PUSH_PULL | pwm8->port_mode));
@@ -95,7 +96,6 @@ public:
 private:
     void configureTone(pin_size_t pin, unsigned int frequency) {
         int pin_index;
-        timer_interrupt_ccu4 = false;
 
         if ((pin_index = scanMapTable(mapping_pin_PWM4, pin)) >= 0) {
             XMC_PWM4_t *pwm4 = &mapping_pwm4[pin_index];
@@ -145,7 +145,6 @@ private:
     }
 
     void configureTimerInterrupt(unsigned long duration_ms) {
-        timer_interrupt_ccu4 = false;
         XMC_CCU4_Init(CCU43, XMC_CCU4_SLICE_MCMS_ACTION_TRANSFER_PR_CR);
         XMC_CCU4_SLICE_COMPARE_CONFIG_t timer_config;
             timer_config.timer_mode = XMC_CCU4_SLICE_TIMER_COUNT_MODE_EA;
