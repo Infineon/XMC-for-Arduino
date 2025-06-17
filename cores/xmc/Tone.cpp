@@ -55,11 +55,6 @@ public:
             XMC_CCU4_SLICE_StartTimer(pwm4->slice);
             if(duration >0) {
                 configureTimerInterrupt(duration);
-                // if(timer_interrupt_ccu4 == true)
-                // {
-                //     XMC_CCU4_SLICE_StopTimer(pwm4->slice);
-                //     timer_interrupt_ccu4 = false;
-                // }
             }
         }
 #if defined(CCU8V2) || defined(CCU8V1)
@@ -74,12 +69,6 @@ public:
             // calculate pulses
           if(duration >0) {
                 configureTimerInterrupt(duration);
-                // if(timer_interrupt_ccu4 == true)
-                // {
-                //     XMC_CCU8_SLICE_StopTimer(pwm8->slice);
-                //     timer_interrupt_ccu4 = false;
-
-                // }
             }
         }
 #endif
