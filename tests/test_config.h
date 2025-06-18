@@ -16,7 +16,7 @@
 #define TEST_PIN_DIGITAL_IO_OUTPUT 3 // IO_4
 #define TEST_PIN_DIGITAL_IO_INPUT 2  // IO_3
 #define TEST_PIN_SYNC_IO 4           // IO_1
-#define TEST_PIN_PULSE                  5             // IO_2
+#define TEST_PIN_PULSE 5             // IO_2
 
 
 #define PWM_FREQUENCY_HZ 490          // PWM Frequency in Hz
