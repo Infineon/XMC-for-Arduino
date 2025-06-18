@@ -41,7 +41,7 @@ uint32_t end_time;          // start time of measured pulse
  * Use of SysTick hardware timer and micros( ) function makes the function
  * more portable across various micros and CPU clock frequencies.
  *
- * Assumptions]
+ * Assumptions:
  *      As per AVR Arduino PulseIn pin is expected to be in input mode already
  *      No major interrupt activity while measurement is taken (including Serial)
  *
@@ -52,8 +52,9 @@ uint32_t end_time;          // start time of measured pulse
 unsigned long pulseIn(pin_size_t pin, uint8_t state, unsigned long timeout) {
 // check pin is valid by NUM_DIGITAL_PINS, return 0 if invalid
 #ifdef NUM_DIGITAL_PINS
-    if (pin >= NUM_DIGITAL_PINS)
+    if (pin >= NUM_DIGITAL_PINS){
         return 0;
+    }
 #endif
 
     // Set up pin details for faster port read in loops
@@ -63,11 +64,12 @@ unsigned long pulseIn(pin_size_t pin, uint8_t state, unsigned long timeout) {
 
     // Check timeout is NOT too small or > Maximum
     // if so use default 1 second or MAX respectively
-    if (timeout < 6)
+    if (timeout < 6){
         timeout = DEF_PULSE_TIMEOUT;
-    else if (timeout > MAX_PULSE_TIMEOUT)
+    }
+    else if (timeout > MAX_PULSE_TIMEOUT){
         timeout = MAX_PULSE_TIMEOUT;
-
+    }
     // Initialise conditions
     pulse_state = (state) ? mask : 0; // level to measure
 
@@ -75,20 +77,25 @@ unsigned long pulseIn(pin_size_t pin, uint8_t state, unsigned long timeout) {
 
     // If already at measurement level we have a problem
     // So wait for pulse to go to OPPOSITE level required (idle) first
-    while (((pulsePort->IN & mask) == pulse_state))
-        if (micros() > timeout)
+    while (((pulsePort->IN & mask) == pulse_state)){
+        if (micros() > timeout){
             return 0;
-
+        }
+    }
     // Wait for pulse to go to level required
-    while (((pulsePort->IN & mask) != pulse_state))
-        if (micros() > timeout)
+    while (((pulsePort->IN & mask) != pulse_state)){
+        if (micros() > timeout){
             return 0;
+        }
+    }
 
     // measure pulse length of required level
     start_time = micros();
-    while (((pulsePort->IN & mask) == pulse_state))
-        if (micros() > timeout)
+    while (((pulsePort->IN & mask) == pulse_state)){
+        if (micros() > timeout){
             return 0;
+        }
+    }
     end_time = micros();
 
     // Return time difference
