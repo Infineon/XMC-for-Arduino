@@ -7,3 +7,9 @@
 [submodule "extras/arduino-examples"]
 	path = extras/arduino-examples
 	url = https://github.com/arduino/arduino-examples.git
+[submodule "extras/arduino-devops"]
+	path = extras/arduino-devops
+	url = https://github.com/Infineon/arduino-devops.git
+[submodule "extras/makers-devops"]
+	path = extras/makers-devops
+	url = https://github.com/Infineon/makers-devops.git
