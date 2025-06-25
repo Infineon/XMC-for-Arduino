@@ -54,25 +54,31 @@ def get_device_serial_number(port):
                 return device[1]
     return None
 
-def create_jlink_loadbin_command_file(binfile):
-    cmd_load_bin = 'loadbin ' + binfile + ' 0x0\n'
+def create_jlink_loadbin_command_file(binfile, enable_update):
+    lines = []
+    if not enable_update:
+        lines.append('exec DisableAutoUpdateFW\n')
+    lines += ['r\n', 'h\n', f'loadbin {binfile} 0x0\n', 'r\n', 'g\n', 'exit\n']
     with open(cmd_jlink,'w') as f:
-        f.writelines(['r\n', 'h\n', cmd_load_bin, 'r\n', 'g\n', 'exit\n'])
-
+        f.writelines(lines)
     return cmd_jlink
 
-def create_jlink_mem_read_command_file(addr, bytes):
-    #cmd_log_enable
-    cmd_mem_read = 'mem ' + addr +', '+ bytes  + '\n' # todo: store register maps, bytes in file
+def create_jlink_mem_read_command_file(addr, bytes, enable_update):
+    lines = []
+    if not enable_update:
+        lines.append('exec DisableAutoUpdateFW\n')
+    lines += [f'mem {addr}, {bytes}\n', 'r\n', 'g\n', 'exit\n']
     with open(cmd_jlink,'w') as f:
-        f.writelines([cmd_mem_read, 'r\n', 'g\n', 'exit\n'])
-
+        f.writelines(lines)
     return cmd_jlink
 
-def create_jlink_erase_command_file():
+def create_jlink_erase_command_file(enable_update):
+    lines = []
+    if not enable_update:
+        lines.append('exec DisableAutoUpdateFW\n')
+    lines += ['r\n', 'h\n', 'erase\n', 'exit\n']
     with open(cmd_jlink,'w') as f:
-        f.writelines(['r\n', 'h\n', 'erase\n', 'exit\n'])
-
+        f.writelines(lines)
     return cmd_jlink
 
 def remove_jlink_command_file(cmd_file):
@@ -94,7 +100,7 @@ def remove_backspaces(input_str):
     return ''.join(result)
 
 def jlink_commander(device, serial_num, cmd_file, console_output=False):
-    jlink_cmd = [jlinkexe, '-autoconnect', '1','-exitonerror', '1', '-nogui', '1', '-device', device, '-selectemubysn', serial_num, '-if', 'swd', '-speed', '4000', '-commandfile', cmd_file]
+    jlink_cmd = [jlinkexe, '-autoconnect', '1','-exitonerror', '1', '-nogui', '1', '-device', device, '-SelectEmuBySN', serial_num, '-if', 'swd', '-speed', '4000', '-commandfile', cmd_file]
 
     #if console_output is True:
         #jlink_cmd.append('-log ') #todo: pipe this in a better way
@@ -125,13 +131,13 @@ def check_serial_number(serial_num):
     if serial_num == None:
         raise Exception("Device not found! Please check the serial port")
 
-def get_mem_contents(addr, bytes, device, port):
+def get_mem_contents(addr, bytes, device, port, enable_update):
     try:
         serial_num = get_device_serial_number(port)
         check_serial_number(serial_num)
     except ValueError as e:
         print(e)
-    jlink_cmd_file = create_jlink_mem_read_command_file(addr, bytes) # todo: comes from proper metafile
+    jlink_cmd_file = create_jlink_mem_read_command_file(addr, bytes, enable_update) # todo: comes from proper metafile
     jlink_commander(device, serial_num, jlink_cmd_file, True)
     remove_jlink_command_file(jlink_cmd_file)
     
@@ -143,6 +149,8 @@ def get_mem_contents(addr, bytes, device, port):
 
     reg_contents = ""   
     for line in lines :
+        if getattr(sys, 'verbose', True):
+            print(f"JLink Log: {line}")
         if addr in line and '=' in line:
             reg_contents = re.findall('[0-9,A-F]+', line)
             break
@@ -165,11 +173,11 @@ def find_device_by_value(value):
             return device
     return None
 
-def check_device(device, port):
+def check_device(device, port, enable_update):
 
     master_data = read_master_data()
     # get value from reg
-    device_value = get_mem_contents(master_data[device]['IDCHIP']['addr'], master_data[device]['IDCHIP']['size'], device, port)
+    device_value = get_mem_contents(master_data[device]['IDCHIP']['addr'], master_data[device]['IDCHIP']['size'], device, port, enable_update)
     device_value_masked = (int('0x'+device_value,16)) & (int('0x'+master_data[device]['IDCHIP']['mask'],16)) # take only those bits which are needed
     device_value_masked = f'{device_value_masked:x}'
     device_value_masked = device_value_masked.zfill(int(master_data[device]['IDCHIP']['size'])*2)
@@ -183,12 +191,12 @@ def check_device(device, port):
             print(f"Connected Device is: {real_device}.")
         raise Exception(f"Device connected on port {port} does not match the selected device to flash")
 
-def check_mem(device, port):
+def check_mem(device, port, enable_update):
     
     if "XMC1" in device: 
         master_data = read_master_data()
         # get value from reg
-        device_value = get_mem_contents(master_data[device]['FLSIZE']['addr'], master_data[device]['FLSIZE']['size'], device, port)
+        device_value = get_mem_contents(master_data[device]['FLSIZE']['addr'], master_data[device]['FLSIZE']['size'], device, port, enable_update)
         device_value = int('0x'+device_value,16) & int('0x0003f000',16) # bit 17 to bit 12 are needed
         device_value = device_value >> int(master_data[device]['FLSIZE']['bitposition_LSB'])
         flash_size = (device_value-1)*4 #flash size given by (ADDR-1)*4 
@@ -208,7 +216,7 @@ def check_mem(device, port):
     else: #XMC4 series
         master_data = read_master_data()
         # get value from reg
-        device_value = get_mem_contents(master_data[device]['FLASH0_ID']['addr'], master_data[device]['FLASH0_ID']['size'], device, port)     
+        device_value = get_mem_contents(master_data[device]['FLASH0_ID']['addr'], master_data[device]['FLASH0_ID']['size'], device, port, enable_update)     
         device_value_masked = (int('0x'+device_value,16)) & (int('0x'+master_data[device]['FLASH0_ID']['mask'],16)) # take only those bits which are needed
         device_value_masked = f'{device_value_masked:x}'
         device_value_masked = device_value_masked.zfill(int(master_data[device]['FLASH0_ID']['size'])*2)
@@ -231,15 +239,15 @@ def get_default_port(port):
         return port
     
 
-def upload(device, port, binfile, enable_jlink_log):
+def upload(device, port, binfile, enable_jlink_log, enable_update):
     serial_num = get_device_serial_number(port)
-    jlink_cmd_file = create_jlink_loadbin_command_file(binfile)
-    jlink_commander(device, serial_num, jlink_cmd_file, console_output=not enable_jlink_log) # console_output = true will store the log to file instead of printing
+    jlink_cmd_file = create_jlink_loadbin_command_file(binfile, enable_update)
+    jlink_commander(device, serial_num, jlink_cmd_file, console_output=not enable_jlink_log)
     remove_jlink_command_file(jlink_cmd_file)
 
-def erase(device, port):
+def erase(device, port, enable_update):
     serial_num = get_device_serial_number(port)
-    jlink_cmd_file = create_jlink_erase_command_file()
+    jlink_cmd_file = create_jlink_erase_command_file(enable_update)
     jlink_commander(device, serial_num, jlink_cmd_file)
     remove_jlink_command_file(jlink_cmd_file)
 
@@ -252,9 +260,9 @@ def parser():
         parser.print_help()
 
     def parser_upload_func(args):
-        check_device(args.device, args.port)
-        check_mem(args.device, args.port)
-        upload(args.device, args.port, args.binfile, args.verbose)
+        check_device(args.device, args.port, args.jlink_update)
+        check_mem(args.device, args.port, args.jlink_update)
+        upload(args.device, args.port, args.binfile, args.verbose, args.jlink_update)
         # remove console output file if verbose is not enabled
         if not args.verbose:
         # check if upload was successful by parsing the console output
@@ -276,7 +284,7 @@ def parser():
         
 
     def parser_erase_func(args):
-        erase(args.device, args.port)
+        erase(args.device, args.port, args.jlink_update)
 
     class ver_action(argparse.Action):
         def __init__(self, option_strings, dest, **kwargs):
@@ -299,6 +307,8 @@ def parser():
     required_upload.add_argument('-p','--port', type=str, nargs='?', const='', help='serial port')
     required_upload.add_argument('-f','--binfile', type=str, help='binary file to upload', required=True)
     required_upload.add_argument('--verbose', action='store_true', help='Enable verbose logging')
+    parser_upload.add_argument('--no-jlink-update', dest='jlink_update', action='store_false', help='Disable JLink firmware update (default: enabled)')
+    parser_upload.set_defaults(jlink_update=True)
     parser_upload.set_defaults(func=parser_upload_func)
 
     # Erase parser
@@ -306,6 +316,8 @@ def parser():
     required_erase = parser_erase.add_argument_group('required arguments')
     required_erase.add_argument('-d','--device', type=str, help='jlink device name', required=True)
     required_erase.add_argument('-p','--port', type=str, help='serial port', required=True)
+    parser_erase.add_argument('--no-jlink-update', dest='jlink_update', action='store_false', help='Disable JLink firmware update (default: enabled)')
+    parser_erase.set_defaults(jlink_update=True)
     parser_erase.set_defaults(func=parser_erase_func)
 
     # debug_parser. 
