@@ -1,17 +1,6 @@
 #include "Arduino.h"
 #include "Wire.h"
 
-//****************************************************************************
-// @Global Variables
-//****************************************************************************
-
-// Initialize Class Variables //////////////////////////////////////////////////
-
-//****************************************************************************
-// @Local Functions
-//****************************************************************************
-
-// Constructors ////////////////////////////////////////////////////////////////
 TwoWire::TwoWire(XMC_I2C_t *conf) {
     XMC_I2C_config = conf;
 
@@ -35,11 +24,11 @@ TwoWire::TwoWire(XMC_I2C_t *conf) {
 // Public Methods //////////////////////////////////////////////////////////////
 
 void TwoWire::begin(void) {
-    // Check if desire USIC channel is already in use
+    // To-Do for future work need to check
+    // Check if desire USIC channel is already in use 
     // if ((XMC_I2C_config->channel->CCR & USIC_CH_CCR_MODE_Msk) == XMC_USIC_CH_OPERATING_MODE_SPI) {
     //     SPI.end();
     // }
-
     hasError = false;
     isMaster = true;
 
@@ -77,6 +66,7 @@ void TwoWire::begin(void) {
 }
 
 void TwoWire::begin(uint8_t address) {
+    //To-Do for future work need to check
     // Check if desire USIC channel is already in use
     // if ((XMC_I2C_config->channel->CCR & USIC_CH_CCR_MODE_Msk) == XMC_USIC_CH_OPERATING_MODE_SPI) {
     //     SPI.end();
@@ -129,8 +119,6 @@ void TwoWire::begin(uint8_t address) {
                   &(XMC_I2C_config->scl_config));
 }
 
-//void TwoWire::begin(int address) { begin((uint8_t)address); }
-
 void TwoWire::end(void) {
     //  Only disable HW when USIC is used for I2C
     if ((XMC_I2C_config->channel->CCR & USIC_CH_CCR_MODE_Msk) == XMC_USIC_CH_OPERATING_MODE_I2C) {
@@ -174,12 +162,10 @@ uint8_t TwoWire::requestFrom(
     uint8_t address, size_t quantity, uint32_t iaddress, uint8_t isize, bool sendStop) {
     uint32_t StatusFlag;
     beginTransmission(address);
-
     // clamp to buffer length
     if (quantity > BUFFER_LENGTH) {
         quantity = BUFFER_LENGTH;
     }
-
     // send internal address; this mode allows sending a repeated start to access
     // some devices' internal registers. This function is executed by the hardware
     // TWI module on other processors (for example Due's TWI_IADR and TWI_MMR registers)
@@ -298,14 +284,6 @@ uint8_t TwoWire::requestFrom(uint8_t address, size_t quantity) {
     return requestFrom((uint8_t)address, quantity, true);
 }
 
-// uint8_t TwoWire::requestFrom(int address, int quantity) {
-//     return requestFrom((uint8_t)address, (uint8_t)quantity, (uint8_t) true);
-// }
-
-// uint8_t TwoWire::requestFrom(int address, int quantity, int sendStop) {
-//     return requestFrom((uint8_t)address, (uint8_t)quantity, (uint8_t)sendStop);
-// }
-
 void TwoWire::beginTransmission(uint8_t address) {
     if ((XMC_I2C_config->channel->CCR & USIC_CH_CCR_MODE_Msk) != XMC_USIC_CH_OPERATING_MODE_I2C) {
         if (isMaster) {
@@ -326,9 +304,6 @@ void TwoWire::beginTransmission(uint8_t address) {
     XMC_I2C_CH_ClearStatusFlag(XMC_I2C_config->channel, 0xFFFFFFFF);
 }
 
-//void TwoWire::beginTransmission(int address) { beginTransmission((uint8_t)address); }
-
-//
 //  Originally, 'endTransmission' was an f(void) function.
 //  It has been modified to take one parameter indicating
 //  whether or not a STOP should be performed on the bus.
@@ -394,7 +369,6 @@ uint8_t TwoWire::endTransmission(bool sendStop) {
 
 //  This provides backwards compatibility with the original
 //  definition, and expected behaviour, of endTransmission
-//
 uint8_t TwoWire::endTransmission(void) { return endTransmission(true); }
 
 // must be called in:
@@ -664,8 +638,6 @@ void USIC1_3_IRQHandler() { Wire1.ReceiveHandler(); }
 void USIC1_4_IRQHandler() { Wire1.ProtocolHandler(); }
 #endif
 } // extern "C"
-
-// Preinstantiate Objects //////////////////////////////////////////////////////
 
 TwoWire Wire = TwoWire(&XMC_I2C_default);
 #if (NUM_I2C > 1)
