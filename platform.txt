@@ -5,7 +5,7 @@
 
 # The information about this Arduino compatible environment
 # ---------
-name=XMC Family
+name=Infineon XMC Boards
 # The version field is automatically added during
 # the core release packaging. Leave empty.
 version=
