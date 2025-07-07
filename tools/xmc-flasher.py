@@ -196,7 +196,7 @@ def check_mem(device, port, enable_update):
         logging.info(f"Flash size is: {int(flash_size)}kB.")
         # special case for XMC2GO-32kB variant, bypass check
         if "XMC1100" in device and int(flash_size) == 32:
-            logging.warning("XMC2GO 32kB varaint detected!")
+            logging.warning("XMC2GO 32kB variant detected!")
             return
         #compare with selected device 
         if not flash_size == device.split('-')[1]:
