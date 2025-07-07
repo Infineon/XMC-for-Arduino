@@ -29,7 +29,7 @@ sketch:
   - extras/arduino-examples/examples/05.Control/ForLoopIteration/ForLoopIteration.ino
 
 fqbn:
-  - Infineon:xmc:XMC4700_Relax_Kit
+  - infineon:xmc:XMC4700_Relax_Kit
 
 # sketch:
 #     - libraries/LED
@@ -41,33 +41,33 @@ fqbn:
 #     - libraries/DeviceControlXMC/examples/StackMemoryMeasurement/StackMemoryMeasurement.ino
 
 # include: 
-#   - fqbn: Infineon:xmc:XMC1100_Boot_Kit
+#   - fqbn: infineon:xmc:XMC1100_Boot_Kit
 #     sketch:
 #       - libraries/I2S
 #       - libraries/DeviceControlXMC/examples/SleepModeXMC1100/SleepModeXMC1100.ino
-#   - fqbn: Infineon:xmc:XMC1100_XMC2GO
+#   - fqbn: infineon:xmc:XMC1100_XMC2GO
 #     sketch: 
 #       - libraries/I2S
 #       - libraries/DeviceControlXMC/examples/SleepModeXMC1100/SleepModeXMC1100.ino
-#   - fqbn: Infineon:xmc:XMC1300_Boot_Kit
+#   - fqbn: infineon:xmc:XMC1300_Boot_Kit
 #     sketch: 
 #       - libraries/DeviceControlXMC/examples/SleepModeXMC1100/SleepModeXMC1100.ino
-#   - fqbn: Infineon:xmc:XMC1400_XMC2GO
+#   - fqbn: infineon:xmc:XMC1400_XMC2GO
 #     sketch:
 #       - libraries/I2S
 #       - libraries/DeviceControlXMC/examples/SleepModeXMC1100/SleepModeXMC1100.ino
 #       - libraries/CAN
-#   - fqbn: Infineon:xmc:XMC1400_Arduino_Kit
+#   - fqbn: infineon:xmc:XMC1400_Arduino_Kit
 #     sketch:
 #       - libraries/DeviceControlXMC/examples/SleepModeXMC1100/SleepModeXMC1100.ino
-#   - fqbn: Infineon:xmc:XMC4200_Platform2GO
+#   - fqbn: infineon:xmc:XMC4200_Platform2GO
 #     sketch: 
 #       - libraries/RTC/examples/AlarmRTC/AlarmRTC.ino
 #       - libraries/CAN
-#   - fqbn: Infineon:xmc:XMC4400_Platform2GO
+#   - fqbn: infineon:xmc:XMC4400_Platform2GO
 #     sketch: 
 #       - libraries/CAN
-#   - fqbn: Infineon:xmc:XMC4700_Relax_Kit
+#   - fqbn: infineon:xmc:XMC4700_Relax_Kit
 #     sketch: 
 #       - libraries/I2S
 #       - libraries/DeviceControlXMC/examples/SleepModeXMC4700/SleepModeXMC4700.ino
@@ -76,17 +76,17 @@ fqbn:
 #       - libraries/CAN
 
 # exclude: 
-#   - fqbn: Infineon:xmc:XMC1400_XMC2GO
+#   - fqbn: infineon:xmc:XMC1400_XMC2GO
 #     sketch:
 #       - libraries/DeviceControlXMC/examples/StackMemoryMeasurement/StackMemoryMeasurement.ino
-#   - fqbn: Infineon:xmc:XMC1400_Arduino_Kit
+#   - fqbn: infineon:xmc:XMC1400_Arduino_Kit
 #     sketch:
 #       - libraries/DeviceControlXMC/examples/StackMemoryMeasurement/StackMemoryMeasurement.ino
-#   - fqbn: Infineon:xmc:XMC4200_Platform2GO
+#   - fqbn: infineon:xmc:XMC4200_Platform2GO
 #     sketch: 
 #       - libraries/DeviceControlXMC/examples/DieTemperatureMeasurement/DieTemperatureMeasurement.ino
 #       - libraries/DeviceControlXMC/examples/HeapMemoryMeasurement/HeapMemoryMeasurement.ino
-#   - fqbn: Infineon:xmc:XMC4400_Platform2GO
+#   - fqbn: infineon:xmc:XMC4400_Platform2GO
 #     sketch: 
 #       - libraries/DeviceControlXMC/examples/DieTemperatureMeasurement/DieTemperatureMeasurement.ino
 #       - libraries/DeviceControlXMC/examples/HeapMemoryMeasurement/HeapMemoryMeasurement.ino
