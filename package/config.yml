@@ -11,7 +11,7 @@ include:
   - platform.txt
   - programmers.txt
   - README.md
-index-name: package_infineon_index
+index-name: package_xmc_index
 server: 
   type: github
   owner: Infineon
