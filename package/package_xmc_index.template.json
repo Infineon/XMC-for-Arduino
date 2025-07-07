@@ -3,14 +3,11 @@
         {
             "name": "infineon",
             "maintainer": "Infineon Technologies AG",
-            "websiteURL": "https://github.com/Infineon/xmc-for-arduino",
-            "email": "",
-            "help": {
-                "online": "https://xmc-arduino.readthedocs.io/en/latest/index.html"
-            },
+            "websiteURL": "https://xmc-arduino.readthedocs.io/en/latest/index.html",
+            "email": "maker@infineon.com",
             "platforms": [
                 {
-                    "name": "Infineon's XMC Microcontroller",
+                    "name": "Infineon XMC Boards",
                     "architecture": "xmc",
                     "version": "",
                     "category": "Contributed",
@@ -19,7 +16,7 @@
                     "checksum": "",
                     "size": "",
                     "help": {
-                        "online": "https://xmc-arduino.readthedocs.io/en/latest/index.html"
+                        "online": ""
                     },
                     "boards": [
                         {
