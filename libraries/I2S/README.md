@@ -6,9 +6,9 @@ the master device and read audio input from another device such as a microphone.
 Be aware that only reading is possible for the time being - no I2S output is supported.
 
 ## Wiring
-The library has been tested with the KIT_XMC47_RELAX_5V_AD_V1, XMC1100 XMC 2Go, and KIT_XMC11_BOOT_001 in combination with the IM69D130 Microphone Shield2Go.
+The library has been tested with the KIT_XMC47_RELAX, XMC1100 XMC 2Go, and KIT_XMC11_BOOT_001 in combination with the IM69D130 Microphone Shield2Go.
 
-* For the KIT_XMC47_RELAX_5V_AD_V1, following ports/pins should be connected:
+* For the KIT_XMC47_RELAX, following ports/pins should be connected:
   - BCLK -- P3.10
   - DATA -- P3.7
   - CLK -- P3.9
@@ -66,7 +66,7 @@ Please refer to the data sheet of your specific microphone for the sampling rate
 If you are using XMC1000 family boards, the recommended sampling rate is 12 kHz as higher values might interfere with the microcontroller speed.
 Since both `Serial` and `I2S` use USIC interrupts, there could be a problem with processing remaining code as the processor could get locked out via interrupts.
 
-However, if you are using an XMC4000 board such as a KIT_XMC47_RELAX_5V_AD_V1, you shouldn't have to worry about these issues in particular.
+However, if you are using an XMC4000 board such as a KIT_XMC47_RELAX, you shouldn't have to worry about these issues in particular.
 
 ### Data delay
 Sometimes, it also makes sense to adjust the data delay, which is the delay between a changing WA/LRCL edge and the start of a sample depending on the microphone of your choice. Please be aware that there are different `I2S.begin()` functions which allow to set the parameters very precisely. Have a look in the I2S.h file for more information.
