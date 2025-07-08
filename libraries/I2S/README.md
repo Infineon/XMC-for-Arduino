@@ -6,9 +6,9 @@ the master device and read audio input from another device such as a microphone.
 Be aware that only reading is possible for the time being - no I2S output is supported.
 
 ## Wiring
-The library has been tested with the XMC4700 Relax Kit, XMC1100 XMC 2Go, and XMC1100 Boot Kit in combination with the IM69D130 Microphone Shield2Go.
+The library has been tested with the KIT_XMC47_RELAX_5V_AD_V1, XMC1100 XMC 2Go, and KIT_XMC11_BOOT_001 in combination with the IM69D130 Microphone Shield2Go.
 
-* For the XMC4700 Relax Kit, following ports/pins should be connected:
+* For the KIT_XMC47_RELAX_5V_AD_V1, following ports/pins should be connected:
   - BCLK -- P3.10
   - DATA -- P3.7
   - CLK -- P3.9
@@ -26,14 +26,14 @@ The library has been tested with the XMC4700 Relax Kit, XMC1100 XMC 2Go, and XMC
 
 `No level shifting needed as the XMC 2Go board runs at 3.3 V.`
 
-*  For the XMC1100 Boot Kit board the ports/pins connection should be as follows:
+*  For the KIT_XMC11_BOOT_001 board the ports/pins connection should be as follows:
     - BCLK -- P0.9
     - DATA -- P1.0
     - CLK -- P0.7
     - GND  -- GND (VSS)
     - 3.3V -- 3.3V (VDD)
 
-`Ensure that level shifting is in place as the microphone board has 3.3 V logic level, XMC1100 Boot Kit has 5 V by default.`
+`Ensure that level shifting is in place as the microphone board has 3.3 V logic level, KIT_XMC11_BOOT_001 has 5 V by default.`
 
 This configuration is defined in the respective board configuration files `pins_arduino.h`.
 
@@ -66,7 +66,7 @@ Please refer to the data sheet of your specific microphone for the sampling rate
 If you are using XMC1000 family boards, the recommended sampling rate is 12 kHz as higher values might interfere with the microcontroller speed.
 Since both `Serial` and `I2S` use USIC interrupts, there could be a problem with processing remaining code as the processor could get locked out via interrupts.
 
-However, if you are using an XMC4000 board such as a XMC4700 Relax Kit, you shouldn't have to worry about these issues in particular.
+However, if you are using an XMC4000 board such as a KIT_XMC47_RELAX_5V_AD_V1, you shouldn't have to worry about these issues in particular.
 
 ### Data delay
 Sometimes, it also makes sense to adjust the data delay, which is the delay between a changing WA/LRCL edge and the start of a sample depending on the microphone of your choice. Please be aware that there are different `I2S.begin()` functions which allow to set the parameters very precisely. Have a look in the I2S.h file for more information.

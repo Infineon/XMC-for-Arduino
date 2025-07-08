@@ -415,11 +415,11 @@ void I2SClass::_onSampleReceived() {
 }
 
 extern "C" {
-#if defined(XMC4700_Relax_Kit)
+#if defined(KIT_XMC47_RELAX_5V_AD_V1)
 void USIC2_2_IRQHandler() { I2S._onSampleReceived(); }
-#elif defined(XMC1100_XMC2GO) || defined(XMC1100_Boot_Kit)
+#elif defined(KIT_XMC_2GO_XMC1100_V1) || defined(KIT_XMC11_BOOT_001)
 void USIC0_2_IRQHandler() { I2S._onSampleReceived(); }
-#elif defined(XMC1400_XMC2GO)
+#elif defined(KIT_XMC14_2GO)
 void USIC1_2_IRQHandler() { I2S._onSampleReceived(); }
 #endif
 }

@@ -5,7 +5,7 @@
 
 namespace onewire {
 
-#if defined(XMC1100_XMC2GO)
+#if defined(KIT_XMC_2GO_XMC1100_V1)
     #define NUM_ONEWIRE_HW 4
     #define PIN_HAS_ONEWIRE_HW(pin) ((pin == 0) || (pin == 1) || (pin == 10) || (pin == 11))
     #define PIN_TO_ONEWIRE_HW(pin) \
@@ -86,7 +86,7 @@ XMC_SPI_t mappingHW[] = {
                         .output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH,
                         .input_hysteresis = XMC_GPIO_INPUT_HYSTERESIS_STANDARD}}};
 
-#elif defined(XMC1100_Boot_Kit)
+#elif defined(KIT_XMC11_BOOT_001)
     #define NUM_ONEWIRE_HW 3
     #define PIN_HAS_ONEWIRE_HW(pin) ((pin == 11) || (pin == 15) || (pin == 16))
     #define PIN_TO_ONEWIRE_HW(pin) ((pin == 11) ? 0 : ((pin == 15) ? 1 : ((pin == 16) ? 2 : -1)))
@@ -147,7 +147,7 @@ XMC_SPI_t mappingHW[] = {
                         .output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH,
                         .input_hysteresis = XMC_GPIO_INPUT_HYSTERESIS_STANDARD}}};
 
-#elif defined(XMC4700_Relax_Kit)
+#elif defined(KIT_XMC47_RELAX_5V_AD_V1)
     #define NUM_ONEWIRE_HW 6
     #define PIN_HAS_ONEWIRE_HW(pin) \
         ((pin == 1) || (pin == 15) || (pin == 29) || (pin == 37) || (pin == 70) || (pin == 88))
