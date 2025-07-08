@@ -415,7 +415,7 @@ void I2SClass::_onSampleReceived() {
 }
 
 extern "C" {
-#if defined(KIT_XMC47_RELAX_5V_AD_V1)
+#if defined(KIT_XMC47_RELAX)
 void USIC2_2_IRQHandler() { I2S._onSampleReceived(); }
 #elif defined(KIT_XMC_2GO_XMC1100_V1) || defined(KIT_XMC11_BOOT_001)
 void USIC0_2_IRQHandler() { I2S._onSampleReceived(); }

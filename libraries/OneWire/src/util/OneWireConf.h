@@ -147,7 +147,7 @@ XMC_SPI_t mappingHW[] = {
                         .output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH,
                         .input_hysteresis = XMC_GPIO_INPUT_HYSTERESIS_STANDARD}}};
 
-#elif defined(KIT_XMC47_RELAX_5V_AD_V1)
+#elif defined(KIT_XMC47_RELAX)
     #define NUM_ONEWIRE_HW 6
     #define PIN_HAS_ONEWIRE_HW(pin) \
         ((pin == 1) || (pin == 15) || (pin == 29) || (pin == 37) || (pin == 70) || (pin == 88))

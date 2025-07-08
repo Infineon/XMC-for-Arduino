@@ -4,9 +4,9 @@ Based on [Arduino CAN library](https://www.arduino.cc/reference/en/libraries/can
 
 # Hardware Setup
 
-XMC boards with CAN support (CAN transceiver on board and CAN controller module): KIT_XMC_PLT2GO_XMC4200, KIT_XMC_PLT2GO_XMC4400, KIT_XMC47_RELAX_5V_AD_V1 and KIT_XMC14_2GO.
+XMC boards with CAN support (CAN transceiver on board and CAN controller module): KIT_XMC_PLT2GO_XMC4200, KIT_XMC_PLT2GO_XMC4400, KIT_XMC47_RELAX and KIT_XMC14_2GO.
 
-:warning: There is a 120 ohm terminal resistor on the KIT_XMC_PLT2GO_XMC4400 and KIT_XMC14_2GO boards, not on the KIT_XMC_PLT2GO_XMC4200 and KIT_XMC47_RELAX_5V_AD_V1. Please remove or add resistors as needed.
+:warning: There is a 120 ohm terminal resistor on the KIT_XMC_PLT2GO_XMC4400 and KIT_XMC14_2GO boards, not on the KIT_XMC_PLT2GO_XMC4200 and KIT_XMC47_RELAX. Please remove or add resistors as needed.
 
 All CAN nodes should be connected using the (twisted) pair cable for the CAN_H and CAN_L
 

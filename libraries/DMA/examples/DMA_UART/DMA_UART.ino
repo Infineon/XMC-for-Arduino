@@ -1,5 +1,5 @@
 /*
- * Simple DMA example for KIT_XMC47_RELAX_5V_AD_V1
+ * Simple DMA example for KIT_XMC47_RELAX
  * Demonstrates how to setup an DMA, between memory and UART module. 
  * Prints the message in Serial port.
  */

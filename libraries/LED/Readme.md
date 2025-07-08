@@ -46,8 +46,8 @@ models of board so we end up with
  KIT_XMC1400_ARDUINO | Low | Yes | High
  KIT_XMC_PLT2GO_XMC4200 | High| No | High
  KIT_XMC_PLT2GO_XMC4400 | High| No | High
- KIT_XMC47_RELAX_5V_AD_V1 | High| No | High
- KIT_XMC47_RELAX_5V_AD_V1 Lite | High| No | High
+ KIT_XMC47_RELAX | High| No | High
+ KIT_XMC47_RELAX Lite | High| No | High
 
 ** NOTE ** After Version 2.0 of XMC-for-Arduino, some boards were dropped (e.g. XMC1300 Sense2GO) they are still shown here for those using old versions of XMC-for-Arduino, and for history.
 
