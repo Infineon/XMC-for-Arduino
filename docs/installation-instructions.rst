@@ -53,7 +53,7 @@ Paste the following URL into the *Additional boards manager URLs* input field un
 
 ::
 
-    https://github.com/Infineon/XMC-for-Arduino/releases/latest/download/package_infineon_index.json
+    https://github.com/Infineon/XMC-for-Arduino/releases/latest/download/package_xmc_index.json
 
 .. image:: img/arduino_ide_preferences_menu.png
     :width: 600
