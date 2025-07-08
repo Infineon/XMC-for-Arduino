@@ -140,7 +140,7 @@ KIT_XMC_PLT2GO_XMC4200
 .. image:: img/KIT_XMC_PLT2GO_XMC4200.jpg
     :width: 400
 
-The _KIT_XMC_PLT2GO_XMC4200 board consists of a XMC4200 microcontroller with a debugger implemented by a XMC4200 microcontroller. 
+The KIT_XMC_PLT2GO_XMC4200 board consists of a XMC4200 microcontroller with a debugger implemented by a XMC4200 microcontroller. 
 Please note that there exist versions with 5V and 3.3V. Please be careful which version you have and use with your respective shields. 
 The one described here is the 5V version as this one is compatible with Arduino shields designed for 5V systems.
 This kit is equipped with an ARM® Cortex®-M4 based XMC4200 microcontroller with on-board debugger, Ethernet, CAN and footprints for Arduino, 
@@ -188,7 +188,7 @@ on the board itself. If you want to use them check out the subsection :ref:`conn
 KIT_XMC47_RELAX_5V_AD_V1
 ------------------------
 
-* Legacy name: ``KIT_XMC47_RELAX_5V_AD_V1``
+* Legacy name: ``XMC4700 Relax Kit``
 * `Product Page <https://www.infineon.com/cms/en/product/evaluation-boards/kit_xmc47_relax_5v_ad_v1/>`__
 
 .. image:: img/KIT_XMC47_RELAX_5V_AD_V1.jpg
