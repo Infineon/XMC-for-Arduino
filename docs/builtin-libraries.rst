@@ -24,7 +24,7 @@ Examples Supported
         | KIT_XMC14_2GO
         | KIT_XMC1400_ARDUINO
         | KIT_XMC_PLT2GO_XMC4400
-        | KIT_XMC47_RELAX_5V_AD_V1
+        | KIT_XMC47_RELAX
       - | Simple die temperature measurement  
         | for XMC devices which demonstrates 
         | themeasure temperature of die using 
@@ -35,7 +35,7 @@ Examples Supported
         | KIT_XMC13_BOOT_001
         | KIT_XMC14_2GO
         | KIT_XMC1400_ARDUINO
-        | KIT_XMC47_RELAX_5V_AD_V1
+        | KIT_XMC47_RELAX
       - | Simple example to check heap memory 
         | during run time for XMC devices which
         | demonstrates the ability to check on 
@@ -49,7 +49,7 @@ Examples Supported
       - | Demonstrates the use of an alarm to 
         | wake up an xmc1100 from sleep mode.
     * - SleepModeXMC4700
-      - | KIT_XMC47_RELAX_5V_AD_V1
+      - | KIT_XMC47_RELAX
       - | Simple Sleep Mode for XMC4700  
         | Relax Kit V1 demonstrates the use of 
         | an alarm to wake up an XMC4700 from  
@@ -65,7 +65,7 @@ Examples Supported
         | KIT_XMC11_BOOT_001
         | KIT_XMC13_BOOT_001
         | KIT_XMC_PLT2GO_XMC4400
-        | KIT_XMC47_RELAX_5V_AD_V1
+        | KIT_XMC47_RELAX
       - | Simple example to check stack memory 
         | during run time for XMC devices which
         | demonstrates the ability to check on 
@@ -84,11 +84,11 @@ Examples Supported
       - Boards
       - Description
     * - DMA_Memory   
-      - | KIT_XMC47_RELAX_5V_AD_V1
+      - | KIT_XMC47_RELAX
       - | Demonstrates how to setup an DMA, to transfer
         | data between two places in memory. 
     * - DMA_UART   
-      - | KIT_XMC47_RELAX_5V_AD_V1
+      - | KIT_XMC47_RELAX
       - | Demonstrates how to setup an DMA, to transfer
         | data between two places in memory. 
 
@@ -104,11 +104,11 @@ RTC Library
       - Boards
       - Description
     * - AlarmRTC
-      -  KIT_XMC47_RELAX_5V_AD_V1
+      -  KIT_XMC47_RELAX
       - | Demonstrates how to set an RTC alarm for the 
-        | KIT_XMC47_RELAX_5V_AD_V1 V1.
+        | KIT_XMC47_RELAX V1.
     * - SimpleRTC
-      -  KIT_XMC47_RELAX_5V_AD_V1
+      -  KIT_XMC47_RELAX
       -  Demonstrates the use of the RTC library for the XMC4700.
 
 
@@ -129,7 +129,7 @@ SPI Library
         | KIT_XMC14_2GO
         | KIT_XMC1400_ARDUINO
         | KIT_XMC_PLT2GO_XMC4400
-        | KIT_XMC47_RELAX_5V_AD_V1
+        | KIT_XMC47_RELAX
       - | SPI example which communicates between the
         | MOSI and MISO pin of the same board. Connect 
         | the MOSI pin to the MOSI pin as hardware 
@@ -152,7 +152,7 @@ Wire Library
         | KIT_XMC14_2GO
         | KIT_XMC1400_ARDUINO
         | KIT_XMC_PLT2GO_XMC4400
-        | KIT_XMC47_RELAX_5V_AD_V1
+        | KIT_XMC47_RELAX
       - | Demonstrates use of the Wire library. Reads data
         | from an I2C/TWI slave device. Refer to the "Wire Slave
         | Sender" example for use with this. Then it
@@ -167,7 +167,7 @@ Wire Library
         | KIT_XMC14_2GO
         | KIT_XMC1400_ARDUINO
         | KIT_XMC_PLT2GO_XMC4400
-        | KIT_XMC47_RELAX_5V_AD_V1
+        | KIT_XMC47_RELAX
       - | Demonstrates use of the Wire library. Writes data to
         | an I2C/TWI slave device. Refer to the "Wire Slave
         | Receiver" example for use with this. Then it
@@ -182,7 +182,7 @@ Wire Library
         | KIT_XMC14_2GO
         | KIT_XMC1400_ARDUINO
         | KIT_XMC_PLT2GO_XMC4400
-        | KIT_XMC47_RELAX_5V_AD_V1
+        | KIT_XMC47_RELAX
       - | Demonstrates use of the Wire library. Receives data as
         | an I2C/TWI slave device. Refer to the "Wire Slave
         | Writer" example for use with this. Then it
@@ -197,7 +197,7 @@ Wire Library
         | KIT_XMC14_2GO
         | KIT_XMC1400_ARDUINO
         | KIT_XMC_PLT2GO_XMC4400
-        | KIT_XMC47_RELAX_5V_AD_V1
+        | KIT_XMC47_RELAX
       - | Demonstrates use of the Wire library. Receives data as
         | an I2C/TWI slave device. Refer to the "Wire Master
         | Reader" example for use with this. Then it
@@ -210,7 +210,7 @@ Wire Library
 I2S Library
 ^^^^^^^^^^^
 
-This library has been tested with the IM69D130 Microphone Shield2Go with both KIT_XMC47_RELAX_5V_AD_V1 and XMC1100 XMC2Go. 
+This library has been tested with the IM69D130 Microphone Shield2Go with both KIT_XMC47_RELAX and KIT_XMC_2GO_XMC1100_V1.
 Please refer to the `README.md <https://github.com/Infineon/XMC-for-Arduino/blob/master/libraries/I2S/README.md>`_ of 
 the I2S library for pin connections.
 
@@ -236,7 +236,7 @@ This library provides support for the CAN protocol. For further details, please 
       - Boards
       - Description
     * - CANSender   
-      - XMC1400 2GO 
+      - KIT_XMC14_2GO 
       - | This example demonstrates how to send a CAN message.
         | It supports two different message/frame formats: 
         | standard and extended. The CAN standard frame uses 
@@ -244,7 +244,7 @@ This library provides support for the CAN protocol. For further details, please 
         | uses a 29-bit identifier.
     * - | CANReceiver/
         | CANReceiverCallback  
-      - XMC1400 2GO 
+      - KIT_XMC14_2GO 
       - | This example demonstrates how to receive a CAN 
         | message. There are two methods for receiving messages:
         | the default method runs a loop that continuously
@@ -255,7 +255,7 @@ This library provides support for the CAN protocol. For further details, please 
         | be received. Additionally, messages can be filtered for
         | specific IDs  using the ``filter()`` function.
     * - CANLoopBack 
-      - XMC1400 2GO 
+      - KIT_XMC14_2GO 
       - | This example demonstrates the loopback mode of CAN. 
         | In this mode, the CAN transmitter is internally connected 
         | to its receiver, allowing the message to be sent and 

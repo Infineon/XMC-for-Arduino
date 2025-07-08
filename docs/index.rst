@@ -9,7 +9,7 @@ Welcome to Infineon's XMC Microcontroller Boards for Arduino!
 .. image:: img/KIT_XMC11_BOOT_001.jpg
     :width: 200
 
-.. image:: img/KIT_XMC47_RELAX_5V_AD_V1.jpg
+.. image:: img/KIT_XMC47_RELAX.jpg
     :width: 200
 
 The XMC microcontroller family from Infineon offers a powerful and versatile platform for embedded system development. 
