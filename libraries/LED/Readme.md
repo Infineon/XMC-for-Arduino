@@ -38,16 +38,16 @@ models of board so we end up with
 
 | Board | Normal LEDs <br>ON state | LED_BUILTIN <br>Separate |  LED_BUILTIN <br>ON state
 | :----  | :---: | :---: | :---: |
- XMC1100 Boot Kit | Low | Yes | High
- XMC1100 XMC2GO | High | No | High
+ KIT_XMC11_BOOT_001 | Low | Yes | High
+ KIT_XMC_2GO_XMC1100_V1 | High | No | High
  XMC1100 XMC H Bridge2GO | High| No | High
- XMC1300 Boot Kit  | Low | No | Low
+ KIT_XMC13_BOOT_001  | Low | No | Low
  XMC1300 Sense2GO | Low| No | Low
- XMC1400 Arduino Kit | Low | Yes | High
- XMC4200 Platform2Go | High| No | High
- XMC4400 Platform2Go | High| No | High
- XMC4700 Relax Kit | High| No | High
- XMC4700 Relax Kit Lite | High| No | High
+ KIT_XMC1400_ARDUINO | Low | Yes | High
+ KIT_XMC_PLT2GO_XMC4200 | High| No | High
+ KIT_XMC_PLT2GO_XMC4400 | High| No | High
+ KIT_XMC47_RELAX_5V_AD_V1 | High| No | High
+ KIT_XMC47_RELAX_5V_AD_V1 Lite | High| No | High
 
 ** NOTE ** After Version 2.0 of XMC-for-Arduino, some boards were dropped (e.g. XMC1300 Sense2GO) they are still shown here for those using old versions of XMC-for-Arduino, and for history.
 

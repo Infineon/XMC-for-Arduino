@@ -676,19 +676,19 @@ void USIC0_4_IRQHandler() { Wire.ReceiveHandler(); }
 
 void USIC0_5_IRQHandler() { Wire.ProtocolHandler(); }
 
-    #if defined(XMC1100_XMC2GO) || defined(XMC1100_H_BRIDGE2GO)
+    #if defined(KIT_XMC_2GO_XMC1100_V1) || defined(XMC1100_H_BRIDGE2GO)
 void USIC0_2_IRQHandler() { Wire1.ReceiveHandler(); }
 
 void USIC0_3_IRQHandler() { Wire1.ProtocolHandler(); }
     #endif
 
-    #if defined(XMC4400_Platform2GO)
+    #if defined(KIT_XMC_PLT2GO_XMC4200)
 void USIC1_1_IRQHandler() { Wire.ReceiveHandler(); }
 
 void USIC1_2_IRQHandler() { Wire.ProtocolHandler(); }
     #endif
 
-#elif defined(XMC4700_Relax_Kit)
+#elif defined(KIT_XMC47_RELAX_5V_AD_V1)
 void USIC1_1_IRQHandler() { Wire.ReceiveHandler(); }
 
 void USIC1_2_IRQHandler() { Wire.ProtocolHandler(); }
