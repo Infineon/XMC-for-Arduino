@@ -3,345 +3,353 @@ menu.UART=Serial Output Selection
 menu.LIB=Additional Libraries
 
 ####################################################
-XMC1100_Boot_Kit.name=XMC1100 Boot Kit
-XMC1100_Boot_Kit.upload.tool=xmcflasher
-XMC1100_Boot_Kit.upload.speed=115200
-XMC1100_Boot_Kit.upload.resetmethod=ck
-XMC1100_Boot_Kit.upload.maximum_size=65536
-XMC1100_Boot_Kit.upload.wait_for_upload_port=true
+KIT_XMC11_BOOT_001kit_xmc11_boot_001.name=KIT_XMC11_BOOT_001
+kit_xmc11_boot_001.upload.tool=xmcflasher
+kit_xmc11_boot_001.upload.speed=115200
+kit_xmc11_boot_001.upload.resetmethod=ck
+kit_xmc11_boot_001.upload.maximum_size=65536
+kit_xmc11_boot_001.upload.wait_for_upload_port=true
 
-XMC1100_Boot_Kit.communication=usb
-XMC1100_Boot_Kit.protocol=dragon_isp
-XMC1100_Boot_Kit.program.protocol=dragon_isp
-XMC1100_Boot_Kit.program.tool=xmcflasher
-XMC1100_Boot_Kit.program.extra_params=-Pusb
+kit_xmc11_boot_001.communication=usb
+kit_xmc11_boot_001.protocol=dragon_isp
+kit_xmc11_boot_001.program.protocol=dragon_isp
+kit_xmc11_boot_001.program.tool=xmcflasher
+kit_xmc11_boot_001.program.extra_params=-Pusb
 
-XMC1100_Boot_Kit.serial.disableDTR=true
-XMC1100_Boot_Kit.serial.disableRTS=true
+kit_xmc11_boot_001.serial.disableDTR=true
+kit_xmc11_boot_001.serial.disableRTS=true
 
-XMC1100_Boot_Kit.build.mcu=cortex-m0
-XMC1100_Boot_Kit.build.f_cpu=32000000L
-XMC1100_Boot_Kit.build.board=ARM_XMC
-XMC1100_Boot_Kit.build.board.version=1100
-XMC1100_Boot_Kit.build.board.type=T038x0064
-XMC1100_Boot_Kit.build.board.v=0064
-XMC1100_Boot_Kit.build.core=xmc
-XMC1100_Boot_Kit.build.variant=XMC1100
-XMC1100_Boot_Kit.build.board_variant=XMC1100_Boot_Kit
-XMC1100_Boot_Kit.build.flash_size=64K
-XMC1100_Boot_Kit.build.flash_ld=linker_script.ld
-XMC1100_Boot_Kit.build.extra_flags=-DARM_MATH_CM0 -DXMC1_SERIES
+kit_xmc11_boot_001.build.mcu=cortex-m0
+kit_xmc11_boot_001.build.f_cpu=32000000L
+kit_xmc11_boot_001.build.board=ARM_XMC
+kit_xmc11_boot_001.build.board.version=1100
+kit_xmc11_boot_001.build.board.type=T038x0064
+kit_xmc11_boot_001.build.board.v=0064
+kit_xmc11_boot_001.build.core=xmc
+kit_xmc11_boot_001.build.variant=XMC1100
+kit_xmc11_boot_001.build.board_variant_old=XMC1100_Boot_Kit
+kit_xmc11_boot_001.build.board_variant=KIT_XMC11_BOOT_001
+kit_xmc11_boot_001.build.flash_size=64K
+kit_xmc11_boot_001.build.flash_ld=linker_script.ld
+kit_xmc11_boot_001.build.extra_flags=-DARM_MATH_CM0 -DXMC1_SERIES
 
-XMC1100_Boot_Kit.menu.UART.debug=PC
-XMC1100_Boot_Kit.menu.UART.debug.uart.selected=-DSERIAL_HOSTPC
-XMC1100_Boot_Kit.menu.UART.onBoard=On Board
-XMC1100_Boot_Kit.menu.UART.onBoard.uart.selected=-DSERIAL_ONBOARD
+kit_xmc11_boot_001.menu.UART.debug=PC
+kit_xmc11_boot_001.menu.UART.debug.uart.selected=-DSERIAL_HOSTPC
+kit_xmc11_boot_001.menu.UART.onBoard=On Board
+kit_xmc11_boot_001.menu.UART.onBoard.uart.selected=-DSERIAL_ONBOARD
 
-XMC1100_Boot_Kit.menu.LIB.NONE=None
-XMC1100_Boot_Kit.menu.LIB.NONE.library.selected=
-XMC1100_Boot_Kit.menu.LIB.NN=ARM NN Framework
-XMC1100_Boot_Kit.menu.LIB.NN.library.selected=-DARM_LIB_CMSIS_NN
-XMC1100_Boot_Kit.menu.LIB.DSP=ARM DSP
-XMC1100_Boot_Kit.menu.LIB.DSP.library.selected=-DARM_LIB_CMSIS_DSP
-XMC1100_Boot_Kit.menu.LIB.DSPNN=ARM DSP / ARM NN Framework
-XMC1100_Boot_Kit.menu.LIB.DSPNN.library.selected=-DARM_LIB_CMSIS_DSP -DARM_LIB_CMSIS_NN
-
-####################################################
-XMC1100_XMC2GO.name=XMC1100 XMC2Go
-XMC1100_XMC2GO.upload.tool=xmcflasher
-XMC1100_XMC2GO.upload.speed=115200
-XMC1100_XMC2GO.upload.resetmethod=ck
-XMC1100_XMC2GO.upload.maximum_size=65536
-XMC1100_XMC2GO.upload.wait_for_upload_port=true
-
-XMC1100_XMC2GO.communication=usb
-XMC1100_XMC2GO.protocol=dragon_isp
-XMC1100_XMC2GO.program.protocol=dragon_isp
-XMC1100_XMC2GO.program.tool=xmcflasher
-XMC1100_XMC2GO.program.extra_params=-Pusb
-
-XMC1100_XMC2GO.serial.disableDTR=true
-XMC1100_XMC2GO.serial.disableRTS=true
-
-XMC1100_XMC2GO.build.mcu=cortex-m0
-XMC1100_XMC2GO.build.f_cpu=32000000L
-XMC1100_XMC2GO.build.board=ARM_XMC
-XMC1100_XMC2GO.build.board.version=1100
-XMC1100_XMC2GO.build.board.type=Q024x0064
-XMC1100_XMC2GO.build.board.v=0064
-XMC1100_XMC2GO.build.core=xmc
-XMC1100_XMC2GO.build.variant=XMC1100
-XMC1100_XMC2GO.build.board_variant=XMC1100_XMC2GO
-XMC1100_XMC2GO.build.flash_size=64K
-XMC1100_XMC2GO.build.flash_ld=linker_script.ld
-XMC1100_XMC2GO.build.extra_flags=-DARM_MATH_CM0 -DXMC1_SERIES
-
-XMC1100_XMC2GO.menu.UART.debug=PC
-XMC1100_XMC2GO.menu.UART.debug.uart.selected=-DSERIAL_HOSTPC
-XMC1100_XMC2GO.menu.UART.onBoard=On Board
-XMC1100_XMC2GO.menu.UART.onBoard.uart.selected=-DSERIAL_ONBOARD
-
-XMC1100_XMC2GO.menu.LIB.NONE=None
-XMC1100_XMC2GO.menu.LIB.NONE.library.selected=
-XMC1100_XMC2GO.menu.LIB.NN=ARM NN Framework
-XMC1100_XMC2GO.menu.LIB.NN.library.selected=-DARM_LIB_CMSIS_NN
-XMC1100_XMC2GO.menu.LIB.DSP=ARM DSP
-XMC1100_XMC2GO.menu.LIB.DSP.library.selected=-DARM_LIB_CMSIS_DSP
-XMC1100_XMC2GO.menu.LIB.DSPNN=ARM DSP / ARM NN Framework
-XMC1100_XMC2GO.menu.LIB.DSPNN.library.selected=-DARM_LIB_CMSIS_DSP -DARM_LIB_CMSIS_NN
+kit_xmc11_boot_001.menu.LIB.NONE=None
+kit_xmc11_boot_001.menu.LIB.NONE.library.selected=
+kit_xmc11_boot_001.menu.LIB.NN=ARM NN Framework
+kit_xmc11_boot_001.menu.LIB.NN.library.selected=-DARM_LIB_CMSIS_NN
+kit_xmc11_boot_001.menu.LIB.DSP=ARM DSP
+kit_xmc11_boot_001.menu.LIB.DSP.library.selected=-DARM_LIB_CMSIS_DSP
+kit_xmc11_boot_001.menu.LIB.DSPNN=ARM DSP / ARM NN Framework
+kit_xmc11_boot_001.menu.LIB.DSPNN.library.selected=-DARM_LIB_CMSIS_DSP -DARM_LIB_CMSIS_NN
 
 ####################################################
-XMC1300_Boot_Kit.name=XMC1300 Boot Kit
-XMC1300_Boot_Kit.upload.tool=xmcflasher
-XMC1300_Boot_Kit.upload.speed=115200
-XMC1300_Boot_Kit.upload.resetmethod=ck
-XMC1300_Boot_Kit.upload.maximum_size=204800
-XMC1300_Boot_Kit.upload.wait_for_upload_port=true
+kit_xmc_2go_xmc1100_v1.name=KIT_XMC_2GO_XMC1100_V1
+kit_xmc_2go_xmc1100_v1.upload.tool=xmcflasher
+kit_xmc_2go_xmc1100_v1.upload.speed=115200
+kit_xmc_2go_xmc1100_v1.upload.resetmethod=ck
+kit_xmc_2go_xmc1100_v1.upload.maximum_size=65536
+kit_xmc_2go_xmc1100_v1.upload.wait_for_upload_port=true
 
-XMC1300_Boot_Kit.communication=usb
-XMC1300_Boot_Kit.protocol=dragon_isp
-XMC1300_Boot_Kit.program.protocol=dragon_isp
-XMC1300_Boot_Kit.program.tool=xmcflasher
-XMC1300_Boot_Kit.program.extra_params=-Pusb
+kit_xmc_2go_xmc1100_v1.communication=usb
+kit_xmc_2go_xmc1100_v1.protocol=dragon_isp
+kit_xmc_2go_xmc1100_v1.program.protocol=dragon_isp
+kit_xmc_2go_xmc1100_v1.program.tool=xmcflasher
+kit_xmc_2go_xmc1100_v1.program.extra_params=-Pusb
 
-XMC1300_Boot_Kit.serial.disableDTR=true
-XMC1300_Boot_Kit.serial.disableRTS=true
+kit_xmc_2go_xmc1100_v1.serial.disableDTR=true
+kit_xmc_2go_xmc1100_v1.serial.disableRTS=true
 
-XMC1300_Boot_Kit.build.mcu=cortex-m0
-XMC1300_Boot_Kit.build.f_cpu=32000000L
-XMC1300_Boot_Kit.build.board=ARM_XMC
-XMC1300_Boot_Kit.build.board.version=1302
-XMC1300_Boot_Kit.build.board.type=T038x0200
-XMC1300_Boot_Kit.build.board.v=0200
-XMC1300_Boot_Kit.build.core=xmc
-XMC1300_Boot_Kit.build.variant=XMC1300
-XMC1300_Boot_Kit.build.board_variant=XMC1300_Boot_Kit
-XMC1300_Boot_Kit.build.flash_size=200K
-XMC1300_Boot_Kit.build.flash_ld=linker_script_200k.ld
-XMC1300_Boot_Kit.build.extra_flags=-DARM_MATH_CM0 -DXMC1_SERIES
+kit_xmc_2go_xmc1100_v1.build.mcu=cortex-m0
+kit_xmc_2go_xmc1100_v1.build.f_cpu=32000000L
+kit_xmc_2go_xmc1100_v1.build.board=ARM_XMC
+kit_xmc_2go_xmc1100_v1.build.board.version=1100
+kit_xmc_2go_xmc1100_v1.build.board.type=Q024x0064
+kit_xmc_2go_xmc1100_v1.build.board.v=0064
+kit_xmc_2go_xmc1100_v1.build.core=xmc
+kit_xmc_2go_xmc1100_v1.build.variant=XMC1100
+kit_xmc_2go_xmc1100_v1.build.board_variant_old=XMC1100_XMC2GO
+kit_xmc_2go_xmc1100_v1.build.board_variant=KIT_XMC_2GO_XMC1100_V1
+kit_xmc_2go_xmc1100_v1.build.flash_size=64K
+kit_xmc_2go_xmc1100_v1.build.flash_ld=linker_script.ld
+kit_xmc_2go_xmc1100_v1.build.extra_flags=-DARM_MATH_CM0 -DXMC1_SERIES
 
-XMC1300_Boot_Kit.menu.UART.debug=PC
-XMC1300_Boot_Kit.menu.UART.debug.uart.selected=-DSERIAL_HOSTPC
-XMC1300_Boot_Kit.menu.UART.onBoard=On Board
-XMC1300_Boot_Kit.menu.UART.onBoard.uart.selected=-DSERIAL_ONBOARD
+kit_xmc_2go_xmc1100_v1.menu.UART.debug=PC
+kit_xmc_2go_xmc1100_v1.menu.UART.debug.uart.selected=-DSERIAL_HOSTPC
+kit_xmc_2go_xmc1100_v1.menu.UART.onBoard=On Board
+kit_xmc_2go_xmc1100_v1.menu.UART.onBoard.uart.selected=-DSERIAL_ONBOARD
 
-XMC1300_Boot_Kit.menu.LIB.NONE=None
-XMC1300_Boot_Kit.menu.LIB.NONE.library.selected=
-XMC1300_Boot_Kit.menu.LIB.NN=ARM NN Framework
-XMC1300_Boot_Kit.menu.LIB.NN.library.selected=-DARM_LIB_CMSIS_NN
-XMC1300_Boot_Kit.menu.LIB.DSP=ARM DSP
-XMC1300_Boot_Kit.menu.LIB.DSP.library.selected=-DARM_LIB_CMSIS_DSP
-XMC1300_Boot_Kit.menu.LIB.DSPNN=ARM DSP / ARM NN Framework
-XMC1300_Boot_Kit.menu.LIB.DSPNN.library.selected=-DARM_LIB_CMSIS_DSP -DARM_LIB_CMSIS_NN
-
-####################################################
-XMC1400_XMC2GO.name=XMC1400 XMC2GO
-XMC1400_XMC2GO.upload.tool=xmcflasher
-XMC1400_XMC2GO.upload.speed=115200
-XMC1400_XMC2GO.upload.resetmethod=ck
-XMC1400_XMC2GO.upload.maximum_size=65536
-XMC1400_XMC2GO.upload.wait_for_upload_port=true
-
-XMC1400_XMC2GO.communication=usb
-XMC1400_XMC2GO.protocol=dragon_isp
-XMC1400_XMC2GO.program.protocol=dragon_isp
-XMC1400_XMC2GO.program.tool=xmcflasher
-XMC1400_XMC2GO.program.extra_params=-Pusb
-
-XMC1400_XMC2GO.serial.disableDTR=true
-XMC1400_XMC2GO.serial.disableRTS=true
-
-XMC1400_XMC2GO.build.mcu=cortex-m0
-XMC1400_XMC2GO.build.f_cpu=48000000L
-XMC1400_XMC2GO.build.board=ARM_XMC
-XMC1400_XMC2GO.build.board.version=1404
-XMC1400_XMC2GO.build.board.type=Q040x0200
-XMC1400_XMC2GO.build.board.v=0200
-XMC1400_XMC2GO.build.core=xmc
-XMC1400_XMC2GO.build.variant=XMC1400
-XMC1400_XMC2GO.build.board_variant=XMC1400_XMC2GO
-XMC1400_XMC2GO.build.flash_size=200K
-XMC1400_XMC2GO.build.flash_ld=linker_script_200k.ld
-XMC1400_XMC2GO.build.extra_flags=-DARM_MATH_CM0 -DXMC1_SERIES
-
-XMC1400_XMC2GO.menu.UART.debug=PC
-XMC1400_XMC2GO.menu.UART.debug.uart.selected=-DSERIAL_HOSTPC
-XMC1400_XMC2GO.menu.UART.onBoard=On Board
-XMC1400_XMC2GO.menu.UART.onBoard.uart.selected=-DSERIAL_ONBOARD
-
-XMC1400_XMC2GO.menu.LIB.NONE=None
-XMC1400_XMC2GO.menu.LIB.NONE.library.selected=
-XMC1400_XMC2GO.menu.LIB.NN=ARM NN Framework
-XMC1400_XMC2GO.menu.LIB.NN.library.selected=-DARM_LIB_CMSIS_NN
-XMC1400_XMC2GO.menu.LIB.DSP=ARM DSP
-XMC1400_XMC2GO.menu.LIB.DSP.library.selected=-DARM_LIB_CMSIS_DSP
-XMC1400_XMC2GO.menu.LIB.DSPNN=ARM DSP / ARM NN Framework
-XMC1400_XMC2GO.menu.LIB.DSPNN.library.selected=-DARM_LIB_CMSIS_DSP -DARM_LIB_CMSIS_NN
+kit_xmc_2go_xmc1100_v1.menu.LIB.NONE=None
+kit_xmc_2go_xmc1100_v1.menu.LIB.NONE.library.selected=
+kit_xmc_2go_xmc1100_v1.menu.LIB.NN=ARM NN Framework
+kit_xmc_2go_xmc1100_v1.menu.LIB.NN.library.selected=-DARM_LIB_CMSIS_NN
+kit_xmc_2go_xmc1100_v1.menu.LIB.DSP=ARM DSP
+kit_xmc_2go_xmc1100_v1.menu.LIB.DSP.library.selected=-DARM_LIB_CMSIS_DSP
+kit_xmc_2go_xmc1100_v1.menu.LIB.DSPNN=ARM DSP / ARM NN Framework
+kit_xmc_2go_xmc1100_v1.menu.LIB.DSPNN.library.selected=-DARM_LIB_CMSIS_DSP -DARM_LIB_CMSIS_NN
 
 ####################################################
-XMC1400_Arduino_Kit.name=XMC1400 Kit for Arduino
-XMC1400_Arduino_Kit.upload.tool=xmcflasher
-XMC1400_Arduino_Kit.upload.speed=115200
-XMC1400_Arduino_Kit.upload.resetmethod=ck
-XMC1400_Arduino_Kit.upload.maximum_size=204800
-XMC1400_Arduino_Kit.upload.wait_for_upload_port=true
+kit_xmc13_boot_001.name=KIT_XMC13_BOOT_001
+kit_xmc13_boot_001.upload.tool=xmcflasher
+kit_xmc13_boot_001.upload.speed=115200
+kit_xmc13_boot_001.upload.resetmethod=ck
+kit_xmc13_boot_001.upload.maximum_size=204800
+kit_xmc13_boot_001.upload.wait_for_upload_port=true
 
-XMC1400_Arduino_Kit.communication=usb
-XMC1400_Arduino_Kit.protocol=dragon_isp
-XMC1400_Arduino_Kit.program.protocol=dragon_isp
-XMC1400_Arduino_Kit.program.tool=xmcflasher
-XMC1400_Arduino_Kit.program.extra_params=-Pusb
+kit_xmc13_boot_001.communication=usb
+kit_xmc13_boot_001.protocol=dragon_isp
+kit_xmc13_boot_001.program.protocol=dragon_isp
+kit_xmc13_boot_001.program.tool=xmcflasher
+kit_xmc13_boot_001.program.extra_params=-Pusb
 
-XMC1400_Arduino_Kit.serial.disableDTR=true
-XMC1400_Arduino_Kit.serial.disableRTS=true
+kit_xmc13_boot_001.serial.disableDTR=true
+kit_xmc13_boot_001.serial.disableRTS=true
 
-XMC1400_Arduino_Kit.build.mcu=cortex-m0
-XMC1400_Arduino_Kit.build.f_cpu=48000000L
-XMC1400_Arduino_Kit.build.board=ARM_XMC
-XMC1400_Arduino_Kit.build.board.version=1402
-XMC1400_Arduino_Kit.build.board.type=T038x0200
-XMC1400_Arduino_Kit.build.board.v=0200
-XMC1400_Arduino_Kit.build.core=xmc
-XMC1400_Arduino_Kit.build.variant=XMC1400
-XMC1400_Arduino_Kit.build.board_variant=XMC1400_Arduino_Kit
-XMC1400_Arduino_Kit.build.flash_size=200K
-XMC1400_Arduino_Kit.build.flash_ld=linker_script_200k.ld
-XMC1400_Arduino_Kit.build.extra_flags=-DARM_MATH_CM0 -DXMC1_SERIES
+kit_xmc13_boot_001.build.mcu=cortex-m0
+kit_xmc13_boot_001.build.f_cpu=32000000L
+kit_xmc13_boot_001.build.board=ARM_XMC
+kit_xmc13_boot_001.build.board.version=1302
+kit_xmc13_boot_001.build.board.type=T038x0200
+kit_xmc13_boot_001.build.board.v=0200
+kit_xmc13_boot_001.build.core=xmc
+kit_xmc13_boot_001.build.variant=XMC1300
+kit_xmc13_boot_001.build.board_variant_old=XMC1300_Boot_Kit
+kit_xmc13_boot_001.build.board_variant=KIT_XMC13_BOOT_001
+kit_xmc13_boot_001.build.flash_size=200K
+kit_xmc13_boot_001.build.flash_ld=linker_script_200k.ld
+kit_xmc13_boot_001.build.extra_flags=-DARM_MATH_CM0 -DXMC1_SERIES
 
-XMC1400_Arduino_Kit.menu.UART.debug=PC
-XMC1400_Arduino_Kit.menu.UART.debug.uart.selected=-DSERIAL_HOSTPC
-XMC1400_Arduino_Kit.menu.UART.onBoard=On Board
-XMC1400_Arduino_Kit.menu.UART.onBoard.uart.selected=-DSERIAL_ONBOARD
+kit_xmc13_boot_001.menu.UART.debug=PC
+kit_xmc13_boot_001.menu.UART.debug.uart.selected=-DSERIAL_HOSTPC
+kit_xmc13_boot_001.menu.UART.onBoard=On Board
+kit_xmc13_boot_001.menu.UART.onBoard.uart.selected=-DSERIAL_ONBOARD
 
-XMC1400_Arduino_Kit.menu.LIB.NONE=None
-XMC1400_Arduino_Kit.menu.LIB.NONE.library.selected=
-XMC1400_Arduino_Kit.menu.LIB.NN=ARM NN Framework
-XMC1400_Arduino_Kit.menu.LIB.NN.library.selected=-DARM_LIB_CMSIS_NN
-XMC1400_Arduino_Kit.menu.LIB.DSP=ARM DSP
-XMC1400_Arduino_Kit.menu.LIB.DSP.library.selected=-DARM_LIB_CMSIS_DSP
-XMC1400_Arduino_Kit.menu.LIB.DSPNN=ARM DSP / ARM NN Framework
-XMC1400_Arduino_Kit.menu.LIB.DSPNN.library.selected=-DARM_LIB_CMSIS_DSP -DARM_LIB_CMSIS_NN
+kit_xmc13_boot_001.menu.LIB.NONE=None
+kit_xmc13_boot_001.menu.LIB.NONE.library.selected=
+kit_xmc13_boot_001.menu.LIB.NN=ARM NN Framework
+kit_xmc13_boot_001.menu.LIB.NN.library.selected=-DARM_LIB_CMSIS_NN
+kit_xmc13_boot_001.menu.LIB.DSP=ARM DSP
+kit_xmc13_boot_001.menu.LIB.DSP.library.selected=-DARM_LIB_CMSIS_DSP
+kit_xmc13_boot_001.menu.LIB.DSPNN=ARM DSP / ARM NN Framework
+kit_xmc13_boot_001.menu.LIB.DSPNN.library.selected=-DARM_LIB_CMSIS_DSP -DARM_LIB_CMSIS_NN
 
 ####################################################
-XMC4200_Platform2GO.name=XMC4200 Platform 2GO
-XMC4200_Platform2GO.upload.tool=xmcflasher
-XMC4200_Platform2GO.upload.speed=115200
-XMC4200_Platform2GO.upload.resetmethod=ck
-XMC4200_Platform2GO.upload.maximum_size=262144
-XMC4200_Platform2GO.upload.wait_for_upload_port=true
+kit_xmc14_2go.name=KIT_XMC14_2GO
+kit_xmc14_2go.upload.tool=xmcflasher
+kit_xmc14_2go.upload.speed=115200
+kit_xmc14_2go.upload.resetmethod=ck
+kit_xmc14_2go.upload.maximum_size=65536
+kit_xmc14_2go.upload.wait_for_upload_port=true
 
-XMC4200_Platform2GO.communication=usb
-XMC4200_Platform2GO.protocol=dragon_isp
-XMC4200_Platform2GO.program.protocol=dragon_isp
-XMC4200_Platform2GO.program.tool=xmcflasher
-XMC4200_Platform2GO.program.extra_params=-Pusb
+kit_xmc14_2go.communication=usb
+kit_xmc14_2go.protocol=dragon_isp
+kit_xmc14_2go.program.protocol=dragon_isp
+kit_xmc14_2go.program.tool=xmcflasher
+kit_xmc14_2go.program.extra_params=-Pusb
 
-XMC4200_Platform2GO.serial.disableDTR=true
-XMC4200_Platform2GO.serial.disableRTS=true
+kit_xmc14_2go.serial.disableDTR=true
+kit_xmc14_2go.serial.disableRTS=true
 
-XMC4200_Platform2GO.build.mcu=cortex-m4
-XMC4200_Platform2GO.build.f_cpu=80000000L
-XMC4200_Platform2GO.build.board=ARM_XMC
-XMC4200_Platform2GO.build.board.version=4200
-XMC4200_Platform2GO.build.board.type=F64x256
-XMC4200_Platform2GO.build.board.v=256
-XMC4200_Platform2GO.build.core=xmc
-XMC4200_Platform2GO.build.variant=XMC4200
-XMC4200_Platform2GO.build.board_variant=XMC4200_Platform2GO
-XMC4200_Platform2GO.build.flash_size=256K
-XMC4200_Platform2GO.build.flash_ld=linker_script.ld
-XMC4200_Platform2GO.build.extra_flags=-DARM_MATH_CM4 -DARM_MATH_DSP -DINTERRUPT_USE_ERU
+kit_xmc14_2go.build.mcu=cortex-m0
+kit_xmc14_2go.build.f_cpu=48000000L
+kit_xmc14_2go.build.board=ARM_XMC
+kit_xmc14_2go.build.board.version=1404
+kit_xmc14_2go.build.board.type=Q040x0200
+kit_xmc14_2go.build.board.v=0200
+kit_xmc14_2go.build.core=xmc
+kit_xmc14_2go.build.variant=XMC1400
+kit_xmc14_2go.build.board_variant_old=XMC1400_XMC2GO
+kit_xmc14_2go.build.board_variant=KIT_XMC14_2GO
+kit_xmc14_2go.build.flash_size=200K
+kit_xmc14_2go.build.flash_ld=linker_script_200k.ld
+kit_xmc14_2go.build.extra_flags=-DARM_MATH_CM0 -DXMC1_SERIES
+
+kit_xmc14_2go.menu.UART.debug=PC
+kit_xmc14_2go.menu.UART.debug.uart.selected=-DSERIAL_HOSTPC
+kit_xmc14_2go.menu.UART.onBoard=On Board
+kit_xmc14_2go.menu.UART.onBoard.uart.selected=-DSERIAL_ONBOARD
+
+kit_xmc14_2go.menu.LIB.NONE=None
+kit_xmc14_2go.menu.LIB.NONE.library.selected=
+kit_xmc14_2go.menu.LIB.NN=ARM NN Framework
+kit_xmc14_2go.menu.LIB.NN.library.selected=-DARM_LIB_CMSIS_NN
+kit_xmc14_2go.menu.LIB.DSP=ARM DSP
+kit_xmc14_2go.menu.LIB.DSP.library.selected=-DARM_LIB_CMSIS_DSP
+kit_xmc14_2go.menu.LIB.DSPNN=ARM DSP / ARM NN Framework
+kit_xmc14_2go.menu.LIB.DSPNN.library.selected=-DARM_LIB_CMSIS_DSP -DARM_LIB_CMSIS_NN
+
+####################################################
+kit_xmc1400_arduino.name=KIT_XMC1400_ARDUINO
+kit_xmc1400_arduino.upload.tool=xmcflasher
+kit_xmc1400_arduino.upload.speed=115200
+kit_xmc1400_arduino.upload.resetmethod=ck
+kit_xmc1400_arduino.upload.maximum_size=204800
+kit_xmc1400_arduino.upload.wait_for_upload_port=true
+
+kit_xmc1400_arduino.communication=usb
+kit_xmc1400_arduino.protocol=dragon_isp
+kit_xmc1400_arduino.program.protocol=dragon_isp
+kit_xmc1400_arduino.program.tool=xmcflasher
+kit_xmc1400_arduino.program.extra_params=-Pusb
+
+kit_xmc1400_arduino.serial.disableDTR=true
+kit_xmc1400_arduino.serial.disableRTS=true
+
+kit_xmc1400_arduino.build.mcu=cortex-m0
+kit_xmc1400_arduino.build.f_cpu=48000000L
+kit_xmc1400_arduino.build.board=ARM_XMC
+kit_xmc1400_arduino.build.board.version=1402
+kit_xmc1400_arduino.build.board.type=T038x0200
+kit_xmc1400_arduino.build.board.v=0200
+kit_xmc1400_arduino.build.core=xmc
+kit_xmc1400_arduino.build.variant=XMC1400
+kit_xmc1400_arduino.build.board_variant_old=XMC1400_Arduino_Kit
+kit_xmc1400_arduino.build.board_variant=KIT_XMC1400_ARDUINO
+kit_xmc1400_arduino.build.flash_size=200K
+kit_xmc1400_arduino.build.flash_ld=linker_script_200k.ld
+kit_xmc1400_arduino.build.extra_flags=-DARM_MATH_CM0 -DXMC1_SERIES
+
+kit_xmc1400_arduino.menu.UART.debug=PC
+kit_xmc1400_arduino.menu.UART.debug.uart.selected=-DSERIAL_HOSTPC
+kit_xmc1400_arduino.menu.UART.onBoard=On Board
+kit_xmc1400_arduino.menu.UART.onBoard.uart.selected=-DSERIAL_ONBOARD
+
+kit_xmc1400_arduino.menu.LIB.NONE=None
+kit_xmc1400_arduino.menu.LIB.NONE.library.selected=
+kit_xmc1400_arduino.menu.LIB.NN=ARM NN Framework
+kit_xmc1400_arduino.menu.LIB.NN.library.selected=-DARM_LIB_CMSIS_NN
+kit_xmc1400_arduino.menu.LIB.DSP=ARM DSP
+kit_xmc1400_arduino.menu.LIB.DSP.library.selected=-DARM_LIB_CMSIS_DSP
+kit_xmc1400_arduino.menu.LIB.DSPNN=ARM DSP / ARM NN Framework
+kit_xmc1400_arduino.menu.LIB.DSPNN.library.selected=-DARM_LIB_CMSIS_DSP -DARM_LIB_CMSIS_NN
+
+####################################################
+kit_xmc_plt2go_xmc4200.name=KIT_XMC_PLT2GO_XMC4200
+kit_xmc_plt2go_xmc4200.upload.tool=xmcflasher
+kit_xmc_plt2go_xmc4200.upload.speed=115200
+kit_xmc_plt2go_xmc4200.upload.resetmethod=ck
+kit_xmc_plt2go_xmc4200.upload.maximum_size=262144
+kit_xmc_plt2go_xmc4200.upload.wait_for_upload_port=true
+
+kit_xmc_plt2go_xmc4200.communication=usb
+kit_xmc_plt2go_xmc4200.protocol=dragon_isp
+kit_xmc_plt2go_xmc4200.program.protocol=dragon_isp
+kit_xmc_plt2go_xmc4200.program.tool=xmcflasher
+kit_xmc_plt2go_xmc4200.program.extra_params=-Pusb
+
+kit_xmc_plt2go_xmc4200.serial.disableDTR=true
+kit_xmc_plt2go_xmc4200.serial.disableRTS=true
+
+kit_xmc_plt2go_xmc4200.build.mcu=cortex-m4
+kit_xmc_plt2go_xmc4200.build.f_cpu=80000000L
+kit_xmc_plt2go_xmc4200.build.board=ARM_XMC
+kit_xmc_plt2go_xmc4200.build.board.version=4200
+kit_xmc_plt2go_xmc4200.build.board.type=F64x256
+kit_xmc_plt2go_xmc4200.build.board.v=256
+kit_xmc_plt2go_xmc4200.build.core=xmc
+kit_xmc_plt2go_xmc4200.build.variant=XMC4200
+kit_xmc_plt2go_xmc4200.build.board_variant_old=XMC4200_Platform2GO
+kit_xmc_plt2go_xmc4200.build.board_variant=KIT_XMC_PLT2GO_XMC4200
+kit_xmc_plt2go_xmc4200.build.flash_size=256K
+kit_xmc_plt2go_xmc4200.build.flash_ld=linker_script.ld
+kit_xmc_plt2go_xmc4200.build.extra_flags=-DARM_MATH_CM4 -DARM_MATH_DSP -DINTERRUPT_USE_ERU
 #-DUSB0
 
-XMC4200_Platform2GO.menu.LIB.NONE=None
-XMC4200_Platform2GO.menu.LIB.NONE.library.selected=
-XMC4200_Platform2GO.menu.LIB.DSPNN=ARM DSP / ARM NN Framework
-XMC4200_Platform2GO.menu.LIB.DSPNN.library.selected=-DARM_LIB_CMSIS_DSP -DARM_LIB_CMSIS_NN
-XMC4200_Platform2GO.menu.LIB.NN=ARM NN Framework
-XMC4200_Platform2GO.menu.LIB.NN.library.selected=-DARM_LIB_CMSIS_NN
-XMC4200_Platform2GO.menu.LIB.DSP=ARM DSP
-XMC4200_Platform2GO.menu.LIB.DSP.library.selected=-DARM_LIB_CMSIS_DSP
+kit_xmc_plt2go_xmc4200.menu.LIB.NONE=None
+kit_xmc_plt2go_xmc4200.menu.LIB.NONE.library.selected=
+kit_xmc_plt2go_xmc4200.menu.LIB.DSPNN=ARM DSP / ARM NN Framework
+kit_xmc_plt2go_xmc4200.menu.LIB.DSPNN.library.selected=-DARM_LIB_CMSIS_DSP -DARM_LIB_CMSIS_NN
+kit_xmc_plt2go_xmc4200.menu.LIB.NN=ARM NN Framework
+kit_xmc_plt2go_xmc4200.menu.LIB.NN.library.selected=-DARM_LIB_CMSIS_NN
+kit_xmc_plt2go_xmc4200.menu.LIB.DSP=ARM DSP
+kit_xmc_plt2go_xmc4200.menu.LIB.DSP.library.selected=-DARM_LIB_CMSIS_DSP
 
 ####################################################
-XMC4400_Platform2GO.name=XMC4400 Platform 2GO
-XMC4400_Platform2GO.upload.tool=xmcflasher
-XMC4400_Platform2GO.upload.speed=115200
-XMC4400_Platform2GO.upload.resetmethod=ck
-XMC4400_Platform2GO.upload.maximum_size=512000
-XMC4400_Platform2GO.upload.wait_for_upload_port=true
+kit_xmc_plt2go_xmc4400.name=KIT_XMC_PLT2GO_XMC4400
+kit_xmc_plt2go_xmc4400.upload.tool=xmcflasher
+kit_xmc_plt2go_xmc4400.upload.speed=115200
+kit_xmc_plt2go_xmc4400.upload.resetmethod=ck
+kit_xmc_plt2go_xmc4400.upload.maximum_size=512000
+kit_xmc_plt2go_xmc4400.upload.wait_for_upload_port=true
 
-XMC4400_Platform2GO.communication=usb
-XMC4400_Platform2GO.protocol=dragon_isp
-XMC4400_Platform2GO.program.protocol=dragon_isp
-XMC4400_Platform2GO.program.tool=xmcflasher
-XMC4400_Platform2GO.program.extra_params=-Pusb
+kit_xmc_plt2go_xmc4400.communication=usb
+kit_xmc_plt2go_xmc4400.protocol=dragon_isp
+kit_xmc_plt2go_xmc4400.program.protocol=dragon_isp
+kit_xmc_plt2go_xmc4400.program.tool=xmcflasher
+kit_xmc_plt2go_xmc4400.program.extra_params=-Pusb
 
-XMC4400_Platform2GO.serial.disableDTR=true
-XMC4400_Platform2GO.serial.disableRTS=true
+kit_xmc_plt2go_xmc4400.serial.disableDTR=true
+kit_xmc_plt2go_xmc4400.serial.disableRTS=true
 
-XMC4400_Platform2GO.build.mcu=cortex-m4
-XMC4400_Platform2GO.build.f_cpu=144000000L
-XMC4400_Platform2GO.build.board=ARM_XMC
-XMC4400_Platform2GO.build.board.version=4400
-XMC4400_Platform2GO.build.board.type=F100x512
-XMC4400_Platform2GO.build.board.v=512
-XMC4400_Platform2GO.build.core=xmc
-XMC4400_Platform2GO.build.variant=XMC4400
-XMC4400_Platform2GO.build.board_variant=XMC4400_Platform2GO
-XMC4400_Platform2GO.build.flash_size=500K
-XMC4400_Platform2GO.build.flash_ld=linker_script.ld
-XMC4400_Platform2GO.build.extra_flags=-DARM_MATH_CM4 -DARM_MATH_DSP
+kit_xmc_plt2go_xmc4400.build.mcu=cortex-m4
+kit_xmc_plt2go_xmc4400.build.f_cpu=144000000L
+kit_xmc_plt2go_xmc4400.build.board=ARM_XMC
+kit_xmc_plt2go_xmc4400.build.board.version=4400
+kit_xmc_plt2go_xmc4400.build.board.type=F100x512
+kit_xmc_plt2go_xmc4400.build.board.v=512
+kit_xmc_plt2go_xmc4400.build.core=xmc
+kit_xmc_plt2go_xmc4400.build.variant=XMC4400
+kit_xmc_plt2go_xmc4400.build.board_variant_old=XMC4400_Platform2GO
+kit_xmc_plt2go_xmc4400.build.board_variant=KIT_XMC_PLT2GO_XMC4400
+kit_xmc_plt2go_xmc4400.build.flash_size=500K
+kit_xmc_plt2go_xmc4400.build.flash_ld=linker_script.ld
+kit_xmc_plt2go_xmc4400.build.extra_flags=-DARM_MATH_CM4 -DARM_MATH_DSP
 #-DUSB0
 
-XMC4400_Platform2GO.menu.UART.debug=PC
-XMC4400_Platform2GO.menu.UART.debug.uart.selected=-DSERIAL_HOSTPC
-XMC4400_Platform2GO.menu.UART.onBoard=On Board
-XMC4400_Platform2GO.menu.UART.onBoard.uart.selected=-DSERIAL_ONBOARD
+kit_xmc_plt2go_xmc4400.menu.UART.debug=PC
+kit_xmc_plt2go_xmc4400.menu.UART.debug.uart.selected=-DSERIAL_HOSTPC
+kit_xmc_plt2go_xmc4400.menu.UART.onBoard=On Board
+kit_xmc_plt2go_xmc4400.menu.UART.onBoard.uart.selected=-DSERIAL_ONBOARD
 
-XMC4400_Platform2GO.menu.LIB.NONE=None
-XMC4400_Platform2GO.menu.LIB.NONE.library.selected=
-XMC4400_Platform2GO.menu.LIB.DSPNN=ARM DSP / ARM NN Framework
-XMC4400_Platform2GO.menu.LIB.DSPNN.library.selected=-DARM_LIB_CMSIS_DSP -DARM_LIB_CMSIS_NN
-XMC4400_Platform2GO.menu.LIB.NN=ARM NN Framework
-XMC4400_Platform2GO.menu.LIB.NN.library.selected=-DARM_LIB_CMSIS_NN
-XMC4400_Platform2GO.menu.LIB.DSP=ARM DSP
-XMC4400_Platform2GO.menu.LIB.DSP.library.selected=-DARM_LIB_CMSIS_DSP
+kit_xmc_plt2go_xmc4400.menu.LIB.NONE=None
+kit_xmc_plt2go_xmc4400.menu.LIB.NONE.library.selected=
+kit_xmc_plt2go_xmc4400.menu.LIB.DSPNN=ARM DSP / ARM NN Framework
+kit_xmc_plt2go_xmc4400.menu.LIB.DSPNN.library.selected=-DARM_LIB_CMSIS_DSP -DARM_LIB_CMSIS_NN
+kit_xmc_plt2go_xmc4400.menu.LIB.NN=ARM NN Framework
+kit_xmc_plt2go_xmc4400.menu.LIB.NN.library.selected=-DARM_LIB_CMSIS_NN
+kit_xmc_plt2go_xmc4400.menu.LIB.DSP=ARM DSP
+kit_xmc_plt2go_xmc4400.menu.LIB.DSP.library.selected=-DARM_LIB_CMSIS_DSP
 
 ####################################################
-XMC4700_Relax_Kit.name=XMC4700 Relax Kit
-XMC4700_Relax_Kit.upload.tool=xmcflasher
-XMC4700_Relax_Kit.upload.speed=115200
-XMC4700_Relax_Kit.upload.resetmethod=ck
-XMC4700_Relax_Kit.upload.maximum_size=2048000
-XMC4700_Relax_Kit.upload.wait_for_upload_port=true
+kit_xmc47_relax_5v_ad_v1.name=KIT_XMC47_RELAX_5V_AD_V1
+kit_xmc47_relax_5v_ad_v1.upload.tool=xmcflasher
+kit_xmc47_relax_5v_ad_v1.upload.speed=115200
+kit_xmc47_relax_5v_ad_v1.upload.resetmethod=ck
+kit_xmc47_relax_5v_ad_v1.upload.maximum_size=2048000
+kit_xmc47_relax_5v_ad_v1.upload.wait_for_upload_port=true
 
-XMC4700_Relax_Kit.communication=usb
-XMC4700_Relax_Kit.protocol=dragon_isp
-XMC4700_Relax_Kit.program.protocol=dragon_isp
-XMC4700_Relax_Kit.program.tool=xmcflasher
-XMC4700_Relax_Kit.program.extra_params=-Pusb
+kit_xmc47_relax_5v_ad_v1.communication=usb
+kit_xmc47_relax_5v_ad_v1.protocol=dragon_isp
+kit_xmc47_relax_5v_ad_v1.program.protocol=dragon_isp
+kit_xmc47_relax_5v_ad_v1.program.tool=xmcflasher
+kit_xmc47_relax_5v_ad_v1.program.extra_params=-Pusb
 
-XMC4700_Relax_Kit.serial.disableDTR=true
-XMC4700_Relax_Kit.serial.disableRTS=true
+kit_xmc47_relax_5v_ad_v1.serial.disableDTR=true
+kit_xmc47_relax_5v_ad_v1.serial.disableRTS=true
 
-XMC4700_Relax_Kit.build.mcu=cortex-m4
-XMC4700_Relax_Kit.build.f_cpu=144000000L
-XMC4700_Relax_Kit.build.board=ARM_XMC
-XMC4700_Relax_Kit.build.board.version=4700
-XMC4700_Relax_Kit.build.board.type=F144x2048
-XMC4700_Relax_Kit.build.board.v=2048
-XMC4700_Relax_Kit.build.core=xmc
-XMC4700_Relax_Kit.build.variant=XMC4700
-XMC4700_Relax_Kit.build.board_variant=XMC4700_Relax_Kit
-XMC4700_Relax_Kit.build.flash_size=2000K
-XMC4700_Relax_Kit.build.flash_ld=linker_script.ld
-XMC4700_Relax_Kit.build.extra_flags=-DARM_MATH_CM4 -DXMC4_SERIES
+kit_xmc47_relax_5v_ad_v1.build.mcu=cortex-m4
+kit_xmc47_relax_5v_ad_v1.build.f_cpu=144000000L
+kit_xmc47_relax_5v_ad_v1.build.board=ARM_XMC
+kit_xmc47_relax_5v_ad_v1.build.board.version=4700
+kit_xmc47_relax_5v_ad_v1.build.board.type=F144x2048
+kit_xmc47_relax_5v_ad_v1.build.board.v=2048
+kit_xmc47_relax_5v_ad_v1.build.core=xmc
+kit_xmc47_relax_5v_ad_v1.build.variant=XMC4700
+kit_xmc47_relax_5v_ad_v1.build.board_variant_old=XMC4700_Relax_Kit
+kit_xmc47_relax_5v_ad_v1.build.board_variant=KIT_XMC47_RELAX_5V_AD_V1
+kit_xmc47_relax_5v_ad_v1.build.flash_size=2000K
+kit_xmc47_relax_5v_ad_v1.build.flash_ld=linker_script.ld
+kit_xmc47_relax_5v_ad_v1.build.extra_flags=-DARM_MATH_CM4 -DXMC4_SERIES
 
-XMC4700_Relax_Kit.menu.LIB.DSPNN=ARM DSP / ARM NN Framework
-XMC4700_Relax_Kit.menu.LIB.DSPNN.library.selected=-DARM_LIB_CMSIS_DSP -DARM_LIB_CMSIS_NN
-XMC4700_Relax_Kit.menu.LIB.NONE=None
-XMC4700_Relax_Kit.menu.LIB.NONE.library.selected=
-XMC4700_Relax_Kit.menu.LIB.NN=ARM NN Framework
-XMC4700_Relax_Kit.menu.LIB.NN.library.selected=-DARM_LIB_CMSIS_NN
-XMC4700_Relax_Kit.menu.LIB.DSP=ARM DSP
-XMC4700_Relax_Kit.menu.LIB.DSP.library.selected=-DARM_LIB_CMSIS_DSP
+kit_xmc47_relax_5v_ad_v1.menu.LIB.DSPNN=ARM DSP / ARM NN Framework
+kit_xmc47_relax_5v_ad_v1.menu.LIB.DSPNN.library.selected=-DARM_LIB_CMSIS_DSP -DARM_LIB_CMSIS_NN
+kit_xmc47_relax_5v_ad_v1.menu.LIB.NONE=None
+kit_xmc47_relax_5v_ad_v1.menu.LIB.NONE.library.selected=
+kit_xmc47_relax_5v_ad_v1.menu.LIB.NN=ARM NN Framework
+kit_xmc47_relax_5v_ad_v1.menu.LIB.NN.library.selected=-DARM_LIB_CMSIS_NN
+kit_xmc47_relax_5v_ad_v1.menu.LIB.DSP=ARM DSP
+kit_xmc47_relax_5v_ad_v1.menu.LIB.DSP.library.selected=-DARM_LIB_CMSIS_DSP
