@@ -41,7 +41,7 @@ analogWrite( 26, 64 );
 analogWrite( 32, 96 );      // PWM8
 analogWrite( 33, 128 );
 #endif
-#if defined ( KIT_XMC47_RELAX_5V_AD_V1 ) || defined( XMC4700_Radar_Baseboard )
+#if defined ( KIT_XMC47_RELAX ) || defined( XMC4700_Radar_Baseboard )
 analogWrite( 3, 32 );       // PWM4
 analogWrite( 5, 64 );       // PWM8 rest relax kit only
 analogWrite( 6, 96 );

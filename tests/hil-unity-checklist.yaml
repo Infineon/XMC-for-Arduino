@@ -1,4 +1,4 @@
-infineon.xmc.kit_xmc47_relax_5v_ad_v1:
+infineon.xmc.kit_xmc47_relax:
   CAN:
     1:
       - "test_can_connected2_node2"
