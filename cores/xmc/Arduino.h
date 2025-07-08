@@ -293,12 +293,12 @@ extern XMC_UART_t XMC_UART_debug;
 extern XMC_UART_t XMC_UART_on_board;
 
 extern XMC_SPI_t XMC_SPI_0;
-// Some boards for eg. XMC4700 Relax Kit has more than one SPI instance
+// Some boards for eg. KIT_XMC47_RELAX_5V_AD_V1 has more than one SPI instance
 extern XMC_SPI_t XMC_SPI_1;
 extern XMC_SPI_t XMC_SPI_2;
 
 extern XMC_I2C_t XMC_I2C_0;
-// Some boards for eg. XMC4700 Relax Kit has more than one I2C instance
+// Some boards for eg. KIT_XMC47_RELAX_5V_AD_V1 has more than one I2C instance
 extern XMC_I2C_t XMC_I2C_1;
 
 extern XMC_I2S_t i2s_config;
