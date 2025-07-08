@@ -21,7 +21,7 @@ void ERU0_3_IRQHandler(void) {
     }
 }
 
-    #if defined(XMC4200_Platform2GO)
+    #if defined(KIT_XMC_PLT2GO_XMC4200)
 void ERU0_0_IRQHandler(void) {
     if (interrupt_1_cb) {
         interrupt_1_cb();
@@ -104,7 +104,7 @@ void attachInterrupt(pin_size_t interrupt_num, voidFuncPtr callback, PinStatus m
         interrupt_0_cb = callback;
         NVIC_EnableIRQ(ERU0_3_IRQn);
     } else if (pin_irq.irq_num == 1) {
-    #if defined(XMC4200_Platform2GO)
+    #if defined(KIT_XMC_PLT2GO_XMC4200)
         NVIC_SetPriority(ERU0_0_IRQn, 3);
         interrupt_1_cb = callback;
         NVIC_EnableIRQ(ERU0_0_IRQn);
@@ -139,7 +139,7 @@ void attachInterrupt(pin_size_t interrupt_num, voidFuncPtr callback, PinStatus m
     XMC_CCU4_EnableClock(pin_irq.ccu, pin_irq.slice_num);
 
     if (pin_irq.irq_num == 0) {
-    #if defined(XMC1100_Boot_Kit) || defined(XMC1400_Arduino_Kit) || defined(XMC1400_XMC2GO)
+    #if defined(KIT_XMC11_BOOT_001) || defined(KIT_XMC1400_ARDUINO) || defined(KIT_XMC14_2GO)
         /* P1_4 external interrupt goes through USIC to CCU4 */
         XMC_USIC_CH_Enable(XMC_USIC0_CH0);
         XMC_USIC_CH_SetInputSource(XMC_USIC0_CH0, XMC_USIC_CH_INPUT_DX5, USIC0_C0_DX5_P1_4);
@@ -155,12 +155,12 @@ void attachInterrupt(pin_size_t interrupt_num, voidFuncPtr callback, PinStatus m
         interrupt_0_cb = callback;
         NVIC_EnableIRQ(CCU40_0_IRQn);
     } else if (pin_irq.irq_num == 1) {
-    #if defined(XMC1300_Boot_Kit)
+    #if defined(KIT_XMC13_BOOT_001)
         /* P0_13 external interrupt goes through USIC to CCU4 */
         XMC_USIC_CH_Enable(XMC_USIC0_CH0);
         XMC_USIC_CH_SetInputSource(XMC_USIC0_CH0, XMC_USIC_CH_INPUT_DX2, USIC0_C0_DX2_P0_13);
     #endif
-    #if defined(XMC1400_Arduino_Kit)
+    #if defined(KIT_XMC1400_ARDUINO)
         /* P1_1 external interrupt goes through USIC to CCU4 */
         XMC_USIC_CH_Enable(XMC_USIC0_CH1);
         XMC_USIC_CH_SetInputSource(XMC_USIC0_CH1, XMC_USIC_CH_INPUT_DX2, USIC0_C1_DX2_P1_1);
@@ -191,7 +191,7 @@ void detachInterrupt(pin_size_t interrupt_num) {
         break;
 
     case 1:
-    #if defined(XMC4200_Platform2GO)
+    #if defined(KIT_XMC_PLT2GO_XMC4200)
         NVIC_DisableIRQ(ERU0_0_IRQn);
     #else
         NVIC_DisableIRQ(ERU1_0_IRQn);
