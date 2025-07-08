@@ -20,28 +20,28 @@
                     },
                     "boards": [
                         {
-                            "name": "XMC1100 Boot Kit"
+                            "name": "KIT_XMC11_BOOT_001"
                         },
                         {
-                            "name": "XMC1100 XMC2Go"
+                            "name": "KIT_XMC_2GO_XMC1100_V1"
                         },
                         {
-                            "name": "XMC1300 Boot Kit"
+                            "name": "KIT_XMC13_BOOT_001"
                         },
                         {
-                            "name": "XMC1400 Kit for Arduino"
+                            "name": "KIT_XMC1400_ARDUINO"
                         },
                         {
-                            "name": "XMC1400 XMC2Go"
+                            "name": "KIT_XMC14_2GO"
                         },
                         {
-                            "name": "XMC4200 Platform 2Go"
+                            "name": "KIT_XMC_PLT2GO_XMC4200"
                         },
                         {
-                            "name": "XMC4400 Platform 2Go"
+                            "name": "KIT_XMC_PLT2GO_XMC4400"
                         },
                         {
-                            "name": "XMC4700 Relax Kit"
+                            "name": "KIT_XMC47_RELAX_5V_AD_V1"
                         }
                     ],
                     "toolsDependencies": [
