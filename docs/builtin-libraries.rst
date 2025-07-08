@@ -20,7 +20,6 @@ Examples Supported
     * - DieTemperatureMeasurement
       - | KIT_XMC_2GO_XMC1100_V1 
         | KIT_XMC11_BOOT_001
-        | XMC1100 H-Bridge 2GO
         | KIT_XMC13_BOOT_001
         | KIT_XMC14_2GO
         | KIT_XMC1400_ARDUINO
@@ -33,7 +32,6 @@ Examples Supported
     * - HeapMemoryMeasurement
       - | KIT_XMC_2GO_XMC1100_V1 
         | KIT_XMC11_BOOT_001
-        | XMC1100 H-Bridge 2GO
         | KIT_XMC13_BOOT_001
         | KIT_XMC14_2GO
         | KIT_XMC1400_ARDUINO
@@ -45,7 +43,6 @@ Examples Supported
     * - SleepModeXMC1100
       - | KIT_XMC_2GO_XMC1100_V1 
         | KIT_XMC11_BOOT_001
-        | XMC1100 H-Bridge 2GO
         | KIT_XMC13_BOOT_001
         | KIT_XMC14_2GO
         | KIT_XMC1400_ARDUINO
@@ -66,7 +63,6 @@ Examples Supported
     * - StackMemoryMeasurement
       - | KIT_XMC_2GO_XMC1100_V1 
         | KIT_XMC11_BOOT_001
-        | XMC1100 H-Bridge 2GO
         | KIT_XMC13_BOOT_001
         | KIT_XMC_PLT2GO_XMC4400
         | KIT_XMC47_RELAX_5V_AD_V1
@@ -129,7 +125,6 @@ SPI Library
         | _SameDevice
       - | KIT_XMC_2GO_XMC1100_V1 
         | KIT_XMC11_BOOT_001
-        | XMC1100 H-Bridge 2GO
         | KIT_XMC13_BOOT_001
         | KIT_XMC14_2GO
         | KIT_XMC1400_ARDUINO
@@ -153,7 +148,6 @@ Wire Library
     * - master_reader    
       - | KIT_XMC_2GO_XMC1100_V1 
         | KIT_XMC11_BOOT_001
-        | XMC1100 H-Bridge 2GO
         | KIT_XMC13_BOOT_001
         | KIT_XMC14_2GO
         | KIT_XMC1400_ARDUINO
@@ -169,7 +163,6 @@ Wire Library
     * - master_writer 
       - | KIT_XMC_2GO_XMC1100_V1 
         | KIT_XMC11_BOOT_001
-        | XMC1100 H-Bridge 2GO
         | KIT_XMC13_BOOT_001
         | KIT_XMC14_2GO
         | KIT_XMC1400_ARDUINO
@@ -185,7 +178,6 @@ Wire Library
     * - slave_receiver
       - | KIT_XMC_2GO_XMC1100_V1 
         | KIT_XMC11_BOOT_001
-        | XMC1100 H-Bridge 2GO
         | KIT_XMC13_BOOT_001
         | KIT_XMC14_2GO
         | KIT_XMC1400_ARDUINO
@@ -201,7 +193,6 @@ Wire Library
     * - slave_sender
       - | KIT_XMC_2GO_XMC1100_V1 
         | KIT_XMC11_BOOT_001
-        | XMC1100 H-Bridge 2GO
         | KIT_XMC13_BOOT_001
         | KIT_XMC14_2GO
         | KIT_XMC1400_ARDUINO
