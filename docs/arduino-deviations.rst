@@ -158,12 +158,12 @@ function, or other case as described below.
       - | A4 + A5 are separate
         | A6 + A7 are alternate pin 
         | configurations to I2C
-    * - XMC1300 Boot Kit
+    * - KIT_XMC13_BOOT_001
       - | NOT same pin format
         | as Arduino Uno R3
       - | A10 + A11 are alternate pin
         | configurations to I2C
-    * - XMC1400 Arduino Kit
+    * - KIT_XMC1400_ARDUINO
       - Alternate pin function
       - Matches Arduino Uno  
     * - XMC4400 Platform 2Go
@@ -171,7 +171,7 @@ function, or other case as described below.
       - | For 3V3 boards set I2C pins to tristate or open drain to use
         | For 5V boards refer to [this section](https://xmc-arduino.readthedocs.io/en/latest/hw-platforms.html#connected-i2s-and-analog-pins) on track cuts to enable A4 and A5 to work
         | Level shifter on the 5V board could interfere with tristate/open drain setting
-    * - XMC4700 Relax Kit (and variants)
+    * - KIT_XMC47_RELAX_5V_AD_V1 (and variants)
       - External hard wired pins
       - | For 3V3 boards set I2C pins to tristate or open drain to use
         | For 5V boards see [this section](https://xmc-arduino.readthedocs.io/en/latest/hw-platforms.html#connected-i2s-and-analog-pins) board page on track cuts to enable A4 and A5 to work

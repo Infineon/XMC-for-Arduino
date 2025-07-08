@@ -47,13 +47,13 @@ The following XMC microcontroller boards are supported by XMC for Arduino:
 KIT_XMC11_BOOT_001
 ------------------
 
-* Name in Arduino IDE: ``XMC1100 Boot Kit``
+* Legacy name: ``XMC1100 Boot Kit``
 * `Product Page <https://www.infineon.com/cms/de/product/evaluation-boards/kit_xmc11_boot_001/>`__
 
 .. image:: img/KIT_XMC11_BOOT_001.jpg
     :width: 400
 
-The XMC1100 Boot Kit board consists of a XMC1100 microcontroller with a debugger implemented by a XMC4200 microcontroller.
+The KIT_XMC11_BOOT_001 board consists of a XMC1100 microcontroller with a debugger implemented by a XMC4200 microcontroller.
 The board shares the same power supply and board shape as other shields for Arduino.
 
 Pinout Diagram
@@ -71,7 +71,7 @@ nor share the same pins/resources. This is different from the original Arduino U
 KIT_XMC13_BOOT_001
 ------------------
 
-* Name in Arduino IDE: ``XMC1300 Boot Kit``
+* Legacy name: ``XMC1300 Boot Kit``
 * `Product Page <https://www.infineon.com/cms/de/product/evaluation-boards/kit_xmc13_boot_001/>`__
 
 .. image:: img/KIT_XMC13_BOOT_001.jpg
@@ -86,13 +86,13 @@ XMC1302 Microcontroller in TSSOP-38 with 200KB Flash and full peripheral set of 
 KIT_XMC14_2GO
 -------------
 
-* Name in Arduino IDE: ``XMC1400 XMC2GO``
+* Legacy name: ``XMC1400 XMC2GO``
 * `Product Page <https://www.infineon.com/cms/en/product/evaluation-boards/kit_xmc14_2go/>`__
 
 .. image:: img/KIT_XMC14_2GO.png
     :width: 400
 
-The XMC1400 Kit 2Go provides an easy way to evaluate almost all capabilities of the XMC1400 microcontroller. 
+The KIT_XMC14_2GO provides an easy way to evaluate almost all capabilities of the XMC1400 microcontroller. 
 The kit is powered via USB, interfaces to other Infineon sensor boards and provides multiple interfaces including a 
 CAN bus. The software development is supported via ModusToolbox™ and the Arduino IDE.
 
@@ -109,13 +109,13 @@ Pinout Diagram
 KIT_XMC1400_ARDUINO
 -------------------
 
-* Name in Arduino IDE: ``XMC1400 Kit for Arduino``
+* Legacy name: ``XMC1400 Kit for Arduino``
 * `Product Page <https://www.infineon.com/cms/en/product/evaluation-boards/kit_xmc1400_arduino/>`__
 
 .. image:: img/KIT_XMC1400_ARDUINO.jpg
     :width: 400
 
-The XMC1400 Kit for Arduino consists of a XMC1400 microcontroller with a debugger implemented by a XMC4200 microcontroller.
+The KIT_XMC1400_ARDUINO consists of a XMC1400 microcontroller with a debugger implemented by a XMC4200 microcontroller.
 The board shares the same power supply and board shape as other shields for Arduino.
 
 Pinout Diagram
@@ -134,13 +134,13 @@ Arduino UNO Rev3 implementation. Please look at the pinout diagram for more info
 KIT_XMC_PLT2GO_XMC4200
 ----------------------
 
-* Name in Arduino IDE: ``XMC4200 Platform 2GO``
+* Legacy name: ``XMC4200 Platform 2GO``
 * `Product Page <https://www.infineon.com/cms/en/product/evaluation-boards/kit_xmc_plt2go_xmc4200/>`__
 
 .. image:: img/KIT_XMC_PLT2GO_XMC4200.jpg
     :width: 400
 
-The XMC4200 Platform 2Go evaluation board consists of a XMC4200 microcontroller with a debugger implemented by a XMC4200 microcontroller. 
+The _KIT_XMC_PLT2GO_XMC4200 board consists of a XMC4200 microcontroller with a debugger implemented by a XMC4200 microcontroller. 
 Please note that there exist versions with 5V and 3.3V. Please be careful which version you have and use with your respective shields. 
 The one described here is the 5V version as this one is compatible with Arduino shields designed for 5V systems.
 This kit is equipped with an ARM® Cortex®-M4 based XMC4200 microcontroller with on-board debugger, Ethernet, CAN and footprints for Arduino, 
@@ -161,13 +161,13 @@ on the board itself. If you want to use them check out the subsection :ref:`conn
 KIT_XMC_PLT2GO_XMC4400
 ----------------------
 
-* Name in Arduino IDE: ``XMC4400 Platform 2GO``
+* Legacy name: ``XMC4400 Platform 2GO``
 * `Product Page <https://www.infineon.com/cms/en/product/evaluation-boards/kit_xmc_plt2go_xmc4400/>`__
 
 .. image:: img/KIT_XMC_PLT2GO_XMC4400.jpg
     :width: 400
 
-The XMC4400 Platform 2Go evaluation board consists of a XMC4400 microcontroller with a debugger implemented by a XMC4200 microcontroller. 
+The KIT_XMC_PLT2GO_XMC4400 board consists of a XMC4400 microcontroller with a debugger implemented by a XMC4200 microcontroller. 
 Please note that there exist versions with 5V and 3.3V. Please be careful which version you have and use with your respective shields. 
 The one described here is the 5V version as this one is compatible with Arduino shields designed for 5V systems. 
 This kit is equipped with an ARM® Cortex®-M4 based XMC4400 microcontroller with on-board debugger, Ethernet, CAN and footprints for Arduino, 
@@ -188,13 +188,13 @@ on the board itself. If you want to use them check out the subsection :ref:`conn
 KIT_XMC47_RELAX_5V_AD_V1
 ------------------------
 
-* Name in Arduino IDE: ``XMC4700 Relax Kit``
+* Legacy name: ``KIT_XMC47_RELAX_5V_AD_V1``
 * `Product Page <https://www.infineon.com/cms/en/product/evaluation-boards/kit_xmc47_relax_5v_ad_v1/>`__
 
 .. image:: img/KIT_XMC47_RELAX_5V_AD_V1.jpg
     :width: 400
 
-The XMC4700 Relax Kit board consists of a XMC4700 microcontroller with a debugger implemented by a XMC4200 microcontroller. 
+The KIT_XMC47_RELAX_5V_AD_V1 board consists of a XMC4700 microcontroller with a debugger implemented by a XMC4200 microcontroller. 
 Please note that there exist versions with 5V and 3.3V. 
 Please be careful which version you have and use with your respective shields.
 The one described here is the 5V version as this one is compatible with Arduino shields designed for 5V systems. 
@@ -286,7 +286,7 @@ KIT_XMC_2GO_XMC1100_V1
 ----------------------
 
 * Replaced by :ref:`KIT_XMC14_2GO`
-* Name in Arduino IDE: ``XMC1100 XMC2Go``
+* Legacy name: ``XMC1100 XMC2Go```
 
 The XMC1100 2Go board consists of a XMC1100 microcontroller with a debugger implemented by a XMC4200 microcontroller.
 
