@@ -34,8 +34,8 @@ The following XMC microcontroller boards are supported by XMC for Arduino:
      - :ref:`KIT_XMC_PLT2GO_XMC4400`
      - XMC4400
      - Arduino Uno, Shield2Go, mikroBUS
-   * - .. image:: img/KIT_XMC47_RELAX_5V_AD_V1.jpg
-     - :ref:`KIT_XMC47_RELAX_5V_AD_V1`
+   * - .. image:: img/KIT_XMC47_RELAX.jpg
+     - :ref:`KIT_XMC47_RELAX`
      - XMC4700
      - Arduino Uno
 
@@ -183,25 +183,25 @@ on the board itself. If you want to use them check out the subsection :ref:`conn
 
 -----------------------------------------------------------------------
 
-.. _KIT_XMC47_RELAX_5V_AD_V1:
+.. _KIT_XMC47_RELAX:
 
-KIT_XMC47_RELAX_5V_AD_V1
+KIT_XMC47_RELAX
 ------------------------
 
 * Legacy name: ``XMC4700 Relax Kit``
 * `Product Page <https://www.infineon.com/cms/en/product/evaluation-boards/kit_xmc47_relax_5v_ad_v1/>`__
 
-.. image:: img/KIT_XMC47_RELAX_5V_AD_V1.jpg
+.. image:: img/KIT_XMC47_RELAX.jpg
     :width: 400
 
-The KIT_XMC47_RELAX_5V_AD_V1 board consists of a XMC4700 microcontroller with a debugger implemented by a XMC4200 microcontroller. 
+The KIT_XMC47_RELAX board consists of a XMC4700 microcontroller with a debugger implemented by a XMC4200 microcontroller. 
 Please note that there exist versions with 5V and 3.3V. 
 Please be careful which version you have and use with your respective shields.
 The one described here is the 5V version as this one is compatible with Arduino shields designed for 5V systems. 
 
 Pinout Diagram
 ^^^^^^^^^^^^^^
-.. image:: img/KIT_XMC47_RELAX_5V_AD_V1_pinout.png
+.. image:: img/KIT_XMC47_RELAX_pinout.png
     :width: 700
 
 Please note that Arduino pin number ``15`` & ``21`` (``SCL`` & ``A5``) and Arduino pin number ``14`` & ``20`` (``SDA`` & ``A4``) are connected with each other 
@@ -214,11 +214,11 @@ on the board itself. If you want to use them check out the subsection :ref:`conn
 Connected I2S and Analog pins
 -----------------------------
 
-For the ``KIT_XMC_PLT2GO_XMC4200``, ``KIT_XMC_PLT2GO_XMC4400`` and ``KIT_XMC47_RELAX_5V_AD_V1`` the Arduino pin number ``15`` & ``21`` (``SCL`` & ``A5``) and Arduino 
+For the ``KIT_XMC_PLT2GO_XMC4200``, ``KIT_XMC_PLT2GO_XMC4400`` and ``KIT_XMC47_RELAX`` the Arduino pin number ``15`` & ``21`` (``SCL`` & ``A5``) and Arduino 
 pin number ``14`` & ``20`` (``SDA`` & ``A4``) are connected with each other on the board itself. Although they are different physical pins of the microcontroller, 
 they are connected with each other on the board to comply with the original Arduino UNO Rev3 pin connections. This influences analog measurements on 
 ``A4`` and ``A5`` if you are using I2C simultaneously. Details of the connection can also be found in the schematics in the user manual of the board here:
-`KIT_XMC_PLT2GO_XMC4200 user manual`_, `KIT_XMC_PLT2GO_XMC4400 user manual`_ and `KIT_XMC47_RELAX_5V_AD_V1 user manual`_.
+`KIT_XMC_PLT2GO_XMC4200 user manual`_, `KIT_XMC_PLT2GO_XMC4400 user manual`_ and `KIT_XMC47_RELAX user manual`_.
 
 The user manual shows on:
 
@@ -242,14 +242,14 @@ For the ``KIT_XMC_PLT2GO_XMC4400`` by cutting the marked blue routes on the back
 .. image:: img/kit_xmc_plt2go_xmc4400_cut_routes.png
     :width: 300
 
-For the ``KIT_XMC47_RELAX_5V_AD_V1`` cut the blue routes on the back side of the PCB as indicated here:
+For the ``KIT_XMC47_RELAX`` cut the blue routes on the back side of the PCB as indicated here:
 
 .. image:: img/kit_xmc47_relax_cut_routes.jpg
     :width: 300
 
 .. _KIT_XMC_PLT2GO_XMC4200 user manual: https://www.infineon.com/dgdl/Infineon-XMC4200_Platform2Go-UserManual-v01_00-EN.pdf?fileId=5546d4626f229553016f8fca76c12c96
 .. _KIT_XMC_PLT2GO_XMC4400 user manual: https://www.infineon.com/dgdl/Infineon-XMC4400_Platform2Go-UserManual-v01_00-EN.pdf?fileId=5546d4626f229553016f8fc159482c94
-.. _KIT_XMC47_RELAX_5V_AD_V1 user manual: https://www.infineon.com/dgdl/Infineon-Board_User_Manual_XMC4700_XMC4800_Relax_Kit_Series-UM-v01_02-EN.pdf?fileId=5546d46250cc1fdf01513f8e052d07fc
+.. _KIT_XMC47_RELAX user manual: https://www.infineon.com/dgdl/Infineon-Board_User_Manual_XMC4700_XMC4800_Relax_Kit_Series-UM-v01_02-EN.pdf?fileId=5546d46250cc1fdf01513f8e052d07fc
 
 -----------------------------------------------------------------------
 
