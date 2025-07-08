@@ -26,12 +26,12 @@ The [XMC™ microcontroller family](https://www.infineon.com/cms/de/product/micr
     <tr>
         <td><img src="docs/img/KIT_XMC_PLT2GO_XMC4200.jpg" width="200"></td>
         <td><img src="docs/img/KIT_XMC_PLT2GO_XMC4400.jpg" width="200"></td>
-        <td><img src="docs/img/KIT_XMC47_RELAX_5V_AD_V1.jpg" width="200"></td>
+        <td><img src="docs/img/KIT_XMC47_RELAX.jpg" width="200"></td>
     </tr>
     <tr>
         <td><a href="https://www.infineon.com/cms/en/product/evaluation-boards/kit_xmc_plt2go_xmc4200/">KIT_XMC_PLT2GO_XMC4200</a></td>
         <td><a href="https://www.infineon.com/cms/en/product/evaluation-boards/kit_xmc_plt2go_xmc4400/">KIT_XMC_PLT2GO_XMC4400</a></td>
-        <td><a href="https://www.infineon.com/cms/en/product/evaluation-boards/kit_xmc47_relax_5v_ad_v1/?redirId=114289">KIT_XMC47_RELAX_5V_AD_V1</a></td>
+        <td><a href="https://www.infineon.com/cms/en/product/evaluation-boards/kit_xmc47_relax_5v_ad_v1/?redirId=114289">KIT_XMC47_RELAX</a></td>
     </tr>
 </table>
 
