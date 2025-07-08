@@ -1,5 +1,5 @@
 /*
- * Simple DMA example for XMC4700 Relax Kit V1
+ * Simple DMA example for KIT_XMC47_RELAX_5V_AD_V1 V1
  * Demonstrates how to setup an DMA, to transfer data between two places in memory.
  * Prints the message in Serial port.
  */

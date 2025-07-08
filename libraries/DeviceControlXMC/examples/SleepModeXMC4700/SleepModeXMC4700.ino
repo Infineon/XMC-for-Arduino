@@ -1,5 +1,5 @@
 /*
-  Simple Sleep Mode for XMC4700 Relax Kit V1
+  Simple Sleep Mode for KIT_XMC47_RELAX_5V_AD_V1 V1
   Demonstrates the ability to control peripherals on sleep mode.
   LED2 will blink fast on active mode. If CCU4 is ON in sleep mode, LED2 will blink slower (because of slower clock) while in sleep mode.
   If CCU is OFF in sleep mode, LED2 will stop blinking, until device wakes up.

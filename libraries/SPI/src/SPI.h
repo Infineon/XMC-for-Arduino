@@ -36,7 +36,7 @@
 
 // Define USE_XMC_RELAX_KIT_SD allows to use the SD Lib to communicate with a SD Card over
 // the on-board SD Card Slot. This feature is only available on XMC4700 RelaxKits.
-#if defined(XMC4700_Relax_Kit)
+#if defined(KIT_XMC47_RELAX_5V_AD_V1)
     #define USE_XMC_RELAX_KIT_SD
 #endif
 
@@ -66,10 +66,10 @@
 
 // #define pin_cs 	10
 //
-// #if defined(XMC1100_XMC2GO) || defined(XMC1100_H_BRIDGE2GO)
+// #if defined(KIT_XMC_2GO_XMC1100_V1) || defined(XMC1100_H_BRIDGE2GO)
 // #define pin_cs  3
 
-// #elif defined(XMC4400_Platform2GO)
+// #elif defined(KIT_XMC_PLT2GO_XMC4200)
 /// #define pin_cs_slot_1  95
 // #define pin_cs_slot_2  96
 

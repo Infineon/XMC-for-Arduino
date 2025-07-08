@@ -37,9 +37,10 @@
  *and read audio input from another device such as a microphone.
  *
  *	@section Wiring
- *  The library has been tested with the XMC4700 Relax Kit/XMC1100 XMC2G0/XMC1100 Boot Kit.
- *interfacing an Infineon IM69D130 Microphone Shield2Go. For the XMC4700 relax board, following
- *ports should be connected: LRCL -- 3.10 DOUT -- 3.7 SCLK -- 3.9 GND  -- GND 3.3V -- 3.3V
+ *  The library has been tested with the
+ *KIT_XMC47_RELAX_5V_AD_V1/KIT_XMC_2GO_XMC1100_V1/KIT_XMC11_BOOT_001. interfacing an Infineon
+ *IM69D130 Microphone Shield2Go. For the XMC4700 relax board, following ports should be connected:
+ *LRCL -- 3.10 DOUT -- 3.7 SCLK -- 3.9 GND  -- GND 3.3V -- 3.3V
  *
  *  For the XMC1100 boards the connection should be the following:
  *  LRCL -- 0.9
