@@ -29,7 +29,7 @@ sketch:
   - extras/arduino-examples/examples/05.Control/ForLoopIteration/ForLoopIteration.ino
 
 fqbn:
-  - infineon:xmc:kit_xmc47_relax_5v_ad_v1
+  - infineon:xmc:kit_xmc47_relax
 
 # sketch:
 #     - libraries/LED
@@ -67,7 +67,7 @@ fqbn:
 #   - fqbn: infineon:xmc:kit_xmc_plt2go_xmc4400
 #     sketch: 
 #       - libraries/CAN
-#   - fqbn: infineon:xmc:kit_xmc47_relax_5v_ad_v1
+#   - fqbn: infineon:xmc:kit_xmc47_relax
 #     sketch: 
 #       - libraries/I2S
 #       - libraries/DeviceControlXMC/examples/SleepModeXMC4700/SleepModeXMC4700.ino
