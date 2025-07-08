@@ -35,7 +35,7 @@
 // #define USE_SW_SPI
 
 // Define USE_XMC_RELAX_KIT_SD allows to use the SD Lib to communicate with a SD Card over
-// the on-board SD Card Slot. This feature is only available on KIT_XMC47_RELAX_5V_AD_V1Kits.
+// the on-board SD Card Slot. This feature is only available on KIT_XMC47_RELAX_5V_AD_V1 Kits.
 #if defined(KIT_XMC47_RELAX_5V_AD_V1)
     #define USE_XMC_RELAX_KIT_SD
 #endif
