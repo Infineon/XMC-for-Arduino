@@ -41,7 +41,7 @@
                             "name": "KIT_XMC_PLT2GO_XMC4400"
                         },
                         {
-                            "name": "KIT_XMC47_RELAX_5V_AD_V1"
+                            "name": "KIT_XMC47_RELAX"
                         }
                     ],
                     "toolsDependencies": [
