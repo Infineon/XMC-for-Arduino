@@ -18,41 +18,41 @@ Examples Supported
       - Boards
       - Description
     * - DieTemperatureMeasurement
-      - | XMC1100 XMC 2GO 
-        | XMC1100 Boot Kit
+      - | KIT_XMC_2GO_XMC1100_V1 
+        | KIT_XMC11_BOOT_001
         | XMC1100 H-Bridge 2GO
-        | XMC1300 Boot Kit
-        | XMC1400 2GO Kit
-        | XMC1400 Arduino Kit
-        | XMC4400 Platform 2Go
-        | XMC4700 Relax Kit
+        | KIT_XMC13_BOOT_001
+        | KIT_XMC14_2GO
+        | KIT_XMC1400_ARDUINO
+        | KIT_XMC_PLT2GO_XMC4400
+        | KIT_XMC47_RELAX_5V_AD_V1
       - | Simple die temperature measurement  
         | for XMC devices which demonstrates 
         | themeasure temperature of die using 
         | sensor.  
     * - HeapMemoryMeasurement
-      - | XMC1100 XMC 2GO 
-        | XMC1100 Boot Kit
+      - | KIT_XMC_2GO_XMC1100_V1 
+        | KIT_XMC11_BOOT_001
         | XMC1100 H-Bridge 2GO
-        | XMC1300 Boot Kit
-        | XMC1400 2GO Kit
-        | XMC1400 Arduino Kit
-        | XMC4700 Relax Kit
+        | KIT_XMC13_BOOT_001
+        | KIT_XMC14_2GO
+        | KIT_XMC1400_ARDUINO
+        | KIT_XMC47_RELAX_5V_AD_V1
       - | Simple example to check heap memory 
         | during run time for XMC devices which
         | demonstrates the ability to check on 
         | free heap memory.
     * - SleepModeXMC1100
-      - | XMC1100 XMC 2GO 
-        | XMC1100 Boot Kit
+      - | KIT_XMC_2GO_XMC1100_V1 
+        | KIT_XMC11_BOOT_001
         | XMC1100 H-Bridge 2GO
-        | XMC1300 Boot Kit
-        | XMC1400 2GO Kit
-        | XMC1400 Arduino Kit
+        | KIT_XMC13_BOOT_001
+        | KIT_XMC14_2GO
+        | KIT_XMC1400_ARDUINO
       - | Demonstrates the use of an alarm to 
         | wake up an xmc1100 from sleep mode.
     * - SleepModeXMC4700
-      - | XMC4700 Relax Kit
+      - | KIT_XMC47_RELAX_5V_AD_V1
       - | Simple Sleep Mode for XMC4700  
         | Relax Kit V1 demonstrates the use of 
         | an alarm to wake up an XMC4700 from  
@@ -64,12 +64,12 @@ Examples Supported
         | mode, LED2 will stop blinking, until 
         | device wakes up.
     * - StackMemoryMeasurement
-      - | XMC1100 XMC 2GO 
-        | XMC1100 Boot Kit
+      - | KIT_XMC_2GO_XMC1100_V1 
+        | KIT_XMC11_BOOT_001
         | XMC1100 H-Bridge 2GO
-        | XMC1300 Boot Kit
-        | XMC4400 Platform 2Go
-        | XMC4700 Relax Kit
+        | KIT_XMC13_BOOT_001
+        | KIT_XMC_PLT2GO_XMC4400
+        | KIT_XMC47_RELAX_5V_AD_V1
       - | Simple example to check stack memory 
         | during run time for XMC devices which
         | demonstrates the ability to check on 
@@ -88,11 +88,11 @@ Examples Supported
       - Boards
       - Description
     * - DMA_Memory   
-      - | XMC4700 Relax Kit
+      - | KIT_XMC47_RELAX_5V_AD_V1
       - | Demonstrates how to setup an DMA, to transfer
         | data between two places in memory. 
     * - DMA_UART   
-      - | XMC4700 Relax Kit
+      - | KIT_XMC47_RELAX_5V_AD_V1
       - | Demonstrates how to setup an DMA, to transfer
         | data between two places in memory. 
 
@@ -108,11 +108,11 @@ RTC Library
       - Boards
       - Description
     * - AlarmRTC
-      -  XMC4700 Relax Kit
+      -  KIT_XMC47_RELAX_5V_AD_V1
       - | Demonstrates how to set an RTC alarm for the 
-        | XMC4700 Relax Kit V1.
+        | KIT_XMC47_RELAX_5V_AD_V1 V1.
     * - SimpleRTC
-      -  XMC4700 Relax Kit
+      -  KIT_XMC47_RELAX_5V_AD_V1
       -  Demonstrates the use of the RTC library for the XMC4700.
 
 
@@ -127,14 +127,14 @@ SPI Library
       - Description
     * - | SPI_MOSI_to_MISO
         | _SameDevice
-      - | XMC1100 XMC 2GO 
-        | XMC1100 Boot Kit
+      - | KIT_XMC_2GO_XMC1100_V1 
+        | KIT_XMC11_BOOT_001
         | XMC1100 H-Bridge 2GO
-        | XMC1300 Boot Kit
-        | XMC1400 2GO Kit
-        | XMC1400 Arduino Kit
-        | XMC4400 Platform 2Go
-        | XMC4700 Relax Kit
+        | KIT_XMC13_BOOT_001
+        | KIT_XMC14_2GO
+        | KIT_XMC1400_ARDUINO
+        | KIT_XMC_PLT2GO_XMC4400
+        | KIT_XMC47_RELAX_5V_AD_V1
       - | SPI example which communicates between the
         | MOSI and MISO pin of the same board. Connect 
         | the MOSI pin to the MOSI pin as hardware 
@@ -151,14 +151,14 @@ Wire Library
       - Boards
       - Description
     * - master_reader    
-      - | XMC1100 XMC 2GO 
-        | XMC1100 Boot Kit
+      - | KIT_XMC_2GO_XMC1100_V1 
+        | KIT_XMC11_BOOT_001
         | XMC1100 H-Bridge 2GO
-        | XMC1300 Boot Kit
-        | XMC1400 2GO Kit
-        | XMC1400 Arduino Kit
-        | XMC4400 Platform 2Go
-        | XMC4700 Relax Kit
+        | KIT_XMC13_BOOT_001
+        | KIT_XMC14_2GO
+        | KIT_XMC1400_ARDUINO
+        | KIT_XMC_PLT2GO_XMC4400
+        | KIT_XMC47_RELAX_5V_AD_V1
       - | Demonstrates use of the Wire library. Reads data
         | from an I2C/TWI slave device. Refer to the "Wire Slave
         | Sender" example for use with this. Then it
@@ -167,14 +167,14 @@ Wire Library
         | pins of one board to the SDA and SCL pin of the
         | other board.
     * - master_writer 
-      - | XMC1100 XMC 2GO 
-        | XMC1100 Boot Kit
+      - | KIT_XMC_2GO_XMC1100_V1 
+        | KIT_XMC11_BOOT_001
         | XMC1100 H-Bridge 2GO
-        | XMC1300 Boot Kit
-        | XMC1400 2GO Kit
-        | XMC1400 Arduino Kit
-        | XMC4400 Platform 2Go
-        | XMC4700 Relax Kit
+        | KIT_XMC13_BOOT_001
+        | KIT_XMC14_2GO
+        | KIT_XMC1400_ARDUINO
+        | KIT_XMC_PLT2GO_XMC4400
+        | KIT_XMC47_RELAX_5V_AD_V1
       - | Demonstrates use of the Wire library. Writes data to
         | an I2C/TWI slave device. Refer to the "Wire Slave
         | Receiver" example for use with this. Then it
@@ -183,14 +183,14 @@ Wire Library
         | pins of one board to the SDA and SCL pin of the
         | other board.
     * - slave_receiver
-      - | XMC1100 XMC 2GO 
-        | XMC1100 Boot Kit
+      - | KIT_XMC_2GO_XMC1100_V1 
+        | KIT_XMC11_BOOT_001
         | XMC1100 H-Bridge 2GO
-        | XMC1300 Boot Kit
-        | XMC1400 2GO Kit
-        | XMC1400 Arduino Kit
-        | XMC4400 Platform 2Go
-        | XMC4700 Relax Kit
+        | KIT_XMC13_BOOT_001
+        | KIT_XMC14_2GO
+        | KIT_XMC1400_ARDUINO
+        | KIT_XMC_PLT2GO_XMC4400
+        | KIT_XMC47_RELAX_5V_AD_V1
       - | Demonstrates use of the Wire library. Receives data as
         | an I2C/TWI slave device. Refer to the "Wire Slave
         | Writer" example for use with this. Then it
@@ -199,14 +199,14 @@ Wire Library
         | pins of one board to the SDA and SCL pin of the
         | other board.
     * - slave_sender
-      - | XMC1100 XMC 2GO 
-        | XMC1100 Boot Kit
+      - | KIT_XMC_2GO_XMC1100_V1 
+        | KIT_XMC11_BOOT_001
         | XMC1100 H-Bridge 2GO
-        | XMC1300 Boot Kit
-        | XMC1400 2GO Kit
-        | XMC1400 Arduino Kit
-        | XMC4400 Platform 2Go
-        | XMC4700 Relax Kit
+        | KIT_XMC13_BOOT_001
+        | KIT_XMC14_2GO
+        | KIT_XMC1400_ARDUINO
+        | KIT_XMC_PLT2GO_XMC4400
+        | KIT_XMC47_RELAX_5V_AD_V1
       - | Demonstrates use of the Wire library. Receives data as
         | an I2C/TWI slave device. Refer to the "Wire Master
         | Reader" example for use with this. Then it
@@ -219,7 +219,7 @@ Wire Library
 I2S Library
 ^^^^^^^^^^^
 
-This library has been tested with the IM69D130 Microphone Shield2Go with both XMC4700 Relax Kit and XMC1100 XMC2Go. 
+This library has been tested with the IM69D130 Microphone Shield2Go with both KIT_XMC47_RELAX_5V_AD_V1 and XMC1100 XMC2Go. 
 Please refer to the `README.md <https://github.com/Infineon/XMC-for-Arduino/blob/master/libraries/I2S/README.md>`_ of 
 the I2S library for pin connections.
 
