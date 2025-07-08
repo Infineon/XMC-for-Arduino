@@ -3,7 +3,7 @@ menu.UART=Serial Output Selection
 menu.LIB=Additional Libraries
 
 ####################################################
-KIT_XMC11_BOOT_001kit_xmc11_boot_001.name=KIT_XMC11_BOOT_001
+kit_xmc11_boot_001.name=KIT_XMC11_BOOT_001
 kit_xmc11_boot_001.upload.tool=xmcflasher
 kit_xmc11_boot_001.upload.speed=115200
 kit_xmc11_boot_001.upload.resetmethod=ck
