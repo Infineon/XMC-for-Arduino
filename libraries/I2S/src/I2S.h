@@ -38,7 +38,7 @@
  *
  *	@section Wiring
  *  The library has been tested with the
- *KIT_XMC47_RELAX_5V_AD_V1/KIT_XMC_2GO_XMC1100_V1/KIT_XMC11_BOOT_001. interfacing an Infineon
+ *KIT_XMC47_RELAX/KIT_XMC_2GO_XMC1100_V1/KIT_XMC11_BOOT_001. interfacing an Infineon
  *IM69D130 Microphone Shield2Go. For the XMC4700 relax board, following ports should be connected:
  *LRCL -- 3.10 DOUT -- 3.7 SCLK -- 3.9 GND  -- GND 3.3V -- 3.3V
  *

@@ -688,7 +688,7 @@ void USIC1_1_IRQHandler() { Wire.ReceiveHandler(); }
 void USIC1_2_IRQHandler() { Wire.ProtocolHandler(); }
     #endif
 
-#elif defined(KIT_XMC47_RELAX_5V_AD_V1)
+#elif defined(KIT_XMC47_RELAX)
 void USIC1_1_IRQHandler() { Wire.ReceiveHandler(); }
 
 void USIC1_2_IRQHandler() { Wire.ProtocolHandler(); }

@@ -1,15 +1,15 @@
 /*
    Simple RTC Alarm for XMC Boards
-   Demonstrates how to set an RTC alarm for the KIT_XMC47_RELAX_5V_AD_V1 V1
+   Demonstrates how to set an RTC alarm for the KIT_XMC47_RELAX V1
  */
 
  /*  
   Board Check 
-  This library can currently only be used with the KIT_XMC47_RELAX_5V_AD_V1 
+  This library can currently only be used with the KIT_XMC47_RELAX 
   If you modify the library to work with other XMC versions, remove the following lines 
 */ 
 #if (UC_FAMILY != XMC4)
-#error This XMC board is not supported, only KIT_XMC47_RELAX_5V_AD_V1 is supported 
+#error This XMC board is not supported, only KIT_XMC47_RELAX is supported 
 #endif 
 // End of Board Check 
 
