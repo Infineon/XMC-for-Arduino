@@ -16,14 +16,14 @@
 
  Wiring
     Pot is connected to analogue input A1
-            (XMC1300 Boot Kit has on-board pot on this pin)
+            (KIT_XMC13_BOOT_001 has on-board pot on this pin)
     Default PWM pins are 3 and 4
 
     Some Board variant PWM Pins
-    XMC1100 Boot Kit    3, 4, 6, 9
-    XMC1100 XMC2Go      8, 3, 2, 1
-    XMC1300 Boot Kit    31, 26, 32, 33
-    XMC4700 Relax       3, 10, 11, 95, 72, 96, 63, 36, 78, 90, 91,
+    KIT_XMC11_BOOT_001    3, 4, 6, 9
+    KIT_XMC_2GO_XMC1100_V1    8, 3, 2, 1
+    KIT_XMC13_BOOT_001    31, 26, 32, 33
+    KIT_XMC47_RELAX_5V_AD_V1       3, 10, 11, 95, 72, 96, 63, 36, 78, 90, 91,
                         5,  6, 9, 53, 39, 64, 38, 68, 79, 83, 82, 81
  */
 #include <Servo.h>

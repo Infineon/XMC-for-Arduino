@@ -18,7 +18,7 @@
 
 
 void setup() {
-#if defined ( XMC1100_XMC2GO )
+#if defined ( KIT_XMC_2GO_XMC1100_V1 )
 analogWrite( 8, 32 );       // all PWM4
 analogWrite( 1, 64 );
 analogWrite( 2, 96 );
@@ -27,21 +27,21 @@ analogWrite( 3, 128 );
 #if defined ( XMC1100_H_BRIDGE2GO )
 analogWrite( 8, 32 );       // PWM4
 #endif
-#if defined ( XMC1100_Boot_Kit ) || defined ( XMC1400_Boot_Kit ) || defined ( XMC1300_Sense2GoL )
-// XMC1100 Boot Kit or XMC1400 Boot Kit  or XMC1300 Sense2GoL
+#if defined ( KIT_XMC11_BOOT_001 ) || defined ( KIT_XMC1400_ARDUINO ) || defined ( XMC1300_Sense2GoL )
+// KIT_XMC11_BOOT_001 or XMC1400 Boot Kit  or XMC1300 Sense2GoL
 analogWrite( 3, 32 );       // all PWM4
 analogWrite( 4, 64 );
 analogWrite( 6, 96 );
 analogWrite( 9, 128 );
 #endif
-#if defined ( XMC1300_Boot_Kit )
-// XMC1300 Boot Kit
+#if defined ( KIT_XMC13_BOOT_001 )
+// KIT_XMC13_BOOT_001
 analogWrite( 31, 32 );      // PWM4
 analogWrite( 26, 64 );
 analogWrite( 32, 96 );      // PWM8
 analogWrite( 33, 128 );
 #endif
-#if defined ( XMC4700_Relax_Kit ) || defined( XMC4700_Radar_Baseboard )
+#if defined ( KIT_XMC47_RELAX_5V_AD_V1 ) || defined( XMC4700_Radar_Baseboard )
 analogWrite( 3, 32 );       // PWM4
 analogWrite( 5, 64 );       // PWM8 rest relax kit only
 analogWrite( 6, 96 );

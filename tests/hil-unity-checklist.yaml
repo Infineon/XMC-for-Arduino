@@ -1,4 +1,4 @@
-infineon.xmc.XMC4700_Relax_Kit:
+infineon.xmc.kit_xmc47_relax_5v_ad_v1:
   CAN:
     1:
       - "test_can_connected2_node2"
@@ -19,7 +19,7 @@ infineon.xmc.XMC4700_Relax_Kit:
       - "test_uart_connected2_rx"
 
 
-infineon.xmc.XMC1400_XMC2GO:
+infineon.xmc.kit_xmc14_2go:
   CAN:
     1:
       - "test_can_connected2_node2"
@@ -33,7 +33,7 @@ infineon.xmc.XMC1400_XMC2GO:
       - "test_wire_connected2_masterpingpong"
 
 
-infineon.xmc.XMC1100_XMC2GO:
+infineon.xmc.kit_xmc_2go_xmc1100_v1:
   Wire:
     1:
       - "test_wire_connected2_slavepingpong"

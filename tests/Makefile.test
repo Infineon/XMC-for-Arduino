@@ -5,24 +5,24 @@
 ##CAN
 
 # 1 board, no wire
-make FQBN=infineon:xmc:XMC1400_XMC2GO PORT=COM42 test_can_single monitor
+make FQBN=infineon:xmc:kit_xmc14_2go PORT=COM42 test_can_single monitor
 
 # 2 boards
-make FQBN=infineon:xmc:XMC1400_XMC2GO PORT=COM42 test_can_connected2_node2 monitor
-make FQBN=infineon:xmc:XMC1400_XMC2GO PORT=COM41 test_can_connected2_node1 monitor
+make FQBN=infineon:xmc:kit_xmc14_2go PORT=COM42 test_can_connected2_node2 monitor
+make FQBN=infineon:xmc:kit_xmc14_2go PORT=COM41 test_can_connected2_node1 monitor
 
 
 ## IIC
 
 # 1 board "talking to itself", wire needed
-make FQBN=infineon:xmc:XMC4700_Relax_Kit PORT=COM28 test_wire_connected1_pingpong monitor
+make FQBN=infineon:xmc:kit_xmc47_relax_5v_ad_v1 PORT=COM28 test_wire_connected1_pingpong monitor
 
 # 2 boards
-make FQBN=infineon:xmc:XMC4700_Relax_Kit PORT=COM85 test_wire_connected2_masterpingpong monitor
-make FQBN=infineon:xmc:XMC4700_Relax_Kit PORT=COM28 test_wire_connected2_slavepingpong monitor
+make FQBN=infineon:xmc:kit_xmc47_relax_5v_ad_v1 PORT=COM85 test_wire_connected2_masterpingpong monitor
+make FQBN=infineon:xmc:kit_xmc47_relax_5v_ad_v1 PORT=COM28 test_wire_connected2_slavepingpong monitor
 
 ## UART
 
 # 2 boards
-make FQBN=infineon:xmc:XMC4700_Relax_Kit PORT=COM71 test_uart_connected2_tx monitor
-make FQBN=infineon:xmc:XMC4700_Relax_Kit PORT=COM28 test_uart_connected2_rx monitor
+make FQBN=infineon:xmc:kit_xmc47_relax_5v_ad_v1 PORT=COM71 test_uart_connected2_tx monitor
+make FQBN=infineon:xmc:kit_xmc47_relax_5v_ad_v1 PORT=COM28 test_uart_connected2_rx monitor
