@@ -95,13 +95,13 @@ compiler.elf2hex.extra_flags=
 includes=-I{runtime.platform.path}/cores/xmc
 
 ## Compile C files
-recipe.c.o.pattern="{compiler.path}{compiler.c.cmd}" {compiler.c.flags} -DXMC{build.board.version}_{build.board.type} -D{build.board_variant} -DF_CPU={build.f_cpu} -DARDUINO={build.board.version} -DARDUINO_{build.board} -DARDUINO_ARCH_{build.arch} {compiler.c.extra_flags} {build.extra_flags} {build.menu_flags} {compiler.arm.cmsis.path} {compiler.avr_support.path} {compiler.usb.path} {compiler.arduino_core_api.path} {includes} "{source_file}" -o "{object_file}"
+recipe.c.o.pattern="{compiler.path}{compiler.c.cmd}" {compiler.c.flags} -DXMC{build.board.version}_{build.board.type} -D{build.board_variant} -D{build.board_variant_old} -DF_CPU={build.f_cpu} -DARDUINO={build.board.version} -DARDUINO_{build.board} -DARDUINO_ARCH_{build.arch} {compiler.c.extra_flags} {build.extra_flags} {build.menu_flags} {compiler.arm.cmsis.path} {compiler.avr_support.path} {compiler.usb.path} {compiler.arduino_core_api.path} {includes} "{source_file}" -o "{object_file}"
 
 ## Compile C++ files
-recipe.cpp.o.pattern="{compiler.path}{compiler.cpp.cmd}" {compiler.cpp.flags} -DXMC{build.board.version}_{build.board.type} -D{build.board_variant} -DF_CPU={build.f_cpu} -DARDUINO={build.board.version} -DARDUINO_{build.board} -DARDUINO_ARCH_{build.arch} {compiler.cpp.extra_flags} {build.extra_flags} {build.menu_flags} {compiler.arm.cmsis.path} {compiler.avr_support.path} {compiler.usb.path} {compiler.arduino_core_api.path} {includes} "{source_file}" -o "{object_file}"
+recipe.cpp.o.pattern="{compiler.path}{compiler.cpp.cmd}" {compiler.cpp.flags} -DXMC{build.board.version}_{build.board.type} -D{build.board_variant} -D{build.board_variant_old} -DF_CPU={build.f_cpu} -DARDUINO={build.board.version} -DARDUINO_{build.board} -DARDUINO_ARCH_{build.arch} {compiler.cpp.extra_flags} {build.extra_flags} {build.menu_flags} {compiler.arm.cmsis.path} {compiler.avr_support.path} {compiler.usb.path} {compiler.arduino_core_api.path} {includes} "{source_file}" -o "{object_file}"
 
 ## Compile S files
-recipe.S.o.pattern="{compiler.path}{compiler.S.cmd}" {compiler.S.flags} -DXMC{build.board.version}_{build.board.type} -D{build.board_variant} -DF_CPU={build.f_cpu} -DARDUINO={build.board.version} -DARDUINO_{build.board} -DARDUINO_ARCH_{build.arch} {compiler.S.extra_flags} {build.extra_flags} {build.menu_flags} {compiler.arm.cmsis.path} {compiler.avr_support.path} {compiler.usb.path} {compiler.arduino_core_api.path} {includes} "{source_file}" -o "{object_file}"
+recipe.S.o.pattern="{compiler.path}{compiler.S.cmd}" {compiler.S.flags} -DXMC{build.board.version}_{build.board.type} -D{build.board_variant} -D{build.board_variant_old} -DF_CPU={build.f_cpu} -DARDUINO={build.board.version} -DARDUINO_{build.board} -DARDUINO_ARCH_{build.arch} {compiler.S.extra_flags} {build.extra_flags} {build.menu_flags} {compiler.arm.cmsis.path} {compiler.avr_support.path} {compiler.usb.path} {compiler.arduino_core_api.path} {includes} "{source_file}" -o "{object_file}"
 
 # Linker patterns
 # ----------------
