@@ -227,7 +227,7 @@ size_t  TwoWire::requestFrom(uint8_t address, size_t quantity, uint32_t iaddress
                                    XMC_I2C_CH_STATUS_FLAG_RECEIVE_INDICATION |
                                        XMC_I2C_CH_STATUS_FLAG_ALTERNATIVE_RECEIVE_INDICATION);
 
-        rxBuffer[count] = XMC_I2C_CH_GetReceivedData(XMC_I2C_config->channel);
+        rx_ringBuffer.store_char(XMC_I2C_CH_GetReceivedData(XMC_I2C_config->channel));
     }
 
     XMC_I2C_CH_MasterReceiveNack(XMC_I2C_config->channel);
@@ -250,7 +250,7 @@ size_t  TwoWire::requestFrom(uint8_t address, size_t quantity, uint32_t iaddress
                                XMC_I2C_CH_STATUS_FLAG_RECEIVE_INDICATION |
                                    XMC_I2C_CH_STATUS_FLAG_ALTERNATIVE_RECEIVE_INDICATION);
 
-    rxBuffer[quantity - 1] = XMC_I2C_CH_GetReceivedData(XMC_I2C_config->channel);
+    rx_ringBuffer.store_char(XMC_I2C_CH_GetReceivedData(XMC_I2C_config->channel));
 
     if (sendStop) {
         XMC_I2C_CH_MasterStop(XMC_I2C_config->channel);
@@ -549,19 +549,13 @@ void TwoWire::OnReceiveService() {
     if (!user_onReceive) {
         return;
     }
-    while(pre_rx_ringBuffer.available()) {
-        // read from pre-receive buffer
-        if(rx_ringBuffer.availableForStore()) {
-            // buffer is full, stop reading
-rx_ringBuffer.store_char(pre_rx_ringBuffer.read_char());
-        } else {
-            // buffer is full, stop reading
-            hasError = true;
-            break;
-        }
-    }
+    uint8_t count = pre_rx_ringBuffer.available();
+    while(pre_rx_ringBuffer.available()>0 && rx_ringBuffer.availableForStore()>0) {      
+        rx_ringBuffer.store_char(pre_rx_ringBuffer.read_char());
+        } 
+    
     // alert user program
-    user_onReceive(rx_ringBuffer.available());
+    user_onReceive(count);
 
     /*Flush receive buffer*/
     (void)XMC_I2C_CH_GetReceivedData(XMC_I2C_config->channel);
