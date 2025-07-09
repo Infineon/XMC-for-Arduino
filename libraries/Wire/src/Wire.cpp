@@ -158,7 +158,7 @@ void TwoWire::end(void) {
 
 void TwoWire::setClock(uint32_t clock) { XMC_I2C_CH_SetBaudrate(XMC_I2C_config->channel, clock); }
 
-uint8_t TwoWire::requestFrom(
+size_t  TwoWire::requestFrom(
     uint8_t address, size_t quantity, uint32_t iaddress, uint8_t isize, bool sendStop) {
     uint32_t StatusFlag;
     beginTransmission(address);
@@ -275,12 +275,12 @@ uint8_t TwoWire::requestFrom(
     return quantity;
 }
 
-uint8_t TwoWire::requestFrom(uint8_t address, size_t quantity, bool sendStop) {
+size_t  TwoWire::requestFrom(uint8_t address, size_t quantity, bool sendStop) {
     return requestFrom((uint8_t)address, quantity, (uint32_t)0, (uint8_t)0,
                        sendStop);
 }
 
-uint8_t TwoWire::requestFrom(uint8_t address, size_t quantity) {
+size_t  TwoWire::requestFrom(uint8_t address, size_t quantity) {
     return requestFrom((uint8_t)address, quantity, true);
 }
 
