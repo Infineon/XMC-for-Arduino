@@ -14,11 +14,14 @@ TwoWire::TwoWire(XMC_I2C_t *conf) {
     slaveAddress = 0;
     txAddress = 0;
 
-    rxBufferIndex = 0;
-    rxBufferLength = 0;
-    txBufferIndex = 0;
-    txBufferLength = 0;
-    pre_rxBufferCount = 0;
+    rx_ringBuffer.clear();
+    tx_ringBuffer.clear();
+    pre_rx_ringBuffer.clear();
+    // rxBufferIndex = 0;
+    // rxBufferLength = 0;
+    // txBufferIndex = 0;
+    // txBufferLength = 0;
+    // pre_rxBufferCount = 0;
 }
 
 // Public Methods //////////////////////////////////////////////////////////////
@@ -158,8 +161,7 @@ void TwoWire::end(void) {
 
 void TwoWire::setClock(uint32_t clock) { XMC_I2C_CH_SetBaudrate(XMC_I2C_config->channel, clock); }
 
-size_t  TwoWire::requestFrom(
-    uint8_t address, size_t quantity, uint32_t iaddress, uint8_t isize, bool sendStop) {
+size_t  TwoWire::requestFrom(uint8_t address, size_t quantity, uint32_t iaddress, uint8_t isize, bool sendStop) {
     uint32_t StatusFlag;
     beginTransmission(address);
     // clamp to buffer length
@@ -266,9 +268,7 @@ size_t  TwoWire::requestFrom(
         }
     }
 
-    // set rx buffer iterator vars
-    rxBufferIndex = 0;
-    rxBufferLength = quantity;
+   
     // indicate that we are done transmitting
     transmitting = 0;
 
@@ -298,8 +298,7 @@ void TwoWire::beginTransmission(uint8_t address) {
     // set address of targeted slave
     txAddress = address;
     // reset tx buffer iterator vars
-    txBufferIndex = 0;
-    txBufferLength = 0;
+    tx_ringBuffer.clear();
     // Clear all Status Flags
     XMC_I2C_CH_ClearStatusFlag(XMC_I2C_config->channel, 0xFFFFFFFF);
 }
@@ -321,8 +320,9 @@ uint8_t TwoWire::endTransmission(bool sendStop) {
 
     XMC_I2C_CH_MasterStart(XMC_I2C_config->channel, (txAddress << 1), XMC_I2C_CH_CMD_WRITE);
 
-    for (uint8_t count = 0; count < txBufferLength; count++) {
-        XMC_I2C_CH_MasterTransmit(XMC_I2C_config->channel, txBuffer[count]);
+    while(tx_ringBuffer.available()) {
+        uint8_t data = tx_ringBuffer.read_char();
+        XMC_I2C_CH_MasterTransmit(XMC_I2C_config->channel, data);
 
         timeout = WIRE_COMMUNICATION_TIMEOUT;
         // Wait for ACK, leave when NACK is detected
@@ -359,9 +359,7 @@ uint8_t TwoWire::endTransmission(bool sendStop) {
         inRepStart = true;
     }
 
-    // reset tx buffer iterator vars
-    txBufferIndex = 0;
-    txBufferLength = 0;
+    
     // indicate that we are done transmitting
     transmitting = 0;
     return 0;
@@ -378,15 +376,12 @@ size_t TwoWire::write(uint8_t data) {
     if (transmitting) {
         // in master transmitter mode
         // don't bother if buffer is full
-        if (txBufferLength >= BUFFER_LENGTH) {
+        if (tx_ringBuffer.isFull()) {
             // TODO: setWriteError();
             return 0;
         }
         // put byte in tx buffer
-        txBuffer[txBufferIndex] = data;
-        ++txBufferIndex;
-        // update amount in buffer
-        txBufferLength = txBufferIndex;
+        tx_ringBuffer.store_char(data);
     } else {
         // in slave send mode
         // reply to master
@@ -423,8 +418,10 @@ size_t TwoWire::write(const uint8_t *data, size_t quantity) {
     if (transmitting) {
         // in master transmitter mode
         for (size_t i = 0; i < quantity; ++i) {
-            write(data[i]);
+            if(!write(data[i])) {
+                return 1;
         }
+    }
     } else {
         // in slave send mode
         // reply to master
@@ -459,34 +456,28 @@ size_t TwoWire::write(const uint8_t *data, size_t quantity) {
 // must be called in:
 // slave rx event callback
 // or after requestFrom(address, numBytes)
-int TwoWire::available(void) { return rxBufferLength - rxBufferIndex; }
+int TwoWire::available(void) { return rx_ringBuffer.available(); }
 
 // must be called in:
 // slave rx event callback
 // or after requestFrom(address, numBytes)
 int TwoWire::read(void) {
-    int value = -1;
-
-    // get each successive byte on each call
-    if (rxBufferIndex < rxBufferLength) {
-        value = rxBuffer[rxBufferIndex];
-        ++rxBufferIndex;
-    }
-
-    return value;
+    if(rx_ringBuffer.available() == 0){
+        // read from ring buffer
+       return -1;
+}
+return rx_ringBuffer.read_char();
 }
 
 // must be called in:
 // slave rx event callback
 // or after requestFrom(address, numBytes)
 int TwoWire::peek(void) {
-    int value = -1;
-
-    if (rxBufferIndex < rxBufferLength) {
-        value = rxBuffer[rxBufferIndex];
+    if(rx_ringBuffer.available() == 0){
+        // read from ring buffer
+        return -1;
     }
-
-    return value;
+    return rx_ringBuffer.peek();
 }
 
 void TwoWire::flush(void) {
@@ -502,13 +493,16 @@ void TwoWire::flush(void) {
         (void)XMC_I2C_CH_GetReceivedData(XMC_I2C_config->channel);
     }
     XMC_I2C_CH_ClearStatusFlag(XMC_I2C_config->channel, 0xFFFFFFFF);
+    rx_ringBuffer.clear();
+    tx_ringBuffer.clear();
+    pre_rx_ringBuffer.clear();
 }
 
 // behind the scenes function that is called after each received byte
 void TwoWire::ReceiveHandler(void) {
     // no stop or read request
-    pre_rxBuffer[pre_rxBufferCount] = XMC_I2C_CH_GetReceivedData(XMC_I2C_config->channel);
-    pre_rxBufferCount++;
+    pre_rx_ringBuffer.store_char(XMC_I2C_CH_GetReceivedData(XMC_I2C_config->channel));
+  
 }
 
 // behind the scenes function that is called after receiving stop or read request
@@ -537,48 +531,37 @@ void TwoWire::ProtocolHandler(void) {
         } else if (flag_status & (uint32_t)XMC_I2C_CH_STATUS_FLAG_SLAVE_READ_REQUESTED) {
             XMC_I2C_CH_ClearStatusFlag(XMC_I2C_config->channel,
                                        XMC_I2C_CH_STATUS_FLAG_SLAVE_READ_REQUESTED);
-            uint8_t numBytes = pre_rxBufferCount;
-
-            pre_rxBufferCount = 0;
-
-            OnReceiveService(pre_rxBuffer, numBytes);
+            OnReceiveService();
 
             OnRequestService();
         } else if (flag_status & (uint32_t)XMC_I2C_CH_STATUS_FLAG_STOP_CONDITION_RECEIVED) {
             XMC_I2C_CH_ClearStatusFlag(XMC_I2C_config->channel,
                                        XMC_I2C_CH_STATUS_FLAG_STOP_CONDITION_RECEIVED);
-            uint8_t numBytes = pre_rxBufferCount;
-
-            pre_rxBufferCount = 0;
-
-            OnReceiveService(pre_rxBuffer, numBytes);
+            
+            OnReceiveService();
         }
     }
 }
 
 // behind the scenes callback function that is called when a data block is received
-void TwoWire::OnReceiveService(uint8_t *inBytes, uint8_t numBytes) {
+void TwoWire::OnReceiveService() {
     // don't bother if user hasn't registered a callback
     if (!user_onReceive) {
         return;
     }
-    // don't bother if rx buffer is in use by a master requestFrom() op
-    // i know this drops data, but it allows for slight stupidity
-    // meaning, they may not have read all the master requestFrom() data yet
-    if (rxBufferIndex < rxBufferLength) {
-        return;
+    while(pre_rx_ringBuffer.available()) {
+        // read from pre-receive buffer
+        if(rx_ringBuffer.availableForStore()) {
+            // buffer is full, stop reading
+rx_ringBuffer.store_char(pre_rx_ringBuffer.read_char());
+        } else {
+            // buffer is full, stop reading
+            hasError = true;
+            break;
+        }
     }
-
-    // copy twi rx buffer into local read buffer
-    // this enables new reads to happen in parallel
-    for (uint8_t i = 0; i < numBytes; ++i) {
-        rxBuffer[i] = inBytes[i];
-    }
-    // set rx iterator vars
-    rxBufferIndex = 0;
-    rxBufferLength = numBytes;
     // alert user program
-    user_onReceive(numBytes);
+    user_onReceive(rx_ringBuffer.available());
 
     /*Flush receive buffer*/
     (void)XMC_I2C_CH_GetReceivedData(XMC_I2C_config->channel);
@@ -593,8 +576,7 @@ void TwoWire::OnRequestService(void) {
     }
     // reset tx buffer iterator vars
     // !!! this will kill any pending pre-master sendTo() activity
-    txBufferIndex = 0;
-    txBufferLength = 0;
+    tx_ringBuffer.clear();
     // alert user program
     user_onRequest();
 }
