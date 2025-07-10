@@ -496,12 +496,20 @@ void TwoWire::flush(void) {
     rx_ringBuffer.clear();
     tx_ringBuffer.clear();
     pre_rx_ringBuffer.clear();
+    transmitting = 0;
+    inRepStart = false;
+    hasError = false;
 }
 
 // behind the scenes function that is called after each received byte
 void TwoWire::ReceiveHandler(void) {
     // no stop or read request
-    pre_rx_ringBuffer.store_char(XMC_I2C_CH_GetReceivedData(XMC_I2C_config->channel));
+    if(pre_rx_ringBuffer.availableForStore() > 0) {
+        pre_rx_ringBuffer.store_char(XMC_I2C_CH_GetReceivedData(XMC_I2C_config->channel));
+    }
+    else{
+        hasError = true;
+    }
   
 }
 
