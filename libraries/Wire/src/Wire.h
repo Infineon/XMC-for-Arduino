@@ -1,22 +1,13 @@
 #ifndef TwoWire_h
 #define TwoWire_h
 
-//****************************************************************************
-// @Project Includes
-//****************************************************************************
 #include <Arduino.h>
 #include "api/RingBuffer.h"
 #include "api/HardwareI2C.h"
-//****************************************************************************
-// @Defines
-//****************************************************************************
 
 #define WIRE_COMMUNICATION_TIMEOUT 5000u
-#define BUFFER_LENGTH 128
+#define BUFFER_LENGTH 64
 
-//****************************************************************************
-// @Class Definitions
-//****************************************************************************
 class TwoWire : public arduino::HardwareI2C {
 public:
     bool volatile hasError;
@@ -53,21 +44,10 @@ private:
     arduino::RingBufferN < BUFFER_LENGTH > rx_ringBuffer;
     arduino::RingBufferN < BUFFER_LENGTH > tx_ringBuffer;
     arduino::RingBufferN < BUFFER_LENGTH > pre_rx_ringBuffer;
-    uint8_t temp_rx_buff[BUFFER_LENGTH] = {0};
-    uint8_t temp_tx_buff[BUFFER_LENGTH] = {0};
-    uint8_t rxBuffer[BUFFER_LENGTH];
-    uint8_t rxBufferIndex;
-    uint8_t rxBufferLength;
-
+    
     uint8_t slaveAddress;
     uint8_t txAddress;
-    uint8_t txBuffer[BUFFER_LENGTH];
-    uint8_t txBufferIndex;
-    uint8_t txBufferLength;
-
-    // uint8_t pre_rxBuffer[BUFFER_LENGTH];
-    // uint8_t pre_rxBufferCount;
-
+    
     void (*user_onRequest)(void);
     void (*user_onReceive)(int);
     void OnRequestService(void);
