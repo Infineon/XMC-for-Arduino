@@ -47,7 +47,6 @@ The following XMC microcontroller boards are supported by XMC for Arduino:
 KIT_XMC11_BOOT_001
 ------------------
 
-* Legacy name: ``XMC1100 Boot Kit``
 * `Product Page <https://www.infineon.com/cms/de/product/evaluation-boards/kit_xmc11_boot_001/>`__
 
 .. image:: img/KIT_XMC11_BOOT_001.jpg
@@ -71,7 +70,6 @@ nor share the same pins/resources. This is different from the original Arduino U
 KIT_XMC13_BOOT_001
 ------------------
 
-* Legacy name: ``XMC1300 Boot Kit``
 * `Product Page <https://www.infineon.com/cms/de/product/evaluation-boards/kit_xmc13_boot_001/>`__
 
 .. image:: img/KIT_XMC13_BOOT_001.jpg
@@ -86,7 +84,6 @@ XMC1302 Microcontroller in TSSOP-38 with 200KB Flash and full peripheral set of 
 KIT_XMC14_2GO
 -------------
 
-* Legacy name: ``XMC1400 XMC2GO``
 * `Product Page <https://www.infineon.com/cms/en/product/evaluation-boards/kit_xmc14_2go/>`__
 
 .. image:: img/KIT_XMC14_2GO.png
@@ -109,7 +106,6 @@ Pinout Diagram
 KIT_XMC1400_ARDUINO
 -------------------
 
-* Legacy name: ``XMC1400 Kit for Arduino``
 * `Product Page <https://www.infineon.com/cms/en/product/evaluation-boards/kit_xmc1400_arduino/>`__
 
 .. image:: img/KIT_XMC1400_ARDUINO.jpg
@@ -134,7 +130,6 @@ Arduino UNO Rev3 implementation. Please look at the pinout diagram for more info
 KIT_XMC_PLT2GO_XMC4200
 ----------------------
 
-* Legacy name: ``XMC4200 Platform 2GO``
 * `Product Page <https://www.infineon.com/cms/en/product/evaluation-boards/kit_xmc_plt2go_xmc4200/>`__
 
 .. image:: img/KIT_XMC_PLT2GO_XMC4200.jpg
@@ -161,7 +156,6 @@ on the board itself. If you want to use them check out the subsection :ref:`conn
 KIT_XMC_PLT2GO_XMC4400
 ----------------------
 
-* Legacy name: ``XMC4400 Platform 2GO``
 * `Product Page <https://www.infineon.com/cms/en/product/evaluation-boards/kit_xmc_plt2go_xmc4400/>`__
 
 .. image:: img/KIT_XMC_PLT2GO_XMC4400.jpg
@@ -188,7 +182,6 @@ on the board itself. If you want to use them check out the subsection :ref:`conn
 KIT_XMC47_RELAX
 ------------------------
 
-* Legacy name: ``XMC4700 Relax Kit``
 * `Product Page <https://www.infineon.com/cms/en/product/evaluation-boards/kit_xmc47_relax_5v_ad_v1/>`__
 
 .. image:: img/KIT_XMC47_RELAX.jpg
@@ -286,7 +279,6 @@ KIT_XMC_2GO_XMC1100_V1
 ----------------------
 
 * Replaced by :ref:`KIT_XMC14_2GO`
-* Legacy name: ``XMC1100 XMC2Go```
 
 The XMC1100 2Go board consists of a XMC1100 microcontroller with a debugger implemented by a XMC4200 microcontroller.
 
