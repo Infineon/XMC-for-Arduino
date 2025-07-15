@@ -33,7 +33,7 @@
 //****************************************************************************
 // @Defines
 //****************************************************************************
-#define XMC_BOARD XMC 4200 Platform 2GO
+#define XMC_BOARD KIT_XMC_PLT2GO_XMC4200
 
 /* On board LED is ON when digital output is 1, HIGH, TRUE, ON */
 #define XMC_LED_ON 1
@@ -269,10 +269,10 @@ XMC_UART_t XMC_UART_1 = {
     .irq_num = USIC1_0_IRQn,
     .irq_service_request = 0};
 
-// Object instantiated of the HardwareSerial class for UART PC (debug) interface
-HardwareSerial Serial(&XMC_UART_0);
-// Object instantiated of the HardwareSerial class for UART ONBOARD interface
-HardwareSerial Serial1(&XMC_UART_1);
+// Object instantiated  for UART PC (debug) interface
+Uart Serial(&XMC_UART_0);
+// Object instantiated for UART ONBOARD interface
+Uart Serial1(&XMC_UART_1);
 
 // SPI instance
 XMC_SPI_t XMC_SPI_0 = {
@@ -358,8 +358,4 @@ void USIC0_0_IRQHandler() { Serial.IrqHandler(); }
     #endif
 #endif /* ARDUINO_MAIN*/
 
-#ifdef __cplusplus
-extern HardwareSerial Serial;
-extern HardwareSerial Serial1;
-#endif /* cplusplus */
 #endif
