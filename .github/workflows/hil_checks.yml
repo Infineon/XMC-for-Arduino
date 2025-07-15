@@ -1,6 +1,7 @@
 name: HIL Checks
 
 on:
+  push:
   workflow_call:
     inputs:
       project-yaml:
