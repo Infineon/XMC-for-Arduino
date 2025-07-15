@@ -36,7 +36,7 @@
 // XMC_BOARD for stringifying into serial or other text outputs/logs
 // Note the actual name XMC and number MUST have a character between
 // to avoid issues with other defined macros e.g. XMC1100
-#define XMC_BOARD XMC 4700 Relax Kit
+#define XMC_BOARD KIT_XMC47_RELAX
 
 /* On board LED is ON when digital output is 1, HIGH, TRUE, ON */
 #define XMC_LED_ON 1
