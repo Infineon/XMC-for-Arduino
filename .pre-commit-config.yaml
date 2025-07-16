@@ -10,7 +10,7 @@ repos:
     hooks:    
       - id: verifygitlog
         name: git commit message format checker
-        entry: python3 tools/verifygitlog.py --check-file --ignore-rebase
+        entry: python3 tools/verifygitlog.py --ignore-rebase --check-file 
         language: python
         verbose: true
         stages: [commit-msg]

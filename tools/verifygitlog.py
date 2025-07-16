@@ -96,6 +96,10 @@ def verify(sha, err):
 
 def verify_message_body(raw_body, err):    
     subject_line = raw_body[0]
+    for prefix in ignore_prefixes:
+        if subject_line.startswith(prefix):
+            verbose("Skipping ignored commit message")
+            return
     very_verbose("subject_line", subject_line)
     subject_line_format = r"^[^!]+: [A-Z]+.+ .+\.$"
     if not re.match(subject_line_format, subject_line):
