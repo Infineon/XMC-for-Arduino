@@ -40,7 +40,7 @@ The following XMC microcontroller boards are supported by XMC for Arduino:
      - Arduino Uno
 
 .. note::
-    For all Kit 2Go or MS 2Go sensor boards please select ``XMC1100 XMC2Go`` in the Arduino IDE.
+    For all Kit 2Go or MS 2Go sensor boards please select ``KIT_XMC_2GO_XMC1100_V1`` in the Arduino IDE.
 
 .. _KIT_XMC11_BOOT_001:
 
