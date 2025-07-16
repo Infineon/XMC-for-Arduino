@@ -2,7 +2,7 @@
 
 ### Unit tests
 
-##CAN
+## CAN
 
 # 1 board, no wire
 make FQBN=infineon:xmc:kit_xmc14_2go PORT=COM42 test_can_single monitor
