@@ -7,15 +7,16 @@ If both LED1 and LED2 are permanently ON then an invalid pin for PWM has been
 attempted to be attached to a invalid pin
 
 Wiring
-    Default PWM pin are 3
+  Default PWM pin are 3
 
-    Some Board variant PWM Pins
-    KIT_XMC11_BOOT_001    3, 4, 6, 9
-    KIT_XMC_2GO_XMC1100_V1    8, 3, 2, 1
-    KIT_XMC13_BOOT_001    31, 26, 32, 33
-    KIT_XMC47_RELAX       3, 10, 11, 95, 72, 96, 63, 36, 78, 90, 91,
-                        5,  6, 9, 53, 39, 64, 38, 68, 79, 83, 82, 81
- */
+  Some Board variant PWM Pins
+  KIT_XMC11_BOOT_001        3,   4,   6,   9
+  KIT_XMC_2GO_XMC1100_V1    8,   3,   2,   1
+  KIT_XMC13_BOOT_001       31,  26,  32,  33
+  KIT_XMC47_RELAX           3,  10,  11,  95, 72, 96, 63, 36, 78, 90, 91,
+                            5,   6,   9,  53, 39, 64, 38, 68, 79, 83, 82, 81
+
+*/
 #include <LED.h>
 #include <DeviceControlXMC.h>
 
