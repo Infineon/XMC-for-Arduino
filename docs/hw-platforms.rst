@@ -53,7 +53,7 @@ KIT_XMC11_BOOT_001
     :width: 400
 
 The KIT_XMC11_BOOT_001 board consists of a XMC1100 microcontroller with a debugger implemented by a XMC4200 microcontroller.
-The board shares the same power supply and board shape as other shields for Arduino.
+The board shares the same power supply and board shape as other boards for Arduino.
 
 Pinout Diagram
 ^^^^^^^^^^^^^^
@@ -112,7 +112,7 @@ KIT_XMC1400_ARDUINO
     :width: 400
 
 The KIT_XMC1400_ARDUINO consists of a XMC1400 microcontroller with a debugger implemented by a XMC4200 microcontroller.
-The board shares the same power supply and board shape as other shields for Arduino.
+The board shares the same power supply and board shape as other boards for Arduino.
 
 Pinout Diagram
 ^^^^^^^^^^^^^^

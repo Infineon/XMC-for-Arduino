@@ -106,7 +106,7 @@ RTC Library
     * - AlarmRTC
       -  KIT_XMC47_RELAX
       - | Demonstrates how to set an RTC alarm for the 
-        | KIT_XMC47_RELAX V1.
+        | KIT_XMC47_RELAX.
     * - SimpleRTC
       -  KIT_XMC47_RELAX
       -  Demonstrates the use of the RTC library for the XMC4700.
