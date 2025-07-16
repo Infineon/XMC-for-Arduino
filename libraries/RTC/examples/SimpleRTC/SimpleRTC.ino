@@ -1,5 +1,5 @@
 /*
-   Simple RTC for KIT_XMC47_RELAX V1
+   Simple RTC for KIT_XMC47_RELAX
    Demonstrates the use of the RTC library for the XMC4700
  */
 

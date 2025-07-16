@@ -6,7 +6,12 @@ Based on [Arduino CAN library](https://www.arduino.cc/reference/en/libraries/can
 
 XMC boards with CAN support (CAN transceiver on board and CAN controller module): KIT_XMC_PLT2GO_XMC4200, KIT_XMC_PLT2GO_XMC4400, KIT_XMC47_RELAX and KIT_XMC14_2GO.
 
-:warning: There is a 120 ohm terminal resistor on the KIT_XMC_PLT2GO_XMC4400 and KIT_XMC14_2GO boards, not on the KIT_XMC_PLT2GO_XMC4200 and KIT_XMC47_RELAX. Please remove or add resistors as needed.
+| Board Name               | Onboard CAN | Termination Resistor |
+|--------------------------|-------------|-----------------------|
+| KIT_XMC14_2GO           | Yes         | Yes (120 ohm)        |
+| KIT_XMC_PLT2GO_XMC4200  | Yes         | No                   |
+| KIT_XMC_PLT2GO_XMC4400  | Yes         | Yes (120 ohm)        |
+| KIT_XMC47_RELAX         | Yes         | No                   |
 
 All CAN nodes should be connected using the (twisted) pair cable for the CAN_H and CAN_L
 
@@ -46,7 +51,7 @@ Here the API definition is based on:
   
 ## :warning: XMC specification
 
-Due to the different behavior of xmc4 series and xmc1 series, the library and provided examples was tested primarily on **KIT_XMC14_2GO**.
+Due to the different behavior of xmc4000 series and xmc1000 series, the library and provided examples was tested primarily on **KIT_XMC14_2GO**.
 
 The known difference is that the XMC4 is unable to receive CAN messages for all IDs. Therefore, it is necessary to define the device ID using the following function:
 
