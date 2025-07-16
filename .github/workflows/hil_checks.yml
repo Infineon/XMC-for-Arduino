@@ -25,12 +25,12 @@ jobs:
     runs-on: ubuntu-24.04
 
     container:
-      # image: docker.io/ifxmakers/makers-docker:latest
+      image: docker.io/ifxmakers/makers-docker:latest
 
-      image: ghcr.io/infineon/makers-docker:latest
-      credentials:
-        username: ${{ github.actor }}
-        password: ${{ secrets.github_token }}
+      # image: ghcr.io/infineon/makers-docker:latest
+      # credentials:
+      #   username: ${{ github.actor }}
+      #   password: ${{ secrets.github_token }}
 
       volumes:
         - .:/myLocalWorkingDir:rw
