@@ -51,7 +51,7 @@ jobs:
       - name: Set strategy matrix
         id: set-matrix
         run: |
-          eval $(python3 extras/makers-devops/tools/code_checks/codeChecks.py --projectYAML "${{ inputs.project-yaml }}" --userYAML "${{ inputs.user-yaml }}" --getAllHILChecks)
+          eval $(python3 extras/makers-devops/src/python/code_checks/codeChecks.py --projectYAML "${{ inputs.project-yaml }}" --userYAML "${{ inputs.user-yaml }}" --getAllHILChecks)
 
       - name: Append HIL Checks Output to Summary
         run: |
