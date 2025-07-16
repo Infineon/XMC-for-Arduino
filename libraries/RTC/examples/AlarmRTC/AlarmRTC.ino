@@ -1,6 +1,6 @@
 /*
    Simple RTC Alarm for XMC Boards
-   Demonstrates how to set an RTC alarm for the KIT_XMC47_RELAX V1
+   Demonstrates how to set an RTC alarm for the KIT_XMC47_RELAX
  */
 
  /*  
