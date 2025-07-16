@@ -1,104 +1,13 @@
 name: HIL Checks
 
 on:
-  push:
-  workflow_call:
-    inputs:
-      project-yaml:
-        required: true
-        type: string
-        description: 'Project Yaml file that consists of build and check configurations'
-      user-yaml:
-        required: true
-        type: string
-        description: 'User Yaml file with list of build and checks to be executed'
+  pull_request:
+  # push:
 
-defaults:
-  run:
-    shell: bash
-
-# permissions:
-#   contents: write
-    
 jobs:
-  setup:
-    runs-on: ubuntu-24.04
-
-    container:
-      image: docker.io/ifxmakers/makers-docker:latest
-
-      # image: ghcr.io/infineon/makers-docker:latest
-      # credentials:
-      #   username: ${{ github.actor }}
-      #   password: ${{ secrets.github_token }}
-
-      volumes:
-        - .:/myLocalWorkingDir:rw
-      options: --cpus 1
-
-    steps:
-      - name: Checkout repository 
-        uses: actions/checkout@v4
-        with:
-          submodules: false
-
-      - name: Checkout makers-devops
-        uses: actions/checkout@v4
-        with:
-          repository: Infineon/makers-devops
-          path: extras/makers-devops
-
-      - name: Set strategy matrix
-        id: set-matrix
-        run: |
-          eval $(python3 extras/makers-devops/src/python/code_checks/codeChecks.py --projectYAML "${{ inputs.project-yaml }}" --userYAML "${{ inputs.user-yaml }}" --getAllHILChecks)
-
-      - name: Append HIL Checks Output to Summary
-        run: |
-          echo "## 📜 Test Quality Report" >> $GITHUB_STEP_SUMMARY
-
-    outputs:
-      checks: ${{ steps.set-matrix.outputs.checks }}
-      
-
-  hilChecks:
-    runs-on:
-      - self-hosted
-      - X64
-      - Linux
-    needs: setup
-
-    strategy:
-      fail-fast: false
-
-      matrix:
-        checks: ${{ fromJson(needs.setup.outputs.checks) }}
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-        with:
-          submodules: recursive
-
-      - name: Run all code checks
-        id: run_build
-        run: |
-          echo "Workflow has these parameters :"
-          echo "matrix.checks   : ${{ matrix.checks }}"
-          echo ""
-
-          hilChecks.py --projectYAML "${{ inputs.project-yaml }}" --userYAML "${{ inputs.user-yaml }}" --runCheck ${{ matrix.checks }} --dockerTag=test  2>&1 | tee output.log
-
-      - name: Archive code check reports
-        if: success() || failure()
-        uses: actions/upload-artifact@v4
-        with:
-          name: ${{ matrix.checks }}
-          path: _results
-
-      - name: Append Code Checks Output to Summary
-        if: success() || failure()
-        run: |
-          echo "<details>" >> $GITHUB_STEP_SUMMARY
-          cat output.log >> $GITHUB_STEP_SUMMARY
-          echo "</details>" >> $GITHUB_STEP_SUMMARY
+  makers-devops:
+    uses: Infineon/makers-devops/.github/workflows/hil_checks.yml@main
+    with:
+      project-yaml: config/project.yml
+      user-yaml: config/user.yml
+    secrets: inherit
