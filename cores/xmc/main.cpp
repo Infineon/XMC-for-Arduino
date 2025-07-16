@@ -39,7 +39,7 @@ int main(void) {
     wiring_time_init();
 
 // Initialize the reset pin for the KIT_XMC11_BOOT_001 series and KIT_XMC1400_ARDUINO as they are
-// based on Arduino form-factor Hence, a dedicated reset pin is required.
+// based on Arduino Uno form-factor. Hence a dedicated reset pin is required.
 #ifdef HAS_GPIO_RESET
     reset_init();
 #endif
