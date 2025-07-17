@@ -239,11 +239,16 @@ uint8_t TwoWire::endTransmission(bool sendStop) {
         do {
             StatusFlag = XMC_I2C_CH_GetStatusFlag(XMC_I2C_config->channel);
             // Check for NACK, indicates that no slave with desired address is on the bus
-            if (this->hasError == true || timeout == 0) {
-                this->hasError = false;
-                inRepStart = false;
+            if(StatusFlag & XMC_I2C_CH_STATUS_FLAG_NACK_RECEIVED) {
+                this->hasError = true;
                 flush();
-                return 1;
+                return 2; // NACK received
+            }
+
+            if(timeout == 0) {
+                this->hasError = true;
+                flush();
+                return 4; // Timeout
             }
             timeout--;
         } while ((StatusFlag & XMC_I2C_CH_STATUS_FLAG_ACK_RECEIVED) == 0U);
@@ -258,7 +263,7 @@ uint8_t TwoWire::endTransmission(bool sendStop) {
                 this->hasError = false;
                 inRepStart = false;
                 flush();
-                return 1;
+                return 4;
             }
             timeout--;
         }
