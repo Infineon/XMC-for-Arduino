@@ -63,7 +63,7 @@ code-quality:
 unit-test:
     unit-test-timer-4700:
       - description: Compiling, flashing and monitoring timer unit test.
-        command: make test_timer UNITY_PATH=/opt/Unity 
+        command: make test_time_single UNITY_PATH=/opt/Unity 
         query: timer_single_board == '1:1'
         working_dir: extras/arduino-core-tests
         options: 
