@@ -232,6 +232,12 @@ uint8_t TwoWire::endTransmission(bool sendStop) {
     uint32_t StatusFlag;
     XMC_I2C_CH_MasterStart(XMC_I2C_config->channel, (txAddress << 1), XMC_I2C_CH_CMD_WRITE);
     while(tx_ringBuffer.available()) {
+
+        if(tx_ringBuffer.isFull()){
+            this->hasError = true;
+            flush();
+            return 1; // Buffer overflow
+        }
         uint8_t data = tx_ringBuffer.read_char();
         XMC_I2C_CH_MasterTransmit(XMC_I2C_config->channel, data);
         timeout = WIRE_COMMUNICATION_TIMEOUT;
