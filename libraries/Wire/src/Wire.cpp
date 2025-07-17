@@ -321,7 +321,7 @@ size_t TwoWire::write(const uint8_t *data, size_t quantity) {
     if (transmitting) {
         for (size_t i = 0; i < quantity; ++i) {
             if(!write(data[i])) {
-                return 1;
+                return i;
             }
         }
     } else {
