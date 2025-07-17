@@ -1,7 +1,7 @@
-# options:
-#   USE_CORE:
-#     name: Infineon:xmc@3.0.0
-#     url: https://github.com/Infineon/XMC-for-Arduino/releases/latest/download/package_infineon_index.json
+options:
+  USE_CORE:
+    name: local
+    url: https://balabla
 #   # INCLUDE:
   #   - filename
 
@@ -12,21 +12,21 @@ compile:
       fqbns: [infineon:xmc:kit_xmc47_relax]
       working_dir: tests/arduino-core-tests
 
-# code-quality:
-#     source-code-quality-clang-tidy:
-#       description: clang-tidy check sources
-#       tool: clang-tidy
-#       command: extras/makers-devops/tools/code_checks/run_clang_tidy.sh ./cores/psoc6/* ./libraries/*
+code-quality:
+    source-code-quality-clang-tidy:
+      description: clang-tidy check sources
+      tool: clang-tidy
+      command: extras/makers-devops/src/python/code_checks/run_clang_tidy.sh ./cores/xmc/* ./libraries/*
 
-#     source-code-quality-cppcheck:
-#       description: cppcheck check sources
-#       tool: cppcheck
-#       command: extras/makers-devops/tools/code_checks/run_cppcheck.sh ./cores/psoc6/* ./libraries/*  
-#                | -I extras/arduino-core-api/api/ -I variants/CY8CKIT-062S2-AI/mtb-bsp -I extras/mtb-libs/core-lib/include 
-#                | -I libraries/WiFi/src -I libraries/Wire/src -I libraries/SPI/src -I extras/mtb-libs/mtb-hal-cat1/include
-#                | -I extras/mtb-libs/wifi-connection-manager/include --suppress=*:extras/mtb-libs/wifi-connection-manager/include*
-#                | -I variants/CY8CKIT-062S2-AI -I cores/psoc6 --suppress=*:variants/CY8CKIT-062S2-AI/* --suppress=*:extras/mtb-libs/mtb-hal-cat1/include/*
-#                | --suppress=*:extras/arduino-core-api/api/* --suppress=*:cores/psoc6/api/* --suppress=*:variants/CY8CKIT-062S2-AI/mtb-bsp/* --suppress=*:extras/mtb-libs/core-lib/include/*
+    source-code-quality-cppcheck:
+      description: cppcheck check sources
+      tool: cppcheck
+      command: extras/makers-devops/src/python/code_checks/run_cppcheck.sh ./cores/xmc/* 
+               | -I extras/arduino-core-api/api/ -I cores/xmc/xmc_lib/XMCLib/inc/ -I variants/XMC1400/config/KIT_XMC14_2GO
+               | -I variants/XMC1400 -I cores/xmc/avr -I cores/xmc/usblib -I cores/xmc/xmc_lib/inc 
+               | -I /cores/xmc
+               | -i cores/xmc/xmc_lib/ -i cores/xmc/api/ --suppress=*:cores/xmc/xmc_lib/*
+               | --suppress=*:extras/arduino-core-api/api/* --suppress=*:cores/xmc/api/*
     
 #     test-code-quality-clang-tidy:
 #       description: clang-tidy check tests
