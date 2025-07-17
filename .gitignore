@@ -29,3 +29,6 @@ _build/
 
 # Arduino core api symlinked
 cores/xmc/api
+
+# Ignore code check result
+_results/
