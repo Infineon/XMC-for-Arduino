@@ -232,6 +232,12 @@ uint8_t TwoWire::endTransmission(bool sendStop) {
     uint32_t StatusFlag;
     XMC_I2C_CH_MasterStart(XMC_I2C_config->channel, (txAddress << 1), XMC_I2C_CH_CMD_WRITE);
     while(tx_ringBuffer.available()) {
+
+        if(tx_ringBuffer.isFull()){
+            this->hasError = true;
+            flush();
+            return 1; // Buffer overflow
+        }
         uint8_t data = tx_ringBuffer.read_char();
         XMC_I2C_CH_MasterTransmit(XMC_I2C_config->channel, data);
         timeout = WIRE_COMMUNICATION_TIMEOUT;
@@ -239,11 +245,16 @@ uint8_t TwoWire::endTransmission(bool sendStop) {
         do {
             StatusFlag = XMC_I2C_CH_GetStatusFlag(XMC_I2C_config->channel);
             // Check for NACK, indicates that no slave with desired address is on the bus
-            if (this->hasError == true || timeout == 0) {
-                this->hasError = false;
-                inRepStart = false;
+            if(StatusFlag & XMC_I2C_CH_STATUS_FLAG_NACK_RECEIVED) {
+                this->hasError = true;
                 flush();
-                return 1;
+                return 2; // NACK received
+            }
+
+            if(timeout == 0) {
+                this->hasError = true;
+                flush();
+                return 4; // Timeout
             }
             timeout--;
         } while ((StatusFlag & XMC_I2C_CH_STATUS_FLAG_ACK_RECEIVED) == 0U);
@@ -258,7 +269,7 @@ uint8_t TwoWire::endTransmission(bool sendStop) {
                 this->hasError = false;
                 inRepStart = false;
                 flush();
-                return 1;
+                return 4;
             }
             timeout--;
         }
@@ -310,7 +321,7 @@ size_t TwoWire::write(const uint8_t *data, size_t quantity) {
     if (transmitting) {
         for (size_t i = 0; i < quantity; ++i) {
             if(!write(data[i])) {
-                return 1;
+                return i;
             }
         }
     } else {

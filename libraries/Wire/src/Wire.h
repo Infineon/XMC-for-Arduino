@@ -5,9 +5,9 @@
 #include "api/RingBuffer.h"
 #include "api/HardwareI2C.h"
 
-#define WIRE_COMMUNICATION_TIMEOUT 5000u
-#define BUFFER_LENGTH 64
-
+#define WIRE_COMMUNICATION_TIMEOUT 1000u
+#define BUFFER_LENGTH 255
+#define WIRE_HAS_END 1
 class TwoWire : public arduino::HardwareI2C {
 public:
     bool volatile hasError;
