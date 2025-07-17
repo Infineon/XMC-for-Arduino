@@ -1,7 +1,11 @@
 options:
   USE_CORE:
-    name: local
-    url: https://balabla
+    name: Infineon:xmc@3.0.0
+    url: https://github.com/Infineon/XMC-for-Arduino/releases/latest/download/package_infineon_index.json
+# options:
+#   USE_CORE:
+#     name: local
+#     url: https://balabla
 #   # INCLUDE:
   #   - filename
 
