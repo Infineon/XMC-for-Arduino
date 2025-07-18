@@ -132,9 +132,9 @@ unit-test:
             name: local
     
     unit-test-uart-connected2-4700:
-      - description: Compiling, flashing and monitoring I2C pingpong master unit test.
-        command: make test_uart_connected2_tx UNITY_PATH=/opt/Unity 
-        query: uart_connected2_tx == '1:1'
+      - description: Compiling, flashing and monitoring uart rx unit test.
+        command: make test_uart_rx UNITY_PATH=/opt/Unity 
+        query: uart_connected2_rx == '1:1'
         working_dir: extras/arduino-core-tests
         options:
           PARSE_START_TOKEN: Unity test run
@@ -143,9 +143,9 @@ unit-test:
           USE_CORE:
            name: local
 
-      - description: Compiling, flashing and monitoring I2C pingpong slave unit test.
-        command: make test_uart_connected2_rx UNITY_PATH=/opt/Unity 
-        query: uart_connected2_rx == '1:1'
+      - description: Compiling, flashing and monitoring uart tx unit test.
+        command: make test_uart_tx UNITY_PATH=/opt/Unity 
+        query: uart_connected2_tx == '1:1'
         working_dir: extras/arduino-core-tests
         options:
           PARSE_START_TOKEN: Unity test run
