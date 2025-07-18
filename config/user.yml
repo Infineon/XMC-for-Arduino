@@ -11,5 +11,4 @@
 
 
 unit-test:
-    - unit-test-timer-4700
-    - unit-test-pwm-4700
+    - unit-test-iic-pingpong-4700
