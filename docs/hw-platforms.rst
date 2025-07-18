@@ -35,7 +35,7 @@ The following XMC microcontroller boards are supported by XMC for Arduino:
      - XMC4400
      - Arduino Uno, Shield2Go, mikroBUS
    * - .. image:: img/KIT_XMC47_RELAX.jpg
-     - :ref:`KIT_XMC47_RELAX`
+     - :ref:`KIT_XMC47_RELAX` variants
      - XMC4700
      - Arduino Uno
 
@@ -182,12 +182,16 @@ on the board itself. If you want to use them check out the subsection :ref:`conn
 KIT_XMC47_RELAX
 ------------------------
 
-* `Product Page <https://www.infineon.com/cms/en/product/evaluation-boards/kit_xmc47_relax_5v_ad_v1/>`__
+Supported Variants
+^^^^^^^^^^^^^^^^^^
+* `KIT_XMC47_RELAX_V1 <https://www.infineon.com/cms/en/product/evaluation-boards/kit_xmc47_relax_v1/>`__
+* `KIT_XMC47_RELAX_LITE_V1 <https://www.infineon.com/cms/en/product/evaluation-boards/kit_xmc47_relax_lite_v1/>`__
+* `KIT_XMC47_RELAX_5V_AD_V1 <https://www.infineon.com/cms/en/product/evaluation-boards/kit_xmc47_relax_5v_ad_v1/>`__
 
 .. image:: img/KIT_XMC47_RELAX.jpg
     :width: 400
 
-The KIT_XMC47_RELAX board consists of a XMC4700 microcontroller with a debugger implemented by a XMC4200 microcontroller. 
+The KIT_XMC47_RELAX board variants consists of a XMC4700 microcontroller with a debugger implemented by a XMC4200 microcontroller. 
 Please note that there exist versions with 5V and 3.3V. 
 Please be careful which version you have and use with your respective shields.
 The one described here is the 5V version as this one is compatible with Arduino shields designed for 5V systems. 
