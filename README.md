@@ -3,6 +3,7 @@
 ![Compilation Status](https://github.com/Infineon/XMC-for-Arduino/actions/workflows/compile-platform-examples.yml/badge.svg)
 [![Documentation Status](https://readthedocs.org/projects/xmc-arduino/badge/?version=latest)](https://xmc-arduino.readthedocs.io/en/latest/?badge=latest)
 [![Hil unity library checks](https://github.com/Infineon/XMC-for-Arduino/actions/workflows/hil-unity-checks.yml/badge.svg)](https://github.com/Infineon/XMC-for-Arduino/actions/workflows/hil-unity-checks.yml)
+[![Check links](https://github.com/Infineon/XMC-for-Arduino/actions/workflows/check_links.yml/badge.svg)](https://github.com/Infineon/XMC-for-Arduino/actions/workflows/check_links.yml)
 
 This project integrates Infineon's 32-bit XMC™ Industrial Arm® Cortex®-M Microcontroller into the [Arduino](https://www.arduino.cc/en/Guide/Introduction) ecosystem.
 
