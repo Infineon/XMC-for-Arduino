@@ -133,7 +133,7 @@ unit-test:
     
     unit-test-uart-connected2-4700:
       - description: Compiling, flashing and monitoring uart rx unit test.
-        command: make test_uart_rx UNITY_PATH=/opt/Unity 
+        command: make uart_connected2_rx UNITY_PATH=/opt/Unity 
         query: uart_connected2_rx == '1:1'
         working_dir: extras/arduino-core-tests
         options:
@@ -144,7 +144,7 @@ unit-test:
            name: local
 
       - description: Compiling, flashing and monitoring uart tx unit test.
-        command: make test_uart_tx UNITY_PATH=/opt/Unity 
+        command: make uart_connected2_tx UNITY_PATH=/opt/Unity 
         query: uart_connected2_tx == '1:1'
         working_dir: extras/arduino-core-tests
         options:
