@@ -71,7 +71,7 @@ Serial.println(  "PC Services Tone Test V2" );
 tone( LED1, 1 );
 tone( LED2, 2, 20000 );
 
-#if defined( XMC1100_Boot_Kit ) || defined( XMC1300_Boot_Kit )
+#if defined( KIT_XMC11_BOOT_001 ) || defined( KIT_XMC13_BOOT_001 )
 tone( LED5, 4, 1000 );
 tone( LED6, 8, 6000 );
 #elif defined( XMC1300_Sense2GoL )
