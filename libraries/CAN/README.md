@@ -12,7 +12,7 @@ All CAN nodes should be connected using the (twisted) pair cable for the CAN_H a
 
 # Software Usage
 
-There are [examples](libraries/CAN/examples). See the API definition below for more details.
+There are [examples](examples). See the API definition below for more details.
 
 # CAN API
 
