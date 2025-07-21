@@ -1,6 +1,6 @@
 This is an Arduino library for XMC boards using CAN bus to send and receive data.
 
-Based on [Arduino CAN library](https://www.arduino.cc/reference/en/libraries/can/)/ [Github Repo](https://github.com/sandeepmistry/arduino-CAN)
+Based on this [Arduino CAN library](https://github.com/sandeepmistry/arduino-CAN).
 
 # Hardware Setup
 
