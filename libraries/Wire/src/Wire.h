@@ -21,7 +21,7 @@ public:
     uint8_t endTransmission(bool);
     size_t  requestFrom(uint8_t, size_t);
     size_t  requestFrom(uint8_t, size_t, bool);
-    size_t  requestFrom(uint8_t, size_t, uint32_t, uint8_t, bool);
+    // size_t  requestFrom(uint8_t, size_t, uint32_t, uint8_t, bool);
     virtual size_t write(uint8_t);
     virtual size_t write(const uint8_t *, size_t);
      int available(void);
@@ -51,7 +51,7 @@ private:
     void (*user_onRequest)(void);
     void (*user_onReceive)(int);
     void OnRequestService(void);
-    void OnReceiveService(void);
+    void OnReceiveService(uint8_t *inBytes, uint8_t numBytes);
 };
 
 extern TwoWire Wire;
