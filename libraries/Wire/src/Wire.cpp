@@ -378,12 +378,12 @@ void TwoWire::flush(void) {
 }
 
 void TwoWire::ReceiveHandler(void) {
-    
+    uint32_t data =XMC_I2C_CH_GetReceivedData(XMC_I2C_config->channel);
     noInterrupts();
-   if(pre_rx_ringBuffer.availableForStore() > 0) {
-        pre_rx_ringBuffer.store_char(XMC_I2C_CH_GetReceivedData(XMC_I2C_config->channel));
+   if(pre_rx_ringBuffer.isFull()) {
+    hasError = true;
     } else {
-        hasError = true;
+        pre_rx_ringBuffer.store_char(data);
     }
     interrupts();
 
