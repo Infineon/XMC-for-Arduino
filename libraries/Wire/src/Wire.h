@@ -5,8 +5,8 @@
 #include "api/RingBuffer.h"
 #include "api/HardwareI2C.h"
 
-#define WIRE_COMMUNICATION_TIMEOUT 1000u
-#define BUFFER_LENGTH 255
+#define WIRE_COMMUNICATION_TIMEOUT 5000u
+#define BUFFER_LENGTH 256
 #define WIRE_HAS_END 1
 class TwoWire : public arduino::HardwareI2C {
 public:
@@ -51,7 +51,8 @@ private:
     void (*user_onRequest)(void);
     void (*user_onReceive)(int);
     void OnRequestService(void);
-    void OnReceiveService(uint8_t *inBytes, uint8_t numBytes);
+    void OnReceiveService(uint8_t numBytes);
+    void resetBus();
 };
 
 extern TwoWire Wire;
