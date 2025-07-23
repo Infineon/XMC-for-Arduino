@@ -133,7 +133,6 @@ size_t  TwoWire::requestFrom(uint8_t address, size_t quantity, bool sendStop) {
         }
         return 0;
     }
-    //beginTransmission(address);
     if (quantity > BUFFER_LENGTH) {
         quantity = BUFFER_LENGTH;
     }
@@ -251,8 +250,6 @@ uint8_t TwoWire::endTransmission(bool sendStop) {
 
         if(StatusFlag & XMC_I2C_CH_STATUS_FLAG_NACK_RECEIVED) {
             // NACK received, slave is not present
-            // this->hasError = true;
-            // inRepStart = false;
             flush();
             return 2; // NACK received
         }
