@@ -209,10 +209,6 @@ size_t  TwoWire::requestFrom(uint8_t address, size_t quantity, bool sendStop) {
     return rx_ringBuffer.available();
 }
 
-// size_t  TwoWire::requestFrom(uint8_t address, size_t quantity, bool sendStop) {
-//     return requestFrom((uint8_t)address, quantity, (uint32_t)0, (uint8_t)0,sendStop);
-// }
-
 size_t  TwoWire::requestFrom(uint8_t address, size_t quantity) {
     return requestFrom((uint8_t)address, quantity, true);
 }
