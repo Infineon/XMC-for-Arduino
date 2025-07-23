@@ -21,15 +21,6 @@ TwoWire::TwoWire(XMC_I2C_t *conf) {
     pre_rx_ringBuffer.clear();
 }
 
-void TwoWire::resetBus() {
-    end();
-    if(isMaster) {
-        begin();
-    }else {
-        begin(slaveAddress);
-    }
-}
-
 void TwoWire::begin(void) {
     // To-Do for future work need to check
     // Check if desire USIC channel is already in use 
@@ -242,7 +233,6 @@ uint8_t TwoWire::endTransmission(bool sendStop) {
             StatusFlag = XMC_I2C_CH_GetStatusFlag(XMC_I2C_config->channel);
             // Check for NACK, indicates that no slave with desired address is on the bus
             if(hasError || (millis() - start > timeout)) {
-                resetBus();
                 flush();
                 return 5; // NACK received
             }
