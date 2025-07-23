@@ -244,7 +244,7 @@ uint8_t TwoWire::endTransmission(bool sendStop) {
             if(hasError || (millis() - start > timeout)) {
                 resetBus();
                 flush();
-                return 4; // NACK received
+                return 5; // NACK received
             }
         } while (!(StatusFlag & XMC_I2C_CH_STATUS_FLAG_ACK_RECEIVED));
 
@@ -262,7 +262,7 @@ uint8_t TwoWire::endTransmission(bool sendStop) {
         while (XMC_USIC_CH_GetTransmitBufferStatus(XMC_I2C_config->channel) ==XMC_USIC_CH_TBUF_STATUS_BUSY) {
             if (this->hasError == true || (millis() - start > timeout)) {
                 flush();
-                return 4;
+                return 5;
             }
         }
         inRepStart = false;
