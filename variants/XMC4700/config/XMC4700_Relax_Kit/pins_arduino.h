@@ -426,180 +426,180 @@ Uart Serial(&XMC_UART_0);
 // On-Board port
 Uart Serial1(&XMC_UART_1);
 
-    // // Three SPI instances possible
-    // XMC_SPI_t XMC_SPI_0 = {
-    //     .channel = XMC_SPI2_CH0,
-    //     .channel_config = {.baudrate = 20003906U,
-    //                        .bus_mode = (XMC_SPI_CH_BUS_MODE_t)XMC_SPI_CH_BUS_MODE_MASTER,
-    //                        .selo_inversion = XMC_SPI_CH_SLAVE_SEL_INV_TO_MSLS,
-    //                        .parity_mode = XMC_USIC_CH_PARITY_MODE_NONE},
-    //     .mosi = {.port = (XMC_GPIO_PORT_t *)PORT3_BASE, .pin = (uint8_t)8},
-    //     .mosi_config = {.mode = XMC_GPIO_MODE_OUTPUT_PUSH_PULL_ALT1,
-    //                     .output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH,
-    //                     .output_strength = XMC_GPIO_OUTPUT_STRENGTH_MEDIUM},
-    //     .miso = {.port = (XMC_GPIO_PORT_t *)PORT3_BASE, .pin = (uint8_t)7},
-    //     .miso_config =
-    //         {
-    //             .mode = XMC_GPIO_MODE_INPUT_TRISTATE,
-    //         },
-    //     .input_source = XMC_INPUT_C,
-    //     .sclkout = {.port = (XMC_GPIO_PORT_t *)PORT3_BASE, .pin = (uint8_t)9},
-    //     .sclkout_config = {.mode = XMC_GPIO_MODE_OUTPUT_PUSH_PULL_ALT1,
-    //                        .output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH,
-    //                        .output_strength = XMC_GPIO_OUTPUT_STRENGTH_MEDIUM},
-    // };
+// // Three SPI instances possible
+// XMC_SPI_t XMC_SPI_0 = {
+//     .channel = XMC_SPI2_CH0,
+//     .channel_config = {.baudrate = 20003906U,
+//                        .bus_mode = (XMC_SPI_CH_BUS_MODE_t)XMC_SPI_CH_BUS_MODE_MASTER,
+//                        .selo_inversion = XMC_SPI_CH_SLAVE_SEL_INV_TO_MSLS,
+//                        .parity_mode = XMC_USIC_CH_PARITY_MODE_NONE},
+//     .mosi = {.port = (XMC_GPIO_PORT_t *)PORT3_BASE, .pin = (uint8_t)8},
+//     .mosi_config = {.mode = XMC_GPIO_MODE_OUTPUT_PUSH_PULL_ALT1,
+//                     .output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH,
+//                     .output_strength = XMC_GPIO_OUTPUT_STRENGTH_MEDIUM},
+//     .miso = {.port = (XMC_GPIO_PORT_t *)PORT3_BASE, .pin = (uint8_t)7},
+//     .miso_config =
+//         {
+//             .mode = XMC_GPIO_MODE_INPUT_TRISTATE,
+//         },
+//     .input_source = XMC_INPUT_C,
+//     .sclkout = {.port = (XMC_GPIO_PORT_t *)PORT3_BASE, .pin = (uint8_t)9},
+//     .sclkout_config = {.mode = XMC_GPIO_MODE_OUTPUT_PUSH_PULL_ALT1,
+//                        .output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH,
+//                        .output_strength = XMC_GPIO_OUTPUT_STRENGTH_MEDIUM},
+// };
 
-    // XMC_SPI_t XMC_SPI_1 = {
-    //     .channel = XMC_SPI0_CH1,
-    //     .channel_config = {.baudrate = 20003906U,
-    //                        .bus_mode = (XMC_SPI_CH_BUS_MODE_t)XMC_SPI_CH_BUS_MODE_MASTER,
-    //                        .selo_inversion = XMC_SPI_CH_SLAVE_SEL_INV_TO_MSLS,
-    //                        .parity_mode = XMC_USIC_CH_PARITY_MODE_NONE},
-    //     .mosi = {.port = (XMC_GPIO_PORT_t *)PORT3_BASE, .pin = (uint8_t)5},
-    //     .mosi_config = {.mode = XMC_GPIO_MODE_OUTPUT_PUSH_PULL_ALT4,
-    //                     .output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH,
-    //                     .output_strength = XMC_GPIO_OUTPUT_STRENGTH_MEDIUM},
-    //     .miso = {.port = (XMC_GPIO_PORT_t *)PORT4_BASE, .pin = (uint8_t)0},
-    //     .miso_config =
-    //         {
-    //             .mode = XMC_GPIO_MODE_INPUT_TRISTATE,
-    //         },
-    //     .input_source = XMC_INPUT_E,
-    //     .sclkout = {.port = (XMC_GPIO_PORT_t *)PORT3_BASE, .pin = (uint8_t)6},
-    //     .sclkout_config = {.mode = XMC_GPIO_MODE_OUTPUT_PUSH_PULL_ALT4,
-    //                        .output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH,
-    //                        .output_strength = XMC_GPIO_OUTPUT_STRENGTH_MEDIUM},
-    // };
+// XMC_SPI_t XMC_SPI_1 = {
+//     .channel = XMC_SPI0_CH1,
+//     .channel_config = {.baudrate = 20003906U,
+//                        .bus_mode = (XMC_SPI_CH_BUS_MODE_t)XMC_SPI_CH_BUS_MODE_MASTER,
+//                        .selo_inversion = XMC_SPI_CH_SLAVE_SEL_INV_TO_MSLS,
+//                        .parity_mode = XMC_USIC_CH_PARITY_MODE_NONE},
+//     .mosi = {.port = (XMC_GPIO_PORT_t *)PORT3_BASE, .pin = (uint8_t)5},
+//     .mosi_config = {.mode = XMC_GPIO_MODE_OUTPUT_PUSH_PULL_ALT4,
+//                     .output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH,
+//                     .output_strength = XMC_GPIO_OUTPUT_STRENGTH_MEDIUM},
+//     .miso = {.port = (XMC_GPIO_PORT_t *)PORT4_BASE, .pin = (uint8_t)0},
+//     .miso_config =
+//         {
+//             .mode = XMC_GPIO_MODE_INPUT_TRISTATE,
+//         },
+//     .input_source = XMC_INPUT_E,
+//     .sclkout = {.port = (XMC_GPIO_PORT_t *)PORT3_BASE, .pin = (uint8_t)6},
+//     .sclkout_config = {.mode = XMC_GPIO_MODE_OUTPUT_PUSH_PULL_ALT4,
+//                        .output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH,
+//                        .output_strength = XMC_GPIO_OUTPUT_STRENGTH_MEDIUM},
+// };
 
-    // XMC_SPI_t XMC_SPI_2 = {
-    //     .channel = XMC_SPI2_CH1,
-    //     .channel_config = {.baudrate = 20003906U,
-    //                        .bus_mode = (XMC_SPI_CH_BUS_MODE_t)XMC_SPI_CH_BUS_MODE_MASTER,
-    //                        .selo_inversion = XMC_SPI_CH_SLAVE_SEL_INV_TO_MSLS,
-    //                        .parity_mode = XMC_USIC_CH_PARITY_MODE_NONE},
-    //     .mosi = {.port = (XMC_GPIO_PORT_t *)PORT3_BASE, .pin = (uint8_t)11},
-    //     .mosi_config = {.mode = XMC_GPIO_MODE_OUTPUT_PUSH_PULL_ALT1,
-    //                     .output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH,
-    //                     .output_strength = XMC_GPIO_OUTPUT_STRENGTH_MEDIUM},
-    //     .miso = {.port = (XMC_GPIO_PORT_t *)PORT3_BASE, .pin = (uint8_t)12},
-    //     .miso_config =
-    //         {
-    //             .mode = XMC_GPIO_MODE_INPUT_TRISTATE,
-    //         },
-    //     .input_source = XMC_INPUT_D,
-    //     .sclkout = {.port = (XMC_GPIO_PORT_t *)PORT3_BASE, .pin = (uint8_t)13},
-    //     .sclkout_config = {.mode = XMC_GPIO_MODE_OUTPUT_PUSH_PULL_ALT1,
-    //                        .output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH,
-    //                        .output_strength = XMC_GPIO_OUTPUT_STRENGTH_MEDIUM},
-    // };
+// XMC_SPI_t XMC_SPI_2 = {
+//     .channel = XMC_SPI2_CH1,
+//     .channel_config = {.baudrate = 20003906U,
+//                        .bus_mode = (XMC_SPI_CH_BUS_MODE_t)XMC_SPI_CH_BUS_MODE_MASTER,
+//                        .selo_inversion = XMC_SPI_CH_SLAVE_SEL_INV_TO_MSLS,
+//                        .parity_mode = XMC_USIC_CH_PARITY_MODE_NONE},
+//     .mosi = {.port = (XMC_GPIO_PORT_t *)PORT3_BASE, .pin = (uint8_t)11},
+//     .mosi_config = {.mode = XMC_GPIO_MODE_OUTPUT_PUSH_PULL_ALT1,
+//                     .output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH,
+//                     .output_strength = XMC_GPIO_OUTPUT_STRENGTH_MEDIUM},
+//     .miso = {.port = (XMC_GPIO_PORT_t *)PORT3_BASE, .pin = (uint8_t)12},
+//     .miso_config =
+//         {
+//             .mode = XMC_GPIO_MODE_INPUT_TRISTATE,
+//         },
+//     .input_source = XMC_INPUT_D,
+//     .sclkout = {.port = (XMC_GPIO_PORT_t *)PORT3_BASE, .pin = (uint8_t)13},
+//     .sclkout_config = {.mode = XMC_GPIO_MODE_OUTPUT_PUSH_PULL_ALT1,
+//                        .output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH,
+//                        .output_strength = XMC_GPIO_OUTPUT_STRENGTH_MEDIUM},
+// };
 
-    // Only two serial objects are possible: Serial and Serial1 so anymore serial interfaces has to
-    // overwrite/reuse the existing serial objects
-    //  Will overwrite Serial
-    // XMC_SPI_t XMC_SPI_3 =
-    //{
-    //     .channel          = XMC_SPI0_CH0,
-    //     .channel_config   = {
-    //         .baudrate = 20003906U,
-    //         .bus_mode = (XMC_SPI_CH_BUS_MODE_t)XMC_SPI_CH_BUS_MODE_MASTER,
-    //         .selo_inversion = XMC_SPI_CH_SLAVE_SEL_INV_TO_MSLS,
-    //         .parity_mode = XMC_USIC_CH_PARITY_MODE_NONE
-    //     },
-    //     .mosi             = {
-    //         .port = (XMC_GPIO_PORT_t*)PORT5_BASE,
-    //         .pin  = (uint8_t)1
-    //     },
-    //     .mosi_config      = {
-    //         .mode = XMC_GPIO_MODE_OUTPUT_PUSH_PULL_ALT1,
-    //         .output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH,
-    //         .output_strength = XMC_GPIO_OUTPUT_STRENGTH_MEDIUM
-    //     },
-    //     .miso             = {
-    //         .port = (XMC_GPIO_PORT_t*)PORT5_BASE,
-    //         .pin  = (uint8_t)0
-    //     },
-    //     .miso_config      = {
-    //         .mode = XMC_GPIO_MODE_INPUT_TRISTATE,
-    //     },
-    //     .input_source     = XMC_INPUT_D,
-    //     .sclkout = {
-    //         .port = (XMC_GPIO_PORT_t*)PORT0_BASE,
-    //         .pin  = (uint8_t)8
-    //     },
-    //     .sclkout_config   = {
-    //         .mode = XMC_GPIO_MODE_OUTPUT_PUSH_PULL_ALT2,
-    //         .output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH,
-    //         .output_strength = XMC_GPIO_OUTPUT_STRENGTH_MEDIUM
-    //     },
-    // };
+// Only two serial objects are possible: Serial and Serial1 so anymore serial interfaces has to
+// overwrite/reuse the existing serial objects
+//  Will overwrite Serial
+// XMC_SPI_t XMC_SPI_3 =
+//{
+//     .channel          = XMC_SPI0_CH0,
+//     .channel_config   = {
+//         .baudrate = 20003906U,
+//         .bus_mode = (XMC_SPI_CH_BUS_MODE_t)XMC_SPI_CH_BUS_MODE_MASTER,
+//         .selo_inversion = XMC_SPI_CH_SLAVE_SEL_INV_TO_MSLS,
+//         .parity_mode = XMC_USIC_CH_PARITY_MODE_NONE
+//     },
+//     .mosi             = {
+//         .port = (XMC_GPIO_PORT_t*)PORT5_BASE,
+//         .pin  = (uint8_t)1
+//     },
+//     .mosi_config      = {
+//         .mode = XMC_GPIO_MODE_OUTPUT_PUSH_PULL_ALT1,
+//         .output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH,
+//         .output_strength = XMC_GPIO_OUTPUT_STRENGTH_MEDIUM
+//     },
+//     .miso             = {
+//         .port = (XMC_GPIO_PORT_t*)PORT5_BASE,
+//         .pin  = (uint8_t)0
+//     },
+//     .miso_config      = {
+//         .mode = XMC_GPIO_MODE_INPUT_TRISTATE,
+//     },
+//     .input_source     = XMC_INPUT_D,
+//     .sclkout = {
+//         .port = (XMC_GPIO_PORT_t*)PORT0_BASE,
+//         .pin  = (uint8_t)8
+//     },
+//     .sclkout_config   = {
+//         .mode = XMC_GPIO_MODE_OUTPUT_PUSH_PULL_ALT2,
+//         .output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH,
+//         .output_strength = XMC_GPIO_OUTPUT_STRENGTH_MEDIUM
+//     },
+// };
 
-    // Will overwrite Serial1
-    // XMC_SPI_t XMC_SPI_4 =
-    //{
-    //    .channel          = XMC_SPI1_CH0,
-    //    .channel_config   = {
-    //        .baudrate = 20003906U,
-    //        .bus_mode = (XMC_SPI_CH_BUS_MODE_t)XMC_SPI_CH_BUS_MODE_MASTER,
-    //        .selo_inversion = XMC_SPI_CH_SLAVE_SEL_INV_TO_MSLS,
-    //        .parity_mode = XMC_USIC_CH_PARITY_MODE_NONE
-    //    },
-    //    .mosi             = {
-    //        .port = (XMC_GPIO_PORT_t*)PORT0_BASE,
-    //        .pin  = (uint8_t)5
-    //    },
-    //    .mosi_config      = {
-    //        .mode = XMC_GPIO_MODE_OUTPUT_PUSH_PULL_ALT2,
-    //        .output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH,
-    //        .output_strength = XMC_GPIO_OUTPUT_STRENGTH_MEDIUM
-    //    },
-    //    .miso             = {
-    //        .port = (XMC_GPIO_PORT_t*)PORT0_BASE,
-    //        .pin  = (uint8_t)4
-    //    },
-    //    .miso_config      = {
-    //        .mode = XMC_GPIO_MODE_INPUT_TRISTATE,
-    //    },
-    //    .input_source     = XMC_INPUT_A,
-    //    .sclkout = {
-    //        .port = (XMC_GPIO_PORT_t*)PORT0_BASE,
-    //        .pin  = (uint8_t)11
-    //    },
-    //    .sclkout_config   = {
-    //        .mode = XMC_GPIO_MODE_OUTPUT_PUSH_PULL_ALT2,
-    //        .output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH,
-    //        .output_strength = XMC_GPIO_OUTPUT_STRENGTH_MEDIUM
-    //    },
-    //};
+// Will overwrite Serial1
+// XMC_SPI_t XMC_SPI_4 =
+//{
+//    .channel          = XMC_SPI1_CH0,
+//    .channel_config   = {
+//        .baudrate = 20003906U,
+//        .bus_mode = (XMC_SPI_CH_BUS_MODE_t)XMC_SPI_CH_BUS_MODE_MASTER,
+//        .selo_inversion = XMC_SPI_CH_SLAVE_SEL_INV_TO_MSLS,
+//        .parity_mode = XMC_USIC_CH_PARITY_MODE_NONE
+//    },
+//    .mosi             = {
+//        .port = (XMC_GPIO_PORT_t*)PORT0_BASE,
+//        .pin  = (uint8_t)5
+//    },
+//    .mosi_config      = {
+//        .mode = XMC_GPIO_MODE_OUTPUT_PUSH_PULL_ALT2,
+//        .output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH,
+//        .output_strength = XMC_GPIO_OUTPUT_STRENGTH_MEDIUM
+//    },
+//    .miso             = {
+//        .port = (XMC_GPIO_PORT_t*)PORT0_BASE,
+//        .pin  = (uint8_t)4
+//    },
+//    .miso_config      = {
+//        .mode = XMC_GPIO_MODE_INPUT_TRISTATE,
+//    },
+//    .input_source     = XMC_INPUT_A,
+//    .sclkout = {
+//        .port = (XMC_GPIO_PORT_t*)PORT0_BASE,
+//        .pin  = (uint8_t)11
+//    },
+//    .sclkout_config   = {
+//        .mode = XMC_GPIO_MODE_OUTPUT_PUSH_PULL_ALT2,
+//        .output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH,
+//        .output_strength = XMC_GPIO_OUTPUT_STRENGTH_MEDIUM
+//    },
+//};
 
-    //Two I2C instances possible
-    XMC_I2C_t XMC_I2C_0 = {.channel = XMC_I2C1_CH1,
-                           .channel_config = {.baudrate = (uint32_t)(100000U), .address = 0U},
-                           .sda = {.port = (XMC_GPIO_PORT_t *)PORT3_BASE, .pin = (uint8_t)15},
-                           .sda_config = {.mode = XMC_GPIO_MODE_OUTPUT_OPEN_DRAIN_ALT2,
-                                          .output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH},
-                           .scl = {.port = (XMC_GPIO_PORT_t *)PORT0_BASE, .pin = (uint8_t)13},
-                           .scl_config = {.mode = XMC_GPIO_MODE_OUTPUT_OPEN_DRAIN_ALT2,
-                                          .output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH},
-                           .input_source_dx0 = XMC_INPUT_A,
-                           .input_source_dx1 = XMC_INPUT_B,
-                           .slave_receive_irq_num = (IRQn_Type)91,
-                           .slave_receive_irq_service_request = 1,
-                           .protocol_irq_num = (IRQn_Type)92,
-                           .protocol_irq_service_request = 2};
-    XMC_I2C_t XMC_I2C_1 = {.channel = XMC_I2C1_CH0,
-                           .channel_config = {.baudrate = (uint32_t)(100000U), .address = 0U},
-                           .sda = {.port = (XMC_GPIO_PORT_t *)PORT0_BASE, .pin = (uint8_t)5},
-                           .sda_config = {.mode = XMC_GPIO_MODE_OUTPUT_OPEN_DRAIN_ALT2,
-                                          .output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH},
-                           .scl = {.port = (XMC_GPIO_PORT_t *)PORT0_BASE, .pin = (uint8_t)11},
-                           .scl_config = {.mode = XMC_GPIO_MODE_OUTPUT_OPEN_DRAIN_ALT2,
-                                          .output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH},
-                           .input_source_dx0 = XMC_INPUT_B,
-                           .input_source_dx1 = XMC_INPUT_A,
-                           .slave_receive_irq_num = (IRQn_Type)93,
-                           .slave_receive_irq_service_request = 3,
-                           .protocol_irq_num = (IRQn_Type)94,
-                           .protocol_irq_service_request = 4};
+// Two I2C instances possible
+XMC_I2C_t XMC_I2C_0 = {.channel = XMC_I2C1_CH1,
+                       .channel_config = {.baudrate = (uint32_t)(100000U), .address = 0U},
+                       .sda = {.port = (XMC_GPIO_PORT_t *)PORT3_BASE, .pin = (uint8_t)15},
+                       .sda_config = {.mode = XMC_GPIO_MODE_OUTPUT_OPEN_DRAIN_ALT2,
+                                      .output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH},
+                       .scl = {.port = (XMC_GPIO_PORT_t *)PORT0_BASE, .pin = (uint8_t)13},
+                       .scl_config = {.mode = XMC_GPIO_MODE_OUTPUT_OPEN_DRAIN_ALT2,
+                                      .output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH},
+                       .input_source_dx0 = XMC_INPUT_A,
+                       .input_source_dx1 = XMC_INPUT_B,
+                       .slave_receive_irq_num = (IRQn_Type)91,
+                       .slave_receive_irq_service_request = 1,
+                       .protocol_irq_num = (IRQn_Type)92,
+                       .protocol_irq_service_request = 2};
+XMC_I2C_t XMC_I2C_1 = {.channel = XMC_I2C1_CH0,
+                       .channel_config = {.baudrate = (uint32_t)(100000U), .address = 0U},
+                       .sda = {.port = (XMC_GPIO_PORT_t *)PORT0_BASE, .pin = (uint8_t)5},
+                       .sda_config = {.mode = XMC_GPIO_MODE_OUTPUT_OPEN_DRAIN_ALT2,
+                                      .output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH},
+                       .scl = {.port = (XMC_GPIO_PORT_t *)PORT0_BASE, .pin = (uint8_t)11},
+                       .scl_config = {.mode = XMC_GPIO_MODE_OUTPUT_OPEN_DRAIN_ALT2,
+                                      .output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH},
+                       .input_source_dx0 = XMC_INPUT_B,
+                       .input_source_dx1 = XMC_INPUT_A,
+                       .slave_receive_irq_num = (IRQn_Type)93,
+                       .slave_receive_irq_service_request = 3,
+                       .protocol_irq_num = (IRQn_Type)94,
+                       .protocol_irq_service_request = 4};
 
     // // XMC_I2S instance
     // XMC_I2S_t i2s_config = {.input_config = {.mode = XMC_GPIO_MODE_INPUT_TRISTATE,
