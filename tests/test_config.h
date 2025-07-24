@@ -18,7 +18,6 @@
 #define TEST_PIN_SYNC_IO 4           // IO_1
 #define TEST_PIN_PULSE 5             // IO_2
 
-
 #define PWM_FREQUENCY_HZ 490          // PWM Frequency in Hz
 #define TEST_PIN_ANALOG_IO_VREF A2    // Pin connected to Vdd
 #define TEST_PIN_ANALOG_IO_DIVIDER A1 // Pin connected to voltage divider
