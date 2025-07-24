@@ -51,7 +51,6 @@ private:
     void (*user_onReceive)(int);
     void OnRequestService(void);
     void OnReceiveService(uint8_t numBytes);
-    void resetBus();
 };
 
 extern TwoWire Wire;
