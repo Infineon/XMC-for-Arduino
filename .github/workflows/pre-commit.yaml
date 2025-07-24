@@ -4,9 +4,10 @@ on:
   push:
     branches:
       - master
+      - 4.0.0-pre-release
   pull_request:
     branches:
-      - master
+      - 4.0.0-pre-release
 
 jobs:
   pre-commit:
