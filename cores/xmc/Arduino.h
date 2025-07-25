@@ -338,6 +338,17 @@ extern void analogReadResolution(int res);
  * \param res
  */
 extern void analogWriteResolution(int res);
+
+/*
+ * \brief Sets the frequency for analogWrite PWM.
+ * \note Default value is 490 Hz
+ *
+ * \param pin
+ * \param frequency in Hz
+ *
+ * \return 0 = success, -1 = invalid frequency, -2 = wrong pin
+ */
+extern int16_t setAnalogWriteFrequency(pin_size_t pinNumber, uint32_t frequency);
 //****************************************************************************
 // @Arduino Core Includes
 //****************************************************************************
