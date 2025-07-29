@@ -108,7 +108,7 @@ extern const uint8_t NUM_ANALOG_INPUTS;
 #define EXT_INTR_0 3
 #define EXT_INTR_1 25
 
-#define digitalPinToInterrupt(p) ((p) == 3 ? 0 : ((p) == 25 ? 1 : NOT_AN_INTERRUPT))
+#define digitalPinToInterrupt(p) ((p) == 3 ? 0 : ((p) == 25 ? 1 : -1))
 
 /* Mapping interrupt handlers. Notice that XMC1400 can have interrupt handlers working in 3 modes,
    the defines below assumes the mode A. For details refer to assembly file and reference manual.
@@ -121,6 +121,9 @@ extern const uint8_t NUM_ANALOG_INPUTS;
 
 #define CCU40_1_IRQHandler IRQ22_Handler // interrupt 0
 #define CCU40_1_IRQn IRQ22_IRQn
+
+#define CCU40_3_IRQHandler IRQ24_Handler
+#define CCU40_3_IRQn IRQ24_IRQn
 
 #define USIC0_4_IRQHandler IRQ13_Handler // I2C
 #define USIC0_4_IRQn IRQ13_IRQn
@@ -255,6 +258,7 @@ XMC_UART_t XMC_UART_0 = {.channel = XMC_UART0_CH1,
                          .irq_service_request = 0};
 
 Uart Serial(&XMC_UART_0);
+Uart Serial(&XMC_UART_0);
 
     // // SPI instance
     // XMC_SPI_t XMC_SPI_0 = {
@@ -321,5 +325,4 @@ void USIC0_0_IRQHandler() { Serial.IrqHandler(); }
 }
     #endif
 #endif /* ARDUINO_MAIN */
-
-#endif /* PINS_ARDUINO_H_ */
+#endif // PINS_ARDUINO_H_
