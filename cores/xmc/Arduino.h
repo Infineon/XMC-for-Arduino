@@ -352,11 +352,11 @@ extern void analogWriteResolution(int res);
 // @Infineon Core Includes
 //****************************************************************************
 
-// #include "reset.h"
+#include "reset.h"
 
 #ifdef __cplusplus
 } // extern "C"
-  // #include "Tone.h"
+    #include "Tone.h"
   // #include "WMath.h"
     #include "Uart.h"
 #endif // __cplusplus
