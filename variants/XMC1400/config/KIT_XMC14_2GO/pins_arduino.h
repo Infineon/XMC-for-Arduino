@@ -59,9 +59,6 @@ extern const uint8_t NUM_ANALOG_INPUTS;
 // Indicate unit has RTC/Alarm
 #define HAS_RTC 1
 
-// Indicate variant has a GPIO pin used for Reset pin
-#define HAS_GPIO_RESET 1
-
 // Defines will be either set by ArduinoIDE in the menu or manually
 #ifdef SERIAL_HOSTPC
     // Comment out following line to use Serial on pins (board)
@@ -141,7 +138,7 @@ extern const uint8_t NUM_ANALOG_INPUTS;
 #define CAN0_3_IRQHandler IRQ7_Handler // CAN
 #define CAN0_3_IRQn IRQ7_IRQn
 
-#define digitalPinToInterrupt(p) (((p) == 9) ? 0 : NOT_AN_INTERRUPT)
+#define digitalPinToInterrupt(p) (((p) == 9) ? 0 : -1)
 
 #ifdef ARDUINO_MAIN
 // Mapping of digital pins and comments
@@ -255,6 +252,7 @@ XMC_UART_t XMC_UART_0 = {.channel = XMC_UART0_CH0,
                          .irq_service_request = 0};
 
 Uart Serial(&XMC_UART_0);
+Uart Serial(&XMC_UART_0);
 
     // // SPI instance
     // XMC_SPI_t XMC_SPI_0 = {
@@ -363,5 +361,4 @@ void USIC0_0_IRQHandler() { Serial.IrqHandler(); }
 }
     #endif
 #endif /* ARDUINO_MAIN */
-
-#endif /* PINS_ARDUINO_H_ */
+#endif // PINS_ARDUINO_H_
