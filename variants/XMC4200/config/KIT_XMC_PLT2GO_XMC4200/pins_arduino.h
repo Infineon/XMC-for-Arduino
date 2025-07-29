@@ -94,7 +94,7 @@ extern uint8_t SCK;
     LED1 // Dummy LED define macro; added to comply with LED Library examples in CI/CD workflow
 #define BUTTON1 27 // Additional BUTTON1
 
-#define digitalPinToInterrupt(p) ((p) == 2 ? 0 : ((p) == 3 ? 1 : NOT_AN_INTERRUPT))
+#define digitalPinToInterrupt(p) ((p) == 2 ? 0 : ((p) == 3 ? 1 : -1))
 
 #ifdef ARDUINO_MAIN
 // Mapping of digital pins and comments
@@ -269,9 +269,9 @@ XMC_UART_t XMC_UART_1 = {
     .irq_num = USIC1_0_IRQn,
     .irq_service_request = 0};
 
-// Object instantiated  for UART PC (debug) interface
+// Object instantiated of the HardwareSerial class for UART PC (debug) interface
 Uart Serial(&XMC_UART_0);
-// Object instantiated for UART ONBOARD interface
+// Object instantiated of the HardwareSerial class for UART ONBOARD interface
 Uart Serial1(&XMC_UART_1);
 
 // SPI instance
@@ -358,4 +358,6 @@ void USIC0_0_IRQHandler() { Serial.IrqHandler(); }
     #endif
 #endif /* ARDUINO_MAIN*/
 
+#ifdef __cplusplus
+#endif
 #endif
