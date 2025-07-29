@@ -350,7 +350,7 @@ extern void analogWriteResolution(int res);
  *
  * \return 0 = success, -1 = invalid frequency, -2 = wrong pin
  */
-extern int16_t setAnalogWriteFrequency(pin_size_t pinNumber, uint32_t frequency);
+extern int16_t setAnalogWriteFrequency(pin_size_t pin, uint32_t frequency);
 //****************************************************************************
 // @Arduino Core Includes
 //****************************************************************************
