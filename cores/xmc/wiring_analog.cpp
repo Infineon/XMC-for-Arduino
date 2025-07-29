@@ -100,7 +100,7 @@ void analogWrite(pin_size_t pinNumber, int value) {
         XMC_GPIO_SetMode(pwm4->port_pin.port, pwm4->port_pin.pin,
                          (XMC_GPIO_MODE_t)(XMC_GPIO_MODE_OUTPUT_PUSH_PULL | pwm4->port_mode));
         XMC_CCU4_SLICE_StartTimer(pwm4->slice);
-
+        pwm4->d_cycle_val = value;
         return;
     }
 #if defined(CCU8V2) || defined(CCU8V1)
@@ -129,6 +129,7 @@ void analogWrite(pin_size_t pinNumber, int value) {
         XMC_GPIO_SetMode(pwm8->port_pin.port, pwm8->port_pin.pin,
                          (XMC_GPIO_MODE_t)(XMC_GPIO_MODE_OUTPUT_PUSH_PULL | pwm8->port_mode));
         XMC_CCU8_SLICE_StartTimer(pwm8->slice);
+        pwm8->d_cycle_val = value;
         return;
     }
 #endif
@@ -297,7 +298,7 @@ int16_t setAnalogWriteFrequency(uint8_t pin, uint32_t frequency) {
     int16_t resource;
 
     // Check if frequency is within a valid range
-    if (frequency >= PCLK) {
+    if (frequency == 0 || frequency >= PCLK) {
         return ERROR_INVALID_FREQUENCY; // Frequency too high, cannot configure
     }
 
@@ -309,7 +310,7 @@ int16_t setAnalogWriteFrequency(uint8_t pin, uint32_t frequency) {
         prescaler = static_cast<XMC_CCU4_SLICE_PRESCALER_t>(static_cast<int>(prescaler) + 1);
     }
 
-    // Calculate timer period for 16-bit resolution
+    // Calculate timer period
     period = (PCLK / ((1U << prescaler) * frequency)) - 1;
 
     // Attempt to configure PWM4
@@ -321,9 +322,12 @@ int16_t setAnalogWriteFrequency(uint8_t pin, uint32_t frequency) {
         pwm4->period_timer_val = period;
 
         // If PWM is already enabled, disable and restart it
-        if (pwm4->enabled == ENABLED) {
-            pwm4->enabled = DISABLED;
-            XMC_CCU4_SLICE_StartTimer(pwm4->slice);
+        if (pwm4->enabled) {
+            // Disable to reset the compare value
+            pwm4->enabled = false;
+            XMC_CCU4_SLICE_StopClearTimer(pwm4->slice);
+            // Reconfigure and restart PWM
+            analogWrite(pin, pwm4->d_cycle_val); // Use the saved duty cycle value
         }
 
         return SUCCESS; // Configuration successful
@@ -339,9 +343,11 @@ int16_t setAnalogWriteFrequency(uint8_t pin, uint32_t frequency) {
         pwm8->period_timer_val = period;
 
         // If PWM is already enabled, disable and restart it
-        if (pwm8->enabled == ENABLED) {
-            pwm8->enabled = DISABLED;
-            XMC_CCU8_SLICE_StartTimer(pwm8->slice);
+        if (pwm8->enabled) {
+            pwm8->enabled = false;
+            XMC_CCU8_SLICE_StopClearTimer(pwm8->slice);
+            // Reconfigure and restart PWM
+            analogWrite(pin, pwm8->d_cycle_val); // Use the saved duty cycle value
         }
 
         return SUCCESS; // Configuration successful
