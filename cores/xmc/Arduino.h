@@ -136,6 +136,7 @@ typedef struct {
     XMC_GPIO_MODE_t port_mode;
     XMC_CCU4_SLICE_PRESCALER_t prescaler;
     uint32_t period_timer_val;
+    int d_cycle_val;
     bool enabled;
 } XMC_PWM4_t;
 
@@ -152,6 +153,7 @@ typedef struct {
     XMC_GPIO_MODE_t port_mode;
     XMC_CCU8_SLICE_PRESCALER_t prescaler;
     uint32_t period_timer_val;
+    int d_cycle_val;
     bool enabled;
 } XMC_PWM8_t;
 #endif
