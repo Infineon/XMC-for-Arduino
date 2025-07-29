@@ -285,7 +285,7 @@ int analogRead(pin_size_t pinNumber) {
 // @Param: frequency - Frequency in Hz
 // @Return: -2 if invalid pin, -1 if invalid frequency, 0 on success
 //****************************************************************************
-int16_t setAnalogWriteFrequency(uint8_t pin, uint32_t frequency) {
+int16_t setAnalogWriteFrequency(pin_size_t pin, uint32_t frequency) {
     // Constants for return codes
     constexpr int16_t SUCCESS = 0;
     constexpr int16_t ERROR_INVALID_FREQUENCY = -1;
@@ -293,7 +293,7 @@ int16_t setAnalogWriteFrequency(uint8_t pin, uint32_t frequency) {
     constexpr uint32_t MAX_16BIT_TIMER_COUNT = 65536U;
 
     // Variables for computation
-    XMC_CCU4_SLICE_PRESCALER_t prescaler = XMC_CCU4_SLICE_PRESCALER_1;
+    uint16_t prescaler = 0U;
     uint16_t period;
     int16_t resource;
 
@@ -303,11 +303,12 @@ int16_t setAnalogWriteFrequency(uint8_t pin, uint32_t frequency) {
     }
 
     // Calculate prescaler value
-    while (prescaler <= XMC_CCU4_SLICE_PRESCALER_32768) {
+    while (prescaler <=
+           XMC_CCU4_SLICE_PRESCALER_32768) { // As same as XMC_CCU8_SLICE_PRESCALER_32768
         if (frequency > (PCLK / ((1U << prescaler) * MAX_16BIT_TIMER_COUNT))) {
             break;
         }
-        prescaler = static_cast<XMC_CCU4_SLICE_PRESCALER_t>(static_cast<int>(prescaler) + 1);
+        prescaler++;
     }
 
     // Calculate timer period
