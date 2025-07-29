@@ -252,7 +252,6 @@ XMC_UART_t XMC_UART_0 = {.channel = XMC_UART0_CH0,
                          .irq_service_request = 0};
 
 Uart Serial(&XMC_UART_0);
-Uart Serial(&XMC_UART_0);
 
     // // SPI instance
     // XMC_SPI_t XMC_SPI_0 = {
