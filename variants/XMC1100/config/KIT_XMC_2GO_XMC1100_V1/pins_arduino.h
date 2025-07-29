@@ -105,7 +105,7 @@ extern uint8_t SCK;
 #define LED2 15
 #define LED_BUILTIN LED1
 
-#define digitalPinToInterrupt(p) (((p) == 9) ? 0 : NOT_AN_INTERRUPT)
+#define digitalPinToInterrupt(p) (((p) == 9) ? 0 : -1)
 
 #ifdef ARDUINO_MAIN
 // Mapping of digital pins and comments
@@ -199,6 +199,7 @@ XMC_UART_t XMC_UART_0 = {.channel = XMC_UART0_CH0,
                          .irq_num = USIC0_0_IRQn,
                          .irq_service_request = 0};
 
+Uart Serial(&XMC_UART_0);
 Uart Serial(&XMC_UART_0);
 
     // SPI instance
@@ -308,5 +309,4 @@ void USIC0_0_IRQHandler() { Serial.IrqHandler(); }
 }
     #endif
 #endif /* ARDUINO_MAIN */
-
-#endif /* PINS_ARDUINO_H_ */
+#endif // PINS_ARDUINO_H_
