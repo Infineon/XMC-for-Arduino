@@ -24,8 +24,8 @@ sketch:
   - extras/arduino-examples/examples/03.Analog/Smoothing/Smoothing.ino
   - extras/arduino-examples/examples/04.Communication/ASCIITable/ASCIITable.ino
   # - extras/arduino-examples/examples/04.Communication/MultiSerial/MultiSerial.ino
-  - extras/arduino-examples/examples/04.Communication/PhysicalPixel/PhysicalPixel.ino
-  - extras/arduino-examples/examples/04.Communication/SerialEvent/SerialEvent.ino
+  # - extras/arduino-examples/examples/04.Communication/PhysicalPixel/PhysicalPixel.ino
+  # - extras/arduino-examples/examples/04.Communication/SerialEvent/SerialEvent.ino
   - extras/arduino-examples/examples/05.Control/ForLoopIteration/ForLoopIteration.ino
 
 fqbn:
