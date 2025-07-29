@@ -105,7 +105,7 @@ extern uint8_t SCK;
 #define BUTTON1 68
 #define BUTTON2 57
 
-#define digitalPinToInterrupt(p) ((p) == 2 ? 0 : ((p) == 3 ? 1 : NOT_AN_INTERRUPT))
+#define digitalPinToInterrupt(p) ((p) == 2 ? 0 : ((p) == 3 ? 1 : -1))
 
 #ifdef ARDUINO_MAIN
 // Mapping of digital pins and comments
@@ -355,7 +355,7 @@ XMC_UART_t XMC_UART_0 = {
     .irq_service_request = 0};
 
 // Single Hardware Serial object for both UART interfaces
-UART Serial(&XMC_UART_0);
+Uart Serial(&XMC_UART_0);
 
     // SPI instance
     // XMC_SPI_t XMC_SPI_0 = {
@@ -431,5 +431,4 @@ void USIC1_0_IRQHandler() { Serial.IrqHandler(); }
 }
     #endif
 #endif /* ARDUINO_MAIN*/
-
-#endif /* PINS_ARDUINO_H_ */
+#endif
