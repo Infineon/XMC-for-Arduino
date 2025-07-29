@@ -100,7 +100,7 @@ void analogWrite(pin_size_t pinNumber, int value) {
         XMC_GPIO_SetMode(pwm4->port_pin.port, pwm4->port_pin.pin,
                          (XMC_GPIO_MODE_t)(XMC_GPIO_MODE_OUTPUT_PUSH_PULL | pwm4->port_mode));
         XMC_CCU4_SLICE_StartTimer(pwm4->slice);
-
+        pwm4->d_cycle_val = value;
         return;
     }
 #if defined(CCU8V2) || defined(CCU8V1)
@@ -129,6 +129,7 @@ void analogWrite(pin_size_t pinNumber, int value) {
         XMC_GPIO_SetMode(pwm8->port_pin.port, pwm8->port_pin.pin,
                          (XMC_GPIO_MODE_t)(XMC_GPIO_MODE_OUTPUT_PUSH_PULL | pwm8->port_mode));
         XMC_CCU8_SLICE_StartTimer(pwm8->slice);
+        pwm8->d_cycle_val = value;
         return;
     }
 #endif
@@ -275,6 +276,87 @@ int analogRead(pin_size_t pinNumber) {
         value = ((value & VADC_GLOBRES_RESULT_Msk) >> (ADC_MAX_READ_RESOLUTION - _readResolution));
     }
     return value;
+}
+
+//****************************************************************************
+// @Function: setAnalogWriteFrequency
+// @Brief: Sets the frequency for analogWrite PWM.
+// @Param: pin - The pin number
+// @Param: frequency - Frequency in Hz
+// @Return: -2 if invalid pin, -1 if invalid frequency, 0 on success
+//****************************************************************************
+int16_t setAnalogWriteFrequency(pin_size_t pin, uint32_t frequency) {
+    // Constants for return codes
+    constexpr int16_t SUCCESS = 0;
+    constexpr int16_t ERROR_INVALID_FREQUENCY = -1;
+    constexpr int16_t ERROR_NO_PWM_RESOURCE = -2;
+    constexpr uint32_t MAX_16BIT_TIMER_COUNT = 65536U;
+
+    // Variables for computation
+    uint16_t prescaler = 0U;
+    uint16_t period;
+    int16_t resource;
+
+    // Check if frequency is within a valid range
+    if (frequency == 0 || frequency >= PCLK) {
+        return ERROR_INVALID_FREQUENCY; // Frequency too high, cannot configure
+    }
+
+    // Calculate prescaler value
+    while (prescaler <=
+           XMC_CCU4_SLICE_PRESCALER_32768) { // As same as XMC_CCU8_SLICE_PRESCALER_32768
+        if (frequency > (PCLK / ((1U << prescaler) * MAX_16BIT_TIMER_COUNT))) {
+            break;
+        }
+        prescaler++;
+    }
+
+    // Calculate timer period
+    period = (PCLK / ((1U << prescaler) * frequency)) - 1;
+
+    // Attempt to configure PWM4
+    resource = scan_map_table(mapping_pin_PWM4, pin);
+    if (resource >= 0) {
+        XMC_PWM4_t *pwm4 = &mapping_pwm4[resource];
+
+        pwm4->prescaler = static_cast<XMC_CCU4_SLICE_PRESCALER_t>(prescaler);
+        pwm4->period_timer_val = period;
+
+        // If PWM is already enabled, disable and restart it
+        if (pwm4->enabled) {
+            // Disable to reset the compare value
+            pwm4->enabled = false;
+            XMC_CCU4_SLICE_StopClearTimer(pwm4->slice);
+            // Reconfigure and restart PWM
+            analogWrite(pin, pwm4->d_cycle_val); // Use the saved duty cycle value
+        }
+
+        return SUCCESS; // Configuration successful
+    }
+
+#if defined(CCU8V2) || defined(CCU8V1)
+    // Attempt to configure PWM8
+    resource = scan_map_table(mapping_pin_PWM8, pin);
+    if (resource >= 0) {
+        XMC_PWM8_t *pwm8 = &mapping_pwm8[resource];
+
+        pwm8->prescaler = static_cast<XMC_CCU8_SLICE_PRESCALER_t>(prescaler);
+        pwm8->period_timer_val = period;
+
+        // If PWM is already enabled, disable and restart it
+        if (pwm8->enabled) {
+            pwm8->enabled = false;
+            XMC_CCU8_SLICE_StopClearTimer(pwm8->slice);
+            // Reconfigure and restart PWM
+            analogWrite(pin, pwm8->d_cycle_val); // Use the saved duty cycle value
+        }
+
+        return SUCCESS; // Configuration successful
+    }
+#endif
+
+    // No matching PWM resource found
+    return ERROR_NO_PWM_RESOURCE;
 }
 
 //****************************************************************************

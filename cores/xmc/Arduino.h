@@ -136,6 +136,7 @@ typedef struct {
     XMC_GPIO_MODE_t port_mode;
     XMC_CCU4_SLICE_PRESCALER_t prescaler;
     uint32_t period_timer_val;
+    int d_cycle_val;
     bool enabled;
 } XMC_PWM4_t;
 
@@ -152,6 +153,7 @@ typedef struct {
     XMC_GPIO_MODE_t port_mode;
     XMC_CCU8_SLICE_PRESCALER_t prescaler;
     uint32_t period_timer_val;
+    int d_cycle_val;
     bool enabled;
 } XMC_PWM8_t;
 #endif
@@ -338,6 +340,17 @@ extern void analogReadResolution(int res);
  * \param res
  */
 extern void analogWriteResolution(int res);
+
+/*
+ * \brief Sets the frequency for analogWrite PWM.
+ * \note Default value is 490 Hz
+ *
+ * \param pin
+ * \param frequency in Hz
+ *
+ * \return 0 = success, -1 = invalid frequency, -2 = wrong pin
+ */
+extern int16_t setAnalogWriteFrequency(pin_size_t pin, uint32_t frequency);
 //****************************************************************************
 // @Arduino Core Includes
 //****************************************************************************
