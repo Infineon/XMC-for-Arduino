@@ -2,7 +2,7 @@
 
 XMC_CCU4_SLICE_t *Tone::active_pwm4_slice = nullptr; // Active CCU4 slice
 XMC_CCU4_MODULE_t *Tone::active_pwm4_ccu = nullptr;  // Active CCU4 module
-#if defined(CCU8V2) || defined(CCU8V1) || defined(CCU8V1)
+#if defined(CCU8V2) || defined(CCU8V1) || defined(CCU8V3)
 XMC_CCU8_MODULE_t *Tone::active_pwm8_ccu = nullptr;  // Active CCU8 module
 XMC_CCU8_SLICE_t *Tone::active_pwm8_slice = nullptr; // Active CCU8 slice
 #endif
@@ -33,7 +33,7 @@ void Tone::play(pin_size_t pin, unsigned int frequency, unsigned long duration) 
             scheduleToneTask(pin, duration);
         }
     }
-#if defined(CCU8V2) || defined(CCU8V1)
+#if defined(CCU8V2) || defined(CCU8V1) || defined(CCU8V3)
     else if ((pin_index = scanMapTable(mapping_pin_PWM8, pin)) >= 0) {
         XMC_PWM8_t *pwm8 = &mapping_pwm8[pin_index];
         active_pwm8_slice = pwm8->slice; // Store the active CCU8 slice
@@ -59,7 +59,7 @@ void Tone::stop(pin_size_t pin) {
         XMC_CCU4_SLICE_StopTimer(active_pwm4_slice);
         XMC_CCU4_DisableClock(active_pwm4_ccu, slice_number_ccu4);
     }
-#if defined(CCU8V2) || defined(CCU8V1)
+#if defined(CCU8V2) || defined(CCU8V1) || defined(CCU8V3)
     // Stop CCU8-based PWM
     else if (active_pwm8_slice && active_pwm8_ccu) {
         XMC_CCU8_SLICE_StopTimer(active_pwm8_slice);
@@ -109,7 +109,7 @@ void Tone::configureTone(pin_size_t pin, unsigned int frequency) {
             pwm4->ccu, XMC_CCU4_SHADOW_TRANSFER_SLICE_0 | XMC_CCU4_SHADOW_TRANSFER_SLICE_2 |
                            XMC_CCU4_SHADOW_TRANSFER_SLICE_3 | XMC_CCU4_SHADOW_TRANSFER_SLICE_1);
     }
-#if defined(CCU8V2) || defined(CCU8V1)
+#if defined(CCU8V2) || defined(CCU8V1) || defined(CCU8V3)
     else if ((pin_index = scanMapTable(mapping_pin_PWM8, pin)) >= 0) {
         XMC_PWM8_t *pwm8 = &mapping_pwm8[pin_index];
         XMC_CCU8_SLICE_COMPARE_CONFIG_t compare_config;
