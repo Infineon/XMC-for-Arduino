@@ -126,7 +126,6 @@ findID      Get ID of first task from task address
 // @Project Includes
 //****************************************************************************
 #include "Arduino.h"
-// #include "Tone.h"
 extern int tone_irq_action(int, int16_t); // TODO: not needed for timer yet.
 
 //****************************************************************************
@@ -199,8 +198,7 @@ void wiring_time_init(void) {
         taskTable[i].param = i; // Preset user parameter to task number
         // Fill with call back function addresses
         if (i < NUM_TONE_PINS) {
-            // tasks[i] = NULL;
-            tasks[i] = tone_irq_action; // // TODO: Tone callbacks, not needed for timer yet.
+            tasks[i] = tone_irq_action;
         } else {
             tasks[i] = NULL; // Special case delay() ms callback
         }

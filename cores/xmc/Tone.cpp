@@ -2,8 +2,7 @@
 
 XMC_CCU4_SLICE_t *Tone::active_pwm4_slice = nullptr; // Active CCU4 slice
 XMC_CCU4_MODULE_t *Tone::active_pwm4_ccu = nullptr;  // Active CCU4 module
-#if defined(KIT_XMC_PLT2GO_XMC4200) || defined(KIT_XMC_PLT2GO_XMC4400) || \
-    defined(KIT_XMC13_BOOT_001) || defined(KIT_XMC47_RELAX)
+#if defined(CCU8V2) || defined(CCU8V1) || defined(CCU8V1)
 XMC_CCU8_MODULE_t *Tone::active_pwm8_ccu = nullptr;  // Active CCU8 module
 XMC_CCU8_SLICE_t *Tone::active_pwm8_slice = nullptr; // Active CCU8 slice
 #endif
@@ -70,7 +69,6 @@ void Tone::stop(pin_size_t pin) {
     // Unregister any scheduled tasks for this tone
     tone_durations[taskId] = 0;
     setInterval(taskId, 0); // Clear task interval
-    // stopTask(taskId);
 }
 
 // Tone duration management callback
