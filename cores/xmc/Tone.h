@@ -31,8 +31,7 @@ private:
 
     static XMC_CCU4_SLICE_t *active_pwm4_slice; // Active CCU4 slice
     static XMC_CCU4_MODULE_t *active_pwm4_ccu;  // Active CCU4 module
-    #if defined(KIT_XMC_PLT2GO_XMC4200) || defined(KIT_XMC_PLT2GO_XMC4400) || \
-        defined(KIT_XMC13_BOOT_001) || defined(KIT_XMC47_RELAX)
+    #if defined(CCU8V2) || defined(CCU8V1) || defined(CCU8V3)
     static XMC_CCU8_MODULE_t *active_pwm8_ccu;  // Active CCU8 module
     static XMC_CCU8_SLICE_t *active_pwm8_slice; // Active CCU8 slice
     #endif
