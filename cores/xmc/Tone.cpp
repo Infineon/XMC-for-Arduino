@@ -1,13 +1,5 @@
 #include "Arduino.h"
 
-XMC_CCU4_SLICE_t *Tone::active_pwm4_slice = nullptr; // Active CCU4 slice
-XMC_CCU4_MODULE_t *Tone::active_pwm4_ccu = nullptr;  // Active CCU4 module
-#if defined(CCU8V2) || defined(CCU8V1)
-XMC_CCU8_MODULE_t *Tone::active_pwm8_ccu = nullptr;  // Active CCU8 module
-XMC_CCU8_SLICE_t *Tone::active_pwm8_slice = nullptr; // Active CCU8 slice
-#endif
-uint8_t Tone::slice_number_ccu4 = 0;
-uint8_t Tone::slice_number_ccu8 = 0;
 volatile unsigned long tone_durations[NUM_TONE_PINS] = {0};
 Tone inst_Tone;
 
@@ -22,9 +14,6 @@ void Tone::play(pin_size_t pin, unsigned int frequency, unsigned long duration) 
     stop(pin);
     if ((pin_index = scanMapTable(mapping_pin_PWM4, pin)) >= 0) {
         XMC_PWM4_t *pwm4 = &mapping_pwm4[pin_index];
-        active_pwm4_slice = pwm4->slice;     // Store the active CCU4 slice
-        active_pwm4_ccu = pwm4->ccu;         // Store the active CCU4 module
-        slice_number_ccu4 = pwm4->slice_num; // Store the slice number
         configureTone(pin, frequency);
         XMC_GPIO_SetMode(pwm4->port_pin.port, pwm4->port_pin.pin,
                          (XMC_GPIO_MODE_t)(XMC_GPIO_MODE_OUTPUT_PUSH_PULL | pwm4->port_mode));
@@ -36,9 +25,6 @@ void Tone::play(pin_size_t pin, unsigned int frequency, unsigned long duration) 
 #if defined(CCU8V2) || defined(CCU8V1)
     else if ((pin_index = scanMapTable(mapping_pin_PWM8, pin)) >= 0) {
         XMC_PWM8_t *pwm8 = &mapping_pwm8[pin_index];
-        active_pwm8_slice = pwm8->slice; // Store the active CCU8 slice
-        active_pwm8_ccu = pwm8->ccu;     // Store the active CCU8 module
-        slice_number_ccu8 = pwm8->slice_num;
         configureTone(pin, frequency);
         XMC_GPIO_SetMode(pwm8->port_pin.port, pwm8->port_pin.pin,
                          (XMC_GPIO_MODE_t)(XMC_GPIO_MODE_OUTPUT_PUSH_PULL | pwm8->port_mode));
@@ -52,18 +38,20 @@ void Tone::play(pin_size_t pin, unsigned int frequency, unsigned long duration) 
 }
 
 void Tone::stop(pin_size_t pin) {
-    int taskId = pin % NUM_TONE_PINS;
+    int taskId = 0;
 
-    // Stop CCU4-based PWM
-    if (active_pwm4_slice && active_pwm4_ccu) {
-        XMC_CCU4_SLICE_StopTimer(active_pwm4_slice);
-        XMC_CCU4_DisableClock(active_pwm4_ccu, slice_number_ccu4);
+    int pin_index;
+    if ((pin_index = scanMapTable(mapping_pin_PWM4, pin)) >= 0) {
+        XMC_PWM4_t *_XMC_pwm4_config = &mapping_pwm4[pin_index];
+        XMC_CCU4_SLICE_StopTimer(_XMC_pwm4_config->slice); // stop the timer
+        XMC_CCU4_DisableClock(_XMC_pwm4_config->ccu,
+                              _XMC_pwm4_config->slice_num); // Disable the clock
     }
 #if defined(CCU8V2) || defined(CCU8V1)
-    // Stop CCU8-based PWM
-    else if (active_pwm8_slice && active_pwm8_ccu) {
-        XMC_CCU8_SLICE_StopTimer(active_pwm8_slice);
-        XMC_CCU8_DisableClock(active_pwm8_ccu, slice_number_ccu8);
+    else if ((pin_index = scanMapTable(mapping_pin_PWM8, pin)) >= 0) {
+        XMC_PWM8_t *pwm8 = &mapping_pwm8[pin_index];
+        XMC_CCU8_SLICE_StopTimer(pwm8->slice);             // stop the timer
+        XMC_CCU8_DisableClock(pwm8->ccu, pwm8->slice_num); // Disable the clock
     }
 #endif
     // Unregister any scheduled tasks for this tone
@@ -137,7 +125,7 @@ void Tone::configureTone(pin_size_t pin, unsigned int frequency) {
 }
 
 void Tone::scheduleToneTask(pin_size_t pin, unsigned long duration) {
-    int taskId = pin % NUM_TONE_PINS;
+    int taskId = 0;
 
     tone_durations[taskId] = duration;
     setParam(taskId, pin);
