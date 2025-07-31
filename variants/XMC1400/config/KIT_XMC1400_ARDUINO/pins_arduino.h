@@ -202,9 +202,13 @@ XMC_PWM4_t mapping_pwm4[] = {
     {CCU40, CCU40_CC41, 1, mapping_port_pin[11], P0_1_AF_CCU40_OUT1, XMC_CCU4_SLICE_PRESCALER_64,
      PWM4_TIMER_PERIOD, 0, false} // PWM disabled  4
 };
-
 const uint8_t NUM_PWM4 = (sizeof(mapping_pwm4) / sizeof(XMC_PWM4_t));
-const uint8_t NUM_PWM = (sizeof(mapping_pwm4) / sizeof(XMC_PWM4_t));
+
+/* Configurations of PWM channels for CCU8 type */
+const uint8_t mapping_pin_PWM8[][2] = {{255, 255}};
+XMC_PWM8_t mapping_pwm8[] = {}; // Empty for now, no CCU8 channels defined
+
+const uint8_t NUM_PWM = NUM_PWM4; // Currently only PWM4 channels are defined
 
 /* Analog Pin mappings and configurations */
 // ADC grouping for XMC 1400 series.
