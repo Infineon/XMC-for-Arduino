@@ -33,7 +33,7 @@
 //****************************************************************************
 // @Defines
 //****************************************************************************
-#define XMC_BOARD XMC 4200 Platform 2GO
+#define XMC_BOARD KIT_XMC_PLT2GO_XMC4200
 
 /* On board LED is ON when digital output is 1, HIGH, TRUE, ON */
 #define XMC_LED_ON 1
@@ -53,7 +53,7 @@ extern const uint8_t NUM_ANALOG_OUTPUTS;
 #define NUM_LEDS 1
 #define NUM_BUTTONS 1
 #define NUM_SERIAL 1
-#define NUM_TONE_PINS 7
+#define NUM_TONE_PINS 1 // At a time, run only one tone pin
 #define NUM_TASKS_VARIANT 12
 #define NUM_SPI 1
 #define NUM_I2C 1
@@ -94,7 +94,7 @@ extern uint8_t SCK;
     LED1 // Dummy LED define macro; added to comply with LED Library examples in CI/CD workflow
 #define BUTTON1 27 // Additional BUTTON1
 
-#define digitalPinToInterrupt(p) ((p) == 2 ? 0 : ((p) == 3 ? 1 : NOT_AN_INTERRUPT))
+#define digitalPinToInterrupt(p) ((p) == 2 ? 0 : ((p) == 3 ? 1 : -1))
 
 #ifdef ARDUINO_MAIN
 // Mapping of digital pins and comments
@@ -270,9 +270,9 @@ XMC_UART_t XMC_UART_1 = {
     .irq_service_request = 0};
 
 // Object instantiated of the HardwareSerial class for UART PC (debug) interface
-HardwareSerial Serial(&XMC_UART_0);
+Uart Serial(&XMC_UART_0);
 // Object instantiated of the HardwareSerial class for UART ONBOARD interface
-HardwareSerial Serial1(&XMC_UART_1);
+Uart Serial1(&XMC_UART_1);
 
 // SPI instance
 XMC_SPI_t XMC_SPI_0 = {
@@ -359,7 +359,5 @@ void USIC0_0_IRQHandler() { Serial.IrqHandler(); }
 #endif /* ARDUINO_MAIN*/
 
 #ifdef __cplusplus
-extern HardwareSerial Serial;
-extern HardwareSerial Serial1;
-#endif /* cplusplus */
+#endif
 #endif

@@ -103,7 +103,7 @@ void analogWrite(pin_size_t pinNumber, int value) {
 
         return;
     }
-#if defined(CCU8V2) || defined(CCU8V1)
+#if defined(CCU8V3) || defined(CCU8V2) || defined(CCU8V1)
     // Check if the pin supports PWM8
     else if ((resource = scan_map_table(mapping_pin_PWM8, pinNumber)) >= 0) {
         XMC_PWM8_t *pwm8 = &mapping_pwm8[resource];

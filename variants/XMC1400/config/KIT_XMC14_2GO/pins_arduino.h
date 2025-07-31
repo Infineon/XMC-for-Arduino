@@ -36,7 +36,7 @@
 // XMC_BOARD for stringifying into serial or other text outputs/logs
 // Note the actual name XMC and number MUST have a character between
 // to avoid issues with other defined macros e.g. XMC1100
-#define XMC_BOARD XMC 1400 XMC2GO
+#define XMC_BOARD KIT_XMC14_2GO
 
 /* On board LED is ON when digital output is 1, HIGH, TRUE, ON */
 #define XMC_LED_ON 1
@@ -51,16 +51,13 @@ extern const uint8_t NUM_INTERRUPT;
 extern const uint8_t NUM_ANALOG_INPUTS;
 #define NUM_LEDS 2
 #define NUM_SERIAL 1
-#define NUM_TONE_PINS 4 // PWM Pins
+#define NUM_TONE_PINS 1 // At a time, run only one tone pin
 #define NUM_TASKS_VARIANT 8
 #define NUM_SPI 1
 #define NUM_I2C 1
 
 // Indicate unit has RTC/Alarm
 #define HAS_RTC 1
-
-// Indicate variant has a GPIO pin used for Reset pin
-#define HAS_GPIO_RESET 1
 
 // Defines will be either set by ArduinoIDE in the menu or manually
 #ifdef SERIAL_HOSTPC
@@ -75,6 +72,8 @@ extern const uint8_t NUM_ANALOG_INPUTS;
 
 // Generate 490Hz @fCCU=1MHz
 #define PWM4_TIMER_PERIOD (2041U)
+// Generate 490Hz @fCCU=1MHz
+#define PWM8_TIMER_PERIOD (2041U)
 
 // PCLK = 2 * MCLK
 #define PCLK 96000000u
@@ -141,7 +140,7 @@ extern const uint8_t NUM_ANALOG_INPUTS;
 #define CAN0_3_IRQHandler IRQ7_Handler // CAN
 #define CAN0_3_IRQn IRQ7_IRQn
 
-#define digitalPinToInterrupt(p) (((p) == 9) ? 0 : NOT_AN_INTERRUPT)
+#define digitalPinToInterrupt(p) (((p) == 9) ? 0 : -1)
 
 #ifdef ARDUINO_MAIN
 // Mapping of digital pins and comments
@@ -196,8 +195,23 @@ XMC_PWM4_t mapping_pwm4[] = {
     {CCU41, CCU41_CC40, 0, mapping_port_pin[9], P1_4_AF_CCU41_OUT0, XMC_CCU4_SLICE_PRESCALER_64,
      PWM4_TIMER_PERIOD, false} // PWM disabled  9    P1.4
 };
-const uint8_t NUM_PWM = (sizeof(mapping_pwm4) / sizeof(XMC_PWM4_t));
 const uint8_t NUM_PWM4 = (sizeof(mapping_pwm4) / sizeof(XMC_PWM4_t));
+
+/* Mapping in same manner as PWM4 for PWM8 channels */
+const uint8_t mapping_pin_PWM8[][2] = {{4, 0}, {5, 1}, {255, 255}};
+
+/* Configurations of PWM channels for CCU8 type */
+XMC_PWM8_t mapping_pwm8[] = {
+    {CCU80, CCU80_CC83, 3, XMC_CCU8_SLICE_COMPARE_CHANNEL_1, mapping_port_pin[4],
+     P0_14_AF_CCU80_OUT31, XMC_CCU8_SLICE_PRESCALER_64, PWM8_TIMER_PERIOD,
+     false}, // PWM disabled  4   P0.14
+    {CCU80, CCU80_CC83, 3, XMC_CCU8_SLICE_COMPARE_CHANNEL_1, mapping_port_pin[5],
+     P0_15_AF_CCU80_OUT30, XMC_CCU8_SLICE_PRESCALER_64, PWM8_TIMER_PERIOD,
+     false} // PWM disabled  5   P0.15
+};
+const uint8_t NUM_PWM8 = (sizeof(mapping_pwm8) / sizeof(XMC_PWM8_t));
+const uint8_t NUM_PWM =
+    (sizeof(mapping_pwm4) / sizeof(XMC_PWM4_t)) + (sizeof(mapping_pwm8) / sizeof(XMC_PWM8_t));
 
 /* Analog Pin mappings and configurations */
 // XMC_ADC_t mapping_adc[] =
@@ -254,93 +268,95 @@ XMC_UART_t XMC_UART_0 = {.channel = XMC_UART0_CH0,
                          .irq_num = USIC0_0_IRQn,
                          .irq_service_request = 0};
 
-HardwareSerial Serial(&XMC_UART_0);
+Uart Serial(&XMC_UART_0);
 
-// SPI instance
-XMC_SPI_t XMC_SPI_0 = {
-    .channel = XMC_SPI1_CH1,
-    .channel_config = {.baudrate = 15984375U,
-                       .bus_mode = (XMC_SPI_CH_BUS_MODE_t)XMC_SPI_CH_BUS_MODE_MASTER,
-                       .selo_inversion = XMC_SPI_CH_SLAVE_SEL_INV_TO_MSLS,
-                       .parity_mode = XMC_USIC_CH_PARITY_MODE_NONE},
-    .mosi = {.port = (XMC_GPIO_PORT_t *)PORT0_BASE, .pin = (uint8_t)1},
-    .mosi_config = {.mode = XMC_GPIO_MODE_OUTPUT_PUSH_PULL_ALT9,
-                    .input_hysteresis = XMC_GPIO_INPUT_HYSTERESIS_STANDARD,
-                    .output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH
+    // // SPI instance
+    // XMC_SPI_t XMC_SPI_0 = {
+    //     .channel = XMC_SPI1_CH1,
+    //     .channel_config = {.baudrate = 15984375U,
+    //                        .bus_mode = (XMC_SPI_CH_BUS_MODE_t)XMC_SPI_CH_BUS_MODE_MASTER,
+    //                        .selo_inversion = XMC_SPI_CH_SLAVE_SEL_INV_TO_MSLS,
+    //                        .parity_mode = XMC_USIC_CH_PARITY_MODE_NONE},
+    //     .mosi = {.port = (XMC_GPIO_PORT_t *)PORT0_BASE, .pin = (uint8_t)1},
+    //     .mosi_config = {.mode = XMC_GPIO_MODE_OUTPUT_PUSH_PULL_ALT9,
+    //                     .input_hysteresis = XMC_GPIO_INPUT_HYSTERESIS_STANDARD,
+    //                     .output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH
 
-    },
-    .miso = {.port = (XMC_GPIO_PORT_t *)PORT0_BASE, .pin = (uint8_t)0},
-    .miso_config = {.mode = XMC_GPIO_MODE_INPUT_TRISTATE,
-                    .input_hysteresis = XMC_GPIO_INPUT_HYSTERESIS_STANDARD},
-    .input_source = XMC_INPUT_A,
-    .sclkout = {.port = (XMC_GPIO_PORT_t *)PORT0_BASE, .pin = (uint8_t)3},
-    .sclkout_config = {.mode = XMC_GPIO_MODE_OUTPUT_PUSH_PULL_ALT8,
-                       .input_hysteresis = XMC_GPIO_INPUT_HYSTERESIS_STANDARD,
-                       .output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH
+    //     },
+    //     .miso = {.port = (XMC_GPIO_PORT_t *)PORT0_BASE, .pin = (uint8_t)0},
+    //     .miso_config = {.mode = XMC_GPIO_MODE_INPUT_TRISTATE,
+    //                     .input_hysteresis = XMC_GPIO_INPUT_HYSTERESIS_STANDARD},
+    //     .input_source = XMC_INPUT_A,
+    //     .sclkout = {.port = (XMC_GPIO_PORT_t *)PORT0_BASE, .pin = (uint8_t)3},
+    //     .sclkout_config = {.mode = XMC_GPIO_MODE_OUTPUT_PUSH_PULL_ALT8,
+    //                        .input_hysteresis = XMC_GPIO_INPUT_HYSTERESIS_STANDARD,
+    //                        .output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH
 
-    }};
+    //     }};
 
-XMC_I2C_t XMC_I2C_0 = {.channel = XMC_I2C0_CH1,
-                       .channel_config = {.baudrate = (uint32_t)(100000U), .address = 0U},
-                       .sda = {.port = (XMC_GPIO_PORT_t *)PORT2_BASE, .pin = (uint8_t)10},
-                       .sda_config = {.mode = XMC_GPIO_MODE_OUTPUT_OPEN_DRAIN_ALT7,
-                                      .input_hysteresis = XMC_GPIO_INPUT_HYSTERESIS_STANDARD,
-                                      .output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH
+    // XMC_I2C_t XMC_I2C_0 = {.channel = XMC_I2C0_CH1,
+    //                        .channel_config = {.baudrate = (uint32_t)(100000U), .address = 0U},
+    //                        .sda = {.port = (XMC_GPIO_PORT_t *)PORT2_BASE, .pin = (uint8_t)10},
+    //                        .sda_config = {.mode = XMC_GPIO_MODE_OUTPUT_OPEN_DRAIN_ALT7,
+    //                                       .input_hysteresis = XMC_GPIO_INPUT_HYSTERESIS_STANDARD,
+    //                                       .output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH
 
-                       },
-                       .scl = {.port = (XMC_GPIO_PORT_t *)PORT2_BASE, .pin = (uint8_t)11},
-                       .scl_config = {.mode = XMC_GPIO_MODE_OUTPUT_OPEN_DRAIN_ALT6,
-                                      .input_hysteresis = XMC_GPIO_INPUT_HYSTERESIS_STANDARD,
-                                      .output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH
+    //                        },
+    //                        .scl = {.port = (XMC_GPIO_PORT_t *)PORT2_BASE, .pin = (uint8_t)11},
+    //                        .scl_config = {.mode = XMC_GPIO_MODE_OUTPUT_OPEN_DRAIN_ALT6,
+    //                                       .input_hysteresis = XMC_GPIO_INPUT_HYSTERESIS_STANDARD,
+    //                                       .output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH
 
-                       },
-                       .input_source_dx0 = XMC_INPUT_F,
-                       .input_source_dx1 = XMC_INPUT_E,
-                       .slave_receive_irq_num = (IRQn_Type)USIC0_4_IRQn,
-                       .slave_receive_irq_service_request = 4,
-                       .protocol_irq_num = (IRQn_Type)USIC0_5_IRQn,
-                       .protocol_irq_service_request = 5};
+    //                        },
+    //                        .input_source_dx0 = XMC_INPUT_F,
+    //                        .input_source_dx1 = XMC_INPUT_E,
+    //                        .slave_receive_irq_num = (IRQn_Type)USIC0_4_IRQn,
+    //                        .slave_receive_irq_service_request = 4,
+    //                        .protocol_irq_num = (IRQn_Type)USIC0_5_IRQn,
+    //                        .protocol_irq_service_request = 5};
 
-XMC_I2S_t i2s_config = {.input_config = {.mode = XMC_GPIO_MODE_INPUT_TRISTATE,
-                                         .input_hysteresis = XMC_GPIO_INPUT_HYSTERESIS_STANDARD,
-                                         .output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH
+    // XMC_I2S_t i2s_config = {.input_config = {.mode = XMC_GPIO_MODE_INPUT_TRISTATE,
+    //                                          .input_hysteresis =
+    //                                          XMC_GPIO_INPUT_HYSTERESIS_STANDARD, .output_level =
+    //                                          XMC_GPIO_OUTPUT_LEVEL_HIGH
 
-                        },
-                        .sclk_config = {.mode = XMC_GPIO_MODE_OUTPUT_PUSH_PULL_ALT8,
-                                        .input_hysteresis = XMC_GPIO_INPUT_HYSTERESIS_STANDARD,
-                                        .output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH
+    //                         },
+    //                         .sclk_config = {.mode = XMC_GPIO_MODE_OUTPUT_PUSH_PULL_ALT8,
+    //                                         .input_hysteresis =
+    //                                         XMC_GPIO_INPUT_HYSTERESIS_STANDARD, .output_level =
+    //                                         XMC_GPIO_OUTPUT_LEVEL_HIGH
 
-                        },
-                        .wa_config = {.mode = XMC_GPIO_MODE_OUTPUT_PUSH_PULL_ALT8,
-                                      .input_hysteresis = XMC_GPIO_INPUT_HYSTERESIS_STANDARD,
-                                      .output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH
+    //                         },
+    //                         .wa_config = {.mode = XMC_GPIO_MODE_OUTPUT_PUSH_PULL_ALT8,
+    //                                       .input_hysteresis = XMC_GPIO_INPUT_HYSTERESIS_STANDARD,
+    //                                       .output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH
 
-                        },
-                        .protocol_irq_num = (IRQn_Type)USIC1_2_IRQn,
-                        .protocol_irq_service_request = 2,
-                        .protocol_irq_source = XMC_SCU_IRQCTRL_USIC1_SR2_IRQ11};
+    //                         },
+    //                         .protocol_irq_num = (IRQn_Type)USIC1_2_IRQn,
+    //                         .protocol_irq_service_request = 2,
+    //                         .protocol_irq_source = XMC_SCU_IRQCTRL_USIC1_SR2_IRQ11};
 
-    // XMC CAN instance
-    #ifdef CAN_xmc
-XMC_ARD_CAN_t XMC_CAN_0 = {.can_node = CAN_NODE0,
-                           .can_node_num = XMC_NODE_NUM_0,
-                           .can_clock = XMC_CAN_CANCLKSRC_MCLK,
-                           .can_frequency = (uint32_t)48000000,
-                           .rx = {.port = (XMC_GPIO_PORT_t *)PORT1_BASE, .pin = (uint8_t)1},
-                           .rx_config =
-                               {
-                                   .mode = XMC_GPIO_MODE_INPUT_TRISTATE,
-                               },
-                           .tx = {.port = (XMC_GPIO_PORT_t *)PORT1_BASE, .pin = (uint8_t)0},
-                           .tx_config =
-                               {
-                                   .mode = XMC_GPIO_MODE_OUTPUT_PUSH_PULL_ALT9,
-                               },
-                           .node_input = CAN_NODE0_RXD_P1_1,
-                           .irq_num = CAN0_3_IRQn,
-                           .irq_service_request = 3,
-                           .irq_source = XMC_SCU_IRQCTRL_CAN0_SR3_IRQ7};
-    #endif
+    //     // XMC CAN instance
+    //     #ifdef CAN_xmc
+    // XMC_ARD_CAN_t XMC_CAN_0 = {.can_node = CAN_NODE0,
+    //                            .can_node_num = XMC_NODE_NUM_0,
+    //                            .can_clock = XMC_CAN_CANCLKSRC_MCLK,
+    //                            .can_frequency = (uint32_t)48000000,
+    //                            .rx = {.port = (XMC_GPIO_PORT_t *)PORT1_BASE, .pin = (uint8_t)1},
+    //                            .rx_config =
+    //                                {
+    //                                    .mode = XMC_GPIO_MODE_INPUT_TRISTATE,
+    //                                },
+    //                            .tx = {.port = (XMC_GPIO_PORT_t *)PORT1_BASE, .pin = (uint8_t)0},
+    //                            .tx_config =
+    //                                {
+    //                                    .mode = XMC_GPIO_MODE_OUTPUT_PUSH_PULL_ALT9,
+    //                                },
+    //                            .node_input = CAN_NODE0_RXD_P1_1,
+    //                            .irq_num = CAN0_3_IRQn,
+    //                            .irq_service_request = 3,
+    //                            .irq_source = XMC_SCU_IRQCTRL_CAN0_SR3_IRQ7};
+    //     #endif
 
     // Serial Interrupt and event handling
     #ifdef __cplusplus
@@ -361,9 +377,4 @@ void USIC0_0_IRQHandler() { Serial.IrqHandler(); }
 }
     #endif
 #endif /* ARDUINO_MAIN */
-
-#ifdef __cplusplus
-extern HardwareSerial Serial;
-#endif /* cplusplus */
-
 #endif // PINS_ARDUINO_H_

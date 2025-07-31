@@ -36,7 +36,7 @@
 // XMC_BOARD for stringifying into serial or other text outputs/logs
 // Note the actual name XMC and number MUST have a character between
 // to avoid issues with other defined macros e.g. XMC1100
-#define XMC_BOARD XMC 4700 Relax Kit
+#define XMC_BOARD KIT_XMC47_RELAX
 
 /* On board LED is ON when digital output is 1, HIGH, TRUE, ON */
 #define XMC_LED_ON 1
@@ -56,7 +56,7 @@ extern const uint8_t NUM_ANALOG_OUTPUTS;
 #define NUM_LEDS 2
 #define NUM_BUTTONS 2
 #define NUM_SERIAL 2
-#define NUM_TONE_PINS 16
+#define NUM_TONE_PINS 1 // At a time, run only one tone pin
 #define NUM_TASKS_VARIANT 32
 #define NUM_SPI 3
 #define NUM_I2C 2
