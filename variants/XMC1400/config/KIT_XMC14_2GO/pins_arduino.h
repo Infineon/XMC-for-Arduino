@@ -72,6 +72,8 @@ extern const uint8_t NUM_ANALOG_INPUTS;
 
 // Generate 490Hz @fCCU=1MHz
 #define PWM4_TIMER_PERIOD (2041U)
+// Generate 490Hz @fCCU=1MHz
+#define PWM8_TIMER_PERIOD (2041U)
 
 // PCLK = 2 * MCLK
 #define PCLK 96000000u
@@ -193,8 +195,23 @@ XMC_PWM4_t mapping_pwm4[] = {
     {CCU41, CCU41_CC40, 0, mapping_port_pin[9], P1_4_AF_CCU41_OUT0, XMC_CCU4_SLICE_PRESCALER_64,
      PWM4_TIMER_PERIOD, 0, false} // PWM disabled  9    P1.4
 };
-const uint8_t NUM_PWM = (sizeof(mapping_pwm4) / sizeof(XMC_PWM4_t));
 const uint8_t NUM_PWM4 = (sizeof(mapping_pwm4) / sizeof(XMC_PWM4_t));
+
+/* Mapping in same manner as PWM4 for PWM8 channels */
+const uint8_t mapping_pin_PWM8[][2] = {{4, 0}, {5, 1}, {255, 255}};
+
+/* Configurations of PWM channels for CCU8 type */
+XMC_PWM8_t mapping_pwm8[] = {
+    {CCU80, CCU80_CC83, 3, XMC_CCU8_SLICE_COMPARE_CHANNEL_1, mapping_port_pin[4],
+     P0_14_AF_CCU80_OUT31, XMC_CCU8_SLICE_PRESCALER_64, PWM8_TIMER_PERIOD,
+     false}, // PWM disabled  4   P0.14
+    {CCU80, CCU80_CC83, 3, XMC_CCU8_SLICE_COMPARE_CHANNEL_1, mapping_port_pin[5],
+     P0_15_AF_CCU80_OUT30, XMC_CCU8_SLICE_PRESCALER_64, PWM8_TIMER_PERIOD,
+     false} // PWM disabled  5   P0.15
+};
+const uint8_t NUM_PWM8 = (sizeof(mapping_pwm8) / sizeof(XMC_PWM8_t));
+const uint8_t NUM_PWM =
+    (sizeof(mapping_pwm4) / sizeof(XMC_PWM4_t)) + (sizeof(mapping_pwm8) / sizeof(XMC_PWM8_t));
 
 /* Analog Pin mappings and configurations */
 // XMC_ADC_t mapping_adc[] =
