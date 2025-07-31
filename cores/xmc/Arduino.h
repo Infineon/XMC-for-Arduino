@@ -140,7 +140,7 @@ typedef struct {
     bool enabled;
 } XMC_PWM4_t;
 
-#if defined(CCU8V2) || defined(CCU8V3) || defined(CCU8V1)
+#if defined(CCU8V3) || defined(CCU8V2) || defined(CCU8V1)
 /*
  * XMC PWM type (CCU8)
  */
