@@ -22,7 +22,7 @@ void Tone::play(pin_size_t pin, unsigned int frequency, unsigned long duration) 
             scheduleToneTask(pin, duration);
         }
     }
-#if defined(CCU8V2) || defined(CCU8V1)
+#if defined(CCU8V3) || defined(CCU8V2) || defined(CCU8V1)
     else if ((pin_index = scanMapTable(mapping_pin_PWM8, pin)) >= 0) {
         XMC_PWM8_t *pwm8 = &mapping_pwm8[pin_index];
         configureTone(pin, frequency);
@@ -47,7 +47,7 @@ void Tone::stop(pin_size_t pin) {
         XMC_CCU4_DisableClock(_XMC_pwm4_config->ccu,
                               _XMC_pwm4_config->slice_num); // Disable the clock
     }
-#if defined(CCU8V2) || defined(CCU8V1)
+#if defined(CCU8V3) || defined(CCU8V2) || defined(CCU8V1)
     else if ((pin_index = scanMapTable(mapping_pin_PWM8, pin)) >= 0) {
         XMC_PWM8_t *pwm8 = &mapping_pwm8[pin_index];
         XMC_CCU8_SLICE_StopTimer(pwm8->slice);             // stop the timer
@@ -97,7 +97,7 @@ void Tone::configureTone(pin_size_t pin, unsigned int frequency) {
             pwm4->ccu, XMC_CCU4_SHADOW_TRANSFER_SLICE_0 | XMC_CCU4_SHADOW_TRANSFER_SLICE_2 |
                            XMC_CCU4_SHADOW_TRANSFER_SLICE_3 | XMC_CCU4_SHADOW_TRANSFER_SLICE_1);
     }
-#if defined(CCU8V2) || defined(CCU8V1)
+#if defined(CCU8V3) || defined(CCU8V2) || defined(CCU8V1)
     else if ((pin_index = scanMapTable(mapping_pin_PWM8, pin)) >= 0) {
         XMC_PWM8_t *pwm8 = &mapping_pwm8[pin_index];
         XMC_CCU8_SLICE_COMPARE_CONFIG_t compare_config;
