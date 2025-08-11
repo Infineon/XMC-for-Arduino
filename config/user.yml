@@ -11,11 +11,15 @@ code-quality:
 
 
 unit-test:
-    # - unit-test-iic-pingpong-4700
-    - unit-test-iic-4700
+    - unit-test-iic-pingpong-4700
+    - unit-test-iic-pingpong-4700
+    - unit-test-iic-pingpong-4700
+    # - unit-test-iic-4700
     # - unit-test-uart-connected2-4700
-    - unit-test-timer-4700
-    - unit-test-timer-4700
-    - unit-test-timer-4700
+    # - unit-test-timer-4700
+    # - unit-test-timer-4700
+    # - unit-test-timer-4700
+    - unit-test-pwm-4700
+    - unit-test-pwm-4700
     - unit-test-pwm-4700
     # - unit-test-iic-pingpong-1400
