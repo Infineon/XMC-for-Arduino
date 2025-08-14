@@ -1,0 +1,13 @@
+name: HIL Checks
+
+on:
+  pull_request:
+  push:
+
+jobs:
+  makers-devops:
+    uses: Infineon/makers-devops/.github/workflows/hil_checks.yml@4.0.0-hil-integration
+    with:
+      project-yaml: config/project.yml
+      user-yaml: config/user.yml
+    secrets: inherit
