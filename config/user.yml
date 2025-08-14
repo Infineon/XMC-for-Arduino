@@ -1,0 +1,19 @@
+# code-quality:
+#     - source-code-quality-clang-tidy
+#     - source-code-quality-cppcheck
+#     - test-code-quality-clang-tidy
+#     - test-code-quality-cppcheck
+#     - code-quality-clang-format
+#     - code-quality-black-format
+
+# compile:
+#     - compile-psoc6-cy8ckit_062s2_ai
+
+
+unit-test:
+    - unit-test-iic-pingpong-4700
+    - unit-test-iic-4700
+#    - unit-test-uart-connected2-4700
+    - unit-test-timer-4700
+    - unit-test-pwm-4700
+#    - unit-test-iic-pingpong-1400
