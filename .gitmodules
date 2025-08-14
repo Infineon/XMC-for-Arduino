@@ -1,5 +1,5 @@
 [submodule "arduino-core-tests"]
-	path = tests/arduino-core-tests
+	path = extras/arduino-core-tests
 	url = https://github.com/Infineon/arduino-core-tests.git
 [submodule "cores/arduino-core-api"]
 	path = extras/arduino-core-api
