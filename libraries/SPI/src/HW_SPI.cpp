@@ -1,116 +1,292 @@
-/*
- * SPI Master library implementation for XMC microcontrollers.
- */
-
 #include "SPI.h"
+#include <stdlib.h>
 
-// Constructor
-XMC_SPIClass::XMC_SPIClass(XMC_SPI_t *spiConfig)
-    : XMC_SPI_Config(spiConfig),
-      initialized(false) {}
+void *operator new(size_t size) { return malloc(size); }
 
-// Explicit empty destructor
-XMC_SPIClass::~XMC_SPIClass() {
-    // Explicitly empty - no dynamic memory used
-}
+void operator delete(void *ptr) noexcept { free(ptr); }
 
-// Arduino SPI API Methods
-void XMC_SPIClass::begin() {
-    if (initialized)
-        return;
+#if !defined(USE_SW_SPI)
+    #include "Wire.h"
+
+    // swap SPI_default and SPI_for_xmc_SD if desired by user
+    #if defined(USE_XMC_RELAX_KIT_SD) && defined(XMC_SPI_for_xmc_SD)
+XMCSPIClass SPI(&XMC_SPI_default);
+XMCSPIClass SPI1(&XMC_SPI_for_xmc_SD);
+    #else // normal behaviour
+XMCSPIClass SPI(&XMC_SPI_default);
+        #if (NUM_SPI > 1)
+XMCSPIClass SPI1(&XMC_SPI_1);
+        #endif
+    #endif
+uint8_t SS = PIN_SPI_SS;
+uint8_t MOSI = PIN_SPI_MOSI;
+uint8_t MISO = PIN_SPI_MISO;
+uint8_t SCK = PIN_SPI_SCK;
+
+    #if (NUM_SPI > 2)
+XMCSPIClass SPI2(&XMC_SPI_2);
+        #if (NUM_SPI > 3)
+XMCSPIClass SPI3(&XMC_SPI_3);
+            #if (NUM_SPI > 4)
+XMCSPIClass SPI4(&XMC_SPI_4);
+            #endif
+        #endif
+    #endif
+
+//****************************************************************************
+// @Local Functions
+//****************************************************************************
+
+// Public Methods //////////////////////////////////////////////////////////////
+XMCSPIClass::XMCSPIClass(XMC_SPI_t *conf)
+    : XMC_SPI_config(conf),
+      initialized(false),
+      interruptMode(SPI_IMODE_NONE),
+      interruptSave(0),
+      interruptMask(0) {}
+
+XMCSPIClass::~XMCSPIClass() { end(); }
+
+void XMCSPIClass::begin() {
+    // Check if desire USIC channel is already in use
+    if ((XMC_SPI_config->channel->CCR & USIC_CH_CCR_MODE_Msk) == XMC_USIC_CH_OPERATING_MODE_I2C) {
+        Wire.end();
+    }
 
     init();
+
+    setBitOrder(_settings.getBitOrder());
+
+    setDataMode(_settings.getDataMode());
+
+    XMC_SPI_CH_SetBaudrate(XMC_SPI_config->channel, _settings.getClockFreq());
 }
 
-void XMC_SPIClass::end() {
-    if (!initialized)
+void XMCSPIClass::init() {
+    if (initialized) {
         return;
+    }
 
-    // Stop SPI hardware if in SPI mode
-    if ((XMC_SPI_Config->channel->CCR & USIC_CH_CCR_MODE_Msk) == XMC_USIC_CH_OPERATING_MODE_SPI) {
-        XMC_SPI_CH_Stop(XMC_SPI_Config->channel);
+    /* LLD initialization */
+    XMC_SPI_CH_Init(XMC_SPI_config->channel, &(XMC_SPI_config->channel_config));
+
+    /* Configure the data input line selected */
+    XMC_SPI_CH_SetInputSource(XMC_SPI_config->channel, XMC_SPI_CH_INPUT_DIN0,
+                              (uint8_t)XMC_SPI_config->input_source);
+
+    /* Start the SPI_Channel */
+    XMC_SPI_CH_Start(XMC_SPI_config->channel);
+
+    /* Initialize SPI SCLK out pin */
+    XMC_GPIO_Init((XMC_GPIO_PORT_t *)XMC_SPI_config->sclkout.port,
+                  (uint8_t)XMC_SPI_config->sclkout.pin, &(XMC_SPI_config->sclkout_config));
+
+    /* Configure the input pin properties */
+    XMC_GPIO_Init((XMC_GPIO_PORT_t *)XMC_SPI_config->miso.port, (uint8_t)XMC_SPI_config->miso.pin,
+                  &(XMC_SPI_config->miso_config));
+
+    /* Configure the output pin properties */
+    XMC_GPIO_Init((XMC_GPIO_PORT_t *)XMC_SPI_config->mosi.port, (uint8_t)XMC_SPI_config->mosi.pin,
+                  &(XMC_SPI_config->mosi_config));
+
+    interruptMode = SPI_IMODE_NONE;
+    interruptSave = 0;
+    interruptMask = 0;
+    initialized = true;
+}
+
+void XMCSPIClass::end() {
+    // Only disable HW when USIC is used for SPI
+    if ((XMC_SPI_config->channel->CCR & USIC_CH_CCR_MODE_Msk) == XMC_USIC_CH_OPERATING_MODE_SPI) {
+        XMC_SPI_CH_Stop(XMC_SPI_config->channel);
+
+        XMC_SPI_config->channel->DXCR[XMC_USIC_CH_INPUT_DX0] =
+            (uint32_t)(XMC_SPI_config->channel->DXCR[XMC_USIC_CH_INPUT_DX0] |
+                       (USIC_CH_DX0CR_DSEN_Msk)) &
+            (~USIC_CH_DX0CR_INSW_Msk);
+        XMC_USIC_CH_SetInputSource(XMC_SPI_config->channel, XMC_USIC_CH_INPUT_DX0, XMC_INPUT_A);
     }
 
     initialized = false;
 }
 
-uint8_t XMC_SPIClass::transfer(uint8_t data) {
-    // Send data via SPI
-    XMC_SPI_CH_Transmit(XMC_SPI_Config->channel, data, XMC_SPI_CH_MODE_STANDARD);
+// Function not used here
+void XMCSPIClass::usingInterrupt(int interruptNumber) {}
 
-    // Wait for data transmission to complete
-    while (!(XMC_SPI_CH_GetStatusFlag(XMC_SPI_Config->channel) &
-             XMC_SPI_CH_STATUS_FLAG_TRANSMIT_SHIFT_INDICATION))
+void XMCSPIClass::notUsingInterrupt(int interruptNumber) {}
+
+void XMCSPIClass::beginTransaction(arduino::SPISettings settings) {
+    // Check if desire USIC channel is already in use
+    if ((XMC_SPI_config->channel->CCR & USIC_CH_CCR_MODE_Msk) != XMC_USIC_CH_OPERATING_MODE_SPI) {
+        SPI.begin();
+    }
+    _settings = settings;
+    setBitOrder(settings.getBitOrder());
+    setDataMode(static_cast<uint8_t>(settings.getDataMode()));
+    XMC_SPI_CH_SetBaudrate(XMC_SPI_config->channel, settings.getClockFreq());
+
+    // TODO: Do sth with SS?
+}
+
+void XMCSPIClass::endTransaction(void) {
+    // TODO: inTransactionFlag and interrupt not use
+}
+
+void XMCSPIClass::setBitOrder(BitOrder order) {
+    if (order == LSBFIRST) {
+        XMC_SPI_CH_SetBitOrderLsbFirst(XMC_SPI_config->channel);
+    } else {
+        XMC_SPI_CH_SetBitOrderMsbFirst(XMC_SPI_config->channel);
+    }
+}
+
+void XMCSPIClass::setDataMode(uint8_t mode) {
+    switch (mode) {
+    case SPI_MODE0:
+        // Low if inactive, transmit on falling clock, receive on raising clock edge
+        XMC_SPI_CH_ConfigureShiftClockOutput(
+            XMC_SPI_config->channel, XMC_SPI_CH_BRG_SHIFT_CLOCK_PASSIVE_LEVEL_0_DELAY_ENABLED,
+            XMC_SPI_CH_BRG_SHIFT_CLOCK_OUTPUT_SCLK);
+        break;
+
+    case SPI_MODE1:
+        // Low if inactive, transmit on rising clock, receive on falling clock edge
+        XMC_SPI_CH_ConfigureShiftClockOutput(
+            XMC_SPI_config->channel, XMC_SPI_CH_BRG_SHIFT_CLOCK_PASSIVE_LEVEL_0_DELAY_DISABLED,
+            XMC_SPI_CH_BRG_SHIFT_CLOCK_OUTPUT_SCLK);
+        break;
+
+    case SPI_MODE2:
+        // High if inactive, transmit on rising clock, receive on falling clock edge
+        XMC_SPI_CH_ConfigureShiftClockOutput(
+            XMC_SPI_config->channel, XMC_SPI_CH_BRG_SHIFT_CLOCK_PASSIVE_LEVEL_1_DELAY_ENABLED,
+            XMC_SPI_CH_BRG_SHIFT_CLOCK_OUTPUT_SCLK);
+        break;
+
+    case SPI_MODE3:
+        // High if inactive, transmit on falling clock, receive on raising clock edge
+        XMC_SPI_CH_ConfigureShiftClockOutput(
+            XMC_SPI_config->channel, XMC_SPI_CH_BRG_SHIFT_CLOCK_PASSIVE_LEVEL_1_DELAY_DISABLED,
+            XMC_SPI_CH_BRG_SHIFT_CLOCK_OUTPUT_SCLK);
+        break;
+
+    default:
+        break;
+    }
+}
+
+void XMCSPIClass::setClockDivider(uint8_t div) {
+    switch (div) {
+    case SPI_CLOCK_DIV2:
+        XMC_SPI_CH_SetBaudrate(XMC_SPI_config->channel, 8000000U);
+        break;
+
+    case SPI_CLOCK_DIV4:
+        XMC_SPI_CH_SetBaudrate(XMC_SPI_config->channel, 4000000U);
+        break;
+
+    case SPI_CLOCK_DIV8:
+        XMC_SPI_CH_SetBaudrate(XMC_SPI_config->channel, 2000000U);
+        break;
+
+    case SPI_CLOCK_DIV16:
+        XMC_SPI_CH_SetBaudrate(XMC_SPI_config->channel, 1000000U);
+        break;
+
+    case SPI_CLOCK_DIV32:
+        XMC_SPI_CH_SetBaudrate(XMC_SPI_config->channel, 500000U);
+        break;
+
+    case SPI_CLOCK_DIV64:
+        XMC_SPI_CH_SetBaudrate(XMC_SPI_config->channel, 250000U);
+        break;
+
+    case SPI_CLOCK_DIV128:
+        XMC_SPI_CH_SetBaudrate(XMC_SPI_config->channel, 125000U);
+        break;
+
+    default:
+        break;
+    }
+}
+
+byte XMCSPIClass::transfer(uint8_t data_out) {
+    uint8_t data_in = 0;
+
+    /* Clear RBF0 */
+    (void)XMC_SPI_CH_GetReceivedData(XMC_SPI_config->channel);
+    /* Clear RBF1 */
+    (void)XMC_SPI_CH_GetReceivedData(XMC_SPI_config->channel);
+
+    /*Sending a byte*/
+    XMC_SPI_CH_Transmit(XMC_SPI_config->channel, data_out, XMC_SPI_CH_MODE_STANDARD);
+
+    /*Wait till the byte has been transmitted*/
+    while ((XMC_SPI_CH_GetStatusFlag(XMC_SPI_config->channel) &
+            XMC_SPI_CH_STATUS_FLAG_TRANSMIT_SHIFT_INDICATION) == 0U)
         ;
-    XMC_SPI_CH_ClearStatusFlag(XMC_SPI_Config->channel,
+    XMC_SPI_CH_ClearStatusFlag(XMC_SPI_config->channel,
                                XMC_SPI_CH_STATUS_FLAG_TRANSMIT_SHIFT_INDICATION);
 
-    // Wait for data reception
-    while (XMC_USIC_CH_GetReceiveBufferStatus(XMC_SPI_Config->channel) == 0)
+    while (XMC_USIC_CH_GetReceiveBufferStatus(XMC_SPI_config->channel) == 0U)
         ;
-    return XMC_SPI_CH_GetReceivedData(XMC_SPI_Config->channel);
+
+    data_in = XMC_SPI_CH_GetReceivedData(XMC_SPI_config->channel);
+
+    XMC_SPI_CH_ClearStatusFlag(XMC_SPI_config->channel,
+                               ((uint32_t)XMC_SPI_CH_STATUS_FLAG_RECEIVE_INDICATION |
+                                (uint32_t)XMC_SPI_CH_STATUS_FLAG_ALTERNATIVE_RECEIVE_INDICATION));
+
+    return data_in;
 }
 
-uint16_t XMC_SPIClass::transfer16(uint16_t data) {
-    uint8_t msb = transfer((data >> 8) & 0xFF);
-    uint8_t lsb = transfer(data & 0xFF);
-    return (msb << 8) | lsb;
-}
+void XMCSPIClass::transfer(void *buf, size_t count) {
+    uint8_t *buffer = reinterpret_cast<uint8_t *>(buf);
+    const uint8_t *tx_buf;
+    uint8_t tx_temp_buf[count];
 
-void XMC_SPIClass::transfer(void *buf, size_t count) {
-    uint8_t *buffer = (uint8_t *)buf;
-    for (size_t i = 0; i < count; i++) {
-        buffer[i] = transfer(buffer[i]);
+    memcpy(tx_temp_buf, buffer, count);
+    tx_buf = tx_temp_buf;
+    for (size_t index = 0; index < count; index++) {
+        buffer[index] = transfer(tx_buf[index]);
     }
 }
 
-void XMC_SPIClass::attachInterrupt() {
-    // No implementation for attachInterrupt in XMC
-}
+uint16_t XMCSPIClass::transfer16(uint16_t data) {
+    union {
+        uint16_t val;
 
-void XMC_SPIClass::detachInterrupt() {
-    // No implementation for detachInterrupt in XMC
-}
+        struct {
+            uint8_t lsb;
+            uint8_t msb;
+        };
+    } data_in_out;
 
-void XMC_SPIClass::usingInterrupt(int interruptNumber) {
-    // No implementation for usingInterrupt in XMC
-}
+    // Split 16-bit word into two bytes:
+    data_in_out.val = data;
 
-void XMC_SPIClass::notUsingInterrupt(int interruptNumber) {
-    // No implementation for notUsingInterrupt in XMC
-}
-
-void XMC_SPIClass::beginTransaction(arduino::SPISettings settings) {
-    // Configure SPI settings
-    if ((XMC_SPI_Config->channel->CCR & USIC_CH_CCR_MODE_Msk) != XMC_USIC_CH_OPERATING_MODE_SPI) {
-        begin();
+    if (_settings.getBitOrder() == LSBFIRST) {
+        transfer(&data_in_out.lsb, 1);
+        transfer(&data_in_out.msb, 1);
+    } else {
+        transfer(&data_in_out.msb, 1);
+        transfer(&data_in_out.lsb, 1);
     }
 
-    XMC_SPI_CH_SetBaudrate(XMC_SPI_Config->channel, settings.getClockFreq());
+    // Combine the two received bytes into a 16-bit word:
+    return data_in_out.val;
 }
 
-void XMC_SPIClass::endTransaction() {
-    // Placeholder for endTransaction logic
+void XMCSPIClass::attachInterrupt() {
+    // Should be enableInterrupt()
 }
 
-// Internal initialization logic
-void XMC_SPIClass::init() {
-    if (initialized)
-        return;
-
-    // Initialize hardware SPI
-    XMC_SPI_CH_Init(XMC_SPI_Config->channel, &(XMC_SPI_Config->channel_config));
-    XMC_SPI_CH_SetInputSource(XMC_SPI_Config->channel, XMC_SPI_CH_INPUT_DIN0,
-                              (uint8_t)XMC_SPI_Config->input_source);
-    XMC_SPI_CH_Start(XMC_SPI_Config->channel);
-
-    initialized = true;
+void XMCSPIClass::detachInterrupt() {
+    // Should be disableInterrupt()
 }
 
-// Instantiate the global SPI object statically
-XMC_SPIClass SPI(&XMC_SPI_default);
+#endif
 
-// Provide dummy operator delete implementation for embedded environments
-void operator delete(void *ptr) {
-    // Do nothing - memory is not allocated dynamically
-}
+//****************************************************************************
+//                                 END OF FILE
+//****************************************************************************
