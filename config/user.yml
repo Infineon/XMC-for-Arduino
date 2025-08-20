@@ -18,6 +18,7 @@ unit-test:
     - unit-test-pwm-4700
     - unit-test-analog-io-adc-4700
     - unit-test-iic-pingpong-4700
+    - unit-test-uart-4700
     - unit-test-uart-connected2-4700
 # kit_xmc14_2go
     - unit-test-iic-pingpong-1400
