@@ -2,7 +2,6 @@ name: HIL Checks
 
 on:
   pull_request:
-  push:
 
 jobs:
   makers-devops:
