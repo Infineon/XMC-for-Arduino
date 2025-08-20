@@ -16,4 +16,5 @@ unit-test:
 #    - unit-test-uart-connected2-4700
     - unit-test-timer-4700
     - unit-test-pwm-4700
+    - unit-test-analog-io-adc-4700
 #    - unit-test-iic-pingpong-1400
