@@ -72,7 +72,7 @@ unit-test:
     unit-test-pwm-4700:
       - description: Compiling, flashing and monitoring timer unit test.
         command: make test_analogio_pwm UNITY_PATH=/opt/Unity 
-        query: analogio_pwm_single_boar == '1:1'
+        query: analogio_pwm_single_board == '1:1'
         working_dir: extras/arduino-core-tests
         options:
           SEND_JOB_START_TOKEN: True     
@@ -103,8 +103,8 @@ unit-test:
 
     unit-test-iic-pingpong-4700:     
       - description: Compiling, flashing and monitoring I2C pingpong slave unit test.
-        command: make test_wire_connected2_slavepingong UNITY_PATH=/opt/Unity 
-        query: iic_ping_pong_multiple_boards_slave == '2:1'
+        command: make test_wire_connected2_slavepingpong UNITY_PATH=/opt/Unity 
+        query: iic_ping_pong_multiple_boards_slve == '2:1'
         working_dir: extras/arduino-core-tests
         options:
           SEND_JOB_START_TOKEN: True 
