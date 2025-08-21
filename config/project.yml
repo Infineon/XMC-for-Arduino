@@ -80,7 +80,7 @@ unit-test:
     unit-test-iic-4700:
       - description: Compiling, flashing and monitoring timer unit test.
         command: make test_wire_connected1_pingpong UNITY_PATH=/opt/Unity 
-        query: iic_ping_pong_single_board == '1:11'
+        query: iic_ping_pong_single_board == '1:1'
         working_dir: extras/arduino-core-tests
         options:
           SEND_JOB_START_TOKEN: True     
@@ -111,7 +111,7 @@ unit-test:
 
       - description: Compiling, flashing and monitoring I2C pingpong master unit test.
         command: make test_wire_connected2_masterpingpong UNITY_PATH=/opt/Unity 
-        query: iic_ping_pong_multiple_boards_maser == '2:1'
+        query: iic_ping_pong_multiple_boards_master == '2:1'
         working_dir: extras/arduino-core-tests
         options:
           SEND_JOB_START_TOKEN: True
