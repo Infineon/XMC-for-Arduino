@@ -160,6 +160,21 @@ unit-test:
         options:
           SEND_JOB_START_TOKEN: True
 
+    unit-test-pulse-4700:     
+      - description: Compiling, flashing and monitoring pulse board1 unit test.
+        command: make test_pulse_board1 UNITY_PATH=/opt/Unity 
+        query: pulse_board1 == '1:1'
+        working_dir: extras/arduino-core-tests
+        options:
+          SEND_JOB_START_TOKEN: True
+
+      - description: Compiling, flashing and monitoring pulse board2 unit test.
+        command: make test_pulse_board2 UNITY_PATH=/opt/Unity 
+        query: pulse_board2 == '1:1'
+        working_dir: extras/arduino-core-tests
+        options:
+          SEND_JOB_START_TOKEN: True
+
     unit-test-iic-pingpong-1400:
       - description: Compiling, flashing and monitoring I2C pingpong slave unit test.
         command: make test_wire_connected2_slavepingpong UNITY_PATH=/opt/Unity 
@@ -174,3 +189,59 @@ unit-test:
         working_dir: extras/arduino-core-tests
         options:
           SEND_JOB_START_TOKEN: True
+
+    unit-test-digital-io-1400:
+      - description: Compiling, flashing and monitoring digital IO unit test.
+        command: make test_digitalio_single 
+        query: digital_io_single_board == '1:1'
+        working_dir: extras/arduino-core-tests
+    
+    unit-test-tone-1400:
+      - description: Compiling, flashing and monitoring tone, no-tone unit test.
+        command: make test_tone_no_tone 
+        query: tone_no_tone_single_board == '1:1'
+        working_dir: extras/arduino-core-tests
+    
+    unit-test-interrupts-1400:
+      - description: Compiling, flashing and monitoring Interrupts unit test.
+        command: make test_interrupts_single 
+        query: interrupts_single_board == '1:1'
+        working_dir: extras/arduino-core-tests
+    
+    unit-test-random-1400:
+      - description: Compiling, flashing and monitoring random unit test.
+        command: make test_random 
+        query: random_single_board == '1:1'
+        working_dir: extras/arduino-core-tests
+    
+    unit-test-time-1400:
+      - description: Compiling, flashing and monitoring timer unit test.
+        command: make test_time_single UNITY_PATH=/opt/Unity 
+        query: time_single_board == '1:1'
+        working_dir: extras/arduino-core-tests
+        options:
+          SEND_JOB_START_TOKEN: True
+    
+    unit-test-analog-io-pwm-1400:
+      - description: Compiling, flashing and monitoring timer unit test.
+        command: make test_analogio_pwm UNITY_PATH=/opt/Unity 
+        query: analogio_pwm_single_board == '1:1'
+        working_dir: extras/arduino-core-tests
+        options:
+          SEND_JOB_START_TOKEN: True
+          
+    unit-test-analog-io-adc-4700:
+      - description: Compiling, flashing and monitoring ADC unit test.
+        command: make test_analogio_adc
+        query: analogio_adc_single_board == '1:1'
+        working_dir: extras/arduino-core-tests
+
+    unit-test-iic-1400:
+      - description: Compiling, flashing and monitoring timer unit test.
+        command: make test_wire_connected1_pingpong UNITY_PATH=/opt/Unity 
+        query: iic_ping_pong_single_board == '1:1'
+        working_dir: extras/arduino-core-tests
+        options:
+          SEND_JOB_START_TOKEN: True     
+    
+   
