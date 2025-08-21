@@ -107,7 +107,7 @@ unit-test:
         query: iic_ping_pong_multiple_boards_slave == '2:1'
         working_dir: extras/arduino-core-tests
         options:
-          SEND_JOB_START_TOKEN: True
+          SEND_JOB_START_TOKEN: True 
 
       - description: Compiling, flashing and monitoring I2C pingpong master unit test.
         command: make test_wire_connected2_masterpingpong UNITY_PATH=/opt/Unity 
@@ -118,15 +118,15 @@ unit-test:
 
     unit-test-uart-connected2-4700:
       - description: Compiling, flashing and monitoring uart rx unit test.
-        command: make test_uart_connected2_rx UNITY_PATH=/opt/Unity 
+        command: make test_uart_connected2_rx UNITY_PATH=/opt/Unity ENABLE_SYNC=0
         query: uart_connected2_rx == '1:1'
         working_dir: extras/arduino-core-tests
         options:
-          SEND_JOB_START_TOKEN: True
+          SEND_JOB_START_TOKEN: False
 
       - description: Compiling, flashing and monitoring uart tx unit test.
-        command: make test_uart_connected2_tx UNITY_PATH=/opt/Unity 
+        command: make test_uart_connected2_tx UNITY_PATH=/opt/Unity ENABLE_SYNC=0
         query: uart_connected2_tx == '1:1'
         working_dir: extras/arduino-core-tests
         options:
-          SEND_JOB_START_TOKEN: True
+          SEND_JOB_START_TOKEN: False
