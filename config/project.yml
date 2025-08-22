@@ -163,14 +163,14 @@ unit-test:
     unit-test-pulse-4700:     
       - description: Compiling, flashing and monitoring pulse board1 unit test.
         command: make test_pulse_board1 UNITY_PATH=/opt/Unity 
-        query: pulse_board1 == '1:1'
+        query: adv_io_pulse_board1  == '1:1'
         working_dir: extras/arduino-core-tests
         options:
           SEND_JOB_START_TOKEN: True
 
       - description: Compiling, flashing and monitoring pulse board2 unit test.
         command: make test_pulse_board2 UNITY_PATH=/opt/Unity 
-        query: pulse_board2 == '1:1'
+        query: adv_io_pulse_board2  == '1:1'
         working_dir: extras/arduino-core-tests
         options:
           SEND_JOB_START_TOKEN: True
