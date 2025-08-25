@@ -11,12 +11,13 @@
 #define TEST_CONFIG_H
 
 #include <stdint.h>
-
+#include <SPI.h>
 // Test Pin Definitions
 #define TEST_PIN_DIGITAL_IO_OUTPUT 3 // IO_4
 #define TEST_PIN_DIGITAL_IO_INPUT 2  // IO_3
 #define TEST_PIN_SYNC_IO 4           // IO_1
 #define TEST_PIN_PULSE 5             // IO_2
+#define TEST_PIN_SPI_SSEL 10         // IO_0
 
 #define PWM_FREQUENCY_HZ 490          // PWM Frequency in Hz
 #define TEST_PIN_ANALOG_IO_VREF A2    // Pin connected to Vdd
@@ -27,5 +28,6 @@
 
 #define TEST_PIN_ANALOG_IO_DAC 53
 #define TEST_PIN_ANALOG_IO_DAC_INPUT A3
+extern XMCSPIClass SPI;
 
 #endif // TEST_CONFIG_H
