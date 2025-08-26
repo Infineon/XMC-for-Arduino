@@ -242,13 +242,9 @@ byte XMCSPIClass::transfer(uint8_t data_out) {
 
 void XMCSPIClass::transfer(void *buf, size_t count) {
     uint8_t *buffer = reinterpret_cast<uint8_t *>(buf);
-    const uint8_t *tx_buf;
-    uint8_t tx_temp_buf[count];
-
-    memcpy(tx_temp_buf, buffer, count);
-    tx_buf = tx_temp_buf;
     for (size_t index = 0; index < count; index++) {
-        buffer[index] = transfer(tx_buf[index]);
+        *buffer = transfer(*buffer);
+        buffer++;
     }
 }
 
@@ -266,11 +262,11 @@ uint16_t XMCSPIClass::transfer16(uint16_t data) {
     data_in_out.val = data;
 
     if (_settings.getBitOrder() == LSBFIRST) {
-        transfer(&data_in_out.lsb, 1);
-        transfer(&data_in_out.msb, 1);
+        data_in_out.lsb = transfer(data_in_out.lsb);
+        data_in_out.msb = transfer(data_in_out.msb);
     } else {
-        transfer(&data_in_out.msb, 1);
-        transfer(&data_in_out.lsb, 1);
+        data_in_out.msb = transfer(data_in_out.msb);
+        data_in_out.lsb = transfer(data_in_out.lsb);
     }
 
     // Combine the two received bytes into a 16-bit word:
