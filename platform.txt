@@ -67,7 +67,7 @@ build.usb_manufacturer="Unknown"
 compiler.c.flags=-mcpu={build.mcu} -mthumb -c -g -Os {compiler.warning_flags} -std=gnu11 -ffunction-sections -fdata-sections -nostdlib --param max-inline-insns-single=500 -MMD
 #compiler.c.extra_flags=-ftime-report
 compiler.c.extra_flags=
-compiler.libraries.ldflags=
+compiler.libraries.ldflags= -lstdc++
 
 compiler.c.elf.flags=-Os -Wl,--gc-sections -save-temps
 compiler.c.elf.extra_flags=
