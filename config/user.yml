@@ -15,7 +15,7 @@ unit-test:
   #  - unit-test-digital-io-4700
    - unit-test-tone-4700
    - unit-test-interrupts-4700
-  #  - unit-test-random-4700
+   - unit-test-random-4700
   #  - unit-test-time-4700
    - unit-test-analog-io-pwm-4700
   #  - unit-test-analog-io-adc-4700
