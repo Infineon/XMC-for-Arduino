@@ -9,10 +9,6 @@ This project integrates Infineon's 32-bit XMC™ Industrial Arm® Cortex®-M Mic
 
 The [XMC™ microcontroller family](https://www.infineon.com/cms/de/product/microcontroller/32-bit-industrial-microcontroller-based-on-arm-cortex-m/) from Infineon is a powerful and versatile platform for embedded system development. The XMC for Arduino core provides a comprehensive set of APIs, examples, and tools for developing a wide range of applications, allowing developers to leverage the ease of use and flexibility of the Arduino platform while harnessing the advanced features and performance of the XMC™ microcontrollers.
 
-> [!TIP]
-> Participate in our [survey](https://github.com/Infineon/XMC-for-Arduino/discussions/categories/polls) to share which XMC™ boards you use most with this core. Your feedback helps us improve support for your favorite boards!
-> The survey is open until **August 31, 2025**.
-
 ## Supported Microcontroller Boards
 
 <table style="text-align : center">
