@@ -84,6 +84,10 @@ extern const uint8_t NUM_ANALOG_INPUTS;
 #define PIN_SPI_MISO 0
 #define PIN_SPI_SCK 2
 
+extern uint8_t SS;
+extern uint8_t MOSI;
+extern uint8_t MISO;
+extern uint8_t SCK;
 // Define analog pin
 #define A0 0
 #define A1 1
