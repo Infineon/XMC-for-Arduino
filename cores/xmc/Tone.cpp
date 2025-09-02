@@ -42,18 +42,20 @@ static int8_t toneBegin(uint8_t _pin) {
 
     // Once initialised
     // if we're already using the pin, the timer should be configured.
-    for (i = 0; i < NUM_TONE_PINS; i++)
-        if (tone_pins[i] == _pin)
+    for (i = 0; i < NUM_TONE_PINS; i++) {
+        if (tone_pins[i] == _pin) {
             return i;
+        }
+    }
 
     // search for an unused timer.
-    for (i = 0; i < NUM_TONE_PINS; i++)
+    for (i = 0; i < NUM_TONE_PINS; i++) {
         if (tone_pins[i] == 255) {
             tone_pins[i] = _pin;
             pinMode(_pin, OUTPUT);
             break;
         }
-
+    }
     return (i < NUM_TONE_PINS) ? i : -1;
 }
 
@@ -64,17 +66,19 @@ static int8_t toneBegin(uint8_t _pin) {
 // Timer task ID is tone pin index _timer
 void tone(uint8_t _pin, unsigned int frequency, unsigned long duration) {
     int8_t _timer;
-
+    Serial.println("Freq: ");
+    Serial.println(frequency);
     // Check valid frequency range first
     if (frequency > 0 && frequency <= 500) {
         _timer = toneBegin(_pin);
 
         if (_timer >= 0 && _timer < NUM_TONE_PINS) {
             // Calculate the toggle count
-            if (duration > 0)
+            if (duration > 0) {
                 timer_toggle_count[_timer] = 2 * frequency * duration / 1000;
-            else
+            } else {
                 timer_toggle_count[_timer] = -1; // Continuous
+            }
             // Set internal task parameters
             setParam(_timer, _timer);
             setInterval(_timer, (unsigned int)FREQUENCY_TO_MILLIS(frequency));
@@ -87,12 +91,12 @@ void tone(uint8_t _pin, unsigned int frequency, unsigned long duration) {
 void noTone(uint8_t _pin) {
     int8_t i;
 
-    for (i = 0; i < NUM_TONE_PINS; i++)
+    for (i = 0; i < NUM_TONE_PINS; i++) {
         if (tone_pins[i] == _pin) {
             tone_pins[i] = 255;
             break;
         }
-
+    }
     if (i < NUM_TONE_PINS) // Only if found set to stop at max next Systick event
     {
         noInterrupts();            // Interrupt disable guard to be safe
@@ -109,8 +113,9 @@ void noTone(uint8_t _pin) {
 int tone_irq_action(int ID, int16_t tone) {
     if (timer_toggle_count[tone]) {
         digitalToggle(tone_pins[tone]);
-        if (timer_toggle_count[tone] > 0)
+        if (timer_toggle_count[tone] > 0) {
             timer_toggle_count[tone]--;
+        }
     } else {
         setInterval(ID, 0); // no longer wanted to run
         digitalWrite(tone_pins[tone], LOW);

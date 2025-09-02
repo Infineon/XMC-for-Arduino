@@ -1,12 +1,10 @@
 #ifndef _WIRING_TONE_
 #define _WIRING_TONE_
-#include "Arduino.h"
 
 //****************************************************************************
 // @External Prototypes
 //****************************************************************************
-// extern void noTone(uint8_t);
-
+void digitalToggle(uint8_t pin);
 #ifdef __cplusplus
 extern "C" {
 #endif
