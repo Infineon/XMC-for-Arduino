@@ -51,7 +51,7 @@ extern const uint8_t NUM_INTERRUPT;
 extern const uint8_t NUM_ANALOG_INPUTS;
 #define NUM_LEDS 2
 #define NUM_SERIAL 1
-#define NUM_TONE_PINS 1 // At a time, run only one tone pin
+#define NUM_TONE_PINS 4
 #define NUM_TASKS_VARIANT 8
 #define NUM_SPI 1
 #define NUM_I2C 2
