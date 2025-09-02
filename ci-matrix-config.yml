@@ -42,7 +42,7 @@ sketch:
 #     - libraries/LED
 #     - libraries/RTC/examples/SimpleRTC
   - libraries/SPI
-#     - libraries/Wire
+  - libraries/Wire
 #     - libraries/DeviceControlXMC/examples/DieTemperatureMeasurement/DieTemperatureMeasurement.ino
 #     - libraries/DeviceControlXMC/examples/HeapMemoryMeasurement/HeapMemoryMeasurement.ino
 #     - libraries/DeviceControlXMC/examples/StackMemoryMeasurement/StackMemoryMeasurement.ino
