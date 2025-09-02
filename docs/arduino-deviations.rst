@@ -68,13 +68,19 @@ must be Slave mode configuration and sets the I2C configuration differently.
 Tone
 ++++
 
-The tone() function in XMC-for-Arduino core uses the PWM(pulse Width Modulation) peripheral to generate square wave signals at specific frequencies.
-Number of tone pins is determined by PWM -capable pins on XMC Device.
+Number of Tone pins is determined by pins_arduino.h define NUM_TONE_PINS. This allows for use in other modules and for variations between boards as >100MHz boards can obviously handle more tone pins.
 
-Do not call pinMode() on the pin prior to using the tone() function. The tone() function automatically configures the pin for output modes and sets it up internally.
-Calling pinMode() beforehand may result in unexpected behavior or conflicts with PWM peripheral.
+The default for XMC1xxx is 4 with a change XMC4xxxx should be 16
 
-Maximum duration of tone can be set upto 90 seconds.
+Tone has frequency range of maximum = 500 Hz minimum = 1 Hz
+
+This is due to the fact that the tone frequency is software derived from the Systick handler, Systick has a time period of 1 ms. At maximum each handler event for Systick toggles a GPIO pin, so at minimum period of 1 ms the output is toggled, so TWO events produce one square wave cycle, therefore the maximum output frequency is 500Hz.
+
+The minimum is due to the fact that tone function only accepts an unsigned integer (32 bit) for the frequency, so the minimum usable frequency is 1.
+
+Standard Arduino boards use hardware timers (the few that are available) to generate tones and at least one timer can interfere with other functions.
+
+However this does mean you can have more tone pins, just much lower frequency range.
 
 Analog Functions 
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
