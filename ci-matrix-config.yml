@@ -38,10 +38,10 @@ fqbn:
   - infineon:xmc:kit_xmc_plt2go_xmc4200
   - infineon:xmc:kit_xmc_plt2go_xmc4400
 
-# sketch:
+sketch:
 #     - libraries/LED
 #     - libraries/RTC/examples/SimpleRTC
-#     - libraries/SPI
+  - libraries/SPI
 #     - libraries/Wire
 #     - libraries/DeviceControlXMC/examples/DieTemperatureMeasurement/DieTemperatureMeasurement.ino
 #     - libraries/DeviceControlXMC/examples/HeapMemoryMeasurement/HeapMemoryMeasurement.ino
