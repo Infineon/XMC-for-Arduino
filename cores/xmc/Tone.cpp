@@ -66,8 +66,6 @@ static int8_t toneBegin(uint8_t _pin) {
 // Timer task ID is tone pin index _timer
 void tone(uint8_t _pin, unsigned int frequency, unsigned long duration) {
     int8_t _timer;
-    Serial.println("Freq: ");
-    Serial.println(frequency);
     // Check valid frequency range first
     if (frequency > 0 && frequency <= 500) {
         _timer = toneBegin(_pin);
@@ -90,13 +88,6 @@ void tone(uint8_t _pin, unsigned int frequency, unsigned long duration) {
 // Stops tone at next 1ms Systick
 void noTone(uint8_t _pin) {
     int8_t i;
-
-    for (i = 0; i < NUM_TONE_PINS; i++) {
-        if (tone_pins[i] == _pin) {
-            tone_pins[i] = 255;
-            break;
-        }
-    }
     if (i < NUM_TONE_PINS) // Only if found set to stop at max next Systick event
     {
         noInterrupts();            // Interrupt disable guard to be safe
