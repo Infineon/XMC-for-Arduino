@@ -13,7 +13,7 @@
 #include <stdint.h>
 #include <SPI.h>
 
-#define SPI_TRANSFER_DELAY 2000
+#define SPI_TRANSFER_DELAY_US 2000
 // Test Pin Definitions
 #define TEST_PIN_DIGITAL_IO_OUTPUT 3 // IO_4
 #define TEST_PIN_DIGITAL_IO_INPUT 2  // IO_3
