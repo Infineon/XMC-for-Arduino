@@ -74,6 +74,9 @@ The default for XMC1xxx is 4 with a change XMC4xxxx should be 16
 
 Tone has frequency range of maximum = 500 Hz minimum = 1 Hz
 
+Due to the Systick periodicity, only discrete frequencies are supported as listed below:
+[1, 2, 4, 5, 10, 20, 25, 50, 100, 125, 250, 500]
+
 This is due to the fact that the tone frequency is software derived from the Systick handler, Systick has a time period of 1 ms. At maximum each handler event for Systick toggles a GPIO pin, so at minimum period of 1 ms the output is toggled, so TWO events produce one square wave cycle, therefore the maximum output frequency is 500Hz.
 
 The minimum is due to the fact that tone function only accepts an unsigned integer (32 bit) for the frequency, so the minimum usable frequency is 1.
