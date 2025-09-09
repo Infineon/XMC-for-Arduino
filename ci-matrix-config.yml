@@ -35,8 +35,6 @@ fqbn:
   - infineon:xmc:kit_xmc14_2go
   - infineon:xmc:kit_xmc47_relax
   - infineon:xmc:kit_xmc_2go_xmc1100_v1
-  - infineon:xmc:kit_xmc_plt2go_xmc4200
-  - infineon:xmc:kit_xmc_plt2go_xmc4400
 
 sketch:
 #     - libraries/LED
@@ -67,13 +65,6 @@ sketch:
 #   - fqbn: infineon:xmc:kit_xmc1400_arduino
 #     sketch:
 #       - libraries/DeviceControlXMC/examples/SleepModeXMC1100/SleepModeXMC1100.ino
-#   - fqbn: infineon:xmc:kit_xmc_plt2go_xmc4200
-#     sketch: 
-#       - libraries/RTC/examples/AlarmRTC/AlarmRTC.ino
-#       - libraries/CAN
-#   - fqbn: infineon:xmc:kit_xmc_plt2go_xmc4400
-#     sketch: 
-#       - libraries/CAN
 #   - fqbn: infineon:xmc:kit_xmc47_relax
 #     sketch: 
 #       - libraries/I2S
@@ -103,17 +94,7 @@ exclude:
     - libraries/DeviceControlXMC/examples/StackMemoryMeasurement/StackMemoryMeasurement.ino
     - extras/arduino-examples/examples/04.Communication/MultiSerial/MultiSerial.ino
     - extras/arduino-examples/examples/04.Communication/SerialEvent/SerialEvent.ino
-- fqbn: infineon:xmc:kit_xmc_plt2go_xmc4200
-  sketch: 
-    - libraries/DeviceControlXMC/examples/DieTemperatureMeasurement/DieTemperatureMeasurement.ino
-    - libraries/DeviceControlXMC/examples/HeapMemoryMeasurement/HeapMemoryMeasurement.ino
-    - extras/arduino-examples/examples/04.Communication/SerialEvent/SerialEvent.ino
-- fqbn: infineon:xmc:kit_xmc_plt2go_xmc4400
-  sketch: 
-    - libraries/DeviceControlXMC/examples/DieTemperatureMeasurement/DieTemperatureMeasurement.ino
-    - libraries/DeviceControlXMC/examples/HeapMemoryMeasurement/HeapMemoryMeasurement.ino
-    - extras/arduino-examples/examples/04.Communication/MultiSerial/MultiSerial.ino
-    - extras/arduino-examples/examples/04.Communication/SerialEvent/SerialEvent.ino
+
 
 
 

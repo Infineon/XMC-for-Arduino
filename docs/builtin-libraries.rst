@@ -23,7 +23,6 @@ Examples Supported
         | KIT_XMC13_BOOT_001
         | KIT_XMC14_2GO
         | KIT_XMC1400_ARDUINO
-        | KIT_XMC_PLT2GO_XMC4400
         | KIT_XMC47_RELAX
       - | Simple die temperature measurement  
         | for XMC devices which demonstrates 
@@ -64,7 +63,6 @@ Examples Supported
       - | KIT_XMC_2GO_XMC1100_V1 
         | KIT_XMC11_BOOT_001
         | KIT_XMC13_BOOT_001
-        | KIT_XMC_PLT2GO_XMC4400
         | KIT_XMC47_RELAX
       - | Simple example to check stack memory 
         | during run time for XMC devices which
@@ -128,7 +126,6 @@ SPI Library
         | KIT_XMC13_BOOT_001
         | KIT_XMC14_2GO
         | KIT_XMC1400_ARDUINO
-        | KIT_XMC_PLT2GO_XMC4400
         | KIT_XMC47_RELAX
       - | SPI example which communicates between the
         | MOSI and MISO pin of the same board. Connect 
@@ -151,7 +148,6 @@ Wire Library
         | KIT_XMC13_BOOT_001
         | KIT_XMC14_2GO
         | KIT_XMC1400_ARDUINO
-        | KIT_XMC_PLT2GO_XMC4400
         | KIT_XMC47_RELAX
       - | Demonstrates use of the Wire library. Reads data
         | from an I2C/TWI slave device. Refer to the "Wire Slave
@@ -166,7 +162,6 @@ Wire Library
         | KIT_XMC13_BOOT_001
         | KIT_XMC14_2GO
         | KIT_XMC1400_ARDUINO
-        | KIT_XMC_PLT2GO_XMC4400
         | KIT_XMC47_RELAX
       - | Demonstrates use of the Wire library. Writes data to
         | an I2C/TWI slave device. Refer to the "Wire Slave
@@ -181,7 +176,6 @@ Wire Library
         | KIT_XMC13_BOOT_001
         | KIT_XMC14_2GO
         | KIT_XMC1400_ARDUINO
-        | KIT_XMC_PLT2GO_XMC4400
         | KIT_XMC47_RELAX
       - | Demonstrates use of the Wire library. Receives data as
         | an I2C/TWI slave device. Refer to the "Wire Slave
@@ -196,7 +190,6 @@ Wire Library
         | KIT_XMC13_BOOT_001
         | KIT_XMC14_2GO
         | KIT_XMC1400_ARDUINO
-        | KIT_XMC_PLT2GO_XMC4400
         | KIT_XMC47_RELAX
       - | Demonstrates use of the Wire library. Receives data as
         | an I2C/TWI slave device. Refer to the "Wire Master

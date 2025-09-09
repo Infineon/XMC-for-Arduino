@@ -175,7 +175,6 @@ function, or other case as described below.
     * - KIT_XMC1400_ARDUINO
       - Alternate pin function
       - Matches Arduino Uno  
-    * - KIT_XMC_PLT2GO_XMC4400
       - External hard wired pins
       - | For 3V3 boards set I2C pins to tristate or open drain to use
         | For 5V boards refer to [this section](https://xmc-arduino.readthedocs.io/en/latest/hw-platforms.html#connected-i2s-and-analog-pins) on track cuts to enable A4 and A5 to work
@@ -205,8 +204,8 @@ via the Tools menu as shown in the picture below.
     :width: 600
 
 This is generally the case for most of the XMC boards. However, for boards 
-such as the :ref:`xmc4200-platform2go` and the :ref:`xmc4700-relax`, both the serial 
-output modes are simultaneously active and neednot be selected or enabled from the menu.
+such as the :ref:`xmc4700-relax`, both the serial 
+output modes are simultaneously active and need not be selected or enabled from the menu.
 
 Note: Please note that the sketch must be recompiled when a different serial 
 output is selected.
