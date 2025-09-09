@@ -504,12 +504,6 @@ void USIC0_2_IRQHandler() { Wire1.ReceiveHandler(); }
 void USIC0_3_IRQHandler() { Wire1.ProtocolHandler(); }
     #endif
 
-    #if defined(KIT_XMC_PLT2GO_XMC4200)
-void USIC1_1_IRQHandler() { Wire.ReceiveHandler(); }
-
-void USIC1_2_IRQHandler() { Wire.ProtocolHandler(); }
-    #endif
-
 #elif defined(KIT_XMC47_RELAX)
 void USIC1_1_IRQHandler() { Wire.ReceiveHandler(); }
 
