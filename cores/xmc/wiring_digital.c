@@ -3,7 +3,11 @@
 extern "C" {
 #endif
 void pinMode(pin_size_t pin, PinMode mode) {
+    if (pin > NUM_DIGITAL) {
+        return;
+    }
     XMC_GPIO_CONFIG_t gpio_conf;
+    bool gpio_init_value = false;
 
     switch (mode) {
     case INPUT:
@@ -38,18 +42,30 @@ void pinMode(pin_size_t pin, PinMode mode) {
     gpio_conf.input_hysteresis = XMC_GPIO_INPUT_HYSTERESIS_LARGE;
 #endif
     XMC_GPIO_Init(mapping_port_pin[pin].port, mapping_port_pin[pin].pin, &gpio_conf);
+    gpio_current_value[pin] = gpio_init_value;
 }
 
-uint8_t digitalRead(uint8_t pin) {
-    return (pin == GND)
-               ? LOW
-               : (XMC_GPIO_GetInput(mapping_port_pin[pin].port, mapping_port_pin[pin].pin));
+PinStatus digitalRead(pin_size_t pin) {
+    if (pin > NUM_DIGITAL) {
+        return 0;
+    }
+    gpio_current_value[pin] =
+        XMC_GPIO_GetInput(mapping_port_pin[pin].port, mapping_port_pin[pin].pin) ? HIGH : LOW;
+    return gpio_current_value[pin];
 }
 
-void digitalWrite(uint8_t pin, uint8_t status) {
+void digitalWrite(pin_size_t pin, PinStatus status) {
+    if (pin > NUM_DIGITAL) {
+        return;
+    }
     XMC_GPIO_SetOutputLevel(mapping_port_pin[pin].port, mapping_port_pin[pin].pin,
                             (status == LOW) ? XMC_GPIO_OUTPUT_LEVEL_LOW
                                             : XMC_GPIO_OUTPUT_LEVEL_HIGH);
+    if (status == LOW) {
+        gpio_current_value[pin] = false;
+    } else {
+        gpio_current_value[pin] = true;
+    }
 }
 
 #ifdef __cplusplus

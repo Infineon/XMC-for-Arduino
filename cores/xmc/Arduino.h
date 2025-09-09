@@ -283,6 +283,7 @@ extern const XMC_PIN_INTERRUPT_t mapping_interrupt[];
 extern const uint8_t mapping_pin_PWM4[][2];
 extern XMC_PWM4_t mapping_pwm4[];
 extern XMC_ADC_t mapping_adc[];
+extern bool gpio_current_value[];
 #if defined(CCU8V2) || defined(CCU8V3) || defined(CCU8V1)
 extern const uint8_t mapping_pin_PWM8[][2];
 extern XMC_PWM8_t mapping_pwm8[];
