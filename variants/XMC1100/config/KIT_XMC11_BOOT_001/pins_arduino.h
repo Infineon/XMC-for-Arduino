@@ -177,6 +177,7 @@ const XMC_PORT_PIN_t mapping_port_pin[] = {
 };
 const uint8_t GND = (sizeof(mapping_port_pin) / sizeof(XMC_PORT_PIN_t));
 const uint8_t NUM_DIGITAL = (sizeof(mapping_port_pin) / sizeof(XMC_PORT_PIN_t));
+bool gpio_current_value[NUM_DIGITAL] = {false};
 ;
 
 const XMC_PIN_INTERRUPT_t mapping_interrupt[] = {
