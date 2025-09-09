@@ -21,8 +21,8 @@ unit-test:
    - unit-test-analog-io-dac-4700
   #  - unit-test-iic-4700
   # - unit-test-iic-pingpong-4700
-   - unit-test-uart-4700
-  #   - unit-test-uart-connected2-4700
+  # - unit-test-uart-4700
+   - unit-test-uart-connected2-4700
   #  - unit-test-pulse-4700
  
   #  - unit-test-digital-io-1400
