@@ -11,8 +11,7 @@
 
 
 unit-test:
-
-  #  - unit-test-digital-io-4700
+   - unit-test-digital-io-4700
    - unit-test-tone-4700
    - unit-test-interrupts-4700
    - unit-test-random-4700
