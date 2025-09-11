@@ -3,9 +3,6 @@
 extern "C" {
 #endif
 void pinMode(pin_size_t pin, PinMode mode) {
-    if (pin > NUM_DIGITAL) {
-        return;
-    }
     XMC_GPIO_CONFIG_t gpio_conf;
     bool gpio_init_value = false;
 
@@ -46,18 +43,12 @@ void pinMode(pin_size_t pin, PinMode mode) {
 }
 
 PinStatus digitalRead(pin_size_t pin) {
-    if (pin > NUM_DIGITAL) {
-        return 0;
-    }
     gpio_current_value[pin] =
         XMC_GPIO_GetInput(mapping_port_pin[pin].port, mapping_port_pin[pin].pin) ? HIGH : LOW;
     return gpio_current_value[pin];
 }
 
 void digitalWrite(pin_size_t pin, PinStatus status) {
-    if (pin > NUM_DIGITAL) {
-        return;
-    }
     XMC_GPIO_SetOutputLevel(mapping_port_pin[pin].port, mapping_port_pin[pin].pin,
                             (status == LOW) ? XMC_GPIO_OUTPUT_LEVEL_LOW
                                             : XMC_GPIO_OUTPUT_LEVEL_HIGH);
