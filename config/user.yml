@@ -11,6 +11,7 @@
 
 
 unit-test:
+
   #  - unit-test-digital-io-4700
    - unit-test-tone-4700
    - unit-test-interrupts-4700
@@ -24,6 +25,7 @@ unit-test:
   #  - unit-test-uart-4700
   #  - unit-test-uart-connected2-4700
   #  - unit-test-pulse-4700
+   - unit-test-spi-pingpong-4700
  
   #  - unit-test-digital-io-1400
   #  - unit-test-tone-1400
@@ -31,5 +33,4 @@ unit-test:
   #  - unit-test-random-1400
   #   - unit-test-time-1400
   #  - unit-test-analog-io-pwm-1400
-  #  - unit-test-analog-io-adc-1400
-  #  - unit-test-iic-pingpong-1400
+  #  - unit-test-analog-io-adc-1400 

@@ -1,6 +1,6 @@
 # options:
 #   USE_CORE:
-#     name: Infineon:xmc@3.5.0
+#     name: infineon:xmc@3.5.0
 #     url: https://github.com/Infineon/XMC-for-Arduino/releases/latest/download/package_infineon_index.json
 options:
   USE_CORE:
@@ -162,6 +162,21 @@ unit-test:
         command: make test_pulse_board2 UNITY_PATH=/opt/Unity 
         query: adv_io_pulse_board2  == '1:1'
         working_dir: extras/arduino-core-tests
+    
+    unit-test-spi-pingpong-4700:
+      - description: Compiling, flashing and monitoring SPI pingpong slave unit test.
+        command: make test_spi_connected2_slavepingpong 
+        query: spi_ping_pong_multiple_boards_slave == '1:1'
+        working_dir: extras/arduino-core-tests
+        options:
+          USE_CORE:
+            name: infineon:psoc6@0.8.1
+            url: https://github.com/Infineon/arduino-core-psoc6/releases/latest/download/package_psoc6_index.json
+
+      - description: Compiling, flashing and monitoring SPI pingpong master unit test.
+        command: make test_spi_connected2_masterpingpong 
+        query: spi_ping_pong_multiple_boards_master == '1:1'
+        working_dir: extras/arduino-core-tests
 
     unit-test-iic-pingpong-1400:
       - description: Compiling, flashing and monitoring I2C pingpong slave unit test.
@@ -215,5 +230,6 @@ unit-test:
         command: make test_wire_connected1_pingpong UNITY_PATH=/opt/Unity 
         query: iic_ping_pong_single_board == '2:1'
         working_dir: extras/arduino-core-tests
+
     
    
