@@ -143,14 +143,18 @@ unit-test:
     
     unit-test-uart-4700:
       - description: Compiling, flashing and monitoring uart rx unit test.
-        command: make test_uart_rx  UNITY_PATH=/opt/Unity
+        command: make test_uart_rx  UNITY_PATH=/opt/Unity ENABLE_SYNC=0
         query: uart_multiple_boards_rx == '1:1'
         working_dir: extras/arduino-core-tests
+        options:
+          SEND_JOB_START_TOKEN: False
 
       - description: Compiling, flashing and monitoring uart tx unit test.
-        command: make test_uart_tx UNITY_PATH=/opt/Unity
+        command: make test_uart_tx UNITY_PATH=/opt/Unity ENABLE_SYNC=0
         query: uart_multiple_boards_tx == '1:1'
         working_dir: extras/arduino-core-tests
+        options:
+          SEND_JOB_START_TOKEN: False
 
     unit-test-pulse-4700:     
       - description: Compiling, flashing and monitoring pulse board1 unit test.
