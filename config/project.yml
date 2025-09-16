@@ -182,6 +182,12 @@ unit-test:
         query: spi_ping_pong_multiple_boards_master == '1:1'
         working_dir: extras/arduino-core-tests
 
+    unit-test-spi-single-pingpong-4700:
+      - description: Compiling, f;asging and monitoring SPI pingpong single_board.
+        command: make test_spi_connected1_loopback
+        query: spi_ping_pong_single_board == '1:1'
+        working_dir: extras/arduino-core-tests
+
     unit-test-iic-pingpong-1400:
       - description: Compiling, flashing and monitoring I2C pingpong slave unit test.
         command: make test_wire_connected2_slavepingpong UNITY_PATH=/opt/Unity 
