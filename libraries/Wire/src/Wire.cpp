@@ -290,7 +290,7 @@ uint8_t TwoWire::endTransmission(bool sendStop) {
     }
 
     if (sendStop) {
-        delay(1);
+        delay(1); // Allow time for the I2C Scan
         XMC_I2C_CH_MasterStop(XMC_I2C_config->channel);
         uint32_t start = millis();
         while (XMC_USIC_CH_GetTransmitBufferStatus(XMC_I2C_config->channel) ==
