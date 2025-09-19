@@ -37,7 +37,7 @@
         {
             "label": "Arduino Debug",
             "type": "shell",
-            "command": "${workspaceFolder}/extras/arduino-core-tests/gen_launch.sh",
+            "command": "${workspaceFolder}/tools/gen_launch.sh",
             "args": [
                 "${input:boardFqbn}",
                 "${input:debugBuildPath}",
