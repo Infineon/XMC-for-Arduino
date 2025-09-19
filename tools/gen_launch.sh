@@ -1,0 +1,79 @@
+#!/bin/bash
+# gen_launch.sh: Compile and generate launch.json for XMC boards
+# Usage: ./gen_launch.sh <fqbn> <build_path> <sketch_path>
+# Example: ./gen_launch.sh kit_xmc47_relax ~/output ~/build/build.ino
+
+set -e
+
+
+
+FQBN_FULL="$1"
+BUILD_PATH="$2"
+SKETCH_PATH="$3"
+BOARDS_TXT="$HOME/Arduino/hardware/arduino-git/xmc/boards.txt"
+
+# Extract board name from FQBN (e.g. arduino-git:xmc:kit_xmc47_relax -> kit_xmc47_relax)
+BOARD_NAME=$(echo "$FQBN_FULL" | awk -F: '{print $NF}')
+
+# Find arm-none-eabi-gdb
+GDB_PATH=$(command -v arm-none-eabi-gdb)
+if [ -z "$GDB_PATH" ]; then
+  # Try to find it under home directory only
+  GDB_PATH=$(find "$HOME" -type f -name arm-none-eabi-gdb 2>/dev/null | head -n 1)
+fi
+if [ -z "$GDB_PATH" ]; then
+  echo "arm-none-eabi-gdb not found in PATH or under your home directory."
+  exit 3
+fi
+
+if [[ -z "$FQBN_FULL" || -z "$BUILD_PATH" || -z "$SKETCH_PATH" ]]; then
+  echo "Usage: $0 <fqbn> <build_path> <sketch_path>"
+  exit 1
+fi
+
+# 1. Compile
+arduino-cli compile -b "${FQBN_FULL}" --build-path "${BUILD_PATH}" "${SKETCH_PATH}" || exit 1
+
+# 2. Parse boards.txt for variant and board.v using board name
+VARIANT=$(grep "^${BOARD_NAME}\.build\.variant=" "$BOARDS_TXT" | cut -d= -f2)
+BOARD_V=$(grep "^${BOARD_NAME}\.build\.board\.v=" "$BOARDS_TXT" | cut -d= -f2)
+
+if [[ -z "$VARIANT" || -z "$BOARD_V" ]]; then
+  echo "Could not find variant or board.v for $BOARD_NAME in $BOARDS_TXT"
+  exit 2
+fi
+
+DEVICE="${VARIANT}-${BOARD_V}"
+EXECUTABLE="${BUILD_PATH}/build.ino.elf"
+
+# 3. Generate launch.json in xmc/.vscode
+LAUNCH_DIR="../../.vscode"
+if [ ! -d "$LAUNCH_DIR" ]; then
+  mkdir "$LAUNCH_DIR"
+fi
+if [ -f "$LAUNCH_DIR/launch.json" ]; then
+  rm "$LAUNCH_DIR/launch.json"
+fi
+cat > "$LAUNCH_DIR/launch.json" <<EOF
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Cortex-Debug: Debug ${DEVICE}",
+      "type": "cortex-debug",
+      "request": "launch",
+      "servertype": "jlink",
+      "device": "${DEVICE}",
+      "executable": "${EXECUTABLE}",
+      "cwd": "\${workspaceFolder}",
+      "interface": "swd",
+      "gdbPath": "${GDB_PATH}",
+      "showDevDebugOutput": "info"
+    }
+  ]
+}
+EOF
+
+echo "launch.json generated for device ${DEVICE} at $LAUNCH_DIR."
+
+

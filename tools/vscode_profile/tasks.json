@@ -1,0 +1,106 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+      {
+        "label": "Arduino Build",
+        "type": "shell",
+        "command": "arduino-cli",
+        "args": [
+          "compile",
+          "--fqbn", "${input:boardFqbn}",
+          "${input:examplePath}"
+        ],
+        "group": {
+          "kind": "build",
+          "isDefault": false
+        },
+        "problemMatcher": []
+      },
+      {
+        "label": "Arduino Upload",
+        "type": "shell",
+        "command": "arduino-cli",
+        "args": [
+          "upload",
+        //  "--verbose",
+          "-p", "${input:port}",
+          "--fqbn", "${input:boardFqbn}",
+          "${input:examplePath}"
+        ],
+        "dependsOn": "Arduino Build",
+        "group": {
+          "kind": "build",
+          "isDefault": true
+        },
+        "problemMatcher": []
+      },
+        {
+            "label": "Arduino Debug",
+            "type": "shell",
+            "command": "${workspaceFolder}/extras/arduino-core-tests/gen_launch.sh",
+            "args": [
+                "${input:boardFqbn}",
+                "${input:debugBuildPath}",
+                "${input:examplePath}"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": false
+            },
+            "problemMatcher": [],
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared"
+            }
+        },
+        {
+            "label": "Arduino Monitor",
+            "type": "shell",
+            "command": "arduino-cli",
+            "args": [
+                "monitor",
+                "-p", "${input:port}",
+                "-c", "baudrate=115200"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": false
+            },
+            "problemMatcher": []
+            }
+    ],
+    "inputs": [
+            {
+                "id": "boardFqbn",
+                "type": "promptString",
+                "description": "Enter the FQBN (Fully Qualified Board Name) for the Arduino board",
+                "default": "arduino-git:xmc:kit_xmc47_relax"
+            },
+                {
+                    "id": "debugBuildPath",
+                    "type": "promptString",
+                    "description": "Enter the build path for gen_launch.sh",
+                    "default": "${workspaceFolder}/extras/arduino-core-tests/build/output"
+                },
+        {
+            "id": "examplePath",
+            "type": "promptString",
+            "description": "Enter the path to the Arduino example sketch",
+            "default": "${workspaceFolder}/examples/bug/bug.ino"
+        },
+        {
+            "id": "port",
+            "type": "promptString",
+            "description": "Enter the port for the Arduino board",
+            "default": "/dev/ttyACM0"
+        },
+    ]
+  }
+
+
+
+
+
+
