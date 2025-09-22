@@ -183,9 +183,15 @@ unit-test:
         working_dir: extras/arduino-core-tests
 
     unit-test-spi-single-pingpong-4700:
-      - description: Compiling, f;asging and monitoring SPI pingpong single_board.
+      - description: Compiling, flasging and monitoring SPI pingpong single_board.
         command: make test_spi_connected1_loopback
         query: spi_ping_pong_single_board == '1:1'
+        working_dir: extras/arduino-core-tests
+    
+    unit-test-onewire-DS18x20-4700:
+      - description: Compiling, flashing and monitoring OneWire sensor DS18B20 data.
+        command: make test_onewire_DS18x20 
+        query: onewire_DS18x20_board == '1:1'
         working_dir: extras/arduino-core-tests
 
     unit-test-iic-pingpong-1400:
