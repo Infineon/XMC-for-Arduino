@@ -10,21 +10,15 @@ set -e
 FQBN_FULL="$1"
 BUILD_PATH="$2"
 SKETCH_PATH="$3"
-BOARDS_TXT="$HOME/Arduino/hardware/arduino-git/xmc/boards.txt"
+# Allow BOARDS_TXT as optional 4th parameter, default to original absolute path
+BOARDS_TXT="${4:-$HOME/Arduino/hardware/arduino-git/xmc/boards.txt}"
 
 # Extract board name from FQBN (e.g. arduino-git:xmc:kit_xmc47_relax -> kit_xmc47_relax)
 BOARD_NAME=$(echo "$FQBN_FULL" | awk -F: '{print $NF}')
 
-# Find arm-none-eabi-gdb
-GDB_PATH=$(command -v arm-none-eabi-gdb)
-if [ -z "$GDB_PATH" ]; then
-  # Try to find it under home directory only
-  GDB_PATH=$(find "$HOME" -type f -name arm-none-eabi-gdb 2>/dev/null | head -n 1)
-fi
-if [ -z "$GDB_PATH" ]; then
-  echo "arm-none-eabi-gdb not found in PATH or under your home directory."
-  exit 3
-fi
+
+# Allow GDB_PATH as optional 5th parameter, default to Infineon toolchain path
+GDB_PATH="${5:-$HOME/.arduino15/packages/Infineon/tools/arm-none-eabi-gcc/10.3-2021.10/bin/arm-none-eabi-gdb}"
 
 if [[ -z "$FQBN_FULL" || -z "$BUILD_PATH" || -z "$SKETCH_PATH" ]]; then
   echo "Usage: $0 <fqbn> <build_path> <sketch_path>"
@@ -34,12 +28,13 @@ fi
 # 1. Compile
 arduino-cli compile -b "${FQBN_FULL}" --build-path "${BUILD_PATH}" "${SKETCH_PATH}" || exit 1
 
-# 2. Parse boards.txt for variant and board.v using board name
+ # 2. Parse boards.txt for variant and board.v using board name
 VARIANT=$(grep "^${BOARD_NAME}\.build\.variant=" "$BOARDS_TXT" | cut -d= -f2)
 BOARD_V=$(grep "^${BOARD_NAME}\.build\.board\.v=" "$BOARDS_TXT" | cut -d= -f2)
 
 if [[ -z "$VARIANT" || -z "$BOARD_V" ]]; then
   echo "Could not find variant or board.v for $BOARD_NAME in $BOARDS_TXT"
+
   exit 2
 fi
 
@@ -75,5 +70,6 @@ cat > "$LAUNCH_DIR/launch.json" <<EOF
 EOF
 
 echo "launch.json generated for device ${DEVICE} at $LAUNCH_DIR."
+echo "(Using boards.txt at $BOARDS_TXT)"
 
 
