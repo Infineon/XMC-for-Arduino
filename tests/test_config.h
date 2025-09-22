@@ -22,6 +22,7 @@
     #define TEST_PIN_SYNC_IO 4           // IO_1
     #define TEST_PIN_PULSE 5             // IO_2
     #define TEST_PIN_SPI_SSEL 10         // IO_0
+    #define TEST_PIN_ONEWIRE 7
 
     #if defined(KIT_XMC47_RELAX)
         #define PWM_FREQUENCY_HZ 490          // PWM Frequency in Hz
