@@ -39,12 +39,17 @@ if [[ -z "$VARIANT" || -z "$BOARD_V" ]]; then
 fi
 
 DEVICE="${VARIANT}-${BOARD_V}"
-EXECUTABLE="${BUILD_PATH}/build.ino.elf"
+EXECUTABLE=$(find "${BUILD_PATH}" -maxdepth 1 -type f -name "*.elf" | head -n 1)
+if [[ -z "$EXECUTABLE" ]]; then
+  echo "No .elf executable found in $BUILD_PATH."
+  exit 3
+fi
 
-# 3. Generate launch.json in xmc/.vscode
-LAUNCH_DIR="../../.vscode"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+XMC_DIR="$(dirname "$SCRIPT_DIR")"
+LAUNCH_DIR="$XMC_DIR/.vscode"
 if [ ! -d "$LAUNCH_DIR" ]; then
-  mkdir "$LAUNCH_DIR"
+  mkdir -p "$LAUNCH_DIR"
 fi
 if [ -f "$LAUNCH_DIR/launch.json" ]; then
   rm "$LAUNCH_DIR/launch.json"
@@ -63,7 +68,7 @@ cat > "$LAUNCH_DIR/launch.json" <<EOF
       "cwd": "\${workspaceFolder}",
       "interface": "swd",
       "gdbPath": "${GDB_PATH}",
-      "showDevDebugOutput": "info"
+      "showDevDebugOutput": "vscode"
     }
   ]
 }
