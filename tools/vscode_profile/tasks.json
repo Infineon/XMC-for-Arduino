@@ -83,7 +83,7 @@
 				{
 					"id": "debugBuildPath",
 					"type": "promptString",
-					"description": "Enter the build path for gen_launch.sh",
+					"description": "Enter the build path where the .elf file would be placed",
 					"default": "${workspaceFolder}/extras/arduino-core-tests/build/output"
 				},
 		{

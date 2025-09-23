@@ -124,6 +124,26 @@ Tests are located in ``tests/arduino-core-tests`` and included as submodule in t
 
 If you need to run these tests locally, you'll also need to download `GNU Make <https://www.gnu.org/software/make/#download>`_ .
 
+Debugging (VS Code)
+^^^^^^^^^^^^^^^^^^^^
+Debugging support described here is for Visual Studio Code. The Arduino IDE already provides a built-in debugger for supported boards.
+
+#. Install the `Cortex-Debug` extension in VS Code.
+#. Copy the `tasks.json` file from `tools/vscode-profile` to the `.vscode` directory in your project root.
+#. In VS Code, run the task: **Generate launch.json for debug (XMC)**.
+#. Required parameters for this task:
+   * **fqbn**: Fully Qualified Board Name (e.g., `arduino-git:xmc:kit_xmc47_relax`)
+   * **build path**: Directory where the `.elf` file will be placed
+   * **example path**: Path to the sketch (`.ino` file) to debug
+#. Optional parameters:
+   * **boards.txt path**: Path to a custom `boards.txt` file
+   * **gdb path**: Path to a custom GDB executable
+
+Refer to the documentation of your chosen debugger and scripts in the `tools/` folder for more details.
+
+.. note::
+   If you encounter an error indicating that ``libncurses.so.5`` or a similar library cannot be found, please search online and install the appropriate package for your environment.
+
 Release
 ---------
 Add a git tag in the format `Vx.y.z` (e.g. V3.3.0) to trigger the release process.
