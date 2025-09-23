@@ -1,7 +1,12 @@
 #!/bin/bash
 # gen_launch.sh: Compile and generate launch.json for XMC boards
-# Usage: ./gen_launch.sh <fqbn> <build_path> <sketch_path>
-# Example: ./gen_launch.sh kit_xmc47_relax ~/output ~/build/build.ino
+# Usage: ./gen_launch.sh <fqbn> <build_path> <sketch_path> [boards.txt] [gdb_path]
+#   <fqbn>        : Fully Qualified Board Name (e.g. arduino-git:xmc:kit_xmc47_relax)
+#   <build_path>  : Directory where the .elf file will be placed
+#   <sketch_path> : Path to the sketch (.ino) file
+#   [boards.txt]  : (Optional) Path to boards.txt (default: $HOME/Arduino/hardware/arduino-git/xmc/boards.txt)
+#   [gdb_path]    : (Optional) Path to GDB executable (default: $HOME/.arduino15/packages/Infineon/tools/arm-none-eabi-gcc/10.3-2021.10/bin/arm-none-eabi-gdb)
+# Example: ./gen_launch.sh arduino-git:xmc:kit_xmc47_relax ~/output ~/build/Blink.ino ~/Arduino/hardware/arduino-git/xmc/boards.txt /usr/bin/arm-none-eabi-gdb
 
 set -e
 
@@ -21,7 +26,7 @@ BOARD_NAME=$(echo "$FQBN_FULL" | awk -F: '{print $NF}')
 GDB_PATH="${5:-$HOME/.arduino15/packages/Infineon/tools/arm-none-eabi-gcc/10.3-2021.10/bin/arm-none-eabi-gdb}"
 
 if [[ -z "$FQBN_FULL" || -z "$BUILD_PATH" || -z "$SKETCH_PATH" ]]; then
-  echo "Usage: $0 <fqbn> <build_path> <sketch_path>"
+  echo "Usage: $0 <fqbn> <build_path> <sketch_path> [boards.txt] [gdb_path]"
   exit 1
 fi
 
