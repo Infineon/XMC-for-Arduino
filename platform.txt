@@ -49,7 +49,7 @@ compiler.cmsis_include.path={compiler.xmclib_include.path}/CMSIS/Include
 compiler.nn_include.path={compiler.xmclib_include.path}/CMSIS/NN/Include
 compiler.dsp_include.path={compiler.xmclib_include.path}/CMSIS/DSP/Include
 
-compiler.arduino_core.path={runtime.platform.path}/cores/arduino/api
+compiler.arduino_core.path={runtime.platform.path}/cores/xmc/api
 compiler.arduino_core_dep.path={compiler.arduino_core.path}/deprecated
 compiler.arduino_core_dep_avr.path={compiler.arduino_core.path}/deprecated-avr-comp/avr
 compiler.arduino_core_api.path= "-I{compiler.arduino_core_dep_avr.path}" "-I{compiler.arduino_core_dep.path}" 
