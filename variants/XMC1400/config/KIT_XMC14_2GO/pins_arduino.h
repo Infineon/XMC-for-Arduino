@@ -341,27 +341,27 @@ XMC_I2C_t XMC_I2C_0 = {.channel = XMC_I2C0_CH1,
     //                         .protocol_irq_service_request = 2,
     //                         .protocol_irq_source = XMC_SCU_IRQCTRL_USIC1_SR2_IRQ11};
 
-    //     // XMC CAN instance
-    //     #ifdef CAN_xmc
-    // XMC_ARD_CAN_t XMC_CAN_0 = {.can_node = CAN_NODE0,
-    //                            .can_node_num = XMC_NODE_NUM_0,
-    //                            .can_clock = XMC_CAN_CANCLKSRC_MCLK,
-    //                            .can_frequency = (uint32_t)48000000,
-    //                            .rx = {.port = (XMC_GPIO_PORT_t *)PORT1_BASE, .pin = (uint8_t)1},
-    //                            .rx_config =
-    //                                {
-    //                                    .mode = XMC_GPIO_MODE_INPUT_TRISTATE,
-    //                                },
-    //                            .tx = {.port = (XMC_GPIO_PORT_t *)PORT1_BASE, .pin = (uint8_t)0},
-    //                            .tx_config =
-    //                                {
-    //                                    .mode = XMC_GPIO_MODE_OUTPUT_PUSH_PULL_ALT9,
-    //                                },
-    //                            .node_input = CAN_NODE0_RXD_P1_1,
-    //                            .irq_num = CAN0_3_IRQn,
-    //                            .irq_service_request = 3,
-    //                            .irq_source = XMC_SCU_IRQCTRL_CAN0_SR3_IRQ7};
-    //     #endif
+    // XMC CAN instance
+    #ifdef CAN_xmc
+XMC_ARD_CAN_t XMC_CAN_0 = {.can_node = CAN_NODE0,
+                           .can_node_num = XMC_NODE_NUM_0,
+                           .can_clock = XMC_CAN_CANCLKSRC_MCLK,
+                           .can_frequency = (uint32_t)48000000,
+                           .rx = {.port = (XMC_GPIO_PORT_t *)PORT1_BASE, .pin = (uint8_t)1},
+                           .rx_config =
+                               {
+                                   .mode = XMC_GPIO_MODE_INPUT_TRISTATE,
+                               },
+                           .tx = {.port = (XMC_GPIO_PORT_t *)PORT1_BASE, .pin = (uint8_t)0},
+                           .tx_config =
+                               {
+                                   .mode = XMC_GPIO_MODE_OUTPUT_PUSH_PULL_ALT9,
+                               },
+                           .node_input = CAN_NODE0_RXD_P1_1,
+                           .irq_num = CAN0_3_IRQn,
+                           .irq_service_request = 3,
+                           .irq_source = XMC_SCU_IRQCTRL_CAN0_SR3_IRQ7};
+    #endif
 
     // Serial Interrupt and event handling
     #ifdef __cplusplus
