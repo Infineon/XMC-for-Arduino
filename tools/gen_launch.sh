@@ -23,7 +23,7 @@ BOARD_NAME=$(echo "$FQBN_FULL" | awk -F: '{print $NF}')
 
 
 # Allow GDB_PATH as optional 5th parameter, default to Infineon toolchain path
-GDB_PATH="${5:-$HOME/.arduino15/packages/Infineon/tools/arm-none-eabi-gcc/10.3-2021.10/bin/arm-none-eabi-gdb}"
+GDB_PATH="${5:-$HOME/.arduino15/packages/infineon/tools/arm-none-eabi-gcc/10.3-2021.10/bin/arm-none-eabi-gdb}"
 
 if [[ -z "$FQBN_FULL" || -z "$BUILD_PATH" || -z "$SKETCH_PATH" ]]; then
   echo "Usage: $0 <fqbn> <build_path> <sketch_path> [boards.txt] [gdb_path]"
