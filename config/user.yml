@@ -31,10 +31,14 @@ unit-test:
    - unit-test-can-multi-1400-2go
 
 
-  #  - unit-test-digital-io-1400
-  #  - unit-test-tone-1400
-  #  - unit-test-interrupts-1400
-  #  - unit-test-random-1400
-  #  - unit-test-time-1400
-  #  - unit-test-analog-io-pwm-1400
-  #  - unit-test-analog-io-adc-1400
+   # - unit-test-digital-io-1400
+   # - unit-test-tone-1400
+   # - unit-test-interrupts-1400
+   - unit-test-random-1400
+   - unit-test-time-1400
+   - unit-test-iic-pingpong-1400
+   - unit-test-spi-single-pingpong-1400
+   # - unit-test-pulse-1400
+   - unit-test-onewire-DS18x20-1400
+   # - unit-test-analog-io-pwm-1400
+   # - unit-test-analog-io-adc-1400
