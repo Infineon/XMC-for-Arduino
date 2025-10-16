@@ -247,11 +247,21 @@ unit-test:
         query: iic_ping_pong_single_board == '2:1'
         working_dir: extras/arduino-core-tests
     
-    unit-test-can-1400-2go:
+    unit-test-can-single-1400-2go:
       - description: Compiling, flashing and monitoring CAN unit test.
         command: make test_can_single  
         query: can_single_board == '1:1'
         working_dir: extras/arduino-core-tests
 
+    unit-test-can-multi-1400-2go:
+      - description: Compiling, flashing and monitoring can node 1 test.
+        command: make test_can_connected2_node1
+        query: can_multiple_boards_node1 == '1:1'
+        working_dir: extras/arduino-core-tests
+
+      - description: Compiling, flashing and monitoring can node 2 test.
+        command: make test_can_connected2_node2
+        query: can_multiple_boards_node2 == '1:1'
+        working_dir: extras/arduino-core-tests
     
    
