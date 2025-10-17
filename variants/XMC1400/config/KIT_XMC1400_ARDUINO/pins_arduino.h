@@ -109,10 +109,10 @@ extern uint8_t SCK;
 #define LED3 26
 #define LED_BUILTIN LED1
 
-#define EXT_INTR_0 3
-#define EXT_INTR_1 25
+#define EXT_INTR_0 25
+#define EXT_INTR_1 3
 
-#define digitalPinToInterrupt(p) ((p) == 3 ? 0 : ((p) == 25 ? 1 : -1))
+#define digitalPinToInterrupt(p) ((p) == 25 ? 0 : ((p) == 3 ? 1 : -1))
 
 /* Mapping interrupt handlers. Notice that XMC1400 can have interrupt handlers working in 3 modes,
    the defines below assumes the mode A. For details refer to assembly file and reference manual.
@@ -180,8 +180,8 @@ bool gpio_current_value[NUM_DIGITAL] = {false};
 ;
 
 const XMC_PIN_INTERRUPT_t mapping_interrupt[] = {
-    /* 0  */ {CCU40, CCU40_CC41, 1, 1, CCU40_IN1_U0C1_DX2INS},
-    /* 1  */ {CCU40, CCU40_CC40, 0, 0, CCU40_IN0_U0C0_DX2INS}};
+    /* 0  */ {CCU40, CCU40_CC40, 0, 0, CCU40_IN0_U0C0_DX2INS},
+    /* 1  */ {CCU40, CCU40_CC41, 1, 1, CCU40_IN1_U0C1_DX2INS}};
 const uint8_t NUM_INTERRUPT = (sizeof(mapping_interrupt) / sizeof(XMC_PIN_INTERRUPT_t));
 
 /* Mapping of Arduino Pins to PWM4 channels as pin and index in PWM4 channel
