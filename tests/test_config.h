@@ -38,7 +38,14 @@
     #elif defined(KIT_XMC1400_ARDUINO)
         #define TEST_PIN_DIGITAL_IO_OUTPUT 4
         #define TEST_PIN_DIGITAL_IO_INPUT 25
-        #define TEST_PIN_PULSE 6 // IO_2
+        #define TEST_PIN_PULSE 6
+
+        #define PWM_FREQUENCY_HZ 490          // PWM Frequency in Hz
+        #define TEST_PIN_ANALOG_IO_VREF A2    // Pin connected to Vdd
+        #define TEST_PIN_ANALOG_IO_DIVIDER A1 // Pin connected to voltage divider
+        #define TEST_PIN_ANALOG_IO_GND A0     // Pin connected to Ground
+        #define TEST_ADC_MAX_VALUE 1023
+        #define TEST_ADC_RESOLUTION 10 // ADC resolution
 
     #elif defined(KIT_XMC14_2GO)
         #define PWM_FREQUENCY_HZ 490          // PWM Frequency in Hz
