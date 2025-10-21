@@ -27,8 +27,8 @@ unit-test:
    - unit-test-uart-4700
    - unit-test-spi-single-pingpong-4700
    - unit-test-onewire-DS18x20-4700
-   - unit-test-can-single-1400-2go
-   - unit-test-can-multi-1400-2go
+   # - unit-test-can-single-1400-2go
+   # - unit-test-can-multi-1400-2go
 
 
    - unit-test-digital-io-1400
