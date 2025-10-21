@@ -241,10 +241,16 @@ unit-test:
         query: analogio_pwm_single_board == '2:1'
         working_dir: extras/arduino-core-tests
         
-    unit-test-iic-1400:
-      - description: Compiling, flashing and monitoring timer unit test.
-        command: make test_wire_connected1_pingpong
-        query: iic_ping_pong_single_board == '2:1'
+    unit-test-analog-io-adc-1400:
+      - description: Compiling, flashing and monitoring ADC unit test.
+        command: make test_analogio_adc
+        query: analogio_adc_single_board == '2:1'
+        working_dir: extras/arduino-core-tests
+
+    unit-test-spi-single-pingpong-1400:
+      - description: Compiling, flashing and monitoring SPI pingpong single_board.
+        command: make test_spi_connected1_loopback
+        query: spi_ping_pong_single_board == '2:1'
         working_dir: extras/arduino-core-tests
     
     unit-test-can-single-1400-2go:
