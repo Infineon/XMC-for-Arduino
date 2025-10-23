@@ -58,6 +58,8 @@ extern const uint8_t NUM_ANALOG_INPUTS;
 
 // Indicate unit has RTC/Alarm
 #define HAS_RTC 1
+// Indicate variant has a GPIO pin used for Reset pin
+#define HAS_GPIO_RESET 1
 
 // Defines will be either set by ArduinoIDE in the menu or manually
 #ifdef SERIAL_HOSTPC
