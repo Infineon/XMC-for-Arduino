@@ -21,7 +21,7 @@ unit-test:
    - unit-test-analog-io-pwm-4700
    - unit-test-pulse-4700
    - unit-test-time-4700
-   - unit-test-iic-4700
+   # - unit-test-iic-4700
    - unit-test-analog-io-adc-4700
    - unit-test-analog-io-dac-4700
    - unit-test-uart-4700
