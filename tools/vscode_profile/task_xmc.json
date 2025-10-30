@@ -1,0 +1,114 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+	  {
+		"label": "Arduino Build",
+		"type": "shell",
+		"command": "arduino-cli",
+		"args": [
+		  "compile",
+		  "--fqbn", "${input:boardFqbn}",
+		  "${input:examplePath}"
+		],
+		"group": {
+		  "kind": "build",
+		  "isDefault": false
+		},
+		"problemMatcher": []
+	  },
+	  {
+		"label": "Arduino Upload",
+		"type": "shell",
+		"command": "arduino-cli",
+		"args": [
+		  "upload",
+		//  "--verbose",
+		  "-p", "${input:port}",
+		  "--fqbn", "${input:boardFqbn}",
+		  "${input:examplePath}"
+		],
+		"dependsOn": "Arduino Build",
+		"group": {
+		  "kind": "build",
+		  "isDefault": true
+		},
+		"problemMatcher": []
+	  },
+		{
+			"label": "Generate lauch.json for debug (XMC)",
+			"type": "shell",
+			"command": "${workspaceFolder}/tools/gen_launch.sh",
+			"args": [
+				"${input:boardFqbn}",
+				"${input:debugBuildPath}",
+				"${input:examplePath}",
+				"${input:boardsTxtPath}",
+				"${input:gdbPath}"
+			],
+			"group": {
+				"kind": "build",
+				"isDefault": false
+			},
+			"problemMatcher": [],
+			"presentation": {
+				"echo": true,
+				"reveal": "always",
+				"focus": false,
+				"panel": "shared"
+			}
+		},
+		{
+			"label": "Arduino Monitor",
+			"type": "shell",
+			"command": "arduino-cli",
+			"args": [
+				"monitor",
+				"-p", "${input:port}",
+				"-c", "baudrate=115200"
+			],
+			"group": {
+				"kind": "build",
+				"isDefault": false
+			},
+			"problemMatcher": []
+			}
+	],
+	"inputs": [
+			{
+				"id": "boardFqbn",
+				"type": "promptString",
+				"description": "Enter the FQBN (Fully Qualified Board Name) for the Arduino board",
+				"default": "arduino-git:xmc:kit_xmc47_relax"
+			},
+				{
+					"id": "debugBuildPath",
+					"type": "promptString",
+					"description": "Enter the build path where the .elf file would be placed",
+					"default": "${workspaceFolder}/extras/arduino-core-tests/build/output"
+				},
+		{
+			"id": "examplePath",
+			"type": "promptString",
+			"description": "Enter the path to the Arduino example sketch",
+			"default": "${workspaceFolder}/examples/bug/bug.ino"
+		},
+		{
+			"id": "port",
+			"type": "promptString",
+			"description": "Enter the port for the Arduino board",
+			"default": "/dev/ttyACM0"
+		},
+		{
+			"id": "boardsTxtPath",
+			"type": "promptString",
+			"description": "(Optional) Enter the path to boards.txt, or leave blank for default",
+			"default": ""
+		},
+		{
+			"id": "gdbPath",
+			"type": "promptString",
+			"description": "(Optional) Enter the path to arm-none-eabi-gdb, or leave blank for default",
+			"default": ""
+		},
+	]
+  }

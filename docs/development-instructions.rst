@@ -129,12 +129,12 @@ Debugging (VS Code)
 Debugging support described here is for Visual Studio Code. The Arduino IDE already provides a built-in debugger for supported boards.
 
 #. Install the `Cortex-Debug` extension in VS Code.
-#. Copy the `tasks.json` file from `tools/vscode-profile` to the `.vscode` directory in your project root.
+#. Copy the `task_xmc.json` file from `tools/vscode-profile` to the `.vscode` directory and rename to `tasks.json` in your project root.
 #. In VS Code, run the task: **Generate launch.json for debug (XMC)**.
 #. Required parameters for this task:
    * **fqbn**: Fully Qualified Board Name (e.g., `arduino-git:xmc:kit_xmc47_relax`)
    * **build path**: Directory where the `.elf` file will be placed
-   * **example path**: Path to the sketch (`.ino` file) to debug
+   * **example path**: Path to the sketch (`.ino` file) to debug (for arduino-core-tests make sure it has been built at least once to generate the required build.ino)
 #. Optional parameters:
    * **boards.txt path**: Path to a custom `boards.txt` file
    * **gdb path**: Path to a custom GDB executable
