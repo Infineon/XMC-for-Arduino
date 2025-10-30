@@ -1,0 +1,10 @@
+# These owners will be the default owners for everything in
+# the repo. Unless a later match takes precedence,
+# they will be requested for review when someone opens a pull request.
+* @ederjc @jaenrig-ifx @LinjingZhang @dineshgit411
+
+# Owners for specific paths/files.
+cores/ @jaenrig-ifx @LinjingZhang @dineshgit411
+libraries/ @jaenrig-ifx @LinjingZhang @dineshgit411
+variants/ @jaenrig-ifx @LinjingZhang @dineshgit411
+tools/ @jaenrig-ifx @LinjingZhang @dineshgit411
