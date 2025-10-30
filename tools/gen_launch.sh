@@ -109,8 +109,7 @@ if [[ "$DEVICE_TYPE" == "psoc6" ]]; then
       "numberOfProcessors": 2,
       "targetProcessor": 1,// Set to 0 for the CM0+, set to 1 for the CM4
       "postStartSessionCommands": [
-        "monitor gdb_sync",
-        "stepi"
+        "continue"
       ],
       "overrideRestartCommands": [
         "starti"
