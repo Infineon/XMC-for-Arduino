@@ -40,6 +40,7 @@
 			"args": [
 				"${input:boardFqbn}",
 				"${input:debugBuildPath}",
+				
 				"${input:examplePath}",
 				"${input:boardsTxtPath}",
 				"${input:gdbPath}"
