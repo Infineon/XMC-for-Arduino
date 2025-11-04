@@ -22,7 +22,6 @@
 		"command": "arduino-cli",
 		"args": [
 		  "upload",
-		//  "--verbose",
 		  "-p", "${input:port}",
 		  "--fqbn", "${input:boardFqbn}",
 		  "${input:examplePath}"
@@ -109,6 +108,6 @@
 			"type": "promptString",
 			"description": "(Optional) Enter the path to arm-none-eabi-gdb, or leave blank for default",
 			"default": ""
-		},
+		}
 	]
   }
