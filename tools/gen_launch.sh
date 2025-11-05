@@ -26,7 +26,7 @@ PACKAGE_DIR="$(dirname "$SCRIPT_DIR")"
 if [[ "$FQBN_FULL" == infineon:psoc6:* ]]; then
   DEVICE_TYPE="psoc6"
   BOARDS_TXT="${4:-$PACKAGE_DIR/boards.txt}"
-  GDB_PATH="${5:-$HOME/.arduino15/packages/Infineon/tools/arm-none-eabi-gcc/10.3-2021.10/bin/arm-none-eabi-gdb}"
+  GDB_PATH="${5:-$HOME/.arduino15/packages/infineon/tools/mtb-gcc-arm-none-eabi/11.3.1.67/bin/arm-none-eabi-gdb}"
 elif [[ "$FQBN_FULL" == arduino-git:xmc:* ]]; then
   DEVICE_TYPE="xmc"
   XMC_DIR="$(dirname "$SCRIPT_DIR")"
