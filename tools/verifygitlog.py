@@ -87,8 +87,9 @@ def verify(sha, err):
     # Author and committer email.
     for line in git_log("%ae%n%ce", sha, "-n1"):
         very_verbose("email", line)
-        if "noreply" in line:
-            err.error("Unwanted email address: " + line)
+        # Disable because user have to change their github profile.
+        # if "noreply" in line:
+        #     err.error("Unwanted email address: " + line)
 
 
     verify_message_body(raw_body, err)
