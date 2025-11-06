@@ -17,7 +17,6 @@
 
     #define SPI_TRANSFER_DELAY_US 2000
     // Test Pin Definitions
-    #define TEST_PIN_SYNC_IO 4   // IO_1
     #define TEST_PIN_SPI_SSEL 10 // IO_0
     #define TEST_PIN_ONEWIRE 7
 
@@ -25,6 +24,7 @@
         #define TEST_PIN_DIGITAL_IO_OUTPUT 3  // IO_4
         #define TEST_PIN_DIGITAL_IO_INPUT 2   // IO_3
         #define TEST_PIN_PULSE 5              // IO_2
+        #define TEST_PIN_SYNC_IO 4            // IO_1
         #define PWM_FREQUENCY_HZ 490          // PWM Frequency in Hz
         #define TEST_PIN_ANALOG_IO_VREF A2    // Pin connected to Vdd
         #define TEST_PIN_ANALOG_IO_DIVIDER A1 // Pin connected to voltage divider
@@ -39,6 +39,7 @@
         #define TEST_PIN_DIGITAL_IO_OUTPUT 4
         #define TEST_PIN_DIGITAL_IO_INPUT 25
         #define TEST_PIN_PULSE 6
+        #define TEST_PIN_SYNC_IO 5 // IO_1
 
         #define PWM_FREQUENCY_HZ 490          // PWM Frequency in Hz
         #define TEST_PIN_ANALOG_IO_VREF A2    // Pin connected to Vdd
