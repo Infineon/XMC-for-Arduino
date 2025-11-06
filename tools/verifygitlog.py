@@ -87,10 +87,6 @@ def verify(sha, err):
     # Author and committer email.
     for line in git_log("%ae%n%ce", sha, "-n1"):
         very_verbose("email", line)
-        # Disable because user have to change their github profile.
-        # if "noreply" in line:
-        #     err.error("Unwanted email address: " + line)
-
 
     verify_message_body(raw_body, err)
 
@@ -113,9 +109,6 @@ def verify_message_body(raw_body, err):
         # Long lines with URLs are exempt from the line length rule.
         if len(line) >= 76 and "://" not in line:
             err.error("Message lines should be 75 or less characters: " + line)
-
-    if not raw_body[-1].startswith("Signed-off-by: ") or "@" not in raw_body[-1]:
-        err.error('Message must be signed-off. Use "git commit -s".')
 
 
 def run(args):
