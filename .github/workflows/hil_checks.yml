@@ -2,6 +2,10 @@ name: HIL Checks
 
 on:
   pull_request:
+    paths-ignore:
+      - '**/*.md'
+      - '**/docs/**'
+      - 'tools/verifygitlog.py'
 
 jobs:
   makers-devops:
