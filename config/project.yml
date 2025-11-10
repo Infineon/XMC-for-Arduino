@@ -270,6 +270,13 @@ unit-test:
         command: make test_spi_connected1_loopback
         query: spi_ping_pong_single_board == '2:1'
         working_dir: extras/arduino-core-tests
+    
+    unit-test-onewire-DS18x20-1400:
+      - description: Compiling, flashing and monitoring OneWire sensor DS18B20 data.
+        command: make test_onewire_DS18x20 
+        query: onewire_DS18x20_board == '2:1'
+        working_dir: extras/arduino-core-tests
+
 #########################################################################################
     unit-test-digital-io-1100:
       - description: Compiling, flashing and monitoring digital IO unit test.
@@ -346,14 +353,13 @@ unit-test:
         query: spi_ping_pong_single_board == '3:1'
         working_dir: extras/arduino-core-tests
 
-
 ##########################################################################################
-    unit-test-onewire-DS18x20-1400:
+    unit-test-onewire-DS18x20-1100:
       - description: Compiling, flashing and monitoring OneWire sensor DS18B20 data.
         command: make test_onewire_DS18x20 
-        query: onewire_DS18x20_board == '2:1'
-        working_dir: extras/arduino-core-tests
-    
+        query: onewire_DS18x20_board == '3:1'
+        working_dir: extras/arduino-core-tests 
+
     unit-test-can-1400-2go:
       - description: Compiling, flashing and monitoring CAN unit test.
         command: make test_can_single  
