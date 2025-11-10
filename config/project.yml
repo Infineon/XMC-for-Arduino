@@ -196,9 +196,11 @@ unit-test:
 
     unit-test-digital-io-1400:
       - description: Compiling, flashing and monitoring digital IO unit test.
-        command: make test_digitalio_single
+        command: make test_digitalio_single ENABLE_SYNC=0
         query: digital_io_single_board == '2:1'
         working_dir: extras/arduino-core-tests
+        options:
+          SEND_JOB_START_TOKEN: False
     
     unit-test-tone-1400:
       - description: Compiling, flashing and monitoring tone, no-tone unit test.

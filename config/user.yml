@@ -28,7 +28,7 @@ unit-test:
    - unit-test-spi-single-pingpong-4700
    - unit-test-onewire-DS18x20-4700
    - unit-test-can-1400-2go
-   # - unit-test-digital-io-1400
+   - unit-test-digital-io-1400
    - unit-test-tone-1400
    - unit-test-iic-pingpong-1400
    - unit-test-interrupts-1400
