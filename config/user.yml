@@ -38,4 +38,4 @@ unit-test:
    - unit-test-time-1400
    - unit-test-onewire-DS18x20-1400
    - unit-test-analog-io-adc-1400
-   # - unit-test-analog-io-pwm-1400
+   - unit-test-analog-io-pwm-1400
