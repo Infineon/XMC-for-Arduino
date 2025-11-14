@@ -280,12 +280,10 @@ unit-test:
 #########################################################################################
     unit-test-digital-io-1100:
       - description: Compiling, flashing and monitoring digital IO unit test.
-        command: make test_digitalio_single ENABLE_SYNC=0
+        command: make test_digitalio_single
         query: digital_io_single_board == '3:1'
         working_dir: extras/arduino-core-tests
-        options:
-          SEND_JOB_START_TOKEN: False
-    
+
     unit-test-tone-1100:
       - description: Compiling, flashing and monitoring tone, no-tone unit test.
         command: make test_tone_no_tone
