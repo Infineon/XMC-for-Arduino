@@ -61,6 +61,6 @@ unit-test:
    - unit-test-spi-single-pingpong-1300
    - unit-test-pulse-1300
    - unit-test-time-1300
-   # - unit-test-onewire-DS18x20-1300
+   - unit-test-onewire-DS18x20-1300
    - unit-test-analog-io-adc-1300
    - unit-test-analog-io-pwm-1300
