@@ -193,7 +193,7 @@ unit-test:
         command: make test_onewire_DS18x20 
         query: onewire_DS18x20_board == '1:1'
         working_dir: extras/arduino-core-tests
-
+############################# XMC1400_Arduino#########################################
     unit-test-digital-io-1400:
       - description: Compiling, flashing and monitoring digital IO unit test.
         command: make test_digitalio_single ENABLE_SYNC=0
@@ -231,12 +231,7 @@ unit-test:
         command: make test_analogio_pwm
         query: analogio_pwm_single_board == '2:1'
         working_dir: extras/arduino-core-tests
-        
-    # unit-test-iic-1400:
-    #   - description: Compiling, flashing and monitoring timer unit test.
-    #     command: make test_wire_connected1_pingpong
-    #     query: iic_ping_pong_single_board == '2:1'
-    #     working_dir: extras/arduino-core-tests
+
     unit-test-analog-io-adc-1400:
       - description: Compiling, flashing and monitoring ADC unit test.
         command: make test_analogio_adc
@@ -277,7 +272,7 @@ unit-test:
         query: onewire_DS18x20_board == '2:1'
         working_dir: extras/arduino-core-tests
 
-#########################################################################################
+######################### XMC 1100  ##############################################
     unit-test-digital-io-1100:
       - description: Compiling, flashing and monitoring digital IO unit test.
         command: make test_digitalio_single ENABLE_SYNC=0
@@ -315,12 +310,7 @@ unit-test:
         command: make test_analogio_pwm
         query: analogio_pwm_single_board == '3:1'
         working_dir: extras/arduino-core-tests
-        
-    # unit-test-iic-1400:
-    #   - description: Compiling, flashing and monitoring timer unit test.
-    #     command: make test_wire_connected1_pingpong
-    #     query: iic_ping_pong_single_board == '2:1'
-    #     working_dir: extras/arduino-core-tests
+
     unit-test-analog-io-adc-1100:
       - description: Compiling, flashing and monitoring ADC unit test.
         command: make test_analogio_adc
@@ -355,13 +345,90 @@ unit-test:
         query: spi_ping_pong_single_board == '3:1'
         working_dir: extras/arduino-core-tests
 
-##########################################################################################
     unit-test-onewire-DS18x20-1100:
       - description: Compiling, flashing and monitoring OneWire sensor DS18B20 data.
         command: make test_onewire_DS18x20 
         query: onewire_DS18x20_board == '3:1'
         working_dir: extras/arduino-core-tests 
+############################### XMC 1300 ####################################################
+    unit-test-digital-io-1300:
+      - description: Compiling, flashing and monitoring digital IO unit test.
+        command: make test_digitalio_single ENABLE_SYNC=0
+        query: digital_io_single_board == '4:1'
+        working_dir: extras/arduino-core-tests
+        options:
+          SEND_JOB_START_TOKEN: False
+    
+    unit-test-tone-1300:
+      - description: Compiling, flashing and monitoring tone, no-tone unit test.
+        command: make test_tone_no_tone
+        query: tone_no_tone_single_board == '4:1'
+        working_dir: extras/arduino-core-tests
+    
+    unit-test-interrupts-1300:
+      - description: Compiling, flashing and monitoring Interrupts unit test.
+        command: make test_interrupts_single
+        query: interrupts_single_board == '4:1'
+        working_dir: extras/arduino-core-tests
+    
+    unit-test-random-1300:
+      - description: Compiling, flashing and monitoring random unit test.
+        command: make test_random
+        query: random_single_board == '4:1'
+        working_dir: extras/arduino-core-tests
+    
+    unit-test-time-1300:
+      - description: Compiling, flashing and monitoring timer unit test.
+        command: make test_time_single
+        query: time_single_board == '4:1'
+        working_dir: extras/arduino-core-tests
+    
+    unit-test-analog-io-pwm-1300:
+      - description: Compiling, flashing and monitoring timer unit test.
+        command: make test_analogio_pwm
+        query: analogio_pwm_single_board == '4:1'
+        working_dir: extras/arduino-core-tests
 
+    unit-test-analog-io-adc-1300:
+      - description: Compiling, flashing and monitoring ADC unit test.
+        command: make test_analogio_adc
+        query: analogio_adc_single_board == '4:1'
+        working_dir: extras/arduino-core-tests
+
+    unit-test-iic-pingpong-1300:
+      - description: Compiling, flashing and monitoring I2C pingpong slave unit test.
+        command: make test_wire_connected2_slavepingpong
+        query: iic_ping_pong_multiple_boards_slave == '4:1'
+        working_dir: extras/arduino-core-tests
+
+      - description: Compiling, flashing and monitoring I2C pingpong master unit test.
+        command: make test_wire_connected2_masterpingpong
+        query: iic_ping_pong_multiple_boards_master == '4:1'
+        working_dir: extras/arduino-core-tests
+
+    unit-test-pulse-1300:     
+      - description: Compiling, flashing and monitoring pulse board1 unit test.
+        command: make test_pulse_board1
+        query: adv_io_pulse_board1  == '4:1'
+        working_dir: extras/arduino-core-tests
+
+      - description: Compiling, flashing and monitoring pulse board2 unit test.
+        command: make test_pulse_board2
+        query: adv_io_pulse_board2  == '4:1'
+        working_dir: extras/arduino-core-tests
+    
+    unit-test-spi-single-pingpong-1300:
+      - description: Compiling, flashing and monitoring SPI pingpong single_board.
+        command: make test_spi_connected1_loopback
+        query: spi_ping_pong_single_board == '4:1'
+        working_dir: extras/arduino-core-tests
+
+    # unit-test-onewire-DS18x20-1100:
+    #   - description: Compiling, flashing and monitoring OneWire sensor DS18B20 data.
+    #     command: make test_onewire_DS18x20 
+    #     query: onewire_DS18x20_board == '4:1'
+    #     working_dir: extras/arduino-core-tests 
+################################################################################################
     unit-test-can-1400-2go:
       - description: Compiling, flashing and monitoring CAN unit test.
         command: make test_can_single  

@@ -52,3 +52,15 @@ unit-test:
    - unit-test-onewire-DS18x20-1100
    - unit-test-analog-io-adc-1100
    - unit-test-analog-io-pwm-1100
+
+   - unit-test-digital-io-1300
+   - unit-test-tone-1300
+   - unit-test-iic-pingpong-1300
+   - unit-test-interrupts-1300
+   - unit-test-random-1300
+   - unit-test-spi-single-pingpong-1300
+   - unit-test-pulse-1300
+   - unit-test-time-1300
+   # - unit-test-onewire-DS18x20-1300
+   - unit-test-analog-io-adc-1300
+   - unit-test-analog-io-pwm-1300
