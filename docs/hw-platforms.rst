@@ -101,7 +101,7 @@ The board shares the same power supply and board shape as other boards for Ardui
 Pinout Diagram
 ^^^^^^^^^^^^^^
 Please note that pins ``P1.4`` and ``P0.5`` are swapped on the board and are not consistent with the silkscreen. As a result, interrupt 0 ``INT0`` 
-occurs as Arduino pin ``3`` and interrupt 1 ``INT1`` is located at Arduino pin ``25``. This is different from the original 
+occurs as Arduino pin ``25`` and interrupt 1 ``INT1`` is located at Arduino pin ``3``. This is different from the original 
 Arduino UNO Rev3 implementation. Please look at the pinout diagram for more information.
 
 .. image:: img/KIT_XMC1400_ARDUINO_pinout.png
