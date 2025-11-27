@@ -65,6 +65,16 @@ KIT_XMC13_BOOT_001
 
 The `KIT_XMC13_BOOT_001 <https://www.infineon.com/cms/de/product/evaluation-boards/kit_xmc13_boot_001/>`__ features a XMC1302 microcontroller in TSSOP-38 with 200KB flash and detachable SEGGER J-Link.
 
+Known Issues
+^^^^^^^^^^^^
+
+**Serial Communication Garbled Output**
+
+Some board versions may display garbled characters in serial output. To resolve this:
+
+1. **Update J-Link firmware** to the latest version. `J-Link-Firmware <https://kb.segger.com/J-Link_-_Firmware>`__
+2. **Reduce baud rate** if your application allows (e.g., from 115200 to 9600)
+
 -----------------------------------------------------------------------
 
 .. _KIT_XMC14_2GO:
