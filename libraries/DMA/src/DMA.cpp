@@ -35,7 +35,7 @@
 #include <Arduino.h>
 #include "DMA.h"
 
-static interrupt_cb_t event_handler = NULL;
+static voidFuncPtr event_handler = NULL;
 event_t event;
 
 void DMA::beginDMA(XMC_DMA_t *const dma) {
@@ -217,7 +217,7 @@ void DMA::configDMA_P2P(XMC_DMA_t *const dma,
 
 void DMA::attachDMAInterrupt(XMC_DMA_t *const dma,
                              uint8_t channel,
-                             interrupt_cb_t _event_handler,
+                             voidFuncPtr _event_handler,
                              event_t _event) {
     event = _event;
     XMC_DMA_CH_EnableEvent(dma, channel, event);
