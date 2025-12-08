@@ -322,26 +322,24 @@ XMC_I2C_t XMC_I2C_0 = {.channel = XMC_I2C0_CH1,
                        .protocol_irq_num = (IRQn_Type)USIC0_5_IRQn,
                        .protocol_irq_service_request = 5};
 
-    // XMC_I2S_t i2s_config = {.input_config = {.mode = XMC_GPIO_MODE_INPUT_TRISTATE,
-    //                                          .input_hysteresis =
-    //                                          XMC_GPIO_INPUT_HYSTERESIS_STANDARD, .output_level =
-    //                                          XMC_GPIO_OUTPUT_LEVEL_HIGH
+XMC_I2S_t i2s_config = {.input_config = {.mode = XMC_GPIO_MODE_INPUT_TRISTATE,
+                                         .input_hysteresis = XMC_GPIO_INPUT_HYSTERESIS_STANDARD,
+                                         .output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH
 
-    //                         },
-    //                         .sclk_config = {.mode = XMC_GPIO_MODE_OUTPUT_PUSH_PULL_ALT8,
-    //                                         .input_hysteresis =
-    //                                         XMC_GPIO_INPUT_HYSTERESIS_STANDARD, .output_level =
-    //                                         XMC_GPIO_OUTPUT_LEVEL_HIGH
+                        },
+                        .sclk_config = {.mode = XMC_GPIO_MODE_OUTPUT_PUSH_PULL_ALT8,
+                                        .input_hysteresis = XMC_GPIO_INPUT_HYSTERESIS_STANDARD,
+                                        .output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH
 
-    //                         },
-    //                         .wa_config = {.mode = XMC_GPIO_MODE_OUTPUT_PUSH_PULL_ALT8,
-    //                                       .input_hysteresis = XMC_GPIO_INPUT_HYSTERESIS_STANDARD,
-    //                                       .output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH
+                        },
+                        .wa_config = {.mode = XMC_GPIO_MODE_OUTPUT_PUSH_PULL_ALT8,
+                                      .input_hysteresis = XMC_GPIO_INPUT_HYSTERESIS_STANDARD,
+                                      .output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH
 
-    //                         },
-    //                         .protocol_irq_num = (IRQn_Type)USIC1_2_IRQn,
-    //                         .protocol_irq_service_request = 2,
-    //                         .protocol_irq_source = XMC_SCU_IRQCTRL_USIC1_SR2_IRQ11};
+                        },
+                        .protocol_irq_num = (IRQn_Type)USIC1_2_IRQn,
+                        .protocol_irq_service_request = 2,
+                        .protocol_irq_source = XMC_SCU_IRQCTRL_USIC1_SR2_IRQ11};
 
     // XMC CAN instance
     #ifdef CAN_xmc
