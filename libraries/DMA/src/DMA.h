@@ -156,7 +156,7 @@ public:
     // Interrupt configuration
     void attachDMAInterrupt(XMC_DMA_t *const dma,
                             uint8_t channel,
-                            interrupt_cb_t _event_handler,
+                            voidFuncPtr _event_handler,
                             event_t event);
     void detachDMAInterrupt(XMC_DMA_t *const dma, uint8_t channel, XMC_DMA_CH_EVENT_t event);
 
