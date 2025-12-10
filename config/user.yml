@@ -28,7 +28,6 @@ unit-test:
    - unit-test-spi-single-pingpong-4700
    - unit-test-onewire-DS18x20-4700
 
-   - unit-test-can-1400-2go
    - unit-test-digital-io-1400
    - unit-test-tone-1400
    - unit-test-iic-pingpong-1400
@@ -40,6 +39,7 @@ unit-test:
    - unit-test-onewire-DS18x20-1400
    - unit-test-analog-io-adc-1400
    - unit-test-analog-io-pwm-1400
+  #  - unit-test-spi-pingpong-1400 # disable because of current shared spi slave
 
    - unit-test-digital-io-1100
    - unit-test-tone-1100
@@ -52,3 +52,7 @@ unit-test:
    - unit-test-onewire-DS18x20-1100
    - unit-test-analog-io-adc-1100
    - unit-test-analog-io-pwm-1100
+  # - unit-test-spi-pingpong-1100  # disable because of current shared spi slave
+
+   - unit-test-can-1400-2go
+   - unit-test-can-multi-1400-2go
