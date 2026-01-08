@@ -43,6 +43,19 @@ like Serial or in INPUT mode.
 On XMC boards the inputs are UNDEFINED, you MUST specify every pin 
 to be in INPUT Mode that needs Inputs.
 
+Interrupt
++++++++++
+
+XMC1400 Kit for Arduino - Interrupt 1 and serial conflict
+When using the **KIT_XMC1400_ARDUINO** **Interrupt** 1 does not work when serial (UART) is used.
+The Pin Mapped to **Interrupt 1** shares the **same hardware bus configuration as UART**.
+
+**Impact..**
+- Interrupt will not trigger.
+- Serial communication also not work.
+  
+**Workarounds:**
+- use a **Interrupt 0"
 
 Wire/I2C Differences
 ++++++++++++++++++++
@@ -142,7 +155,18 @@ The DAC output voltage range for the XMC4000 series is limited to a **minimum** 
 
     In this formula, 0.3V is the minimum voltage, 2.5V is the maximum voltage, and 4095 is the maximum value for a 12-bit DAC. 
 
+Analog pins for XMC14_2GO
+-------------------------
 
+On the **XMC14_2GO board**, **pins 12 and 13 are incorrectly named**
+- Correct mapping:
+ -pin 12 -> 'A1' (also index '0')
+ -pin 13 -> 'A0' (also index '1')
+
+**Correct Usage:**
+Use the analog pin defintions instead of 12 and 13 numbers:
+ analogRead(0);  //Instead of using pin 12
+ analogRead(1);  //Instead of using pin 13
 
 I2C Analog pins
 ^^^^^^^^^^^^^^^
