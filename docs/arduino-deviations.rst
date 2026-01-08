@@ -160,13 +160,13 @@ Analog pins for XMC14_2GO
 
 On the **XMC14_2GO board**, **pins 12 and 13 are incorrectly named**
 - Correct mapping:
- -pin 12 -> 'A1' (also index '0')
- -pin 13 -> 'A0' (also index '1')
+ -pin 12 -> 'A1'
+ -pin 13 -> 'A0'
 
 **Correct Usage:**
 Use the analog pin defintions instead of 12 and 13 numbers:
- analogRead(0);  //Instead of using pin 12
- analogRead(1);  //Instead of using pin 13
+ analogRead(A0);  //Instead of using pin 12
+ analogRead(A1);  //Instead of using pin 13
 
 I2C Analog pins
 ^^^^^^^^^^^^^^^
