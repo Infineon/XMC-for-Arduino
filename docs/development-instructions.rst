@@ -146,7 +146,10 @@ Refer to the documentation of your chosen debugger and scripts in the `tools/` f
 
 Release
 ---------
-Add a git tag in the format `Vx.y.z` (e.g. V3.3.0) to trigger the release process.
+Add a git tag in the format `x.y.z` (e.g. 3.3.0) to trigger the release process.
+
+For detailed steps on how to release the package, refer to the 
+`Release Process Documentation <https://ifx-arduino-devops.readthedocs.io/en/latest/release/index.html>`_.
 
 
 Creating and Maintaining Third Party Libraries
