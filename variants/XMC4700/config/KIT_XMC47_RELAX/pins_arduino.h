@@ -113,33 +113,55 @@ static const uint8_t SCK_SD = SDCARD_SCK_PIN;
 #define MASTER_SCLK PORT3, 9
 #define MASTER_WACLK PORT3, 10
 
-#define A0 0
-#define A1 1
-#define A2 2
-#define A3 3
-#define A4 4
-#define A5 5
+#define PIN_A0 0
+#define PIN_A1 1
+#define PIN_A2 2
+#define PIN_A3 3
+#define PIN_A4 4
+#define PIN_A5 5
 // Additional ADC ports starting here
-#define A6 6
-#define A7 7
-#define A8 8
-#define A9 9
-#define A10 10
-#define A11 11
-#define A12 12
-#define A13 13
-#define A14 14
-#define A15 15
-#define A16 16
-#define A17 17
-#define A18 18
-#define A19 19
-#define A20 20
-#define A21 21
+#define PIN_A6 6
+#define PIN_A7 7
+#define PIN_A8 8
+#define PIN_A9 9
+#define PIN_A10 10
+#define PIN_A11 11
+#define PIN_A12 12
+#define PIN_A13 13
+#define PIN_A14 14
+#define PIN_A15 15
+#define PIN_A16 16
+#define PIN_A17 17
+#define PIN_A18 18
+#define PIN_A19 19
+#define PIN_A20 20
+#define PIN_A21 21
 // ADC G3CH0 on P15.8   not available
 // ADC G3CH1 on P15.9   not available
 // ADC G3CH4 on P15.12  button
 // ADC G3CH5 on P15.13  button
+static const uint8_t A0 = PIN_A0;
+static const uint8_t A1 = PIN_A1;
+static const uint8_t A2 = PIN_A2;
+static const uint8_t A3 = PIN_A3;
+static const uint8_t A4 = PIN_A4;
+static const uint8_t A5 = PIN_A5;
+static const uint8_t A6 = PIN_A6;
+static const uint8_t A7 = PIN_A7;
+static const uint8_t A8 = PIN_A8;
+static const uint8_t A9 = PIN_A9;
+static const uint8_t A10 = PIN_A10;
+static const uint8_t A11 = PIN_A11;
+static const uint8_t A12 = PIN_A12;
+static const uint8_t A13 = PIN_A13;
+static const uint8_t A14 = PIN_A14;
+static const uint8_t A15 = PIN_A15;
+static const uint8_t A16 = PIN_A16;
+static const uint8_t A17 = PIN_A17;
+static const uint8_t A18 = PIN_A18;
+static const uint8_t A19 = PIN_A19;
+static const uint8_t A20 = PIN_A20;
+static const uint8_t A21 = PIN_A21;
 
 #define LED1 22
 #define LED2 23
