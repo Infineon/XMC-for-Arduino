@@ -2,7 +2,7 @@
 # pip install --user -r requirements.txt
 #
 sphinx>=7.2.6
-sphinx-tabs
+sphinx-tabs>=3.4.5
 sphinxemoji
 sphinx-rtd-theme
 recommonmark>=0.6.0
