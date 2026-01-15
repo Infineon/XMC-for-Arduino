@@ -50,12 +50,14 @@ XMC1400 Kit for Arduino - Interrupt 1 and serial conflict
 When using the **KIT_XMC1400_ARDUINO** **Interrupt** 1 does not work when serial (UART) is used.
 The Pin Mapped to **Interrupt 1** shares the **same hardware bus configuration as UART**.
 
-**Impact..**
+**Impact:**
+
 - Interrupt will not trigger.
 - Serial communication also not work.
   
 **Workarounds:**
-- use a **Interrupt 0"
+
+- use **Interrupt 0**
 
 Wire/I2C Differences
 ++++++++++++++++++++
@@ -159,14 +161,18 @@ Analog pins for XMC14_2GO
 -------------------------
 
 On the **XMC14_2GO board**, **pins 12 and 13 are incorrectly named**
+
 - Correct mapping:
- -pin 12 -> 'A1'
- -pin 13 -> 'A0'
+
+  - pin 12 -> 'A1'
+  - pin 13 -> 'A0'
 
 **Correct Usage:**
-Use the analog pin defintions instead of 12 and 13 numbers:
- analogRead(A0);  //Instead of using pin 12
- analogRead(A1);  //Instead of using pin 13
+
+Use the analog pin defintions instead of 12 and 13 numbers::
+
+  analogRead(A0);  //Instead of using pin 12
+  analogRead(A1);  //Instead of using pin 13
 
 I2C Analog pins
 ^^^^^^^^^^^^^^^
@@ -197,11 +203,11 @@ function, or other case as described below.
       - | A10 + A11 are alternate pin
         | configurations to I2C
     * - KIT_XMC1400_ARDUINO
-      - Alternate pin function
-      - Matches Arduino Uno  
-      - External hard wired pins
+      - | Alternate pin function
+        | Matches Arduino Uno  
+        | External hard wired pins
       - | For 3V3 boards set I2C pins to tristate or open drain to use
-        | For 5V boards refer to [this section](https://xmc-arduino.readthedocs.io/en/latest/hw-platforms.html#connected-i2s-and-analog-pins) on track cuts to enable A4 and A5 to work
+        | For 5V boards refer to `this section <https://xmc-arduino.readthedocs.io/en/latest/hw-platforms.html#connected-i2s-and-analog-pins>`_ on track cuts to enable A4 and A5 to work
         | Level shifter on the 5V board could interfere with tristate/open drain setting
     * - KIT_XMC47_RELAX (and variants)
       - External hard wired pins
@@ -228,7 +234,7 @@ via the Tools menu as shown in the picture below.
     :width: 600
 
 This is generally the case for most of the XMC boards. However, for boards 
-such as the :ref:`xmc4700-relax`, both the serial 
+such as the :ref:`KIT_XMC47_RELAX`, both the serial 
 output modes are simultaneously active and need not be selected or enabled from the menu.
 
 Note: Please note that the sketch must be recompiled when a different serial 
