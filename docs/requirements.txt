@@ -1,8 +1,8 @@
 # This is a list of python packages used to generate documentation. This file is used with pip:
 # pip install --user -r requirements.txt
 #
-sphinx>=7.2.6
-sphinx-tabs>=3.4.5
+sphinx>=7.2.6,<9.0.0
+sphinx-tabs
 sphinxemoji
 sphinx-rtd-theme
 recommonmark>=0.6.0
