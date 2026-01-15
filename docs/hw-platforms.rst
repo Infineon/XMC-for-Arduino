@@ -151,7 +151,7 @@ on the board itself. If you want to use them check out the subsection :ref:`conn
 .. _connected_pins:
 
 Connected I2S and Analog pins
------------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 For the ``KIT_XMC47_RELAX`` the Arduino pin number ``15`` & ``21`` (``SCL`` & ``A5``) and Arduino 
 pin number ``14`` & ``20`` (``SDA`` & ``A4``) are connected with each other on the board itself. Although they are different physical pins of the microcontroller, 
@@ -201,6 +201,14 @@ Legacy Microcontroller Boards
      - :ref:`XMC1300 Sense2GoL`
      - XMC1300
      - Proprietary
+   * - v3.x
+     - :ref:`KIT_XMC_PLT2GO_XMC4200`
+     - XMC4200
+     - Arduino Uno, Shield2Go, mikroBUS
+   * - v3.x
+     - :ref:`KIT_XMC_PLT2GO_XMC4400`
+     - XMC4400
+     - Arduino Uno, Shield2Go, mikroBUS
    * - v1.7.0
      - :ref:`XMC4700 Radar Baseboard`
      - XMC4700
@@ -251,6 +259,60 @@ XMC1300 Sense2GoL
 
 24 GHz sensor development kit utilizing Infineon BGT24LTR11 RF transceiver
 and XMC1300 32-bit ARM® Cortex®-M0 MCU series.
+
+-----------------------------------------------------------------------
+
+.. _KIT_XMC_PLT2GO_XMC4200:
+
+KIT_XMC_PLT2GO_XMC4200
+----------------------
+
+* Name in Arduino IDE: ``XMC4200 Platform 2GO``
+* `Product Page <https://www.infineon.com/cms/en/product/evaluation-boards/kit_xmc_plt2go_xmc4200/>`__
+
+.. image:: img/KIT_XMC_PLT2GO_XMC4200.jpg
+    :width: 400
+
+The XMC4200 Platform 2Go evaluation board consists of a XMC4200 microcontroller with a debugger implemented by a XMC4200 microcontroller. 
+Please note that there exist versions with 5V and 3.3V. Please be careful which version you have and use with your respective shields. 
+The one described here is the 5V version as this one is compatible with Arduino shields designed for 5V systems.
+This kit is equipped with an ARM® Cortex®-M4 based XMC4200 microcontroller with on-board debugger, Ethernet, CAN and footprints for Arduino, 
+MikroBUS and Shield2Go form factors.
+
+Pinout Diagram
+^^^^^^^^^^^^^^
+.. image:: img/KIT_XMC_PLT2GO_XMC4200_pinout.png
+    :width: 700
+
+Please note that Arduino pin number ``15`` & ``21`` (``SCL`` & ``A5``) and Arduino pin number ``14`` & ``20`` (``SDA`` & ``A4``) are connected with each other 
+on the board itself. If you want to use them check out the subsection :ref:`connected_pins`.
+
+-----------------------------------------------------------------------
+
+.. _KIT_XMC_PLT2GO_XMC4400:
+
+KIT_XMC_PLT2GO_XMC4400
+----------------------
+
+* Name in Arduino IDE: ``XMC4400 Platform 2GO``
+* `Product Page <https://www.infineon.com/cms/en/product/evaluation-boards/kit_xmc_plt2go_xmc4400/>`__
+
+.. image:: img/KIT_XMC_PLT2GO_XMC4400.jpg
+    :width: 400
+
+The XMC4400 Platform 2Go evaluation board consists of a XMC4400 microcontroller with a debugger implemented by a XMC4200 microcontroller. 
+Please note that there exist versions with 5V and 3.3V. Please be careful which version you have and use with your respective shields. 
+The one described here is the 5V version as this one is compatible with Arduino shields designed for 5V systems. 
+This kit is equipped with an ARM® Cortex®-M4 based XMC4400 microcontroller with on-board debugger, Ethernet, CAN and footprints for Arduino, 
+MikroBUS and Shield2Go form factors.
+
+Pinout Diagram
+^^^^^^^^^^^^^^
+.. image:: img/KIT_XMC_PLT2GO_XMC4400_pinout.png
+    :width: 700
+
+Please note that Arduino pin number ``15`` & ``21`` (``SCL`` & ``A5``) and Arduino pin number ``14`` & ``20`` (``SDA`` & ``A4``) are connected with each other 
+on the board itself. If you want to use them check out the subsection :ref:`connected_pins`.
 
 -----------------------------------------------------------------------
 
