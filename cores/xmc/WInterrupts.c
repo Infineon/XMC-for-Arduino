@@ -127,9 +127,9 @@ void attachInterrupt(pin_size_t interrupt_num, voidFuncPtr callback, PinStatus m
     if (pin_irq.irq_num == 0) {
     #if defined(KIT_XMC11_BOOT_001) || defined(KIT_XMC1400_ARDUINO) || defined(KIT_XMC14_2GO)
         /* P1_4 external interrupt goes through USIC to CCU4 */
-        XMC_USIC_CH_Enable(XMC_USIC0_CH0);
-        XMC_USIC_CH_SetInputSource(XMC_USIC0_CH0, XMC_USIC_CH_INPUT_DX5, USIC0_C0_DX5_P1_4);
-        XMC_USIC_CH_SetInputSource(XMC_USIC0_CH0, XMC_USIC_CH_INPUT_DX2, USIC0_C0_DX2_DX5INS);
+        XMC_USIC_CH_Enable(XMC_USIC0_CH1);
+        XMC_USIC_CH_SetInputSource(XMC_USIC0_CH1, XMC_USIC_CH_INPUT_DX5, USIC0_C0_DX5_P1_4);
+        XMC_USIC_CH_SetInputSource(XMC_USIC0_CH1, XMC_USIC_CH_INPUT_DX2, USIC0_C0_DX2_DX5INS);
     #endif
         XMC_CCU4_SLICE_EnableMultipleEvents(pin_irq.slice, XMC_CCU4_SLICE_MULTI_IRQ_ID_EVENT0);
         XMC_CCU4_SLICE_SetInterruptNode(pin_irq.slice, XMC_CCU4_SLICE_IRQ_ID_EVENT0, 0);
