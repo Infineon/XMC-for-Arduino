@@ -179,7 +179,7 @@ bool gpio_current_value[NUM_DIGITAL] = {false};
 
 /* Configurations of Interrupt */
 const XMC_PIN_INTERRUPT_t mapping_interrupt[] = {
-    /* 0  */ {CCU40, CCU40_CC40, 0, 0, CCU40_IN0_U0C0_DX2INS}};
+    /* 0  */ {CCU40, CCU40_CC41, 1, 0, CCU40_IN0_U0C0_DX2INS}};
 const uint8_t NUM_INTERRUPT = (sizeof(mapping_interrupt) / sizeof(XMC_PIN_INTERRUPT_t));
 
 /* Mapping of Arduino Pins to PWM4 channels as pin and index in PWM4 channel
