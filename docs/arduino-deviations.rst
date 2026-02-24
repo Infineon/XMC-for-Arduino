@@ -46,18 +46,9 @@ to be in INPUT Mode that needs Inputs.
 Interrupt
 +++++++++
 
-XMC1400 Kit for Arduino - Interrupt 1 and serial conflict
-When using the **KIT_XMC1400_ARDUINO** **Interrupt** 1 does not work when serial (UART) is used.
-The Pin Mapped to **Interrupt 1** shares the **same hardware bus configuration as UART**.
-
-**Impact:**
-
-- Interrupt will not trigger.
-- Serial communication also not work.
-  
-**Workarounds:**
-
-- use **Interrupt 0**
+XMC1400 Kit for Arduino - Interrupt 1 pin allocated to pin number - **7**
+.. code-block::
+   const byte interruptPin = 7; // for interrupt-1
 
 Wire/I2C Differences
 ++++++++++++++++++++
