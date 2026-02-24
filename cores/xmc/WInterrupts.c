@@ -125,11 +125,16 @@ void attachInterrupt(pin_size_t interrupt_num, voidFuncPtr callback, PinStatus m
     XMC_CCU4_EnableClock(pin_irq.ccu, pin_irq.slice_num);
 
     if (pin_irq.irq_num == 0) {
-    #if defined(KIT_XMC11_BOOT_001) || defined(KIT_XMC1400_ARDUINO) || defined(KIT_XMC14_2GO)
+    #if  defined(KIT_XMC14_2GO)
         /* P1_4 external interrupt goes through USIC to CCU4 */
         XMC_USIC_CH_Enable(XMC_USIC0_CH1);
         XMC_USIC_CH_SetInputSource(XMC_USIC0_CH1, XMC_USIC_CH_INPUT_DX5, USIC0_C0_DX5_P1_4);
         XMC_USIC_CH_SetInputSource(XMC_USIC0_CH1, XMC_USIC_CH_INPUT_DX2, USIC0_C0_DX2_DX5INS);
+    #endif
+    #if defined(KIT_XMC11_BOOT_001) || defined(KIT_XMC1400_ARDUINO)
+        XMC_USIC_CH_Enable(XMC_USIC0_CH0);
+        XMC_USIC_CH_SetInputSource(XMC_USIC0_CH0, XMC_USIC_CH_INPUT_DX5, USIC0_C0_DX5_P1_4);
+        XMC_USIC_CH_SetInputSource(XMC_USIC0_CH0, XMC_USIC_CH_INPUT_DX2, USIC0_C0_DX2_DX5INS);
     #endif
         XMC_CCU4_SLICE_EnableMultipleEvents(pin_irq.slice, XMC_CCU4_SLICE_MULTI_IRQ_ID_EVENT0);
         XMC_CCU4_SLICE_SetInterruptNode(pin_irq.slice, XMC_CCU4_SLICE_IRQ_ID_EVENT0, 0);
@@ -141,15 +146,10 @@ void attachInterrupt(pin_size_t interrupt_num, voidFuncPtr callback, PinStatus m
         interrupt_0_cb = callback;
         NVIC_EnableIRQ(CCU40_0_IRQn);
     } else if (pin_irq.irq_num == 1) {
-    #if defined(KIT_XMC13_BOOT_001)
+    #if defined(KIT_XMC13_BOOT_001) || defined(KIT_XMC1400_ARDUINO)
         /* P0_13 external interrupt goes through USIC to CCU4 */
         XMC_USIC_CH_Enable(XMC_USIC0_CH0);
         XMC_USIC_CH_SetInputSource(XMC_USIC0_CH0, XMC_USIC_CH_INPUT_DX2, USIC0_C0_DX2_P0_13);
-    #endif
-    #if defined(KIT_XMC1400_ARDUINO)
-        /* P1_1 external interrupt goes through USIC to CCU4 */
-        XMC_USIC_CH_Enable(XMC_USIC0_CH1);
-        XMC_USIC_CH_SetInputSource(XMC_USIC0_CH1, XMC_USIC_CH_INPUT_DX2, USIC0_C1_DX2_P1_1);
     #endif
         XMC_CCU4_SLICE_EnableMultipleEvents(pin_irq.slice, XMC_CCU4_SLICE_MULTI_IRQ_ID_EVENT1);
         XMC_CCU4_SLICE_SetInterruptNode(pin_irq.slice, XMC_CCU4_SLICE_IRQ_ID_EVENT1, 1);
