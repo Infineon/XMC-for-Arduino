@@ -125,7 +125,7 @@ void attachInterrupt(pin_size_t interrupt_num, voidFuncPtr callback, PinStatus m
     XMC_CCU4_EnableClock(pin_irq.ccu, pin_irq.slice_num);
 
     if (pin_irq.irq_num == 0) {
-    #if  defined(KIT_XMC14_2GO)
+    #if defined(KIT_XMC14_2GO)
         /* P1_4 external interrupt goes through USIC to CCU4 */
         XMC_USIC_CH_Enable(XMC_USIC0_CH1);
         XMC_USIC_CH_SetInputSource(XMC_USIC0_CH1, XMC_USIC_CH_INPUT_DX5, USIC0_C0_DX5_P1_4);
