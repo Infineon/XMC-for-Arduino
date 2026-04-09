@@ -1,6 +1,6 @@
 Supported Boards
 ================
-
+Linjing
 The following XMC microcontroller boards are supported by XMC for Arduino:
 
 .. list-table:: Supported Microcontroller Boards
