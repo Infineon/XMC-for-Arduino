@@ -45,6 +45,11 @@ String::String(const String &value) {
     *this = value;
 }
 
+String::String(const __FlashStringHelper *pstr) {
+    init();
+    *this = pstr;
+}
+
 String::String(char c) {
     init();
     char buf[2];
@@ -159,6 +164,16 @@ String &String::copy(const char *cstr, unsigned int length) {
     return *this;
 }
 
+String &String::copy(const __FlashStringHelper *pstr, unsigned int length) {
+    if (!reserve(length)) {
+        invalidate();
+        return *this;
+    }
+    len = length;
+    strcpy_P(buffer, (PGM_P)pstr);
+    return *this;
+}
+
 String &String::operator=(const String &rhs) {
     if (this == &rhs) {
         return *this;
@@ -176,6 +191,16 @@ String &String::operator=(const String &rhs) {
 String &String::operator=(const char *cstr) {
     if (cstr) {
         copy(cstr, strlen(cstr));
+    } else {
+        invalidate();
+    }
+
+    return *this;
+}
+
+String &String::operator=(const __FlashStringHelper *pstr) {
+    if (pstr) {
+        copy(pstr, strlen_P((PGM_P)pstr));
     } else {
         invalidate();
     }
@@ -261,6 +286,23 @@ unsigned char String::concat(double num) {
     return concat(string, strlen(string));
 }
 
+unsigned char String::concat(const __FlashStringHelper *pstr) {
+    if (!pstr) {
+        return 0;
+    }
+    unsigned int length = strlen_P((PGM_P)pstr);
+    if (length == 0) {
+        return 1;
+    }
+    unsigned int newlen = len + length;
+    if (!reserve(newlen)) {
+        return 0;
+    }
+    strcpy_P(buffer + len, (PGM_P)pstr);
+    len = newlen;
+    return 1;
+}
+
 /*********************************************/
 /*  Concatenate                              */
 /*********************************************/
@@ -340,6 +382,14 @@ StringSumHelper &operator+(const StringSumHelper &lhs, float num) {
 StringSumHelper &operator+(const StringSumHelper &lhs, double num) {
     StringSumHelper &a = const_cast<StringSumHelper &>(lhs);
     if (!a.concat(num)) {
+        a.invalidate();
+    }
+    return a;
+}
+
+StringSumHelper &operator+(const StringSumHelper &lhs, const __FlashStringHelper *rhs) {
+    StringSumHelper &a = const_cast<StringSumHelper &>(lhs);
+    if (!a.concat(rhs)) {
         a.invalidate();
     }
     return a;
