@@ -2,10 +2,9 @@
 
 ![Compilation Status](https://github.com/Infineon/XMC-for-Arduino/actions/workflows/compile-platform-examples.yml/badge.svg)
 [![Documentation Status](https://readthedocs.org/projects/xmc-arduino/badge/?version=latest)](https://xmc-arduino.readthedocs.io/en/latest/?badge=latest)
-[![Hil unity library checks](https://github.com/Infineon/XMC-for-Arduino/actions/workflows/hil-unity-checks.yml/badge.svg)](https://github.com/Infineon/XMC-for-Arduino/actions/workflows/hil-unity-checks.yml)
 [![Check links](https://github.com/Infineon/XMC-for-Arduino/actions/workflows/check_links.yml/badge.svg)](https://github.com/Infineon/XMC-for-Arduino/actions/workflows/check_links.yml)
 
-This project integrates Infineon's 32-bit XMC™ Industrial Arm® Cortex®-M Microcontroller into the [Arduino](https://www.arduino.cc/en/Guide/Introduction) ecosystem.
+This project integrates Infineon's 32-bit XMC™ Industrial Arm® Cortex®-M Microcontroller into the [Arduino](https://docs.arduino.cc/learn/starting-guide/getting-started-arduino/) ecosystem.
 
 The [XMC™ microcontroller family](https://www.infineon.com/cms/de/product/microcontroller/32-bit-industrial-microcontroller-based-on-arm-cortex-m/) from Infineon is a powerful and versatile platform for embedded system development. The XMC for Arduino core provides a comprehensive set of APIs, examples, and tools for developing a wide range of applications, allowing developers to leverage the ease of use and flexibility of the Arduino platform while harnessing the advanced features and performance of the XMC™ microcontrollers.
 
